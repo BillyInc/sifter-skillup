@@ -1,15 +1,11 @@
 /**
  * ExploreScreen — the core entry point (and the guest landing).
  *
- * This is where every user searches → sees the fields (domains), roles and
- * programmes their term maps to. The disambiguation search is the heart of the
- * screen: a student types "nursing" or "data scientist" and sees ALL their
- * options grouped — the domains that match, the roles that match (each listing
- * which domains it's reachable from, so they pick context), and the programmes
- * that match.
- *
- * When the query is empty (<2 chars) the screen falls back to the three SS3
- * "doors" and the browse links — the onboarding entry points.
+ * Editorial front page with:
+ *  1. Scoped disambiguation search (domains, roles, programmes)
+ *  2. Hero cluster carousel (8 signature clusters with signature colours)
+ *  3. Browse clusters / pathways / admission intelligence / elite pathways
+ *  4. Typed search results grouped by domain → role → programme
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -21,6 +17,7 @@ import {
   TextInput,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
   Spacing,
@@ -47,28 +44,33 @@ import { exploreNav } from "../lib/exploreNav";
 import { locked, type DataState, type CareerSearchResult } from "../types/career";
 import { useAuth } from "../hooks/useAuth";
 
-const DOORS = [
-  {
-    key: "know",
-    icon: "🎯",
-    title: "I know what & where",
-    body: "Pick your programme and see the fields and jobs it unlocks.",
-    live: true,
-  },
-  {
-    key: "what",
-    icon: "🏫",
-    title: "I know what, not where",
-    body: "See which institutions offer it, with JAMB & Post-UTME cut-offs.",
-    live: true,
-  },
-  {
-    key: "unsure",
-    icon: "🧭",
-    title: "I don't know yet",
-    body: "Enter your strongest subjects and see the programmes you qualify for.",
-    live: true,
-  },
+// ─── Cluster hero data ───────────────────────────────────────────
+// The 8 signature clusters from BUILD_PLAN.md with their defined
+// colours and Feather icon mappings. The full 37 clusters live on
+// the DomainExplorerScreen.
+const CLUSTER_HEROES: {
+  id: string;
+  name: string;
+  color: string;
+  icon: keyof typeof Feather.glyphMap;
+  route: string;
+}[] = [
+  { id: "ict",     name: "Technology",       color: "#3B3AC4", icon: "code",          route: "ICT" },
+  { id: "health",  name: "Health",           color: "#0E9F6E", icon: "heart",         route: "Health" },
+  { id: "eng",     name: "Engineering",      color: "#D97706", icon: "tool",          route: "Engineering" },
+  { id: "finance", name: "Finance",          color: "#0D9488", icon: "trending-up",   route: "Financial Services" },
+  { id: "legal",   name: "Legal",            color: "#111111", icon: "shield",        route: "Legal" },
+  { id: "agri",    name: "Agriculture",      color: "#F5A65B", icon: "sun",           route: "Agriculture" },
+  { id: "edu",     name: "Education",        color: "#2563EB", icon: "book-open",     route: "Education" },
+  { id: "creative",name: "Creative",         color: "#F5A65B", icon: "star",          route: "Creative" },
+];
+
+const PATHWAYS = [
+  { key: "phd",     label: "PhD & Research",   icon: "book" as const },
+  { key: "change",  label: "Career Change",     icon: "repeat" as const },
+  { key: "creds",   label: "Credentials",       icon: "award" as const },
+  { key: "upgrade", label: "Qualification Upgrades", icon: "arrow-up" as const },
+  { key: "entre",   label: "Entrepreneurship",  icon: "briefcase" as const },
 ];
 
 const MIN_QUERY = 2;
@@ -92,14 +94,10 @@ export default function ExploreScreen() {
   const [filter, setFilter] = useState<ResultFilter>("all");
   const [loading, setLoading] = useState(false);
   const [recents, setRecents] = useState<string[]>(["Medicine", "Data analyst", "Law"]);
-  // Only hold a result state once the term is searchable (>=2 chars), so the
-  // three-door onboarding shows until the user has meaningfully typed.
   const [results, setResults] = useState<DataState<CareerSearchResult> | null>(
     null,
   );
 
-  // Debounced disambiguation search — searchCareer returns all three groups
-  // (domains, roles, programmes) wrapped in a DataState the view renders.
   useEffect(() => {
     const q = query.trim();
     setLoading(false);
@@ -151,17 +149,18 @@ export default function ExploreScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >
+      {/* ── Header ────────────────────────────────────────────── */}
       <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
         EXPLORE
       </Text>
       <View style={styles.titleRow}>
-        <Text style={[styles.title, { color: colors.text }]}>
+        <Text style={[styles.title, { color: colors.textRole.primary }]}>
           Find your field, role{"\n"}or programme
         </Text>
         <InfoTooltip
@@ -197,7 +196,7 @@ export default function ExploreScreen() {
         </View>
       ) : null}
 
-      {/* Disambiguation search */}
+      {/* ── Search ────────────────────────────────────────────── */}
       <CoachMark
         storageKey="explore-intro-v1"
         text="Search a programme, field or job here — or scroll down and pick a starting point that fits where you are."
@@ -230,35 +229,31 @@ export default function ExploreScreen() {
         </Text>
       ) : null}
 
+      {/* ── Idle / Search / Results ────────────────────────────── */}
       {!searching ? (
-        <>
-          <SearchIdleState
-            recents={recents}
-            onPick={(term) => {
-              setQuery(term);
-              searchRef.current?.focus();
-            }}
-          />
-          <ExploreStartingPoints
-            onFocusSearch={() => searchRef.current?.focus()}
-            router={router}
-          />
-        </>
+        <ExploreIdle
+          recents={recents}
+          isGuest={isGuest}
+          router={router}
+          onPick={(term) => {
+            setQuery(term);
+            searchRef.current?.focus();
+          }}
+          onFocusSearch={() => searchRef.current?.focus()}
+        />
       ) : isGuest ? (
         <GuestLimitedSearch query={trimmed} onStartGuest={() => void signInGuest()} />
       ) : loading ? (
         <SearchLoadingRows />
       ) : searching && results ? (
-        // ── Results mode ────────────────────────────────────────────
         <DataStateView
           state={results}
           empty={isEmptyResult}
-          emptyTitle={`No matches for “${trimmed}”`}
+          emptyTitle={`No matches for \u201c${trimmed}\u201d`}
           emptyBody="Try a broader term — a field, a job title, or a programme."
         >
           {(data) => (
             <View style={styles.results}>
-              {/* Fields (domains) */}
               {(filter === "all" || filter === "domains") && data.domains.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Domains</SectionLabel>
@@ -275,13 +270,11 @@ export default function ExploreScreen() {
                 </View>
               ) : null}
 
-              {/* Roles — each lists the domains it's reachable from */}
               {(filter === "all" || filter === "roles") && data.roles.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Roles</SectionLabel>
                   {data.roles.map((r, ri) => {
-                    const single =
-                      r.domains.length === 1 ? r.domains[0] : undefined;
+                    const single = r.domains.length === 1 ? r.domains[0] : undefined;
                     const roleBody = (
                       <View>
                         <View style={styles.roleHead}>
@@ -295,10 +288,7 @@ export default function ExploreScreen() {
                         </View>
                         {single ? (
                           <Text
-                            style={[
-                              styles.rowMeta,
-                              { color: colors.textRole.muted },
-                            ]}
+                            style={[styles.rowMeta, { color: colors.textRole.muted }]}
                             numberOfLines={1}
                           >
                             in {single.domainName}
@@ -309,9 +299,7 @@ export default function ExploreScreen() {
                               <TouchableOpacity
                                 key={ctx.roleKey}
                                 activeOpacity={0.75}
-                                onPress={() =>
-                                  exploreNav.role(router, ctx.roleKey)
-                                }
+                                onPress={() => exploreNav.role(router, ctx.roleKey)}
                                 style={[
                                   styles.chip,
                                   {
@@ -321,10 +309,7 @@ export default function ExploreScreen() {
                                 ]}
                               >
                                 <Text
-                                  style={[
-                                    styles.chipText,
-                                    { color: colors.textRole.secondary },
-                                  ]}
+                                  style={[styles.chipText, { color: colors.textRole.secondary }]}
                                   numberOfLines={1}
                                 >
                                   {ctx.domainName}
@@ -335,8 +320,6 @@ export default function ExploreScreen() {
                         )}
                       </View>
                     );
-
-                    // One domain → the whole row taps straight to that role.
                     return single ? (
                       <PressableCard
                         key={`${r.name}-${ri}`}
@@ -352,7 +335,6 @@ export default function ExploreScreen() {
                 </View>
               ) : null}
 
-              {/* Programmes */}
               {(filter === "all" || filter === "programmes") && data.programmes.length ? (
                 <View style={styles.group}>
                   <View style={styles.groupHead}>
@@ -397,27 +379,160 @@ export default function ExploreScreen() {
   );
 }
 
-function SearchIdleState({
+// ─── Idle state (editorial front page) ───────────────────────────
+
+function ExploreIdle({
   recents,
+  isGuest,
+  router,
   onPick,
+  onFocusSearch,
 }: {
   recents: string[];
+  isGuest: boolean;
+  router: ReturnType<typeof useRouter>;
   onPick: (term: string) => void;
+  onFocusSearch: () => void;
 }) {
   const { colors } = useTheme();
-  const suggestions = ["Nursing", "Software engineer", "Accounting", "Civil engineering"];
   return (
-    <View style={styles.commandState}>
-      <View style={styles.commandGroup}>
+    <View style={styles.idle}>
+      {/* ── Hero cluster carousel ──────────────────────────────── */}
+      <View style={styles.section}>
+        <SectionLabel>Explore by field</SectionLabel>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.clusterCarousel}
+          decelerationRate="fast"
+          snapToInterval={CLUSTER_CARD_W + Spacing.sm}
+          snapToAlignment="start"
+        >
+          {CLUSTER_HEROES.map((c) => (
+            <TouchableOpacity
+              key={c.id}
+              activeOpacity={0.85}
+              onPress={() => {
+                // Navigate to DomainExplorerScreen filtered by this cluster
+                router.push("/(tabs)/explore/domains" as never);
+              }}
+              style={[styles.clusterCard, { borderColor: c.color + "30" }]}
+            >
+              <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
+                <Feather name={c.icon} size={22} color={c.color} />
+              </View>
+              <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
+                {c.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        <TouchableOpacity
+          activeOpacity={0.75}
+          onPress={() => exploreNav.domains(router)}
+          style={styles.seeAllLink}
+        >
+          <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
+            Browse all 37 clusters →
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ── Pathways strip ────────────────────────────────────── */}
+      <View style={styles.section}>
+        <SectionLabel>Pathways</SectionLabel>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.pathwayCarousel}
+        >
+          {PATHWAYS.map((p) => (
+            <TouchableOpacity
+              key={p.key}
+              activeOpacity={0.85}
+              onPress={() => exploreNav.pathways(router)}
+              style={[
+                styles.pathwayCard,
+                {
+                  backgroundColor: colors.surface.raised,
+                  borderColor: colors.borderRole.subtle,
+                },
+              ]}
+            >
+              <Feather name={p.icon} size={16} color={colors.accentRole.action} />
+              <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>
+                {p.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* ── Admission intelligence card ────────────────────────── */}
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() =>
+          router.push("/(tabs)/explore/admission?mode=programme" as never)
+        }
+        style={[
+          styles.admissionCard,
+          {
+            backgroundColor: colors.surface.raised,
+            borderColor: colors.borderRole.subtle,
+          },
+        ]}
+      >
+        <View style={styles.admissionLeft}>
+          <Text style={[styles.admissionEyebrow, { color: colors.textRole.muted }]}>
+            ADMISSION INTELLIGENCE
+          </Text>
+          <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>
+            Programme cut-offs,{"\n"}requirements &amp; competition
+          </Text>
+        </View>
+        <View style={[styles.admissionNumeral, { backgroundColor: colors.accentRole.action + "10" }]}>
+          <Text style={[styles.admissionNumeralText, { color: colors.accentRole.action }]}>
+            280
+          </Text>
+          <Text style={[styles.admissionNumeralUnit, { color: colors.textRole.muted }]}>
+            JAMB
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* ── Elite pathways gold strip ─────────────────────────── */}
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() => exploreNav.elitePathways(router)}
+        style={[styles.eliteStrip, { backgroundColor: "#B8860B10", borderColor: "#B8860B30" }]}
+      >
+        <Feather name="award" size={18} color="#B8860B" />
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.eliteTitle, { color: "#B8860B" }]}>
+            Elite pathways
+          </Text>
+          <Text style={[styles.eliteSub, { color: colors.textRole.muted }]}>
+            The 1% routes — medicine, law, engineering &amp; finance
+          </Text>
+        </View>
+        <Feather name="chevron-right" size={16} color="#B8860B" />
+      </TouchableOpacity>
+
+      {/* ── Suggested searches ─────────────────────────────────── */}
+      <View style={styles.section}>
         <SectionLabel>Suggested searches</SectionLabel>
         <View style={styles.filterRow}>
-          {suggestions.map((term) => (
-            <FilterChip key={term} label={term} onPress={() => onPick(term)} />
-          ))}
+          {["Nursing", "Software engineer", "Accounting", "Civil engineering"].map(
+            (term) => (
+              <FilterChip key={term} label={term} onPress={() => onPick(term)} />
+            ),
+          )}
         </View>
       </View>
+
+      {/* ── Recents ────────────────────────────────────────────── */}
       {recents.length ? (
-        <View style={styles.commandGroup}>
+        <View style={styles.section}>
           <SectionLabel>Recent</SectionLabel>
           {recents.map((term) => (
             <ListRow
@@ -431,19 +546,77 @@ function SearchIdleState({
           ))}
         </View>
       ) : null}
-      <View
-        style={[
-          styles.dataNotice,
-          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
-        ]}
-      >
-        <Text style={[styles.dataNoticeText, { color: colors.textRole.secondary }]}>
-          Search is grouped by domains, roles and programmes. Guest previews stay limited.
-        </Text>
+
+      {/* ── Starting points (3 doors) ─────────────────────────── */}
+      <View style={styles.section}>
+        <SectionLabel>Starting points</SectionLabel>
+        {DOORS.map((d) => (
+          <TouchableOpacity
+            key={d.key}
+            activeOpacity={0.85}
+            onPress={
+              d.key === "know"
+                ? onFocusSearch
+                : d.key === "what"
+                  ? () => router.push("/(tabs)/explore/admission?mode=programme" as never)
+                  : () => router.push("/(tabs)/explore/admission?mode=subjects" as never)
+            }
+            style={[
+              styles.card,
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+            ]}
+          >
+            <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
+              <Text style={styles.cardIcon}>{d.icon}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <View style={styles.cardHeadRow}>
+                <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
+                  {d.title}
+                </Text>
+                {d.live ? null : <LockedPill />}
+              </View>
+              <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
+                {d.body}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
+
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>
+        University and College of Education programmes come online first. Other
+        institution types, opportunities and elite pathways are being populated.
+      </Text>
     </View>
   );
 }
+
+// ─── Sub-components ──────────────────────────────────────────────
+
+const DOORS = [
+  {
+    key: "know",
+    icon: "🎯",
+    title: "I know what & where",
+    body: "Pick your programme and see the fields and jobs it unlocks.",
+    live: true,
+  },
+  {
+    key: "what",
+    icon: "🏫",
+    title: "I know what, not where",
+    body: "See which institutions offer it, with JAMB & Post-UTME cut-offs.",
+    live: true,
+  },
+  {
+    key: "unsure",
+    icon: "🧭",
+    title: "I don't know yet",
+    body: "Enter your strongest subjects and see the programmes you qualify for.",
+    live: true,
+  },
+];
 
 function SearchLoadingRows() {
   return (
@@ -495,89 +668,6 @@ function GuestLimitedSearch({
   );
 }
 
-function ExploreStartingPoints({
-  onFocusSearch,
-  router,
-}: {
-  onFocusSearch: () => void;
-  router: ReturnType<typeof useRouter>;
-}) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.commandGroup}>
-      <SectionLabel>Starting points</SectionLabel>
-      {DOORS.map((d) => (
-        <TouchableOpacity
-          key={d.key}
-          activeOpacity={0.85}
-          onPress={
-            d.key === "know"
-              ? onFocusSearch
-              : d.key === "what"
-                ? () =>
-                    router.push(
-                      "/(tabs)/explore/admission?mode=programme" as never,
-                    )
-                : () =>
-                    router.push(
-                      "/(tabs)/explore/admission?mode=subjects" as never,
-                    )
-          }
-          style={[
-            styles.card,
-            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-          ]}
-        >
-          <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
-            <Text style={styles.cardIcon}>{d.icon}</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <View style={styles.cardHeadRow}>
-              <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
-                {d.title}
-              </Text>
-              {d.live ? null : <LockedPill />}
-            </View>
-            <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
-              {d.body}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      ))}
-
-      <View style={styles.browseGrid}>
-        <BrowseLink label="Browse all domains" onPress={() => exploreNav.domains(router)} />
-        <BrowseLink label="Compare programmes" onPress={() => exploreNav.compare(router)} />
-        <BrowseLink label="Explore elite pathways" onPress={() => exploreNav.elitePathways(router)} />
-        <BrowseLink label="Special pathways" onPress={() => exploreNav.pathways(router)} />
-      </View>
-
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>
-        University and College of Education programmes come online first. Other
-        institution types, opportunities and elite pathways are being populated.
-      </Text>
-    </View>
-  );
-}
-
-function BrowseLink({ label, onPress }: { label: string; onPress: () => void }) {
-  const { colors } = useTheme();
-  return (
-    <TouchableOpacity
-      activeOpacity={0.76}
-      onPress={onPress}
-      style={[
-        styles.browse,
-        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-      ]}
-    >
-      <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
 function DataLimitedState() {
   const { colors } = useTheme();
   return (
@@ -595,6 +685,10 @@ function DataLimitedState() {
     </View>
   );
 }
+
+// ─── Styles ──────────────────────────────────────────────────────
+
+const CLUSTER_CARD_W = 120;
 
 const styles = StyleSheet.create({
   scroll: {
@@ -640,107 +734,132 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: Spacing.xs,
   },
-  commandState: {
+
+  // ── Idle ─────────────────────────────────────────────────────
+  idle: {
     gap: Spacing.lg,
     marginTop: Spacing.xs,
   },
-  commandGroup: { gap: Spacing.sm },
-  dataNotice: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.sm,
-    padding: Spacing.md,
+  section: {
+    gap: Spacing.sm,
   },
-  dataNoticeText: {
+
+  // Cluster carousel
+  clusterCarousel: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    paddingVertical: Spacing.xs,
+  },
+  clusterCard: {
+    width: CLUSTER_CARD_W,
+    padding: Spacing.md,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: "flex-start",
+    gap: Spacing.sm,
+  },
+  clusterIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  clusterCardName: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.sm * 1.2,
+  },
+  seeAllLink: {
+    paddingVertical: Spacing.xs,
+  },
+  seeAllText: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+  },
+
+  // Pathways strip
+  pathwayCarousel: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    paddingVertical: Spacing.xs,
+  },
+  pathwayCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: Radius.full,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  pathwayLabel: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+  },
+
+  // Admission card
+  admissionCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: Spacing.lg,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: Spacing.md,
+  },
+  admissionLeft: {
+    flex: 1,
+    gap: Spacing.xs,
+  },
+  admissionEyebrow: {
     fontSize: FontSize.xs,
     fontWeight: FontWeight.semibold,
-    lineHeight: FontSize.xs * 1.5,
+    letterSpacing: 0.8,
   },
-  guestPanel: {
-    borderWidth: StyleSheet.hairlineWidth,
+  admissionTitle: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.md * 1.3,
+  },
+  admissionNumeral: {
+    width: 72,
+    height: 72,
+    borderRadius: Radius.lg,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  admissionNumeralText: {
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    lineHeight: 30,
+  },
+  admissionNumeralUnit: {
+    fontSize: 9,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.5,
+    marginTop: 1,
+  },
+
+  // Elite strip
+  eliteStrip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    padding: Spacing.md,
     borderRadius: Radius.md,
-    padding: Spacing.lg,
-    gap: Spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  guestTitle: {
-    fontSize: FontSize.lg,
+  eliteTitle: {
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
   },
-  guestBody: {
-    fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.5,
+  eliteSub: {
+    fontSize: FontSize.xs,
+    marginTop: 2,
   },
-  guestRows: { gap: Spacing.sm, marginTop: Spacing.xs },
 
-  // ── Results ──────────────────────────────────────────────────
-  results: { gap: Spacing.lg, marginTop: Spacing.xs },
-  group: { gap: Spacing.sm },
-  groupHead: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: Spacing.md,
-    flexWrap: "wrap",
-  },
-  compareLink: {
-    minHeight: 34,
-    justifyContent: "center",
-    paddingHorizontal: Spacing.xs,
-  },
-  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    padding: Spacing.md,
-    minHeight: 44,
-  },
-  rowMain: { flex: 1 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
-  rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
-  roleHead: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: Spacing.sm,
-    padding: Spacing.md,
-    paddingBottom: Spacing.xs,
-  },
-  chips: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.xs,
-    paddingHorizontal: Spacing.md,
-    paddingBottom: Spacing.md,
-    paddingTop: Spacing.xs,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 6,
-    minHeight: 32,
-    justifyContent: "center",
-    maxWidth: "100%",
-  },
-  chipText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-
-  // ── Onboarding ───────────────────────────────────────────────
-  browse: {
-    minHeight: 44,
-    justifyContent: "center",
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
-    borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
-    flexGrow: 1,
-    flexBasis: 180,
-  },
-  browseGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.sm,
-  },
-  browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  // Doors
   card: {
     flexDirection: "row",
     gap: Spacing.md,
@@ -773,5 +892,78 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     lineHeight: FontSize.xs * 1.6,
     marginTop: Spacing.md,
+  },
+
+  // ── Results ──────────────────────────────────────────────────
+  results: { gap: Spacing.lg, marginTop: Spacing.xs },
+  group: { gap: Spacing.sm },
+  groupHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.md,
+    flexWrap: "wrap",
+  },
+  compareLink: {
+    minHeight: 34,
+    justifyContent: "center",
+    paddingHorizontal: Spacing.xs,
+  },
+  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
+  rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
+  roleHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.sm,
+    padding: Spacing.md,
+    paddingBottom: Spacing.xs,
+  },
+  chips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingBottom: Spacing.md,
+    paddingTop: Spacing.xs,
+  },
+  chip: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+    minHeight: 32,
+    justifyContent: "center",
+    maxWidth: "100%",
+  },
+  chipText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+
+  // Guest / data-limited
+  guestPanel: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  guestTitle: {
+    fontSize: FontSize.lg,
+    fontWeight: FontWeight.semibold,
+  },
+  guestBody: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+  },
+  guestRows: { gap: Spacing.sm, marginTop: Spacing.xs },
+  dataNotice: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.sm,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+  },
+  dataNoticeText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.xs * 1.5,
   },
 });

@@ -39,21 +39,21 @@ import {
   FontSize,
   webContainer,
   CompassFonts,
-} from "../theme";
-import { DataStateView, LockedPill } from "../components/careerIntelligence";
-import { careerData } from "../lib/careerData";
-import { exploreNav } from "../lib/exploreNav";
+} from "@/theme";
+import { DataStateView, LockedPill } from "@/components/careerIntelligence";
+import { careerData } from "@/lib/careerData";
+import { exploreNav } from "@/lib/exploreNav";
 import {
   type DataState,
   type SavedItem,
   type Note,
   type SavedEntityType,
   locked,
-} from "../types/career";
-import { useAuth } from "../hooks/useAuth";
-import { featureFlags } from "../lib/featureFlags";
-import { xpEngine, type XPSnapshot } from "../lib/XPEngine";
-import { streakEngine, type StreakStatus } from "../lib/StreakEngine";
+} from "@/types/career";
+import { useAuth } from "@/hooks/useAuth";
+import { featureFlags } from "@/lib/featureFlags";
+import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
+import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {

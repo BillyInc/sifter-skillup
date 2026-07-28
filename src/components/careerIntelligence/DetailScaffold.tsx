@@ -4,13 +4,15 @@
  * title/eyebrow header, and a scrollable body that renders a DataState
  * gracefully (Coming Soon / Pending / Error) before showing content.
  */
-import React, { type ReactNode } from "react";
+import React, { type ReactNode, type RefObject } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent,
 } from "react-native";
 import { useRouter } from "expo-router";
 import {
@@ -44,6 +46,10 @@ export interface DetailScaffoldProps<T> {
   empty?: (data: T) => boolean;
   /** Show the career-guidance disclaimer at the foot of the body. Default true. */
   disclaimer?: boolean;
+  /** External ref to the inner ScrollView (for section nav scroll-to). */
+  scrollRef?: RefObject<ScrollView>;
+  /** Scroll event handler (for section nav active tracking). */
+  onScroll?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
 export function DetailScaffold<T>({
@@ -57,6 +63,8 @@ export function DetailScaffold<T>({
   header,
   empty,
   disclaimer = true,
+  scrollRef,
+  onScroll,
 }: DetailScaffoldProps<T>) {
   const router = useRouter();
   const { colors } = useTheme();
@@ -70,9 +78,12 @@ export function DetailScaffold<T>({
 
   return (
     <ScrollView
+      ref={scrollRef}
+      onScroll={onScroll}
       style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
+      scrollEventThrottle={16}
     >
       <View
         style={[

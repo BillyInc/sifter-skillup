@@ -2,9 +2,8 @@
  * ApplicationWindowsScreen — the Opportunities list of upcoming application
  * windows and deadlines.
  *
- * This is a LIST screen, so it ships its own inline back+header chrome
- * (mirroring DetailScaffold visually) and renders the body through
- * DataStateView. Semantic tokens + CompassFonts (BRIEF chrome).
+ * Phase 10 redesign: editorial header, responsive card grid, all legacy
+ * tokens migrated.
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -15,22 +14,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
-import { careerData } from "../../lib/careerData";
+import { Feather } from "@expo/vector-icons";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { careerData } from "@/lib/careerData";
+import { useResponsive } from "@/hooks/useResponsive";
 import {
   comingSoon,
   type DataState,
   type ApplicationWindow,
-} from "../../types/career";
+} from "@/types/career";
 import {
   DataStateView,
   ApplicationWindowCard,
   SubscribeButton,
-} from "../../components/careerIntelligence";
+} from "@/components/careerIntelligence";
 
 export function ApplicationWindowsScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const resp = useResponsive();
   const [state, setState] =
     useState<DataState<ApplicationWindow[]>>(comingSoon<ApplicationWindow[]>());
 
@@ -39,10 +41,10 @@ export function ApplicationWindowsScreen() {
     careerData.getApplicationWindows().then((res) => {
       if (alive) setState(res);
     });
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
+
+  const isGrid = (resp.isDesktop || resp.isTablet) && resp.isWeb;
 
   return (
     <ScrollView
@@ -59,32 +61,35 @@ export function ApplicationWindowsScreen() {
           hitSlop={10}
           style={styles.back}
         >
-          <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-            ← Back
+          <Feather name="arrow-left" size={16} color={colors.accentRole.action} style={{ marginRight: 4 }} />
+          <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
+            Back
           </Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        OPPORTUNITIES
-      </Text>
-      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Application Windows
-      </Text>
-      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        Upcoming openings &amp; deadlines — don&apos;t miss these.
-      </Text>
+      <View style={styles.hero}>
+        <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+          OPPORTUNITIES
+        </Text>
+        <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+          Application Windows
+        </Text>
+        <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
+          Upcoming openings and deadlines — don&apos;t miss these.
+        </Text>
+      </View>
 
-      <View style={{ marginTop: Spacing.md }}>
-        <DataStateView
-          state={state}
-          empty={(d) => d.length === 0}
-          emptyTitle="No upcoming windows"
-        >
-          {(windows) => (
-            <View style={{ gap: Spacing.md }}>
-              {windows.map((w) => (
-                <View key={w.id} style={{ gap: Spacing.sm }}>
+      <DataStateView
+        state={state}
+        empty={(d) => d.length === 0}
+        emptyTitle="No upcoming windows"
+      >
+        {(windows) => (
+          <View style={isGrid ? styles.cardGrid : { gap: Spacing.md }}>
+            {windows.map((w) => (
+              <View key={w.id} style={isGrid ? styles.cardWrap : undefined}>
+                <View style={{ gap: Spacing.sm }}>
                   <ApplicationWindowCard
                     title={w.title}
                     status={w.status}
@@ -98,11 +103,11 @@ export function ApplicationWindowsScreen() {
                     />
                   ) : null}
                 </View>
-              ))}
-            </View>
-          )}
-        </DataStateView>
-      </View>
+              </View>
+            ))}
+          </View>
+        )}
+      </DataStateView>
     </ScrollView>
   );
 }
@@ -113,20 +118,25 @@ const styles = StyleSheet.create({
   scroll: {
     paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
-    gap: Spacing.sm,
+    gap: Spacing.md,
     flexGrow: 1,
   },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
   },
-  back: { paddingVertical: 4, minHeight: 44, justifyContent: "center" },
+  back: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 4,
+    minHeight: 44,
+    justifyContent: "center",
+  },
   backText: { fontSize: FontSize.md },
+  hero: { gap: 4 },
   eyebrow: {
     fontSize: FontSize.xs,
-    letterSpacing: 1,
-    marginTop: Spacing.sm,
+    letterSpacing: 0.9,
   },
   title: {
     fontSize: FontSize.display,
@@ -135,6 +145,16 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
-    marginTop: Spacing.xs,
+    marginTop: 2,
+  },
+  cardGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  cardWrap: {
+    flexBasis: 320,
+    flexGrow: 1,
+    minWidth: 280,
   },
 });

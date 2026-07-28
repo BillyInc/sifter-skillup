@@ -36,13 +36,13 @@ export function DataSourceBadge({
     <View
       style={[
         styles.row,
-        { backgroundColor: colors.bgSecondary, borderColor: colors.border },
+        { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
         style,
       ]}
     >
       <Text style={styles.icon}>{f.icon}</Text>
       <Text
-        style={[styles.text, { color: colors.textMuted }]}
+        style={[styles.text, { color: colors.textRole.muted }]}
         numberOfLines={1}
       >
         {parts.join(" · ")}

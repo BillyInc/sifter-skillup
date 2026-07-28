@@ -798,7 +798,7 @@ const rT = StyleSheet.create({
 
 type ResearchMode = 'protocol-research' | 'grant-proposal' | 'ecosystem-report' | 'exec-summary';
 
-const RESEARCH_TEMPLATES: Record<ResearchMode, { title: string; sections: Array<{ id: string; label: string; placeholder: string; minWords: number; required: boolean }> }> = {
+const RESEARCH_TEMPLATES: Record<ResearchMode, { title: string; sections: { id: string; label: string; placeholder: string; minWords: number; required: boolean }[] }> = {
   'protocol-research': {
     title: 'Protocol Research Report',
     sections: [
@@ -1362,13 +1362,13 @@ export function PortfolioPushSim({ onComplete, onSkip, colors, artifactName = 'p
   artifactName?: string; labPath?: string;
 }) {
   const [phase, setPhase]           = useState<'idle' | 'testing' | 'tested' | 'confirming' | 'pushing' | 'done'>('idle');
-  const [testResults, setTestResults] = useState<Array<{ id: string; passed: boolean }>>([]);
+  const [testResults, setTestResults] = useState<{ id: string; passed: boolean }[]>([]);
   const [confirmed, setConfirmed]   = useState(false);
   const [commitHash, setCommitHash] = useState<string | null>(null);
 
   const runTests = async () => {
     setPhase('testing');
-    const results: Array<{ id: string; passed: boolean }> = [];
+    const results: { id: string; passed: boolean }[] = [];
     for (const test of PORTFOLIO_TESTS) {
       await simulateDelay(400);
       results.push({ id: test.id, passed: true }); // In production: run real checks
@@ -2234,7 +2234,7 @@ function JudgmentSim({ type, onComplete, onSkip }: SimProps & { type: string }) 
   const scenario = AGG_POOL.find((item: any) => item?.type === type) ?? AGG_POOL[0];
   const [response, setResponse] = useState('');
   const [scoring, setScoring] = useState(false);
-  const [results, setResults] = useState<Array<{ criterion: string; passed: boolean }> | null>(null);
+  const [results, setResults] = useState<{ criterion: string; passed: boolean }[] | null>(null);
   const words = wc(response);
   const minWords = 50;
 

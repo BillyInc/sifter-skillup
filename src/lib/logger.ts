@@ -30,7 +30,7 @@ const DEFAULT_CONFIG = {
   // Set log level based on environment
   level: __DEV__ ? 'debug' : 'info',
   // Additional fields to include in every log
-  // eslint-disable-next-line no-undef
+   
   extraFields: {
     env: __DEV__ ? 'development' : 'production',
     platform: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',

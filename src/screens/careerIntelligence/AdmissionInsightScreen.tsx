@@ -1,25 +1,32 @@
 /**
  * AdmissionInsightScreen — standalone screen for admission intelligence
  * (SS → University cut-offs, formulas, competitiveness).
- * Reachable from ProgrammeOverviewScreen Admission tab, DomainDetailScreen,
- * and JAMB-name → domains flow.
+ *
+ * Phase 10 redesign: editorial hero, mono equation formula block,
+ * competitiveness bands (success/warning/danger washes), responsive
+ * 2-column desktop layout with section nav, all legacy tokens migrated.
  */
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, type Router } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   DetailScaffold,
   DataSourceBadge,
   NotesWidget,
   SectionLabel,
+  StatTile,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
+import { useResponsive } from "@/hooks/useResponsive";
+import { exploreNav } from "@/lib/exploreNav";
 import {
   type DataState,
   type ProgrammeSchoolCutoff,
   type SchoolAggregateFormula,
   type CourseCompetitiveness,
   type AdmissionSnapshotVersion,
+  type NationalJambFloor,
   comingSoon,
 } from "@/types/career";
 import {
@@ -27,7 +34,6 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
   CompassFonts,
   type ColorPalette,
 } from "@/theme";
@@ -36,8 +42,23 @@ export interface AdmissionInsightScreenProps {
   programmeId?: string;
   schoolId?: string;
   domainId?: string;
-  /** Course / JAMB name when reached from the Explore "what, not where" door. */
   jambName?: string;
+}
+
+const SECTIONS = [
+  { key: "overview", label: "Overview" },
+  { key: "floor", label: "JAMB Floor" },
+  { key: "formula", label: "Formula" },
+  { key: "cutoffs", label: "Cut-offs" },
+  { key: "competitiveness", label: "Competitiveness" },
+] as const;
+
+const CHROME_OFFSET = 104;
+
+function competitivenessBand(ratio: number): { color: string; soft: string; label: string } {
+  if (ratio > 0.5) return { color: "", soft: "", label: "Low" };
+  if (ratio > 0.25) return { color: "", soft: "", label: "Medium" };
+  return { color: "", soft: "", label: "High" };
 }
 
 export function AdmissionInsightScreen({
@@ -46,8 +67,8 @@ export function AdmissionInsightScreen({
   domainId,
   jambName,
 }: AdmissionInsightScreenProps) {
-  const router = useRouter();
   const { colors } = useTheme();
+  const resp = useResponsive();
   const [snapshotState, setSnapshotState] = useState<
     DataState<AdmissionSnapshotVersion>
   >(() => comingSoon<AdmissionSnapshotVersion>("Snapshot version not yet loaded."));
@@ -60,8 +81,8 @@ export function AdmissionInsightScreen({
   const [competitivenessState, setCompetitivenessState] = useState<DataState<CourseCompetitiveness[]>>(
     () => comingSoon<CourseCompetitiveness[]>("Competitiveness not yet loaded."),
   );
-  const [floorState, setFloorState] = useState<DataState<any>>(
-    () => comingSoon<any>("JAMB floor not yet loaded."),
+  const [floorState, setFloorState] = useState<DataState<NationalJambFloor>>(
+    () => comingSoon<NationalJambFloor>("JAMB floor not yet loaded."),
   );
 
   useEffect(() => {
@@ -79,13 +100,11 @@ export function AdmissionInsightScreen({
       } catch {
         if (active) {
           setSnapshotState(comingSoon<AdmissionSnapshotVersion>("Snapshot unavailable."));
-          setFloorState(comingSoon<any>("JAMB floor unavailable."));
+          setFloorState(comingSoon<NationalJambFloor>("JAMB floor unavailable."));
         }
       }
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
@@ -100,9 +119,7 @@ export function AdmissionInsightScreen({
         if (active) setCutoffsState(comingSoon<ProgrammeSchoolCutoff[]>("Cut-offs unavailable."));
       }
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [programmeId, schoolId, snapshotState.data?.year]);
 
   useEffect(() => {
@@ -117,9 +134,7 @@ export function AdmissionInsightScreen({
         if (active) setFormulaState(comingSoon<SchoolAggregateFormula | null>("Formula unavailable."));
       }
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [schoolId, snapshotState.data?.year]);
 
   useEffect(() => {
@@ -133,13 +148,234 @@ export function AdmissionInsightScreen({
         if (active) setCompetitivenessState(comingSoon<CourseCompetitiveness[]>("Competitiveness unavailable."));
       }
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [snapshotState.data?.year, jambName]);
 
   const year = snapshotState.data?.year ?? new Date().getFullYear();
   const activeLabel = snapshotState.data?.label ?? `${year}/${year + 1} Cycle — compiling`;
+
+  const isDesktop = resp.isDesktop && resp.isWeb;
+
+  const sectionY = useRef<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState("overview");
+  const scrollRef = useRef<ScrollView>(null);
+
+  const onSectionLayout = useCallback((key: string, y: number) => {
+    if (sectionY.current[key] === undefined) {
+      sectionY.current[key] = CHROME_OFFSET + y;
+    }
+  }, []);
+
+  const scrollTo = useCallback((key: string) => {
+    const y = sectionY.current[key];
+    if (y !== undefined) {
+      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+    }
+    setActiveSection(key);
+  }, []);
+
+  const content = (
+    <>
+      {/* ── Overview: editorial hero ─────────────────────────── */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
+        <View style={[styles.heroCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <View style={styles.heroIconWrap}>
+            <Feather name="bar-chart-2" size={28} color={colors.accentRole.action} />
+          </View>
+          <View style={styles.heroTextBlock}>
+            <Text style={[styles.heroEyebrow, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
+              {activeLabel}
+            </Text>
+            <Text style={[styles.heroTitle, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
+              Admission Intelligence
+            </Text>
+            <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
+              Verified cut-off scores, aggregate formulas, and competitiveness data compiled from
+              JAMB, university admissions offices, and the Joint Admissions and Matriculation Board.
+            </Text>
+          </View>
+          <DataSourceBadge
+            verification={snapshotState.meta?.verification ?? "pending"}
+            source={snapshotState.meta?.sources?.[0] ?? "JAMB · NUC · University admissions"}
+            date={String(year)}
+          />
+        </View>
+      </View>
+
+      {/* ── National JAMB Floor ──────────────────────────────── */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("floor", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>National JAMB floor</SectionLabel>
+          <View style={[styles.floorCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            {floorState.status === "real" && floorState.data ? (
+              <View style={styles.floorInner}>
+                <Text style={[styles.floorScore, CompassFonts.data, { color: colors.accentRole.action }]}>
+                  {floorState.data.floorScore}
+                </Text>
+                <View style={styles.floorMeta}>
+                  <Text style={[styles.floorLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+                    Minimum score
+                  </Text>
+                  <Text style={[styles.floorNote, { color: colors.textRole.secondary }]}>
+                    {floorState.data.contextNote ?? "University minimum floor for this cycle"}
+                  </Text>
+                  <Text style={[styles.floorSource, { color: colors.textRole.muted }]}>
+                    Source: {floorState.data.sourceUrl ?? "JAMB"}
+                  </Text>
+                </View>
+              </View>
+            ) : floorState.status === "fallback" ? (
+              <View style={styles.floorInner}>
+                <Text style={[styles.floorScore, CompassFonts.data, { color: colors.warning }]}>
+                  ~150
+                </Text>
+                <View style={styles.floorMeta}>
+                  <Text style={[styles.floorLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+                    Indicative minimum
+                  </Text>
+                  <Text style={[styles.floorNote, { color: colors.textRole.secondary }]}>
+                    Live floor data pending — showing estimated minimum
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View style={styles.floorInner}>
+                <Text style={[styles.floorScore, CompassFonts.data, { color: colors.textRole.muted }]}>
+                  —
+                </Text>
+                <View style={styles.floorMeta}>
+                  <Text style={[styles.floorLabel, { color: colors.textRole.muted }]}>
+                    Loading floor score...
+                  </Text>
+                </View>
+              </View>
+            )}
+          </View>
+        </View>
+      </View>
+
+      {/* ── Aggregate Formula ────────────────────────────────── */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("formula", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>Aggregate formula</SectionLabel>
+          {formulaState.status === "real" && formulaState.data ? (
+            <FormulaExplainCard formula={formulaState.data} colors={colors} />
+          ) : formulaState.status === "fallback" ? (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>
+                No aggregate formula published for this school in {year}.
+              </Text>
+            </View>
+          ) : (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>Loading formula...</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* ── Cut-offs ─────────────────────────────────────────── */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("cutoffs", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>
+            {programmeId
+              ? "Programme cut-offs"
+              : schoolId
+              ? "School cut-offs"
+              : "Cut-offs by programme and school"}
+          </SectionLabel>
+          {cutoffsState.status === "real" && cutoffsState.data?.length ? (
+            <View style={resp.isDesktop ? styles.cutoffGrid : { gap: Spacing.sm }}>
+              {cutoffsState.data.map((c) => (
+                <CutoffCard key={c.id} cutoff={c} colors={colors} />
+              ))}
+            </View>
+          ) : cutoffsState.status === "fallback" ? (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>
+                No cut-off data for this selection in {year}.
+              </Text>
+            </View>
+          ) : (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>Loading cut-offs...</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* ── National Competitiveness ──────────────────────────── */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("competitiveness", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>National competitiveness</SectionLabel>
+          {competitivenessState.status === "real" && competitivenessState.data?.length ? (
+            <View style={resp.isDesktop ? styles.compGrid : { gap: Spacing.sm }}>
+              {competitivenessState.data.map((c) => (
+                <CompetitivenessCard key={c.id} data={c} colors={colors} year={year} />
+              ))}
+            </View>
+          ) : competitivenessState.status === "fallback" ? (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>
+                No competitiveness data for {year}.
+              </Text>
+            </View>
+          ) : (
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={{ color: colors.textRole.muted }}>Loading competitiveness...</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      <NotesWidget entityType="programme" entityId={programmeId ?? "admission"} />
+    </>
+  );
+
+  if (isDesktop) {
+    return (
+      <DetailScaffold
+        eyebrow="ADMISSION"
+        title={jambName ? `${jambName} — Admission` : "Admission Intelligence"}
+        pdf
+        save={programmeId ? { entityType: "programme", entityId: programmeId } : undefined}
+        state={snapshotState}
+      >
+        {() => (
+          <View style={styles.desktopRow}>
+            <View style={styles.navColumn}>
+              <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                  On this page
+                </Text>
+                {SECTIONS.map((s) => (
+                  <TouchableOpacity
+                    key={s.key}
+                    onPress={() => scrollTo(s.key)}
+                    style={[styles.navItem, activeSection === s.key && { backgroundColor: colors.surface.subtle }]}
+                    activeOpacity={0.6}
+                  >
+                    <View style={[styles.navDot, { backgroundColor: activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle }]} />
+                    <Text style={[styles.navLabel, { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary }, CompassFonts.bodyMedium]} numberOfLines={1}>
+                      {s.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            <ScrollView ref={scrollRef} style={styles.mainScroll} showsVerticalScrollIndicator={false} scrollEventThrottle={16}>
+              <View style={{ gap: Spacing.lg }}>{content}</View>
+            </ScrollView>
+          </View>
+        )}
+      </DetailScaffold>
+    );
+  }
 
   return (
     <DetailScaffold
@@ -149,135 +385,109 @@ export function AdmissionInsightScreen({
       save={programmeId ? { entityType: "programme", entityId: programmeId } : undefined}
       state={snapshotState}
     >
-      {(data) => (
+      {() => (
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
-          {/* Snapshot banner */}
-          <View
-            style={[
-              styles.banner,
-              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-            ]}
-          >
-            <Text style={[styles.bannerLabel, { color: colors.textRole.primary }]}>
-              {activeLabel}
-            </Text>
-            <DataSourceBadge
-              verification={data?.meta?.verification ?? "pending"}
-              source={data?.meta?.sources?.[0] ?? "Manual annual compile"}
-            />
-          </View>
-
-          {/* National JAMB Floor */}
-          <View style={styles.section}>
-            <SectionLabel>National JAMB floor</SectionLabel>
-            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              {floorState.status === "real" && floorState.data ? (
-                <View>
-                  <Text style={[styles.floorScore, CompassFonts.data, { color: colors.textRole.primary }]}>
-                    {floorState.data.floorScore}
-                  </Text>
-                  <Text style={[styles.floorNote, { color: colors.textRole.secondary }]}>
-                    {floorState.data.contextNote ?? "University minimum floor"}
-                  </Text>
-                  <Text style={[styles.floorSource, { color: colors.textRole.muted }]}>
-                    Source: {floorState.data.sourceUrl ?? "JAMB"}
-                  </Text>
-                </View>
-              ) : floorState.status === "fallback" ? (
-                <Text style={[styles.floorScore, CompassFonts.data, { color: colors.warning }]}>
-                  ~150 (indicative)
-                </Text>
-              ) : (
-                <Text style={{ color: colors.textRole.muted }}>Loading floor score...</Text>
-              )}
-            </View>
-          </View>
-
-          {/* Cut-offs */}
-          <View style={styles.section}>
-            <SectionLabel>
-              {
-                programmeId
-                  ? "This Programme's Cut-offs"
-                  : schoolId
-                  ? "This School's Cut-offs"
-                  : "Cut-offs (select a programme or school)"
-              }
-            </SectionLabel>
-            {cutoffsState.status === "real" && cutoffsState.data?.length ? (
-              <View style={{ gap: Spacing.sm }}>
-                {cutoffsState.data.map((c) => (
-                  <CutoffCard key={c.id} cutoff={c} colors={colors} />
-                ))}
-              </View>
-            ) : cutoffsState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>
-                  No cut-off data for this selection in {year}.
-                </Text>
-              </View>
-            ) : (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>Loading cut-offs...</Text>
-              </View>
-            )}
-          </View>
-
-          {/* School Aggregate Formula */}
-          <View style={styles.section}>
-            <SectionLabel>Aggregate formula</SectionLabel>
-            {formulaState.status === "real" && formulaState.data ? (
-              <FormulaCard formula={formulaState.data} colors={colors} />
-            ) : formulaState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>
-                  No aggregate formula published for this school in {year}.
-                </Text>
-              </View>
-            ) : (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>Loading formula...</Text>
-              </View>
-            )}
-          </View>
-
-          {/* National Competitiveness */}
-          <View style={styles.section}>
-            <SectionLabel>National competitiveness</SectionLabel>
-            {competitivenessState.status === "real" &&
-            competitivenessState.data?.length ? (
-              <View style={{ gap: Spacing.sm }}>
-                {competitivenessState.data.map((c) => (
-                  <CompetitivenessCard
-                    key={c.id}
-                    data={c}
-                    colors={colors}
-                    year={year}
-                  />
-                ))}
-              </View>
-            ) : competitivenessState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>
-                  No competitiveness data for {year}.
-                </Text>
-              </View>
-            ) : (
-              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Text style={{ color: colors.textRole.muted }}>Loading competitiveness...</Text>
-              </View>
-            )}
-          </View>
-
-          <NotesWidget
-            entityType="programme"
-            entityId={programmeId ?? "admission"}
-          />
+          {content}
         </ScrollView>
       )}
     </DetailScaffold>
   );
 }
+
+/* ── Formula Explain Card ─────────────────────────────────── */
+
+function FormulaExplainCard({
+  formula,
+  colors,
+}: {
+  formula: SchoolAggregateFormula;
+  colors: ColorPalette;
+}) {
+  const jambPct = Math.round(formula.jambWeight * 100);
+  const postUtmePct = Math.round(formula.postUtmeWeight * 100);
+  const olevelPct = Math.round(formula.olevelWeight * 100);
+  const total = jambPct + postUtmePct + olevelPct;
+
+  const schoolName = formula.schoolName ?? "this university";
+  const equationParts: string[] = [];
+  if (formula.jambWeight > 0) equationParts.push(`UTME/${Math.round(1 / formula.jambWeight)}`);
+  if (formula.postUtmeWeight > 0) equationParts.push(`Post-UTME/${Math.round(1 / formula.postUtmeWeight)}`);
+  if (formula.olevelWeight > 0) equationParts.push(`O'Level/${Math.round(1 / formula.olevelWeight)}`);
+  const equation = equationParts.length
+    ? `Aggregate = ${equationParts.join(" + ")}`
+    : "";
+
+  return (
+    <View style={[styles.formulaCard, { backgroundColor: colors.surface.raised, borderColor: colors.accentRole.action + "30" }]}>
+      <View style={[styles.formulaAccent, { backgroundColor: colors.accentRole.action }]} />
+      <View style={styles.formulaBody}>
+        <Text style={[styles.formulaHeading, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
+          How {schoolName} computes aggregate
+        </Text>
+
+        {equation ? (
+          <View style={[styles.equationBlock, { backgroundColor: colors.surface.sunken, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.equationText, CompassFonts.data, { color: colors.textRole.primary }]}>
+              {equation}
+            </Text>
+          </View>
+        ) : null}
+
+        <View style={styles.weightRow}>
+          {formula.jambWeight > 0 && (
+            <View style={[styles.weightPill, { backgroundColor: colors.accentSoft }]}>
+              <Text style={[styles.weightPillLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                JAMB
+              </Text>
+              <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.accentRole.action }]}>
+                {jambPct}%
+              </Text>
+            </View>
+          )}
+          {formula.postUtmeWeight > 0 && (
+            <View style={[styles.weightPill, { backgroundColor: colors.infoSoft }]}>
+              <Text style={[styles.weightPillLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                Post-UTME
+              </Text>
+              <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.info }]}>
+                {postUtmePct}%
+              </Text>
+            </View>
+          )}
+          {formula.olevelWeight > 0 && (
+            <View style={[styles.weightPill, { backgroundColor: colors.successSoft }]}>
+              <Text style={[styles.weightPillLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                O'Level
+              </Text>
+              <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.success }]}>
+                {olevelPct}%
+              </Text>
+            </View>
+          )}
+        </View>
+
+        {formula.description ? (
+          <Text style={[styles.formulaDesc, { color: colors.textRole.secondary }]}>
+            {formula.description}
+          </Text>
+        ) : null}
+
+        <View style={styles.formulaFooter}>
+          <Text style={[styles.formulaTotal, { color: colors.textRole.muted }, CompassFonts.data]}>
+            Total: {total}%
+          </Text>
+          {formula.sourceUrl && (
+            <Text style={[styles.formulaSource, { color: colors.textRole.muted }]}>
+              Source: {formula.sourceUrl}
+            </Text>
+          )}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+/* ── CutoffCard ───────────────────────────────────────────── */
 
 function CutoffCard({
   cutoff,
@@ -286,117 +496,74 @@ function CutoffCard({
   cutoff: ProgrammeSchoolCutoff;
   colors: ColorPalette;
 }) {
+  const hasSchoolReq = cutoff.schoolRequirements?.hasInstitutionNote;
   return (
-    <TouchableOpacity
-      style={[
-        styles.card,
-        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-      ]}
-      hitSlop={8}
-    >
+    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.cutoffHeader}>
-        <Text style={[styles.cutoffSchool, { color: colors.textRole.primary }]}>
-          {cutoff.schoolName}
-        </Text>
-        <Text style={[styles.cutoffForm, { color: colors.textRole.muted }]}>
-          {cutoff.form}
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.cutoffSchool, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            {cutoff.schoolName}
+          </Text>
+          <Text style={[styles.cutoffProgramme, { color: colors.textRole.secondary }]}>
+            {cutoff.programmeName}
+          </Text>
+        </View>
+        <Text style={[styles.cutoffForm, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
+          {cutoff.form === "UTME" ? "UTME" : "Direct Entry"}
         </Text>
       </View>
-      <Text style={[styles.cutoffProgramme, { color: colors.textRole.secondary }]}>
-        {cutoff.programmeName}
-      </Text>
+
       <View style={styles.cutoffScores}>
         {cutoff.aggregateCutoff != null && (
-          <View style={styles.scorePill}>
+          <View style={[styles.scorePill, { backgroundColor: colors.infoSoft }]}>
             <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               Aggregate
             </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.info }]}>
               {cutoff.aggregateCutoff}
             </Text>
           </View>
         )}
         {cutoff.jambCutoff != null && (
-          <View style={styles.scorePill}>
+          <View style={[styles.scorePill, { backgroundColor: colors.accentSoft }]}>
             <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               JAMB
             </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.accentRole.action }]}>
               {cutoff.jambCutoff}
             </Text>
           </View>
         )}
         {cutoff.postUtmeCutoff != null && (
-          <View style={styles.scorePill}>
+          <View style={[styles.scorePill, { backgroundColor: colors.successSoft }]}>
             <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               Post-UTME
             </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.success }]}>
               {cutoff.postUtmeCutoff}
             </Text>
           </View>
         )}
       </View>
-      <Text style={[styles.cutoffSource, { color: colors.textRole.muted }]}>
-        Source: {cutoff.sourceUrl}
-      </Text>
-    </TouchableOpacity>
-  );
-}
 
-function FormulaCard({
-  formula,
-  colors,
-}: {
-  formula: SchoolAggregateFormula;
-  colors: ColorPalette;
-}) {
-  const total = formula.jambWeight + formula.postUtmeWeight + formula.olevelWeight;
-  return (
-    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-      <View style={styles.formulaRow}>
-        <FormulaPill label="JAMB" weight={formula.jambWeight} colors={colors} />
-        <FormulaPill label="Post-UTME" weight={formula.postUtmeWeight} colors={colors} />
-        <FormulaPill label="O'level" weight={formula.olevelWeight} colors={colors} />
+      <View style={styles.cutoffMeta}>
+        {hasSchoolReq && (
+          <View style={[styles.reqBadge, { backgroundColor: colors.infoSoft }]}>
+            <Feather name="file-text" size={10} color={colors.info} />
+            <Text style={[styles.reqBadgeText, { color: colors.info }, CompassFonts.bodyMedium]}>
+              Has institution requirements
+            </Text>
+          </View>
+        )}
+        <Text style={[styles.cutoffSource, { color: colors.textRole.muted }]}>
+          Source: {cutoff.sourceUrl}
+        </Text>
       </View>
-      {formula.description && (
-        <Text style={[styles.formulaDesc, { color: colors.textRole.secondary }]}>
-          {formula.description}
-        </Text>
-      )}
-      <Text style={[styles.formulaTotal, { color: colors.textRole.muted }]}>
-        Total: {Math.round(total * 100)}%
-      </Text>
-      {formula.sourceUrl && (
-        <Text style={[styles.formulaSource, { color: colors.textRole.muted }]}>
-          Source: {formula.sourceUrl}
-        </Text>
-      )}
     </View>
   );
 }
 
-function FormulaPill({
-  label,
-  weight,
-  colors,
-}: {
-  label: string;
-  weight: number;
-  colors: ColorPalette;
-}) {
-  const pct = Math.round(weight * 100);
-  return (
-    <View style={styles.formulaPill}>
-      <Text style={[styles.formulaPillLabel, { color: colors.textRole.muted }]}>
-        {label}
-      </Text>
-      <Text style={[styles.formulaPillValue, CompassFonts.data, { color: colors.textRole.primary }]}>
-        {pct}%
-      </Text>
-    </View>
-  );
-}
+/* ── CompetitivenessCard ───────────────────────────────────── */
 
 function CompetitivenessCard({
   data,
@@ -407,53 +574,80 @@ function CompetitivenessCard({
   colors: ColorPalette;
   year: number;
 }) {
+  const ratio = data.ratio ?? 0;
+  let bandColor: string;
+  let bandSoft: string;
+  let bandLabel: string;
+
+  if (ratio > 0.5) {
+    bandColor = colors.success;
+    bandSoft = colors.successSoft;
+    bandLabel = "Low competition";
+  } else if (ratio > 0.25) {
+    bandColor = colors.warning;
+    bandSoft = colors.warningSoft;
+    bandLabel = "Medium competition";
+  } else {
+    bandColor = colors.danger;
+    bandSoft = colors.dangerSoft;
+    bandLabel = "High competition";
+  }
+
   return (
-    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+    <View style={[styles.compCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.compHeader}>
-        <Text style={[styles.compCourse, { color: colors.textRole.primary }]}>
-          {data.broadCourse}
-        </Text>
-        <Text style={[styles.compYear, { color: colors.textRole.muted }]}>
-          {year}
-        </Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.compCourse, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            {data.broadCourse}
+          </Text>
+          <Text style={[styles.compYear, { color: colors.textRole.muted }]}>
+            {year} · {bandLabel}
+          </Text>
+        </View>
+        <View style={[styles.compBand, { backgroundColor: bandSoft, borderColor: bandColor }]}>
+          <View style={[styles.compBandDot, { backgroundColor: bandColor }]} />
+          <Text style={[styles.compBandLabel, { color: bandColor }, CompassFonts.bodyMedium]}>
+            {bandLabel}
+          </Text>
+        </View>
       </View>
+
       {data.applied != null && data.admitted != null && (
         <View style={styles.compStats}>
-          <View style={styles.compStat}>
-            <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.textRole.primary }]}>
+          <View style={[styles.compStat, { backgroundColor: bandSoft }]}>
+            <Text style={[styles.compStatValue, CompassFonts.data, { color: bandColor }]}>
               {data.applied.toLocaleString()}
             </Text>
             <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
               Applied
             </Text>
           </View>
-          <View style={styles.compStat}>
-            <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.textRole.primary }]}>
+          <View style={[styles.compStat, { backgroundColor: bandSoft }]}>
+            <Text style={[styles.compStatValue, CompassFonts.data, { color: bandColor }]}>
               {data.admitted.toLocaleString()}
             </Text>
             <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
               Admitted
             </Text>
           </View>
-          {data.ratio != null && (
-            <View style={styles.compStat}>
-              <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.accentRole.action }]}>
-                {Math.round(data.ratio * 10000) / 100}%
-              </Text>
-              <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
-                Ratio
-              </Text>
-            </View>
-          )}
+          <View style={[styles.compStat, { backgroundColor: bandSoft }]}>
+            <Text style={[styles.compStatValue, CompassFonts.data, { color: bandColor }]}>
+              {Math.round(ratio * 10000) / 100}%
+            </Text>
+            <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
+              Ratio
+            </Text>
+          </View>
         </View>
       )}
+
       {data.note && (
         <Text style={[styles.compNote, { color: colors.textRole.secondary }]}>
           {data.note}
         </Text>
       )}
       {data.source && (
-        <Text style={[styles.compSource, { color: colors.textRole.muted }]}>
+        <Text style={[styles.cutoffSource, { color: colors.textRole.muted }]}>
           Source: {data.source}
         </Text>
       )}
@@ -466,62 +660,259 @@ export default AdmissionInsightScreen;
 const styles = StyleSheet.create({
   scroll: { flex: 1 },
   content: { gap: Spacing.xl, paddingBottom: Spacing.xxl },
-  banner: {
-    padding: Spacing.md,
-    borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
-    gap: Spacing.xs,
+  sectionBlock: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingTop: Spacing.lg,
   },
-  bannerLabel: {
-    fontSize: FontSize.md,
-    fontWeight: FontWeight.semibold,
-  },
-  section: { gap: Spacing.sm },
   card: {
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
   },
-  floorScore: { fontSize: FontSize.xxxl, fontWeight: FontWeight.semibold },
-  floorNote: { fontSize: FontSize.sm, marginTop: Spacing.xs },
+
+  // ── Hero ──────────────────────────────────────────────────
+  heroCard: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  heroIconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  heroTextBlock: { gap: 4 },
+  heroEyebrow: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.9,
+    textTransform: "uppercase",
+  },
+  heroTitle: {
+    fontSize: FontSize.xxl,
+  },
+  heroDesc: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.6,
+    marginTop: 2,
+  },
+
+  // ── Floor ─────────────────────────────────────────────────
+  floorCard: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
+  },
+  floorInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.lg,
+  },
+  floorScore: {
+    fontSize: FontSize.display,
+    lineHeight: FontSize.display * 1.1,
+    minWidth: 100,
+  },
+  floorMeta: { flex: 1, gap: 2 },
+  floorLabel: { fontSize: FontSize.md },
+  floorNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   floorSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },
-  cutoffHeader: { flexDirection: "row", justifyContent: "space-between" },
-  cutoffSchool: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
-  cutoffForm: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  cutoffProgramme: { fontSize: FontSize.sm, marginTop: Spacing.xs },
-  cutoffScores: { flexDirection: "row", gap: Spacing.sm, marginTop: Spacing.sm },
+
+  // ── Formula explain card ──────────────────────────────────
+  formulaCard: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  formulaAccent: {
+    width: 4,
+  },
+  formulaBody: {
+    flex: 1,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  formulaHeading: {
+    fontSize: FontSize.md,
+  },
+  equationBlock: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    alignItems: "center",
+  },
+  equationText: {
+    fontSize: FontSize.md,
+    letterSpacing: 0.3,
+  },
+  weightRow: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+  },
+  weightPill: {
+    flex: 1,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    alignItems: "center",
+    gap: 4,
+  },
+  weightPillLabel: {
+    fontSize: FontSize.xs,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  weightPillValue: {
+    fontSize: FontSize.lg,
+  },
+  formulaDesc: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+  },
+  formulaFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  formulaTotal: {
+    fontSize: FontSize.xs,
+  },
+  formulaSource: {
+    fontSize: FontSize.xs,
+  },
+
+  // ── Cut-offs ──────────────────────────────────────────────
+  cutoffGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  cutoffHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  cutoffSchool: { fontSize: FontSize.md },
+  cutoffProgramme: { fontSize: FontSize.sm, marginTop: 2 },
+  cutoffForm: { fontSize: FontSize.xs },
+  cutoffScores: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    marginTop: Spacing.sm,
+  },
   scorePill: {
-    backgroundColor: "rgba(0,0,0,0.04)",
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.xs,
     gap: 2,
+    alignItems: "center",
   },
-  scoreLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  scoreValue: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
-  cutoffSource: { fontSize: FontSize.xs, marginTop: Spacing.sm },
-  formulaRow: { flexDirection: "row", gap: Spacing.sm },
-  formulaPill: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.04)",
+  scoreLabel: { fontSize: FontSize.xs },
+  scoreValue: { fontSize: FontSize.sm },
+  cutoffMeta: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: Spacing.sm,
+    flexWrap: "wrap",
+    gap: Spacing.xs,
+  },
+  reqBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+  },
+  reqBadgeText: { fontSize: FontSize.xs },
+  cutoffSource: { fontSize: FontSize.xs },
+
+  // ── Competitiveness ───────────────────────────────────────
+  compGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  compCard: {
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
-    alignItems: "center",
-    gap: 2,
+    minWidth: 280,
+    flex: 1,
   },
-  formulaPillLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  formulaPillValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
-  formulaDesc: { fontSize: FontSize.sm, marginTop: Spacing.sm },
-  formulaTotal: { fontSize: FontSize.sm, marginTop: Spacing.xs },
-  formulaSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },
-  compHeader: { flexDirection: "row", justifyContent: "space-between" },
-  compCourse: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
-  compYear: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  compStats: { flexDirection: "row", gap: Spacing.md, marginTop: Spacing.sm },
-  compStat: { flex: 1 },
-  compStatValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
-  compStatLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  compNote: { fontSize: FontSize.xs, marginTop: Spacing.xs },
-  compSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },
-});
+  compHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  compCourse: { fontSize: FontSize.md },
+  compYear: { fontSize: FontSize.xs, marginTop: 2 },
+  compBand: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+  },
+  compBandDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  compBandLabel: { fontSize: FontSize.xs },
+  compStats: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+  },
+  compStat: {
+    flex: 1,
+    borderRadius: Radius.sm,
+    padding: Spacing.sm,
+    gap: 2,
+    alignItems: "center",
+  },
+  compStatValue: { fontSize: FontSize.md },
+  compStatLabel: { fontSize: FontSize.xs },
+  compNote: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
+    marginTop: Spacing.sm,
+  },
 
+  // ── Desktop layout ────────────────────────────────────────
+  desktopRow: {
+    flex: 1,
+    flexDirection: "row",
+    gap: Spacing.xxl,
+  },
+  navColumn: { width: 180, flexShrink: 0 },
+  navSticky: {
+    borderRightWidth: StyleSheet.hairlineWidth,
+    paddingRight: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  navTitle: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.7,
+    textTransform: "uppercase",
+    marginBottom: Spacing.sm,
+  },
+  navItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+  },
+  navDot: { width: 6, height: 6, borderRadius: 3 },
+  navLabel: { fontSize: FontSize.sm },
+  mainScroll: { flex: 1 },
+});

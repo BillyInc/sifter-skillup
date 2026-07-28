@@ -1,19 +1,27 @@
 /**
  * DomainExplorerScreen — the context-free map of every domain across all
- * clusters. Unlike the programme view, there is no user programme here, so
- * domains render as neutral chips (no Direct/Functional/Adjacent label).
+ * 37 clusters. Masonry/editorial grid: cluster colour accent bar at top,
+ * Feather icon, domain name, subgroup count, demand meter (teal), elite
+ * badge. Whole card is the tap target.
  *
- * Supports filter chips: "All", "In-Demand", "Elite", plus one per cluster.
- * getDomainClusters currently returns a `coming_soon` envelope, so DataStateView
- * renders the graceful state; the populated branch below is what ships once the
- * domain map lands. Each chip taps through to its domain detail via exploreNav.
+ * Supports filter chips: "All", "In-Demand", "Elite", plus text search.
+ * getDomainClusters currently returns a `coming_soon` envelope, so
+ * DataStateView renders the graceful state; the populated branch is what
+ * ships once the domain map lands.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   DataStateView,
-  DomainChip,
   FilterChip,
   SearchBar,
   SectionLabel,
@@ -26,14 +34,24 @@ import {
   Spacing,
   Radius,
   FontSize,
+  FontWeight,
   webContainer,
 } from "@/theme";
 
-type FilterKey = "all" | "in_demand" | "elite" | string; // cluster name for cluster chips
+type FilterKey = "all" | "in_demand" | "elite" | string;
+
+// ─── Cluster identity map (from shared source) ─────────────
+import {
+  CLUSTER_COLORS,
+  CLUSTER_ICONS,
+  DEFAULT_COLOR,
+  DEFAULT_ICON,
+} from "@/data/clusterMaps";
 
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const { width } = useWindowDimensions();
   const [filter, setFilter] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const [state, setState] = useState<DataState<DomainClusterGroup[]>>(() =>
@@ -51,7 +69,6 @@ export function DomainExplorerScreen() {
     };
   }, []);
 
-  // Derive unique cluster names from the data for cluster chips.
   const clusterKeys = useMemo(() => {
     if (!state.data) return [];
     const seen = new Set<string>();
@@ -61,12 +78,10 @@ export function DomainExplorerScreen() {
     return Array.from(seen);
   }, [state]);
 
-  // Local filter across cluster + domain names; drops empty clusters.
   const filtered = useMemo(() => {
     if (!state.data) return state;
     let data = state.data;
 
-    // Apply chip filter first
     if (activeFilter === "in_demand") {
       data = data
         .map((g) => ({
@@ -82,11 +97,9 @@ export function DomainExplorerScreen() {
         }))
         .filter((g) => g.domains.length > 0);
     } else if (activeFilter !== "all") {
-      // Cluster filter: show only the cluster matching the selected name
       data = data.filter((g) => g.cluster === activeFilter);
     }
 
-    // Apply text search on top of chip filter
     const q = filter.trim().toLowerCase();
     if (q) {
       data = data
@@ -104,6 +117,9 @@ export function DomainExplorerScreen() {
     return { ...state, data };
   }, [state, filter, activeFilter]);
 
+  const isWide = width >= 920;
+  const cardColumns = isWide ? 3 : 2;
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
@@ -118,7 +134,7 @@ export function DomainExplorerScreen() {
         Domain Explorer
       </Text>
       <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
-        Explore domains across every cluster
+        168 domains across 37 clusters
       </Text>
 
       <SearchBar
@@ -128,7 +144,6 @@ export function DomainExplorerScreen() {
         placeholder="Filter domains"
       />
 
-      {/* Filter chips */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -160,31 +175,153 @@ export function DomainExplorerScreen() {
         ))}
       </ScrollView>
 
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>
-        The full domain map comes online with University and College of
-        Education programmes first.
-      </Text>
-
       <DataStateView state={filtered} empty={(g) => g.length === 0}>
         {(groups) => (
-          <View style={styles.clusters}>
-            {groups.map((g) => (
-              <View key={g.cluster} style={styles.cluster}>
-                <SectionLabel>{g.cluster}</SectionLabel>
-                <View style={styles.chips}>
-                  {g.domains.map((d) => (
-                    <DomainChip
-                      key={d.id}
-                      label={d.name}
-                      matchType="direct"
-                      showType={false}
-                      elite={d.eliteFlag}
-                      onPress={() => exploreNav.domain(router, d.id)}
-                    />
-                  ))}
+          <View style={[styles.masonry, isWide && styles.masonryWide]}>
+            {groups.map((g) => {
+              const clusterColor =
+                CLUSTER_COLORS[g.cluster] ?? DEFAULT_COLOR;
+              const clusterIcon =
+                CLUSTER_ICONS[g.cluster] ?? DEFAULT_ICON;
+              return (
+                <View
+                  key={g.cluster}
+                  style={[
+                    styles.clusterCol,
+                    isWide && { width: `${100 / cardColumns - 1}%` },
+                  ]}
+                >
+                  {/* Cluster header */}
+                  <View style={styles.clusterHeader}>
+                    <View
+                      style={[
+                        styles.clusterIconWrap,
+                        { backgroundColor: clusterColor + "15" },
+                      ]}
+                    >
+                      <Feather
+                        name={clusterIcon}
+                        size={16}
+                        color={clusterColor}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={[
+                          styles.clusterName,
+                          { color: colors.textRole.primary },
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {g.cluster}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.clusterCount,
+                          { color: colors.textRole.muted },
+                        ]}
+                      >
+                        {g.domains.length} domains
+                      </Text>
+                    </View>
+                  </View>
+
+                  {/* Domain cards */}
+                  <View style={styles.domainGrid}>
+                    {g.domains.map((d) => (
+                      <TouchableOpacity
+                        key={d.id}
+                        activeOpacity={0.85}
+                        onPress={() => exploreNav.domain(router, d.id)}
+                        style={[
+                          styles.domainCard,
+                          {
+                            backgroundColor: colors.surface.raised,
+                            borderColor: colors.borderRole.subtle,
+                          },
+                        ]}
+                      >
+                        {/* Colour accent bar */}
+                        <View
+                          style={[
+                            styles.accentBar,
+                            { backgroundColor: clusterColor },
+                          ]}
+                        />
+                        <View style={styles.domainCardBody}>
+                          <Text
+                            style={[
+                              styles.domainCardName,
+                              { color: colors.textRole.primary },
+                            ]}
+                            numberOfLines={2}
+                          >
+                            {d.name}
+                          </Text>
+
+                          {/* Demand meter */}
+                          {(d.inDemandScore ?? 0) > 0 ? (
+                            <View style={styles.demandRow}>
+                              <View
+                                style={[
+                                  styles.demandBar,
+                                  {
+                                    backgroundColor:
+                                      colors.accentRole.success + "20",
+                                  },
+                                ]}
+                              >
+                                <View
+                                  style={[
+                                    styles.demandFill,
+                                    {
+                                      backgroundColor:
+                                        colors.accentRole.success,
+                                      width: `${Math.min(
+                                        100,
+                                        ((d.inDemandScore ?? 0) / 10) * 100,
+                                      )}%`,
+                                    },
+                                  ]}
+                                />
+                              </View>
+                              <Text
+                                style={[
+                                  styles.demandLabel,
+                                  {
+                                    color: colors.accentRole.success,
+                                  },
+                                ]}
+                              >
+                                Demand
+                              </Text>
+                            </View>
+                          ) : null}
+
+                          {d.eliteFlag ? (
+                            <View
+                              style={[
+                                styles.eliteBadge,
+                                {
+                                  backgroundColor: "#B8860B15",
+                                  borderColor: "#B8860B30",
+                                },
+                              ]}
+                            >
+                              <Text
+                                style={[styles.eliteText, { color: "#B8860B" }]}
+                              >
+                                Elite
+                              </Text>
+                            </View>
+                          ) : null}
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
           </View>
         )}
       </DataStateView>
@@ -203,13 +340,13 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "600",
+    fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "600",
+    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {
@@ -221,15 +358,95 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     paddingVertical: Spacing.xs,
   },
-  note: {
-    fontSize: FontSize.xs,
-    lineHeight: FontSize.xs * 1.6,
+
+  // Masonry grid
+  masonry: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+    marginTop: Spacing.xs,
   },
-  clusters: { gap: Spacing.lg, marginTop: Spacing.xs },
-  cluster: { gap: Spacing.sm },
-  chips: {
+  masonryWide: {},
+  clusterCol: {
+    width: "100%",
+    gap: Spacing.sm,
+  },
+  clusterHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+  },
+  clusterIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: Radius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  clusterName: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+  },
+  clusterCount: {
+    fontSize: FontSize.xs,
+    marginTop: 1,
+  },
+
+  // Domain cards — 2-column within each cluster
+  domainGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.sm,
+  },
+  domainCard: {
+    width: "48%",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    overflow: "hidden",
+  },
+  accentBar: {
+    height: 3,
+  },
+  domainCardBody: {
+    padding: Spacing.sm,
+    gap: 4,
+  },
+  domainCardName: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.sm * 1.3,
+  },
+  demandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 4,
+  },
+  demandBar: {
+    flex: 1,
+    height: 3,
+    borderRadius: 1.5,
+    overflow: "hidden",
+  },
+  demandFill: {
+    height: "100%",
+    borderRadius: 1.5,
+  },
+  demandLabel: {
+    fontSize: 9,
+    fontWeight: FontWeight.semibold,
+  },
+  eliteBadge: {
+    alignSelf: "flex-start",
+    borderRadius: Radius.full,
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginTop: 2,
+  },
+  eliteText: {
+    fontSize: 9,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.3,
   },
 });
