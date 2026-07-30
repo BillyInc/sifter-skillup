@@ -16,14 +16,14 @@ import {
   SafeAreaView, RefreshControl,
   Platform, useWindowDimensions,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
-import { CompassFonts } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import FeedWebLayout from '../components/FeedWebLayout';
-import { useFeed } from '../hooks/useFeed';
-import { FeedCard } from '../components/FeedCard';
-import { CommentSheet } from '../components/CommentSheet';
-import { TrackSearch } from '../components/TrackSearch';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
+import { CompassFonts } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import FeedWebLayout from '@/components/FeedWebLayout';
+import { useFeed } from '@/hooks/useFeed';
+import { FeedCard } from '@/components/FeedCard';
+import { CommentSheet } from '@/components/CommentSheet';
+import { TrackSearch } from '@/components/TrackSearch';
 import type { FeedItem, MonitoredTrack, UserFeedContext } from '../types/feed';
 
 // ─── Monitored track filter chips ────────────────────────────────────────────
@@ -383,16 +383,16 @@ const styles = StyleSheet.create({
   screen:             { flex: 1 },
 
   header:             { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
-  headerEyebrow:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 2 },
-  headerTitle:        { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  headerEyebrow:      { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8, marginBottom: 2 },
+  headerTitle:        { fontSize: FontSize.lg, fontWeight: '900' },
   headerCopy:         { fontSize: FontSize.xs, lineHeight: 18, marginTop: 4 },
-  headerSub:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: 2 },
+  headerSub:          { fontSize: FontSize.xs, fontWeight: '700', marginTop: 2 },
 
   chipsScroll:        { borderBottomWidth: 1, maxHeight: 52 },
   chipsContent:       { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
   chip:               { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: Spacing.md, paddingVertical: 6, borderRadius: Radius.full, borderWidth: 1.5 },
   chipEmoji:          { fontSize: 14 },
-  chipLabel:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  chipLabel:          { fontSize: FontSize.xs, fontWeight: '700' },
   primaryDot:         { width: 6, height: 6, borderRadius: 3, marginLeft: 2 },
   manageChip:         {},
 
@@ -400,20 +400,20 @@ const styles = StyleSheet.create({
   sectionFilterContent:{ paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
   sectionFilterChip:  { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },
   sectionFilterIcon:  { fontSize: 12 },
-  sectionFilterLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  sectionFilterLabel: { fontSize: FontSize.xs, fontWeight: '700' },
   fallbackBanner:     { margin: Spacing.md, marginTop: 0, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.md },
-  fallbackBannerText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, lineHeight: 18 },
+  fallbackBannerText: { fontSize: FontSize.xs, fontWeight: '700', lineHeight: 18 },
 
   feedContent:        { ...webContainer, gap: Spacing.md },
 
   sectionBlock:       { gap: Spacing.sm },
   sectionHeader:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md, borderLeftWidth: 3, borderRadius: Radius.md },
   sectionIcon:        { fontSize: 18 },
-  sectionTitle:       { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.5, flex: 1 },
+  sectionTitle:       { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.5, flex: 1 },
   sectionRight:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   sectionCount:       { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
-  sectionCountText:   { fontSize: 11, fontWeight: FontWeight.black },
-  sectionChevron:     { fontSize: 18, fontWeight: FontWeight.bold },
+  sectionCountText:   { fontSize: 11, fontWeight: '900' },
+  sectionChevron:     { fontSize: 18, fontWeight: '700' },
 
   emptySection:       { padding: Spacing.lg, borderRadius: Radius.lg, alignItems: 'center' },
   emptySectionText:   { fontSize: FontSize.sm },

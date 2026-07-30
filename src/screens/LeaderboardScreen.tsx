@@ -14,12 +14,12 @@ import {
   Platform, useWindowDimensions, ActivityIndicator, ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
-import { CompassFonts } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import { leaderboardEngine, type LeaderboardScope } from '../lib/leaderboardEngine';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
+import { CompassFonts } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { leaderboardEngine, type LeaderboardScope } from '@/lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';
-import { resolveTrackContext } from '../lib/trackContext';
+import { resolveTrackContext } from '@/lib/trackContext';
 
 // XP stage colours reused from character system
 const STAGE_COLORS = ['','#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#FBBF24','#F59E0B'];
@@ -85,7 +85,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
           <Text style={[styles.avatarText, { color: stageColor }]}>{entry.avatar_emoji || '👤'}</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.username, { color: isUser ? colors.accentRole.action : colors.textRole.primary, fontWeight: isUser ? FontWeight.black : FontWeight.semibold }]}>
+          <Text style={[styles.username, { color: isUser ? colors.accentRole.action : colors.textRole.primary, fontWeight: isUser ? '900' : '600' }]}>
             {entry.username}{isUser ? ' (You)' : ''}
           </Text>
           <Text style={[styles.stageName, { color: stageColor }]}>Stage {entry.xp_stage}</Text>
@@ -149,7 +149,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
             onPress={() => setScope(t.scope)}
           >
             <Text style={styles.scopeTabEmoji}>{t.emoji}</Text>
-            <Text style={[styles.scopeTabLabel, { color: isActive ? colors.accentRole.action : colors.textRole.secondary, fontWeight: isActive ? FontWeight.black : FontWeight.semibold }]}>
+            <Text style={[styles.scopeTabLabel, { color: isActive ? colors.accentRole.action : colors.textRole.secondary, fontWeight: isActive ? '900' : '600' }]}>
               {t.label}
             </Text>
           </TouchableOpacity>
@@ -246,7 +246,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
           <ScopePanel />
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 18 }}>
             <View style={{ marginBottom: 14, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.textRole.primary, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
+              <Text style={{ fontSize: 18, fontWeight: '900', color: colors.textRole.primary, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textRole.secondary }}>
                 Global, field, and workspace competition with a weekly reset.
               </Text>
@@ -274,18 +274,18 @@ const styles = StyleSheet.create({
   screen:        { flex: 1 },
   webRoot:       { flex: 1, flexDirection: 'row' },
   scopePanel:    { width: 232, borderRightWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
-  scopePanelTitle:{ fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginTop: Spacing.sm, marginBottom: Spacing.xs },
+  scopePanelTitle:{ fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8, marginTop: Spacing.sm, marginBottom: Spacing.xs },
   scopeRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.sm },
   scopeRowEmoji: { fontSize: 18 },
-  scopeRowLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  scopeRowLabel: { fontSize: FontSize.sm, fontWeight: '600' },
   divider:       { height: 1, marginVertical: Spacing.md },
   rewardRow:     { paddingVertical: Spacing.xs },
-  rewardRank:    { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  rewardRank:    { fontSize: FontSize.sm, fontWeight: '700' },
   rewardDetail:  { fontSize: FontSize.xs },
 
   header:        { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: Spacing.lg, borderBottomWidth: 1 },
-  headerTitle:   { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  headerSub:     { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  headerTitle:   { fontSize: FontSize.xl, fontWeight: '900' },
+  headerSub:     { fontSize: FontSize.xs, fontWeight: '700' },
 
   scopeTabs:     { flexDirection: 'row', borderBottomWidth: 1 },
   scopeTab:      { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: Spacing.md },
@@ -294,24 +294,24 @@ const styles = StyleSheet.create({
 
   weekBanner:    { padding: Spacing.lg, paddingHorizontal: Spacing.lg, gap: 4 },
   weekText:      { fontSize: FontSize.xs },
-  weekReward:    { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  weekReward:    { fontSize: FontSize.xs, fontWeight: '700' },
 
   row:           { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md, paddingHorizontal: Spacing.lg, borderBottomWidth: StyleSheet.hairlineWidth },
   rankCell:      { width: 42, alignItems: 'center', gap: 2 },
   medal:         { fontSize: 20 },
-  rankNum:       { fontSize: FontSize.sm, fontWeight: FontWeight.black },
-  delta:         { fontSize: 9, fontWeight: FontWeight.black },
+  rankNum:       { fontSize: FontSize.sm, fontWeight: '900' },
+  delta:         { fontSize: 9, fontWeight: '900' },
   avatarCircle:  { width: 36, height: 36, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   avatarText:    { fontSize: 16 },
   username:      { fontSize: FontSize.sm },
   stageName:     { fontSize: FontSize.xs },
   xpCell:        { alignItems: 'flex-end', gap: 2 },
-  weeklyXp:      { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  weeklyXp:      { fontSize: FontSize.sm, fontWeight: '900' },
   totalXp:       { fontSize: FontSize.xs },
 
   userPosCard:   { margin: Spacing.lg, borderRadius: Radius.xl, padding: Spacing.xl, borderWidth: 1, alignItems: 'center', gap: Spacing.sm },
-  userPosTitle:  { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
-  userPosRank:   { fontSize: FontSize.xxxl, fontWeight: FontWeight.black },
+  userPosTitle:  { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8 },
+  userPosRank:   { fontSize: FontSize.xxxl, fontWeight: '900' },
   userPosXp:     { fontSize: FontSize.sm },
 
   listContent:   { paddingBottom: Spacing.xl },
@@ -319,6 +319,6 @@ const styles = StyleSheet.create({
   loadText:      { fontSize: FontSize.sm },
   empty:         { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xxxl },
   emptyEmoji:    { fontSize: 18 },
-  emptyTitle:    { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  emptyTitle:    { fontSize: FontSize.lg, fontWeight: '900' },
   emptySub:      { fontSize: FontSize.sm, textAlign: 'center' },
 });

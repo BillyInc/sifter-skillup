@@ -12,14 +12,14 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
-import { API, API_BASE } from '../lib/api';
-import { PRIVY_ENABLED } from '../lib/config';
-import { useAppPrivy } from '../lib/privy';
-import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
-import StarknetFaucetButton from '../components/StarknetFaucetButton';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
+import { API, API_BASE } from '@/lib/api';
+import { PRIVY_ENABLED } from '@/lib/config';
+import { useAppPrivy } from '@/lib/privy';
+import { getStarknetLabs } from '@/data/tracks/starknet_ecosystem/starknetLessonRegistry';
+import StarknetFaucetButton from '@/components/StarknetFaucetButton';
 
 interface LabDef {
   id: string;
@@ -130,8 +130,8 @@ function WalletBanner({
 const walletStyles = StyleSheet.create({
   wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 12 : 10 },
   copy: { flex: 1 },
-  label: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, textTransform: 'uppercase' },
-  title: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, marginTop: 3 },
+  label: { fontSize: 10, fontWeight: '900', letterSpacing: 0.8, textTransform: 'uppercase' },
+  title: { fontSize: FontSize.sm, fontWeight: '700', marginTop: 3 },
   help: { fontSize: FontSize.xs, lineHeight: 16, marginTop: 4 },
   btn: { borderRadius: 8, paddingHorizontal: 12, paddingVertical: 7 },
   btnTxt: { color: '#fff', fontSize: 11, fontWeight: '700' },
@@ -425,20 +425,20 @@ const styles = StyleSheet.create({
   scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.xl, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 9, borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 8 },
-  backButtonIcon: { fontSize: 14, fontWeight: FontWeight.black },
-  backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
-  heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
+  backButtonIcon: { fontSize: 14, fontWeight: '900' },
+  backButtonText: { fontSize: FontSize.xs, fontWeight: '900' },
+  heroEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   heroTitle: { fontSize: 20, fontWeight: '900' },
   heroSub: { fontSize: 11, lineHeight: 17 },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
   statCard: { flex: 1, minWidth: 108, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 16 : 14, gap: 4, borderWidth: 1 },
-  statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
-  statLabel: { fontSize: 10, fontWeight: FontWeight.semibold },
+  statValue: { fontSize: FontSize.md, fontWeight: '900' },
+  statLabel: { fontSize: 10, fontWeight: '600' },
   faucetWrap: { marginTop: -Spacing.xs },
   notice: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
-  noticeText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: FontWeight.medium },
+  noticeText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: '500' },
   sectionHeader: { gap: 4, marginTop: Spacing.xs },
-  sectionEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
+  sectionEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   sectionTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   labList: { gap: Spacing.sm },
   labCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, gap: Spacing.sm },
@@ -451,15 +451,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  labNumberText: { fontSize: 12, fontWeight: FontWeight.black },
+  labNumberText: { fontSize: 12, fontWeight: '900' },
   labCopy: { flex: 1 },
-  labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  labEyebrow: { fontSize: 10, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
   labTitle: { fontSize: 12, fontWeight: '800', marginBottom: 2 },
   labMetaText: { fontSize: 11, lineHeight: 16 },
   statePill: { borderRadius: 999, paddingHorizontal: 11, paddingVertical: 6, borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 5 },
   statePillText: { fontSize: 9, fontWeight: '700' },
   certCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, gap: Spacing.sm, alignItems: 'flex-start' },
-  certEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  certTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  certEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  certTitle: { fontSize: FontSize.lg, fontWeight: '900' },
   certDesc: { fontSize: FontSize.sm, lineHeight: 20 },
 });

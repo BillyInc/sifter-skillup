@@ -31,9 +31,9 @@ import {
   FontWeight,
   Shadow,
   webContainer,
-} from "../theme";
-import { studentAccountApi } from "../lib/provisioningData";
-import { useAuth } from "../hooks/useAuth";
+} from "@/theme";
+import { studentAccountApi } from "@/lib/provisioningData";
+import { useAuth } from "@/hooks/useAuth";
 
 type AffiliateResult = { schoolId: string; schoolName?: string } | null;
 
@@ -287,15 +287,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   back: { paddingVertical: Spacing.xs },
-  backText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  h1: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  backText: { fontSize: FontSize.md, fontWeight: '700' },
+  h1: { fontSize: FontSize.xxl, fontWeight: '900' },
   card: {
     borderWidth: 1,
     borderRadius: Radius.xl,
     padding: Spacing.lg,
     gap: Spacing.sm,
   },
-  cardTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  cardTitle: { fontSize: FontSize.lg, fontWeight: '900' },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   input: {
     borderWidth: 1,
@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.md,
     marginTop: Spacing.xs,
   },
-  err: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  ok: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  err: { fontSize: FontSize.sm, fontWeight: '700' },
+  ok: { fontSize: FontSize.sm, fontWeight: '700' },
   btnPrimary: {
     borderRadius: Radius.full,
     paddingVertical: Spacing.md,
@@ -314,14 +314,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: Spacing.xs,
   },
-  btnPrimaryText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  btnPrimaryText: { fontSize: FontSize.md, fontWeight: '700' },
   consentBox: {
     borderWidth: 1,
     borderRadius: Radius.lg,
     padding: Spacing.md,
     gap: Spacing.sm,
   },
-  consentTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  consentTitle: { fontSize: FontSize.md, fontWeight: '700' },
   choice: {
     flex: 1,
     borderWidth: 1,
@@ -329,6 +329,6 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     alignItems: "center",
   },
-  choiceText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  choiceText: { fontSize: FontSize.sm, fontWeight: '700' },
   consentStatus: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
 });

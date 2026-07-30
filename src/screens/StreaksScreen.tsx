@@ -9,11 +9,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
-import { FontSize, FontWeight, Radius, Spacing, useTheme, webContainer } from '../theme';
-import { StatTile, SectionLabel } from '../components/careerIntelligence';
-import { useAuth } from '../hooks/useAuth';
-import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
-import { resolveTrackContext } from '../lib/trackContext';
+import { FontSize, FontWeight, Radius, Spacing, useTheme, webContainer } from '@/theme';
+import { StatTile, SectionLabel } from '@/components/careerIntelligence';
+import { useAuth } from '@/hooks/useAuth';
+import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
+import { resolveTrackContext } from '@/lib/trackContext';
 
 const WEEKS_TO_SHOW = 16;
 const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -299,13 +299,13 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
+    fontWeight: '600',
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.semibold,
+    fontWeight: '600',
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {

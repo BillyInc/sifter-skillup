@@ -4,10 +4,10 @@ import {
   SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import RoomMessage from '../components/RoomMessage';
-import { API } from '../lib/api';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import RoomMessage from '@/components/RoomMessage';
+import { API } from '@/lib/api';
 import type { RoomMessage as Msg } from '../types/social';
 
 const POLL_MS = 10000;
@@ -223,32 +223,32 @@ const styles = StyleSheet.create({
   webRoot: { flex: 1, flexDirection: 'row' },
   webLeft: { width: 280, borderRightWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
   webRight: { flex: 1, flexDirection: 'column' },
-  sidebarEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  sidebarTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sidebarEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  sidebarTitle: { fontSize: FontSize.lg, fontWeight: '900' },
   sidebarCopy: { fontSize: FontSize.sm, lineHeight: 20 },
   divider: { height: 1, marginVertical: Spacing.sm },
-  guidelineLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, textTransform: 'uppercase' },
+  guidelineLabel: { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8, textTransform: 'uppercase' },
   guidelineText: { fontSize: FontSize.xs, lineHeight: 20 },
   memberCount: { padding: Spacing.sm, borderRadius: Radius.md, alignItems: 'center' },
   memberCountText: { fontSize: FontSize.xs },
   roomHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md, borderBottomWidth: 1 },
   roomHeaderCopy: { flex: 1 },
   backBtn: { width: 36, height: 36, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  backBtnText: { fontSize: FontSize.md, fontWeight: FontWeight.black },
-  roomEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
-  roomTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  backBtnText: { fontSize: FontSize.md, fontWeight: '900' },
+  roomEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
+  roomTitle: { fontSize: FontSize.md, fontWeight: '900' },
   roomSub: { fontSize: FontSize.xs },
   liveTag: { marginLeft: 'auto', paddingHorizontal: Spacing.sm, paddingVertical: 4, borderRadius: Radius.full },
-  liveTagText: { fontSize: 10, fontWeight: FontWeight.black },
+  liveTagText: { fontSize: 10, fontWeight: '900' },
   messageArea: { flex: 1 },
   messageList: { paddingVertical: Spacing.md, gap: 2 },
   centerState: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.lg },
   stateText: { fontSize: FontSize.sm },
   emptyRoom: { padding: Spacing.xxxl, alignItems: 'center', gap: Spacing.sm },
-  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, textAlign: 'center' },
+  emptyTitle: { fontSize: FontSize.lg, fontWeight: '900', textAlign: 'center' },
   emptyCopy: { fontSize: FontSize.sm, textAlign: 'center', maxWidth: 280 },
   inputBar: { flexDirection: 'row', gap: Spacing.sm, padding: Spacing.md, borderTopWidth: 1 },
   input: { flex: 1, borderRadius: Radius.full, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: FontSize.sm },
   sendBtn: { minWidth: 68, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
-  sendBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  sendBtnText: { fontSize: FontSize.sm, fontWeight: '900' },
 });

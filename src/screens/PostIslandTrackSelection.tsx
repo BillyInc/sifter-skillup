@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import { fieldColor } from '../components/artwork/FieldArtwork';
+import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { fieldColor } from '@/components/artwork/FieldArtwork';
 
 export const POST_ISLAND_TRACKS = [
   {
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
   containerCompact: { paddingHorizontal: 0, paddingBottom: 0 },
   header: { gap: Spacing.xs, paddingVertical: Spacing.lg },
   headerCompact: { paddingTop: 0, paddingBottom: Spacing.md },
-  headerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1 },
-  title: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1 },
+  title: { fontSize: FontSize.xl, fontWeight: '900' },
   sub: { fontSize: FontSize.sm, lineHeight: 19, maxWidth: 620 },
   card: {
     borderRadius: Radius.xl,
@@ -167,15 +167,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  icon: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
-  subtitle: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
-  name: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  icon: { fontSize: FontSize.sm, fontWeight: '900' },
+  subtitle: { fontSize: FontSize.xs, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  name: { fontSize: FontSize.md, fontWeight: '900' },
   statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
-  statePillText: { fontSize: 10, fontWeight: FontWeight.bold },
+  statePillText: { fontSize: 10, fontWeight: '700' },
   desc: { fontSize: FontSize.sm, lineHeight: 18 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   tag: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
-  tagText: { fontSize: 10, fontWeight: FontWeight.bold },
+  tagText: { fontSize: 10, fontWeight: '700' },
   ctaRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -184,10 +184,10 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
     borderTopWidth: 1,
   },
-  ctaLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.6, marginBottom: 2 },
-  ctaCopy: { fontSize: 11, fontWeight: FontWeight.medium, flex: 1, maxWidth: 240 },
+  ctaLabel: { fontSize: 10, fontWeight: '900', letterSpacing: 0.6, marginBottom: 2 },
+  ctaCopy: { fontSize: 11, fontWeight: '500', flex: 1, maxWidth: 240 },
   ctaButton: { borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 8 },
-  ctaText: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
+  ctaText: { color: '#fff', fontSize: FontSize.xs, fontWeight: '900' },
   backToFieldsBtn: {
     marginTop: Spacing.sm,
     borderRadius: Radius.full,
@@ -198,6 +198,6 @@ const styles = StyleSheet.create({
   },
   backToFieldsText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
 });

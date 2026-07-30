@@ -10,8 +10,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
 import {
   Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
-} from '../theme';
-import { SifterButton, SifterCard } from '../components/ui';
+} from '@/theme';
+import { SifterButton, SifterCard } from '@/components/ui';
 
 interface QuizQuestion {
   id: string;
@@ -403,17 +403,17 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scrollBody: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-  eyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1, textAlign: 'center', marginBottom: Spacing.xs },
+  eyebrow: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: Spacing.xs },
   heroCard: { marginBottom: Spacing.md },
   disclaimerHero: { marginBottom: Spacing.md },
   heroEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.sm },
-  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, textAlign: 'center', marginBottom: Spacing.sm },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: '900', textAlign: 'center', marginBottom: Spacing.sm },
   heroSub: { fontSize: FontSize.sm, lineHeight: 20, textAlign: 'center' },
   disclaimerCard: { marginBottom: Spacing.md },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.heavy, marginBottom: Spacing.sm },
+  cardTitle: { fontSize: FontSize.md, fontWeight: '800', marginBottom: Spacing.sm },
   cardBody: { fontSize: FontSize.sm, lineHeight: 20 },
   learnMoreButton: { paddingTop: Spacing.md, alignItems: 'center' },
-  learnMoreText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  learnMoreText: { fontSize: FontSize.sm, fontWeight: '700' },
   routeCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -424,10 +424,10 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   routeEmoji: { fontSize: 18 },
-  routeLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.8, marginBottom: 2 },
-  routeTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
+  routeLabel: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.8, marginBottom: 2 },
+  routeTitle: { fontSize: FontSize.md, fontWeight: '900', marginBottom: 2 },
   routeSub: { fontSize: FontSize.sm, lineHeight: 19 },
-  routeArrow: { fontSize: 20, fontWeight: FontWeight.heavy },
+  routeArrow: { fontSize: 20, fontWeight: '800' },
   summaryPanel: {
     borderWidth: 1,
     borderRadius: Radius.lg,
@@ -436,14 +436,14 @@ const styles = StyleSheet.create({
   },
   summaryText: { fontSize: FontSize.sm, lineHeight: 22 },
   backLink: { paddingVertical: Spacing.md, alignItems: 'center' },
-  backLinkText: { fontSize: FontSize.sm, fontWeight: FontWeight.medium },
+  backLinkText: { fontSize: FontSize.sm, fontWeight: '500' },
   quizHeaderCard: { marginBottom: Spacing.md },
   progressTrack: { height: 6, borderRadius: Radius.full, overflow: 'hidden', marginBottom: Spacing.sm },
   progressFill: { height: '100%', borderRadius: Radius.full },
   progressText: { fontSize: FontSize.xs, marginBottom: Spacing.md, textAlign: 'right' },
-  quizQuestion: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy, lineHeight: 22 },
+  quizQuestion: { fontSize: FontSize.lg, fontWeight: '800', lineHeight: 22 },
   optionCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Spacing.sm },
-  optionText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: FontWeight.medium },
+  optionText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: '500' },
   resultCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Spacing.sm },
   bestBadge: {
     alignSelf: 'flex-start',
@@ -452,9 +452,9 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     marginBottom: Spacing.sm,
   },
-  bestBadgeText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8 },
+  bestBadgeText: { fontSize: 10, fontWeight: '900', letterSpacing: 0.8 },
   resultEmoji: { fontSize: 18, marginBottom: Spacing.sm },
-  resultName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
+  resultName: { fontSize: FontSize.lg, fontWeight: '900', marginBottom: Spacing.sm },
   resultWhy: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.sm },
-  resultAction: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  resultAction: { fontSize: FontSize.sm, fontWeight: '800' },
 });

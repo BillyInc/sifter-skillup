@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Animated,
   Platform,
   RefreshControl,
   SafeAreaView,
@@ -11,29 +10,29 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { RouteLine, StatTile, SectionLabel } from '../components/careerIntelligence';
+import Animated, { useSharedValue, withTiming, useAnimatedStyle, withDelay } from 'react-native-reanimated';
+import { RouteLine, StatTile, SectionLabel } from '@/components/careerIntelligence';
 import {
   CompassFonts,
   FontSize,
-  FontWeight,
   Radius,
-  Shadow,
   Spacing,
   XP_DAILY_GOALS,
   useTheme,
-  webContainer,
-} from '../theme';
-import { Badge, SifterButton, SifterCard } from '../components/ui';
-import { TheBolt } from '../components/CharacterSystem';
-import { fieldColor } from '../components/artwork/FieldArtwork';
-import TrackScene from '../components/artwork/TrackIsometricScene';
-import IslandGlobe, { DEFAULT_ISLAND_PINS } from '../components/artwork/IslandGlobe';
-import { useAuth } from '../hooks/useAuth';
-import { useResume } from '../hooks/useResume';
-import { xpEngine, type XPSnapshot } from '../lib/XPEngine';
-import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
-import { findTrackById, getTrackHref, resolveTrackContext } from '../lib/trackContext';
-import { buildResumeHref, getResumeSummary, normaliseResumePosition } from '../lib/resumeNavigation';
+} from '@/theme';
+import { Badge, SifterButton, SifterCard } from '@/components/ui';
+import { StaggerReveal } from '@/components/animations/StaggerReveal';
+import { TheBolt } from '@/components/CharacterSystem';
+import { fieldColor } from '@/components/artwork/FieldArtwork';
+import TrackScene from '@/components/artwork/TrackIsometricScene';
+import IslandGlobe, { DEFAULT_ISLAND_PINS } from '@/components/artwork/IslandGlobe';
+import { useAuth } from '@/hooks/useAuth';
+import { useResume } from '@/hooks/useResume';
+import { useResponsive } from '@/hooks/useResponsive';
+import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
+import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
+import { findTrackById, getTrackHref, resolveTrackContext } from '@/lib/trackContext';
+import { buildResumeHref, getResumeSummary, normaliseResumePosition } from '@/lib/resumeNavigation';
 import {
   GRID_GAP,
   WebCard,
@@ -44,8 +43,7 @@ import {
   WebSectionLabel,
   WebShell,
   WebStatTile,
-  useIsWebWide,
-} from '../components/web/WebGrid';
+} from '@/components/web/WebGrid';
 
 function getGreeting(): string {
   const h = new Date().getHours();
@@ -115,7 +113,7 @@ function StreakBanner({ status }: { status: StreakStatus }) {
 
   return (
     <View style={[styles.streakBanner, { backgroundColor }]}>
-      <Text style={[styles.streakBannerText, { color }]}>{msg}</Text>
+      <Text style={[styles.streakBannerText, { color }, CompassFonts.bodyBold]}>{msg}</Text>
     </View>
   );
 }
@@ -132,36 +130,36 @@ function XPProgressBar({
   dailyGoalTarget: number;
 }) {
   const { colors } = useTheme();
-  const fillAnim = useRef(new Animated.Value(0)).current;
-  const dailyFillAnim = useRef(new Animated.Value(0)).current;
+  const fillAnim = useSharedValue(0);
+  const dailyFillAnim = useSharedValue(0);
 
   useEffect(() => {
-    Animated.timing(fillAnim, { toValue: progress, duration: 650, useNativeDriver: false }).start();
-    Animated.timing(dailyFillAnim, {
-      toValue: Math.min(1, dailyXp / Math.max(1, dailyGoalTarget)),
-      duration: 650,
-      useNativeDriver: false,
-    }).start();
-  }, [dailyFillAnim, dailyGoalTarget, dailyXp, fillAnim, progress]);
+    fillAnim.value = withTiming(progress, { duration: 650 });
+    dailyFillAnim.value = withTiming(Math.min(1, dailyXp / Math.max(1, dailyGoalTarget)), { duration: 650 });
+  }, [dailyGoalTarget, dailyXp, progress]);
 
-  const width = fillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
-  const dailyWidth = dailyFillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
+  const fillWidthStyle = useAnimatedStyle(() => ({
+    width: `${fillAnim.value * 100}%`,
+  }));
+  const dailyFillWidthStyle = useAnimatedStyle(() => ({
+    width: `${dailyFillAnim.value * 100}%`,
+  }));
 
   return (
     <View style={{ gap: 6 }}>
       <View style={styles.progressLabelRow}>
-        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }]}>Stage Progress</Text>
-        <Text style={[styles.progressValue, { color }]}>{Math.round(progress * 100)}%</Text>
+        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }, CompassFonts.bodySemibold]}>Stage Progress</Text>
+        <Text style={[styles.progressValue, { color }, CompassFonts.bodyBold]}>{Math.round(progress * 100)}%</Text>
       </View>
       <View style={[styles.progressTrack, { backgroundColor: colors.surface.subtle }]}>
-        <Animated.View style={[styles.progressFill, { backgroundColor: color, width }]} />
+        <Animated.View style={[styles.progressFill, { backgroundColor: color }, fillWidthStyle]} />
       </View>
       <View style={styles.progressLabelRow}>
-        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }]}>Daily Goal</Text>
-        <Text style={[styles.progressValue, { color: colors.accentRole.success }]}>{dailyXp} / {dailyGoalTarget} XP</Text>
+        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }, CompassFonts.bodySemibold]}>Daily Goal</Text>
+        <Text style={[styles.progressValue, { color: colors.accentRole.success }, CompassFonts.bodyBold]}>{dailyXp} / {dailyGoalTarget} XP</Text>
       </View>
       <View style={[styles.progressTrack, { backgroundColor: colors.surface.subtle }]}>
-        <Animated.View style={[styles.progressFill, { backgroundColor: colors.accentRole.success, width: dailyWidth }]} />
+        <Animated.View style={[styles.progressFill, { backgroundColor: colors.accentRole.success }, dailyFillWidthStyle]} />
       </View>
     </View>
   );
@@ -216,16 +214,16 @@ function OverviewTrackCard({
     <WebCard accentBar accentColor={accentColor} onPress={onPress} style={styles.overviewTrackCard}>
       <View style={styles.webTrackHeader}>
         <View style={[styles.trackIconBadge, { backgroundColor: `${accentColor}14`, borderColor: `${accentColor}26` }]}>
-          <Text style={[styles.trackIconBadgeText, { color: accentColor }]}>{iconLabel}</Text>
+          <Text style={[styles.trackIconBadgeText, { color: accentColor }, CompassFonts.data]}>{iconLabel}</Text>
         </View>
-        <Text style={[styles.webTrackName, { color: colors.textRole.primary }]}>{name}</Text>
-        <Text style={[styles.webTrackArrow, { color: colors.textRole.muted }]}>{'>'}</Text>
+        <Text style={[styles.webTrackName, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{name}</Text>
+        <Text style={[styles.webTrackArrow, { color: colors.textRole.muted }, CompassFonts.data]}>{'>'}</Text>
       </View>
-      <Text style={[styles.overviewTrackSummary, { color: colors.textRole.secondary }]}>{summary}</Text>
+      <Text style={[styles.overviewTrackSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{summary}</Text>
       <WebMiniChart color={accentColor} values={[12, 24, 21, 38, 44, 57, 63]} />
       <View style={{ marginTop: 10, gap: 4 }}>
         {points.map((point) => (
-          <Text key={point} style={[styles.webTrackKey, { color: colors.textRole.secondary }]}>{`- ${point}`}</Text>
+          <Text key={point} style={[styles.webTrackKey, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>{`- ${point}`}</Text>
         ))}
       </View>
       <SifterButton
@@ -272,12 +270,12 @@ function TrackHeroCard({
       <View style={[styles.heroPanel, { backgroundColor: colors.surface.raised }]}>
         <View style={styles.heroPanelCopy}>
           <ReferenceBadge label={eyebrow} color={accentColor} />
-          <Text style={[styles.heroPanelTitle, { color: colors.textRole.primary }]}>{title}</Text>
-          <Text style={[styles.heroPanelSummary, { color: colors.textRole.secondary }]}>{summary}</Text>
+          <Text style={[styles.heroPanelTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
+          <Text style={[styles.heroPanelSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{summary}</Text>
           <View style={styles.heroPanelTags}>
             {focusAreas.map((item) => (
               <View key={item} style={[styles.heroTag, { backgroundColor: colors.surface.subtle }]}>
-                <Text style={[styles.heroTagText, { color: colors.textRole.secondary }]}>{item}</Text>
+                <Text style={[styles.heroTagText, { color: colors.textRole.secondary }, CompassFonts.data]}>{item}</Text>
               </View>
             ))}
           </View>
@@ -310,7 +308,7 @@ function TrackHeroCard({
             )}
           </View>
           <View style={[styles.heroPanelMiniCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.heroPanelMiniLabel, { color: colors.textRole.muted }]}>Momentum</Text>
+            <Text style={[styles.heroPanelMiniLabel, { color: colors.textRole.muted }, CompassFonts.data]}>Momentum</Text>
             <WebMiniChart color={accentColor} values={chartValues} />
           </View>
         </View>
@@ -336,11 +334,11 @@ function StatCard({
   return (
     <SifterCard style={[styles.statCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={[styles.statBadge, { backgroundColor: `${color}14`, borderColor: `${color}22` }]}>
-        <Text style={[styles.statBadgeText, { color }]}>{iconLabel}</Text>
+        <Text style={[styles.statBadgeText, { color }, CompassFonts.data]}>{iconLabel}</Text>
       </View>
-      <Text style={[styles.statValue, { color }]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: colors.textRole.secondary }]}>{label}</Text>
-      {sub ? <Text style={[styles.statSub, { color: colors.textRole.muted }]}>{sub}</Text> : null}
+      <Text style={[styles.statValue, { color }, CompassFonts.data]}>{value}</Text>
+      <Text style={[styles.statLabel, { color: colors.textRole.secondary }, CompassFonts.data]}>{label}</Text>
+      {sub ? <Text style={[styles.statSub, { color: colors.textRole.muted }, CompassFonts.data]}>{sub}</Text> : null}
     </SifterCard>
   );
 }
@@ -362,13 +360,13 @@ function QuickAction({
   return (
     <SifterCard onPress={onPress} style={[styles.quickAction, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={[styles.quickActionIcon, { backgroundColor: `${color}14`, borderColor: `${color}22` }]}>
-        <Text style={[styles.quickActionIconText, { color }]}>{iconLabel}</Text>
+        <Text style={[styles.quickActionIconText, { color }, CompassFonts.data]}>{iconLabel}</Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.quickActionLabel, { color: colors.textRole.primary }]}>{label}</Text>
-        <Text style={[styles.quickActionSub, { color: colors.textRole.muted }]}>{sub}</Text>
+        <Text style={[styles.quickActionLabel, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{label}</Text>
+        <Text style={[styles.quickActionSub, { color: colors.textRole.muted }, CompassFonts.body]}>{sub}</Text>
       </View>
-      <Text style={[styles.quickActionArrow, { color: colors.textRole.muted }]}>{'>'}</Text>
+      <Text style={[styles.quickActionArrow, { color: colors.textRole.muted }, CompassFonts.data]}>{'>'}</Text>
     </SifterCard>
   );
 }
@@ -378,7 +376,7 @@ export default function HomeScreen() {
   const { colors } = useTheme();
   const { user, updateActiveField } = useAuth();
   const { lastPosition } = useResume();
-  const isWebWide = useIsWebWide();
+  const resp = useResponsive();
   const go = useCallback((href: string) => router.push(href as any), [router]);
   const resumePosition = useMemo(
     () => lastPosition ?? normaliseResumePosition(user?.last_position),
@@ -395,8 +393,17 @@ export default function HomeScreen() {
   const [streak, setStreak] = useState<StreakStatus | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const headerAnim = useRef(new Animated.Value(0)).current;
-  const contentAnim = useRef(new Animated.Value(0)).current;
+  const headerAnim = useSharedValue(0);
+  const contentAnim = useSharedValue(0);
+
+  const headerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: headerAnim.value,
+    transform: [{ translateY: -20 + headerAnim.value * 20 }],
+  }));
+  const contentAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: contentAnim.value,
+    transform: [{ translateY: 16 - contentAnim.value * 16 }],
+  }));
 
   const loadData = useCallback(async () => {
     const [xpSnap, streakSnap] = await Promise.all([xpEngine.snapshot(), streakEngine.status()]);
@@ -406,13 +413,11 @@ export default function HomeScreen() {
 
   useFocusEffect(useCallback(() => {
     void loadData();
-    headerAnim.setValue(0);
-    contentAnim.setValue(0);
-    Animated.sequence([
-      Animated.timing(headerAnim, { toValue: 1, duration: 420, useNativeDriver: true }),
-      Animated.timing(contentAnim, { toValue: 1, duration: 320, useNativeDriver: true }),
-    ]).start();
-  }, [contentAnim, headerAnim, loadData]));
+    headerAnim.value = 0;
+    contentAnim.value = 0;
+    headerAnim.value = withTiming(1, { duration: 420 });
+    contentAnim.value = withDelay(420, withTiming(1, { duration: 320 }));
+  }, [loadData]));
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -448,13 +453,14 @@ export default function HomeScreen() {
     try {
       await updateActiveField(track.fieldId, fieldColor(track.fieldId), track.id, track.name);
     } catch {
-      // Best effort only.
     }
 
     go(getTrackHref(track));
   }, [go, updateActiveField]);
 
-  if (isWebWide) {
+  const isDesktopWeb = resp.isDesktop && resp.isWeb;
+
+  if (isDesktopWeb) {
     const overviewTracks = [
       {
         id: 'quant-trader',
@@ -503,7 +509,7 @@ export default function HomeScreen() {
                 style={[styles.webBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
                 <TheBolt size={32} animate />
-                <Text style={[styles.webBoltLabel, { color: accentColor }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
+                <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
               </TouchableOpacity>
             )}
           />
@@ -533,8 +539,8 @@ export default function HomeScreen() {
                       <IslandGlobe pins={trackAwarePins} width="100%" height="100%" />
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Text style={[styles.webStageName, { color: colors.accentRole.action }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
-                      <Text style={[styles.webStageDesc, { color: colors.textRole.secondary }]}>
+                      <Text style={[styles.webStageName, { color: colors.accentRole.action }, CompassFonts.displayBold]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
+                      <Text style={[styles.webStageDesc, { color: colors.textRole.secondary }, CompassFonts.body]}>
                         {xp?.stage.description ?? 'Just starting out. Empty desk, full potential.'}
                       </Text>
                       {xp ? (
@@ -580,13 +586,13 @@ export default function HomeScreen() {
               <WebRow>
                 <WebCol weight={2}>
                   <WebCard accentBar accentColor={accentColor}>
-                    <Text style={[styles.trackFeatureTitle, { color: colors.textRole.primary }]}>{trackContext.challengeTitle}</Text>
-                    <Text style={[styles.trackFeatureSummary, { color: colors.textRole.secondary }]}>{trackContext.challengeSummary}</Text>
+                    <Text style={[styles.trackFeatureTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{trackContext.challengeTitle}</Text>
+                    <Text style={[styles.trackFeatureSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{trackContext.challengeSummary}</Text>
                     <View style={styles.trackFeatureGrid}>
                       {trackContext.focusAreas.map((item, index) => (
                         <View key={item} style={[styles.trackFeatureItem, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                          <Text style={[styles.trackFeatureIndex, { color: accentColor }]}>{`0${index + 1}`}</Text>
-                          <Text style={[styles.trackFeatureItemText, { color: colors.textRole.secondary }]}>{item}</Text>
+                          <Text style={[styles.trackFeatureIndex, { color: accentColor }, CompassFonts.data]}>{`0${index + 1}`}</Text>
+                          <Text style={[styles.trackFeatureItemText, { color: colors.textRole.secondary }, CompassFonts.body]}>{item}</Text>
                         </View>
                       ))}
                     </View>
@@ -632,9 +638,9 @@ export default function HomeScreen() {
               <WebCard title={trackContext.mode === 'track' ? `${trackContext.trackName} Guild` : 'Guild'} accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
                 <WebListRow icon="GUILD" title={trackContext.mode === 'track' ? `${trackContext.trackName} Circle` : 'Alpha Seekers Guild'} sub="Active - 1h ago" onPress={() => go('/(tabs)/guild')} />
                 <View style={[styles.webDiscussionCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                  <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }]}>ACTIVE THREADS</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }]}>{`Chat: ${trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine learning in alpha generation'}`}</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }]}>{`Chat: ${trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal artifact packaging for interviews'}`}</Text>
+                  <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }, CompassFonts.data]}>ACTIVE THREADS</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>{`Chat: ${trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine learning in alpha generation'}`}</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>{`Chat: ${trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal artifact packaging for interviews'}`}</Text>
                 </View>
                 <WebListRow icon="TASK" title="Challenge Queue" sub="Track prompts and guild tasks" badge={3} badgeColor={colors.accentRole.status} onPress={() => go('/(tabs)/guild')} />
               </WebCard>
@@ -642,9 +648,9 @@ export default function HomeScreen() {
 
             <WebCol weight={1}>
               <WebCard accentBar accentColor={colors.accentRole.status} style={{ marginBottom: GRID_GAP }}>
-                <Text style={[styles.webStreakLabel, { color: colors.textRole.muted }]}>ACTIVE STREAK</Text>
-                <Text style={[styles.webStreakNum, { color: colors.accentRole.status }]}>{streak?.streak ?? 0} days</Text>
-                <Text style={[styles.webStreakSub, { color: colors.textRole.secondary }]}>
+                <Text style={[styles.webStreakLabel, { color: colors.textRole.muted }, CompassFonts.data]}>ACTIVE STREAK</Text>
+                <Text style={[styles.webStreakNum, { color: colors.accentRole.status }, CompassFonts.data]}>{streak?.streak ?? 0} days</Text>
+                <Text style={[styles.webStreakSub, { color: colors.textRole.secondary }, CompassFonts.body]}>
                   {streak?.completedToday ? 'Lesson completed today.' : 'Complete a lesson to extend it.'}
                 </Text>
               </WebCard>
@@ -671,12 +677,12 @@ export default function HomeScreen() {
                 </View>
                 <View style={styles.webChartMetrics}>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: colors.textRole.primary }]}>{xp?.totalXp ?? 0} XP</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }]}>Total XP</Text>
+                    <Text style={[styles.webMetricVal, { color: colors.textRole.primary }, CompassFonts.data]}>{xp?.totalXp ?? 0} XP</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }, CompassFonts.data]}>Total XP</Text>
                   </View>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: accentColor }]}>{trackContext.trackName}</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }]}>Current Track</Text>
+                    <Text style={[styles.webMetricVal, { color: accentColor }, CompassFonts.data]}>{trackContext.trackName}</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }, CompassFonts.data]}>Current Track</Text>
                   </View>
                 </View>
               </WebCard>
@@ -712,15 +718,6 @@ export default function HomeScreen() {
     );
   }
 
-  const headerStyle = {
-    opacity: headerAnim,
-    transform: [{ translateY: headerAnim.interpolate({ inputRange: [0, 1], outputRange: [-20, 0] }) }],
-  };
-  const contentStyle = {
-    opacity: contentAnim,
-    transform: [{ translateY: contentAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) }],
-  };
-
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <ScrollView
@@ -729,7 +726,7 @@ export default function HomeScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={accentColor} />}
       >
         {/* ── Editorial header ── */}
-        <Animated.View style={[styles.editorialHeader, headerStyle]}>
+        <Animated.View style={[styles.editorialHeader, headerAnimatedStyle]}>
           <View style={styles.headerLeft}>
             <Text style={[styles.greeting, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
               {trackContext.mode === 'track' ? trackContext.heroEyebrow : getGreeting()}
@@ -753,7 +750,7 @@ export default function HomeScreen() {
         {streak ? <StreakBanner status={streak} /> : null}
 
         {/* ── Hero: Your Route card ── */}
-        <Animated.View style={[styles.heroRouteCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, contentStyle]}>
+        <Animated.View style={[styles.heroRouteCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, contentAnimatedStyle]}>
           <View style={styles.heroRouteHeader}>
             <ReferenceBadge label={trackContext.heroEyebrow} color={accentColor} />
             {trackContext.mode === 'track' ? (
@@ -821,7 +818,7 @@ export default function HomeScreen() {
         </Animated.View>
 
         {/* ── Stats: asymmetric 2-column grid with StatTile ── */}
-        <Animated.View style={contentStyle}>
+        <Animated.View style={contentAnimatedStyle}>
           <SectionLabel>Your numbers</SectionLabel>
           <View style={styles.statTileGrid}>
             <StatTile
@@ -859,7 +856,7 @@ export default function HomeScreen() {
         </Animated.View>
 
         {/* ── Quick actions ── */}
-        <Animated.View style={[styles.actionsSection, contentStyle]}>
+        <Animated.View style={[styles.actionsSection, contentAnimatedStyle]}>
           <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
           <QuickAction iconLabel="GO" label={trackContext.mode === 'track' ? 'Resume Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? continueSub : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
           <QuickAction iconLabel="MAP" label="Explore Tracks" sub="Browse career fields" color={colors.accentRole.success} onPress={() => go('/(tabs)/fields')} />
@@ -873,7 +870,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scroll: { ...webContainer, paddingBottom: Spacing.xxxl },
+  scroll: { paddingBottom: Spacing.xxxl, paddingHorizontal: Spacing.md, paddingTop: Spacing.md },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.md },
   headerLeft: { flex: 1 },
   greeting: { fontSize: FontSize.sm, marginBottom: 2 },
@@ -891,11 +888,11 @@ const styles = StyleSheet.create({
   statTile: { minWidth: 140 },
 
   streakBanner: { borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 10 : 12, marginBottom: Spacing.md },
-  streakBannerText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, textAlign: 'center' },
+  streakBannerText: { fontSize: FontSize.sm, textAlign: 'center' },
 
   progressLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  progressLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  progressValue: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  progressLabel: { fontSize: FontSize.xs },
+  progressValue: { fontSize: FontSize.xs },
   progressTrack: { height: 6, borderRadius: Radius.full, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: Radius.full },
 
@@ -906,26 +903,26 @@ const styles = StyleSheet.create({
   referenceBadgeWrap: { alignSelf: 'flex-start', marginBottom: 10 },
 
   webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderRadius: 8, paddingVertical: 6, paddingHorizontal: 10, borderWidth: 1 },
-  webBoltLabel: { fontSize: 11, fontWeight: '700', maxWidth: 180 },
+  webBoltLabel: { fontSize: 11, maxWidth: 180 },
 
   webProgressCard: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
   overviewGlobeWrap: { width: 148, aspectRatio: 1, flexShrink: 0 },
-  webStageName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 3 },
+  webStageName: { fontSize: FontSize.lg, marginBottom: 3 },
   webStageDesc: { fontSize: FontSize.xs, lineHeight: 17, marginBottom: 10 },
 
   heroPanel: { flexDirection: 'row', minHeight: 236 },
   heroPanelCopy: { flex: 1, padding: 18, justifyContent: 'center' },
-  heroPanelTitle: { fontSize: 17, fontWeight: '900', letterSpacing: -0.5, marginBottom: 8 },
+  heroPanelTitle: { fontSize: 17, letterSpacing: -0.5, marginBottom: 8 },
   heroPanelSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 12, maxWidth: 420 },
   heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 },
   heroTag: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
-  heroTagText: { fontSize: 9, fontWeight: '700' },
+  heroTagText: { fontSize: 9 },
   heroPanelBtn: { alignSelf: 'flex-start' },
   heroPanelVisual: { width: 270, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 18 },
   heroArtworkGlobe: { width: '100%', maxWidth: 208, aspectRatio: 1 },
   heroArtworkScene: { width: '100%', maxWidth: 220, aspectRatio: 560 / 300 },
   heroPanelMiniCard: { borderWidth: 1, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 12 : 14, width: '100%' },
-  heroPanelMiniLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginBottom: 8 },
+  heroPanelMiniLabel: { fontSize: FontSize.xs, marginBottom: 8 },
 
   overviewTrackCard: { height: '100%' },
   webTrackHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
@@ -938,45 +935,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 7,
   },
-  trackIconBadgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4 },
-  webTrackName: { fontSize: FontSize.md, fontWeight: FontWeight.bold, flex: 1 },
+  trackIconBadgeText: { fontSize: 9, letterSpacing: 0.4 },
+  webTrackName: { fontSize: FontSize.md, flex: 1 },
   webTrackArrow: { fontSize: 18 },
   overviewTrackSummary: { fontSize: FontSize.xs, lineHeight: 18, marginBottom: 8 },
-  webTrackKey: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
+  webTrackKey: { fontSize: FontSize.xs },
   webTrackBtn: { marginTop: 10 },
 
-  trackFeatureTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
+  trackFeatureTitle: { fontSize: 13, marginBottom: 10 },
   trackFeatureSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 14 },
   trackFeatureGrid: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
   trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 12 : 12, gap: 8 },
-  trackFeatureIndex: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  trackFeatureIndex: { fontSize: FontSize.md },
   trackFeatureItemText: { fontSize: FontSize.sm, lineHeight: 18 },
   primaryActionBtn: { marginTop: 12 },
 
   webDiscussionCard: { borderRadius: 11, padding: Platform.OS === 'web' ? 12 : 12, borderWidth: 1, marginVertical: 6 },
-  webDiscTitle: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
+  webDiscTitle: { fontSize: 10, letterSpacing: 0.8, marginBottom: 6 },
   webDiscItem: { fontSize: FontSize.sm, marginBottom: 4 },
-  webStreakLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2, marginBottom: 4 },
-  webStreakNum: { fontSize: 18, fontWeight: FontWeight.black, lineHeight: 22, marginBottom: 6 },
+  webStreakLabel: { fontSize: 10, letterSpacing: 1.2, marginBottom: 4 },
+  webStreakNum: { fontSize: 18, lineHeight: 22, marginBottom: 6 },
   webStreakSub: { fontSize: FontSize.sm },
 
   webChartArea: { height: 84, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 10, padding: 10, alignItems: 'center', justifyContent: 'center' },
   webChartMetrics: { flexDirection: 'row', gap: 32 },
-  webMetricVal: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  webMetricLbl: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  webMetricVal: { fontSize: FontSize.xl },
+  webMetricLbl: { fontSize: FontSize.xs },
 
-  mobileHeroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, marginBottom: Spacing.lg, gap: Spacing.md },
-  mobileHeroHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   mobileHeroTrackPill: { fontSize: FontSize.xs },
-  mobileHeroBody: { flexDirection: 'row', gap: Spacing.md, alignItems: 'center' },
   mobileArtworkGlobe: { width: 120, aspectRatio: 1, flexShrink: 0 },
   mobileArtworkScene: { width: 132, aspectRatio: 560 / 300, flexShrink: 0 },
   mobileHeroTitle: { fontSize: FontSize.lg, marginBottom: 4 },
   mobileHeroSummary: { fontSize: FontSize.sm, lineHeight: 18, marginBottom: Spacing.md },
   mobilePrimaryBtn: {},
 
-  statsGrid: { gap: Spacing.sm, marginBottom: Spacing.lg },
-  statsRow: { flexDirection: 'row', gap: Spacing.sm },
   statCard: { flex: 1, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 16 : 14, alignItems: 'flex-start', gap: 6, borderWidth: 1 },
   statBadge: {
     minWidth: 38,
@@ -988,17 +980,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     marginBottom: 4,
   },
-  statBadgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.6 },
-  statValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  statLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  statSub: { fontSize: 10, fontWeight: FontWeight.medium, textAlign: 'left' },
+  statBadgeText: { fontSize: 9, letterSpacing: 0.6 },
+  statValue: { fontSize: FontSize.xl },
+  statLabel: { fontSize: FontSize.xs },
+  statSub: { fontSize: 10, textAlign: 'left' },
 
   actionsSection: { gap: Spacing.sm },
-  sectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
   quickAction: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 16 : 14, borderWidth: 1 },
   quickActionIcon: { width: 44, height: 44, borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
-  quickActionIconText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.7 },
-  quickActionLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  quickActionIconText: { fontSize: 10, letterSpacing: 0.7 },
+  quickActionLabel: { fontSize: FontSize.md },
   quickActionSub: { fontSize: FontSize.xs, marginTop: 2 },
-  quickActionArrow: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  quickActionArrow: { fontSize: FontSize.lg },
 });

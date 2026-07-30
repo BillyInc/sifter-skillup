@@ -16,10 +16,11 @@ import {
   FontSize,
   CompassFonts,
   Brand,
-} from "../../theme";
+} from "@/theme";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import type { DataState } from "../../types/career";
 import type { DomainRankItem, RankScope } from "../../types/institution";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 const SCOPES: { value: RankScope; label: string }[] = [
   { value: "nigerian", label: "NG local" },
@@ -83,13 +84,13 @@ export function DomainRankPanel({
           );
           return (
             <View style={{ gap: Spacing.sm }}>
-              {items.map((item) => {
+              {items.map((item, i) => {
                 const ratio =
                   item.barRatio != null
                     ? item.barRatio
                     : (item.postingsPerMonth || 0) / max;
-                return (
-                  <View key={item.domainId} style={styles.item}>
+                return (<StaggerReveal key={item.domainId} index={i}>
+                  <View style={styles.item}>
                     <View style={styles.itemHead}>
                       <Text
                         style={[styles.rank, CompassFonts.displayBold, { color: colors.textMuted }]}
@@ -135,6 +136,7 @@ export function DomainRankPanel({
                       </Text>
                     ) : null}
                   </View>
+                </StaggerReveal>
                 );
               })}
             </View>

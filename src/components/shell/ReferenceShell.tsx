@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Animated,
   Modal,
   Platform,
   Pressable,
@@ -11,14 +10,16 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import { FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
-import { useAuth } from '../../hooks/useAuth';
-import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
-import { SearchOverlay, SearchBar } from '../careerIntelligence';
-import type { SearchResult, SearchScope } from '../../types/career';
+import { FontSize, CompassFonts, Radius, Spacing, useTheme } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { resolveTrackContext, type TrackContext } from '@/lib/trackContext';
+import { SearchOverlay, SearchBar } from '@/components/careerIntelligence';
+import { Spring, useReducedMotion } from '@/theme/motion';
+import type { SearchResult, SearchScope } from '@/types/career';
 
 type NavId =
   | 'home'
@@ -125,6 +126,7 @@ function NavList({
               },
             ]}
           >
+            {active && <View style={[styles.navActiveDot, { backgroundColor: colors.accentRole.action }]} />}
             <View
               style={[
                 styles.navIconWrap,
@@ -173,20 +175,28 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const activeMobileId = useMemo(() => getActiveMobileNavId(activeId), [activeId]);
   const activeItem = primaryNav.find(item => item.id === activeId) ?? primaryNav[0];
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
+  const reduced = useReducedMotion();
   const isWide = Platform.OS === 'web' && width >= 1100;
 
-  const tabDotX = useRef(new Animated.Value(0)).current;
+  const tabDotX = useSharedValue(0);
+  const tabW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
+  const stride = useSharedValue(tabW + Spacing.xs);
+  const baseLeft = useSharedValue(Spacing.md + tabW / 2 - 8);
   const activeIdx = MOBILE_NAV.findIndex(n => n.id === activeMobileId);
 
   useEffect(() => {
-    Animated.spring(tabDotX, {
-      toValue: Math.max(0, activeIdx),
-      useNativeDriver: true,
-      damping: 18,
-      stiffness: 220,
-      mass: 0.6,
-    }).start();
-  }, [activeIdx, tabDotX]);
+    const nextW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
+    stride.value = nextW + Spacing.xs;
+    baseLeft.value = Spacing.md + nextW / 2 - 8;
+  }, [width, stride, baseLeft]);
+
+  useEffect(() => {
+    tabDotX.value = withSpring(Math.max(0, activeIdx), reduced ? Spring.press : Spring.arrive);
+  }, [activeIdx, tabDotX, reduced]);
+
+  const dotAnimStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: baseLeft.value + tabDotX.value * stride.value }],
+  }));
 
   const goTo = (item: ShellNavItem) => {
     setDrawerOpen(false);
@@ -311,13 +321,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         {!isWide && (() => {
           const DOT_W = 16;
           const DOT_H = 3;
-          const tabW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
-          const stride = tabW + Spacing.xs;
-          const baseLeft = Spacing.md + tabW / 2 - DOT_W / 2;
-          const dotTranslateX = tabDotX.interpolate({
-            inputRange: [0, 1, 2, 3, 4],
-            outputRange: [0, stride, stride * 2, stride * 3, stride * 4],
-          });
           return (
             <View
               style={[
@@ -330,16 +333,17 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               ]}
             >
               <Animated.View
-                style={{
-                  position: 'absolute',
-                  bottom: Math.max(insets.bottom, Spacing.sm) + 2,
-                  left: baseLeft,
-                  width: DOT_W,
-                  height: DOT_H,
-                  borderRadius: DOT_H / 2,
-                  backgroundColor: colors.accentRole.action,
-                  transform: [{ translateX: dotTranslateX }],
-                }}
+                style={[
+                  dotAnimStyle,
+                  {
+                    position: 'absolute',
+                    bottom: Math.max(insets.bottom, Spacing.sm) + 2,
+                    width: DOT_W,
+                    height: DOT_H,
+                    borderRadius: DOT_H / 2,
+                    backgroundColor: colors.accentRole.action,
+                  },
+                ]}
               />
               {MOBILE_NAV.map(item => {
                 const active = item.id === activeMobileId;
@@ -488,15 +492,15 @@ const styles = StyleSheet.create({
   brandBadgeText: {
     color: '#fff',
     fontSize: 14,
-    fontWeight: FontWeight.black,
+    ...CompassFonts.displayBold,
   },
   brandTitle: {
     fontSize: 14,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   brandSub: {
     fontSize: 9,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     letterSpacing: 1,
   },
   navList: {
@@ -512,6 +516,15 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     borderWidth: 0,
   },
+  navActiveDot: {
+    position: 'absolute',
+    left: -2,
+    top: '50%',
+    width: 3,
+    height: 14,
+    borderRadius: 1.5,
+    marginTop: -7,
+  },
   navIconWrap: {
     width: 16,
     height: 16,
@@ -525,7 +538,7 @@ const styles = StyleSheet.create({
   },
   navLabel: {
     fontSize: 13,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   sidebarFooter: {
     marginTop: 'auto',
@@ -551,7 +564,7 @@ const styles = StyleSheet.create({
   },
   profileMiniLabel: {
     fontSize: 11,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   profileMiniSub: {
     fontSize: 9,
@@ -577,13 +590,13 @@ const styles = StyleSheet.create({
   },
   pageEyebrow: {
     fontSize: 10,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   pageTitle: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     marginTop: 1,
   },
   topbarActions: {
@@ -639,7 +652,7 @@ const styles = StyleSheet.create({
   },
   mobileTabLabel: {
     fontSize: 11,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   drawerOverlay: {
     flex: 1,
@@ -674,6 +687,6 @@ const styles = StyleSheet.create({
   },
   secondaryBtnLabel: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    ...CompassFonts.bodyBold,
   },
 });

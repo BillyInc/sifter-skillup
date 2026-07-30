@@ -4,8 +4,11 @@
  * Flagship redesign (Phase 10): hero with badges, stat-tile demand row,
  * "routes into this role" journey, skills bridge, and related roles rail.
  * Uses the careerIntelligence component library for all design-system tokens.
+ *
+ * Phase 10b: responsive 2-column desktop layout with "On this page" section nav,
+ * CompassFonts migration (FontWeight removed), vertical route-line diagram.
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import {
@@ -28,8 +31,19 @@ import {
   type DomainRoleV2,
   type DomainRoleV2Enriched,
 } from "@/types/career";
-import { useTheme, Spacing, Radius, FontSize, FontWeight, CompassFonts } from "@/theme";
+import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ColorPalette } from "@/theme";
+import { useResponsive } from "@/hooks/useResponsive";
+
+const SECTIONS = [
+  { key: "overview", label: "Overview" },
+  { key: "routes", label: "Routes" },
+  { key: "skills", label: "Skills gap" },
+  { key: "related", label: "Related" },
+] as const;
+
+/** Estimated chrome offset from scroll top to body content start. */
+const CHROME_OFFSET = 104;
 
 export interface RoleDetailScreenProps {
   /** Stable role key (e.g. "D011|securities trader"). */
@@ -70,6 +84,7 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
 function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   const { colors } = useTheme();
   const router = useRouter();
+  const resp = useResponsive();
 
   const aka = role.alsoKnownAs?.length ? role.alsoKnownAs.join(", ") : null;
   const essential = role.essentialSkills ?? [];
@@ -79,13 +94,34 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   const currency = enriched.currencyStatus;
   const metrics = role.demandMetrics?.ng_local;
 
-  return (
-    <View style={styles.body}>
+  const isDesktop = resp.isDesktop && resp.isWeb;
+
+  // Section positions for nav scrolling
+  const sectionY = useRef<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState("overview");
+  const scrollRef = useRef<ScrollView>(null);
+
+  const onSectionLayout = useCallback((key: string, y: number) => {
+    if (sectionY.current[key] === undefined) {
+      sectionY.current[key] = CHROME_OFFSET + y;
+    }
+  }, []);
+
+  const scrollTo = useCallback((key: string) => {
+    const y = sectionY.current[key];
+    if (y !== undefined) {
+      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+    }
+    setActiveSection(key);
+  }, []);
+
+  const content = (
+    <>
       {/* 1 — identity badges */}
       {(aka || role.tier || isElite(role.eliteStatus) || currency) ? (
         <View style={styles.identitySection}>
           {aka ? (
-            <Text style={[styles.aka, { color: colors.textRole.muted }]}>
+            <Text style={[styles.aka, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
               Also known as: {aka}
             </Text>
           ) : null}
@@ -106,7 +142,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
                   ]}
                 >
                   <Text style={styles.eliteGlyph}>★</Text>
-                  <Text style={[styles.eliteText, { color: colors.accentRole.status }]}>
+                  <Text style={[styles.eliteText, { color: colors.accentRole.status }, CompassFonts.bodySemibold]}>
                     Elite role
                   </Text>
                 </View>
@@ -114,7 +150,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
             </View>
           ) : null}
           {currency && enriched.currencySource ? (
-            <Text style={[styles.currencySource, { color: colors.textRole.muted }]}>
+            <Text style={[styles.currencySource, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
               Verified via {formatCurrencySource(enriched.currencySource)}
             </Text>
           ) : null}
@@ -122,12 +158,15 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
       ) : null}
 
       {/* 2 — demand stats row */}
+      <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
       <DemandMetricsBlock metrics={metrics} title="Demand snapshot" />
 
       {/* 3 — routes into this role */}
+      <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
       <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} />
 
       {/* 4 — skills bridge: what to build */}
+      <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
       {essential.length ? (
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Skills gap</SectionLabel>
@@ -143,7 +182,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         <View style={{ gap: Spacing.sm }}>
           {essential.length ? (
             <View style={{ gap: Spacing.xs }}>
-              <Text style={[styles.chipLabel, { color: colors.textRole.muted }]}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
                 Essential
               </Text>
               <ChipCloud items={essential} colors={colors} prominent />
@@ -151,7 +190,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
           ) : null}
           {optional.length ? (
             <View style={{ gap: Spacing.xs }}>
-              <Text style={[styles.chipLabel, { color: colors.textRole.muted }]}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
                 Optional / edge
               </Text>
               <ChipCloud items={optional} colors={colors} prominent={false} />
@@ -161,6 +200,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
       ) : null}
 
       {/* 6 — related roles from career ladder */}
+      <View onLayout={(e) => onSectionLayout("related", e.nativeEvent.layout.y)} />
       {role.careerLadder?.length ? (
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Related roles</SectionLabel>
@@ -194,6 +234,69 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         title="Build toward this role"
         body="Close the skill gap one level at a time — your path starts in your world."
       />
+    </>
+  );
+
+  // Desktop layout: section nav on left, content on right
+  if (isDesktop) {
+    return (
+      <View style={styles.desktopRow}>
+        <View style={styles.navColumn}>
+          <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle, position: "sticky" as any, top: 0 }]}>
+            <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+              On this page
+            </Text>
+            {SECTIONS.map((s) => (
+              <TouchableOpacity
+                key={s.key}
+                onPress={() => scrollTo(s.key)}
+                style={[
+                  styles.navItem,
+                  activeSection === s.key && { backgroundColor: colors.surface.subtle },
+                ]}
+                activeOpacity={0.6}
+              >
+                <View
+                  style={[
+                    styles.navDot,
+                    {
+                      backgroundColor:
+                        activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle,
+                    },
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.navLabel,
+                    { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary },
+                    CompassFonts.bodyMedium,
+                  ]}
+                  numberOfLines={1}
+                >
+                  {s.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+        <ScrollView
+          ref={scrollRef}
+          style={styles.mainScroll}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+        >
+          <View style={{ gap: Spacing.lg }}>
+            {content}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // Mobile / tablet: single column
+  return (
+    <View style={{ gap: Spacing.lg }}>
+      {content}
     </View>
   );
 }
@@ -222,7 +325,7 @@ function RouteIntoSection({
       <SectionLabel>Routes into this role</SectionLabel>
 
       {hasDomains ? (
-        <Text style={[styles.routeCaption, { color: colors.textRole.muted }]}>
+        <Text style={[styles.routeCaption, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
           Reachable from {appearsIn.length} {appearsIn.length === 1 ? "field" : "fields"}
         </Text>
       ) : null}
@@ -243,7 +346,7 @@ function RouteIntoSection({
               ]}
               activeOpacity={0.7}
             >
-              <Text style={[styles.domainChipText, { color: colors.textRole.primary }]} numberOfLines={1}>
+              <Text style={[styles.domainChipText, { color: colors.textRole.primary }, CompassFonts.bodySemibold]} numberOfLines={1}>
                 {a.domainName}
               </Text>
             </TouchableOpacity>
@@ -294,10 +397,10 @@ function RelatedRoleChip({
       ]}
       activeOpacity={0.7}
     >
-      <Text style={[styles.relatedChipText, { color: colors.textRole.primary }]} numberOfLines={1}>
+      <Text style={[styles.relatedChipText, { color: colors.textRole.primary }, CompassFonts.bodySemibold]} numberOfLines={1}>
         {name}
       </Text>
-      <Text style={[styles.relatedArrow, { color: colors.textRole.muted }]}>→</Text>
+      <Text style={[styles.relatedArrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>→</Text>
     </TouchableOpacity>
   );
 }
@@ -385,7 +488,7 @@ function CurrencyBadge({
         { backgroundColor: c.bg, borderColor: c.border },
       ]}
     >
-      <Text style={[styles.currencyText, { color: c.text }]}>{c.label}</Text>
+      <Text style={[styles.currencyText, { color: c.text }, CompassFonts.bodySemibold]}>{c.label}</Text>
     </View>
   );
 }
@@ -414,7 +517,6 @@ const styles = StyleSheet.create({
   identitySection: { gap: Spacing.sm },
   aka: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
     lineHeight: FontSize.sm * 1.4,
   },
   badgeRow: {
@@ -435,7 +537,6 @@ const styles = StyleSheet.create({
   eliteGlyph: { fontSize: FontSize.xs },
   eliteText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
   currencyChip: {
     alignSelf: "flex-start",
@@ -446,19 +547,16 @@ const styles = StyleSheet.create({
   },
   currencyText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.3,
     textTransform: "uppercase",
   },
   currencySource: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.medium,
   },
 
   // routes
   routeCaption: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
   },
   domainChips: {
     flexDirection: "row",
@@ -473,13 +571,11 @@ const styles = StyleSheet.create({
   },
   domainChipText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
 
   // chips
   chipLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.6,
     textTransform: "uppercase",
   },
@@ -513,10 +609,49 @@ const styles = StyleSheet.create({
   },
   relatedChipText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
   relatedArrow: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+  },
+
+  // Desktop layout
+  desktopRow: {
+    flex: 1,
+    flexDirection: "row",
+    gap: Spacing.xxl,
+  },
+  navColumn: {
+    width: 180,
+    flexShrink: 0,
+  },
+  navSticky: {
+    borderRightWidth: StyleSheet.hairlineWidth,
+    paddingRight: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  navTitle: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.7,
+    textTransform: "uppercase",
+    marginBottom: Spacing.sm,
+  },
+  navItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+  },
+  navDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  navLabel: {
+    fontSize: FontSize.sm,
+  },
+  mainScroll: {
+    flex: 1,
   },
 });

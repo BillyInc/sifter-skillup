@@ -4,20 +4,20 @@ import {
   StatusBar, Modal, Alert, Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIslands';
-import { QUANT_LEVELS } from '../data/quantLevels';
-import { useAuth } from '../hooks/useAuth';
-import { useProgress } from '../hooks/useProgress';
-import { Spacing, Radius, FontSize, FontWeight, Shadow, useTheme, webContainer, type ColorPalette } from '../theme';
+import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '@/data/quantIslands';
+import { QUANT_LEVELS } from '@/data/quantLevels';
+import { useAuth } from '@/hooks/useAuth';
+import { useProgress } from '@/hooks/useProgress';
+import { Spacing, Radius, FontSize, FontWeight, Shadow, useTheme, webContainer, type ColorPalette } from '@/theme';
 import LessonScreen from './LessonScreen';
-import { VRBridge } from '../lib/vrBridge';
-import type { VRScenarioKey } from '../lib/vrBridge';
-import DisclaimerFooter from '../components/DisclaimerFooter';
-import TrackScene from '../components/artwork/TrackIsometricScene';
+import { VRBridge } from '@/lib/vrBridge';
+import type { VRScenarioKey } from '@/lib/vrBridge';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
+import TrackScene from '@/components/artwork/TrackIsometricScene';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
   WebSectionLabel, WebStatTile, WebListRow, useIsWebWide,
-} from '../components/web/WebGrid';
+} from '@/components/web/WebGrid';
 
 const TIER_COLORS = {
   foundation: '#22c55e',
@@ -244,7 +244,7 @@ function LevelDot({ levelId, labColor, onPress, completed, isBoss, locked, inter
       activeOpacity={locked ? 1 : 0.8}
     >
       {emoji
-        ? <Text style={{ fontSize: isBoss ? 18 : 14, fontWeight: FontWeight.heavy }}>{emoji}</Text>
+        ? <Text style={{ fontSize: isBoss ? 18 : 14, fontWeight: '800' }}>{emoji}</Text>
         : <Text style={[styles.dotText, { color: completed ? colors.textRole.inverse : labColor, fontSize: isBoss ? 16 : 12 }]}>
             {String(levelId - 1000)}
           </Text>}
@@ -621,7 +621,7 @@ export default function QuantMapScreen() {
                               ? colors.surface.subtle
                               : colors.accentRole.action + '20',
                         }}>
-                          <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textRole.muted : colors.accentRole.action }}>
+                          <Text style={{ fontSize: 10, fontWeight: '700', color: state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textRole.muted : colors.accentRole.action }}>
                             {state === 'review' ? 'Review' : state === 'continue' ? 'Continue' : state === 'ready' ? 'Start' : 'Locked'}
                           </Text>
                         </View>
@@ -644,7 +644,7 @@ export default function QuantMapScreen() {
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                           <Text style={{ fontSize: 18 }}>{lab.icon ?? 'Q'}</Text>
                           <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: FontWeight.bold, color: colors.textRole.primary }}>{lab.name}</Text>
+                            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textRole.primary }}>{lab.name}</Text>
                             <Text style={{ fontSize: 11, color: colors.textRole.muted, marginTop: 1 }}>
                               {state === 'review' ? 'Review complete run' : state === 'continue' ? 'Continue current run' : state === 'ready' ? 'Ready to start' : 'Locked path'}
                             </Text>
@@ -657,7 +657,7 @@ export default function QuantMapScreen() {
                         ) : null}
                         {lab.vrScenario && state !== 'locked' && (
                           <View style={{ backgroundColor: colors.accentRole.action + '18', borderRadius: Radius.sm, padding: 7, marginBottom: 10 }}>
-                            <Text style={{ fontSize: 11, color: colors.accentRole.action, fontWeight: FontWeight.bold }}>VR unlocks on boss</Text>
+                            <Text style={{ fontSize: 11, color: colors.accentRole.action, fontWeight: '700' }}>VR unlocks on boss</Text>
                           </View>
                         )}
                         {state !== 'locked' && state !== 'review' && (
@@ -665,7 +665,7 @@ export default function QuantMapScreen() {
                             style={{ backgroundColor: accent, borderRadius: Radius.md, paddingVertical: 8, alignItems: 'center' }}
                             onPress={() => handleLevelPress(lab.start)}
                           >
-                            <Text style={{ color: colors.textRole.inverse, fontSize: 12, fontWeight: FontWeight.bold }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
+                            <Text style={{ color: colors.textRole.inverse, fontSize: 12, fontWeight: '700' }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
                           </TouchableOpacity>
                         )}
                       </WebCard>
@@ -735,34 +735,34 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 18 },
   header: { backgroundColor: colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   headerTop: { gap: 2 },
-  headerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  headerTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, color: colors.textRole.inverse },
-  headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: FontWeight.semibold },
+  headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  headerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: colors.textRole.inverse },
+  headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: '600' },
   headerStats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
-  statVal: { fontSize: FontSize.xl, fontWeight: FontWeight.heavy, color: colors.textRole.inverse },
-  statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: FontWeight.semibold },
+  statVal: { fontSize: FontSize.xl, fontWeight: '800', color: colors.textRole.inverse },
+  statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: '600' },
   statDivider: { width: 1, height: 32, backgroundColor: '#334155' },
   overallBar: { height: 6, backgroundColor: '#334155', borderRadius: 3, overflow: 'hidden' },
   overallFill: { height: '100%', backgroundColor: colors.accentRole.action, borderRadius: 3 },
-  overallLabel: { fontSize: FontSize.xs, color: '#94a3b8', textAlign: 'center', fontWeight: FontWeight.semibold },
+  overallLabel: { fontSize: FontSize.xs, color: '#94a3b8', textAlign: 'center', fontWeight: '600' },
   labCard: { backgroundColor: colors.surface.raised, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderRole.subtle },
   labCardLocked: { opacity: 0.65 },
   labHeader: { flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, alignItems: 'flex-start' },
   labIcon: { fontSize: 18, lineHeight: 22 },
-  labName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, color: colors.textRole.inverse, marginTop: 2 },
-  labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: FontWeight.semibold, marginTop: 2 },
+  labName: { fontSize: FontSize.lg, fontWeight: '900', color: colors.textRole.inverse, marginTop: 2 },
+  labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginTop: 2 },
   tierPill: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2, marginBottom: 4 },
-  tierText: { fontSize: FontSize.xs, fontWeight: FontWeight.heavy, letterSpacing: 0.5 },
+  tierText: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.5 },
   stateBadge: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5, alignSelf: 'flex-start' },
-  stateBadgeText: { fontSize: 10, fontWeight: FontWeight.heavy },
+  stateBadgeText: { fontSize: 10, fontWeight: '800' },
   labBody: { padding: Spacing.lg, gap: Spacing.md },
   labDesc: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
   stateHelper: { fontSize: FontSize.xs, color: colors.textRole.muted, lineHeight: 18 },
   progressRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   progressTrack: { flex: 1, height: 6, backgroundColor: colors.borderRole.subtle, borderRadius: 3, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 3 },
-  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: FontWeight.bold, minWidth: 72, textAlign: 'right' },
+  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: '700', minWidth: 72, textAlign: 'right' },
   vrBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6, alignSelf: 'flex-start' },
   vrBadgeIcon: { fontSize: 12, fontWeight: '800' },
   vrBadgeText: { fontSize: FontSize.xs, fontWeight: '800' },

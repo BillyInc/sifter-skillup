@@ -7,7 +7,7 @@
  * surfaces a brief transient "Saving comes online soon" hint and does NOT claim
  * the item was saved.
  */
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -17,8 +17,10 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withSequence } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize } from "../../theme";
+import { Spring, useReducedMotion } from "../../theme/motion";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
 
@@ -44,10 +46,25 @@ export function SaveButton({
   style,
 }: SaveButtonProps) {
   const { colors } = useTheme();
+  const reduced = useReducedMotion();
   const [saved, setSaved] = useState(initialSaved);
   const [busy, setBusy] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scale = useSharedValue(1);
+
+  const pop = useCallback(() => {
+    if (reduced) return;
+    scale.value = withSequence(
+      withSpring(0.9, Spring.press),
+      withSpring(1.15, Spring.arrive),
+      withSpring(1, Spring.press),
+    );
+  }, [reduced, scale]);
+
+  const btnStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
   const showHint = (msg: string) => {
     setHint(msg);
@@ -57,6 +74,7 @@ export function SaveButton({
 
   const onPress = async () => {
     if (busy) return;
+    pop();
     setBusy(true);
     setHint(null);
     try {
@@ -69,7 +87,6 @@ export function SaveButton({
         setSaved(next);
         onChange?.(next);
       } else {
-        // Not live yet — stay honest, don't flip the saved state.
         showHint(result.meta?.notice ?? "Saving comes online soon");
       }
     } catch {
@@ -83,42 +100,44 @@ export function SaveButton({
 
   return (
     <View style={[styles.wrap, style]}>
-      <TouchableOpacity
-        onPress={onPress}
-        disabled={busy}
-        activeOpacity={0.7}
-        accessibilityRole="button"
-        accessibilityLabel={saved ? "Remove from saved" : "Save item"}
-        style={[
-          styles.btn,
-          compact ? styles.btnCompact : styles.btnFull,
-          {
-            backgroundColor: saved ? colors.accentSoft : colors.surface.raised,
-            borderColor: saved ? colors.accentRole.action : colors.borderRole.subtle,
-            opacity: busy ? 0.6 : 1,
-          },
-        ]}
-      >
-        {busy ? (
-          <ActivityIndicator size="small" color={colors.textRole.secondary} />
-        ) : (
-          <Feather
-            name={saved ? "bookmark" : "bookmark"}
-            size={compact ? 16 : 15}
-            color={saved ? colors.accentRole.action : colors.textRole.secondary}
-          />
-        )}
-        {!compact && (
-          <Text
-            style={[
-              styles.label,
-              { color: saved ? colors.accentRole.action : colors.textRole.secondary },
-            ]}
-          >
-            {text}
-          </Text>
-        )}
-      </TouchableOpacity>
+      <Animated.View style={btnStyle}>
+        <TouchableOpacity
+          onPress={onPress}
+          disabled={busy}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={saved ? "Remove from saved" : "Save item"}
+          style={[
+            styles.btn,
+            compact ? styles.btnCompact : styles.btnFull,
+            {
+              backgroundColor: saved ? colors.accentSoft : colors.surface.raised,
+              borderColor: saved ? colors.accentRole.action : colors.borderRole.subtle,
+              opacity: busy ? 0.6 : 1,
+            },
+          ]}
+        >
+          {busy ? (
+            <ActivityIndicator size="small" color={colors.textRole.secondary} />
+          ) : (
+            <Feather
+              name={saved ? "bookmark" : "bookmark"}
+              size={compact ? 16 : 15}
+              color={saved ? colors.accentRole.action : colors.textRole.secondary}
+            />
+          )}
+          {!compact && (
+            <Text
+              style={[
+                styles.label,
+                { color: saved ? colors.accentRole.action : colors.textRole.secondary },
+              ]}
+            >
+              {text}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </Animated.View>
 
       {hint ? (
         <Text style={[styles.hint, { color: colors.textRole.muted }]}>{hint}</Text>

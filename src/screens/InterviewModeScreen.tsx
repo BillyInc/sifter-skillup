@@ -28,9 +28,9 @@ import {
   TextInput, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Spacing, Radius, FontSize, Shadow, webContainer, useTheme, type ColorPalette } from '../theme';
-import { API } from '../lib/api';
-import DisclaimerFooter from '../components/DisclaimerFooter';
+import { Spacing, Radius, FontSize, Shadow, webContainer, useTheme, type ColorPalette } from '@/theme';
+import { API } from '@/lib/api';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types

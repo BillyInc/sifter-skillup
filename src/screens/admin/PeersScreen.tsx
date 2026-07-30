@@ -10,13 +10,13 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import type { PeerInstitutionRow } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import { PeerComparisonChart } from "../../components/admin/PeerComparisonChart";
+import { PeerComparisonChart } from "@/components/admin/PeerComparisonChart";
 
 export function PeersScreen() {
   const { colors } = useTheme();

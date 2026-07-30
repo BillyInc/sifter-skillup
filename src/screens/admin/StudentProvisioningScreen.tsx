@@ -35,12 +35,12 @@ import {
   CompassFonts,
   Shadow,
   webContainer,
-} from "../../theme";
+} from "@/theme";
 import { AdminShell } from "./AdminShell";
 import {
   provisioningData,
   type DraftImage,
-} from "../../lib/provisioningData";
+} from "@/lib/provisioningData";
 import type {
   ProvisionDraft,
   GeneratedStudent,

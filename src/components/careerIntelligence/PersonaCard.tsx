@@ -3,7 +3,6 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   type StyleProp,
   type ViewStyle,
@@ -17,6 +16,7 @@ import {
   Spacing,
   useTheme,
 } from "../../theme";
+import { PressLift } from "../animations/PressLift";
 
 // ── PersonaCard ────────────────────────────────────────────────
 // Large selectable card for the Account Type Gate (6 persona options).
@@ -43,8 +43,7 @@ export function PersonaCard({
   const { colors } = useTheme();
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.78}
+    <PressLift
       onPress={onPress}
       disabled={!onPress}
       style={[
@@ -112,7 +111,7 @@ export function PersonaCard({
       ) : (
         <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
       )}
-    </TouchableOpacity>
+    </PressLift>
   );
 }
 

@@ -14,7 +14,7 @@ import {
   Radius,
   FontSize,
   CompassFonts,
-} from "../../theme";
+} from "@/theme";
 import type { DataState } from "../../types/career";
 
 export interface StatCardProps<T> {

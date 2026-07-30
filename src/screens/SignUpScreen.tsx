@@ -8,9 +8,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { useAuth } from "../hooks/useAuth";
-import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "../theme";
-import { SifterButton } from "../components/ui";
+import { useAuth } from "@/hooks/useAuth";
+import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
+import { SifterButton } from "@/components/ui";
 import {
   AuthScaffold,
   AuthField,

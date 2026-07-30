@@ -17,10 +17,10 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
-import { CompassFonts } from '../theme';
-import { API } from '../lib/api';
-import { offlineRead } from '../lib/offlineQueue';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
+import { CompassFonts } from '@/theme';
+import { API } from '@/lib/api';
+import { offlineRead } from '@/lib/offlineQueue';
 
 interface ReferralStats {
   referralCode: string;
@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
   content: { ...webContainer },
   hero: { alignItems: 'center', marginBottom: Spacing.xl },
   heroEmoji: { fontSize: 18, marginBottom: Spacing.md },
-  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: '900', marginBottom: Spacing.sm },
   heroSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
 
   statsRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
   statCard: { flex: 1, borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center', borderWidth: 1 },
-  statNum: { fontSize: FontSize.xxl, fontWeight: FontWeight.heavy },
+  statNum: { fontSize: FontSize.xxl, fontWeight: '800' },
   statLabel: { fontSize: FontSize.xs },
 
   progressSection: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 1 },
@@ -209,15 +209,15 @@ const styles = StyleSheet.create({
   progressFill: { height: 8, borderRadius: 4 },
 
   linkCard: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 2 },
-  linkLabel: { fontSize: 9, fontWeight: FontWeight.heavy, letterSpacing: 1, marginBottom: 4 },
-  linkUrl: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: Spacing.md },
+  linkLabel: { fontSize: 9, fontWeight: '800', letterSpacing: 1, marginBottom: 4 },
+  linkUrl: { fontSize: FontSize.sm, fontWeight: '600', marginBottom: Spacing.md },
   linkBtns: { flexDirection: 'row', gap: Spacing.sm },
   copyBtn: { flex: 1, borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center', borderWidth: 1 },
-  copyBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  copyBtnText: { fontSize: FontSize.sm, fontWeight: '800' },
   shareBtn: { flex: 1, borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center' },
-  shareBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  shareBtnText: { fontSize: FontSize.sm, fontWeight: '800' },
 
-  sectionHead: { fontSize: FontSize.md, fontWeight: FontWeight.heavy, marginBottom: Spacing.sm, marginTop: Spacing.md },
+  sectionHead: { fontSize: FontSize.md, fontWeight: '800', marginBottom: Spacing.sm, marginTop: Spacing.md },
   howCard: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1 },
   howRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: Spacing.xs },
   howIcon: { fontSize: 18, width: 26 },
@@ -225,14 +225,14 @@ const styles = StyleSheet.create({
 
   tierCard: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1 },
   tierPoints: { width: 48, alignItems: 'center' },
-  tierPointsNum: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  tierPointsNum: { fontSize: FontSize.md, fontWeight: '800' },
   tierPointsLabel: { fontSize: 10 },
-  tierReward: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  tierReward: { fontSize: FontSize.sm, fontWeight: '800' },
   tierDesc: { fontSize: FontSize.xs },
-  tierEarned: { fontSize: 20, fontWeight: FontWeight.heavy },
+  tierEarned: { fontSize: 20, fontWeight: '800' },
 
   referralRow: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderRadius: Radius.md, marginBottom: Spacing.sm, borderWidth: 1 },
-  referralName: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  referralName: { fontSize: FontSize.sm, fontWeight: '800' },
   referralType: { fontSize: FontSize.xs },
-  referralPoints: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  referralPoints: { fontSize: FontSize.md, fontWeight: '800' },
 });

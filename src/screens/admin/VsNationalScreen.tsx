@@ -15,12 +15,12 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import type { InstitutionSummary } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
-import { NationalBenchmarkPanel } from "../../components/admin/NationalBenchmarkPanel";
+import { NationalBenchmarkPanel } from "@/components/admin/NationalBenchmarkPanel";
 
 export function VsNationalScreen() {
   const { colors } = useTheme();

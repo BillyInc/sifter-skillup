@@ -31,10 +31,10 @@ import {
   CompassFonts,
   Brand,
   webContainer,
-} from "../theme";
-import { DataStateView, LockedPill } from "../components/careerIntelligence";
-import { careerData } from "../lib/careerData";
-import { getStartingPoint, saveStartingPoint } from "../lib/startingPoint";
+} from "@/theme";
+import { DataStateView, LockedPill } from "@/components/careerIntelligence";
+import { careerData } from "@/lib/careerData";
+import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
 import {
   type DataState,
   type SavedItem,
@@ -47,7 +47,7 @@ import type {
   StartingPointProfile,
   UserType,
 } from "../types/onboarding";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary (SS1/SS2)",

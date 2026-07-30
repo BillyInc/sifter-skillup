@@ -11,11 +11,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
-} from '../theme';
-import { downloadTrackContent, isTrackDownloaded } from '../lib/offlineStorage';
-import { API_BASE, API } from '../lib/api';
+} from '@/theme';
+import { downloadTrackContent, isTrackDownloaded } from '@/lib/offlineStorage';
+import { API_BASE, API } from '@/lib/api';
 import NetInfo from '@react-native-community/netinfo';
-import { SifterButton, SifterCard } from '../components/ui';
+import { SifterButton, SifterCard } from '@/components/ui';
 
 interface Props {
   trackId: string;
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
     letterSpacing: 1,
     marginBottom: Spacing.sm,
     textAlign: 'center',
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   emoji: { fontSize: 18 },
   heroText: { flex: 1, gap: 4 },
-  trackName: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  trackName: { fontSize: FontSize.xxl, fontWeight: '900' },
   trackSub: { fontSize: FontSize.sm, lineHeight: 20 },
   banner: {
     borderWidth: 1,
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginBottom: Spacing.md,
   },
-  bannerText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  bannerText: { fontSize: FontSize.xs, fontWeight: '700' },
   body: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.lg },
   statsRow: {
     flexDirection: 'row',
@@ -252,14 +252,14 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: 6,
   },
-  statLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase' },
-  statValue: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  statLabel: { fontSize: FontSize.xs, fontWeight: '700', textTransform: 'uppercase' },
+  statValue: { fontSize: FontSize.sm, fontWeight: '800' },
   primaryButton: { marginTop: Spacing.xs },
   secondaryAction: { paddingTop: Spacing.md, alignItems: 'center' },
-  secondaryActionText: { fontSize: FontSize.sm, fontWeight: FontWeight.medium },
+  secondaryActionText: { fontSize: FontSize.sm, fontWeight: '500' },
   phaseTitle: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.heavy,
+    fontWeight: '800',
     textAlign: 'center',
     marginBottom: Spacing.md,
   },
@@ -273,20 +273,20 @@ const styles = StyleSheet.create({
   progressFill: { height: '100%', borderRadius: Radius.full },
   progressPct: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   downloadNote: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   stateEmoji: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   doneTitle: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },

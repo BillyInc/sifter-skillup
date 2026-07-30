@@ -27,10 +27,10 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { PdfExportButton } from "../../components/careerIntelligence/PdfExportButton";
-import { adminData } from "../../lib/adminData";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { PdfExportButton } from "@/components/careerIntelligence/PdfExportButton";
+import { adminData } from "@/lib/adminData";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import type { DataState } from "../../types/career";
 import type {
   InstitutionSummary,

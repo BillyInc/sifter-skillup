@@ -10,7 +10,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   type ViewStyle,
 } from "react-native";
 import {
@@ -21,6 +20,7 @@ import {
   FontWeight,
   Shadow,
 } from "../../theme";
+import { PressLift } from "../animations/PressLift";
 
 export interface ElitePathwayCardProps {
   name: string;
@@ -44,11 +44,10 @@ export function ElitePathwayCard({
   const { colors } = useTheme();
 
   const firmsLine = firms?.length ? firms.join(" · ") : null;
-  const Container: any = onPress ? TouchableOpacity : View;
 
   return (
-    <Container
-      {...(onPress ? { onPress, activeOpacity: 0.85 } : {})}
+    <PressLift
+      onPress={onPress}
       style={[
         styles.card,
         {
@@ -120,7 +119,7 @@ export function ElitePathwayCard({
           </Text>
         </View>
       ) : null}
-    </Container>
+    </PressLift>
   );
 }
 

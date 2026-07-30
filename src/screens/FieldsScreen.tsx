@@ -17,16 +17,16 @@ import {
   Spacing,
   useTheme,
   webContainer,
-} from '../theme';
+} from '@/theme';
 import {
   getAllFieldDetails,
   getFieldDetail,
   type FieldDetail,
   type FieldSkillTrack,
-} from '../data/fieldDetails';
-import { fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
-import { ISLANDS } from '../data/islands';
-import { useAuth } from '../hooks/useAuth';
+} from '@/data/fieldDetails';
+import { fieldColor, fieldEmoji } from '@/components/artwork/FieldArtwork';
+import { ISLANDS } from '@/data/islands';
+import { useAuth } from '@/hooks/useAuth';
 
 type FieldSummary = {
   id: string;
@@ -490,12 +490,12 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 1.2,
   },
   title: {
     fontSize: FontSize.xxxl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: -0.8,
   },
   subtitle: {
@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
   },
   summaryValue: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   summaryLabel: {
     fontSize: FontSize.sm,
@@ -573,7 +573,7 @@ const styles = StyleSheet.create({
   fieldName: {
     flex: 1,
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: -0.4,
   },
   fieldMetaRow: {
@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
   },
   fieldWorldName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   fieldDescription: {
     fontSize: FontSize.sm,
@@ -598,11 +598,11 @@ const styles = StyleSheet.create({
   },
   browseHint: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
+    fontWeight: '500',
   },
   browseArrow: {
     fontSize: 18,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   expandedSection: {
     borderTopWidth: 1,
@@ -615,7 +615,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   sectionSub: {
     fontSize: FontSize.sm,
@@ -644,11 +644,11 @@ const styles = StyleSheet.create({
   },
   islandNumber: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   islandName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    fontWeight: '600',
     lineHeight: 18,
   },
   trackList: {
@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
   },
   trackIconText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   trackCopy: {
     flex: 1,
@@ -686,7 +686,7 @@ const styles = StyleSheet.create({
   trackName: {
     flexShrink: 1,
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   trackTagline: {
     fontSize: FontSize.sm,
@@ -699,6 +699,6 @@ const styles = StyleSheet.create({
   },
   pillText: {
     fontSize: 10,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
 });

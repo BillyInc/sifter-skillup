@@ -16,7 +16,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  useWindowDimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -24,8 +23,8 @@ import {
   DataStateView,
   FilterChip,
   SearchBar,
-  SectionLabel,
 } from "@/components/careerIntelligence";
+import { StaggerReveal } from "@/components/animations";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import { comingSoon, type DataState } from "@/types/career";
@@ -34,9 +33,9 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
-  webContainer,
+  CompassFonts,
 } from "@/theme";
+import { useResponsive } from "@/hooks/useResponsive";
 
 type FilterKey = "all" | "in_demand" | "elite" | string;
 
@@ -51,7 +50,7 @@ import {
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
   const router = useRouter();
-  const { width } = useWindowDimensions();
+  const resp = useResponsive();
   const [filter, setFilter] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const [state, setState] = useState<DataState<DomainClusterGroup[]>>(() =>
@@ -117,23 +116,42 @@ export function DomainExplorerScreen() {
     return { ...state, data };
   }, [state, filter, activeFilter]);
 
-  const isWide = width >= 920;
-  const cardColumns = isWide ? 3 : 2;
+  const clusterColWidth = resp.columns >= 2
+    ? `${(100 / resp.columns) - 1.5}%`
+    : "100%";
 
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={styles.scroll}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
-      <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
+      <Text
+        style={[
+          styles.eyebrow,
+          CompassFonts.bodySemibold,
+          { color: colors.textRole.muted },
+        ]}
+      >
         EXPLORE
       </Text>
-      <Text style={[styles.title, { color: colors.textRole.primary }]}>
+      <Text
+        style={[
+          styles.title,
+          CompassFonts.bodySemibold,
+          { color: colors.textRole.primary },
+        ]}
+      >
         Domain Explorer
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
+      <Text
+        style={[
+          styles.subtitle,
+          CompassFonts.bodyMedium,
+          { color: colors.textRole.secondary },
+        ]}
+      >
         168 domains across 37 clusters
       </Text>
 
@@ -177,149 +195,158 @@ export function DomainExplorerScreen() {
 
       <DataStateView state={filtered} empty={(g) => g.length === 0}>
         {(groups) => (
-          <View style={[styles.masonry, isWide && styles.masonryWide]}>
-            {groups.map((g) => {
+          <View style={styles.masonry}>
+            {groups.map((g, idx) => {
               const clusterColor =
                 CLUSTER_COLORS[g.cluster] ?? DEFAULT_COLOR;
               const clusterIcon =
                 CLUSTER_ICONS[g.cluster] ?? DEFAULT_ICON;
               return (
-                <View
-                  key={g.cluster}
-                  style={[
-                    styles.clusterCol,
-                    isWide && { width: `${100 / cardColumns - 1}%` },
-                  ]}
-                >
-                  {/* Cluster header */}
-                  <View style={styles.clusterHeader}>
-                    <View
-                      style={[
-                        styles.clusterIconWrap,
-                        { backgroundColor: clusterColor + "15" },
-                      ]}
-                    >
-                      <Feather
-                        name={clusterIcon}
-                        size={16}
-                        color={clusterColor}
-                      />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text
+                <StaggerReveal key={g.cluster} index={idx}>
+                  <View
+                    style={[
+                      styles.clusterCol,
+                      { width: clusterColWidth },
+                    ]}
+                  >
+                    {/* Cluster header */}
+                    <View style={styles.clusterHeader}>
+                      <View
                         style={[
-                          styles.clusterName,
-                          { color: colors.textRole.primary },
-                        ]}
-                        numberOfLines={1}
-                      >
-                        {g.cluster}
-                      </Text>
-                      <Text
-                        style={[
-                          styles.clusterCount,
-                          { color: colors.textRole.muted },
+                          styles.clusterIconWrap,
+                          { backgroundColor: clusterColor + "15" },
                         ]}
                       >
-                        {g.domains.length} domains
-                      </Text>
-                    </View>
-                  </View>
-
-                  {/* Domain cards */}
-                  <View style={styles.domainGrid}>
-                    {g.domains.map((d) => (
-                      <TouchableOpacity
-                        key={d.id}
-                        activeOpacity={0.85}
-                        onPress={() => exploreNav.domain(router, d.id)}
-                        style={[
-                          styles.domainCard,
-                          {
-                            backgroundColor: colors.surface.raised,
-                            borderColor: colors.borderRole.subtle,
-                          },
-                        ]}
-                      >
-                        {/* Colour accent bar */}
-                        <View
-                          style={[
-                            styles.accentBar,
-                            { backgroundColor: clusterColor },
-                          ]}
+                        <Feather
+                          name={clusterIcon}
+                          size={16}
+                          color={clusterColor}
                         />
-                        <View style={styles.domainCardBody}>
-                          <Text
-                            style={[
-                              styles.domainCardName,
-                              { color: colors.textRole.primary },
-                            ]}
-                            numberOfLines={2}
-                          >
-                            {d.name}
-                          </Text>
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text
+                          style={[
+                            styles.clusterName,
+                            CompassFonts.bodySemibold,
+                            { color: colors.textRole.primary },
+                          ]}
+                          numberOfLines={1}
+                        >
+                          {g.cluster}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.clusterCount,
+                            CompassFonts.bodyMedium,
+                            { color: colors.textRole.muted },
+                          ]}
+                        >
+                          {g.domains.length} domains
+                        </Text>
+                      </View>
+                    </View>
 
-                          {/* Demand meter */}
-                          {(d.inDemandScore ?? 0) > 0 ? (
-                            <View style={styles.demandRow}>
-                              <View
-                                style={[
-                                  styles.demandBar,
-                                  {
-                                    backgroundColor:
-                                      colors.accentRole.success + "20",
-                                  },
-                                ]}
-                              >
+                    {/* Domain cards */}
+                    <View style={styles.domainGrid}>
+                      {g.domains.map((d) => (
+                        <TouchableOpacity
+                          key={d.id}
+                          activeOpacity={0.85}
+                          onPress={() => exploreNav.domain(router, d.id)}
+                          style={[
+                            styles.domainCard,
+                            {
+                              backgroundColor: colors.surface.raised,
+                              borderColor: colors.borderRole.subtle,
+                            },
+                          ]}
+                        >
+                          {/* Colour accent bar */}
+                          <View
+                            style={[
+                              styles.accentBar,
+                              { backgroundColor: clusterColor },
+                            ]}
+                          />
+                          <View style={styles.domainCardBody}>
+                            <Text
+                              style={[
+                                styles.domainCardName,
+                                CompassFonts.bodySemibold,
+                                { color: colors.textRole.primary },
+                              ]}
+                              numberOfLines={2}
+                            >
+                              {d.name}
+                            </Text>
+
+                            {/* Demand meter */}
+                            {(d.inDemandScore ?? 0) > 0 ? (
+                              <View style={styles.demandRow}>
                                 <View
                                   style={[
-                                    styles.demandFill,
+                                    styles.demandBar,
                                     {
                                       backgroundColor:
-                                        colors.accentRole.success,
-                                      width: `${Math.min(
-                                        100,
-                                        ((d.inDemandScore ?? 0) / 10) * 100,
-                                      )}%`,
+                                        colors.accentRole.success + "20",
                                     },
                                   ]}
-                                />
+                                >
+                                  <View
+                                    style={[
+                                      styles.demandFill,
+                                      {
+                                        backgroundColor:
+                                          colors.accentRole.success,
+                                        width: `${Math.min(
+                                          100,
+                                          ((d.inDemandScore ?? 0) / 10) * 100,
+                                        )}%`,
+                                      },
+                                    ]}
+                                  />
+                                </View>
+                                <Text
+                                  style={[
+                                    styles.demandLabel,
+                                    CompassFonts.bodySemibold,
+                                    {
+                                      color: colors.accentRole.success,
+                                    },
+                                  ]}
+                                >
+                                  Demand
+                                </Text>
                               </View>
-                              <Text
+                            ) : null}
+
+                            {d.eliteFlag ? (
+                              <View
                                 style={[
-                                  styles.demandLabel,
+                                  styles.eliteBadge,
                                   {
-                                    color: colors.accentRole.success,
+                                    backgroundColor: colors.accentRole.warning + "15",
+                                    borderColor: colors.accentRole.warning + "30",
                                   },
                                 ]}
                               >
-                                Demand
-                              </Text>
-                            </View>
-                          ) : null}
-
-                          {d.eliteFlag ? (
-                            <View
-                              style={[
-                                styles.eliteBadge,
-                                {
-                                  backgroundColor: "#B8860B15",
-                                  borderColor: "#B8860B30",
-                                },
-                              ]}
-                            >
-                              <Text
-                                style={[styles.eliteText, { color: "#B8860B" }]}
-                              >
-                                Elite
-                              </Text>
-                            </View>
-                          ) : null}
-                        </View>
-                      </TouchableOpacity>
-                    ))}
+                                <Text
+                                  style={[
+                                    styles.eliteText,
+                                    CompassFonts.bodySemibold,
+                                    { color: colors.accentRole.warning },
+                                  ]}
+                                >
+                                  Elite
+                                </Text>
+                              </View>
+                            ) : null}
+                          </View>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
                   </View>
-                </View>
+                </StaggerReveal>
               );
             })}
           </View>
@@ -340,13 +367,11 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {
@@ -366,9 +391,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
     marginTop: Spacing.xs,
   },
-  masonryWide: {},
   clusterCol: {
-    width: "100%",
     gap: Spacing.sm,
   },
   clusterHeader: {
@@ -385,7 +408,6 @@ const styles = StyleSheet.create({
   },
   clusterName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
   clusterCount: {
     fontSize: FontSize.xs,
@@ -413,7 +435,6 @@ const styles = StyleSheet.create({
   },
   domainCardName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.3,
   },
   demandRow: {
@@ -434,7 +455,6 @@ const styles = StyleSheet.create({
   },
   demandLabel: {
     fontSize: 9,
-    fontWeight: FontWeight.semibold,
   },
   eliteBadge: {
     alignSelf: "flex-start",
@@ -446,7 +466,6 @@ const styles = StyleSheet.create({
   },
   eliteText: {
     fontSize: 9,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.3,
   },
 });

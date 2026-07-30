@@ -24,14 +24,14 @@ import {
   StatusBar, Linking, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, FontWeight, ColorPalette } from '../theme';
-import { API } from '../lib/api';
-import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
+import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, FontWeight, ColorPalette } from '@/theme';
+import { API } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
   WebStatTile, WebListRow, useIsWebWide,
-} from '../components/web/WebGrid';
+} from '@/components/web/WebGrid';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -569,7 +569,7 @@ function ProgressionTab({
           </View>
         ) : (
           <>
-            <Text style={[styles.body, { color: '#ef4444', fontWeight: FontWeight.bold, marginBottom: 8 }]}>
+            <Text style={[styles.body, { color: '#ef4444', fontWeight: '700', marginBottom: 8 }]}>
               🔒 Phase 2 locked — requirements below must be met
             </Text>
             {gateStatus.blockers.map((b, i) => (
@@ -652,7 +652,7 @@ function ProgressionTab({
                 </Text>
               </View>
               <View style={[styles.remStatus, { backgroundColor: rs.cleared ? '#d1fae5' : '#fee2e2' }]}>
-                <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
+                <Text style={{ fontSize: 10, fontWeight: '700', color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
                   {rs.cleared ? 'CLEARED' : 'PENDING'}
                 </Text>
               </View>
@@ -905,7 +905,7 @@ export default function PortfolioHubScreen() {
                         paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12,
                         backgroundColor: p.connected ? colors.xpGreen + '20' : colors.surface.subtle,
                       }}>
-                        <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: p.connected ? colors.xpGreen : colors.textRole.muted }}>
+                        <Text style={{ fontSize: 10, fontWeight: '700', color: p.connected ? colors.xpGreen : colors.textRole.muted }}>
                           {p.connected ? 'Live' : 'Off'}
                         </Text>
                       </View>
@@ -970,7 +970,7 @@ export default function PortfolioHubScreen() {
             onPress={() => setActiveTab(tab.id)}
             activeOpacity={0.7}
           >
-            <Text style={[styles.tabText, { color: colors.textRole.secondary }, activeTab === tab.id && { color: colors.accentRole.action, fontWeight: FontWeight.heavy }]}>
+            <Text style={[styles.tabText, { color: colors.textRole.secondary }, activeTab === tab.id && { color: colors.accentRole.action, fontWeight: '800' }]}>
               {tab.emoji} {tab.label}
             </Text>
           </TouchableOpacity>
@@ -1064,12 +1064,12 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   },
   xpStatVal: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.heavy,
+    fontWeight: '800',
     color: colors.textRole.inverse,
   },
   xpStatLabel: {
     fontSize: 10,
-    fontWeight: FontWeight.semibold,
+    fontWeight: '600',
     color: 'rgba(255,255,255,0.8)',
     marginTop: 2,
   },
@@ -1085,8 +1085,8 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.borderRole.subtle,
   },
-  headerTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
-  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: FontWeight.bold },
+  headerTitle: { fontSize: FontSize.lg, fontWeight: '800' },
+  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: '700' },
 
   tabBar: {
     flexDirection: 'row',
@@ -1104,8 +1104,8 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     alignItems: 'center',
   },
   tabActive: {},
-  tabText: { fontSize: 10, fontWeight: FontWeight.bold, textAlign: 'center' },
-  tabTextActive: { fontWeight: FontWeight.heavy },
+  tabText: { fontSize: 10, fontWeight: '700', textAlign: 'center' },
+  tabTextActive: { fontWeight: '800' },
 
   card: {
     borderRadius: Radius.xl,
@@ -1115,17 +1115,17 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 10,
-    fontWeight: FontWeight.heavy,
+    fontWeight: '800',
     color: colors.textRole.secondary,
     letterSpacing: 1,
     marginBottom: Spacing.sm,
   },
   body: { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 20, marginBottom: Spacing.sm },
-  subLabel: { fontSize: 10, fontWeight: FontWeight.bold, color: colors.textRole.secondary, letterSpacing: 0.5, marginBottom: 4 },
+  subLabel: { fontSize: 10, fontWeight: '700', color: colors.textRole.secondary, letterSpacing: 0.5, marginBottom: 4 },
 
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm },
   statBox: { flex: 1, alignItems: 'center' },
-  statValue: { fontSize: 18, fontWeight: FontWeight.heavy },
+  statValue: { fontSize: 18, fontWeight: '800' },
   statLabel: { fontSize: 10, color: colors.textRole.secondary, marginTop: 2 },
 
   alertBox: {
@@ -1134,7 +1134,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     padding: Spacing.sm,
     marginTop: Spacing.sm,
   },
-  alertText: { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: FontWeight.semibold },
+  alertText: { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: '600' },
 
   platformRow: {
     flexDirection: 'row',
@@ -1146,7 +1146,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   },
   platformEmoji: { fontSize: 18, width: 36, textAlign: 'center' },
   platformNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 2 },
-  platformName: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  platformName: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   platformDesc: { fontSize: 12, color: colors.textRole.secondary, lineHeight: 16 },
   platformUsername: { fontSize: 12, color: colors.accentRole.action, marginBottom: 2 },
 
@@ -1166,15 +1166,15 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
-  tagText: { fontSize: 9, fontWeight: FontWeight.heavy, letterSpacing: 0.3 },
+  tagText: { fontSize: 9, fontWeight: '800', letterSpacing: 0.3 },
 
   credCard: { backgroundColor: '#0D0D0D' },
-  credTitle: { fontSize: 11, fontWeight: FontWeight.heavy, color: colors.accentRole.action, letterSpacing: 1, marginBottom: Spacing.sm },
+  credTitle: { fontSize: 11, fontWeight: '800', color: colors.accentRole.action, letterSpacing: 1, marginBottom: Spacing.sm },
   credText: { fontSize: FontSize.sm, color: '#ccc', lineHeight: 20, marginBottom: Spacing.sm },
 
   levelHeader: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
+    fontWeight: '800',
     color: colors.textRole.primary,
     marginBottom: Spacing.sm,
     marginTop: Spacing.sm,
@@ -1182,7 +1182,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   artifactCard: { marginBottom: Spacing.sm },
   artifactHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   levelDot: { width: 10, height: 10, borderRadius: 5 },
-  artifactSkill: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  artifactSkill: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   artifactMeta: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
   artifactFramework: { fontSize: 11, color: colors.textRole.secondary, marginTop: 4 },
   chevron: { fontSize: 12, color: colors.textRole.secondary },
@@ -1206,19 +1206,19 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.borderRole.subtle,
   },
-  pushPlatformName: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, color: colors.textRole.primary },
+  pushPlatformName: { fontSize: FontSize.sm, fontWeight: '600', color: colors.textRole.primary },
   pushCondition: { fontSize: 10, color: colors.textRole.secondary },
-  pushedLabel: { fontSize: 11, color: '#10b981', fontWeight: FontWeight.bold },
+  pushedLabel: { fontSize: 11, color: '#10b981', fontWeight: '700' },
 
-  emptyTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: Spacing.sm },
+  emptyTitle: { fontSize: FontSize.md, fontWeight: '700', color: colors.textRole.primary, marginBottom: Spacing.sm },
   emptyBody: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
 
   interviewItem: { marginBottom: Spacing.md, borderLeftWidth: 3, borderLeftColor: colors.accentRole.action, paddingLeft: Spacing.sm },
-  interviewQ: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: 4, fontStyle: 'italic' },
+  interviewQ: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary, marginBottom: 4, fontStyle: 'italic' },
   interviewA: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
 
   proveItem: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle },
-  proveLevel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: 2 },
+  proveLevel: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary, marginBottom: 2 },
   proveText: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 18 },
 
   primaryBtn: {
@@ -1230,7 +1230,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     marginTop: Spacing.sm,
   },
   primaryBtnDisabled: { opacity: 0.5 },
-  primaryBtnText: { color: colors.textRole.inverse, fontWeight: FontWeight.bold, fontSize: FontSize.sm },
+  primaryBtnText: { color: colors.textRole.inverse, fontWeight: '700', fontSize: FontSize.sm },
 
   secondaryBtn: {
     borderWidth: 1,
@@ -1240,39 +1240,39 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
     paddingHorizontal: 12,
     alignItems: 'center',
   },
-  secondaryBtnText: { color: colors.textRole.primary, fontWeight: FontWeight.semibold, fontSize: 12 },
+  secondaryBtnText: { color: colors.textRole.primary, fontWeight: '600', fontSize: 12 },
 
   // Progression tab
   reqRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle },
   reqIcon: { fontSize: 16, width: 20 },
-  reqLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  reqLabel: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   reqStatus: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
 
   unlockedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.sm, padding: Spacing.sm },
-  unlockedText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: '#065f46' },
+  unlockedText: { fontSize: FontSize.sm, fontWeight: '800', color: '#065f46' },
   unlockedSub: { fontSize: 11, color: '#065f46', marginTop: 4 },
 
   aggRow: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: Spacing.sm },
   aggStat: { alignItems: 'center' },
   thresholdBar: { borderRadius: Radius.sm, padding: Spacing.sm, marginBottom: Spacing.sm },
-  thresholdText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  thresholdText: { fontSize: FontSize.sm, fontWeight: '700' },
 
   failedSimRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 8 },
-  failedSimId: { fontSize: 12, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  failedSimId: { fontSize: 12, fontWeight: '700', color: colors.textRole.primary },
   failedSimAttempts: { fontSize: 11, color: colors.textRole.secondary },
 
   remRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 8 },
-  remConcept: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  remConcept: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   remProgress: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
   remStatus: { borderRadius: 4, paddingHorizontal: 6, paddingVertical: 3 },
 
   retryRow: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 6 },
-  retryConcept: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  retryConcept: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   retryLab: { fontSize: 11, color: colors.textRole.secondary },
 
   stepRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: Spacing.sm },
   stepNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.accentRole.action, alignItems: 'center', justifyContent: 'center' },
-  stepNumText: { color: colors.textRole.inverse, fontSize: 11, fontWeight: FontWeight.heavy },
-  stepLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  stepNumText: { color: colors.textRole.inverse, fontSize: 11, fontWeight: '800' },
+  stepLabel: { fontSize: FontSize.sm, fontWeight: '700', color: colors.textRole.primary },
   stepDetail: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
 });

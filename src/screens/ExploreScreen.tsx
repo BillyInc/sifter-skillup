@@ -23,10 +23,9 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
-  webContainer,
+  CompassFonts,
   type TierType,
-} from "../theme";
+} from "@/theme";
 import {
   DataStateView,
   LockedPill,
@@ -37,12 +36,14 @@ import {
   ListRow,
   SearchBar,
   SectionLabel,
-} from "../components/careerIntelligence";
-import { SifterButton, SifterCard, PressableCard } from "../components/ui";
-import { careerData } from "../lib/careerData";
-import { exploreNav } from "../lib/exploreNav";
-import { locked, type DataState, type CareerSearchResult } from "../types/career";
-import { useAuth } from "../hooks/useAuth";
+} from "@/components/careerIntelligence";
+import { SifterButton, SifterCard, PressableCard } from "@/components/ui";
+import { careerData } from "@/lib/careerData";
+import { exploreNav } from "@/lib/exploreNav";
+import { locked, type DataState, type CareerSearchResult } from "@/types/career";
+import { useAuth } from "@/hooks/useAuth";
+import { useResponsive } from "@/hooks/useResponsive";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -86,6 +87,7 @@ export default function ExploreScreen() {
   const { colors } = useTheme();
   const { user, signInGuest } = useAuth();
   const router = useRouter();
+  const responsive = useResponsive();
   const isGuest = !user || user.auth_provider === "guest";
   const hasSession = Boolean(user);
 
@@ -147,10 +149,16 @@ export default function ExploreScreen() {
     setRecents((prev) => [q, ...prev.filter((item) => item.toLowerCase() !== q.toLowerCase())].slice(0, 5));
   };
 
+  const padH = responsive.isWide ? Spacing.xxl : responsive.isDesktop ? Spacing.xl : Spacing.lg;
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={[
+        styles.scroll,
+        { paddingHorizontal: padH },
+        responsive.isWeb ? { maxWidth: 1088, width: "100%", alignSelf: "center" } : null,
+      ]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
@@ -257,15 +265,16 @@ export default function ExploreScreen() {
               {(filter === "all" || filter === "domains") && data.domains.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Domains</SectionLabel>
-                  {data.domains.map((d) => (
-                    <ListRow
-                      key={d.id}
-                      onPress={() => exploreNav.domain(router, d.id)}
-                      icon="compass"
-                      title={d.name}
-                      subtitle={d.cluster}
-                      meta="Domain route"
-                    />
+                  {data.domains.map((d, i) => (
+                    <StaggerReveal key={d.id} index={i}>
+                      <ListRow
+                        onPress={() => exploreNav.domain(router, d.id)}
+                        icon="compass"
+                        title={d.name}
+                        subtitle={d.cluster}
+                        meta="Domain route"
+                      />
+                    </StaggerReveal>
                   ))}
                 </View>
               ) : null}
@@ -320,16 +329,19 @@ export default function ExploreScreen() {
                         )}
                       </View>
                     );
-                    return single ? (
-                      <PressableCard
-                        key={`${r.name}-${ri}`}
-                        onPress={() => exploreNav.role(router, single.roleKey)}
-                        glowColor={colors.accentRole.action}
-                      >
-                        {roleBody}
-                      </PressableCard>
-                    ) : (
-                      <SifterCard key={`${r.name}-${ri}`}>{roleBody}</SifterCard>
+                    return (
+                      <StaggerReveal key={`${r.name}-${ri}`} index={ri}>
+                        {single ? (
+                          <PressableCard
+                            onPress={() => exploreNav.role(router, single.roleKey)}
+                            glowColor={colors.accentRole.action}
+                          >
+                            {roleBody}
+                          </PressableCard>
+                        ) : (
+                          <SifterCard>{roleBody}</SifterCard>
+                        )}
+                      </StaggerReveal>
                     );
                   })}
                 </View>
@@ -354,17 +366,18 @@ export default function ExploreScreen() {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  {data.programmes.map((p) => {
+                  {data.programmes.map((p, i) => {
                     const meta = p.discipline ?? p.institutionType;
                     return (
-                      <ListRow
-                        key={p.id}
-                        onPress={() => exploreNav.programme(router, p.id)}
-                        icon="book-open"
-                        title={p.name}
-                        subtitle={meta}
-                        meta={p.institutionType ?? "Programme"}
-                      />
+                      <StaggerReveal key={p.id} index={i}>
+                        <ListRow
+                          onPress={() => exploreNav.programme(router, p.id)}
+                          icon="book-open"
+                          title={p.name}
+                          subtitle={meta}
+                          meta={p.institutionType ?? "Programme"}
+                        />
+                      </StaggerReveal>
                     );
                   })}
                 </View>
@@ -395,38 +408,68 @@ function ExploreIdle({
   onFocusSearch: () => void;
 }) {
   const { colors } = useTheme();
+  const { isMobile, columns } = useResponsive();
   return (
     <View style={styles.idle}>
       {/* ── Hero cluster carousel ──────────────────────────────── */}
       <View style={styles.section}>
         <SectionLabel>Explore by field</SectionLabel>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.clusterCarousel}
-          decelerationRate="fast"
-          snapToInterval={CLUSTER_CARD_W + Spacing.sm}
-          snapToAlignment="start"
-        >
-          {CLUSTER_HEROES.map((c) => (
-            <TouchableOpacity
-              key={c.id}
-              activeOpacity={0.85}
-              onPress={() => {
-                // Navigate to DomainExplorerScreen filtered by this cluster
-                router.push("/(tabs)/explore/domains" as never);
-              }}
-              style={[styles.clusterCard, { borderColor: c.color + "30" }]}
-            >
-              <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
-                <Feather name={c.icon} size={22} color={c.color} />
-              </View>
-              <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
-                {c.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        {isMobile ? (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.clusterCarousel}
+            decelerationRate="fast"
+            snapToInterval={CLUSTER_CARD_W + Spacing.sm}
+            snapToAlignment="start"
+          >
+            {CLUSTER_HEROES.map((c, i) => (
+              <StaggerReveal key={c.id} index={i}>
+                <TouchableOpacity
+                  activeOpacity={0.85}
+                  onPress={() => {
+                    router.push("/(tabs)/explore/domains" as never);
+                  }}
+                  style={[styles.clusterCard, { borderColor: c.color + "30" }]}
+                >
+                  <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
+                    <Feather name={c.icon} size={22} color={c.color} />
+                  </View>
+                  <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
+                    {c.name}
+                  </Text>
+                </TouchableOpacity>
+              </StaggerReveal>
+            ))}
+          </ScrollView>
+        ) : (
+          <View style={styles.clusterGrid}>
+            {CLUSTER_HEROES.map((c, i) => {
+              const cardW = columns === 2 ? "48%" : columns === 3 ? "30%" : "22%";
+              return (
+                <StaggerReveal key={c.id} index={i}>
+                  <TouchableOpacity
+                    activeOpacity={0.85}
+                    onPress={() => {
+                      router.push("/(tabs)/explore/domains" as never);
+                    }}
+                    style={[
+                      styles.clusterGridCard,
+                      { borderColor: c.color + "30", width: cardW },
+                    ]}
+                  >
+                    <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
+                      <Feather name={c.icon} size={22} color={c.color} />
+                    </View>
+                    <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
+                      {c.name}
+                    </Text>
+                  </TouchableOpacity>
+                </StaggerReveal>
+              );
+            })}
+          </View>
+        )}
         <TouchableOpacity
           activeOpacity={0.75}
           onPress={() => exploreNav.domains(router)}
@@ -446,24 +489,25 @@ function ExploreIdle({
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.pathwayCarousel}
         >
-          {PATHWAYS.map((p) => (
-            <TouchableOpacity
-              key={p.key}
-              activeOpacity={0.85}
-              onPress={() => exploreNav.pathways(router)}
-              style={[
-                styles.pathwayCard,
-                {
-                  backgroundColor: colors.surface.raised,
-                  borderColor: colors.borderRole.subtle,
-                },
-              ]}
-            >
-              <Feather name={p.icon} size={16} color={colors.accentRole.action} />
-              <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>
-                {p.label}
-              </Text>
-            </TouchableOpacity>
+          {PATHWAYS.map((p, i) => (
+            <StaggerReveal key={p.key} index={i}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => exploreNav.pathways(router)}
+                style={[
+                  styles.pathwayCard,
+                  {
+                    backgroundColor: colors.surface.raised,
+                    borderColor: colors.borderRole.subtle,
+                  },
+                ]}
+              >
+                <Feather name={p.icon} size={16} color={colors.accentRole.action} />
+                <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>
+                  {p.label}
+                </Text>
+              </TouchableOpacity>
+            </StaggerReveal>
           ))}
         </ScrollView>
       </View>
@@ -534,15 +578,16 @@ function ExploreIdle({
       {recents.length ? (
         <View style={styles.section}>
           <SectionLabel>Recent</SectionLabel>
-          {recents.map((term) => (
-            <ListRow
-              key={term}
-              title={term}
-              subtitle="Search again"
-              meta="Recent query"
-              icon="clock"
-              onPress={() => onPick(term)}
-            />
+          {recents.map((term, i) => (
+            <StaggerReveal key={term} index={i}>
+              <ListRow
+                title={term}
+                subtitle="Search again"
+                meta="Recent query"
+                icon="clock"
+                onPress={() => onPick(term)}
+              />
+            </StaggerReveal>
           ))}
         </View>
       ) : null}
@@ -550,37 +595,38 @@ function ExploreIdle({
       {/* ── Starting points (3 doors) ─────────────────────────── */}
       <View style={styles.section}>
         <SectionLabel>Starting points</SectionLabel>
-        {DOORS.map((d) => (
-          <TouchableOpacity
-            key={d.key}
-            activeOpacity={0.85}
-            onPress={
-              d.key === "know"
-                ? onFocusSearch
-                : d.key === "what"
-                  ? () => router.push("/(tabs)/explore/admission?mode=programme" as never)
-                  : () => router.push("/(tabs)/explore/admission?mode=subjects" as never)
-            }
-            style={[
-              styles.card,
-              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-            ]}
-          >
-            <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
-              <Text style={styles.cardIcon}>{d.icon}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <View style={styles.cardHeadRow}>
-                <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
-                  {d.title}
-                </Text>
-                {d.live ? null : <LockedPill />}
+        {DOORS.map((d, i) => (
+          <StaggerReveal key={d.key} index={i}>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={
+                d.key === "know"
+                  ? onFocusSearch
+                  : d.key === "what"
+                    ? () => router.push("/(tabs)/explore/admission?mode=programme" as never)
+                    : () => router.push("/(tabs)/explore/admission?mode=subjects" as never)
+              }
+              style={[
+                styles.card,
+                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+              ]}
+            >
+              <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
+                <Text style={styles.cardIcon}>{d.icon}</Text>
               </View>
-              <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
-                {d.body}
-              </Text>
-            </View>
-          </TouchableOpacity>
+              <View style={{ flex: 1 }}>
+                <View style={styles.cardHeadRow}>
+                  <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
+                    {d.title}
+                  </Text>
+                  {d.live ? null : <LockedPill />}
+                </View>
+                <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
+                  {d.body}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </StaggerReveal>
         ))}
       </View>
 
@@ -597,21 +643,21 @@ function ExploreIdle({
 const DOORS = [
   {
     key: "know",
-    icon: "🎯",
+    icon: "\uD83C\uDFAF",
     title: "I know what & where",
     body: "Pick your programme and see the fields and jobs it unlocks.",
     live: true,
   },
   {
     key: "what",
-    icon: "🏫",
+    icon: "\uD83C\uDFEB",
     title: "I know what, not where",
     body: "See which institutions offer it, with JAMB & Post-UTME cut-offs.",
     live: true,
   },
   {
     key: "unsure",
-    icon: "🧭",
+    icon: "\uD83E\uDDED",
     title: "I don't know yet",
     body: "Enter your strongest subjects and see the programmes you qualify for.",
     live: true,
@@ -693,19 +739,18 @@ const CLUSTER_CARD_W = 120;
 const styles = StyleSheet.create({
   scroll: {
     paddingVertical: Spacing.xl,
-    paddingHorizontal: Spacing.lg,
     gap: Spacing.md,
     flexGrow: 1,
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.displaySemi,
     lineHeight: FontSize.display * 1.15,
   },
   titleRow: {
@@ -721,12 +766,12 @@ const styles = StyleSheet.create({
   },
   bannerText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     lineHeight: FontSize.sm * 1.4,
   },
   stateLine: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     marginTop: -Spacing.xs,
   },
   filterRow: {
@@ -758,6 +803,18 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     gap: Spacing.sm,
   },
+  clusterGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  clusterGridCard: {
+    padding: Spacing.md,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: "flex-start",
+    gap: Spacing.sm,
+  },
   clusterIconWrap: {
     width: 40,
     height: 40,
@@ -767,7 +824,7 @@ const styles = StyleSheet.create({
   },
   clusterCardName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     lineHeight: FontSize.sm * 1.2,
   },
   seeAllLink: {
@@ -775,7 +832,7 @@ const styles = StyleSheet.create({
   },
   seeAllText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
 
   // Pathways strip
@@ -795,7 +852,7 @@ const styles = StyleSheet.create({
   },
   pathwayLabel: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
 
   // Admission card
@@ -814,12 +871,12 @@ const styles = StyleSheet.create({
   },
   admissionEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     letterSpacing: 0.8,
   },
   admissionTitle: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     lineHeight: FontSize.md * 1.3,
   },
   admissionNumeral: {
@@ -831,12 +888,12 @@ const styles = StyleSheet.create({
   },
   admissionNumeralText: {
     fontSize: 28,
-    fontWeight: FontWeight.bold,
+    ...CompassFonts.displayBold,
     lineHeight: 30,
   },
   admissionNumeralUnit: {
     fontSize: 9,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     letterSpacing: 0.5,
     marginTop: 1,
   },
@@ -852,7 +909,7 @@ const styles = StyleSheet.create({
   },
   eliteTitle: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   eliteSub: {
     fontSize: FontSize.xs,
@@ -882,7 +939,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     flexWrap: "wrap",
   },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
+  cardTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
   cardBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -909,8 +966,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: Spacing.xs,
   },
-  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
-  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
+  compareText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  rowTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
   rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
   roleHead: {
     flexDirection: "row",
@@ -937,7 +994,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: "100%",
   },
-  chipText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  chipText: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
 
   // Guest / data-limited
   guestPanel: {
@@ -948,7 +1005,7 @@ const styles = StyleSheet.create({
   },
   guestTitle: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
   },
   guestBody: {
     fontSize: FontSize.sm,
@@ -963,7 +1020,7 @@ const styles = StyleSheet.create({
   },
   dataNoticeText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
+    ...CompassFonts.bodySemibold,
     lineHeight: FontSize.xs * 1.5,
   },
 });

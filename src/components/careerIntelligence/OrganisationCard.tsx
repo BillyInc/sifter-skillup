@@ -9,7 +9,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   type ViewStyle,
 } from "react-native";
 import {
@@ -21,6 +20,7 @@ import {
   Shadow,
 } from "../../theme";
 import type { Organisation, Likelihood } from "../../types/career";
+import { PressLift } from "../animations/PressLift";
 
 export interface OrganisationCardProps {
   organisation: Organisation;
@@ -54,11 +54,9 @@ export function OrganisationCard({
   const ll = likelihoodStyle(org.likelihood);
   const subline = [org.sector, org.country].filter(Boolean).join(" · ");
 
-  const Container: any = onPress ? TouchableOpacity : View;
-
   return (
-    <Container
-      {...(onPress ? { onPress, activeOpacity: 0.85 } : {})}
+    <PressLift
+      onPress={onPress}
       style={[
         styles.card,
         { backgroundColor: colors.card, borderColor: colors.border },
@@ -100,7 +98,7 @@ export function OrganisationCard({
           </Text>
         </View>
       ) : null}
-    </Container>
+    </PressLift>
   );
 }
 

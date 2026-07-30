@@ -19,9 +19,9 @@ import {
   Radius,
   FontSize,
   CompassFonts,
-} from "../../theme";
-import { Badge } from "../../components/ui";
-import { SparklineBar } from "../../components/admin/SparklineBar";
+} from "@/theme";
+import { Badge } from "@/components/ui";
+import { SparklineBar } from "@/components/admin/SparklineBar";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import type { DataState } from "../../types/career";
 import type {

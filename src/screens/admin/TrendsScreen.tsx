@@ -11,14 +11,14 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import type { DomainRankItem, RankScope } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import { ScopeToggle } from "../../components/admin/ScopeToggle";
-import type { ScopeOption } from "../../components/admin/ScopeToggle";
+import { ScopeToggle } from "@/components/admin/ScopeToggle";
+import type { ScopeOption } from "@/components/admin/ScopeToggle";
 
 export function TrendsScreen() {
   const { colors } = useTheme();
