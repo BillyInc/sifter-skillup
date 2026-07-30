@@ -22,9 +22,9 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import type { DataState } from "../../types/career";
 import type {
   EducatorProfile,
@@ -33,7 +33,7 @@ import type {
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import { SectionLabel } from "../../components/careerIntelligence";
+import { SectionLabel } from "@/components/careerIntelligence";
 
 const ROLE_OPTIONS: { value: OrgRole; label: string; body: string }[] = [
   {

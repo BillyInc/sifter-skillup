@@ -4,17 +4,17 @@ import {
   Animated, Dimensions, ScrollView, ActivityIndicator, Platform,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, webContainer } from '../theme';
-import { getFieldDetail } from '../data/fieldDetails';
-import { getField } from '../data/fields';
-import TrackScene from '../components/artwork/TrackIsometricScene';
+import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, webContainer } from '@/theme';
+import { getFieldDetail } from '@/data/fieldDetails';
+import { getField } from '@/data/fields';
+import TrackScene from '@/components/artwork/TrackIsometricScene';
 import {
   isStarknetTrack,
   getStarknetLab,
   getStarknetLessonCount,
   getStarknetLessonRuntimeId,
   type StarknetTrackId,
-} from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
+} from '@/data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 const { width: W, height: H } = Dimensions.get('window');
 const NUM_PARTICLES = 18;

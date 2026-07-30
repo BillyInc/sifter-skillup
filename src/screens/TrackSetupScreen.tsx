@@ -12,8 +12,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
-} from '../theme';
-import { SifterButton, SifterCard } from '../components/ui';
+} from '@/theme';
+import { SifterButton, SifterCard } from '@/components/ui';
 
 interface ToolDef {
   name: string;
@@ -535,18 +535,18 @@ const styles = StyleSheet.create({
   headerIcon: { fontSize: 18 },
   headerEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
     letterSpacing: 1,
     marginBottom: 2,
   },
-  headerTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  headerTitle: { fontSize: FontSize.xl, fontWeight: '900' },
   headerSub: { fontSize: FontSize.xs, lineHeight: 17 },
   content: {
     ...webContainer,
     paddingBottom: 112,
   },
   introCard: { marginBottom: Spacing.md },
-  introTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 6 },
+  introTitle: { fontSize: FontSize.lg, fontWeight: '900', marginBottom: 6 },
   introText: { fontSize: FontSize.sm, lineHeight: 20 },
   toolCard: {
     borderWidth: 1,
@@ -564,9 +564,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toolEmoji: { fontSize: 18 },
-  toolName: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  toolName: { fontSize: FontSize.md, fontWeight: '800' },
   toolSummary: { fontSize: FontSize.xs, lineHeight: 17, marginTop: 2 },
-  toolChevron: { fontSize: 18, fontWeight: FontWeight.heavy },
+  toolChevron: { fontSize: 18, fontWeight: '800' },
   toolBody: { paddingHorizontal: Spacing.md, paddingBottom: Spacing.md, gap: Spacing.sm },
   analogyBox: {
     borderLeftWidth: 3,
@@ -575,7 +575,7 @@ const styles = StyleSheet.create({
   },
   microLabel: {
     fontSize: 10,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.6,
     textTransform: 'uppercase',
     marginBottom: 4,
@@ -591,8 +591,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
   },
-  packageBadgeText: { fontSize: 10, fontWeight: FontWeight.black },
-  packageTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  packageBadgeText: { fontSize: 10, fontWeight: '900' },
+  packageTitle: { fontSize: FontSize.md, fontWeight: '900' },
   packageSub: { fontSize: FontSize.xs, marginTop: 2 },
   commandBox: {
     backgroundColor: '#0f172a',
@@ -603,7 +603,7 @@ const styles = StyleSheet.create({
   commandLabel: {
     fontSize: 9,
     color: '#94a3b8',
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.8,
     marginBottom: 6,
   },
@@ -624,25 +624,25 @@ const styles = StyleSheet.create({
   packageNameText: {
     color: '#fff',
     fontSize: 11,
-    fontWeight: FontWeight.heavy,
+    fontWeight: '800',
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
   packageDoes: { flex: 1, fontSize: FontSize.sm, lineHeight: 19 },
   assetCard: { marginBottom: Spacing.md },
   assetRow: { marginTop: Spacing.sm },
   assetMeta: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
-  assetLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  assetLabel: { fontSize: FontSize.sm, fontWeight: '600' },
   assetSize: { fontSize: FontSize.xs },
-  assetPct: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginBottom: 6 },
+  assetPct: { fontSize: FontSize.xs, fontWeight: '700', marginBottom: 6 },
   assetTrack: { height: 4, borderRadius: Radius.full, overflow: 'hidden' },
   assetFill: { height: '100%', borderRadius: Radius.full },
   emptyCard: { alignItems: 'center', paddingVertical: Spacing.xxxl },
-  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
+  emptyTitle: { fontSize: FontSize.lg, fontWeight: '900', marginBottom: Spacing.sm },
   emptyText: { fontSize: FontSize.sm, lineHeight: 20, textAlign: 'center' },
   footer: {
     padding: Spacing.lg,
     borderTopWidth: 1,
   },
   preparingRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
-  preparingText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  preparingText: { fontSize: FontSize.xs, fontWeight: '600' },
 });

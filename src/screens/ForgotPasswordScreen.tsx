@@ -11,8 +11,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "../theme";
-import { SifterButton } from "../components/ui";
+import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
+import { SifterButton } from "@/components/ui";
 import { AuthScaffold, AuthField, ErrorNote } from "./auth/authShared";
 
 export default function ForgotPasswordScreen() {

@@ -2,10 +2,10 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { CompassFonts, FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import { resolveTrackContext } from '../lib/trackContext';
-import { useStarknetWalletBridge } from '../components/auth/StarknetWalletBridge';
+import { CompassFonts, FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { resolveTrackContext } from '@/lib/trackContext';
+import { useStarknetWalletBridge } from '@/components/auth/StarknetWalletBridge';
 
 function SettingsCard({
   title,
@@ -198,13 +198,13 @@ const styles = StyleSheet.create({
   },
   heroEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   heroTitle: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   heroBody: {
     fontSize: FontSize.sm,
@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   cardHeadline: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   cardBody: {
     fontSize: FontSize.sm,
@@ -237,13 +237,13 @@ const styles = StyleSheet.create({
   },
   rowLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.4,
     textTransform: 'uppercase',
   },
   rowValue: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   toggleBtn: {
     borderRadius: Radius.xl,
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   },
   toggleBtnText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   linkBtn: {
     borderRadius: Radius.xl,
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   linkBtnText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   signOutBtn: {
     borderRadius: Radius.xl,
@@ -273,6 +273,6 @@ const styles = StyleSheet.create({
   signOutBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
 });

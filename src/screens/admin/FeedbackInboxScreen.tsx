@@ -15,13 +15,13 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { request } from "../../lib/api";
+} from "@/theme";
+import { request } from "@/lib/api";
 import { type DataState, comingSoon, real } from "../../types/career";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import { AdminDataTable } from "../../components/admin/AdminDataTable";
-import type { ColumnDef } from "../../components/admin/AdminDataTable";
+import { AdminDataTable } from "@/components/admin/AdminDataTable";
+import type { ColumnDef } from "@/components/admin/AdminDataTable";
 
 interface FeedbackRow {
   id: string;

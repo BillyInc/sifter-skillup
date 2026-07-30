@@ -26,9 +26,9 @@ import {
   CompassFonts,
   Shadow,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import type { DataState } from "../../types/career";
 import type {
   EducatorProfile,
@@ -36,6 +36,7 @@ import type {
   VerificationStatus,
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 const STATUS_META: Record<
   VerificationStatus,
@@ -183,9 +184,8 @@ export function VerificationScreen() {
                 also requires consent.
               </Text>
               <View style={styles.tiers}>
-                {TIERS.map((t) => (
+                {TIERS.map((t, i) => (<StaggerReveal key={t.tier} index={i}>
                   <View
-                    key={t.tier}
                     style={[
                       styles.tierCard,
                       {
@@ -204,7 +204,7 @@ export function VerificationScreen() {
                       {t.body}
                     </Text>
                   </View>
-                ))}
+                </StaggerReveal>))}
               </View>
             </View>
 

@@ -20,8 +20,8 @@ import {
   CompassFonts,
   Shadow,
   webContainer,
-} from "../../theme";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import { comingSoon } from "../../types/career";
 import type { EducatorProfile } from "../../types/institution";
 import { AdminShell } from "./AdminShell";

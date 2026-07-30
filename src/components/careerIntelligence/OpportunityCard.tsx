@@ -12,7 +12,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   type ViewStyle,
 } from "react-native";
 import {
@@ -32,6 +31,7 @@ import type {
   InstitutionType,
 } from "../../types/career";
 import { DataSourceBadge } from "./DataSourceBadge";
+import { PressLift } from "../animations/PressLift";
 
 export interface OpportunityCardProps {
   opportunity: Opportunity;
@@ -115,11 +115,9 @@ export function OpportunityCard({
   const windowLabel = o.applicationWindow ?? o.applicationDeadline ?? null;
   const meta = o.meta;
 
-  const Container: any = onPress ? TouchableOpacity : View;
-
   return (
-    <Container
-      {...(onPress ? { onPress, activeOpacity: 0.85 } : {})}
+    <PressLift
+      onPress={onPress}
       style={[
         styles.card,
         { backgroundColor: colors.card, borderColor: colors.border },
@@ -262,7 +260,7 @@ export function OpportunityCard({
           style={styles.provenance}
         />
       ) : null}
-    </Container>
+    </PressLift>
   );
 }
 

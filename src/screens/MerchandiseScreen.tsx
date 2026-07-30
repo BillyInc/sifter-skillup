@@ -13,11 +13,11 @@ import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
   SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import { rewardsEngine } from '../lib/rewardsEngine';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { rewardsEngine } from '@/lib/rewardsEngine';
 import { creditsToUSD } from '../theme/rewards';
-import { merchandiseItems } from '../data/merchandiseItems';
+import { merchandiseItems } from '@/data/merchandiseItems';
 import type { MerchandiseItem } from '../types/social';
 
 const CATEGORIES = [
@@ -217,8 +217,8 @@ export default function MerchandiseScreen({ navigation }: any) {
                   </View>
                 )}
                 <View style={[styles.priceBlockRow, styles.priceBlockTotal]}>
-                  <Text style={[styles.priceBlockLabel, { color: colors.text, fontWeight: FontWeight.black }]}>You pay</Text>
-                  <Text style={[styles.priceBlockValue, { color: colors.accent, fontWeight: FontWeight.black, fontSize: FontSize.xl }]}>
+                  <Text style={[styles.priceBlockLabel, { color: colors.text, fontWeight: '900' }]}>You pay</Text>
+                  <Text style={[styles.priceBlockValue, { color: colors.accent, fontWeight: '900', fontSize: FontSize.xl }]}>
                     ${final.toFixed(0)}
                   </Text>
                 </View>
@@ -295,7 +295,7 @@ export default function MerchandiseScreen({ navigation }: any) {
           {/* Right: grid with page header */}
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 18 }}>
             <View style={{ marginBottom: 14, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
+              <Text style={{ fontSize: 18, fontWeight: '900', color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
                 {credits.toLocaleString()} merch credits · Earn by completing labs
               </Text>
@@ -345,26 +345,26 @@ const styles = StyleSheet.create({
   webRoot:          { flex: 1, flexDirection: 'row' },
   webLeft:          { width: 280, borderRightWidth: 1 },
   header:           { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: Spacing.lg, borderBottomWidth: 1 },
-  headerTitle:      { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  headerSub:        { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  headerTitle:      { fontSize: FontSize.xl, fontWeight: '900' },
+  headerSub:        { fontSize: FontSize.xs, fontWeight: '700' },
 
   walletVertical:   { padding: Spacing.lg, gap: Spacing.md, borderBottomWidth: 1 },
   walletHorizontal: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, padding: Spacing.md, margin: Spacing.md, borderRadius: Radius.lg, borderWidth: 1 },
   walletGlow:       { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   walletIcon:       { fontSize: 18 },
-  walletTitle:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
-  walletBalance:    { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  walletTitle:      { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8 },
+  walletBalance:    { fontSize: FontSize.xxl, fontWeight: '900' },
   walletValue:      { fontSize: FontSize.xs },
   walletStats:      { gap: Spacing.xs },
-  walletStatLabel:  { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
+  walletStatLabel:  { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8 },
   walletStatRow:    { flexDirection: 'row', justifyContent: 'space-between' },
   walletStatItem:   { fontSize: FontSize.xs },
-  walletStatCredits:{ fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  walletStatCredits:{ fontSize: FontSize.xs, fontWeight: '700' },
 
   chipScroll:       { borderBottomWidth: 1, maxHeight: 50 },
   chipRow:          { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
   chip:             { paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },
-  chipText:         { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  chipText:         { fontSize: FontSize.xs, fontWeight: '700' },
 
   gridContent:      { padding: Spacing.md, gap: Spacing.md, paddingBottom: 18 },
   itemCard:         { borderRadius: Radius.xl, borderWidth: 1, overflow: 'hidden' },
@@ -373,13 +373,13 @@ const styles = StyleSheet.create({
   lockedOverlay:    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   lockIcon:         { fontSize: 18 },
   unlockedBadge:    { position: 'absolute', bottom: 6, left: 6, paddingHorizontal: 6, paddingVertical: 2, borderRadius: Radius.full },
-  unlockedBadgeText:{ fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },
+  unlockedBadgeText:{ fontSize: 9, fontWeight: '900', color: '#fff' },
   itemInfo:         { padding: Spacing.md, gap: Spacing.xs },
-  itemName:         { fontSize: FontSize.sm, fontWeight: FontWeight.black, lineHeight: 18 },
+  itemName:         { fontSize: FontSize.sm, fontWeight: '900', lineHeight: 18 },
   itemEmbedding:    { fontSize: 10, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
   priceRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
   originalPrice:    { fontSize: FontSize.xs, textDecorationLine: 'line-through' },
-  finalPrice:       { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  finalPrice:       { fontSize: FontSize.md, fontWeight: '900' },
   unlockHint:       { fontSize: 10, lineHeight: 14 },
 
   modalBg:          { flex: 1, justifyContent: 'flex-end' },
@@ -387,21 +387,21 @@ const styles = StyleSheet.create({
   modalImgBox:      { height: 180, alignItems: 'center', justifyContent: 'center' },
   modalEmoji:       { fontSize: 18 },
   modalContent:     { padding: Spacing.xl, gap: Spacing.md },
-  modalName:        { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  modalName:        { fontSize: FontSize.xl, fontWeight: '900' },
   modalDesc:        { fontSize: FontSize.sm, lineHeight: 22 },
   embeddingBox:     { borderRadius: Radius.md, padding: Spacing.md },
-  embeddingLabel:   { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 4 },
+  embeddingLabel:   { fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.8, marginBottom: 4 },
   embeddingValue:   { fontSize: FontSize.sm, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
   priceBlock:       { borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
   priceBlockRow:    { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   priceBlockLabel:  { fontSize: FontSize.sm },
-  priceBlockValue:  { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  priceBlockValue:  { fontSize: FontSize.sm, fontWeight: '700' },
   priceBlockTotal:  { borderTopWidth: 1, paddingTop: Spacing.sm, marginTop: Spacing.xs },
   unlockBlock:      { borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, gap: Spacing.xs },
-  unlockBlockTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  unlockBlockTitle: { fontSize: FontSize.sm, fontWeight: '900' },
   unlockBlockSub:   { fontSize: FontSize.xs, lineHeight: 18 },
   shopBtn:          { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center' },
-  shopBtnText:      { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  shopBtnText:      { fontSize: FontSize.sm, fontWeight: '900' },
   comingSoon:       { fontSize: FontSize.xs, textAlign: 'center' },
   modalClose:       { borderTopWidth: 1, paddingVertical: Spacing.md, alignItems: 'center' },
   modalCloseText:   { fontSize: FontSize.md },

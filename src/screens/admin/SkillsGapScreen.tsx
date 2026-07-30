@@ -11,15 +11,15 @@ import {
   FontSize,
   CompassFonts,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
-import { Badge } from "../../components/ui";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
+import { Badge } from "@/components/ui";
 import type { DataState } from "../../types/career";
 import type { SkillGapRow } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import { AdminDataTable } from "../../components/admin/AdminDataTable";
-import type { ColumnDef } from "../../components/admin/AdminDataTable";
+import { AdminDataTable } from "@/components/admin/AdminDataTable";
+import type { ColumnDef } from "@/components/admin/AdminDataTable";
 
 const COLUMNS: ColumnDef[] = [
   { key: "programmeName", label: "Programme", width: undefined },

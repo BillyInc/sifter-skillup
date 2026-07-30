@@ -17,8 +17,8 @@ import {
   CompassFonts,
   Shadow,
   webContainer,
-} from "../../theme";
-import { adminData } from "../../lib/adminData";
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import { AdminShell } from "./AdminShell";
 

@@ -16,14 +16,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
-import { SifterButton } from "../../components/ui";
-import { useAuth } from "../../hooks/useAuth";
-import { API } from "../../lib/api";
-import { saveEducatorProfile } from "../../lib/educatorProfile";
-import { setLocalAccountType } from "../../lib/accountType";
-import { adminData } from "../../lib/adminData";
-import { adminHomeForProfile } from "../../lib/adminAudience";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { SifterButton } from "@/components/ui";
+import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
+import { saveEducatorProfile } from "@/lib/educatorProfile";
+import { setLocalAccountType } from "@/lib/accountType";
+import { adminData } from "@/lib/adminData";
+import { adminHomeForProfile } from "@/lib/adminAudience";
 import type {
   AccountType,
   OrganizationType,
@@ -37,7 +37,7 @@ import {
   OptionCard,
   ChoiceChips,
   SearchField,
-} from "../../components/onboarding/primitives";
+} from "@/components/onboarding/primitives";
 
 // ─── Organisation types ───────────────────────────────────────
 const ORGS: {

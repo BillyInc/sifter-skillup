@@ -21,6 +21,7 @@ import {
   FontWeight,
   Shadow,
 } from "../../theme";
+import { PressLift } from "../animations/PressLift";
 
 export type ApplicationWindowStatus =
   | "open"
@@ -69,11 +70,10 @@ export function ApplicationWindowCard({
   };
 
   const sc = statusColors();
-  const Container: any = onPress ? TouchableOpacity : View;
 
   return (
-    <Container
-      {...(onPress ? { onPress, activeOpacity: 0.85 } : {})}
+    <PressLift
+      onPress={onPress}
       style={[
         styles.card,
         { backgroundColor: colors.card, borderColor: colors.border },
@@ -116,7 +116,7 @@ export function ApplicationWindowCard({
           </Text>
         </TouchableOpacity>
       ) : null}
-    </Container>
+    </PressLift>
   );
 }
 

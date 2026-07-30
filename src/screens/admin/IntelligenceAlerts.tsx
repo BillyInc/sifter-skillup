@@ -15,7 +15,7 @@ import {
   FontSize,
   CompassFonts,
   type ColorPalette,
-} from "../../theme";
+} from "@/theme";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import type { DataState } from "../../types/career";
 import type {

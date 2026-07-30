@@ -9,13 +9,15 @@
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
-import { OptionCard } from "../../components/onboarding/primitives";
-import { OnboardingBackGuard } from "../../components/onboarding/OnboardingBackGuard";
-import OnboardingFlow from "../OnboardingFlow";
-import EducatorOnboarding from "../admin/EducatorOnboarding";
-import type { UserType } from "../../types/onboarding";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import { useTheme, Spacing, Radius, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useResponsive } from "@/hooks/useResponsive";
+import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
+import OnboardingFlow from "@/screens/OnboardingFlow";
+import EducatorOnboarding from "@/screens/admin/EducatorOnboarding";
+import type { UserType } from "@/types/onboarding";
 
 type Choice =
   | "senior_secondary"
@@ -28,49 +30,49 @@ type Choice =
 
 const PERSONAS: {
   type: Choice;
-  icon: string;
+  icon: keyof typeof Feather.glyphMap;
   title: string;
   subtitle: string;
 }[] = [
   {
     type: "senior_secondary",
-    icon: "🌱",
+    icon: "map",
     title: "Senior-Secondary Student",
     subtitle: "SS1–SS3 — exploring career & subject guidance",
   },
   {
     type: "jamb",
-    icon: "📚",
+    icon: "book-open",
     title: "JAMB Candidate",
     subtitle: "SS3 student / UTME candidate",
   },
   {
     type: "student",
-    icon: "🎓",
+    icon: "users",
     title: "Current University Student",
     subtitle: "University · Polytechnic · College of Education",
   },
   {
     type: "graduate",
-    icon: "🌍",
+    icon: "globe",
     title: "Graduate",
     subtitle: "NYSC / job seeker / early career",
   },
   {
     type: "skilled_worker",
-    icon: "🔧",
+    icon: "tool",
     title: "Skilled Worker / Professional",
     subtitle: "Trades, artisan work, vocational skills",
   },
   {
     type: "professional",
-    icon: "💼",
+    icon: "briefcase",
     title: "Career Changer",
     subtitle: "Professional · White-collar · Blue-collar — changing direction",
   },
   {
     type: "educator",
-    icon: "🏫",
+    icon: "home",
     title: "Educator / Institution",
     subtitle: "School, university, tutorial centre — career intelligence dashboard",
   },
@@ -78,10 +80,15 @@ const PERSONAS: {
 
 export default function AccountTypeGate() {
   const { colors } = useTheme();
+  const router = useRouter();
+  const resp = useResponsive();
   const [choice, setChoice] = useState<Choice | null>(null);
 
   if (choice === "educator") return <EducatorOnboarding />;
   if (choice) return <OnboardingFlow initialPersona={choice as UserType} />;
+
+  const isGrid = resp.isDesktop;
+  const columns = isGrid ? 2 : 1;
 
   return (
     <ScrollView
@@ -104,15 +111,32 @@ export default function AccountTypeGate() {
           This sets up the right experience for you. Pick the one that fits.
         </Text>
 
-        {PERSONAS.map((p) => (
-          <OptionCard
-            key={p.type}
-            icon={p.icon}
-            title={p.title}
-            subtitle={p.subtitle}
-            onPress={() => setChoice(p.type)}
-          />
-        ))}
+        <View style={[styles.cardGrid, isGrid && styles.cardGridDesktop]}>
+          {PERSONAS.map((p) => (
+            <TouchableOpacity
+              key={p.type}
+              activeOpacity={0.85}
+              onPress={() => setChoice(p.type)}
+              style={[
+                styles.card,
+                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+              ]}
+            >
+              <View style={[styles.cardIcon, { backgroundColor: colors.surface.subtle }]}>
+                <Feather name={p.icon} size={22} color={colors.accentRole.action} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+                  {p.title}
+                </Text>
+                <Text style={[styles.cardSub, { color: colors.textRole.secondary }]}>
+                  {p.subtitle}
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -130,4 +154,27 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xxl * 1.2,
   },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
+  cardGrid: { gap: Spacing.sm },
+  cardGridDesktop: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    padding: Spacing.lg,
+    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    minHeight: 64,
+  },
+  cardIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardTitle: { fontSize: FontSize.md },
+  cardSub: { fontSize: FontSize.xs, marginTop: 2, lineHeight: FontSize.xs * 1.5 },
 });

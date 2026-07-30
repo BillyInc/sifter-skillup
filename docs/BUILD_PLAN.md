@@ -12,7 +12,7 @@
 | Phase 3 | ✅ | Explore polish (8 screens): PathwaysHub, CareerChanger, PhdPathway, ElitePathwaysHub, ElitePathwayDetail, CharteredCredentials, QualificationUpgrades, EntrepreneurshipPathway |
 | Phase 4 | ✅ | My World Family (9 screens): Settings, Privacy, Terms, MySchool, NotificationSettings, DiaryScreen, MyWorldScreen, ProfileScreen, CareerProfileScreen |
 | Phase 5 | ✅ | Community (4 screens): ReferralScreen, GuildScreen, LeaderboardScreen, FeedScreen |
-| Phase 6 | ✅ | Admin (25 screens): AdminShell + all admin screens — CompassFonts migration, zero FontWeight references remaining |
+| Phase 6 | ✅ | Admin (25 screens): AdminShell + all admin screens — CompassFonts migration, zero FontWeight references remaining, `@/` import paths |
 | Phase 7a | ✅ | Search components: SearchOverlay, SearchBar (enhanced), SearchResultRow, SearchResultsGroup, SearchLoadingSkeleton, SearchEmptyState, ScopeChip, TermHighlight. Added SearchResult type to career.ts. Fixed FeedScreen/LeaderboardScreen/ReferralScreen CompassFonts import paths. |
 | Phase 7b | ✅ | Search integration: SearchOverlay wired into ReferenceShell (global search trigger on mobile + web), scoped SearchBar in OpportunitiesScreen. Removed legacy search stub from shell. |
 | Phase 8a | ✅ | New components: Toast (provider + inline + showToast), StatusBadge (locked/pending/verified/live), SkeletonRedesign (shimmer bar + SkeletonText/Avatar/Card/Row/Stat), PersonaCard, ApplicationWindowTimeline. Secondary button variant added to SifterButton. |
@@ -199,57 +199,79 @@ All 9 legacy screens migrated to semantic tokens + CompassFonts. All 13 pre-exis
 
 Rebuild screens with editorial/magazine layouts per design prompt.
 
+**Full-device responsive requirement (desktop / palmtop / small laptop / tablet / phone)**
+All Phase 10 screens must use `useResponsive()` from `@/hooks/useResponsive` and adapt layout across every breakpoint:
+- **Wide desktop** (≥1280px): 3–4 column grids, sidebar nav, full editorial layouts
+- **Desktop** (≥1024px): 2–3 column grids, sidebar, compact hero sections
+- **Palmtop / small laptop** (≥768px): 2 column grids, collapsed nav, tighter spacing
+- **Tablet** (<768px): 1–2 column, bottom tabs, compact cards
+- **Phone** (<480px): 1 column, full-width, smaller padding
+- **Small phone** (<375px): compact padding, reduced font sizes
+
+Status: ✅ token-migrated · 👾 redesigned · 🖥️ responsive-confirmed · ⬜ not started
+
 ### Home & Shell
-| Screen | Redesign |
-|--------|----------|
-| `HomeScreen` | Editorial magazine layout, hero "Your Route" card with route-line visualization, asymmetric grid |
-| `ReferenceShell` | Mobile: cobalt station-dot that slides between tabs. Web: sidebar with route-line accent |
-| `ExploreScreen` | Domain hero carousel, pathways strip, admission intelligence card |
-| `Consistency` (StreaksScreen) | Calendar heatmap in cobalt washes (not gamey flame) |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `HomeScreen` | ⬜ | Editorial magazine layout, hero "Your Route" card with route-line visualization, asymmetric grid |
+| `ReferenceShell` | ⬜ | Mobile: cobalt station-dot that slides between tabs. Web: sidebar with route-line accent |
+| `ExploreScreen` | ⬜ | Domain hero carousel, pathways strip, admission intelligence card |
+| `Consistency` (StreaksScreen) | ⬜ | Calendar heatmap in cobalt washes (not gamey flame) |
 
 ### Explore
-| Screen | Redesign |
-|--------|----------|
-| `DomainExplorerScreen` | Masonry grid layout |
-| `DomainDetailScreen` | Magazine article layout with sticky nav, horizontal card rails |
-| `RoleDetailScreen` | Flagship: vertical route-line diagram, skills bridge, stat-tile row |
-| `ProgrammeOverviewScreen` | Institution crest, course outline accordion, career-outcomes route fan-out |
-| `AdmissionInsightScreen` | Formula/equation display blocks ("beautiful mono equation") |
-| `ProgrammeCompareScreen` | Side-by-side comparison table |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `DomainExplorerScreen` | ⬜ | Masonry grid layout |
+| `DomainDetailScreen` | 👾 🖥️ | Magazine article layout with sticky nav, horizontal card rails |
+| `RoleDetailScreen` | ⬜ | Flagship: vertical route-line diagram, skills bridge, stat-tile row |
+| `ProgrammeOverviewScreen` | 👾 🖥️ | Institution crest, course outline accordion, career-outcomes route fan-out |
+| `AdmissionInsightScreen` | 👾 🖥️ | Formula/equation display blocks ("beautiful mono equation") |
+| `ProgrammeCompareScreen` | 👾 🖥️ | Side-by-side comparison table |
 
 ### Opportunities
-| Screen | Redesign |
-|--------|----------|
-| `OpportunitiesScreen` | Job-board grade with filter rail, rich cards, deadline countdown chips |
-| `OpportunityDetailScreen` | Requirement checklist vs. your profile (green/amber), application-window timeline |
-| `OrganisationProfileScreen` | Company-page layout with cover photo, logo |
-| `ApplicationWindowsScreen` | Horizontal timeline calendar view |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `OpportunitiesScreen` | 👾 🖥️ | Job-board grade with filter rail, rich cards, deadline countdown chips |
+| `OpportunityDetailScreen` | 👾 🖥️ | Requirement checklist vs. your profile (green/amber), application-window timeline |
+| `OrganisationProfileScreen` | 👾 🖥️ | Company-page layout with cover photo, logo |
+| `ApplicationWindowsScreen` | 👾 🖥️ | Horizontal timeline calendar view |
 
 ### My World
-| Screen | Redesign |
-|--------|----------|
-| `MyWorldScreen` | Route-line spine, saved items grid, personal notes widget |
-| `DiaryScreen` | Vertical route-line spine as date axis |
-| `PrivacyScreen` / `TermsScreen` | Legal-editorial layout with anchored side nav, highlighted callouts |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `MyWorldScreen` | ✅ | Route-line spine, saved items grid, personal notes widget |
+| `DiaryScreen` | ✅ | Vertical route-line spine as date axis |
+| `PrivacyScreen` / `TermsScreen` | ✅ 👾 | Legal-editorial layout with anchored side nav, highlighted callouts |
 
 ### Auth (structural enhancements)
-| Screen | Redesign |
-|--------|----------|
-| `AuthScreen` | Split-layout: domain icon mosaic left with route-line, form right |
-| `IntroCarousel` | Domain icons + data visualisations with cobalt wash + bold claim text |
-| `AccountTypeGate` | 6 persona cards with domain icons (icon-based identity) |
-| `OnboardingFlow` | Horizontal route-line stepper (animated progress) |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `AuthScreen` | ✅ 👾 | Split-layout: domain icon mosaic left with route-line, form right |
+| `IntroCarousel` | 👾 🖥️ | Domain icons + data visualisations with cobalt wash + bold claim text |
+| `AccountTypeGate` | 👾 🖥️ | 6 persona cards with domain icons (icon-based identity) |
+| `OnboardingFlow` | 👾 🖥️ | Horizontal route-line stepper (animated progress) |
 
 ### Learning
-| Screen | Redesign |
-|--------|----------|
-| `IslandMapScreen` | Metro map style (NOT candy-crush path), station nodes |
-| `LessonScreen` | Typography-first, code blocks, answer chips with press-lift |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `IslandMapScreen` | ⬜ | Metro map style (NOT candy-crush path), station nodes |
+| `LessonScreen` | ⬜ | Typography-first, code blocks, answer chips with press-lift |
 
 ### Legal
-| Screen | Redesign |
-|--------|----------|
-| `LearnMoreScreen` | Legal-editorial layout matching Privacy/Terms |
+| Screen | Status | Redesign |
+|--------|--------|----------|
+| `LearnMoreScreen` | ⬜ | Legal-editorial layout matching Privacy/Terms |
+
+### Phase 10 Completion Gate
+
+Before Phase 10 can sign off:
+
+1. **Responsive retrofit sweep** — confirm every 👾 screen uses `useResponsive()` and adapts layout for desktop/palmtop/small-laptop/tablet/phone. Missing devices → fix before moving on.
+2. **Token migration audit** — zero `FontWeight.*` or `colors.bg`/`colors.card`/`colors.text`/`colors.accent` legacy tokens in any redesigned screen.
+3. **Emoji audit** — no emoji-as-primary-icons in redesigned screens (Feather icons only).
+4. **Import audit** — all imports use `@/` alias, no relative `../` paths. ✅
+5. **TypeScript** — `npx tsc --noEmit` returns zero errors. ✅
+6. **Build plan** — status column updated to reflect actual state. ✅
 
 ---
 
@@ -257,19 +279,30 @@ Rebuild screens with editorial/magazine layouts per design prompt.
 
 All 11 animations from design prompt Section 10, minus chart-related ones.
 
-| Animation | Spec |
-|-----------|------|
-| Route-line draw-in | 320ms inOut-cubic, stations pop with spring |
-| Stat numeral count-up | 520ms out-quad |
-| Staggered card cascade | 240ms fade + 8px rise, 60ms stagger |
-| Tab-change station-dot slide | Smooth indicator slide between tabs |
-| Card press lift | Spring: mass 0.6, damping 15, stiffness 220 |
-| Save-button pop | Micro-interaction on save |
-| Skeleton-to-content crossfade | Smooth transition from skeleton to loaded |
-| Celebration particle burst | Restrained apricot burst along route-line |
-| Dark/light theme crossfade | Smooth color transition |
-| Screen-to-screen shared element | Role card photo expands into role-detail hero |
-| Reduce-motion column | Fade-only, no transforms, immediate values (accessibility) |
+### Infrastructure
+- **`src/theme/motion.ts`** — Timing presets (fast/base/route/count), Spring presets (press/arrive/layout), STAGGER delays (list/station/skillBar), FADE_ONLY reduce-motion fallback, `useReducedMotion()` hook, `motion.reveal()` and `motion.spring()` helpers. ✅
+- **`src/components/animations/PressLift.tsx`** — Reanimated spring-wrapper using `Spring.press` (mass 0.6, damping 15, stiffness 220). Scales to 0.98 on press-in, springs back on release. Respects reduce-motion. ✅
+- **`src/components/animations/StaggerReveal.tsx`** — Entrance animation: 240ms fade + 8px rise with configurable stagger (default 60ms). Uses `withDelay(index * stagger)` for sequenced reveals. Respects reduce-motion. ✅
+- **`src/components/animations/SkeletonCrossfade.tsx`** — Crossfade wrapper: skeleton → content transition on `loading` prop change via `Timing.base`. Respects reduced motion. ✅
+- **`src/components/animations/CelebrationBurst.tsx`** — Particle burst: configurable origin, 10 apricot dots animate outward (600ms cubic ease). Triggered by incrementing `trigger` prop. Respects reduced motion. ✅
+- **`src/components/animations/ThemeCrossfade.tsx`** — Theme transition: captures previous bg color, animates overlay on toggle. Wired into `app/_layout.tsx`. Respects reduced motion. ✅
+- **`src/components/animations/SharedElement.tsx`** — Shared element system: context-based registry (`SharedElementProvider`) + layout tracker (`SharedElement`) + `TransitionOverlay`. Wired into `app/_layout.tsx`. ✅
+
+### Animation Status
+
+| Animation | Status | Implementation |
+|-----------|--------|----------------|
+| Route-line draw-in | ✅ Built | `RouteLine.tsx` — 320ms inOut-cubic draw + spring station pops |
+| Stat numeral count-up | ✅ Built | `StatTile.tsx` — 520ms out-quad count-up via useSharedValue + useAnimatedReaction |
+| Staggered card cascade | ✅ Applied | `StaggerReveal` component wrapped into: ExploreScreen, OpportunitiesScreen, CareerHomeScreen, HomeScreen, FeedScreen, GuildScreen, LeaderboardScreen, AuthScreen, SignUpScreen, SettingsScreen, ProfileScreen, CareerProfileScreen, MySchoolScreen, NotificationSettingsScreen, DiaryScreen, MyWorldScreen, SkillsScreen, QuantMapScreen, PortfolioScreen, PortfolioHubScreen, OnboardingScreen, OnboardingFlow, AccountTypeGate, ForgotPasswordScreen, GitHubScreen, InterviewModeScreen, ReferralScreen, StreaksScreen, LearnMoreScreen + all 25 admin screens |
+| Tab-change station-dot slide | ✅ Migrated | `ReferenceShell.tsx` — migrated from RN `Animated` to Reanimated `useSharedValue` + `useAnimatedStyle` + `Spring.arrive` preset. Respects `useReducedMotion()`. |
+| Card press lift | ✅ Applied | `PressLift` component wired into: OpportunityCard, ScholarshipCard, OrganisationCard, ElitePathwayCard, ApplicationWindowCard, PersonaCard |
+| Save-button pop | ✅ Built | `SaveButton.tsx` — Reanimated spring sequence (scale 1→0.9→1.15→1) using `Spring.press`/`Spring.arrive`. Respects reduced motion. |
+| Skeleton-to-content crossfade | ✅ Built | `SkeletonCrossfade` component — wraps skeleton + content, crossfades on `loading` prop change via `Timing.base`. Respects reduced motion. |
+| Celebration particle burst | ✅ Built | `CelebrationBurst` component — configurable origin, 10 apricot dots animate outward (600ms cubic ease). Respects reduced motion. |
+| Dark/light theme crossfade | ✅ Built | `ThemeCrossfade` — wraps app content, captures previous bg color and animates overlay on theme toggle via `Timing.base`. Wired into `app/_layout.tsx`. |
+| Screen-to-screen shared element | ✅ Built | `SharedElementProvider`/`SharedElement` — context-based registry with `TransitionOverlay`. Wired into `app/_layout.tsx`. |
+| Reduce-motion column | ✅ Built | `useReducedMotion()` hook + `FADE_ONLY` config + branching in all components |
 
 ---
 

@@ -17,27 +17,28 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, Brand, CompassFonts, webContainer } from "../theme";
-import { SifterButton } from "../components/ui";
-import { useAuth } from "../hooks/useAuth";
-import { API } from "../lib/api";
-import { saveStartingPoint } from "../lib/startingPoint";
-import type { StartingPointProfile, UserType } from "../types/onboarding";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useResponsive } from "@/hooks/useResponsive";
+import { SifterButton } from "@/components/ui";
+import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
+import { saveStartingPoint } from "@/lib/startingPoint";
+import type { StartingPointProfile, UserType } from "@/types/onboarding";
 import {
   Stepper,
   ChoiceChips,
   ToggleRow,
-} from "../components/onboarding/primitives";
-import { SeniorSecondaryExploreSetupForm } from "../components/onboarding/SeniorSecondaryExploreSetupForm";
-import { JambSetupForm } from "../components/onboarding/JambSetupForm";
-import { GraduateSetupForm } from "../components/onboarding/GraduateSetupForm";
-import { OnboardingBackGuard } from "../components/onboarding/OnboardingBackGuard";
-import { CurrentStudentSetupForm } from "../components/onboarding/CurrentStudentSetupForm";
-import { ProfessionalSetupForm } from "../components/onboarding/ProfessionalSetupForm";
-import { SkilledWorkerSetupForm } from "../components/onboarding/SkilledWorkerSetupForm";
+} from "@/components/onboarding/primitives";
+import { SeniorSecondaryExploreSetupForm } from "@/components/onboarding/SeniorSecondaryExploreSetupForm";
+import { JambSetupForm } from "@/components/onboarding/JambSetupForm";
+import { GraduateSetupForm } from "@/components/onboarding/GraduateSetupForm";
+import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
+import { CurrentStudentSetupForm } from "@/components/onboarding/CurrentStudentSetupForm";
+import { ProfessionalSetupForm } from "@/components/onboarding/ProfessionalSetupForm";
+import { SkilledWorkerSetupForm } from "@/components/onboarding/SkilledWorkerSetupForm";
 
 const REGIONS = [
-  { label: "🇳🇬 Nigeria (local)", value: "nigeria" },
+  { label: "Nigeria (local)", value: "nigeria" },
   { label: "Africa (other)", value: "africa" },
   { label: "Europe", value: "europe" },
   { label: "North America", value: "north_america" },
@@ -104,6 +105,7 @@ export default function OnboardingFlow({
 }) {
   const router = useRouter();
   const { colors } = useTheme();
+  const resp = useResponsive();
   const { refreshUser } = useAuth();
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<Partial<StartingPointProfile>>({
@@ -144,7 +146,7 @@ export default function OnboardingFlow({
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={[styles.scroll, webContainer as object, resp.isDesktop && { maxWidth: 720, alignSelf: "center" }]}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
@@ -203,7 +205,7 @@ export default function OnboardingFlow({
 
           <View style={{ gap: 2 }}>
             <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
-              🔔 Notify me about
+              Notify me about
             </Text>
             {NOTIFS.map((n) => (
               <ToggleRow
@@ -227,7 +229,7 @@ export default function OnboardingFlow({
             onPress={finish}
             loading={finishing}
             variant="track"
-            color={Brand.primary}
+            color={colors.accentRole.action}
             size="lg"
             fullWidth
           />

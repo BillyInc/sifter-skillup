@@ -34,17 +34,17 @@ import {
   webContainer,
   INTRO_SEEN_KEY,
   CompassFonts,
-} from "../theme";
-import { useAuth } from "../hooks/useAuth";
-import { SifterButton } from "../components/ui";
-import { LevelUpLogo } from "../components/brand/LevelUpLogo";
-import { IntroCarousel } from "../components/brand/IntroCarousel";
+} from "@/theme";
+import { useAuth } from "@/hooks/useAuth";
+import { SifterButton } from "@/components/ui";
+import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
+import { IntroCarousel } from "@/components/brand/IntroCarousel";
 import {
   AuthField,
   LegalFooter,
   ErrorNote,
   TermsModal,
-} from "./auth/authShared";
+} from "@/screens/auth/authShared";
 
 type Mode = "welcome" | "login" | "signup" | "connecting";
 

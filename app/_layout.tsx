@@ -13,6 +13,7 @@ import { ErrorBoundary } from '../src/components/ErrorBoundary';
 import { OfflineBanner } from '../src/components/OfflineBanner';
 import { DatabaseProvider } from '../src/components/DatabaseProvider';
 import { ThemeProvider } from '../src/theme';
+import { ThemeCrossfade, SharedElementProvider } from '../src/components/animations';
 import { useCompassFonts } from '../src/theme/fonts';
 import { queryClient } from '../src/lib/queryClient';
 import { PRIVY_ENABLED } from '../src/lib/config';
@@ -29,23 +30,27 @@ export default function RootLayout() {
         <ErrorBoundary>
           <DatabaseProvider>
             <ThemeProvider>
-              <QueryClientProvider client={queryClient}>
-                <AuthProvider>
-                  <OfflineBanner />
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="(auth)" />
-                    <Stack.Screen name="(admin)" />
-                    <Stack.Screen name="(tabs)" />
-                    <Stack.Screen name="world/index" />
-                    <Stack.Screen name="starknet-track/index" />
-                    <Stack.Screen name="track-room/index" />
-                    <Stack.Screen name="merchandise/index" />
-                    <Stack.Screen name="map/island" />
-                    <Stack.Screen name="map/lesson" />
-                  </Stack>
-                </AuthProvider>
-              </QueryClientProvider>
+              <ThemeCrossfade>
+                <SharedElementProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <AuthProvider>
+                      <OfflineBanner />
+                      <Stack screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="index" />
+                        <Stack.Screen name="(auth)" />
+                        <Stack.Screen name="(admin)" />
+                        <Stack.Screen name="(tabs)" />
+                        <Stack.Screen name="world/index" />
+                        <Stack.Screen name="starknet-track/index" />
+                        <Stack.Screen name="track-room/index" />
+                        <Stack.Screen name="merchandise/index" />
+                        <Stack.Screen name="map/island" />
+                        <Stack.Screen name="map/lesson" />
+                      </Stack>
+                    </AuthProvider>
+                  </QueryClientProvider>
+                </SharedElementProvider>
+              </ThemeCrossfade>
             </ThemeProvider>
           </DatabaseProvider>
         </ErrorBoundary>

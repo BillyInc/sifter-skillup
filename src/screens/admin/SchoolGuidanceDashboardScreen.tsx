@@ -8,10 +8,11 @@ import {
   Spacing,
   useTheme,
   webContainer,
-} from "../../theme";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import type { EducatorProfile } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
 type GuidanceCard = {
   label: string;
@@ -79,9 +80,8 @@ export function SchoolGuidanceDashboardScreen() {
         </View>
 
         <View style={styles.cardGrid}>
-          {CARDS.map((card) => (
+          {CARDS.map((card, i) => (<StaggerReveal key={card.label} index={i}>
             <View
-              key={card.label}
               style={[
                 styles.card,
                 { backgroundColor: colors.card, borderColor: colors.border },
@@ -98,7 +98,7 @@ export function SchoolGuidanceDashboardScreen() {
                 {card.note}
               </Text>
             </View>
-          ))}
+          </StaggerReveal>))}
         </View>
 
         <View
@@ -110,9 +110,8 @@ export function SchoolGuidanceDashboardScreen() {
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Guidance workflow
           </Text>
-          {PATHWAY_ROWS.map(([label, detail]) => (
+          {PATHWAY_ROWS.map(([label, detail], i) => (<StaggerReveal key={label} index={i}>
             <View
-              key={label}
               style={[styles.row, { borderTopColor: colors.border }]}
             >
               <Text style={[styles.rowLabel, CompassFonts.bodyBold, { color: colors.text }]}>
@@ -122,7 +121,7 @@ export function SchoolGuidanceDashboardScreen() {
                 {detail}
               </Text>
             </View>
-          ))}
+          </StaggerReveal>))}
         </View>
 
         <View

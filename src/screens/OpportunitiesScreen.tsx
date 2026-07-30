@@ -37,6 +37,7 @@ import {
   type OpportunityType,
   type Likelihood,
 } from "../types/career";
+import { StaggerReveal } from "../components/animations/StaggerReveal";
 import {
   DataStateView,
   OpportunityCard,
@@ -194,15 +195,17 @@ export function OpportunitiesScreen() {
         <DataStateView state={state} empty={(d) => d.length === 0}>
           {(opportunities) => (
             <View style={[styles.cards, (isDesktop || isTablet) ? styles.cardsGrid : undefined]}>
-              {opportunities.map((o) => (
+              {opportunities.map((o, i) => (
                 <View key={o.id} style={(isDesktop || isTablet) ? styles.cardWrap : undefined}>
-                  <OpportunityCard
-                    opportunity={o}
-                    onPress={() => opportunitiesNav.opportunity(router, o.id)}
-                    subscribeSlot={
-                      <SubscribeButton target="opportunity" targetId={o.id} />
-                    }
-                  />
+                  <StaggerReveal index={i}>
+                    <OpportunityCard
+                      opportunity={o}
+                      onPress={() => opportunitiesNav.opportunity(router, o.id)}
+                      subscribeSlot={
+                        <SubscribeButton target="opportunity" targetId={o.id} />
+                      }
+                    />
+                  </StaggerReveal>
                 </View>
               ))}
             </View>

@@ -8,12 +8,12 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, CompassFonts, webContainer } from '../theme';
-import { requestPushPermission, scheduleDailyReminder } from '../lib/notificationEngine';
-import { enqueueWrite } from '../lib/offlineStorage';
-import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
-import { resolveTrackContext } from '../lib/trackContext';
+import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, CompassFonts, webContainer } from '@/theme';
+import { requestPushPermission, scheduleDailyReminder } from '@/lib/notificationEngine';
+import { enqueueWrite } from '@/lib/offlineStorage';
+import { useAuth } from '@/hooks/useAuth';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
+import { resolveTrackContext } from '@/lib/trackContext';
 
 const HOURS = Array.from({ length: 24 }, (_, i) => ({
   value: i,
@@ -239,13 +239,13 @@ const styles = StyleSheet.create({
   },
   heroEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   heroTitle: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   heroBody: {
     fontSize: FontSize.sm,
@@ -259,13 +259,13 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   cardHeadline: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   cardBody: {
     fontSize: FontSize.sm,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   },
   channelLabel: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   channelSub: {
     fontSize: FontSize.xs,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   },
   recText: {
     fontSize: 10,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   timeRow: {
     paddingTop: Spacing.xs,
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   timeChipText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: '700',
   },
   infoPanel: {
     borderRadius: Radius.lg,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   },
   previewTitle: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   previewBody: {
     fontSize: FontSize.xs,
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   saveBtnText: {
     color: '#fff',
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
+    fontWeight: '900',
   },
   optOutNote: {
     fontSize: FontSize.xs,

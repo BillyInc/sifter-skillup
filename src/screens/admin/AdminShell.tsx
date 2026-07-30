@@ -31,14 +31,14 @@ import {
   FontSize,
   CompassFonts,
   Shadow,
-} from "../../theme";
-import { adminNav } from "../../lib/adminNav";
-import { getEducatorProfile } from "../../lib/educatorProfile";
+} from "@/theme";
+import { adminNav } from "@/lib/adminNav";
+import { getEducatorProfile } from "@/lib/educatorProfile";
 import {
   adminAudienceForProfile,
   adminAudienceLabel,
   type AdminAudience,
-} from "../../lib/adminAudience";
+} from "@/lib/adminAudience";
 import type { EducatorProfile } from "../../types/institution";
 
 const SIDEBAR_WIDTH = 232;

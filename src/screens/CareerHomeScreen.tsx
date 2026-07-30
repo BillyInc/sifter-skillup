@@ -29,6 +29,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import { LevelUpLogo } from "../components/brand/LevelUpLogo";
 import { DataStateView } from "../components/careerIntelligence";
+import { StaggerReveal } from "../components/animations/StaggerReveal";
 import { careerData } from "../lib/careerData";
 import { getStartingPoint } from "../lib/startingPoint";
 import {
@@ -312,32 +313,33 @@ export default function CareerHomeScreen() {
       >
         {(rows) => (
           <View style={styles.list}>
-            {rows.map((it) => (
-              <View
-                key={it.id}
-                style={[
-                  styles.row,
-                  { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-                ]}
-              >
-                <Text style={styles.rowIcon}>
-                  {it.entityType === "role" ? "🧩" : "🗺️"}
-                </Text>
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={[styles.rowTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}
-                    numberOfLines={1}
-                  >
-                    {it.label ?? it.entityId}
+            {rows.map((it, i) => (
+              <StaggerReveal key={it.id} index={i}>
+                <View
+                  style={[
+                    styles.row,
+                    { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+                  ]}
+                >
+                  <Text style={styles.rowIcon}>
+                    {it.entityType === "role" ? "🧩" : "🗺️"}
                   </Text>
-                  <Text
-                    style={[styles.rowMeta, { color: colors.textRole.muted }, CompassFonts.body]}
-                    numberOfLines={1}
-                  >
-                    {it.entityType === "role" ? "Role" : "Domain"}
-                  </Text>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={[styles.rowTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}
+                      numberOfLines={1}
+                    >
+                      {it.label ?? it.entityId}
+                    </Text>
+                    <Text
+                      style={[styles.rowMeta, { color: colors.textRole.muted }, CompassFonts.body]}
+                      numberOfLines={1}
+                    >
+                      {it.entityType === "role" ? "Role" : "Domain"}
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              </StaggerReveal>
             ))}
           </View>
         )}
@@ -357,24 +359,25 @@ export default function CareerHomeScreen() {
         Quick actions
       </Text>
       <View style={styles.grid}>
-        {QUICK.map((q) => (
-          <TouchableOpacity
-            key={q.title}
-            activeOpacity={0.85}
-            onPress={() => router.push(q.href)}
-            style={[
-              styles.tile,
-              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-            ]}
-          >
-            <Text style={styles.tileIcon}>{q.icon}</Text>
-            <Text style={[styles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-              {q.title}
-            </Text>
-            <Text style={[styles.tileBody, { color: colors.textRole.muted }, CompassFonts.body]}>
-              {q.body}
-            </Text>
-          </TouchableOpacity>
+        {QUICK.map((q, i) => (
+          <StaggerReveal key={q.title} index={i}>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={() => router.push(q.href)}
+              style={[
+                styles.tile,
+                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+              ]}
+            >
+              <Text style={styles.tileIcon}>{q.icon}</Text>
+              <Text style={[styles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+                {q.title}
+              </Text>
+              <Text style={[styles.tileBody, { color: colors.textRole.muted }, CompassFonts.body]}>
+                {q.body}
+              </Text>
+            </TouchableOpacity>
+          </StaggerReveal>
         ))}
       </View>
     </ScrollView>

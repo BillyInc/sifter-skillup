@@ -4,16 +4,16 @@ import {
   SafeAreaView, Linking, RefreshControl, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
-import { API } from '../lib/api';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
+import { API } from '@/lib/api';
 import {
   ECOSYSTEM_LABS,
   ECOSYSTEM_LEVEL_COLORS,
   ECOSYSTEM_TRACK,
   type EcosystemLabDef,
-} from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
+} from '@/data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
 
 const ACCENT = '#6366F1';
 
@@ -304,23 +304,23 @@ const styles = StyleSheet.create({
   scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: Spacing.xl },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.xl, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 9 },
-  backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
-  heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  backButtonText: { fontSize: FontSize.xs, fontWeight: '900' },
+  heroEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: '900' },
   heroSub: { fontSize: FontSize.sm, lineHeight: 20 },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
   statCard: { flex: 1, minWidth: 104, borderRadius: Radius.xl, padding: Spacing.lg, gap: 4 },
-  statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
-  statLabel: { fontSize: 10, fontWeight: FontWeight.medium },
+  statValue: { fontSize: FontSize.md, fontWeight: '900' },
+  statLabel: { fontSize: 10, fontWeight: '500' },
   bannerCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.sm },
   bannerHeader: { flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start' },
   bannerCopy: { flex: 1 },
-  bannerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  bannerTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginTop: 2 },
+  bannerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  bannerTitle: { fontSize: FontSize.md, fontWeight: '900', marginTop: 2 },
   bannerBody: { fontSize: FontSize.sm, lineHeight: 20, marginTop: 2 },
   levelHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Spacing.sm },
   levelHeaderLine: { flex: 1, height: 1 },
-  levelHeaderText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2 },
+  levelHeaderText: { fontSize: 10, fontWeight: '900', letterSpacing: 1.2 },
   labCard: { borderWidth: 1.5, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.sm, ...Shadow.sm },
   labHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   labNumberBadge: {
@@ -331,14 +331,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  labNumberText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  labNumberText: { fontSize: FontSize.sm, fontWeight: '900' },
   labCopy: { flex: 1 },
-  labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
-  labTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, lineHeight: 22 },
+  labEyebrow: { fontSize: 10, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  labTitle: { fontSize: FontSize.md, fontWeight: '700', lineHeight: 22 },
   labMeta: { fontSize: FontSize.xs },
   statePill: { borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 6 },
-  statePillText: { fontSize: 10, fontWeight: FontWeight.black },
+  statePillText: { fontSize: 10, fontWeight: '900' },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   chip: { borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 4 },
-  chipText: { fontSize: 9, fontWeight: FontWeight.black },
+  chipText: { fontSize: 9, fontWeight: '900' },
 });

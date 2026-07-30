@@ -13,7 +13,7 @@
  *   </ComingSoonPanel>
  */
 import React, { type ReactNode } from "react";
-import { DataStateView } from "../../components/careerIntelligence/DataStateView";
+import { DataStateView } from "@/components/careerIntelligence/DataStateView";
 import type { DataState } from "../../types/career";
 
 export interface ComingSoonPanelProps<T> {

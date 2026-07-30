@@ -14,19 +14,19 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import {
   useTheme, Spacing, Radius, FontSize, Shadow,
   AnimPreset, XP_STAGES, webContainer, CompassFonts,
-} from '../theme';
-import { WorkerCharacter, DeskScene } from '../components/CharacterSystem';
+} from '@/theme';
+import { WorkerCharacter, DeskScene } from '@/components/CharacterSystem';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
   WebStatTile, WebDivider, useIsWebWide,
-} from '../components/web/WebGrid';
-import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
-import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
-import { useAuth } from '../hooks/useAuth';
-import { resolveTrackContext } from '../lib/trackContext';
-import { isAdminAccount } from '../lib/accountType';
-import { getEducatorProfile } from '../lib/educatorProfile';
-import { adminHomeForProfile } from '../lib/adminAudience';
+} from '@/components/web/WebGrid';
+import { xpEngine, type XPSnapshot }      from '@/lib/XPEngine';
+import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
+import { useAuth } from '@/hooks/useAuth';
+import { resolveTrackContext } from '@/lib/trackContext';
+import { isAdminAccount } from '@/lib/accountType';
+import { getEducatorProfile } from '@/lib/educatorProfile';
+import { adminHomeForProfile } from '@/lib/adminAudience';
 
 // ─── XP stage ring ─────────────────────────────────────────────────────────────
 

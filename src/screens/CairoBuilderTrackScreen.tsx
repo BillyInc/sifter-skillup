@@ -5,14 +5,14 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
+import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { getStarknetLabs } from '@/data/tracks/starknet_ecosystem/starknetLessonRegistry';
 import {
   getStarknetSepoliaRpcConfigError,
   isStarknetSepoliaRpcConfigured,
   starknetSepoliaRpcCall,
-} from '../lib/starknetRpc';
+} from '@/lib/starknetRpc';
 
 const ACCENT = '#F97316';
 

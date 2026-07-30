@@ -14,6 +14,7 @@ import {
   type ViewStyle,
 } from "react-native";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
+import { PressLift } from "../animations/PressLift";
 
 export interface ScholarshipCardProps {
   name: string;
@@ -47,11 +48,9 @@ export function ScholarshipCard({
 
   const subline = [level, destination].filter(Boolean).join(" · ");
 
-  const Container: any = onPress ? TouchableOpacity : View;
-
   return (
-    <Container
-      {...(onPress ? { onPress, activeOpacity: 0.85 } : {})}
+    <PressLift
+      onPress={onPress}
       style={[
         styles.card,
         { backgroundColor: colors.bgSecondary, borderColor: colors.border },
@@ -113,7 +112,7 @@ export function ScholarshipCard({
           </Text>
         </TouchableOpacity>
       ) : null}
-    </Container>
+    </PressLift>
   );
 }
 
