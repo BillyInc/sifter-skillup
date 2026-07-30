@@ -17,7 +17,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useTheme, Spacing, FontSize, CompassFonts } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
@@ -146,7 +146,7 @@ export default function OnboardingFlow({
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object, resp.isDesktop && { maxWidth: 720, alignSelf: "center" }]}
+      contentContainerStyle={[styles.scroll, { paddingHorizontal: resp.isDesktop ? Spacing.xxl : Spacing.md }, resp.isDesktop && { maxWidth: 720, alignSelf: "center" }]}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >

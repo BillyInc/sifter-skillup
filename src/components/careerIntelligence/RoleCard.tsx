@@ -1,53 +1,38 @@
-/**
- * RoleCard — a single role within a matched domain (CCMAS v3.0 Step 2).
- *
- * Surfaces a role's identity, its ESCO-coverage fit (via RoleMatchBadge — the
- * "Match"/"Adjacent" label is owned there and never relabelled here), and any
- * optional signals: a compact ₦ salary range and the companies hiring for it.
- * Presentational only — pass `onPress` to make it a tappable card.
- */
 import React from "react";
 import { View, Text, StyleSheet, type ViewStyle } from "react-native";
-import { Feather } from "@expo/vector-icons";
 import {
   CompassFonts,
   useTheme,
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
   type TierType,
-} from "../../theme";
-import type { RoleMatchType, Readiness } from "../../types/career";
+} from "@/theme";
+import type { RoleMatchType, Readiness } from "@/types/career";
 import { PressableCard, SifterCard } from "../ui";
 import { RoleMatchBadge } from "./RoleMatchBadge";
 import { ReadinessBadgeView } from "./ReadinessBadgeView";
 import { TierBadgeView } from "./TierBadgeView";
+import { DomainIcon } from "./DomainIcon";
 
 export interface RoleCardProps {
-  /** Role id (from RoleSummary). */
   id: string;
   name: string;
   alsoKnownAs?: string[];
   match: RoleMatchType;
-  /** 0..1 ESCO essential-skill coverage. */
   coverageRatio: number;
-  /** Readiness label (ready/bridge/stretch) from programme context. */
   readiness?: Readiness;
-  /** Career stage (entry/mid/senior). */
   tier?: TierType;
   inDemandScore?: number;
   eliteFlag?: boolean;
-  /** Optional monthly salary band (NGN). */
   salaryNgnMin?: number;
   salaryNgnMax?: number;
-  /** Optional sample of organisations hiring for this role. */
   companiesHiring?: string[];
+  domainId?: string;
   onPress?: () => void;
   style?: ViewStyle;
 }
 
-/** Compact naira formatter: 180000 → "₦180K", 1_200_000 → "₦1.2M". */
 function formatNgn(value: number): string {
   if (value >= 1_000_000) {
     const m = value / 1_000_000;
@@ -81,6 +66,7 @@ export function RoleCard({
   salaryNgnMin,
   salaryNgnMax,
   companiesHiring,
+  domainId,
   onPress,
   style,
 }: RoleCardProps) {
@@ -94,16 +80,17 @@ export function RoleCard({
   const body = (
     <View style={styles.body}>
       <View style={styles.header}>
+        {domainId ? <DomainIcon domainId={domainId} size={14} /> : null}
         <View style={styles.titleCol}>
           <Text
-            style={[styles.title, { color: colors.textRole.primary }]}
+            style={[styles.title, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}
             numberOfLines={2}
           >
             {name}
           </Text>
           {aka ? (
             <Text
-              style={[styles.aka, { color: colors.textRole.muted }]}
+              style={[styles.aka, { color: colors.textRole.muted }, CompassFonts.body]}
               numberOfLines={1}
             >
               {aka}
@@ -117,7 +104,6 @@ export function RoleCard({
         />
       </View>
 
-      {/* Readiness + career-stage badges (from programme context). */}
       {(readiness || tier) ? (
         <View style={styles.badgeRow}>
           {readiness ? <ReadinessBadgeView readiness={readiness} size="sm" /> : null}
@@ -125,27 +111,26 @@ export function RoleCard({
         </View>
       ) : null}
 
-      {/* Compact demand/elite chips */}
       {(inDemandScore != null || eliteFlag) ? (
         <View style={styles.chipRow}>
           {eliteFlag ? (
             <View
               style={[
                 styles.chip,
-                { backgroundColor: colors.eliteSoft, borderColor: colors.elite },
+                { backgroundColor: colors.accentRole.warning + "18", borderColor: colors.accentRole.warning },
               ]}
             >
-              <Text style={[styles.chipText, { color: colors.elite }]}>Elite</Text>
+              <Text style={[styles.chipText, { color: colors.accentRole.warning }, CompassFonts.data]}>Elite</Text>
             </View>
           ) : null}
           {inDemandScore != null && inDemandScore > 0 ? (
             <View
               style={[
                 styles.chip,
-                { backgroundColor: colors.demandSoft, borderColor: colors.demand },
+                { backgroundColor: colors.accentRole.status + "14", borderColor: colors.accentRole.status },
               ]}
             >
-              <Text style={[styles.chipText, { color: colors.demand }]}>
+              <Text style={[styles.chipText, { color: colors.accentRole.status }, CompassFonts.data]}>
                 {inDemandScore >= 80 ? "High demand" : inDemandScore >= 50 ? "In demand" : "Growing"}
               </Text>
             </View>
@@ -155,7 +140,7 @@ export function RoleCard({
 
       {salary ? (
         <View style={styles.metaRow}>
-          <Feather name="credit-card" size={14} color={colors.textRole.muted} />
+          <DomainIcon domainId={domainId} size={12} />
           <Text style={[styles.metaText, CompassFonts.data, { color: colors.textRole.secondary }]}>
             {salary}
           </Text>
@@ -164,12 +149,12 @@ export function RoleCard({
 
       {companies ? (
         <View style={styles.metaRow}>
-          <Feather name="briefcase" size={14} color={colors.textRole.muted} />
+          <DomainIcon domainId={domainId} size={12} />
           <Text
-            style={[styles.metaText, { color: colors.textRole.muted }]}
+            style={[styles.metaText, { color: colors.textRole.muted }, CompassFonts.body]}
             numberOfLines={1}
           >
-            <Text style={{ fontWeight: FontWeight.semibold }}>Companies: </Text>
+            <Text style={CompassFonts.bodySemibold}>Companies: </Text>
             {companies}
           </Text>
         </View>
@@ -202,8 +187,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "space-between",
-    gap: Spacing.md,
+    gap: Spacing.sm,
   },
   titleCol: {
     flex: 1,
@@ -211,12 +195,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.md * 1.25,
   },
   aka: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
   },
   metaRow: {
     flexDirection: "row",
@@ -243,11 +225,9 @@ const styles = StyleSheet.create({
   },
   chipText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
   },
   metaText: {
     flex: 1,
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
   },
 });

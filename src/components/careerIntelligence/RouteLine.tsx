@@ -49,7 +49,7 @@ export interface RouteStation {
 }
 
 export interface RouteLineProps {
-  variant?: 'rule' | 'spine' | 'journey';
+  variant?: 'rule' | 'spine' | 'journey' | 'vertical';
   stations?: RouteStation[];
   /** Edge style *between* stations. Length should be stations.length - 1. */
   edges?: EdgeKind[];
@@ -129,7 +129,7 @@ export function RouteLine({
       const t = draw.value;
       return { opacity: t };
     });
-    if (variant === 'journey') {
+    if (variant === 'journey' || variant === 'vertical') {
       return (
         <AView
           style={[

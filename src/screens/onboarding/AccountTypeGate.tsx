@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-import { useTheme, Spacing, Radius, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
 import OnboardingFlow from "@/screens/OnboardingFlow";
@@ -93,7 +93,7 @@ export default function AccountTypeGate() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >

@@ -151,3 +151,7 @@ export type { SelectOption } from "./InputComponents";
 
 // ── Banner variants (Phase 8) ────────────────────────────────
 export type { BannerVariant } from "./LayoutPrimitives";
+
+// ── Domain icon system (Phase 12) ────────────────────────────
+export { DomainIcon } from "./DomainIcon";
+export type { DomainIconProps } from "./DomainIcon";

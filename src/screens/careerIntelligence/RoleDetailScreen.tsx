@@ -37,8 +37,9 @@ import { useResponsive } from "@/hooks/useResponsive";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
+  { key: "demand", label: "Demand" },
+  { key: "skills", label: "Skills" },
   { key: "routes", label: "Routes" },
-  { key: "skills", label: "Skills gap" },
   { key: "related", label: "Related" },
 ] as const;
 
@@ -117,7 +118,8 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
 
   const content = (
     <>
-      {/* 1 — identity badges */}
+      {/* 1 — Overview: identity badges */}
+      <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
       {(aka || role.tier || isElite(role.eliteStatus) || currency) ? (
         <View style={styles.identitySection}>
           {aka ? (
@@ -157,15 +159,11 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         </View>
       ) : null}
 
-      {/* 2 — demand stats row */}
-      <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
+      {/* 2 — Demand snapshot */}
+      <View onLayout={(e) => onSectionLayout("demand", e.nativeEvent.layout.y)} />
       <DemandMetricsBlock metrics={metrics} title="Demand snapshot" />
 
-      {/* 3 — routes into this role */}
-      <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
-      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} />
-
-      {/* 4 — skills bridge: what to build */}
+      {/* 3 — Skills gap */}
       <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
       {essential.length ? (
         <View style={{ gap: Spacing.sm }}>
@@ -176,8 +174,6 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
           />
         </View>
       ) : null}
-
-      {/* 5 — essential / optional skill chips (compact reference) */}
       {(essential.length || optional.length) ? (
         <View style={{ gap: Spacing.sm }}>
           {essential.length ? (
@@ -199,7 +195,11 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         </View>
       ) : null}
 
-      {/* 6 — related roles from career ladder */}
+      {/* 4 — Routes into this role */}
+      <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
+      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} />
+
+      {/* 5 — Related roles from career ladder */}
       <View onLayout={(e) => onSectionLayout("related", e.nativeEvent.layout.y)} />
       {role.careerLadder?.length ? (
         <View style={{ gap: Spacing.sm }}>
@@ -220,7 +220,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         </View>
       ) : null}
 
-      {/* 7 — footer actions */}
+      {/* 6 — Footer actions */}
       <MappingFeedbackButton
         edgeType="domain_role"
         sourceId={appearsIn[0]?.domainId ?? roleKey}
@@ -354,10 +354,10 @@ function RouteIntoSection({
         </View>
       ) : null}
 
-      {/* Career ladder as a journey route-line */}
+      {/* Career ladder as a vertical route-line diagram */}
       {hasLadder ? (
         <RouteLine
-          variant="journey"
+          variant="vertical"
           stations={[
             { state: "you", label: "You are here" },
             ...careerLadder!.map((step, i) => ({

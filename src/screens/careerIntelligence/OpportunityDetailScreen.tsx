@@ -94,6 +94,7 @@ export function OpportunityDetailScreen({
   const { colors } = useTheme();
   const router = useRouter();
   const resp = useResponsive();
+  const isDesktop = resp.isDesktop && resp.isWeb;
   const [state, setState] = useState<DataState<Opportunity>>(() =>
     comingSoon<Opportunity>("This opportunity is being populated."),
   );
@@ -122,6 +123,7 @@ export function OpportunityDetailScreen({
           router={router}
           colors={colors}
           resp={resp}
+          isDesktop={isDesktop}
         />
       )}
     </DetailScaffold>
@@ -134,12 +136,14 @@ function OpportunityBody({
   router,
   colors,
   resp,
+  isDesktop,
 }: {
   data: Opportunity;
   opportunityId: string;
   router: Router;
   colors: ColorPalette;
   resp: ReturnType<typeof useResponsive>;
+  isDesktop: boolean;
 }) {
   const salary = salaryLabel(data.salaryNgnMin, data.salaryNgnMax);
   const windowLabel =
@@ -151,30 +155,77 @@ function OpportunityBody({
     ...(data.workMode ? [WORK_MODE_LABEL[data.workMode]] : []),
   ];
 
-  return (
-    <View style={styles.body}>
-      {/* Organisation row */}
-      <TouchableOpacity
-        onPress={() => opportunitiesNav.organisation(router, data.organisation.id)}
-        activeOpacity={0.85}
-        style={[styles.orgRow, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
-      >
-        <View style={styles.orgIcon}>
-          <Feather name="briefcase" size={20} color={colors.accentRole.action} />
-        </View>
-        <View style={styles.orgRowText}>
-          <Text style={[styles.orgName, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
-            {data.organisation.name}
+  const orgContent = (
+    <TouchableOpacity
+      onPress={() => opportunitiesNav.organisation(router, data.organisation.id)}
+      activeOpacity={0.85}
+      style={[styles.orgRow, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+    >
+      <View style={styles.orgIcon}>
+        <Feather name="briefcase" size={20} color={colors.accentRole.action} />
+      </View>
+      <View style={styles.orgRowText}>
+        <Text style={[styles.orgName, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+          {data.organisation.name}
+        </Text>
+        {[data.organisation.sector, data.organisation.country].filter(Boolean).join(" · ") ? (
+          <Text style={[styles.orgMeta, { color: colors.textRole.secondary }]}>
+            {[data.organisation.sector, data.organisation.country].filter(Boolean).join(" · ")}
           </Text>
-          {[data.organisation.sector, data.organisation.country].filter(Boolean).join(" · ") ? (
-            <Text style={[styles.orgMeta, { color: colors.textRole.secondary }]}>
-              {[data.organisation.sector, data.organisation.country].filter(Boolean).join(" · ")}
-            </Text>
-          ) : null}
-        </View>
-        <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
-      </TouchableOpacity>
+        ) : null}
+      </View>
+      <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
+    </TouchableOpacity>
+  );
 
+  const factsContent = (
+    <View style={styles.facts}>
+      {salary ? (
+        <View style={styles.factRow}>
+          <Feather name="dollar-sign" size={14} color={colors.demand} />
+          <Text style={[styles.fact, { color: colors.demand }, CompassFonts.data]}>
+            {salary}
+            <Text style={[CompassFonts.bodyMedium, { color: colors.textRole.muted }]}> / month</Text>
+          </Text>
+        </View>
+      ) : null}
+      {windowLabel ? (
+        <View style={styles.factRow}>
+          <Feather name="calendar" size={14} color={colors.textRole.secondary} />
+          <Text style={[styles.fact, { color: colors.textRole.primary }]}>
+            {windowLabel}
+          </Text>
+        </View>
+      ) : null}
+      {data.visaRoute ? (
+        <View style={styles.factRow}>
+          <Feather name="globe" size={14} color={colors.textRole.secondary} />
+          <Text style={[styles.fact, { color: colors.textRole.secondary }]}>
+            {data.visaRoute}
+          </Text>
+        </View>
+      ) : null}
+    </View>
+  );
+
+  const actionsContent = (
+    <View style={styles.actions}>
+      <SubscribeButton target="opportunity" targetId={opportunityId} />
+      {data.careersUrl ? (
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => { const url = data.careersUrl; if (url) Linking.openURL(url).catch(() => {}); }}
+          style={[styles.applyBtn, { backgroundColor: colors.accentRole.action }]}
+        >
+          <Feather name="external-link" size={14} color="#fff" style={{ marginRight: Spacing.xs }} />
+          <Text style={styles.applyBtnText}>Apply</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
+
+  const mainContent = (
+    <>
       {/* Badges */}
       <View style={styles.badgeRow}>
         {badges.map((label) => (
@@ -184,35 +235,6 @@ function OpportunityBody({
             </Text>
           </View>
         ))}
-      </View>
-
-      {/* Key facts */}
-      <View style={styles.facts}>
-        {salary ? (
-          <View style={styles.factRow}>
-            <Feather name="dollar-sign" size={14} color={colors.demand} />
-            <Text style={[styles.fact, { color: colors.demand }, CompassFonts.data]}>
-              {salary}
-              <Text style={[CompassFonts.bodyMedium, { color: colors.textRole.muted }]}> / month</Text>
-            </Text>
-          </View>
-        ) : null}
-        {windowLabel ? (
-          <View style={styles.factRow}>
-            <Feather name="calendar" size={14} color={colors.textRole.secondary} />
-            <Text style={[styles.fact, { color: colors.textRole.primary }]}>
-              {windowLabel}
-            </Text>
-          </View>
-        ) : null}
-        {data.visaRoute ? (
-          <View style={styles.factRow}>
-            <Feather name="globe" size={14} color={colors.textRole.secondary} />
-            <Text style={[styles.fact, { color: colors.textRole.secondary }]}>
-              {data.visaRoute}
-            </Text>
-          </View>
-        ) : null}
       </View>
 
       {/* Eligibility */}
@@ -281,21 +303,106 @@ function OpportunityBody({
         </View>
       ) : null}
 
-      {/* Actions */}
-      <View style={styles.actions}>
-        <SubscribeButton target="opportunity" targetId={opportunityId} />
-        {data.careersUrl ? (
-          <TouchableOpacity
-            activeOpacity={0.85}
-            onPress={() => { const url = data.careersUrl; if (url) Linking.openURL(url).catch(() => {}); }}
-            style={[styles.applyBtn, { backgroundColor: colors.accentRole.action }]}
-          >
-            <Feather name="external-link" size={14} color="#fff" style={{ marginRight: Spacing.xs }} />
-            <Text style={styles.applyBtnText}>Apply</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
+      <NotesWidget entityType="opportunity" entityId={opportunityId} />
+    </>
+  );
 
+  if (isDesktop) {
+    return (
+      <View style={styles.desktopRow}>
+        <View style={styles.desktopSidebar}>
+          <View style={[styles.sidebarSticky]}>
+            {orgContent}
+            {factsContent}
+            {actionsContent}
+          </View>
+        </View>
+        <View style={styles.desktopMain}>
+          <View style={{ gap: Spacing.lg }}>
+            {mainContent}
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.body}>
+      {orgContent}
+      {/* Badges */}
+      <View style={styles.badgeRow}>
+        {badges.map((label) => (
+          <View key={label} style={[styles.badge, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.badgeText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
+              {label}
+            </Text>
+          </View>
+        ))}
+      </View>
+      {factsContent}
+      {/* Eligibility */}
+      {data.eligibleInstitutionTypes.length ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            Who can apply
+          </Text>
+          <View style={styles.chipRow}>
+            {data.eligibleInstitutionTypes.map((t) => (
+              <View key={t} style={[styles.chip, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.chipText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
+                  {INSTITUTION_LABEL[t]}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      ) : null}
+      {/* Description */}
+      {data.description ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            About this role
+          </Text>
+          <Text style={[styles.paragraph, { color: colors.textRole.secondary }]}>
+            {data.description}
+          </Text>
+        </View>
+      ) : null}
+      {/* Skills */}
+      {data.skills && data.skills.length ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            Skills
+          </Text>
+          <View style={styles.chipRow}>
+            {data.skills.map((s) => (
+              <View key={s} style={[styles.chip, { backgroundColor: colors.accentSoft, borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.chipText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
+                  {s}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      ) : null}
+      {/* Certifications */}
+      {data.certifications && data.certifications.length ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            Certifications
+          </Text>
+          <View style={styles.chipRow}>
+            {data.certifications.map((c) => (
+              <View key={c} style={[styles.chip, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.chipText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
+                  {c}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      ) : null}
+      {actionsContent}
       <NotesWidget entityType="opportunity" entityId={opportunityId} />
     </View>
   );
@@ -366,5 +473,22 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: FontSize.sm,
     fontFamily: "HankenGrotesk_600SemiBold",
+  },
+
+  // ── Desktop layout ────────────────────────────────────────
+  desktopRow: {
+    flex: 1,
+    flexDirection: "row",
+    gap: Spacing.xxl,
+  },
+  desktopSidebar: {
+    width: 280,
+    flexShrink: 0,
+  },
+  sidebarSticky: {
+    gap: Spacing.lg,
+  },
+  desktopMain: {
+    flex: 1,
   },
 });

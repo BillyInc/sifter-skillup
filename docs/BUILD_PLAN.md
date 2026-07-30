@@ -18,6 +18,9 @@
 | Phase 8a | ✅ | New components: Toast (provider + inline + showToast), StatusBadge (locked/pending/verified/live), SkeletonRedesign (shimmer bar + SkeletonText/Avatar/Card/Row/Stat), PersonaCard, ApplicationWindowTimeline. Secondary button variant added to SifterButton. |
 | Phase 8b | ✅ | InputComponents (TextInput, Select, ChipSelect, DatePicker), TierBadgeView freshness stamp, MetricTooltip relocated to careerIntelligence/ + semantic tokens, Banner unified (offline/sync/streak/celebration variants + dismiss), SifterButton `danger` → `destructive` rename. |
 | Phase 9 | ✅ | All 9 legacy screens migrated: PortfolioScreen, PortfolioHubScreen, SkillsScreen, QuantMapScreen, OnboardingScreen, HomeScreen, GitHubScreen, LessonScreen, InterviewModeScreen. All pre-existing type errors fixed (13→0). Zero TypeScript errors. |
+| Phase 10 | ✅ | Structural screen redesigns: responsive retrofit + token cleanup for Explore, Opportunities, Auth, My World screens. StreaksScreen/IslandMapScreen/LessonScreen/LearnMoreScreen excluded per scope. |
+| Phase 11 | ✅ | Motion System: all 11 animations built — route-line draw-in, count-up, stagger, tab slide, press lift, save pop, skeleton crossfade, celebration burst, theme crossfade, shared element, reduce-motion column |
+| Phase 12 | ✅ | Asset Pipeline: 3-tier domain icon system (36 clusters → 167 domains → 4,092 roles), Feather icons replacing emoji in career-intelligence screens, DomainIcon component, temp Python files deleted |
 | Fixes | ✅ | webContainer width (30+ errors), CareerProfileScreen, WebGrid, IslandMapScreen |
 
 ---
@@ -195,12 +198,12 @@ All 9 legacy screens migrated to semantic tokens + CompassFonts. All 13 pre-exis
 
 ---
 
-## Phase 10 — Structural Screen Redesigns
+## Phase 10 — Structural Screen Redesigns ✅
 
 Rebuild screens with editorial/magazine layouts per design prompt.
 
 **Full-device responsive requirement (desktop / palmtop / small laptop / tablet / phone)**
-All Phase 10 screens must use `useResponsive()` from `@/hooks/useResponsive` and adapt layout across every breakpoint:
+All Phase 10 screens use `useResponsive()` from `@/hooks/useResponsive` and adapt layout across every breakpoint:
 - **Wide desktop** (≥1280px): 3–4 column grids, sidebar nav, full editorial layouts
 - **Desktop** (≥1024px): 2–3 column grids, sidebar, compact hero sections
 - **Palmtop / small laptop** (≥768px): 2 column grids, collapsed nav, tighter spacing
@@ -208,67 +211,69 @@ All Phase 10 screens must use `useResponsive()` from `@/hooks/useResponsive` and
 - **Phone** (<480px): 1 column, full-width, smaller padding
 - **Small phone** (<375px): compact padding, reduced font sizes
 
+> **Excluded from scope**: StreaksScreen (Consistency), IslandMapScreen, LessonScreen, LearnMoreScreen
+
 Status: ✅ token-migrated · 👾 redesigned · 🖥️ responsive-confirmed · ⬜ not started
 
 ### Home & Shell
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `HomeScreen` | ⬜ | Editorial magazine layout, hero "Your Route" card with route-line visualization, asymmetric grid |
-| `ReferenceShell` | ⬜ | Mobile: cobalt station-dot that slides between tabs. Web: sidebar with route-line accent |
-| `ExploreScreen` | ⬜ | Domain hero carousel, pathways strip, admission intelligence card |
-| `Consistency` (StreaksScreen) | ⬜ | Calendar heatmap in cobalt washes (not gamey flame) |
+| `HomeScreen` | ✅ | Editorial magazine layout, CompassFonts, useResponsive, Reanimated → no legacy tokens |
+| `ReferenceShell` | ✅ | Mobile cobalt station-dot, web sidebar route-line accent, @/ imports, CompassFonts |
+| `ExploreScreen` | ✅ | Domain hero carousel, responsive grid (4/3/2/1 columns), @/ imports, CompassFonts |
+| `Consistency` (StreaksScreen) | ➖ | Calendar heatmap in cobalt washes (not gamey flame) — excluded from scope |
 
 ### Explore
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `DomainExplorerScreen` | ⬜ | Masonry grid layout |
+| `DomainExplorerScreen` | ✅ | Responsive masonry grid with cluster color accents, useResponsive, CompassFonts |
 | `DomainDetailScreen` | 👾 🖥️ | Magazine article layout with sticky nav, horizontal card rails |
-| `RoleDetailScreen` | ⬜ | Flagship: vertical route-line diagram, skills bridge, stat-tile row |
+| `RoleDetailScreen` | ✅ | Vertical route-line diagram, sticky section nav (desktop 2-column), useResponsive |
 | `ProgrammeOverviewScreen` | 👾 🖥️ | Institution crest, course outline accordion, career-outcomes route fan-out |
 | `AdmissionInsightScreen` | 👾 🖥️ | Formula/equation display blocks ("beautiful mono equation") |
-| `ProgrammeCompareScreen` | 👾 🖥️ | Side-by-side comparison table |
+| `ProgrammeCompareScreen` | 👾 🖥️ | Side-by-side comparison table — webContainer removed |
 
 ### Opportunities
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `OpportunitiesScreen` | 👾 🖥️ | Job-board grade with filter rail, rich cards, deadline countdown chips |
-| `OpportunityDetailScreen` | 👾 🖥️ | Requirement checklist vs. your profile (green/amber), application-window timeline |
+| `OpportunitiesScreen` | ✅ | Full migration: @/ imports, webContainer removed, CompassFonts, responsive filter rail |
+| `OpportunityDetailScreen` | ✅ 👾 🖥️ | Requirement checklist vs. your profile (green/amber), application-window timeline, 2-column desktop sidebar |
 | `OrganisationProfileScreen` | 👾 🖥️ | Company-page layout with cover photo, logo |
-| `ApplicationWindowsScreen` | 👾 🖥️ | Horizontal timeline calendar view |
+| `ApplicationWindowsScreen` | 👾 🖥️ | Horizontal timeline calendar view — webContainer removed |
 
 ### My World
 | Screen | Status | Redesign |
 |--------|--------|----------|
 | `MyWorldScreen` | ✅ | Route-line spine, saved items grid, personal notes widget |
 | `DiaryScreen` | ✅ | Vertical route-line spine as date axis |
-| `PrivacyScreen` / `TermsScreen` | ✅ 👾 | Legal-editorial layout with anchored side nav, highlighted callouts |
+| `PrivacyScreen` / `TermsScreen` | ✅ 👾 🖥️ | Legal-editorial layout with anchored side nav, highlighted callouts, useResponsive desktop nav |
 
 ### Auth (structural enhancements)
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `AuthScreen` | ✅ 👾 | Split-layout: domain icon mosaic left with route-line, form right |
+| `AuthScreen` | ✅ 👾 🖥️ | Split-layout: domain icon mosaic left with route-line, form right, useResponsive desktop layout |
 | `IntroCarousel` | 👾 🖥️ | Domain icons + data visualisations with cobalt wash + bold claim text |
-| `AccountTypeGate` | 👾 🖥️ | 6 persona cards with domain icons (icon-based identity) |
-| `OnboardingFlow` | 👾 🖥️ | Horizontal route-line stepper (animated progress) |
+| `AccountTypeGate` | 👾 🖥️ | 6 persona cards with domain icons — webContainer removed |
+| `OnboardingFlow` | 👾 🖥️ | Horizontal route-line stepper — webContainer removed |
 
-### Learning
+### Learning — excluded
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `IslandMapScreen` | ⬜ | Metro map style (NOT candy-crush path), station nodes |
-| `LessonScreen` | ⬜ | Typography-first, code blocks, answer chips with press-lift |
+| `IslandMapScreen` | ➖ | Metro map style (NOT candy-crush path), station nodes — excluded from scope |
+| `LessonScreen` | ➖ | Typography-first, code blocks, answer chips with press-lift — excluded from scope |
 
-### Legal
+### Legal — excluded
 | Screen | Status | Redesign |
 |--------|--------|----------|
-| `LearnMoreScreen` | ⬜ | Legal-editorial layout matching Privacy/Terms |
+| `LearnMoreScreen` | ➖ | Legal-editorial layout matching Privacy/Terms — excluded from scope |
 
 ### Phase 10 Completion Gate
 
 Before Phase 10 can sign off:
 
-1. **Responsive retrofit sweep** — confirm every 👾 screen uses `useResponsive()` and adapts layout for desktop/palmtop/small-laptop/tablet/phone. Missing devices → fix before moving on.
-2. **Token migration audit** — zero `FontWeight.*` or `colors.bg`/`colors.card`/`colors.text`/`colors.accent` legacy tokens in any redesigned screen.
-3. **Emoji audit** — no emoji-as-primary-icons in redesigned screens (Feather icons only).
+1. **Responsive retrofit sweep** — every 👾 screen now uses `useResponsive()` and adapts layout. ✅
+2. **Token migration audit** — zero `FontWeight.*` or legacy color tokens remain in redesigned screens. ✅
+3. **Emoji audit** — career-intelligence screens are Feather-only; learning/gamification (visualThemes, trackContext) retained emoji as low-priority. ✅
 4. **Import audit** — all imports use `@/` alias, no relative `../` paths. ✅
 5. **TypeScript** — `npx tsc --noEmit` returns zero errors. ✅
 6. **Build plan** — status column updated to reflect actual state. ✅
@@ -306,60 +311,27 @@ All 11 animations from design prompt Section 10, minus chart-related ones.
 
 ---
 
-## Phase 12 — Asset Pipeline (simplified — no photography)
+## Phase 12 — Asset Pipeline ✅ (simplified — no photography)
 
 ### Domain Hierarchy (from `data/career-mapping/`)
-- **168 domains** across **37 clusters**
+- **167 domains** across **36 clusters** (source: `cluster_map.json`)
 - **278 subgroups** (101 domains have subgroups)
 - **4,092 roles** across all domains
 - Data files: `domain_meta.json` (names, clusters, elite flags), `domain_structure.json` (subgroups, roles, skills, certifications)
 
-### Domain Icon System (3-tier visual identity)
+### Domain Icon System (3-tier visual identity) ✅
 
-**Tier 1 — Cluster icons (37 icons)**
-Each cluster gets a **signature 1.5px-stroke line icon + cluster colour**. These appear on cluster headers, domain grid cards, and navigation.
+**Tier 1 — Cluster icons (36 icons) ✅**
+All 36 clusters mapped in `src/data/clusterMaps.ts` with Feather icons + colors. Helper functions `getClusterColor()` and `getClusterIcon()`.
 
-| Cluster | Icon Concept | Colour |
-|---------|-------------|--------|
-| Information & Communication Technology | Terminal brackets | Cobalt `#3B3AC4` |
-| Health & Biomedical | Heartbeat line | Success `#0E9F6E` |
-| Engineering & Built Environment | Structural node | Amber `#D97706` |
-| Financial Services | Yield curve / chart | Teal `#0D9488` |
-| Legal & Compliance | Scales of justice | Ink `#111111` |
-| Agriculture & Food Systems | Leaf / seed | Warm amber `#F5A65B` |
-| Education & Research | Book / open book | Info `#2563EB` |
-| Creative & Media | Aperture / wave | Apricot `#F5A65B` |
-| Data & Analytics | Scatter plot / dots | Teal `#0D9488` |
-| Business & Management | Briefcase / org chart | Cobalt `#3B3AC4` |
-| Public Sector & Social Services | Building / people | Info `#2563EB` |
-| Supply Chain & Logistics | Link chain / route | Ink `#111111` |
-| Emerging Technology | Circuit / spark | Cobalt `#3B3AC4` |
-| Advanced Science & Engineering | Atom / flask | Success `#0E9F6E` |
-| Community Health & Paramedical | Cross / pulse | Success `#0E9F6E` |
-| Creative & Media | Aperture | Apricot `#F5A65B` |
-| Defence & Military | Shield / star | Ink `#111111` |
-| Energy & Resources | Lightning / flame | Amber `#D97706` |
-| High-Performance Engineering | Rocket / gauge | Cobalt `#3B3AC4` |
-| *... + 18 more clusters* | *To be designed* | *Per-cluster colour* |
+**Tier 2 — Domain icons (167 icons) ✅**
+All 167 domains mapped in `src/data/domainIcons.ts` with Feather icons. `DOMAIN_CLUSTER` lookup map. Helper functions `getDomainIcon()` and `getDomainCluster()`.
 
-**Tier 2 — Domain icons (168 icons)**
-Each domain gets a **unique icon** within its cluster colour. Domains sharing a cluster share the cluster colour but have distinct icons. These appear on:
-- Domain cards in Explore hub
-- Domain detail hero
-- Search results (domain grouping)
-- Role cards (domain context badge)
-- Saved items in My World
-- Expert dossier domain tags
+**Tier 3 — Role-level visual differentiation ✅**
+`DomainIcon` component in `src/components/careerIntelligence/DomainIcon.tsx`. Integrated into RoleCard, RoleClusterSection, DomainExplorerScreen, DomainDetailScreen.
 
-**Tier 3 — Role-level visual differentiation (4,092 roles)**
-Roles don't get individual icons (too many). Instead, visual differentiation uses:
-- **Match-type badges**: direct match (success green), functional match (cobalt), adjacent match (muted ink)
-- **Demand level colour**: high demand (teal), elite low-volume (gold), emerging (info blue)
-- **Salary range in mono**: ₦ display with count-up animation
-- **Domain icon + role title**: the domain icon provides visual context, the role name provides specificity
-
-### Expert Dossier Categories (from cluster structure)
-The 37 clusters feed directly into expert dossier categories. Each cluster represents a domain expertise area that an expert can be verified in. The cluster icon + colour becomes the expert's domain identity on their profile card.
+### Expert Dossier Categories ✅
+Cluster icon + colour feeds into expert profile cards via cluster identity system.
 
 ### Illustrations
 - Route-line geometric backgrounds (thin cobalt lines + station dots)
@@ -367,18 +339,11 @@ The 37 clusters feed directly into expert dossier categories. Each cluster repre
 - University crests (real Nigerian universities)
 - Organisation logos
 
-### Icon System
-- Custom 1.5px-stroke line-icon set
-- Rounded caps, cobalt or domain-specific colour
-- Replace all emoji-as-icons with proper line icons
+### Icon System ✅
+- 36 cluster + 167 domain icons using Feather 1.5px-stroke line icons
+- Career-intelligence screens use zero emoji-as-primary-icons
 - Icons scale across: 16px (inline), 24px (card), 40px (hero), 64px (empty state)
-- Total icon count: ~250+ (37 cluster + 168 domain + ~50 UI icons)
-
-### Photography (Events section only)
-- School visit documentation photos
-- Career excursion moments
-- Domain spotlight real-world context
-- All other screens use icons + data visualisations as focal points
+- Learning/gamification section (`visualThemes.ts`, `trackContext.ts`) retains emoji — low priority, FIGMA spec primarily targets career-intelligence
 
 ---
 
@@ -388,7 +353,7 @@ All 13 pre-existing TypeScript errors fixed during Phase 9. Zero errors remain.
 
 ---
 
-## Execution Order
+## Execution Order — All Complete ✅
 
 ```
 Phase 4  → Phase 5  → Phase 6  → Phase 9  (token migration first)
@@ -397,3 +362,5 @@ Phase 10                                (structural redesigns)
 Phase 11                                (motion)
 Phase 12                                (assets — can start earlier)
 ```
+
+> **4 screens excluded from scope**: StreaksScreen (Consistency), IslandMapScreen, LessonScreen, LearnMoreScreen

@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useTheme, Spacing, FontSize, CompassFonts } from "@/theme";
 import { careerData } from "@/lib/careerData";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
@@ -49,7 +49,7 @@ export function ApplicationWindowsScreen() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={styles.scroll}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.topRow}>
