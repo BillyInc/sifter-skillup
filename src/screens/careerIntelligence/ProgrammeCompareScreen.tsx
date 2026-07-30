@@ -41,7 +41,6 @@ import {
   Radius,
   Spacing,
   useTheme,
-  webContainer,
   type ColorPalette,
 } from "@/theme";
 
@@ -152,7 +151,7 @@ export default function ProgrammeCompareScreen() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >

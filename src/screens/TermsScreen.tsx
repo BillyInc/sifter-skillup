@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
+import { useResponsive } from "@/hooks/useResponsive";
 
 const SECTIONS = [
   ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
@@ -25,6 +26,57 @@ interface Props { onClose?: () => void; }
 
 export default function TermsScreen({ onClose }: Props) {
   const { colors } = useTheme();
+  const resp = useResponsive();
+  const isDesktop = resp.isDesktop && resp.isWeb;
+
+  const sectionY = useRef<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState('0');
+  const scrollRef = useRef<ScrollView>(null);
+
+  const onSectionLayout = useCallback((key: string, y: number) => {
+    if (sectionY.current[key] === undefined) {
+      sectionY.current[key] = y;
+    }
+  }, []);
+
+  const scrollTo = useCallback((key: string) => {
+    const y = sectionY.current[key];
+    if (y !== undefined) {
+      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+    }
+    setActiveSection(key);
+  }, []);
+
+  const content = (
+    <>
+      <View style={[styles.note, { backgroundColor: `${colors.accentRole.status}14`, borderLeftColor: colors.accentRole.status }]}>
+        <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
+          This is plain-language product copy, not legal advice. Account
+          creation requires accepting the current version of these terms and
+          the Privacy Policy.
+        </Text>
+      </View>
+
+      {SECTIONS.map(([title, body], index) => (
+        <View
+          key={title}
+          style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+          onLayout={(e) => onSectionLayout(String(index), e.nativeEvent.layout.y)}
+        >
+          <Text style={[styles.sectionNum, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{index + 1}.</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
+            <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{body}</Text>
+          </View>
+        </View>
+      ))}
+
+      <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:legal@sifter.app')}>
+        <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email legal@sifter.app</Text>
+      </TouchableOpacity>
+      <View style={{ height: 40 }} />
+    </>
+  );
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
@@ -40,30 +92,61 @@ export default function TermsScreen({ onClose }: Props) {
           </TouchableOpacity>
         ) : null}
       </View>
-      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <View style={[styles.note, { backgroundColor: `${colors.accentRole.status}14`, borderLeftColor: colors.accentRole.status }]}>
-          <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
-            This is plain-language product copy, not legal advice. Account
-            creation requires accepting the current version of these terms and
-            the Privacy Policy.
-          </Text>
-        </View>
-
-        {SECTIONS.map(([title, body], index) => (
-          <View key={title} style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.sectionNum, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{index + 1}.</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
-              <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{body}</Text>
+      {isDesktop ? (
+        <View style={styles.desktopRow}>
+          <View style={styles.navColumn}>
+            <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle, position: "sticky" as any, top: 0 }]}>
+              <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                On this page
+              </Text>
+              {SECTIONS.map(([title], index) => (
+                <TouchableOpacity
+                  key={title}
+                  onPress={() => scrollTo(String(index))}
+                  style={[
+                    styles.navItem,
+                    activeSection === String(index) && { backgroundColor: colors.surface.subtle },
+                  ]}
+                  activeOpacity={0.6}
+                >
+                  <View
+                    style={[
+                      styles.navDot,
+                      {
+                        backgroundColor:
+                          activeSection === String(index) ? colors.accentRole.action : colors.borderRole.subtle,
+                      },
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.navLabel,
+                      { color: activeSection === String(index) ? colors.textRole.primary : colors.textRole.secondary },
+                      CompassFonts.bodyMedium,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
-        ))}
-
-        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:legal@sifter.app')}>
-          <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email legal@sifter.app</Text>
-        </TouchableOpacity>
-        <View style={{ height: 40 }} />
-      </ScrollView>
+          <ScrollView
+            ref={scrollRef}
+            style={styles.mainScroll}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+            contentContainerStyle={styles.body}
+          >
+            {content}
+          </ScrollView>
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+          {content}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -78,12 +161,10 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontFamily: 'HankenGrotesk_700Bold',
     letterSpacing: 1,
   },
   title: {
     fontSize: FontSize.lg,
-    fontFamily: 'HankenGrotesk_700Bold',
   },
   sub: {
     fontSize: FontSize.xs,
@@ -97,7 +178,6 @@ const styles = StyleSheet.create({
   },
   closeText: {
     fontSize: FontSize.xs,
-    fontFamily: 'HankenGrotesk_600SemiBold',
   },
   body: {
     ...webContainer,
@@ -124,11 +204,9 @@ const styles = StyleSheet.create({
   sectionNum: {
     width: 24,
     fontSize: FontSize.sm,
-    fontFamily: 'HankenGrotesk_700Bold',
   },
   sectionTitle: {
     fontSize: FontSize.sm,
-    fontFamily: 'HankenGrotesk_700Bold',
     marginBottom: 4,
   },
   sectionBody: {
@@ -144,6 +222,45 @@ const styles = StyleSheet.create({
   emailBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontFamily: 'HankenGrotesk_700Bold',
+  },
+  // Desktop layout
+  desktopRow: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: Spacing.xxl,
+  },
+  navColumn: {
+    width: 180,
+    flexShrink: 0,
+  },
+  navSticky: {
+    borderRightWidth: StyleSheet.hairlineWidth,
+    paddingRight: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  navTitle: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.7,
+    textTransform: 'uppercase',
+    marginBottom: Spacing.sm,
+  },
+  navItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+  },
+  navDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  navLabel: {
+    fontSize: FontSize.sm,
+  },
+  mainScroll: {
+    flex: 1,
   },
 });

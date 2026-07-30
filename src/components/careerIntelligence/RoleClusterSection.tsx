@@ -1,12 +1,3 @@
-/**
- * RoleClusterSection — a collapsible sub-group (role cluster) within a domain.
- *
- * Header (whole thing tappable): cluster name + a role-count chip + a one-line
- * muted description, with a chevron that rotates on expand. The expanded body
- * shows the cluster's focus skills as chips, its ToolGroupsBlock, its
- * CertPlacementList (specialisation certs) and finally `children` — the role
- * cards for this cluster, rendered by the parent screen.
- */
 import React, { useRef, useState } from "react";
 import {
   View,
@@ -21,15 +12,16 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
-  AnimPreset,
-} from "../../theme";
-import type { SubgroupV2 } from "../../types/career";
+  CompassFonts,
+} from "@/theme";
+import type { SubgroupV2 } from "@/types/career";
 import { ToolGroupsBlock } from "./ToolGroupsBlock";
 import { CertPlacementList } from "./CertPlacementList";
+import { DomainIcon } from "./DomainIcon";
 
 export interface RoleClusterSectionProps {
   subgroup: SubgroupV2;
+  domainId?: string;
   children?: React.ReactNode;
   defaultOpen?: boolean;
   style?: ViewStyle;
@@ -37,24 +29,26 @@ export interface RoleClusterSectionProps {
 
 export function RoleClusterSection({
   subgroup,
+  domainId,
   children,
   defaultOpen = false,
   style,
 }: RoleClusterSectionProps) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(defaultOpen);
-  const rotate = useRef(new Animated.Value(defaultOpen ? 1 : 0)).current;
+  const rotateAnim = useRef(new Animated.Value(defaultOpen ? 1 : 0)).current;
 
   const toggle = () => {
     const next = !open;
     setOpen(next);
-    Animated.timing(rotate, {
+    Animated.timing(rotateAnim, {
       toValue: next ? 1 : 0,
-      ...AnimPreset.standard,
+      duration: 200,
+      useNativeDriver: true,
     }).start();
   };
 
-  const chevron = rotate.interpolate({
+  const chevronRotation = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ["0deg", "90deg"],
   });
@@ -65,7 +59,7 @@ export function RoleClusterSection({
     <View
       style={[
         styles.container,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         style,
       ]}
     >
@@ -74,20 +68,22 @@ export function RoleClusterSection({
         activeOpacity={0.7}
         style={styles.header}
       >
+        <DomainIcon domainId={domainId} size={18} rounded />
         <View style={styles.headerMain}>
           <View style={styles.titleRow}>
             <Text
-              style={[styles.title, { color: colors.text }]}
+              style={[styles.title, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}
               numberOfLines={1}
             >
               {subgroup.name}
             </Text>
             {typeof subgroup.roleCount === "number" ? (
               <View
-                style={[styles.countChip, { backgroundColor: colors.bgSecondary }]}
+                style={[styles.countChip, { backgroundColor: colors.surface.subtle }]}
               >
-                <Text style={[styles.countText, { color: colors.textMuted }]}>
-                  {subgroup.roleCount}{" "}
+                <Text style={[styles.countText, { color: colors.textRole.muted }, CompassFonts.data]}>
+                  {subgroup.roleCount}
+                  {" "}
                   {subgroup.roleCount === 1 ? "role" : "roles"}
                 </Text>
               </View>
@@ -95,7 +91,7 @@ export function RoleClusterSection({
           </View>
           {subgroup.description ? (
             <Text
-              style={[styles.desc, { color: colors.textMuted }]}
+              style={[styles.desc, { color: colors.textRole.secondary }, CompassFonts.body]}
               numberOfLines={1}
             >
               {subgroup.description}
@@ -105,7 +101,7 @@ export function RoleClusterSection({
         <Animated.Text
           style={[
             styles.chevron,
-            { color: colors.textMuted, transform: [{ rotate: chevron }] },
+            { color: colors.textRole.muted, transform: [{ rotate: chevronRotation }] },
           ]}
         >
           ›
@@ -116,7 +112,7 @@ export function RoleClusterSection({
         <View style={styles.body}>
           {skills.length ? (
             <View style={styles.skillsBlock}>
-              <Text style={[styles.subLabel, { color: colors.textMuted }]}>
+              <Text style={[styles.subLabel, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
                 Focus skills
               </Text>
               <View style={styles.chipWrap}>
@@ -126,13 +122,13 @@ export function RoleClusterSection({
                     style={[
                       styles.skillChip,
                       {
-                        backgroundColor: colors.bgSecondary,
-                        borderColor: colors.border,
+                        backgroundColor: colors.surface.subtle,
+                        borderColor: colors.borderRole.subtle,
                       },
                     ]}
                   >
                     <Text
-                      style={[styles.skillChipText, { color: colors.textSoft }]}
+                      style={[styles.skillChipText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}
                       numberOfLines={1}
                     >
                       {s}
@@ -157,7 +153,7 @@ export default RoleClusterSection;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.lg,
     overflow: "hidden",
   },
@@ -176,7 +172,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.heavy,
     flexShrink: 1,
   },
   countChip: {
@@ -186,15 +181,12 @@ const styles = StyleSheet.create({
   },
   countText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
   },
   desc: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
   },
   chevron: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.bold,
     lineHeight: FontSize.xxl,
   },
   body: {
@@ -205,7 +197,6 @@ const styles = StyleSheet.create({
   skillsBlock: { gap: Spacing.sm },
   subLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     letterSpacing: 0.5,
     textTransform: "uppercase",
   },
@@ -215,13 +206,12 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   skillChip: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 5,
   },
   skillChipText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
 });

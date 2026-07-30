@@ -23,10 +23,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
-import { CLUSTER_COLORS, CLUSTER_ICONS, DEFAULT_COLOR, DEFAULT_ICON } from "@/data/clusterMaps";
+import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
@@ -37,6 +36,7 @@ import {
 } from "@/types/career";
 import {
   DetailScaffold,
+  DomainIcon,
   FoundationSkillsBlock,
   ToolGroupsBlock,
   CertPlacementList,
@@ -122,8 +122,7 @@ function DomainBody({
   const roles = domain.roles ?? [];
   const subgroups = domain.subgroups ?? [];
   const metrics = domain.demandMetrics?.ng_local;
-  const clusterColor = cluster ? (CLUSTER_COLORS[cluster] ?? DEFAULT_COLOR) : DEFAULT_COLOR;
-  const clusterIcon = (cluster ? (CLUSTER_ICONS[cluster] ?? DEFAULT_ICON) : DEFAULT_ICON) as keyof typeof Feather.glyphMap;
+  const clusterColor = getClusterColor(cluster ?? "");
 
   const isDesktop = resp.isDesktop && resp.isWeb;
 
@@ -171,8 +170,8 @@ function DomainBody({
     <>
       {/* Hero section */}
       <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: clusterColor + "15" }]}>
-          <Feather name={clusterIcon} size={36} color={clusterColor} />
+        <View style={[styles.heroIconWrap, clusterColor ? { backgroundColor: clusterColor + "15" } : undefined]}>
+          <DomainIcon cluster={cluster} size={36} />
         </View>
         <View style={styles.heroText}>
           {cluster ? (

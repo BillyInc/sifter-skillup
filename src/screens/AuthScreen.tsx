@@ -20,7 +20,6 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Modal,
-  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,6 +35,7 @@ import {
   CompassFonts,
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
+import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
 import { IntroCarousel } from "@/components/brand/IntroCarousel";
@@ -48,13 +48,12 @@ import {
 
 type Mode = "welcome" | "login" | "signup" | "connecting";
 
-const { width: SCREEN_W } = Dimensions.get("window");
-const IS_WEB_WIDE = Platform.OS === "web" && SCREEN_W >= 900;
-
 export default function AuthScreen() {
   const router = useRouter();
   const { colors, isDark } = useTheme();
   const { signInEmail, signUpEmail, signInGuest } = useAuth();
+  const resp = useResponsive();
+  const isDesktop = resp.isDesktop && resp.isWeb;
 
   const [intro, setIntro] = useState<"loading" | "show" | "done">("loading");
   const [mode, setMode] = useState<Mode>("welcome");
@@ -205,11 +204,11 @@ export default function AuthScreen() {
         <View
           style={[
             styles.splitContainer,
-            IS_WEB_WIDE && styles.splitWide,
+            isDesktop && styles.splitWide,
           ]}
         >
           {/* Left panel — brand (wide web only) */}
-          {IS_WEB_WIDE ? (
+          {isDesktop ? (
             <View
               style={[
                 styles.brandPanel,
@@ -244,7 +243,7 @@ export default function AuthScreen() {
           <ScrollView
             contentContainerStyle={[
               styles.welcomeContent,
-              IS_WEB_WIDE && styles.welcomeContentWide,
+              isDesktop && styles.welcomeContentWide,
             ]}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
@@ -259,7 +258,7 @@ export default function AuthScreen() {
                 cardStyle,
               ]}
             >
-              {!IS_WEB_WIDE ? (
+              {!isDesktop ? (
                 <View style={styles.logoWrap}>
                   <LevelUpLogo size={48} />
                   <Text
@@ -290,7 +289,7 @@ export default function AuthScreen() {
                   CompassFonts.bodyMedium,
                 ]}
               >
-                {IS_WEB_WIDE
+                {isDesktop
                   ? "Track-first onboarding. Saved progress. Guest mode."
                   : "Every path. Every role. Clearer choices."}
               </Text>
@@ -564,7 +563,6 @@ const styles = StyleSheet.create({
   },
   brandHeadline: {
     fontSize: FontSize.hero,
-    fontWeight: "900",
     lineHeight: FontSize.hero * 1.15,
   },
   brandSub: {
@@ -602,10 +600,9 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     marginBottom: Spacing.sm,
   },
-  brand: { fontSize: FontSize.xxl, fontWeight: "900" },
+  brand: { fontSize: FontSize.xxl },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1,
     textAlign: "center",
   },
@@ -622,7 +619,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
-  featureText: { fontSize: FontSize.xs, textAlign: "center", fontWeight: "600" },
+  featureText: { fontSize: FontSize.xs, textAlign: "center" },
   btnGroup: { gap: Spacing.sm },
   authDivider: {
     borderTopWidth: 1,
@@ -632,16 +629,14 @@ const styles = StyleSheet.create({
   authDividerText: {
     fontSize: FontSize.xs,
     textAlign: "center",
-    fontWeight: "700",
     letterSpacing: 0.3,
   },
   backBtn: { alignSelf: "flex-start", marginBottom: Spacing.md },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
-  formTitle: { fontSize: FontSize.xxl, fontWeight: "900" },
+  backText: { fontSize: FontSize.md },
+  formTitle: { fontSize: FontSize.xxl },
   formSub: { fontSize: FontSize.sm, lineHeight: 19 },
   connectingText: {
     fontSize: FontSize.md,
-    fontWeight: "600",
     marginTop: Spacing.lg,
   },
 });

@@ -31,9 +31,9 @@ import {
   Brand,
   CompassFonts,
   INTRO_SEEN_KEY,
-} from "../../theme";
-import { SifterButton } from "../ui";
-import { LevelUpLogo } from "./LevelUpLogo";
+} from "@/theme";
+import { SifterButton } from "@/components/ui";
+import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
 
 const { width: W } = Dimensions.get("window");
 
@@ -102,7 +102,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
     : [colors.surface.base, colors.surface.subtle];
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.bg }]}>
+    <View style={[styles.root, { backgroundColor: colors.surface.base }]}>      
       <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
 
       {/* Skip */}

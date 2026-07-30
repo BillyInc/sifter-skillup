@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const SECTIONS = [
   {
@@ -52,50 +53,145 @@ interface Props { onClose?: () => void; }
 
 export default function PrivacyScreen({ onClose }: Props) {
   const { colors } = useTheme();
+  const resp = useResponsive();
 
+  // ── Section positions for nav scrolling ──────────────────────
+  const sectionY = useRef<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState(SECTIONS[0].title);
+  const scrollRef = useRef<ScrollView>(null);
+
+  const onSectionLayout = useCallback((key: string, y: number) => {
+    if (sectionY.current[key] === undefined) {
+      sectionY.current[key] = y;
+    }
+  }, []);
+
+  const scrollTo = useCallback((key: string) => {
+    const y = sectionY.current[key];
+    if (y !== undefined) {
+      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+    }
+    setActiveSection(key);
+  }, []);
+
+  const isDesktop = resp.isDesktop && resp.isWeb;
+
+  const header = (
+    <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
+      <View style={{ flex: 1 }}>
+        <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>LEGAL</Text>
+        <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Privacy policy</Text>
+        <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Nigeria-first privacy with global user-rights support.</Text>
+      </View>
+      {onClose ? (
+        <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
+
+  const content = (
+    <>
+      <View style={[styles.note, { backgroundColor: `${colors.accentRole.success}14`, borderLeftColor: colors.accentRole.success }]}>
+        <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
+          Short version: we do not sell personal data, we minimise sensitive
+          student data, and you can ask to access, correct, export or delete
+          your account data.
+        </Text>
+      </View>
+
+      {SECTIONS.map((section) => (
+        <View
+          key={section.title}
+          onLayout={(e) => onSectionLayout(section.title, e.nativeEvent.layout.y)}
+          style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+        >
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{section.title}</Text>
+          <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{section.body}</Text>
+        </View>
+      ))}
+
+      <View style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Contact</Text>
+        <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+          Privacy concerns: privacy@sifter.app{'\n'}
+          Data deletion requests: privacy@sifter.app{'\n'}
+          Legal and compliance: legal@sifter.app
+        </Text>
+      </View>
+
+      <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:privacy@sifter.app')}>
+        <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email privacy@sifter.app</Text>
+      </TouchableOpacity>
+      <View style={{ height: 40 }} />
+    </>
+  );
+
+  // ── Desktop layout: section nav on left, content on right ───
+  if (isDesktop) {
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
+        {header}
+        <View style={styles.desktopRow}>
+          <View style={styles.navColumn}>
+            <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle, position: "sticky" as any, top: 0 }]}>
+              <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+                On this page
+              </Text>
+              {SECTIONS.map((s) => (
+                <TouchableOpacity
+                  key={s.title}
+                  onPress={() => scrollTo(s.title)}
+                  style={[
+                    styles.navItem,
+                    activeSection === s.title && { backgroundColor: colors.surface.subtle },
+                  ]}
+                  activeOpacity={0.6}
+                >
+                  <View
+                    style={[
+                      styles.navDot,
+                      {
+                        backgroundColor:
+                          activeSection === s.title ? colors.accentRole.action : colors.borderRole.subtle,
+                      },
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.navLabel,
+                      { color: activeSection === s.title ? colors.textRole.primary : colors.textRole.secondary },
+                      CompassFonts.bodyMedium,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {s.title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <ScrollView
+            ref={scrollRef}
+            style={styles.mainScroll}
+            contentContainerStyle={styles.body}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+          >
+            {content}
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // ── Mobile / tablet: single column ───────────────────────────
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
-      <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>LEGAL</Text>
-          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Privacy policy</Text>
-          <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Nigeria-first privacy with global user-rights support.</Text>
-        </View>
-        {onClose ? (
-          <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-            <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
+      {header}
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <View style={[styles.note, { backgroundColor: `${colors.accentRole.success}14`, borderLeftColor: colors.accentRole.success }]}>
-          <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
-            Short version: we do not sell personal data, we minimise sensitive
-            student data, and you can ask to access, correct, export or delete
-            your account data.
-          </Text>
-        </View>
-
-        {SECTIONS.map((section) => (
-          <View key={section.title} style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{section.title}</Text>
-            <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{section.body}</Text>
-          </View>
-        ))}
-
-        <View style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Contact</Text>
-          <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Privacy concerns: privacy@sifter.app{'\n'}
-            Data deletion requests: privacy@sifter.app{'\n'}
-            Legal and compliance: legal@sifter.app
-          </Text>
-        </View>
-
-        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:privacy@sifter.app')}>
-          <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email privacy@sifter.app</Text>
-        </TouchableOpacity>
-        <View style={{ height: 40 }} />
+        {content}
       </ScrollView>
     </SafeAreaView>
   );
@@ -112,11 +208,9 @@ const styles = StyleSheet.create({
   eyebrow: {
     fontSize: FontSize.xs,
     letterSpacing: 1,
-    fontFamily: 'HankenGrotesk_700Bold',
   },
   title: {
     fontSize: FontSize.lg,
-    fontFamily: 'HankenGrotesk_700Bold',
   },
   sub: {
     fontSize: FontSize.xs,
@@ -130,7 +224,6 @@ const styles = StyleSheet.create({
   },
   closeText: {
     fontSize: FontSize.xs,
-    fontFamily: 'HankenGrotesk_600SemiBold',
   },
   body: {
     ...webContainer,
@@ -154,7 +247,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FontSize.sm,
-    fontFamily: 'HankenGrotesk_700Bold',
     marginBottom: 6,
   },
   sectionBody: {
@@ -170,6 +262,45 @@ const styles = StyleSheet.create({
   emailBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontFamily: 'HankenGrotesk_700Bold',
+  },
+  // ── Desktop layout ────────────────────────────────────────
+  desktopRow: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: Spacing.xxl,
+  },
+  navColumn: {
+    width: 180,
+    flexShrink: 0,
+  },
+  navSticky: {
+    borderRightWidth: StyleSheet.hairlineWidth,
+    paddingRight: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  navTitle: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.7,
+    textTransform: 'uppercase',
+    marginBottom: Spacing.sm,
+  },
+  navItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+  },
+  navDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  navLabel: {
+    fontSize: FontSize.sm,
+  },
+  mainScroll: {
+    flex: 1,
   },
 });

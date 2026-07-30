@@ -16,11 +16,12 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  type DimensionValue,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
 import {
   DataStateView,
+  DomainIcon,
   FilterChip,
   SearchBar,
 } from "@/components/careerIntelligence";
@@ -40,12 +41,7 @@ import { useResponsive } from "@/hooks/useResponsive";
 type FilterKey = "all" | "in_demand" | "elite" | string;
 
 // ─── Cluster identity map (from shared source) ─────────────
-import {
-  CLUSTER_COLORS,
-  CLUSTER_ICONS,
-  DEFAULT_COLOR,
-  DEFAULT_ICON,
-} from "@/data/clusterMaps";
+import { getClusterColor, getClusterIcon } from "@/data/clusterMaps";
 
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
@@ -116,9 +112,9 @@ export function DomainExplorerScreen() {
     return { ...state, data };
   }, [state, filter, activeFilter]);
 
-  const clusterColWidth = resp.columns >= 2
+  const clusterColWidth: DimensionValue = (resp.columns >= 2
     ? `${(100 / resp.columns) - 1.5}%`
-    : "100%";
+    : "100%") as DimensionValue;
 
   return (
     <ScrollView
@@ -197,10 +193,6 @@ export function DomainExplorerScreen() {
         {(groups) => (
           <View style={styles.masonry}>
             {groups.map((g, idx) => {
-              const clusterColor =
-                CLUSTER_COLORS[g.cluster] ?? DEFAULT_COLOR;
-              const clusterIcon =
-                CLUSTER_ICONS[g.cluster] ?? DEFAULT_ICON;
               return (
                 <StaggerReveal key={g.cluster} index={idx}>
                   <View
@@ -211,18 +203,11 @@ export function DomainExplorerScreen() {
                   >
                     {/* Cluster header */}
                     <View style={styles.clusterHeader}>
-                      <View
-                        style={[
-                          styles.clusterIconWrap,
-                          { backgroundColor: clusterColor + "15" },
-                        ]}
-                      >
-                        <Feather
-                          name={clusterIcon}
-                          size={16}
-                          color={clusterColor}
-                        />
-                      </View>
+                      <DomainIcon
+                        cluster={g.cluster}
+                        size={16}
+                        rounded
+                      />
                       <View style={{ flex: 1 }}>
                         <Text
                           style={[
@@ -265,7 +250,7 @@ export function DomainExplorerScreen() {
                           <View
                             style={[
                               styles.accentBar,
-                              { backgroundColor: clusterColor },
+                              { backgroundColor: getClusterColor(g.cluster) },
                             ]}
                           />
                           <View style={styles.domainCardBody}>

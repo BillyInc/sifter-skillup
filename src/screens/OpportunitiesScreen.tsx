@@ -22,12 +22,11 @@ import {
   Radius,
   FontSize,
   CompassFonts,
-  webContainer,
   type ColorPalette,
-} from "../theme";
-import { careerData } from "../lib/careerData";
-import { opportunitiesNav } from "../lib/opportunitiesNav";
-import { useResponsive } from "../hooks/useResponsive";
+} from "@/theme";
+import { careerData } from "@/lib/careerData";
+import { opportunitiesNav } from "@/lib/opportunitiesNav";
+import { useResponsive } from "@/hooks/useResponsive";
 import {
   comingSoon,
   type DataState,
@@ -36,16 +35,15 @@ import {
   type OpportunityScope,
   type OpportunityType,
   type Likelihood,
-} from "../types/career";
-import { StaggerReveal } from "../components/animations/StaggerReveal";
+} from "@/types/career";
+import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import {
   DataStateView,
   OpportunityCard,
   SubscribeButton,
   SearchBar,
   FilterChip,
-  StatTile,
-} from "../components/careerIntelligence";
+} from "@/components/careerIntelligence";
 
 const SCOPE_OPTIONS: { label: string; value?: OpportunityScope }[] = [
   { label: "All" },
@@ -94,7 +92,7 @@ export function OpportunitiesScreen() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
+      contentContainerStyle={styles.scroll}
       showsVerticalScrollIndicator={false}
     >
       {/* ── Editorial hero ───────────────────────────────────── */}
