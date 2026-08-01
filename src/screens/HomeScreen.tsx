@@ -429,7 +429,7 @@ export default function HomeScreen() {
   const dailyGoal = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
   const accentColor = trackContext.color || colors.accentRole.action;
   const isCryptoOrIsland =
-    trackContext.mode === 'island' ||
+    trackContext.mode === 'overview' ||
     trackContext.artFieldId === 'crypto' ||
     !trackContext.trackId;
   const heroVisual = isCryptoOrIsland ? 'globe' : 'isometric';

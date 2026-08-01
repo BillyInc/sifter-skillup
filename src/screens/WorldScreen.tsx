@@ -341,7 +341,7 @@ export default function WorldScreen() {
   };
 
   const [bg0, bg1] = worldTheme.bgGradient;
-  const accentColor = getTrackAccent(trackId, track?.accentColor ?? worldTheme.primaryColor);
+  const accentColor = getTrackAccent(trackId, worldTheme.primaryColor);
   const heroTrackId = trackId || fieldId || worldId || 'default';
   const heroWidth = Math.min(W - 48, isWebWide ? 460 : 560);
   const heroHeight = Math.min(Math.max(heroWidth * 0.5, 200), 280);

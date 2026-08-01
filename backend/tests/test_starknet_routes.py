@@ -8,10 +8,21 @@ import pytest
 from fastapi.testclient import TestClient
 from fastapi import BackgroundTasks
 
-import starknet_routes
+# Import the module where the route code actually lives (the app mounts
+# `routes.starknet_routes`). The root `starknet_routes.py` is a `import *`
+# compatibility shim: it doesn't re-export underscore-prefixed helpers like
+# `_verify_privy_token`, and even if it did, monkeypatching the shim wouldn't
+# affect the functions running inside `routes.starknet_routes`' own globals.
+import routes.starknet_routes as starknet_routes
 from auth import Auth
 from main import app
 from models import StarknetAuthRequest
+
+
+# A stub token shaped like a real Privy JWT so it passes `_looks_like_jwt`
+# (needs exactly two dots and length > 100); the actual verification is
+# monkeypatched per-test.
+VALID_PRIVY_TOKEN = "a" * 60 + "." + "b" * 60 + "." + "c" * 60
 
 
 SAMPLE_USER = {
@@ -122,31 +133,47 @@ class TestStarknetAuthEmail:
 
         r = auth_client.post(
             "/api/starknet/auth/email",
-            json={"email": "alice@example.com", "privy_token": "x" * 20},
+            json={"email": "alice@example.com", "privy_token": VALID_PRIVY_TOKEN},
         )
         assert r.status_code == 503
 
-    def test_debug_fallback(self, auth_client, monkeypatch, mock_db):
-        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "fake-app-id", raising=False)
-        monkeypatch.setattr(starknet_routes.settings, "DEBUG", True, raising=False)
+    def test_new_user_email_auth_creates_account(self, monkeypatch):
+        # Replaces an obsolete "DEBUG fallback" test: the route no longer has a
+        # DEBUG bypass and _verify_privy_token is sync and returns a claims dict.
+        # This exercises the real happy path — a brand-new user (no existing row)
+        # authenticates by email and a Starknet-linked account is created.
+        users: list = []
+        service = _FakeService(users)
 
-        async def fake_verify(token):
-            return "0xfaceb00cfaceb00cfaceb00cfaceb00cfaceb00c"
-
-        monkeypatch.setattr(starknet_routes, "_verify_privy_token", fake_verify)
-
-        sc = mock_db.get_service_client.return_value
-        sc.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
-        sc.table.return_value.select.return_value.eq.return_value.single.return_value.execute.return_value = MagicMock(
-            data={**SAMPLE_USER, "starknet_auth": True, "starknet_address": "0xfaceb00c"}
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "app", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_SECRET", "secret", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "WELCOME_BONUS", 100, raising=False)
+        monkeypatch.setattr(starknet_routes.db, "get_service_client", lambda: service)
+        monkeypatch.setattr(starknet_routes, "_verify_privy_token", lambda _token: {"sub": "did:privy:fresh"})
+        monkeypatch.setattr(starknet_routes, "get_user_email", lambda _did: _async_result("newbie@example.com"))
+        monkeypatch.setattr(
+            starknet_routes,
+            "_ensure_privy_starknet_wallet",
+            lambda _did: _async_result(({
+                "address": "0xnew",
+                "id": "wallet-n",
+                "public_key": "pub-n",
+            }, True)),
         )
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
 
-        r = auth_client.post(
-            "/api/starknet/auth/email",
-            json={"email": "alice@example.com", "privy_token": "x" * 20},
-        )
-        assert r.status_code == 200, r.text
-        assert r.json()["success"] is True
+        result = asyncio.run(starknet_routes.starknet_auth_email(
+            StarknetAuthRequest(email="newbie@example.com", privy_token=VALID_PRIVY_TOKEN),
+            BackgroundTasks(),
+            None,
+        ))
+
+        assert result.success is True
+        assert result.data["is_new_user"] is True
+        assert len(users) == 1
+        assert users[0]["email"] == "newbie@example.com"
+        assert users[0]["starknet_wallet_id"] == "wallet-n"
+        assert users[0]["privy_did"] == "did:privy:fresh"
 
     def test_duplicate_insert_falls_back_to_existing_user(self, monkeypatch):
         users = [{
@@ -176,7 +203,7 @@ class TestStarknetAuthEmail:
         monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
-            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
             BackgroundTasks(),
             None,
         ))
@@ -214,7 +241,7 @@ class TestStarknetAuthEmail:
         monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
-            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
             BackgroundTasks(),
             None,
         ))
@@ -253,7 +280,7 @@ class TestStarknetAuthEmail:
 
         with pytest.raises(starknet_routes.HTTPException) as exc_info:
             asyncio.run(starknet_routes.starknet_auth_email(
-                StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+                StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
                 BackgroundTasks(),
                 None,
             ))

@@ -48,6 +48,12 @@ router = APIRouter(prefix="/api/sync", tags=["offline-sync"])
 MAX_ITEM_AGE_HOURS = 72
 # Max items per drain call
 MAX_BATCH_SIZE = 500
+# Per-item XP cap (defends against malicious / corrupt clients)
+MAX_XP_PER_ITEM = 500
+# Per-batch XP cap (server-side safety net; mirrors the RPC's daily default)
+MAX_XP_PER_BATCH = 5000
+# Reject the entire batch if device clock skew exceeds this many seconds
+MAX_CLOCK_SKEW_SECONDS = 24 * 3600
 # Priority sort order
 _PRIORITY_ORDER = {
     QueuePriority.CRITICAL: 0,
@@ -195,29 +201,43 @@ async def _handle_analytics_event(body: Dict[str, Any], user: dict) -> dict:
 
 
 async def _handle_xp_event(body: Dict[str, Any], user: dict) -> dict:
-    """Generic XP award (badges, share bonuses, etc.)."""
-    xp_amount = int(body.get("xp_amount", 0))
-    if xp_amount <= 0:
+    """
+    Generic XP award (badges, share bonuses, etc.).
+
+    Per-item cap: MAX_XP_PER_ITEM. The actual grant is performed by the
+    `try_award_offline_xp` RPC, which enforces the daily cap server-side and
+    atomically (no read-then-write race). A grant of 0 means the user is at
+    their cap → the caller marks the item REJECTED.
+    """
+    user_id = user["id"]
+    xp_request = int(body.get("xp_amount", 0))
+    if xp_request <= 0:
         return {"awarded": 0}
 
-    fresh = db.get_service_client().table("users").select("points") \
-        .eq("id", user["id"]).single().execute().data
-    new_points = (fresh["points"] if fresh else user["points"]) + xp_amount
+    # Cap per-item BEFORE asking the RPC.
+    xp_request = min(xp_request, MAX_XP_PER_ITEM)
 
-    db.get_service_client().table("users").update({"points": new_points}) \
-        .eq("id", user["id"]).execute()
+    granted_resp = db.get_service_client().rpc(
+        "try_award_offline_xp",
+        {"p_user_id": user_id, "p_request": xp_request, "p_max": MAX_XP_PER_BATCH},
+    ).execute()
+    granted = int(granted_resp.data or 0)
+
+    if granted == 0:
+        # Daily cap hit — caller marks REJECTED so the client stops retrying.
+        return {"awarded": 0, "capped": True}
 
     db.get_service_client().table("xp_events").insert({
         "id":         str(uuid.uuid4()),
-        "user_id":    user["id"],
+        "user_id":    user_id,
         "event_type": body.get("event_type", "offline_xp"),
-        "xp_amount":  xp_amount,
+        "xp_amount":  granted,
         "source_id":  body.get("source_id"),
         "metadata":   body.get("metadata", {}),
         "created_at": datetime.utcnow().isoformat(),
     }).execute()
 
-    return {"awarded": xp_amount, "new_points": new_points}
+    return {"awarded": granted}
 
 
 # Map endpoint strings → handlers
@@ -259,6 +279,26 @@ async def drain_offline_queue(
     except Exception:
         skew_seconds = 0
 
+    # Hard-reject batches whose clock skew exceeds the limit — almost certainly a
+    # malicious / corrupt device. Returning REJECTED for every item lets the
+    # client purge its local queue instead of retrying forever.
+    if skew_seconds > MAX_CLOCK_SKEW_SECONDS:
+        log.warning(
+            "Batch rejected: clock skew exceeds limit",
+            user_id=user_id, skew_seconds=skew_seconds, limit=MAX_CLOCK_SKEW_SECONDS,
+        )
+        return OfflineSyncResponse(
+            results=[
+                SyncItemResult(
+                    id=i.id, status=SyncStatus.REJECTED,
+                    error=f"Clock skew {skew_seconds}s exceeds {MAX_CLOCK_SKEW_SECONDS}s limit",
+                )
+                for i in payload.items
+            ],
+            server_time=server_time.isoformat(),
+            clock_skew_seconds=skew_seconds,
+        )
+
     if skew_seconds > 3600:
         log.warning("Large clock skew detected", user_id=user_id, skew_seconds=skew_seconds)
 
@@ -271,7 +311,34 @@ async def drain_offline_queue(
     results: list[SyncItemResult] = []
     cutoff = datetime.utcnow() - timedelta(hours=MAX_ITEM_AGE_HOURS)
 
+    # ── Per-batch XP cap pre-pass ────────────────────────────
+    # Walk items in priority/chrono order and mark anything that would push the
+    # requested XP total over MAX_XP_PER_BATCH as REJECTED up-front — protects
+    # the user before we even hit the per-grant RPC.
+    over_cap_ids: set[str] = set()
+    running_xp = 0
+    for it in sorted_items:
+        if it.endpoint not in ("/api/game/complete-level", "/api/game/xp-event"):
+            continue
+        try:
+            requested = int(it.body.get("xp_amount", 0)) if it.endpoint == "/api/game/xp-event" \
+                else min(settings.LEVEL_COMPLETE_XP + settings.PERFECT_LEVEL_BONUS, MAX_XP_PER_ITEM)
+        except Exception:
+            requested = 0
+        requested = max(0, min(requested, MAX_XP_PER_ITEM))
+        if running_xp + requested > MAX_XP_PER_BATCH:
+            over_cap_ids.add(it.id)
+        else:
+            running_xp += requested
+
     for item in sorted_items:
+        if item.id in over_cap_ids:
+            results.append(SyncItemResult(
+                id=item.id, status=SyncStatus.REJECTED,
+                error=f"Per-batch XP cap exceeded ({MAX_XP_PER_BATCH})",
+            ))
+            continue
+
         # ── Age check ───────────────────────────────────────
         try:
             item_ts = datetime.fromisoformat(item.created_at.replace("Z", "+00:00"))
@@ -304,6 +371,21 @@ async def drain_offline_queue(
         # ── Apply ────────────────────────────────────────────
         try:
             response = await handler(item.body, current_user)
+
+            # If the XP RPC reported it was capped, treat as REJECTED so the
+            # client drops it instead of retrying forever.
+            if (
+                item.endpoint == "/api/game/xp-event"
+                and isinstance(response, dict)
+                and response.get("awarded", 0) == 0
+                and response.get("capped")
+            ):
+                results.append(SyncItemResult(
+                    id=item.id, status=SyncStatus.REJECTED,
+                    error="Daily XP cap reached",
+                ))
+                continue
+
             _mark_applied(item.id, user_id, item.endpoint)
             results.append(SyncItemResult(
                 id=item.id, status=SyncStatus.APPLIED, response=response
