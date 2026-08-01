@@ -98,6 +98,15 @@ In `BillyInc/sifter-kys-bot`: update `REDIS_URL` (and any `CELERY_*`) in the dev
 on the server; `sudo systemctl restart` the KYS backend + celery units. (Redis DB is a broker/cache —
 in-flight queued jobs in the old index are dropped on switch, which is fine.)
 
-## Decommissioning (only after LevelUp is verified live on storytime)
-Delete `render.yaml`, `netlify.toml`, `fly.toml`, `.github/workflows/deploy-web.yml`; disconnect the
-two Netlify sites (`sifter-skillup`, stray `skiliup`) in the Netlify dashboard; delete the Render service.
+## Decommissioning
+
+**Done in this PR:** `render.yaml`, `netlify.toml`, `fly.toml` and
+`.github/workflows/deploy-web.yml` are removed here, so the old Netlify/Render
+path can no longer deploy from `main` and PR builds stop failing against it.
+
+**Still manual, and ordering matters** — do these only after LevelUp is verified
+live on storytime, since merging this PR removes the previous deploy path:
+- Disconnect the two Netlify sites (`sifter-skillup`, and the stray `skiliup`) in
+  the Netlify dashboard. Until this is done Netlify keeps building every PR from
+  the repo connection alone — deleting `netlify.toml` does not stop it.
+- Delete the Render service.
