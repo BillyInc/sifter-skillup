@@ -85,9 +85,29 @@ class DeviceSessionMiddleware(BaseHTTPMiddleware):
 
         device_id = request.headers.get("X-Device-Id", "").strip()
 
-        # No device_id header = old client version, let it through
+        # A missing X-Device-Id must NOT pass. Letting it through made the
+        # whole feature opt-out from the client side: any caller could defeat
+        # single-device enforcement simply by omitting the header, which is
+        # exactly what an attacker replaying a stolen token would do.
+        # Enforcement is default-on (config.SINGLE_DEVICE_ENFORCEMENT), so if
+        # it is enabled the header is required.
         if not device_id:
-            return await call_next(request)
+            log.warning(
+                "Missing X-Device-Id on authenticated request — rejecting",
+                user_id=user_id,
+                path=path,
+            )
+            return JSONResponse(
+                status_code=401,
+                content={
+                    "success": False,
+                    "error": "device_required",
+                    "message": (
+                        "This app version is out of date. "
+                        "Please update and sign in again."
+                    ),
+                },
+            )
 
         if not validate_device_header(user_id, device_id):
             log.warning(
