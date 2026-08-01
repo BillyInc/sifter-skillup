@@ -3,7 +3,7 @@
 # Extended: offline sync, device sessions,
 #           Starknet, feed, badges, challenges
 # ============================================
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Optional, List, Dict, Any, Literal
 from enum import Enum
 
@@ -136,10 +136,48 @@ class StarknetAuthRequest(BaseModel):
     privy_token: Optional[str] = None
     starknet_address: Optional[str] = None
 
+# Read-only Starknet JSON-RPC methods this proxy is allowed to forward.
+# The endpoint is an unauthenticated-ish public relay, so we deliberately
+# exclude write methods (starknet_add*Transaction) and anything not on the
+# read spec — an unknown method is rejected at validation time (422).
+ALLOWED_STARKNET_RPC_METHODS = frozenset({
+    "starknet_call",
+    "starknet_estimateFee",
+    "starknet_estimateMessageFee",
+    "starknet_blockNumber",
+    "starknet_blockHashAndNumber",
+    "starknet_chainId",
+    "starknet_specVersion",
+    "starknet_syncing",
+    "starknet_getBlockWithTxHashes",
+    "starknet_getBlockWithTxs",
+    "starknet_getBlockWithReceipts",
+    "starknet_getStateUpdate",
+    "starknet_getStorageAt",
+    "starknet_getNonce",
+    "starknet_getTransactionByHash",
+    "starknet_getTransactionByBlockIdAndIndex",
+    "starknet_getTransactionReceipt",
+    "starknet_getTransactionStatus",
+    "starknet_getBlockTransactionCount",
+    "starknet_getClass",
+    "starknet_getClassHashAt",
+    "starknet_getClassAt",
+    "starknet_getEvents",
+})
+
+
 class StarknetRPCRequest(BaseModel):
     network:  Literal["sepolia", "mainnet"] = "sepolia"
     method:   str
     params:   List[Any] = []
+
+    @field_validator("method")
+    @classmethod
+    def _method_must_be_allowlisted(cls, v: str) -> str:
+        if v not in ALLOWED_STARKNET_RPC_METHODS:
+            raise ValueError(f"RPC method '{v}' is not allowed")
+        return v
 
 
 # ── Guilds ────────────────────────────────────────────────────

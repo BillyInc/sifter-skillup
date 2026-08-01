@@ -140,6 +140,10 @@ export function useLessonMechanics({
   const [characterMood, setCharacterMood] = useState<CharacterMood>('idle');
   const [xpBarMood,     setXpBarMood]     = useState<LessonMood>('idle');
   const [correctStreak, setCorrectStreak] = useState(0);
+  // Mirror of correctStreak for synchronous reads: several onAnswer() calls can
+  // fire in the same render tick (rapid answers), and onLessonComplete() needs
+  // the up-to-date streak immediately — reading the state var would be stale.
+  const correctStreakRef = useRef(0);
 
   // ── Celebration ───────────────────────────────────────────────────────────
   const [showCelebration, setShowCelebration] = useState(false);
@@ -177,7 +181,8 @@ export function useLessonMechanics({
     if (moodTimerRef.current) clearTimeout(moodTimerRef.current);
 
     if (isCorrect) {
-      const newStreak = correctStreak + 1;
+      const newStreak = correctStreakRef.current + 1;
+      correctStreakRef.current = newStreak;
       setCorrectStreak(newStreak);
 
       // Determine mood
@@ -189,6 +194,7 @@ export function useLessonMechanics({
       // Full XP awarded on lesson complete — here we show partial (+2) per answer
       setSessionXp(prev => prev + 2);
     } else {
+      correctStreakRef.current = 0;
       setCorrectStreak(0);
       setXpBarMood('wrong');
       setCharacterMood('wrong');
@@ -199,7 +205,7 @@ export function useLessonMechanics({
       setXpBarMood('idle');
       setCharacterMood('idle');
     }, MOOD_RESET_MS);
-  }, [correctStreak]);
+  }, []);
 
   // ── Lesson complete handler ───────────────────────────────────────────────
 
@@ -235,13 +241,13 @@ export function useLessonMechanics({
       result.stageUp            ? 'stage_up'
       : lessonType === 'boss'   ? 'boss'
       : lessonType === 'lab'    ? 'lab'
-      : freshStreak.completedToday && freshStreak.streak > 1 && correctStreak >= 3
+      : freshStreak.completedToday && freshStreak.streak > 1 && correctStreakRef.current >= 3
         ? 'daily_goal'
         : 'lesson';
 
     setCelebrationType(celebType);
     setShowCelebration(true);
-  }, [lessonType, correctStreak]);
+  }, [lessonType]);
 
   // ── Celebration dismiss ───────────────────────────────────────────────────
 

@@ -71,8 +71,10 @@ class TestRegisterDevice:
         from unittest.mock import patch
         monkeypatch.setattr(device_sessions.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
 
-        # Mock FCMService.send_device_logout_notification
-        with patch('device_sessions.FCMService.send_device_logout_notification') as fcm_mock:
+        # The live middleware.device_sessions notifies the old device via the
+        # module-level `_send_logout_push(old_push_token, new_device_name)` coroutine
+        # (the old FCMService.send_device_logout_notification path was refactored out).
+        with patch('middleware.device_sessions._send_logout_push') as fcm_mock:
             # _get_existing_session returns an existing session on a different device
             existing_session = {
                 "id": "sess-old",

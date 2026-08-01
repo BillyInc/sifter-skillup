@@ -54,8 +54,8 @@ interface SectorDef {
 interface TrackIsometricSceneProps {
   sectors: SectorDef[];
   accentColor: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
 }
 
 interface TrackSceneProps {

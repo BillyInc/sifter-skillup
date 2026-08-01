@@ -10,7 +10,9 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-import offline_sync
+# The app mounts services.offline_sync; import that (not the stale root shim)
+# so monkeypatches and module-constant reads hit the live module.
+import services.offline_sync as offline_sync
 from auth import Auth
 from main import app
 

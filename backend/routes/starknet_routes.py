@@ -1,4 +1,5 @@
 import itertools
+import re
 import uuid
 from datetime import date, datetime
 from typing import Optional
@@ -630,6 +631,11 @@ async def log_starknet_transaction(
 
     if not tx_hash:
         raise HTTPException(400, "tx hash required")
+
+    # Starknet tx hashes are felt252 values: 0x followed by 1–64 hex digits.
+    # Reject anything else so we don't persist garbage / injection attempts.
+    if not re.fullmatch(r"0x[0-9a-fA-F]{1,64}", tx_hash):
+        raise HTTPException(400, "Invalid transaction hash format")
 
     db.get_service_client().table("starknet_transactions").insert({
         "id": str(uuid.uuid4()),

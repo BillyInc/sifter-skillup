@@ -40,7 +40,7 @@ function getIslandState(unlocked: boolean, completed: boolean, current: boolean)
   return 'ready';
 }
 
-function getIslandStateCopy(state: IslandState) {
+function getIslandStateCopy(state: IslandState): { label: string; helper: string; progress: DimensionValue } {
   if (state === 'continue') {
     return { label: 'Continue', helper: 'Current run', progress: '68%' };
   }
