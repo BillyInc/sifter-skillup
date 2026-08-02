@@ -1,0 +1,133 @@
+name: Deploy Frontend (dev)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'app.json'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+# Same fixed group as deploy-backend.yml — a push touching both backend/ and src/
+# triggers both workflows at once, and both drive nginx/certbot on the shared box.
+# Not ref-scoped; cancel-in-progress:false so they queue rather than overlap.
+concurrency:
+  group: levelup-deploy-dev-storytime
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build web export
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Export web bundle
+        run: npx expo export --platform web
+        env:
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL || 'https://api.dev.levelup.com.ng' }}
+          EXPO_PUBLIC_PRIVY_APP_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_APP_ID }}
+          EXPO_PUBLIC_PRIVY_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_CLIENT_ID }}
+          EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID }}
+          EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+          retention-days: 3
+
+  deploy:
+    name: Deploy to storytime
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: dist
+
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -H "$SERVER" > "$HOME/.ssh/known_hosts"
+          test -s "$HOME/.ssh/known_hosts"
+
+      - name: Rsync web bundle to server
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          # Guard against publishing an empty bundle over a working site.
+          test -f dist/index.html
+          $SSH "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend'
+          rsync -avz --delete \
+            -e "$SSH" \
+            dist/ "$SERVER_USER@$SERVER_HOST:~/levelup-frontend/"
+
+      - name: Configure nginx + TLS on first deploy
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
+          DOMAIN=dev.levelup.com.ng
+          SITE=/etc/nginx/sites-available/levelup-web-dev
+          if [ ! -f "$SITE" ]; then
+            sudo tee "$SITE" >/dev/null <<NGINX
+          server {
+              server_name $DOMAIN;
+              root /home/ubuntu/levelup-frontend;
+              index index.html;
+              location / { try_files \$uri \$uri/ /index.html; }
+              location /assets { expires 1y; add_header Cache-Control "public, immutable"; }
+              add_header X-Frame-Options "SAMEORIGIN" always;
+              add_header X-Content-Type-Options "nosniff" always;
+              add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+              listen 80;
+          }
+          NGINX
+            sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-web-dev
+            if ! sudo nginx -t; then
+              sudo rm -f /etc/nginx/sites-enabled/levelup-web-dev
+              echo "nginx config invalid — rolled back levelup-web-dev." >&2
+              exit 1
+            fi
+            sudo systemctl reload nginx
+            sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?) — re-run after DNS resolves."
+          fi
+          EOSSH
+
+      - name: Cleanup
+        if: always()
+        run: rm -f "$HOME/.ssh/deploy_key"
