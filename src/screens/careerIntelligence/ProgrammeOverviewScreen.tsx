@@ -21,13 +21,22 @@ import {
   DetailScaffold,
   DomainChip,
   DataSourceBadge,
-  DomainMappingExplainer,
   NotesWidget,
   LevelUpCTA,
   SectionLabel,
   TextTabs,
 } from "@/components/careerIntelligence";
-import { careerData, type JambProgrammeSuggestion, type JambProgrammeSchool } from "@/lib/careerData";
+import {
+  careerData,
+  type JambProgrammeSuggestion,
+  type JambProgrammeSchool,
+  type JambProgrammeRequirements,
+} from "@/lib/careerData";
+import {
+  sanitizeRequirementText,
+  requirementFallbackText,
+  type RequirementField,
+} from "@/lib/sanitizeRequirementText";
 import { exploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
@@ -116,6 +125,8 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   );
   const [jambSuggestions, setJambSuggestions] = useState<JambProgrammeSuggestion[]>([]);
   const [jambSchools, setJambSchools] = useState<JambProgrammeSchool[]>([]);
+  const [jambRequirements, setJambRequirements] =
+    useState<JambProgrammeRequirements | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -136,6 +147,7 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   }, [programmeId]);
 
   useEffect(() => {
+    setJambRequirements(null);
     if (state.status !== "real" || !state.data) return;
     let active = true;
     (async () => {
@@ -144,7 +156,13 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
         setJambSuggestions(result.data);
         const firstJamb = result.data[0];
         if (firstJamb) {
-          const schoolsRes = await careerData.getJambProgrammeSchools(firstJamb.jambProgrammeId);
+          const [detailRes, schoolsRes] = await Promise.all([
+            careerData.getJambProgramme(firstJamb.jambProgrammeId),
+            careerData.getJambProgrammeSchools(firstJamb.jambProgrammeId),
+          ]);
+          if (active) {
+            setJambRequirements(detailRes.data?.requirements ?? null);
+          }
           if (active && schoolsRes.status === "real" && schoolsRes.data) {
             setJambSchools(schoolsRes.data);
           }
@@ -197,10 +215,21 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
           resp={resp}
           jambSuggestions={jambSuggestions}
           jambSchools={jambSchools}
+          jambRequirements={jambRequirements}
         />
       )}
     </DetailScaffold>
   );
+}
+
+/** Spec rule for requirement text: never blank, never garbled. Displayable
+ *  text renders cleaned; anything else renders the field's fallback guidance. */
+function requirementDisplay(
+  field: RequirementField,
+  text: string | null | undefined,
+): string {
+  const result = sanitizeRequirementText(text ?? null);
+  return result.displayable ? result.cleaned : requirementFallbackText(field);
 }
 
 function ProgrammeBody({
@@ -215,6 +244,7 @@ function ProgrammeBody({
   resp,
   jambSuggestions,
   jambSchools,
+  jambRequirements,
 }: {
   data: Programme;
   programmeId: string;
@@ -227,6 +257,7 @@ function ProgrammeBody({
   resp: ReturnType<typeof useResponsive>;
   jambSuggestions: JambProgrammeSuggestion[];
   jambSchools: JambProgrammeSchool[];
+  jambRequirements: JambProgrammeRequirements | null;
 }) {
   const isDesktop = resp.isDesktop && resp.isWeb;
 
@@ -268,34 +299,38 @@ function ProgrammeBody({
   const grouped = useMemo(() => groupDomains(data.domains ?? []), [data.domains]);
   const ibassVerified = isIbassVerified(data, status, meta);
 
-  // Build aggregated requirements from JAMB schools
-  const uniqueRequirements = useMemo(() => {
-    const seen = new Set<string>();
-    return jambSchools
-      .map((s) => s.schoolRequirements)
-      .filter((r): r is NonNullable<typeof r> => r != null && r.olevelRequirement != null)
-      .filter((r) => {
-        const key = r.olevelRequirement!.slice(0, 80);
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .slice(0, 3);
-  }, [jambSchools]);
-
-  const uniqueUtme = useMemo(() => {
-    const seen = new Set<string>();
-    return jambSchools
-      .map((s) => s.schoolRequirements)
-      .filter((r): r is NonNullable<typeof r> => r != null && r.utmeSubjects != null)
-      .filter((r) => {
-        const key = r.utmeSubjects!.slice(0, 80);
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .slice(0, 3);
-  }, [jambSchools]);
+  // Programme-level requirements (programme_subject_requirements via
+  // GET /jamb-programmes/{id}). Each field is guarded so garbled or missing
+  // brochure text renders guidance instead of blanks.
+  const requirementCards = useMemo(
+    () => [
+      {
+        field: "utme_subjects" as RequirementField,
+        label: "UTME subject combination",
+        icon: "edit-3" as const,
+        iconColor: colors.accentRole.action,
+        text: requirementDisplay("utme_subjects", jambRequirements?.utmeSubjects),
+      },
+      {
+        field: "olevel_requirement" as RequirementField,
+        label: "O-Level requirements",
+        icon: "book" as const,
+        iconColor: colors.accentRole.status,
+        text: requirementDisplay(
+          "olevel_requirement",
+          jambRequirements?.olevelRequirement,
+        ),
+      },
+      {
+        field: "direct_entry" as RequirementField,
+        label: "Direct Entry",
+        icon: "log-in" as const,
+        iconColor: colors.info,
+        text: requirementDisplay("direct_entry", jambRequirements?.directEntry),
+      },
+    ],
+    [jambRequirements, colors],
+  );
 
   const content = (
     <>
@@ -368,49 +403,39 @@ function ProgrammeBody({
       </View>
 
       {/* ── Entry requirements ────────────────────────────── */}
-      {(uniqueRequirements.length > 0 || uniqueUtme.length > 0) && (
-        <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-          <View onLayout={(e) => onSectionLayout("requirements", e.nativeEvent.layout.y)} />
-          <View style={{ gap: Spacing.sm }}>
-            <SectionLabel>Entry requirements</SectionLabel>
-            {uniqueUtme.length > 0 ? (
-              <View style={[styles.reqCard, { borderColor: colors.borderRole.subtle }]}>
-                <View style={styles.reqHeader}>
-                  <Feather name="edit-3" size={14} color={colors.accentRole.action} />
-                  <Text style={[styles.reqLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
-                    UTME subject combination
-                  </Text>
-                </View>
-                {uniqueUtme.map((r, i) => (
-                  <Text key={i} style={[styles.reqText, { color: colors.textRole.secondary }]}>
-                    {r.utmeSubjects}
-                  </Text>
-                ))}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("requirements", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>Entry requirements</SectionLabel>
+          {jambRequirements?.variesByInstitution ? (
+            <Text style={[styles.reqVariesNote, { color: colors.textRole.muted }]}>
+              Requirements for this programme vary by institution — confirm the
+              exact combination with your chosen school.
+            </Text>
+          ) : null}
+          {requirementCards.map((card) => (
+            <View
+              key={card.field}
+              style={[styles.reqCard, { borderColor: colors.borderRole.subtle }]}
+            >
+              <View style={styles.reqHeader}>
+                <Feather name={card.icon} size={14} color={card.iconColor} />
+                <Text style={[styles.reqLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+                  {card.label}
+                </Text>
               </View>
-            ) : null}
-            {uniqueRequirements.length > 0 ? (
-              <View style={[styles.reqCard, { borderColor: colors.borderRole.subtle }]}>
-                <View style={styles.reqHeader}>
-                  <Feather name="book" size={14} color={colors.accentRole.status} />
-                  <Text style={[styles.reqLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
-                    O-Level requirements
-                  </Text>
-                </View>
-                {uniqueRequirements.map((r, i) => (
-                  <Text key={i} style={[styles.reqText, { color: colors.textRole.secondary }]}>
-                    {r.olevelRequirement}
-                  </Text>
-                ))}
-              </View>
-            ) : null}
-            <DataSourceBadge
-              verification="inferred"
-              source="JAMB brochure"
-              style={{ alignSelf: "flex-start" }}
-            />
-          </View>
+              <Text style={[styles.reqText, { color: colors.textRole.secondary }]}>
+                {card.text}
+              </Text>
+            </View>
+          ))}
+          <DataSourceBadge
+            verification="inferred"
+            source="JAMB brochure"
+            style={{ alignSelf: "flex-start" }}
+          />
         </View>
-      )}
+      </View>
 
       {/* ── Schools ────────────────────────────────────────── */}
       {jambSchools.length > 0 && (
@@ -674,6 +699,10 @@ const styles = StyleSheet.create({
   reqText: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
+  },
+  reqVariesNote: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
   },
 
   // ── Schools ───────────────────────────────────────────────

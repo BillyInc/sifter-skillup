@@ -106,7 +106,10 @@ class Auth:
 
     @staticmethod
     async def require_admin(
-        current_user: dict = Depends(get_current_user),
+        # .__func__: unwrap the staticmethod so FastAPI sees the async function,
+        # not the descriptor — otherwise the dependency injects an un-awaited
+        # coroutine and every guarded endpoint 500s (same fix as below).
+        current_user: dict = Depends(get_current_user.__func__),
     ) -> dict:
         """Guard for admin-only endpoints.
 
@@ -117,4 +120,27 @@ class Auth:
         """
         if current_user.get("account_type") not in ("institution_admin", "educator"):
             raise HTTPException(status_code=403, detail="Admin access required")
+        return current_user
+
+    @staticmethod
+    async def require_internal_staff(
+        # NOTE: .__func__ (not the bare name): in the class body
+        # `get_current_user` is the staticmethod wrapper, which FastAPI
+        # treats as a sync callable and injects an un-awaited coroutine
+        # (crashes on Python 3.13 / FastAPI 0.111). Unwrapping restores
+        # proper async resolution and keeps dependency_overrides keyed on
+        # Auth.get_current_user working.
+        current_user: dict = Depends(get_current_user.__func__),
+    ) -> dict:
+        """Guard for internal Sifter-team-only endpoints (spec §7.8/§6A.4/§6A.5).
+
+        Stricter than require_admin: institution admins and educators do NOT
+        qualify. Access requires the `is_internal_staff` boolean on the user's
+        row in skillup_dev.users (default false — see
+        migration_internal_staff.sql). Used for platform-wide tooling such as
+        the feedback inbox, which must never leak cross-organisation data to
+        institution-level admins.
+        """
+        if current_user.get("is_internal_staff") is not True:
+            raise HTTPException(status_code=403, detail="Internal staff access required")
         return current_user

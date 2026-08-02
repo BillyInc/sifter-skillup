@@ -652,7 +652,7 @@ const DOORS = [
     key: "what",
     icon: "\uD83C\uDFEB",
     title: "I know what, not where",
-    body: "See which institutions offer it, with JAMB & Post-UTME cut-offs.",
+    body: "See which institutions offer it, with JAMB cut-offs.",
     live: true,
   },
   {

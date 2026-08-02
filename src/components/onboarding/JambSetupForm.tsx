@@ -289,7 +289,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
             🎓 We&apos;ll surface the universities offering this programme and their
-            JAMB / Post-UTME cut-offs from the latest admission snapshot.
+            JAMB cut-offs from the latest admission snapshot.
           </Text>
         </View>
       ) : null}

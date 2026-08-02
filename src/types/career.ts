@@ -73,6 +73,13 @@ export function locked<T>(notice?: string): DataState<T> {
     meta: notice ? { notice } : undefined,
   };
 }
+export function pending<T>(notice?: string): DataState<T> {
+  return {
+    status: "pending",
+    data: null,
+    meta: notice ? { notice } : undefined,
+  };
+}
 export function real<T>(data: T, meta?: DataMeta): DataState<T> {
   return { status: "real", data, meta };
 }
@@ -272,6 +279,10 @@ export type SavedEntityType =
   | "organisation"
   | "elite_pathway";
 
+/** What a note can be attached to: any saveable entity, or a global quick note
+ *  written from the NotesFab with no entity context. */
+export type NoteEntityType = SavedEntityType | "global";
+
 export interface SavedItem {
   id: string;
   entityType: SavedEntityType;
@@ -322,11 +333,11 @@ export interface ProgrammeSearchResult {
 // No mock rows are introduced here.
 // ══════════════════════════════════════════════════════════════
 
-// ─── Elite pathways (the 17 elite domains) ────────────────────
+// ─── Elite pathways (see ELITE_DOMAIN_COUNT) ──────────────────
 export interface ElitePathwaySummary {
   id: string;
   name: string;
-  /** Grouping among the 17 elite domains (e.g. "Finance", "Tech", "Law"). */
+  /** Grouping among the elite domains (e.g. "Finance", "Tech", "Law"). */
   cluster?: string;
   firms?: string[];
   compensationLabel?: string;
@@ -374,7 +385,10 @@ export type BridgeLayerKey =
   | "bridge_inventory" // top-ups, Direct Entry, ELR, CFA/ACCA, PLAB, SQE…
   | "timeline_cost" // realistic time + money
   | "employer_entry" // the Nigerian employer entry point
-  | "ownership_path"; // the trade/elite ownership endgame
+  // Layer 6 — "Proof of Concept": real, named people who have actually walked
+  // this route. The wire key stays `ownership_path` for backend compatibility;
+  // the user-facing title is the authority on what the layer means.
+  | "ownership_path";
 
 /** The fixed, ordered set of bridge layers — the model's spine, not data. */
 export const BRIDGE_LAYER_ORDER: {
@@ -386,7 +400,7 @@ export const BRIDGE_LAYER_ORDER: {
   { key: "bridge_inventory", title: "Bridge inventory" },
   { key: "timeline_cost", title: "Timeline & cost" },
   { key: "employer_entry", title: "Nigerian employer entry point" },
-  { key: "ownership_path", title: "Ownership path" },
+  { key: "ownership_path", title: "Proof of Concept" },
 ];
 
 export interface BridgeLayer {
@@ -633,9 +647,9 @@ export interface NationalJambFloor {
 
 /** Per-school × programme cut-off row. */
 /** Per-institution requirement delta for a school×programme pair, extracted
- *  from the JAMB brochure's waiver lists. Attached by
- *  /api/student/jamb-programmes/{id}/schools so every student door can show
- *  "this school's own rule" beside the general requirement. */
+ *  from the JAMB brochure's waiver lists. Not currently attached to any
+ *  payload (source columns are unpopulated); kept for future admin work on
+ *  per-school requirement overrides. */
 export interface SchoolRequirements {
   utmeSubjects?: string | null;
   olevelRequirement?: string | null;
@@ -654,23 +668,19 @@ export interface ProgrammeSchoolCutoff {
   year: number;
   aggregateCutoff?: number;
   jambCutoff?: number;
-  postUtmeCutoff?: number;
   form: "UTME" | "DE";
   sourceUrl: string;
   verifiedAt?: string;
   dataDate: string;
-  /** Per-institution requirement block (may be absent on older payloads). */
-  schoolRequirements?: SchoolRequirements;
 }
 
-/** How a university calculates aggregate (JAMB% + Post-UTME% + O'level%). */
+/** How a university calculates aggregate (JAMB% + O'level%). */
 export interface SchoolAggregateFormula {
   id: string;
   schoolId: string;
   schoolName: string;
   year: number;
   jambWeight: number;       // 0.50 = 50%
-  postUtmeWeight: number;
   olevelWeight: number;
   description?: string;
   sourceUrl?: string;

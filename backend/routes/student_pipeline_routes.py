@@ -484,36 +484,12 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
         if target_year:
             query = query.eq("year", target_year)
         res = query.order("school_name").limit(200).execute()
-        # Per-institution requirement deltas live on school_programmes (extracted
-        # from the brochure's waiver lists). Fetch once, key by school_id, and
-        # attach to every row so all three student doors can show "this school's
-        # own rule" beside the general requirement.
-        per_school: dict = {}
-        try:
-            offs = (
-                svc.table("v_school_jamb_programmes")
-                .select("school_id, utme_subjects, olevel_requirement, direct_entry, remarks")
-                .eq("jamb_programme_id", jamb_programme_id)
-                .limit(400)
-                .execute()
-            )
-            per_school = {o["school_id"]: o for o in (offs.data or [])}
-        except Exception as exc:  # noqa: BLE001
-            log.warning("school requirements lookup skipped", error=str(exc))
-
-        def _attach_reqs(item: dict) -> dict:
-            o = per_school.get(item.get("schoolId")) or {}
-            remarks = (o.get("remarks") or "").strip() or None
-            item["schoolRequirements"] = {
-                "utmeSubjects": o.get("utme_subjects"),
-                "olevelRequirement": o.get("olevel_requirement"),
-                "directEntry": o.get("direct_entry"),
-                "institutionNote": remarks,
-                "hasInstitutionNote": bool(remarks),
-            }
-            return item
-
-        items = [_attach_reqs(_cutoff_out(r)) for r in (res.data or [])]
+        # NOTE: per-school requirement columns on v_school_jamb_programmes
+        # (utme_subjects / olevel_requirement / direct_entry) are 100% NULL —
+        # programme-level requirements live in programme_subject_requirements
+        # and are served by GET /jamb-programmes/{id}. No schoolRequirements
+        # block is attached here.
+        items = [_cutoff_out(r) for r in (res.data or [])]
         if not items:
             offerings = (
                 svc.table("v_school_jamb_programmes")
@@ -524,7 +500,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 .execute()
             )
             items = [
-                _attach_reqs({
+                {
                     "schoolId": r.get("school_id"),
                     "schoolName": r.get("school_name"),
                     "institutionType": r.get("institution_type"),
@@ -535,10 +511,9 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                     "year": target_year,
                     "aggregateCutoff": None,
                     "jambCutoff": None,
-                    "postUtmeCutoff": None,
                     "form": None,
                     "sourceUrl": None,
-                })
+                }
                 for r in (offerings.data or [])
             ]
             return ResponseModel(data=_fallback(items, "No cutoffs found yet; showing schools offering the programme."))
@@ -561,7 +536,6 @@ def _cutoff_out(r: dict) -> dict:
         "year": r.get("year"),
         "aggregateCutoff": r.get("aggregate_cutoff"),
         "jambCutoff": r.get("jamb_cutoff"),
-        "postUtmeCutoff": r.get("postutme_cutoff"),
         "form": r.get("form"),
         "sourceUrl": r.get("source_url"),
         "verifiedAt": r.get("verified_at"),
@@ -646,13 +620,20 @@ def _match_structured_subject_options(selected_norm: set[str], limit: int) -> li
                 break
         if failed_group:
             continue
-        matched_count = len([s for s in required if s in selected_norm])
+        # Matched = the option's required subjects the student actually selected
+        # (normalized names, mirroring _match_text_requirements' `hits`),
+        # plus the selected subjects that satisfied each one_of group.
+        matched_subjects = [s for s in required if s in selected_norm]
+        for names in grouped.values():
+            matched_subjects.extend(n for n in names if n in selected_norm)
+        matched_subjects = list(dict.fromkeys(matched_subjects))
+        matched_count = len(matched_subjects)
         entry = scored.get(opt["jamb_programme_id"])
         if not entry or matched_count > entry["matchedSubjectCount"]:
             scored[opt["jamb_programme_id"]] = {
                 "jambProgrammeId": opt["jamb_programme_id"],
                 "matchedSubjectCount": matched_count,
-                "matchedSubjects": selected,
+                "matchedSubjects": matched_subjects,
                 "requirementText": opt.get("source_text"),
                 "matchBasis": "structured",
             }
