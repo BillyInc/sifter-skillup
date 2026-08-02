@@ -501,6 +501,178 @@ class TestCompleteLevelReplay:
             assert req <= offline_sync.MAX_XP_PER_ITEM
 
 
+class TestStreakCheck:
+    """
+    Regression tests for the streak-check fixes: server-side date, bonus only
+    on a real advance, capped + idempotent payment, fail-closed on bad dates.
+    """
+
+    def _streak_item(self, item_id, date=None):
+        body = {} if date is None else {"date": date}
+        return {
+            "id": item_id,
+            "priority": "normal",
+            "endpoint": "/api/users/streak",
+            "method": "POST",
+            "body": body,
+            "created_at": _now_iso(),
+            "attempts": 0,
+            "device_id": "devA",
+        }
+
+    def _streak_rpc(self, ledger, grants, calls, streak_on_advance=2):
+        """
+        Models `touch_user_streak_v2`: the FIRST call of a (simulated) server
+        day advances the streak; every later call the same day reports
+        advanced=false, exactly like last_played already being CURRENT_DATE.
+        """
+        server_day = "2026-08-02"
+        state = {"advanced_once": False, "streak": 1}
+        base = _fake_ledger_rpc(ledger, grants)
+
+        def rpc_side_effect(name, params=None):
+            params = params or {}
+            calls.append((name, params))
+            if name == "touch_user_streak_v2":
+                rpc_obj = MagicMock()
+                if state["advanced_once"]:
+                    advanced = False
+                else:
+                    state["advanced_once"] = True
+                    state["streak"] = streak_on_advance
+                    advanced = True
+                rpc_obj.execute.return_value = MagicMock(data={
+                    "streak": state["streak"],
+                    "last_played": server_day,
+                    "advanced": advanced,
+                    "previous_last_played": "2026-08-01",
+                })
+                return rpc_obj
+            return base(name, params)
+
+        return rpc_side_effect
+
+    def test_replaying_streak_check_pays_bonus_once(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        """
+        Bug: the bonus was recomputed from the CURRENT streak value, so a replay
+        where the streak did not move (diff == 0) still paid in full — with a
+        fresh client item id each time, unboundedly.
+        """
+        ledger, grants, calls = {}, [], []
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        sc.rpc.side_effect = self._streak_rpc(ledger, grants, calls, streak_on_advance=2)
+
+        bonuses = []
+        for n in range(4):
+            r = auth_client.post("/api/sync/drain", json={
+                "device_id": "devA",
+                "items": [self._streak_item(f"fresh-streak-{n}")],
+                "client_time": _now_iso(),
+            })
+            assert r.status_code == 200, r.text
+            result = r.json()["results"][0]
+            assert result["status"] == "applied", result
+            # Response contract preserved.
+            assert "streak" in result["response"]
+            assert "bonus_earned" in result["response"]
+            bonuses.append(result["response"]["bonus_earned"])
+
+        # STREAK_BONUS[1] == 200 for streak 2, paid on the advance only.
+        assert bonuses == [200, 0, 0, 0], bonuses
+        assert grants == [200], f"bonus must be paid once per streak day, got {grants}"
+
+    def test_client_date_cannot_inflate_streak(self, auth_client, setup_db, monkeypatch):
+        """
+        Bug: `today_str = body.get("date", ...)` let the client choose the date
+        the streak was computed from. The date must never reach the streak
+        calculation, and a future date is rejected outright.
+        """
+        ledger, grants, calls = {}, [], []
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        sc.rpc.side_effect = self._streak_rpc(ledger, grants, calls, streak_on_advance=2)
+
+        far_future = (datetime.now(timezone.utc) + timedelta(days=900)).date().isoformat()
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._streak_item("future-date", date=far_future)],
+            "client_time": _now_iso(),
+        })
+        assert r.status_code == 200, r.text
+        result = r.json()["results"][0]
+        assert result["status"] == "rejected", result
+        assert "future" in (result.get("error") or "").lower()
+
+        # A backdated one — old enough to fabricate a gap — is also refused,
+        # and in no case is a client date passed to the streak RPC.
+        stale = (datetime.now(timezone.utc) - timedelta(days=30)).date().isoformat()
+        r2 = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._streak_item("stale-date", date=stale)],
+            "client_time": _now_iso(),
+        })
+        assert r2.json()["results"][0]["status"] == "rejected"
+
+        assert grants == [], "a rejected streak item must not pay a bonus"
+        for name, params in calls:
+            if name == "touch_user_streak_v2":
+                assert set(params) == {"p_user_id"}, params
+
+    def test_streak_bonus_respects_per_item_cap(self, auth_client, setup_db, monkeypatch):
+        """A streak-7 bonus (1500) must be clamped to MAX_XP_PER_ITEM (500)."""
+        ledger, grants, calls = {}, [], []
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        sc.rpc.side_effect = self._streak_rpc(ledger, grants, calls, streak_on_advance=7)
+
+        assert offline_sync.settings.STREAK_BONUS[6] > offline_sync.MAX_XP_PER_ITEM
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._streak_item("cap-streak")],
+            "client_time": _now_iso(),
+        })
+        assert r.status_code == 200, r.text
+        assert r.json()["results"][0]["status"] == "applied"
+
+        awards = [p for n, p in calls if n == "try_award_offline_xp_idem"]
+        assert awards, "streak bonus must go through the capped grant RPC"
+        for params in awards:
+            assert params["p_request"] <= offline_sync.MAX_XP_PER_ITEM
+            # Server-derived key, never the client's queue-item id.
+            assert params["p_item_id"] != "cap-streak"
+
+    def test_unparseable_date_is_rejected(self, auth_client, setup_db, monkeypatch):
+        """Fail closed, consistent with created_at / client_time handling."""
+        ledger, grants, calls = {}, [], []
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        sc.rpc.side_effect = self._streak_rpc(ledger, grants, calls)
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._streak_item("bad-date", date="yesterday-ish")],
+            "client_time": _now_iso(),
+        })
+        assert r.status_code == 200, r.text
+        result = r.json()["results"][0]
+        assert result["status"] == "rejected", result
+        assert "date" in (result.get("error") or "").lower()
+        assert grants == []
+        assert not any(n == "touch_user_streak_v2" for n, _ in calls)
+
+
 class TestTimestampsFailClosed:
     def test_unparseable_created_at_is_rejected(self, auth_client, setup_db, monkeypatch):
         monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)

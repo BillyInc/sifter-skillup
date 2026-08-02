@@ -27,7 +27,7 @@
 #   - Items older than 72 hours are rejected with status=rejected
 # ============================================
 import uuid
-from datetime import datetime, timedelta
+from datetime import date as date_type, datetime, timedelta
 from typing import Any, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
@@ -60,6 +60,18 @@ _PRIORITY_ORDER = {
     QueuePriority.HIGH: 1,
     QueuePriority.NORMAL: 2,
 }
+
+
+class ItemRejected(Exception):
+    """
+    Raised by a handler when the item is permanently unacceptable (bad input),
+    as opposed to a transient failure.
+
+    The drain loop turns this into status=REJECTED so the client DROPS the item,
+    instead of the CONFLICT a bare Exception produces (which the client retries
+    forever). Used for the same fail-closed cases the batch-level guards already
+    cover: timestamps we cannot parse or cannot trust.
+    """
 
 
 # ─────────────────────────────────────────────────────────────
@@ -268,40 +280,100 @@ async def _handle_save_last_position(body: Dict[str, Any], user: dict, ctx: Dict
     return {"saved": True}
 
 
-async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
-    """Apply a streak check from the device's recorded date."""
-    from datetime import date as date_type
-    today_str = body.get("date", date_type.today().isoformat())
-    last_str  = user.get("last_played", today_str)
+def _validate_client_date(raw: Any) -> None:
+    """
+    Sanity-check a client-supplied capture date. It NEVER feeds the streak
+    calculation (see _handle_streak_check) — this only rejects obviously bogus
+    payloads early, using the same freshness window the drain loop enforces on
+    created_at.
 
+    Fails CLOSED, matching the created_at / client_time convention: an
+    unparseable date is rejected, not silently coerced to "today".
+    """
+    if raw is None:
+        return
     try:
-        today = date_type.fromisoformat(today_str)
-        last  = date_type.fromisoformat(last_str)
-        diff  = (today - last).days
-    except ValueError:
-        diff = 0
+        captured = date_type.fromisoformat(str(raw))
+    except (TypeError, ValueError):
+        raise ItemRejected("Invalid date: expected an ISO-8601 date (YYYY-MM-DD)")
 
-    streak = user.get("streak", 1)
-    if diff == 1:
-        streak += 1
-    elif diff > 1:
-        streak = 1
+    today = datetime.utcnow().date()
+    if captured > today:
+        raise ItemRejected(f"Invalid date: {captured.isoformat()} is in the future")
+    if (today - captured) > timedelta(hours=MAX_ITEM_AGE_HOURS):
+        raise ItemRejected(
+            f"Invalid date: {captured.isoformat()} is older than {MAX_ITEM_AGE_HOURS}h"
+        )
 
-    bonus = 0
-    if streak <= len(settings.STREAK_BONUS):
-        bonus = settings.STREAK_BONUS[streak - 1]
 
-    fresh_points = db.get_service_client().table("users").select("points") \
-        .eq("id", user["id"]).single().execute().data
-    new_points = (fresh_points["points"] if fresh_points else user["points"]) + bonus
+async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
+    """
+    Advance the user's daily streak and pay the streak bonus.
 
-    db.get_service_client().table("users").update({
-        "streak":      streak,
-        "last_played": today_str,
-        "points":      new_points,
-    }).eq("id", user["id"]).execute()
+    Three separate holes are closed here:
 
-    return {"streak": streak, "bonus_earned": bonus}
+      * The date is now derived SERVER-side, inside the RPC (CURRENT_DATE).
+        Previously `body["date"]` drove the whole calculation, so a client could
+        fabricate a qualifying one-day gap and inflate its streak arbitrarily,
+        or hold `last_played` back and keep re-earning. A client date is still
+        accepted for legitimate offline capture, but it is only validated
+        (not-future, within the 72h freshness window) and then DISCARDED.
+
+      * The bonus is paid only when the streak actually ADVANCES — i.e. when
+        the RPC moved `last_played` to a new day. The old code recomputed
+        `STREAK_BONUS[streak - 1]` from the current streak value, so replaying
+        a same-day check (diff == 0, streak unchanged) paid the full bonus
+        again, unbounded with a fresh client item id each time.
+
+      * The payment goes through `try_award_offline_xp_idem` on a SERVER-derived
+        natural key (user + endpoint + streak day), so it is capped by
+        MAX_XP_PER_ITEM / the daily cap and is earnable at most once per
+        streak-day even if the advance and the grant race or retry.
+
+    The streak advance itself is a single atomic server-side statement, not the
+    old select-points → add → update read-modify-write, which both bypassed the
+    XP caps and lost concurrent point updates.
+    """
+    user_id  = user["id"]
+    endpoint = ctx.get("endpoint", "/api/users/streak")
+
+    _validate_client_date(body.get("date"))
+
+    rpc = db.get_service_client().rpc(
+        "touch_user_streak_v2", {"p_user_id": user_id}
+    ).execute()
+    row = rpc.data
+    if isinstance(row, list):
+        row = row[0] if row else None
+    if not isinstance(row, dict):
+        # Fail closed: without a trustworthy server answer we neither know the
+        # streak nor whether it advanced, so we must not pay anything.
+        raise RuntimeError("touch_user_streak_v2 returned no row")
+
+    streak     = int(row.get("streak") or user.get("streak", 1))
+    advanced   = bool(row.get("advanced", False))
+    streak_day = str(row.get("last_played") or datetime.utcnow().date().isoformat())
+
+    bonus  = 0
+    capped = False
+    if advanced and 1 <= streak <= len(settings.STREAK_BONUS):
+        award = _award_xp_idempotent(
+            user_id,
+            _natural_key(user_id, endpoint, "streak-bonus", streak_day),
+            endpoint,
+            settings.STREAK_BONUS[streak - 1],
+        )
+        bonus  = award["granted"]
+        capped = award["capped"]
+
+    return {
+        # Response contract preserved — the mobile client reads both keys.
+        "streak":       streak,
+        "bonus_earned": bonus,
+        # Additive fields; existing clients ignore them.
+        "advanced":     advanced,
+        "capped":       bool(capped and bonus == 0),
+    }
 
 
 async def _handle_analytics_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
@@ -531,6 +603,15 @@ async def drain_offline_queue(
                 id=item.id, status=SyncStatus.APPLIED, response=response
             ))
             log.debug("Offline item applied", item_id=item.id, endpoint=item.endpoint)
+        except ItemRejected as e:
+            # Permanently bad input (e.g. an untrustworthy date). REJECTED, not
+            # CONFLICT, so the client drops it instead of retrying forever.
+            log.warning(
+                "Offline item rejected", item_id=item.id, endpoint=item.endpoint, error=str(e)
+            )
+            results.append(SyncItemResult(
+                id=item.id, status=SyncStatus.REJECTED, error=str(e)
+            ))
         except Exception as e:
             log.error("Offline item failed", item_id=item.id, endpoint=item.endpoint, error=str(e))
             results.append(SyncItemResult(
