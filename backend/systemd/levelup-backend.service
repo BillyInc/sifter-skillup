@@ -1,19 +1,25 @@
 [Unit]
 Description=LevelUp Backend API (Uvicorn)
-After=network.target redis.service
-Wants=redis.service
+After=network-online.target redis.service
+Wants=network-online.target redis.service
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
 User=ubuntu
 Group=ubuntu
 WorkingDirectory=/home/ubuntu/levelup-backend
-Environment="PATH=/home/ubuntu/levelup-backend/.venv/bin"
+# venv first, then the system path (tooling that shells out to git/curl/etc).
+Environment="PATH=/home/ubuntu/levelup-backend/.venv/bin:/usr/local/bin:/usr/bin:/bin"
 EnvironmentFile=/home/ubuntu/levelup-backend/.env
+# Bind loopback only: nginx terminates TLS and proxies to 127.0.0.1. Binding
+# 0.0.0.0 would expose the API on :8000 in plaintext on this shared box.
 # NOTE: keep a single literal "--port 8000" — deploy-prod.yml sed-remaps it to 8001.
-ExecStart=/home/ubuntu/levelup-backend/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --workers 2
-ExecReload=/bin/kill -s HUP $MAINPID
-Restart=on-failure
+ExecStart=/home/ubuntu/levelup-backend/.venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 2
+# No ExecReload on purpose: `systemctl reload-or-restart` then does a real
+# restart, which is the only way to guarantee freshly rsynced code is loaded.
+Restart=always
 RestartSec=5
 KillMode=mixed
 TimeoutStopSec=30
@@ -21,8 +27,22 @@ TimeoutStopSec=30
 # Security hardening
 NoNewPrivileges=true
 PrivateTmp=true
+PrivateDevices=true
 ProtectSystem=strict
 ReadWritePaths=/home/ubuntu/levelup-backend
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+UMask=0077
 
 [Install]
 WantedBy=multi-user.target

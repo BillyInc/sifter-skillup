@@ -10,9 +10,16 @@ on:
         required: true
         default: main
 
+# Fixed group, never ref-scoped: one prod deploy at a time regardless of the tag
+# or ref that triggered it. Kept separate from the dev group so a prod release is
+# not blocked behind a dev push; the nginx/certbot steps take a server-side lock
+# that is shared with the dev workflows.
 concurrency:
-  group: levelup-prod-deploy
+  group: levelup-deploy-prod-storytime
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 env:
   PYTHON_VERSION: '3.13'
@@ -28,6 +35,8 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: astral-sh/setup-uv@v5
       - uses: actions/setup-python@v5
         with:
@@ -52,16 +61,22 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Setup SSH key
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER: ${{ secrets.SERVER_HOST }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+          set -euo pipefail
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -H "$SERVER" > "$HOME/.ssh/known_hosts"
+          test -s "$HOME/.ssh/known_hosts"
 
       - name: Create prod .env on first deploy only
         env:
@@ -69,13 +84,24 @@ jobs:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-backend-prod'
-          if ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" '[ -f ~/levelup-backend-prod/.env ]'; then
+          set -euo pipefail
+          umask 077
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" 'umask 077; mkdir -p ~/levelup-backend-prod'
+          if $SSH "$SERVER_USER@$SERVER_HOST" '[ -f ~/levelup-backend-prod/.env ]'; then
             echo "prod .env already present — leaving untouched."
           else
-            printf '%s' "$ENV_FILE" > /tmp/levelup-prod.env
-            scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no /tmp/levelup-prod.env "$SERVER_USER@$SERVER_HOST:~/levelup-backend-prod/.env"
-            rm -f /tmp/levelup-prod.env
+            if [ -z "${ENV_FILE:-}" ]; then
+              echo "ENV_FILE secret is empty — refusing to create an empty prod .env." >&2
+              exit 1
+            fi
+            trap 'rm -f "$RUNNER_TEMP/levelup-prod.env"' EXIT
+            printf '%s\n' "$ENV_FILE" > "$RUNNER_TEMP/levelup-prod.env"
+            chmod 600 "$RUNNER_TEMP/levelup-prod.env"
+            scp -i "$HOME/.ssh/deploy_key" -o StrictHostKeyChecking=yes \
+              -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+              "$RUNNER_TEMP/levelup-prod.env" "$SERVER_USER@$SERVER_HOST:~/levelup-backend-prod/.env"
+            $SSH "$SERVER_USER@$SERVER_HOST" 'chmod 600 ~/levelup-backend-prod/.env'
           fi
 
       - name: Rsync backend to prod dir
@@ -83,11 +109,13 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           rsync -avz --delete \
             --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
             --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
             --exclude 'celerybeat-schedule' \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "$SSH" \
             backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend-prod/"
 
       - name: Derive prod units, install, restart
@@ -95,10 +123,29 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
-          set -e
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
           cd ~/levelup-backend-prod
           chmod 600 .env
+          # prod and dev celery-beat must not share a Redis index or every
+          # scheduled task double-fires. Fail loudly instead of corrupting dev.
+          if [ -f ~/levelup-backend/.env ]; then
+            dev_broker=$(grep -E '^CELERY_BROKER_URL=' ~/levelup-backend/.env | tail -1 | cut -d= -f2- || true)
+            prod_broker=$(grep -E '^CELERY_BROKER_URL=' .env | tail -1 | cut -d= -f2- || true)
+            if [ -n "$dev_broker" ] && [ "$dev_broker" = "$prod_broker" ]; then
+              echo "prod CELERY_BROKER_URL is identical to dev — refusing to deploy." >&2
+              exit 1
+            fi
+          fi
+          # Shared box (KYS also lives here): refuse to claim :8001 from someone else.
+          if ! systemctl is-active --quiet levelup-backend-prod; then
+            if ss -ltnH 'sport = :8001' | grep -q .; then
+              echo "port 8001 already in use by another service — aborting." >&2
+              exit 1
+            fi
+          fi
           command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.local/bin:$PATH"
           uv sync --no-dev
@@ -122,8 +169,12 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
-          set -e
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
           DOMAIN=api.levelup.com.ng
           SITE=/etc/nginx/sites-available/levelup-api-prod
           if [ ! -f "$SITE" ]; then
@@ -131,7 +182,7 @@ jobs:
           server {
               server_name $DOMAIN;
               location / {
-                  proxy_pass http://localhost:8001;
+                  proxy_pass http://127.0.0.1:8001;
                   proxy_set_header Host \$host;
                   proxy_set_header X-Real-IP \$remote_addr;
                   proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -141,14 +192,42 @@ jobs:
           }
           NGINX
             sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-api-prod
-            sudo nginx -t && sudo systemctl reload nginx
+            if ! sudo nginx -t; then
+              sudo rm -f /etc/nginx/sites-enabled/levelup-api-prod
+              echo "nginx config invalid — rolled back levelup-api-prod." >&2
+              exit 1
+            fi
+            sudo systemctl reload nginx
             sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?)"
           fi
           EOSSH
 
+      - name: Health check (prod API)
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          for i in $(seq 1 10); do
+            if curl -sf --max-time 5 http://127.0.0.1:8001/health >/dev/null; then
+              echo "prod health OK (attempt $i)"
+              exit 0
+            fi
+            echo "prod health attempt $i failed — retrying in 3s"
+            sleep 3
+          done
+          echo "prod health check FAILED after 10 attempts" >&2
+          sudo systemctl status --no-pager levelup-backend-prod || true
+          sudo journalctl -u levelup-backend-prod -n 80 --no-pager || true
+          exit 1
+          EOSSH
+
       - name: Cleanup
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: rm -f "$HOME/.ssh/deploy_key"
 
   deploy-frontend:
     name: Deploy frontend (prod)
@@ -157,6 +236,8 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -179,19 +260,26 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER: ${{ secrets.SERVER_HOST }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+          set -euo pipefail
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -H "$SERVER" > "$HOME/.ssh/known_hosts"
+          test -s "$HOME/.ssh/known_hosts"
 
       - name: Rsync web bundle to prod dir
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend-prod'
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          test -f dist/index.html
+          $SSH "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend-prod'
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "$SSH" \
             dist/ "$SERVER_USER@$SERVER_HOST:~/levelup-frontend-prod/"
 
       - name: Configure prod nginx + TLS on first deploy
@@ -199,8 +287,12 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
-          set -e
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
           DOMAIN=levelup.com.ng
           SITE=/etc/nginx/sites-available/levelup-web-prod
           if [ ! -f "$SITE" ]; then
@@ -218,11 +310,16 @@ jobs:
           }
           NGINX
             sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-web-prod
-            sudo nginx -t && sudo systemctl reload nginx
+            if ! sudo nginx -t; then
+              sudo rm -f /etc/nginx/sites-enabled/levelup-web-prod
+              echo "nginx config invalid — rolled back levelup-web-prod." >&2
+              exit 1
+            fi
+            sudo systemctl reload nginx
             sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?)"
           fi
           EOSSH
 
       - name: Cleanup
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: rm -f "$HOME/.ssh/deploy_key"

@@ -11,9 +11,15 @@ on:
       - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
 
+# Same fixed group as deploy-backend.yml — a push touching both backend/ and src/
+# triggers both workflows at once, and both drive nginx/certbot on the shared box.
+# Not ref-scoped; cancel-in-progress:false so they queue rather than overlap.
 concurrency:
-  group: levelup-frontend-${{ github.ref }}
-  cancel-in-progress: true
+  group: levelup-deploy-dev-storytime
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -61,19 +67,27 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER: ${{ secrets.SERVER_HOST }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+          set -euo pipefail
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -H "$SERVER" > "$HOME/.ssh/known_hosts"
+          test -s "$HOME/.ssh/known_hosts"
 
       - name: Rsync web bundle to server
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend'
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          # Guard against publishing an empty bundle over a working site.
+          test -f dist/index.html
+          $SSH "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend'
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "$SSH" \
             dist/ "$SERVER_USER@$SERVER_HOST:~/levelup-frontend/"
 
       - name: Configure nginx + TLS on first deploy
@@ -81,8 +95,12 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
-          set -e
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
           DOMAIN=dev.levelup.com.ng
           SITE=/etc/nginx/sites-available/levelup-web-dev
           if [ ! -f "$SITE" ]; then
@@ -100,11 +118,16 @@ jobs:
           }
           NGINX
             sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-web-dev
-            sudo nginx -t && sudo systemctl reload nginx
+            if ! sudo nginx -t; then
+              sudo rm -f /etc/nginx/sites-enabled/levelup-web-dev
+              echo "nginx config invalid — rolled back levelup-web-dev." >&2
+              exit 1
+            fi
+            sudo systemctl reload nginx
             sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?) — re-run after DNS resolves."
           fi
           EOSSH
 
       - name: Cleanup
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: rm -f "$HOME/.ssh/deploy_key"

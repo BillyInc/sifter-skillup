@@ -92,6 +92,55 @@ Optional integrations as needed: `ANTHROPIC_API_KEY`, `FCM_SERVER_KEY`, `AIRTABL
 - **Dev:** `git push origin main` → `deploy-backend.yml` + `deploy-frontend.yml`.
 - **Prod:** `git tag v1.0.0 && git push origin v1.0.0` → `deploy-prod.yml` (production approval gate).
 
+---
+
+## Deploy safety model (how the workflows avoid stepping on KYS)
+
+- **Concurrency.** Both dev workflows share one fixed group `levelup-deploy-dev-storytime`
+  (not ref-scoped) with `cancel-in-progress: false`, so rsync + `systemctl restart` can
+  never overlap and a cancelled run can't leave a half-copied tree. Prod uses its own
+  fixed group so a release isn't queued behind a dev push.
+- **nginx/certbot lock.** Every nginx step takes `flock` on `/tmp/levelup-nginx-deploy.lock`
+  before touching config — prod runs its backend and frontend jobs in parallel, and
+  `nginx -t` / `systemctl reload nginx` / `certbot` are global to the box (shared with KYS).
+- **nginx rollback.** If `nginx -t` fails after our site is symlinked, the symlink is removed
+  and the step fails — otherwise a bad LevelUp config would break the *next* nginx reload
+  performed by a KYS deploy.
+- **Port guard.** Before first start, the deploy aborts if `:8000` (dev) / `:8001` (prod) is
+  already bound by something that isn't our unit.
+- **Loopback binding.** uvicorn binds `127.0.0.1`, not `0.0.0.0` — the API is only reachable
+  through nginx/TLS, so no firewall rule is required to keep `:8000`/`:8001` off the internet.
+- **Host key.** The runner pins the host key with `ssh-keyscan` into a fresh `known_hosts`
+  and then uses `StrictHostKeyChecking=yes`. This is trust-on-first-use *per run*; the
+  stronger option is a committed/pinned host key, which would need a new secret — see
+  "Human decisions" below.
+- **Secrets on the runner.** The private key and the `ENV_FILE` temp copy are written under
+  `umask 077`, mode `0600`, into `$RUNNER_TEMP`, deleted via `trap ... EXIT`, and the key is
+  removed again in a `if: always()` cleanup step so a failed deploy doesn't leave it behind.
+  `.env` is `chmod 600` immediately after upload, and is never echoed.
+- **`.env` never overwritten.** Seeded only when absent; deploy aborts if the `ENV_FILE`
+  secret is empty rather than writing an empty `.env` and restarting into a broken app.
+- **No automatic rollback.** A failed `uv sync` aborts before any restart (`set -euo pipefail`),
+  so the running service keeps serving. But if the *new* code starts and fails its health
+  check, the deploy fails **red with the service down** — recovery is manual: re-run the
+  previous green commit/tag, or `git checkout` the old ref and re-deploy. Adding a
+  release-directory + symlink swap would fix this properly and is out of scope here.
+- **Prod/dev Redis split.** The prod deploy refuses to run if prod's `CELERY_BROKER_URL`
+  is identical to dev's, which would make both beats double-fire every scheduled task.
+
+## Human decisions still open
+
+1. **Host key pinning.** Add a `SSH_HOST_KEY` secret (output of `ssh-keyscan -H 52.18.195.224`)
+   and write it to `known_hosts` instead of scanning at deploy time. Deliberately not done
+   here — it introduces a new secret.
+2. **Firewall.** With loopback binding, `ufw` is not required for `:8000`/`:8001`. If you
+   want defence in depth anyway, enable `ufw` allowing only 22/80/443 — do this by hand,
+   since a wrong rule locks out both LevelUp and KYS.
+3. **systemd syscall filtering.** The units stop short of `SystemCallFilter=@system-service`;
+   it's usually fine for Python but can break native extensions, so it should be enabled and
+   verified on the box rather than blind-shipped.
+4. **KYS Redis migration** (below) is still a manual, separately-scheduled step.
+
 ## Migrating KYS off Redis 0/1 → 10/11 (separate step — touches live KYS)
 In `BillyInc/sifter-kys-bot`: update `REDIS_URL` (and any `CELERY_*`) in the dev `ENV_FILE` secret
 `…/0 → …/10` and prod `…/1 → …/11`; update `~/sifter-backend/.env` and `~/sifter-backend-prod/.env`
