@@ -78,13 +78,82 @@ def _already_applied(item_id: str, user_id: str) -> bool:
 
 
 def _mark_applied(item_id: str, user_id: str, endpoint: str):
-    db.get_service_client().table("sync_log").insert({
-        "id":         str(uuid.uuid4()),
-        "item_id":    item_id,
-        "user_id":    user_id,
-        "endpoint":   endpoint,
-        "applied_at": datetime.utcnow().isoformat(),
-    }).execute()
+    """
+    Record the transport-level marker for a queue item.
+
+    NOTE: for XP-bearing endpoints the authoritative ledger row is written
+    INSIDE the grant transaction by `try_award_offline_xp_idem` (see
+    migration_v2_offline_idempotency.sql). This call may therefore be a no-op
+    duplicate, so it must tolerate the UNIQUE(item_id, user_id) conflict rather
+    than raise — a raise here would flip a successfully-applied item to
+    CONFLICT and invite the very retry we are trying to make safe.
+    """
+    db.get_service_client().table("sync_log").upsert(
+        {
+            "item_id":    item_id,
+            "user_id":    user_id,
+            "endpoint":   endpoint,
+            "applied_at": datetime.utcnow().isoformat(),
+        },
+        on_conflict="item_id,user_id",
+        ignore_duplicates=True,
+    ).execute()
+
+
+# ─────────────────────────────────────────────────────────────
+# Server-derived idempotency keys
+# ─────────────────────────────────────────────────────────────
+# `OfflineQueueItem.id` is client-generated, so it is only a transport hint:
+# a malicious or buggy client can mint a fresh UUID and replay a real event.
+# For endpoints that represent a non-repeatable domain fact (completing level
+# N) we derive a deterministic server-side key instead, so replays collapse
+# onto the same sync_log row no matter what id the client sends.
+_SYNC_KEY_NAMESPACE = uuid.UUID("2f5c1b3e-9a47-5d6f-8c21-7e0b4a9d3f18")
+
+
+def _natural_key(user_id: str, endpoint: str, *parts: Any) -> str:
+    """Deterministic uuid5 over (user, endpoint, domain identifiers)."""
+    seed = "|".join([str(user_id), str(endpoint), *[str(p) for p in parts]])
+    return str(uuid.uuid5(_SYNC_KEY_NAMESPACE, seed))
+
+
+def _award_xp_idempotent(
+    user_id: str, ledger_key: str, endpoint: str, xp_request: int
+) -> Dict[str, Any]:
+    """
+    Grant XP exactly once, atomically with the daily cap AND the sync_log
+    ledger row (single DB transaction inside the RPC).
+
+    Returns a normalised dict: granted / already_applied / capped / new_points.
+    """
+    xp_request = max(0, min(int(xp_request), MAX_XP_PER_ITEM))
+
+    resp = db.get_service_client().rpc(
+        "try_award_offline_xp_idem",
+        {
+            "p_user_id":  user_id,
+            "p_item_id":  ledger_key,
+            "p_endpoint": endpoint,
+            "p_request":  xp_request,
+            "p_max":      MAX_XP_PER_BATCH,
+        },
+    ).execute()
+
+    data = resp.data
+    if isinstance(data, list):
+        data = data[0] if data else None
+    if not isinstance(data, dict):
+        # Defensive: an RPC that returns a bare integer (or nothing) is treated
+        # as "granted that many, not a duplicate" so we never silently drop XP.
+        granted = int(data or 0)
+        data = {"granted": granted, "already_applied": False, "capped": granted == 0}
+
+    return {
+        "granted":         int(data.get("granted") or 0),
+        "already_applied": bool(data.get("already_applied")),
+        "capped":          bool(data.get("capped")),
+        "new_points":      data.get("new_points"),
+    }
 
 
 # ─────────────────────────────────────────────────────────────
@@ -92,40 +161,76 @@ def _mark_applied(item_id: str, user_id: str, endpoint: str):
 # Maps endpoint string → function that applies the action to DB
 # ─────────────────────────────────────────────────────────────
 
-async def _handle_complete_level(body: Dict[str, Any], user: dict) -> dict:
-    """Apply a level completion from the offline queue."""
-    user_id   = user["id"]
-    level_id  = int(body["level_id"])
-    score     = int(body.get("score", 0))
+async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
+    """
+    Apply a level completion from the offline queue.
+
+    XP is granted through the same capped + idempotent RPC as every other
+    offline XP path, keyed on a SERVER-derived natural key rather than the
+    client's queue-item id. Consequences:
+
+      * Replaying a level that was already paid for grants 0 XP (previously it
+        paid a flat 50 XP per replay, unbounded, with a fresh client UUID).
+      * The grant respects MAX_XP_PER_ITEM, MAX_XP_PER_BATCH and the daily cap
+        (previously complete-level bypassed all three).
+      * Base completion and the perfect-run bonus use SEPARATE keys, so a
+        player who later replays the same level perfectly still receives the
+        bonus exactly once — without re-earning the base XP.
+    """
+    user_id    = user["id"]
+    level_id   = int(body["level_id"])
+    score      = int(body.get("score", 0))
     is_perfect = bool(body.get("is_perfect", False))
-    track     = body.get("track", "crypto")
+    track      = body.get("track", "crypto")
+    endpoint   = ctx.get("endpoint", "/api/game/complete-level")
 
-    completed = user.get("completed_levels", [])
-    perfect   = user.get("perfect_levels", [])
+    # ── XP: capped + exactly-once, keyed on the domain fact ──
+    completion = _award_xp_idempotent(
+        user_id,
+        _natural_key(user_id, endpoint, "level-complete", level_id),
+        endpoint,
+        settings.LEVEL_COMPLETE_XP,
+    )
+    xp = completion["granted"]
+    new_points = completion.get("new_points")
+    replayed = completion["already_applied"]
+    capped = completion["capped"]
 
-    is_new = str(level_id) not in completed
-    xp = settings.LEVEL_COMPLETE_XP if is_new else 50
-    if is_perfect and str(level_id) not in perfect:
-        xp += settings.PERFECT_LEVEL_BONUS
+    if is_perfect:
+        bonus = _award_xp_idempotent(
+            user_id,
+            _natural_key(user_id, endpoint, "level-perfect", level_id),
+            endpoint,
+            settings.PERFECT_LEVEL_BONUS,
+        )
+        xp += bonus["granted"]
+        if bonus.get("new_points") is not None:
+            new_points = bonus["new_points"]
+        replayed = replayed and bonus["already_applied"]
+        capped = capped and bonus["capped"]
 
-    if is_new:
-        completed.append(str(level_id))
-    if is_perfect and str(level_id) not in perfect:
-        perfect.append(str(level_id))
+    # ── Progress arrays: atomic append, never a whole-array overwrite ──
+    # Reading the arrays off the request-scoped `user` snapshot and writing
+    # them back wholesale lost levels when two drains overlapped.
+    next_level = level_id + 1
+    progress = db.get_service_client().rpc(
+        "append_user_level_progress",
+        {
+            "p_user_id":    user_id,
+            "p_level":      str(level_id),
+            "p_perfect":    is_perfect,
+            "p_next_level": next_level,
+            "p_track":      track,
+        },
+    ).execute().data
+    if isinstance(progress, list):
+        progress = progress[0] if progress else None
+    if isinstance(progress, dict):
+        new_points = progress.get("new_points", new_points)
+        next_level = progress.get("current_level", next_level)
 
-    # Re-fetch user to get latest points (avoid stale from cached user object)
-    fresh = db.get_service_client().table("users").select("points,current_level") \
-        .eq("id", user_id).single().execute().data
-    new_points  = (fresh["points"] if fresh else user["points"]) + xp
-    next_level  = max(fresh["current_level"] if fresh else user["current_level"], level_id + 1)
-
-    db.get_service_client().table("users").update({
-        "points":           new_points,
-        "completed_levels": completed,
-        "perfect_levels":   perfect,
-        "current_level":    next_level,
-        "active_track":     track,
-    }).eq("id", user_id).execute()
+    if new_points is None:
+        new_points = user.get("points", 0) + xp
 
     db.get_service_client().table("level_scores").upsert({
         "user_id":  user_id,
@@ -134,18 +239,28 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict) -> dict:
         "stars":    3 if is_perfect else (2 if score > 150 else 1),
     }).execute()
 
-    db.get_service_client().table("transactions").insert({
-        "user_id":      user_id,
-        "type":         "earn",
-        "amount":       xp,
-        "balance_after": new_points,
-        "description":  f"[OFFLINE] Level {level_id} ({track})",
-    }).execute()
+    # Only write a transaction row when XP actually moved — a replay must not
+    # manufacture a fake earn record.
+    if xp > 0:
+        db.get_service_client().table("transactions").insert({
+            "user_id":      user_id,
+            "type":         "earn",
+            "amount":       xp,
+            "balance_after": new_points,
+            "description":  f"[OFFLINE] Level {level_id} ({track})",
+        }).execute()
 
-    return {"xp_earned": xp, "new_points": new_points, "next_level": next_level}
+    return {
+        "xp_earned":  xp,
+        "new_points": new_points,
+        "next_level": next_level,
+        # Extra, additive fields — existing clients ignore them.
+        "already_applied": replayed,
+        "capped":          bool(capped and xp == 0),
+    }
 
 
-async def _handle_save_last_position(body: Dict[str, Any], user: dict) -> dict:
+async def _handle_save_last_position(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
     """Save the user's resume position."""
     db.get_service_client().table("users").update({
         "last_position": body,
@@ -153,7 +268,7 @@ async def _handle_save_last_position(body: Dict[str, Any], user: dict) -> dict:
     return {"saved": True}
 
 
-async def _handle_streak_check(body: Dict[str, Any], user: dict) -> dict:
+async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
     """Apply a streak check from the device's recorded date."""
     from datetime import date as date_type
     today_str = body.get("date", date_type.today().isoformat())
@@ -189,7 +304,7 @@ async def _handle_streak_check(body: Dict[str, Any], user: dict) -> dict:
     return {"streak": streak, "bonus_earned": bonus}
 
 
-async def _handle_analytics_event(body: Dict[str, Any], user: dict) -> dict:
+async def _handle_analytics_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
     db.get_service_client().table("analytics_events").insert({
         "user_id":    user["id"],
         "event_type": body.get("event_type", "unknown"),
@@ -200,28 +315,37 @@ async def _handle_analytics_event(body: Dict[str, Any], user: dict) -> dict:
     return {"tracked": True}
 
 
-async def _handle_xp_event(body: Dict[str, Any], user: dict) -> dict:
+async def _handle_xp_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
     """
     Generic XP award (badges, share bonuses, etc.).
 
-    Per-item cap: MAX_XP_PER_ITEM. The actual grant is performed by the
-    `try_award_offline_xp` RPC, which enforces the daily cap server-side and
-    atomically (no read-then-write race). A grant of 0 means the user is at
-    their cap → the caller marks the item REJECTED.
+    Per-item cap: MAX_XP_PER_ITEM. The grant is performed by the
+    `try_award_offline_xp_idem` RPC, which in ONE transaction claims the
+    sync_log ledger row, checks the daily cap and increments points. Because
+    the ledger row commits with the grant, a retry after any failure later in
+    this function (e.g. the xp_events insert below) is recognised as a
+    duplicate and pays nothing — the old two-statement version re-granted.
     """
     user_id = user["id"]
-    xp_request = int(body.get("xp_amount", 0))
+    try:
+        xp_request = int(body.get("xp_amount", 0))
+    except (TypeError, ValueError):
+        xp_request = 0
     if xp_request <= 0:
         return {"awarded": 0}
 
-    # Cap per-item BEFORE asking the RPC.
-    xp_request = min(xp_request, MAX_XP_PER_ITEM)
+    # For generic XP events the client's queue-item id IS the natural key:
+    # there is no server-side domain fact to derive one from. It is passed
+    # straight into the RPC so the dedup happens in-transaction.
+    result = _award_xp_idempotent(
+        user_id, ctx["item_id"], ctx.get("endpoint", "/api/game/xp-event"), xp_request
+    )
+    granted = result["granted"]
 
-    granted_resp = db.get_service_client().rpc(
-        "try_award_offline_xp",
-        {"p_user_id": user_id, "p_request": xp_request, "p_max": MAX_XP_PER_BATCH},
-    ).execute()
-    granted = int(granted_resp.data or 0)
+    if result["already_applied"]:
+        # Someone (a concurrent drain, or our own pre-failure attempt) already
+        # paid for this exact item. Report success so the client drops it.
+        return {"awarded": 0, "already_applied": True}
 
     if granted == 0:
         # Daily cap hit — caller marks REJECTED so the client stops retrying.
@@ -277,7 +401,16 @@ async def drain_offline_queue(
         client_time = datetime.fromisoformat(payload.client_time.replace("Z", "+00:00"))
         skew_seconds = int(abs((server_time - client_time.replace(tzinfo=None)).total_seconds()))
     except Exception:
-        skew_seconds = 0
+        # Fail CLOSED. Previously this swallowed the error and set skew to 0,
+        # which meant a client sending garbage in `client_time` sailed past the
+        # clock-skew guard entirely. 400 leaves the client's queue intact (no
+        # data loss) while refusing to apply anything until it sends a real
+        # timestamp.
+        log.warning(
+            "Batch rejected: unparseable client_time",
+            user_id=user_id, client_time=payload.client_time,
+        )
+        raise HTTPException(400, "Invalid client_time: expected an ISO-8601 timestamp")
 
     # Hard-reject batches whose clock skew exceeds the limit — almost certainly a
     # malicious / corrupt device. Returning REJECTED for every item lets the
@@ -349,7 +482,14 @@ async def drain_offline_queue(
                 ))
                 continue
         except Exception:
-            pass  # unparseable timestamp — try to apply anyway
+            # Fail CLOSED. Applying an item whose age we cannot establish
+            # defeats the 72h freshness rule — a client could stamp garbage and
+            # replay arbitrarily old queue entries.
+            results.append(SyncItemResult(
+                id=item.id, status=SyncStatus.REJECTED,
+                error="Unparseable created_at — expected an ISO-8601 timestamp",
+            ))
+            continue
 
         # ── Idempotency ─────────────────────────────────────
         if _already_applied(item.id, user_id):
@@ -370,16 +510,16 @@ async def drain_offline_queue(
 
         # ── Apply ────────────────────────────────────────────
         try:
-            response = await handler(item.body, current_user)
+            response = await handler(
+                item.body, current_user,
+                {"item_id": item.id, "endpoint": item.endpoint, "device_id": item.device_id},
+            )
 
             # If the XP RPC reported it was capped, treat as REJECTED so the
-            # client drops it instead of retrying forever.
-            if (
-                item.endpoint == "/api/game/xp-event"
-                and isinstance(response, dict)
-                and response.get("awarded", 0) == 0
-                and response.get("capped")
-            ):
+            # client drops it instead of retrying forever. Applies to every
+            # XP-bearing endpoint now, not just /api/game/xp-event — the
+            # complete-level path used to bypass the cap entirely.
+            if isinstance(response, dict) and response.get("capped"):
                 results.append(SyncItemResult(
                     id=item.id, status=SyncStatus.REJECTED,
                     error="Daily XP cap reached",
