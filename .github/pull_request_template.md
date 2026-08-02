@@ -9,7 +9,7 @@
 
 ## Testing
 - [ ] Tested locally
-- [ ] Web preview works (Netlify)
+- [ ] Web build passes (`npx expo export --platform web`)
 - [ ] Backend tests pass
 - [ ] TypeScript check passes
 
