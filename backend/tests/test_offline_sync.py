@@ -398,16 +398,17 @@ class TestCompleteLevelReplay:
             "device_id": "devA",
         }
 
-    def test_replaying_completed_level_grants_no_extra_xp(
+    def test_replay_pays_once_per_day_not_once_per_submission(
         self, auth_client, setup_db, monkeypatch
     ):
         """
         Bug: _handle_complete_level bypassed the capped/idempotent RPC and paid
-        a flat 50 XP for every replay, keyed only on the client-generated
+        a flat 50 XP for EVERY replay, keyed only on the client-generated
         item.id — so a fresh UUID per replay was unbounded free XP.
 
-        Each replay below uses a DIFFERENT client item id; only the
-        server-derived natural key stops it.
+        The reward survives; the frequency is what is bounded. Each submission
+        below uses a DIFFERENT client item id, so only the server-derived
+        natural key (which includes the server's date) stops the repeats.
         """
         ledger: dict = {}
         grants: list = []
@@ -418,6 +419,7 @@ class TestCompleteLevelReplay:
         sc = setup_db.get_service_client.return_value
         sc.rpc.side_effect = _fake_ledger_rpc(ledger, grants)
 
+        paid = []
         for n in range(5):
             r = auth_client.post("/api/sync/drain", json={
                 "device_id": "devA",
@@ -427,13 +429,48 @@ class TestCompleteLevelReplay:
             assert r.status_code == 200, r.text
             result = r.json()["results"][0]
             assert result["status"] == "applied"
-            expected_xp = 100 if n == 0 else 0
-            assert result["response"]["xp_earned"] == expected_xp, (
-                f"replay #{n} paid {result['response']['xp_earned']}"
-            )
+            paid.append(result["response"]["xp_earned"])
 
-        # LEVEL_COMPLETE_XP granted exactly once across 5 replays.
-        assert grants == [100], f"expected a single grant, got {grants}"
+        # First submission = the completion itself; second = one replay reward;
+        # every further same-day submission pays nothing.
+        assert paid == [100, 50, 0, 0, 0], f"got {paid}"
+        assert grants == [100, 50], f"expected two grants, got {grants}"
+
+    def test_replay_reward_resets_on_a_new_server_day(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        """The replay key includes the SERVER's date, so the reward becomes
+        earnable again tomorrow — and the date cannot be moved by the client."""
+        ledger: dict = {}
+        grants: list = []
+
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        sc.rpc.side_effect = _fake_ledger_rpc(ledger, grants)
+
+        real_utcnow = offline_sync._utcnow
+        day_one = real_utcnow()
+
+        def _post(item_id):
+            return auth_client.post("/api/sync/drain", json={
+                "device_id": "devA",
+                "items": [self._level_item(item_id, level_id=9)],
+                "client_time": _now_iso(),
+            }).json()["results"][0]["response"]["xp_earned"]
+
+        monkeypatch.setattr(offline_sync, "_utcnow", lambda: day_one)
+        assert _post("d1-a") == 100    # completion
+        assert _post("d1-b") == 50     # replay #1 today
+        assert _post("d1-c") == 0      # replay #2 today — nothing
+
+        # Advance the SERVER clock a day. Note the client payload is unchanged.
+        monkeypatch.setattr(offline_sync, "_utcnow", lambda: day_one + timedelta(days=1))
+        assert _post("d2-a") == 50     # replay earnable again
+        assert _post("d2-b") == 0
+
+        assert grants == [100, 50, 50], f"got {grants}"
 
     def test_perfect_bonus_still_payable_on_a_later_perfect_run(
         self, auth_client, setup_db, monkeypatch
@@ -459,16 +496,18 @@ class TestCompleteLevelReplay:
             "items": [self._level_item("run-2", level_id=7, perfect=True)],
             "client_time": _now_iso(),
         })
-        assert r2.json()["results"][0]["response"]["xp_earned"] == 250  # bonus only
+        # Replay reward (50, first today) + the perfect bonus (250) — but NOT
+        # the base completion XP a second time.
+        assert r2.json()["results"][0]["response"]["xp_earned"] == 300
 
-        # A third perfect run pays nothing at all.
+        # A third perfect run the same day pays nothing at all.
         r3 = auth_client.post("/api/sync/drain", json={
             "device_id": "devA",
             "items": [self._level_item("run-3", level_id=7, perfect=True)],
             "client_time": _now_iso(),
         })
         assert r3.json()["results"][0]["response"]["xp_earned"] == 0
-        assert grants == [100, 250], f"got {grants}"
+        assert grants == [100, 50, 250], f"got {grants}"
 
     def test_complete_level_respects_per_item_cap(self, auth_client, setup_db, monkeypatch):
         """complete-level now goes through the same capped RPC as xp-event."""
@@ -700,3 +739,182 @@ class TestTimestampsFailClosed:
         })
         assert r.status_code == 400
         assert "client_time" in r.text
+
+
+class TestTimezoneHandling:
+    """
+    The module used to mix naive `datetime.utcnow()` with
+    `parsed.replace(tzinfo=None)`, which DISCARDS an offset instead of
+    converting it. A device on a non-UTC offset was therefore mis-aged and
+    mis-skewed by exactly its offset.
+    """
+
+    def _offset_iso(self, hours: int, age_seconds: int = 0) -> str:
+        tz = timezone(timedelta(hours=hours))
+        return (datetime.now(tz) - timedelta(seconds=age_seconds)).isoformat()
+
+    @pytest.mark.parametrize("offset_hours", [1, 8, 14, -11])
+    def test_non_utc_offsets_are_converted_not_truncated(
+        self, auth_client, setup_db, monkeypatch, offset_hours
+    ):
+        """A correct clock on a non-UTC offset must report ~0 skew and its
+        items must not be aged out. Previously UTC+14 lost 14h of the window
+        and UTC-11 reported 11h of phantom skew."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [_xp_item("tz-1", xp=10, created_at=self._offset_iso(offset_hours))],
+            "client_time": self._offset_iso(offset_hours),
+        })
+        assert r.status_code == 200, r.text
+        body = r.json()
+        assert body["clock_skew_seconds"] < 60, (
+            f"UTC{offset_hours:+d} reported {body['clock_skew_seconds']}s of phantom skew"
+        )
+        assert body["results"][0]["status"] == "applied"
+
+    def test_naive_created_at_is_read_as_utc(self, auth_client, setup_db, monkeypatch):
+        """No offset at all still has to work — clients have always sent UTC."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        naive = datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [_xp_item("tz-naive", xp=10, created_at=naive)],
+            "client_time": naive,
+        })
+        assert r.json()["results"][0]["status"] == "applied"
+
+    def test_items_sort_by_instant_not_by_string(self, auth_client, setup_db, monkeypatch):
+        """`created_at` was sorted as text, so '09:00+01:00' (08:00Z) ordered
+        AFTER '08:30Z' despite being earlier."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        seen: list = []
+        real_handler = offline_sync._ENDPOINT_MAP["/api/game/xp-event"]
+
+        async def spy(body, user, ctx):
+            seen.append(ctx["item_id"])
+            return await real_handler(body, user, ctx)
+
+        monkeypatch.setitem(offline_sync._ENDPOINT_MAP, "/api/game/xp-event", spy)
+
+        base = datetime.now(timezone.utc) - timedelta(hours=2)
+        # 'earlier' is the earlier INSTANT but sorts later as a string.
+        earlier = base.astimezone(timezone(timedelta(hours=1))).isoformat()
+        later = (base + timedelta(minutes=30)).isoformat()
+
+        auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [
+                _xp_item("later", xp=10, created_at=later),
+                _xp_item("earlier", xp=10, created_at=earlier),
+            ],
+            "client_time": _now_iso(),
+        })
+        assert seen == ["earlier", "later"], f"applied out of chronological order: {seen}"
+
+
+class TestBatchCapPrePass:
+    def test_stale_items_do_not_consume_batch_xp_budget(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        """The XP pre-pass used to run BEFORE the age check, so items that were
+        about to be discarded as stale still reserved batch budget and could
+        push a fresh, legitimate item over the cap."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        stale = _now_iso(offset_seconds=-(100 * 3600))  # >72h
+        items = [
+            _xp_item(f"stale-{i}", xp=500, created_at=stale) for i in range(10)
+        ] + [_xp_item("fresh", xp=500)]
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA", "items": items, "client_time": _now_iso(),
+        })
+        by_id = {x["id"]: x for x in r.json()["results"]}
+        assert all(by_id[f"stale-{i}"]["status"] == "rejected" for i in range(10))
+        assert by_id["fresh"]["status"] == "applied", (
+            f"fresh item starved by stale ones: {by_id['fresh']}"
+        )
+
+    def test_unparseable_items_do_not_consume_batch_xp_budget(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        # The garbage sorts BEFORE a real timestamp as a string, so on the old
+        # code these ten claimed the batch budget first and starved the good one.
+        items = [
+            _xp_item(f"bad-{i}", xp=500, created_at="0000-not-a-timestamp")
+            for i in range(10)
+        ] + [_xp_item("fresh", xp=500)]
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA", "items": items, "client_time": _now_iso(),
+        })
+        by_id = {x["id"]: x for x in r.json()["results"]}
+        assert by_id["fresh"]["status"] == "applied", by_id["fresh"]
+
+
+class TestLastPosition:
+    def _pos_item(self, body):
+        return {
+            "id": "pos-1",
+            "priority": "normal",
+            "endpoint": "/api/users/last-position",
+            "method": "POST",
+            "body": body,
+            "created_at": _now_iso(),
+            "attempts": 0,
+            "device_id": "devA",
+        }
+
+    def test_only_whitelisted_scalar_fields_are_persisted(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        """The raw request body used to be written straight into
+        users.last_position — an unvalidated, unbounded client-controlled blob."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._pos_item({
+                "track": "crypto",
+                "level_id": 4,
+                "junk": "x" * 10_000,
+                "nested": {"deep": [1, 2, 3]},
+            })],
+            "client_time": _now_iso(),
+        })
+        assert r.json()["results"][0]["status"] == "applied"
+
+        written = [
+            c.args[0] for c in sc.table.return_value.update.call_args_list
+            if isinstance(c.args[0], dict) and "last_position" in c.args[0]
+        ]
+        assert written, "last_position was never written"
+        assert written[-1]["last_position"] == {"track": "crypto", "level_id": 4}
+
+    def test_oversized_string_is_rejected_not_stored(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._pos_item({"track": "c" * 5000})],
+            "client_time": _now_iso(),
+        })
+        result = r.json()["results"][0]
+        assert result["status"] == "rejected", result
+        assert "last_position.track" in result["error"]

@@ -27,18 +27,17 @@
 #   - Items older than 72 hours are rejected with status=rejected
 # ============================================
 import uuid
-from datetime import date as date_type, datetime, timedelta
+from datetime import date as date_type, datetime, timedelta, timezone
 from typing import Any, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
-from fastapi.responses import JSONResponse
 
 from auth import Auth
 from database import db
 from logger import log
 from models import (
-    LevelComplete, OfflineSyncRequest, OfflineSyncResponse,
-    QueuePriority, ResponseModel, SyncItemResult, SyncStatus, TrackType,
+    OfflineSyncRequest, OfflineSyncResponse,
+    QueuePriority, ResponseModel, SyncItemResult, SyncStatus,
 )
 from config import settings
 
@@ -60,6 +59,35 @@ _PRIORITY_ORDER = {
     QueuePriority.HIGH: 1,
     QueuePriority.NORMAL: 2,
 }
+
+
+# Endpoints that can move a user's points, and therefore have to be counted
+# against MAX_XP_PER_BATCH before anything is applied.
+#
+# /api/users/streak is deliberately NOT here. Its bonus is keyed per streak-day,
+# so N queued streak items pay at most once no matter how many arrive; counting
+# each one at its worst case (up to MAX_XP_PER_ITEM) would reserve budget that
+# can never actually be spent and would reject legitimate items behind it. It
+# stays bounded by the RPC's own daily cap instead.
+_XP_BEARING_ENDPOINTS = ("/api/game/complete-level", "/api/game/xp-event")
+
+
+def _requested_xp(item: Any) -> int:
+    """
+    Upper bound on the XP one queued item could move, for the per-batch pre-pass.
+
+    Deliberately pessimistic for complete-level (assumes a perfect first run,
+    which dominates the replay reward), and clamped to MAX_XP_PER_ITEM so a
+    client cannot inflate the running total by claiming a huge xp_amount.
+    """
+    if item.endpoint == "/api/game/xp-event":
+        try:
+            requested = int(item.body.get("xp_amount", 0))
+        except (AttributeError, TypeError, ValueError):
+            requested = 0
+    else:
+        requested = settings.LEVEL_COMPLETE_XP + settings.PERFECT_LEVEL_BONUS
+    return max(0, min(requested, MAX_XP_PER_ITEM))
 
 
 class ItemRejected(Exception):
@@ -105,11 +133,42 @@ def _mark_applied(item_id: str, user_id: str, endpoint: str):
             "item_id":    item_id,
             "user_id":    user_id,
             "endpoint":   endpoint,
-            "applied_at": datetime.utcnow().isoformat(),
+            "applied_at": _utcnow().isoformat(),
         },
         on_conflict="item_id,user_id",
         ignore_duplicates=True,
     ).execute()
+
+
+# ─────────────────────────────────────────────────────────────
+# Time helpers
+# ─────────────────────────────────────────────────────────────
+# Everything in this module is timezone-AWARE UTC. The previous code mixed
+# naive `datetime.utcnow()` with `parsed.replace(tzinfo=None)`, which does not
+# convert — it DISCARDS the offset. A device in UTC+1 sending a perfectly
+# correct timestamp was therefore read as one hour of clock skew, and its queue
+# items were aged as if captured an hour later than they were. Harmless in the
+# middle of the 72h window, wrong at both edges, and it scales with the
+# offset — UTC+14 clients lost 14h of their window.
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _parse_iso_utc(raw: str) -> datetime:
+    """
+    Parse an ISO-8601 timestamp to aware UTC.
+
+    A trailing 'Z' is normalised for Python < 3.11. A timestamp with no offset
+    is ASSUMED to be UTC — clients have always sent UTC, and assuming is the
+    only non-arbitrary choice; the alternative (reject) would break every
+    existing client. Raises ValueError on anything unparseable, and callers
+    fail closed on that.
+    """
+    parsed = datetime.fromisoformat(str(raw).strip().replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -181,8 +240,12 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str
     offline XP path, keyed on a SERVER-derived natural key rather than the
     client's queue-item id. Consequences:
 
-      * Replaying a level that was already paid for grants 0 XP (previously it
-        paid a flat 50 XP per replay, unbounded, with a fresh client UUID).
+      * First completion pays LEVEL_COMPLETE_XP exactly once, ever.
+      * Replaying an already-paid level still pays LEVEL_REPLAY_XP, but on a
+        THIRD key family that includes the server's current date, so it is
+        earnable at most once per level per day. Previously a replay paid a
+        flat 50 on every submission with a fresh client UUID, uncapped — that
+        frequency, not the reward itself, was the exploit.
       * The grant respects MAX_XP_PER_ITEM, MAX_XP_PER_BATCH and the daily cap
         (previously complete-level bypassed all three).
       * Base completion and the perfect-run bonus use SEPARATE keys, so a
@@ -207,6 +270,25 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str
     new_points = completion.get("new_points")
     replayed = completion["already_applied"]
     capped = completion["capped"]
+
+    if replayed and settings.LEVEL_REPLAY_XP > 0:
+        # Already paid for the completion itself — this is a replay. The date
+        # comes from the SERVER (never body/created_at), so a client cannot
+        # mint extra replay days by lying about when it played.
+        replay = _award_xp_idempotent(
+            user_id,
+            _natural_key(
+                user_id, endpoint, "level-replay", level_id, _utcnow().date().isoformat()
+            ),
+            endpoint,
+            settings.LEVEL_REPLAY_XP,
+        )
+        xp += replay["granted"]
+        if replay.get("new_points") is not None:
+            new_points = replay["new_points"]
+        # A second replay on the same day is a no-op, not a cap hit: reporting
+        # `capped` would make the drain loop REJECT an otherwise valid item.
+        capped = replay["capped"] and not replay["already_applied"]
 
     if is_perfect:
         bonus = _award_xp_idempotent(
@@ -251,15 +333,16 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str
         "stars":    3 if is_perfect else (2 if score > 150 else 1),
     }).execute()
 
-    # Only write a transaction row when XP actually moved — a replay must not
-    # manufacture a fake earn record.
+    # Only write a transaction row when XP actually moved — a same-day repeat
+    # replay pays nothing and must not manufacture a fake earn record.
     if xp > 0:
+        label = "Level {} replay".format(level_id) if replayed else "Level {}".format(level_id)
         db.get_service_client().table("transactions").insert({
             "user_id":      user_id,
             "type":         "earn",
             "amount":       xp,
             "balance_after": new_points,
-            "description":  f"[OFFLINE] Level {level_id} ({track})",
+            "description":  f"[OFFLINE] {label} ({track})",
         }).execute()
 
     return {
@@ -272,10 +355,29 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str
     }
 
 
+# Only these keys are persisted from a last-position payload. The handler used
+# to write the raw request body straight into users.last_position, so a client
+# could park an arbitrarily large, arbitrarily shaped blob on its own row —
+# unbounded storage on a column nothing validates.
+_LAST_POSITION_FIELDS = ("track", "level_id", "chapter_id", "step", "scroll_offset")
+_LAST_POSITION_MAX_STR = 128
+
+
 async def _handle_save_last_position(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
-    """Save the user's resume position."""
+    """Save the user's resume position (whitelisted scalar fields only)."""
+    position: Dict[str, Any] = {}
+    for field in _LAST_POSITION_FIELDS:
+        value = body.get(field)
+        if value is None:
+            continue
+        if isinstance(value, bool) or not isinstance(value, (int, float, str)):
+            raise ItemRejected(f"Invalid last_position.{field}: expected a scalar")
+        if isinstance(value, str) and len(value) > _LAST_POSITION_MAX_STR:
+            raise ItemRejected(f"Invalid last_position.{field}: exceeds {_LAST_POSITION_MAX_STR} chars")
+        position[field] = value
+
     db.get_service_client().table("users").update({
-        "last_position": body,
+        "last_position": position,
     }).eq("id", user["id"]).execute()
     return {"saved": True}
 
@@ -297,7 +399,7 @@ def _validate_client_date(raw: Any) -> None:
     except (TypeError, ValueError):
         raise ItemRejected("Invalid date: expected an ISO-8601 date (YYYY-MM-DD)")
 
-    today = datetime.utcnow().date()
+    today = _utcnow().date()
     if captured > today:
         raise ItemRejected(f"Invalid date: {captured.isoformat()} is in the future")
     if (today - captured) > timedelta(hours=MAX_ITEM_AGE_HOURS):
@@ -352,7 +454,7 @@ async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, 
 
     streak     = int(row.get("streak") or user.get("streak", 1))
     advanced   = bool(row.get("advanced", False))
-    streak_day = str(row.get("last_played") or datetime.utcnow().date().isoformat())
+    streak_day = str(row.get("last_played") or _utcnow().date().isoformat())
 
     bonus  = 0
     capped = False
@@ -382,7 +484,7 @@ async def _handle_analytics_event(body: Dict[str, Any], user: dict, ctx: Dict[st
         "event_type": body.get("event_type", "unknown"),
         "event_data": body.get("event_data", {}),
         "session_id": body.get("session_id"),
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": _utcnow().isoformat(),
     }).execute()
     return {"tracked": True}
 
@@ -430,7 +532,7 @@ async def _handle_xp_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]
         "xp_amount":  granted,
         "source_id":  body.get("source_id"),
         "metadata":   body.get("metadata", {}),
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": _utcnow().isoformat(),
     }).execute()
 
     return {"awarded": granted}
@@ -468,10 +570,10 @@ async def drain_offline_queue(
         raise HTTPException(400, f"Batch too large: max {MAX_BATCH_SIZE} items")
 
     # Detect clock skew
-    server_time = datetime.utcnow()
+    server_time = _utcnow()
     try:
-        client_time = datetime.fromisoformat(payload.client_time.replace("Z", "+00:00"))
-        skew_seconds = int(abs((server_time - client_time.replace(tzinfo=None)).total_seconds()))
+        client_time = _parse_iso_utc(payload.client_time)
+        skew_seconds = int(abs((server_time - client_time).total_seconds()))
     except Exception:
         # Fail CLOSED. Previously this swallowed the error and set skew to 0,
         # which meant a client sending garbage in `client_time` sailed past the
@@ -507,30 +609,52 @@ async def drain_offline_queue(
     if skew_seconds > 3600:
         log.warning("Large clock skew detected", user_id=user_id, skew_seconds=skew_seconds)
 
-    # Sort by priority then by created_at (chronological within each tier)
-    sorted_items = sorted(
-        payload.items,
-        key=lambda i: (_PRIORITY_ORDER.get(i.priority, 99), i.created_at)
-    )
-
     results: list[SyncItemResult] = []
-    cutoff = datetime.utcnow() - timedelta(hours=MAX_ITEM_AGE_HOURS)
+    cutoff = _utcnow() - timedelta(hours=MAX_ITEM_AGE_HOURS)
+
+    # ── Freshness pass ───────────────────────────────────────
+    # Parse and age-check FIRST, before anything else looks at the batch. This
+    # used to run inside the apply loop, i.e. AFTER the XP pre-pass, so stale
+    # and unparseable items still consumed per-batch XP budget on their way to
+    # being discarded — and could push a legitimate item over the cap and get
+    # it rejected. Parsing here also gives the sort a real datetime key: the
+    # old sort compared `created_at` as a STRING, so '...T09:00:00+01:00' and
+    # '...T09:00:00Z' ordered by text rather than by instant.
+    fresh: list[tuple[Any, datetime]] = []
+    for item in payload.items:
+        try:
+            item_ts = _parse_iso_utc(item.created_at)
+        except (TypeError, ValueError):
+            # Fail CLOSED. Applying an item whose age we cannot establish
+            # defeats the 72h freshness rule — a client could stamp garbage and
+            # replay arbitrarily old queue entries.
+            results.append(SyncItemResult(
+                id=item.id, status=SyncStatus.REJECTED,
+                error="Unparseable created_at — expected an ISO-8601 timestamp",
+            ))
+            continue
+        if item_ts < cutoff:
+            results.append(SyncItemResult(
+                id=item.id, status=SyncStatus.REJECTED,
+                error=f"Item too old (>{MAX_ITEM_AGE_HOURS}h) — discarded"
+            ))
+            continue
+        fresh.append((item, item_ts))
+
+    # Sort by priority then by capture instant (chronological within each tier)
+    fresh.sort(key=lambda pair: (_PRIORITY_ORDER.get(pair[0].priority, 99), pair[1]))
+    sorted_items = [item for item, _ in fresh]
 
     # ── Per-batch XP cap pre-pass ────────────────────────────
-    # Walk items in priority/chrono order and mark anything that would push the
-    # requested XP total over MAX_XP_PER_BATCH as REJECTED up-front — protects
-    # the user before we even hit the per-grant RPC.
+    # Walk the surviving items in priority/chrono order and mark anything that
+    # would push the requested XP total over MAX_XP_PER_BATCH as REJECTED
+    # up-front — protects the user before we even hit the per-grant RPC.
     over_cap_ids: set[str] = set()
     running_xp = 0
     for it in sorted_items:
-        if it.endpoint not in ("/api/game/complete-level", "/api/game/xp-event"):
+        if it.endpoint not in _XP_BEARING_ENDPOINTS:
             continue
-        try:
-            requested = int(it.body.get("xp_amount", 0)) if it.endpoint == "/api/game/xp-event" \
-                else min(settings.LEVEL_COMPLETE_XP + settings.PERFECT_LEVEL_BONUS, MAX_XP_PER_ITEM)
-        except Exception:
-            requested = 0
-        requested = max(0, min(requested, MAX_XP_PER_ITEM))
+        requested = _requested_xp(it)
         if running_xp + requested > MAX_XP_PER_BATCH:
             over_cap_ids.add(it.id)
         else:
@@ -541,25 +665,6 @@ async def drain_offline_queue(
             results.append(SyncItemResult(
                 id=item.id, status=SyncStatus.REJECTED,
                 error=f"Per-batch XP cap exceeded ({MAX_XP_PER_BATCH})",
-            ))
-            continue
-
-        # ── Age check ───────────────────────────────────────
-        try:
-            item_ts = datetime.fromisoformat(item.created_at.replace("Z", "+00:00"))
-            if item_ts.replace(tzinfo=None) < cutoff:
-                results.append(SyncItemResult(
-                    id=item.id, status=SyncStatus.REJECTED,
-                    error=f"Item too old (>{MAX_ITEM_AGE_HOURS}h) — discarded"
-                ))
-                continue
-        except Exception:
-            # Fail CLOSED. Applying an item whose age we cannot establish
-            # defeats the 72h freshness rule — a client could stamp garbage and
-            # replay arbitrarily old queue entries.
-            results.append(SyncItemResult(
-                id=item.id, status=SyncStatus.REJECTED,
-                error="Unparseable created_at — expected an ISO-8601 timestamp",
             ))
             continue
 
@@ -645,6 +750,6 @@ async def sync_status(current_user: dict = Depends(Auth.get_current_user)):
     """
     return ResponseModel(data={
         "user_id":     current_user["id"],
-        "server_time": datetime.utcnow().isoformat(),
+        "server_time": _utcnow().isoformat(),
         "ok":          True,
     })
