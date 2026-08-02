@@ -19,8 +19,10 @@
 -- authoritative, race-free "exactly once" gate — a losing INSERT means the
 -- grant already happened, and we return 0 without touching points.
 --
--- NOTE: this file is intentionally NOT applied by the change author. Apply it
--- with the same process used for the other migration_*.sql files.
+-- STATUS: applied to the DEV database (billy / igvizqgbrxmdtyaujbxu, schema
+-- skillup_dev) on 2026-08-02 as migration `v2_offline_idempotency`. NOT yet
+-- applied to prod (vkgfw) — that has to happen before this branch's code is
+-- deployed there, or every offline XP grant fails.
 -- ============================================================
 BEGIN;
 
@@ -173,8 +175,9 @@ END;
 $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 
--- Duplicate-safe lookups of the natural keys written by the RPC above.
-CREATE INDEX IF NOT EXISTS idx_sync_log_item_user
-    ON skillup_dev.sync_log(item_id, user_id);
+-- No index is created here: sync_log already carries the UNIQUE constraint
+-- `sync_log_item_id_user_id_key` on (item_id, user_id), which is both the
+-- idempotency gate the RPC above relies on and the index that serves these
+-- lookups. Adding a second btree on the same columns would only cost writes.
 
 COMMIT;

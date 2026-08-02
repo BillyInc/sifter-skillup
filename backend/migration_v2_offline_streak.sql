@@ -29,8 +29,10 @@
 -- try_award_offline_xp_idem, keyed on (user, endpoint, streak day), so it is
 -- capped and earnable at most once per streak-day.
 --
--- NOTE: this file is intentionally NOT applied by the change author. Apply it
--- with the same process used for the other migration_*.sql files.
+-- STATUS: applied to the DEV database (billy / igvizqgbrxmdtyaujbxu, schema
+-- skillup_dev) on 2026-08-02 as migration `v2_offline_streak`. NOT yet applied
+-- to prod (vkgfw) — that has to happen before this branch's code is deployed
+-- there, or the offline streak endpoint fails.
 -- ============================================================
 BEGIN;
 
@@ -73,11 +75,15 @@ BEGIN
         -- Already counted today. Nothing moves, nothing is owed.
         v_advanced := false;
         v_streak   := GREATEST(v_streak, 1);
-    ELSIF v_last = v_today - INTERVAL '1 day' THEN
+    ELSIF v_last = v_today - 1 THEN     -- date - int stays DATE; INTERVAL would
+                                        -- promote both sides to TIMESTAMP
         v_advanced := true;
         v_streak   := v_streak + 1;
     ELSE
-        -- Gap of 2+ days, or a first-ever play (last_played IS NULL).
+        -- Gap of 2+ days, or last_played is NULL on a legacy row. (In the
+        -- current schema last_played is NOT NULL DEFAULT CURRENT_DATE, so a
+        -- brand-new user takes the same-day branch above and is not owed a
+        -- bonus for the day they signed up.)
         v_advanced := true;
         v_streak   := 1;
     END IF;
