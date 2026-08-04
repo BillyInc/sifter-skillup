@@ -155,6 +155,12 @@ class Settings:
     WELCOME_BONUS: int         = 1000
     LEVEL_COMPLETE_XP: int     = 100
     PERFECT_LEVEL_BONUS: int   = 250
+    # Replaying an already-completed level pays this, at most once per level
+    # per day (see services/offline_sync._handle_complete_level). Historically
+    # a flat 50 was paid on EVERY replay with no cap and no dedup key, which
+    # was the unbounded XP exploit; the amount is unchanged, the frequency is
+    # what is now bounded.
+    LEVEL_REPLAY_XP: int       = 50
     STREAK_BONUS: list         = [100, 200, 300, 500, 750, 1000, 1500]
 
     # ── Withdrawal limits ─────────────────────────────────────
