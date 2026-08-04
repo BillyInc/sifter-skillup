@@ -88,17 +88,32 @@ BEGIN
         );
     END IF;
 
-    -- ── Daily cap check + grant (unchanged semantics) ─────────
+    -- ── Daily cap check + grant ───────────────────────────────
+    -- DO UPDATE, not DO NOTHING. DO NOTHING neither locks nor returns the
+    -- conflicting row, so with a concurrent uncommitted insert of the same
+    -- (user_id, cap_date) this could fall through to a SELECT that also does
+    -- not see the row, leaving v_current NULL. That is not a harmless NULL:
+    -- GREATEST(p_max - NULL, 0) is 0 in Postgres (GREATEST ignores NULLs), so
+    -- v_grant becomes 0, the branch below deletes the sync_log row we just
+    -- claimed, and we return capped=true. The caller maps capped to REJECTED
+    -- and the client DROPS the item — the user silently loses XP while the
+    -- daily budget is untouched. Two overlapping drains on the first grant of
+    -- the day is exactly the race this function exists to close.
+    --
+    -- DO UPDATE with a no-op SET waits for the concurrent writer and returns
+    -- the row already locked, which is also what the old separate FOR UPDATE
+    -- was there for — so that SELECT is gone.
     INSERT INTO skillup_dev.daily_xp_caps(user_id, cap_date, xp_offline)
         VALUES (p_user_id, CURRENT_DATE, 0)
-        ON CONFLICT (user_id, cap_date) DO NOTHING;
+        ON CONFLICT (user_id, cap_date) DO UPDATE
+            SET xp_offline = skillup_dev.daily_xp_caps.xp_offline
+        RETURNING xp_offline INTO v_current;
 
-    SELECT xp_offline INTO v_current
-      FROM skillup_dev.daily_xp_caps
-     WHERE user_id = p_user_id AND cap_date = CURRENT_DATE
-       FOR UPDATE;
-
-    v_grant := LEAST(p_request, GREATEST(p_max - v_current, 0));
+    -- COALESCE is belt-and-braces: v_current can no longer be NULL above, and
+    -- a NULL here fails toward "grant nothing", which is the outcome we must
+    -- never reach by accident.
+    v_current := COALESCE(v_current, 0);
+    v_grant   := LEAST(p_request, GREATEST(p_max - v_current, 0));
 
     IF v_grant > 0 THEN
         UPDATE skillup_dev.daily_xp_caps

@@ -918,3 +918,28 @@ class TestLastPosition:
         result = r.json()["results"][0]
         assert result["status"] == "rejected", result
         assert "last_position.track" in result["error"]
+
+    def test_unrecognised_body_does_not_erase_a_stored_position(
+        self, auth_client, setup_db, monkeypatch
+    ):
+        """Regression: the whitelist could yield {} and that empty object was
+        written over a perfectly good stored resume point, so an old build
+        posting a renamed field silently destroyed the user's progress marker."""
+        monkeypatch.setattr(offline_sync, "_already_applied", lambda *a, **kw: False)
+        monkeypatch.setattr(offline_sync, "_mark_applied", lambda *a, **kw: None)
+
+        sc = setup_db.get_service_client.return_value
+        r = auth_client.post("/api/sync/drain", json={
+            "device_id": "devA",
+            "items": [self._pos_item({"foo": 1, "legacy_field": "bar"})],
+            "client_time": _now_iso(),
+        })
+        result = r.json()["results"][0]
+        assert result["status"] == "applied"          # client drops it, no retry loop
+        assert result["response"]["saved"] is False
+
+        wrote_position = [
+            c for c in sc.table.return_value.update.call_args_list
+            if isinstance(c.args[0], dict) and "last_position" in c.args[0]
+        ]
+        assert not wrote_position, f"erased the stored position with {wrote_position}"

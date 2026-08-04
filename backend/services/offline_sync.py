@@ -383,6 +383,14 @@ async def _handle_save_last_position(body: Dict[str, Any], user: dict, ctx: Dict
             raise ItemRejected(f"Invalid last_position.{field}: exceeds {_LAST_POSITION_MAX_STR} chars")
         position[field] = value
 
+    if not position:
+        # Nothing recognisable survived the whitelist. Writing {} here would
+        # ERASE a perfectly good stored resume point — a client posting an
+        # unrecognised shape (an old build, a renamed field) would silently
+        # destroy the user's progress marker. Ignoring it is the safe outcome;
+        # the item is still APPLIED so the client drops it rather than retrying.
+        return {"saved": False, "reason": "no recognised last_position fields"}
+
     db.get_service_client().table("users").update({
         "last_position": position,
     }).eq("id", user["id"]).execute()
