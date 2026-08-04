@@ -275,6 +275,13 @@ async def _handle_complete_level(body: Dict[str, Any], user: dict, ctx: Dict[str
         # Already paid for the completion itself — this is a replay. The date
         # comes from the SERVER (never body/created_at), so a client cannot
         # mint extra replay days by lying about when it played.
+        #
+        # This date is the API server's UTC date; the daily cap inside the RPC
+        # rolls on Postgres CURRENT_DATE. They agree only because the database
+        # is UTC (verified on billy). If that ever changes, the replay window
+        # and the cap window drift apart by the offset — not exploitable (both
+        # are server-side and both roll once per day), but the boundaries would
+        # no longer line up.
         replay = _award_xp_idempotent(
             user_id,
             _natural_key(
