@@ -240,7 +240,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const isNewUser = Boolean(payload.is_new_user);
-      const nextPath = resolvePostAuthHref(payload.user, 'starknet-islands');
+      const nextPath = resolvePostAuthHref(payload.user);
       setPendingPostAuthRedirect(nextPath);
       await _handleAuthResponse({ token: payload.token, user: payload.user });
       return { isNewUser, nextPath };

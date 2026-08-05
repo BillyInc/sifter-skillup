@@ -46,8 +46,13 @@ class UserUpdate(BaseModel):
     current_track_id:   Optional[str]            = None
     current_track_name: Optional[str]            = None
     xp_stage:           Optional[int]            = None
-    # 'student' | 'educator' | 'institution_admin' — defaults to student.
-    account_type:       Optional[str]            = None
+    # SECURITY: `account_type` is deliberately NOT part of this model.
+    # It gates require_admin (auth.py), so it must never be client-settable
+    # via PUT /api/users/me. It is managed server-side only — see the
+    # institutions verify flow (routes/institutions_routes.py) and
+    # provisioning (routes/provisioning_routes.py). Unknown fields in the
+    # request body are ignored by Pydantic, and update_me additionally
+    # strips privileged columns before writing (main.py).
 
 
 class UserProfile(BaseModel):
@@ -521,7 +526,6 @@ class ProgrammeSchoolCutoffOut(BaseModel):
     year: int
     aggregateCutoff: Optional[int] = None
     jambCutoff: Optional[int] = None
-    postUtmeCutoff: Optional[int] = None
     form: str  # UTME | DE
     sourceUrl: str
     verifiedAt: Optional[str] = None
@@ -534,7 +538,6 @@ class SchoolAggregateFormulaOut(BaseModel):
     schoolName: str
     year: int
     jambWeight: float
-    postUtmeWeight: float
     olevelWeight: float
     description: Optional[str] = None
     sourceUrl: Optional[str] = None

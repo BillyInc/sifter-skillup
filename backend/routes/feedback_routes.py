@@ -9,7 +9,7 @@
 # try/except with log.error, graceful degradation.
 #
 #   POST /api/feedback   — auth required; submit feedback
-#   GET  /api/feedback   — auth required; recent feedback (admin inbox)
+#   GET  /api/feedback   — internal staff only; recent feedback (Sifter-team inbox)
 # ============================================================
 from typing import Optional
 
@@ -87,12 +87,14 @@ async def create_feedback(
 async def list_feedback(
     limit: int = 100,
     type: Optional[str] = None,
-    current_user: dict = Depends(Auth.require_admin),
+    current_user: dict = Depends(Auth.require_internal_staff),
 ):
-    """Recent feedback for the admin inbox, newest first.
+    """Recent feedback for the internal inbox, newest first.
 
-    Admin-only: restricted to institution admins and educators via
-    Auth.require_admin (students must not read the inbox).
+    Internal-staff-only (spec §7.8/§6A.4/§6A.5): the inbox is platform-wide
+    with no organisation filter, so it is Sifter-team tooling. Institution,
+    school, and tutorial-centre admins must NOT reach it — gated by
+    Auth.require_internal_staff (users.is_internal_staff, default false).
     """
     try:
         query = (

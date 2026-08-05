@@ -208,12 +208,30 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     return ResponseModel(data=current_user)
 
 
+# Columns that gate authorisation or are otherwise server-managed.
+# Never writable through the self-service profile update, regardless of
+# what the UserUpdate model accepts (defense in depth against model drift).
+_PRIVILEGED_USER_COLUMNS = frozenset({
+    "id", "account_type", "is_internal_staff", "password_hash",
+})
+
+
 @app.put("/api/users/me", response_model=ResponseModel)
 async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_current_user)):
+    payload = {
+        k: v for k, v in updates.model_dump(exclude_unset=True).items()
+        if k not in _PRIVILEGED_USER_COLUMNS
+    }
+    if not payload:
+        # Nothing writable was supplied — return the current row unchanged.
+        current_user.pop("password_hash", None)
+        return ResponseModel(data=current_user)
     result = db.get_client().table("users").update(
-        updates.dict(exclude_unset=True)
+        payload
     ).eq("id", current_user["id"]).execute()
-    return ResponseModel(data=result.data[0])
+    user = result.data[0]
+    user.pop("password_hash", None)
+    return ResponseModel(data=user)
 
 
 @app.post("/api/users/streak", response_model=ResponseModel)

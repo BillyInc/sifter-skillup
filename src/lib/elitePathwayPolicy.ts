@@ -164,6 +164,20 @@ export const CAREER_CHANGER_ROUTE_DEFINITIONS: {
   },
 ];
 
+/**
+ * The number of elite domains the product covers. Single source of truth for
+ * any user-facing copy that states the count, so the number can never drift
+ * out of sync with the data again.
+ */
+export const ELITE_DOMAIN_COUNT = 10;
+
+/**
+ * The bridge layers a guide MUST populate before release. Layer 6
+ * (`ownership_path`, titled "Proof of Concept") is deliberately excluded: it
+ * can only hold real, named Nigerians who actually walked the route, so it
+ * stays locked until verified people exist rather than being filled to pass a
+ * completeness gate.
+ */
 export const GUIDE_REQUIRED_BRIDGE_LAYER_KEYS: BridgeLayerKey[] = [
   "global_standard",
   "nigerian_qualification_map",

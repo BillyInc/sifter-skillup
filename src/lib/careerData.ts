@@ -22,6 +22,7 @@ import {
   type ApplicationWindow,
   type SavedItem,
   type Note,
+  type NoteEntityType,
   type Subscription,
   type ProgrammeSearchResult,
   type InstitutionType,
@@ -46,13 +47,13 @@ import {
   type SchoolAggregateFormula,
   type CourseCompetitiveness,
   type AdmissionSnapshotVersion,
-  type SchoolRequirements,
   comingSoon,
+  pending,
   type MappingFeedback,
   type FeedbackType,
 } from "../types/career";
 import { request } from "./api";
-import { getCached, setCached } from "./careerCache";
+import { getCached, setCached, queueWrite, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
 
 /** TTL for cached domain/role detail payloads (15 min). */
@@ -90,6 +91,23 @@ export interface JambProgrammeSuggestion {
   confidence?: string | null;
 }
 
+/** General requirements block from programme_subject_requirements (brochure
+ *  text). `variesByInstitution` is true when parse_status = needs_review —
+ *  the requirement is institution-variant prose, not a data gap. */
+export interface JambProgrammeRequirements {
+  utmeSubjects: string | null;
+  olevelRequirement: string | null;
+  directEntry: string | null;
+  parseStatus: "parsed" | "unparsed" | "needs_review" | null;
+  variesByInstitution: boolean;
+}
+
+/** Full detail payload of GET /api/student/jamb-programmes/{id}. The
+ *  `requirements` block is absent when no requirements row exists. */
+export interface JambProgrammeDetail extends JambProgrammeSuggestion {
+  requirements?: JambProgrammeRequirements;
+}
+
 export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
   matchedSubjectCount: number;
   matchedSubjects: string[];
@@ -109,10 +127,8 @@ export interface JambProgrammeSchool {
   year?: number | null;
   aggregateCutoff?: number | null;
   jambCutoff?: number | null;
-  postUtmeCutoff?: number | null;
   form?: "UTME" | "DE" | null;
   sourceUrl?: string | null;
-  schoolRequirements?: SchoolRequirements | null;
 }
 
 export interface StudentAffiliation {
@@ -210,6 +226,20 @@ export const careerData = {
     } catch {
       return comingSoon<SubjectProgrammeMatch[]>(
         "Subject-to-programme matching is unavailable.",
+      );
+    }
+  },
+
+  async getJambProgramme(
+    jambProgrammeId: string,
+  ): Promise<DataState<JambProgrammeDetail | null>> {
+    try {
+      return await request<DataState<JambProgrammeDetail | null>>(
+        `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}`,
+      );
+    } catch {
+      return comingSoon<JambProgrammeDetail | null>(
+        "Programme requirements are unavailable.",
       );
     }
   },
@@ -628,7 +658,7 @@ export const careerData = {
     }
   },
 
-  /** School aggregate formula (JAMB% + Post-UTME% + O'level%). */
+  /** School aggregate formula (JAMB% + O'level%). */
   async getSchoolFormula(
     schoolId: string,
     year?: number,
@@ -704,18 +734,40 @@ export const careerData = {
   },
 
   // ─── Note management (used by My World) ───────────────────────
+  /**
+   * The SINGLE note-save mutation for the whole app. Both the per-entity
+   * NotesWidget and the global NotesFab go through here, so one payload shape
+   * and one offline behaviour serve every note the user writes.
+   *
+   * Offline-first: a failed request is queued through careerCache and flushed
+   * when connectivity returns, and the caller gets an honest `pending` envelope
+   * rather than a false "saved".
+   */
   async upsertNote(
-    entityType: SavedEntityType,
-    entityId: string,
+    entityType: NoteEntityType,
+    entityId: string | undefined,
     body: string,
   ): Promise<DataState<Note>> {
+    const payload = { entityType, entityId, body };
     try {
       return await request<DataState<Note>>(`/api/career/notes`, {
         method: "POST",
-        body: JSON.stringify({ entityType, entityId, body }),
+        body: JSON.stringify(payload),
       });
     } catch {
-      return comingSoon<Note>("Couldn't save that note right now.");
+      try {
+        await queueWrite({
+          endpoint: "/api/career/notes",
+          method: "POST",
+          body: payload,
+        });
+        await flushQueue().catch(() => 0);
+        return pending<Note>(
+          "Kept on this device — it'll sync when you're back online.",
+        );
+      } catch {
+        return comingSoon<Note>("Couldn't save that note right now.");
+      }
     }
   },
 
@@ -789,7 +841,7 @@ export const careerData = {
   },
 
   // ─── Phase 7: elite pathways · bridge · special flows ────────
-  /** The 17 elite domains, for the Elite Pathways hub. */
+  /** The elite domains (see ELITE_DOMAIN_COUNT), for the Elite Pathways hub. */
   async getElitePathways(): Promise<DataState<ElitePathwaySummary[]>> {
     try {
       return await request<DataState<ElitePathwaySummary[]>>(

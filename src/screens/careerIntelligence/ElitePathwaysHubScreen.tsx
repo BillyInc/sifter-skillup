@@ -1,5 +1,5 @@
 /**
- * ElitePathwaysHubScreen — the hub for the 17 elite domains: the
+ * ElitePathwaysHubScreen — the hub for the elite domains: the
  * highest-selectivity global paths and how a Nigerian start reaches them.
  *
  * getElitePathways currently returns a `coming_soon` envelope, so DataStateView
@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import { DataStateView, ElitePathwayCard } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
+import { ELITE_DOMAIN_COUNT } from "@/lib/elitePathwayPolicy";
 import {
   comingSoon,
   type DataState,
@@ -44,6 +45,13 @@ export function ElitePathwaysHubScreen() {
     };
   }, []);
 
+  // Prefer the live count once real pathways land; fall back to the policy
+  // constant while the envelope is still `coming_soon`.
+  const domainCount =
+    state.status === "real" && state.data?.length
+      ? state.data.length
+      : ELITE_DOMAIN_COUNT;
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
@@ -54,7 +62,7 @@ export function ElitePathwaysHubScreen() {
         ELITE PATHWAYS
       </Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        The 17 elite domains
+        The {domainCount} elite domains
       </Text>
       <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
         The highest-selectivity global paths and how a Nigerian start reaches
