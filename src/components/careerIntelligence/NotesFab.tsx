@@ -1,11 +1,14 @@
 /**
  * NotesFab — a floating action button (bottom-right) that opens a global
  * quick-note hub. Tapping it opens a lightweight modal to jot a note without
- * leaving the current screen; the note is queued through careerCache so it
- * saves offline-first and syncs when connectivity returns.
+ * leaving the current screen.
+ *
+ * Saves go through careerData.upsertNote — the SAME single note mutation the
+ * per-entity NotesWidget uses — so both surfaces share one payload shape and
+ * one offline-first behaviour (careerData queues + flushes internally).
  *
  * Self-contained: drop <NotesFab /> onto any screen. It carries its own modal
- * state and styling and only depends on the theme + careerCache write queue.
+ * state and styling.
  */
 import React, { useState } from "react";
 import {
@@ -18,11 +21,12 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useTheme, Spacing, FontSize, Radius, Shadow, Brand } from "../../theme";
-import { queueWrite, flushQueue } from "../../lib/careerCache";
+import { careerData } from "../../lib/careerData";
+import type { NoteEntityType } from "../../types/career";
 
 export interface NotesFabProps {
   /** Optional entity context stamped onto the note. Defaults to a global note. */
-  entityType?: string;
+  entityType?: NoteEntityType;
   entityId?: string;
 }
 
@@ -43,15 +47,16 @@ export function NotesFab({ entityType = "global", entityId }: NotesFabProps) {
     if (!text || busy) return;
     setBusy(true);
     try {
-      // Offline-first: enqueue the write, then attempt an immediate flush.
-      await queueWrite({
-        endpoint: "/api/career/notes",
-        method: "POST",
-        body: { entity_type: entityType, entity_id: entityId, body: text },
-      });
-      await flushQueue().catch(() => 0);
+      // Same single mutation the NotesWidget uses; it handles the offline
+      // queue + flush internally, so both surfaces behave identically.
+      const result = await careerData.upsertNote(entityType, entityId, text);
       setBody("");
-      setStatus("Saved — it'll sync when you're online.");
+      setStatus(
+        result.status === "real"
+          ? "Note saved."
+          : (result.meta?.notice ??
+            "Kept on this device — we'll sync it later."),
+      );
     } catch {
       setStatus("Kept on this device — we'll sync it later.");
     } finally {

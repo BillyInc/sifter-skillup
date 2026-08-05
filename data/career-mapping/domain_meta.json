@@ -1,2578 +1,2738 @@
 {
- "D001": {
-  "domain_name": "Software Engineering",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D002": {
-  "domain_name": "Data Engineering",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D003": {
-  "domain_name": "D003 Artificial Intelligence",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 16
- },
- "D004": {
-  "domain_name": "Cybersecurity",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D005": {
-  "domain_name": "Cloud Computing",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D006": {
-  "domain_name": "Internet of Things",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D007": {
-  "domain_name": "UI/UX Design",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D008": {
-  "domain_name": "Telecommunications",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.94,
-  "trade_ratio": 0.06,
-  "n_elite_roles": 1
- },
- "D139": {
-  "domain_name": "D139 Game Design",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D140": {
-  "domain_name": "Robotics Engineering, Systems Design",
-  "cluster": "Information & Communication Technology",
-  "clusters": [
-   "Information & Communication Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 7
- },
- "D009": {
-  "domain_name": "Data Science",
-  "cluster": "Data & Analytics",
-  "clusters": [
-   "Data & Analytics"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 31
- },
- "D010": {
-  "domain_name": "Business Intelligence",
-  "cluster": "Data & Analytics",
-  "clusters": [
-   "Data & Analytics"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D011": {
-  "domain_name": "Quantitative Finance",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D012": {
-  "domain_name": "FinTech Engineering",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D013": {
-  "domain_name": "Investment Analysis",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 25
- },
- "D014": {
-  "domain_name": "Actuarial Science",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 3
- },
- "D015": {
-  "domain_name": "Accounting",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.71,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D060": {
-  "domain_name": "Banking, Credit",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.67,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D061": {
-  "domain_name": "Insurance",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.92,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D062": {
-  "domain_name": "Trading",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D158": {
-  "domain_name": "Corporate Finance, Investment Banking",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 20
- },
- "D159": {
-  "domain_name": "Credit Analysis, Structured Finance",
-  "cluster": "Financial Services",
-  "clusters": [
-   "Financial Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 20
- },
- "D016": {
-  "domain_name": "Electrical",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D017": {
-  "domain_name": "Mechanical",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D018": {
-  "domain_name": "Civil",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D019": {
-  "domain_name": "Renewable Energy Engineering",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.88,
-  "trade_ratio": 0.12,
-  "n_elite_roles": 0
- },
- "D020": {
-  "domain_name": "Environmental Engineering",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D021": {
-  "domain_name": "Architecture",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D022": {
-  "domain_name": "Mining",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.67,
-  "trade_ratio": 0.33,
-  "n_elite_roles": 0
- },
- "D069": {
-  "domain_name": "Aviation",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.69,
-  "trade_ratio": 0.21,
-  "n_elite_roles": 1
- },
- "D072": {
-  "domain_name": "Geospatial Science",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D074": {
-  "domain_name": "Occupational Health, Safety",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D146": {
-  "domain_name": "Building Services Engineering — Mechanical, Electrical",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D147": {
-  "domain_name": "Process Automation, SCADA, PLC",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D156": {
-  "domain_name": "Land Surveying, Cadastral Mapping",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D164": {
-  "domain_name": "Urban Mobility, Smart City Systems",
-  "cluster": "Engineering & Built Environment",
-  "clusters": [
-   "Engineering & Built Environment"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D023": {
-  "domain_name": "Medicine",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D024": {
-  "domain_name": "Nursing",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.91,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D025": {
-  "domain_name": "Pharmacy",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 11
- },
- "D026": {
-  "domain_name": "Public Health",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D027": {
-  "domain_name": "Biomedical",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 36
- },
- "D064": {
-  "domain_name": "Psychology, Counselling",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D066": {
-  "domain_name": "Veterinary Science",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D067": {
-  "domain_name": "Dentistry",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 5
- },
- "D068": {
-  "domain_name": "Allied Health",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D154": {
-  "domain_name": "Exercise Science, Sports Therapy",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 3
- },
- "D165": {
-  "domain_name": "Wellness Coaching, Lifestyle Medicine",
-  "cluster": "Health & Biomedical",
-  "clusters": [
-   "Health & Biomedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D028": {
-  "domain_name": "General Management",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 3
- },
- "D029": {
-  "domain_name": "Human Resources",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.94,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D030": {
-  "domain_name": "Marketing, Brand",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D031": {
-  "domain_name": "Sales",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.81,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D032": {
-  "domain_name": "Project Management",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D033": {
-  "domain_name": "Product Management",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D130": {
-  "domain_name": "Recruitment, Employment",
-  "cluster": "Business & Management",
-  "clusters": [
-   "Business & Management"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D034": {
-  "domain_name": "Supply Chain Management",
-  "cluster": "Supply Chain & Logistics",
-  "clusters": [
-   "Supply Chain & Logistics"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.59,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D035": {
-  "domain_name": "Logistics",
-  "cluster": "Supply Chain & Logistics",
-  "clusters": [
-   "Supply Chain & Logistics"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.6,
-  "trade_ratio": 0.4,
-  "n_elite_roles": 0
- },
- "D036": {
-  "domain_name": "Procurement",
-  "cluster": "Supply Chain & Logistics",
-  "clusters": [
-   "Supply Chain & Logistics"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D076": {
-  "domain_name": "Maritime",
-  "cluster": "Supply Chain & Logistics",
-  "clusters": [
-   "Supply Chain & Logistics"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.6,
-  "trade_ratio": 0.4,
-  "n_elite_roles": 1
- },
- "D079": {
-  "domain_name": "Customs, Trade",
-  "cluster": "Supply Chain & Logistics",
-  "clusters": [
-   "Supply Chain & Logistics"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D037": {
-  "domain_name": "Legal Practice",
-  "cluster": "Legal & Compliance",
-  "clusters": [
-   "Legal & Compliance"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D038": {
-  "domain_name": "Compliance, Regulation",
-  "cluster": "Legal & Compliance",
-  "clusters": [
-   "Legal & Compliance"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D157": {
-  "domain_name": "Tax Advisory, Transfer Pricing",
-  "cluster": "Legal & Compliance",
-  "clusters": [
-   "Legal & Compliance"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 16
- },
- "D162": {
-  "domain_name": "Immigration Law, Asylum",
-  "cluster": "Legal & Compliance",
-  "clusters": [
-   "Legal & Compliance"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D149": {
-  "domain_name": "Diplomacy, International Relations",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 7
- },
- "D163": {
-  "domain_name": "Intellectual Property Law, Patents",
-  "cluster": "Legal & Compliance",
-  "clusters": [
-   "Legal & Compliance"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 4
- },
- "D039": {
-  "domain_name": "Higher Education",
-  "cluster": "Education & Research",
-  "clusters": [
-   "Education & Research"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D040": {
-  "domain_name": "Vocational",
-  "cluster": "Education & Research",
-  "clusters": [
-   "Education & Research"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.89,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D041": {
-  "domain_name": "Scientific Research",
-  "cluster": "Education & Research",
-  "clusters": [
-   "Education & Research"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 3
- },
- "D078": {
-  "domain_name": "Social Sciences",
-  "cluster": "Education & Research",
-  "clusters": [
-   "Education & Research"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D042": {
-  "domain_name": "Media Production",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D043": {
-  "domain_name": "Journalism",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D044": {
-  "domain_name": "Graphic Design",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D065": {
-  "domain_name": "Translation, Interpretation",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D071": {
-  "domain_name": "Sports Management",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D080": {
-  "domain_name": "Interior Design",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D152": {
-  "domain_name": "Museum Curation, Cultural Heritage, Archives",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.92,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D153": {
-  "domain_name": "D153 Music Production",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D160": {
-  "domain_name": "Fashion Styling, Image Consulting",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.43,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D045": {
-  "domain_name": "Public Administration",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D046": {
-  "domain_name": "Social Work",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.92,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D063": {
-  "domain_name": "Economics",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D073": {
-  "domain_name": "Library, Archive",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.93,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D077": {
-  "domain_name": "Security Services",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.1,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D128": {
-  "domain_name": "Social Welfare, Youth Services",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D143": {
-  "domain_name": "Forensic Science, Digital Forensics",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D150": {
-  "domain_name": "Religious Ministry, Theology",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D151": {
-  "domain_name": "Criminology, Criminal Justice",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.7,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D161": {
-  "domain_name": "Humanitarian Aid, Emergency Response",
-  "cluster": "Public Sector & Social Services",
-  "clusters": [
-   "Public Sector & Social Services"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D047": {
-  "domain_name": "Agricultural Science",
-  "cluster": "Agriculture & Food Systems",
-  "clusters": [
-   "Agriculture & Food Systems"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.59,
-  "trade_ratio": 0.41,
-  "n_elite_roles": 1
- },
- "D048": {
-  "domain_name": "Food Science",
-  "cluster": "Agriculture & Food Systems",
-  "clusters": [
-   "Agriculture & Food Systems"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.18,
-  "trade_ratio": 0.82,
-  "n_elite_roles": 0
- },
- "D049": {
-  "domain_name": "Automotive Engineering",
-  "cluster": "Advanced Manufacturing",
-  "clusters": [
-   "Advanced Manufacturing"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.76,
-  "trade_ratio": 0.24,
-  "n_elite_roles": 0
- },
- "D050": {
-  "domain_name": "Industrial Automation",
-  "cluster": "Advanced Manufacturing",
-  "clusters": [
-   "Advanced Manufacturing"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.65,
-  "trade_ratio": 0.35,
-  "n_elite_roles": 0
- },
- "D075": {
-  "domain_name": "Fashion, Textiles",
-  "cluster": "Advanced Manufacturing",
-  "clusters": [
-   "Advanced Manufacturing"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.23,
-  "trade_ratio": 0.74,
-  "n_elite_roles": 0
- },
- "D051": {
-  "domain_name": "Real Estate",
-  "cluster": "Real Estate & Construction",
-  "clusters": [
-   "Real Estate & Construction"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D052": {
-  "domain_name": "Construction Management",
-  "cluster": "Real Estate & Construction",
-  "clusters": [
-   "Real Estate & Construction"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.8,
-  "trade_ratio": 0.2,
-  "n_elite_roles": 0
- },
- "D053": {
-  "domain_name": "Hospitality",
-  "cluster": "Hospitality & Tourism",
-  "clusters": [
-   "Hospitality & Tourism"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.46,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D054": {
-  "domain_name": "Oil",
-  "cluster": "Energy & Resources",
-  "clusters": [
-   "Energy & Resources"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.62,
-  "trade_ratio": 0.38,
-  "n_elite_roles": 0
- },
- "D055": {
-  "domain_name": "Chemical Engineering",
-  "cluster": "Energy & Resources",
-  "clusters": [
-   "Energy & Resources"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.42,
-  "trade_ratio": 0.58,
-  "n_elite_roles": 0
- },
- "D148": {
-  "domain_name": "Offshore, Subsea",
-  "cluster": "Energy & Resources",
-  "clusters": [
-   "Energy & Resources"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.95,
-  "trade_ratio": 0.05,
-  "n_elite_roles": 0
- },
- "D056": {
-  "domain_name": "Blockchain",
-  "cluster": "Emerging Technology",
-  "clusters": [
-   "Emerging Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D057": {
-  "domain_name": "Digital Health",
-  "cluster": "Emerging Technology",
-  "clusters": [
-   "Emerging Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D058": {
-  "domain_name": "EdTech",
-  "cluster": "Emerging Technology",
-  "clusters": [
-   "Emerging Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D059": {
-  "domain_name": "Space Technology",
-  "cluster": "Emerging Technology",
-  "clusters": [
-   "Emerging Technology"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 7
- },
- "D081": {
-  "domain_name": "Office Administration, Secretarial",
-  "cluster": "Office & Administrative Services",
-  "clusters": [
-   "Office & Administrative Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D082": {
-  "domain_name": "Customer Service, Contact Centre",
-  "cluster": "Office & Administrative Services",
-  "clusters": [
-   "Office & Administrative Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.16,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D083": {
-  "domain_name": "Travel, Tourism",
-  "cluster": "Office & Administrative Services",
-  "clusters": [
-   "Office & Administrative Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.04,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D084": {
-  "domain_name": "Payroll, Bookkeeping",
-  "cluster": "Office & Administrative Services",
-  "clusters": [
-   "Office & Administrative Services"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.08,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D085": {
-  "domain_name": "Retail Sales, Shop Operations",
-  "cluster": "Retail, Sales & Commerce",
-  "clusters": [
-   "Retail, Sales & Commerce"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.04,
-  "trade_ratio": 0.04,
-  "n_elite_roles": 0
- },
- "D087": {
-  "domain_name": "Hairdressing, Barbering",
-  "cluster": "Beauty, Personal Care & Wellness",
-  "clusters": [
-   "Beauty, Personal Care & Wellness"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D088": {
-  "domain_name": "Beauty Therapy, Aesthetics",
-  "cluster": "Beauty, Personal Care & Wellness",
-  "clusters": [
-   "Beauty, Personal Care & Wellness"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D089": {
-  "domain_name": "Funeral",
-  "cluster": "Beauty, Personal Care & Wellness",
-  "clusters": [
-   "Beauty, Personal Care & Wellness"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D090": {
-  "domain_name": "Animal Care, Grooming",
-  "cluster": "Beauty, Personal Care & Wellness",
-  "clusters": [
-   "Beauty, Personal Care & Wellness"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D091": {
-  "domain_name": "Driving Instruction",
-  "cluster": "Beauty, Personal Care & Wellness",
-  "clusters": [
-   "Beauty, Personal Care & Wellness"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D092": {
-  "domain_name": "Culinary Arts, Catering",
-  "cluster": "Culinary Arts & Food Service",
-  "clusters": [
-   "Culinary Arts & Food Service"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.04,
-  "trade_ratio": 0.22,
-  "n_elite_roles": 0
- },
- "D093": {
-  "domain_name": "Electrical Installation, Wiring",
-  "cluster": "Electrical & Electronics Trades",
-  "clusters": [
-   "Electrical & Electronics Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.05,
-  "trade_ratio": 0.95,
-  "n_elite_roles": 0
- },
- "D094": {
-  "domain_name": "Electronics Servicing, ICT Equipment",
-  "cluster": "Electrical & Electronics Trades",
-  "clusters": [
-   "Electrical & Electronics Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.35,
-  "trade_ratio": 0.65,
-  "n_elite_roles": 0
- },
- "D095": {
-  "domain_name": "Motor Vehicle Mechanics, Repairs",
-  "cluster": "Mechanical & Automotive Trades",
-  "clusters": [
-   "Mechanical & Automotive Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D096": {
-  "domain_name": "Agricultural",
-  "cluster": "Mechanical & Automotive Trades",
-  "clusters": [
-   "Mechanical & Automotive Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.1,
-  "trade_ratio": 0.9,
-  "n_elite_roles": 0
- },
- "D097": {
-  "domain_name": "Welding, Fabrication, Blacksmithing",
-  "cluster": "Metal, Welding & Fabrication Trades",
-  "clusters": [
-   "Metal, Welding & Fabrication Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D098": {
-  "domain_name": "Precision Engineering, Toolmaking",
-  "cluster": "Metal, Welding & Fabrication Trades",
-  "clusters": [
-   "Metal, Welding & Fabrication Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D099": {
-  "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
-  "cluster": "Building & Construction Trades",
-  "clusters": [
-   "Building & Construction Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D100": {
-  "domain_name": "Plumbing, Pipefitting",
-  "cluster": "Building & Construction Trades",
-  "clusters": [
-   "Building & Construction Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D101": {
-  "domain_name": "Painting, Decorating",
-  "cluster": "Building & Construction Trades",
-  "clusters": [
-   "Building & Construction Trades"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D102": {
-  "domain_name": "Carpentry, Joinery, Wood Technology",
-  "cluster": "Wood, Furniture & Craft",
-  "clusters": [
-   "Wood, Furniture & Craft"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D103": {
-  "domain_name": "Jewellery Making, Goldsmithing",
-  "cluster": "Wood, Furniture & Craft",
-  "clusters": [
-   "Wood, Furniture & Craft"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D104": {
-  "domain_name": "Pottery, Ceramics, Glass",
-  "cluster": "Wood, Furniture & Craft",
-  "clusters": [
-   "Wood, Furniture & Craft"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D105": {
-  "domain_name": "Handicraft, Basketry, Textile Craft",
-  "cluster": "Wood, Furniture & Craft",
-  "clusters": [
-   "Wood, Furniture & Craft"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D106": {
-  "domain_name": "Garment Making, Tailoring, Dressmaking",
-  "cluster": "Textiles, Garments & Leather",
-  "clusters": [
-   "Textiles, Garments & Leather"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D107": {
-  "domain_name": "Leather Technology, Shoemaking",
-  "cluster": "Textiles, Garments & Leather",
-  "clusters": [
-   "Textiles, Garments & Leather"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.5,
-  "trade_ratio": 0.46,
-  "n_elite_roles": 0
- },
- "D108": {
-  "domain_name": "Printing Technology, Pre-press",
-  "cluster": "Printing & Graphic Production",
-  "clusters": [
-   "Printing & Graphic Production"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.14,
-  "trade_ratio": 0.86,
-  "n_elite_roles": 0
- },
- "D109": {
-  "domain_name": "Metal Processing, Foundry",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.05,
-  "trade_ratio": 0.95,
-  "n_elite_roles": 0
- },
- "D110": {
-  "domain_name": "Chemical, Rubber",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.02,
-  "trade_ratio": 0.98,
-  "n_elite_roles": 0
- },
- "D111": {
-  "domain_name": "Textile, Garment",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.13,
-  "trade_ratio": 0.87,
-  "n_elite_roles": 0
- },
- "D112": {
-  "domain_name": "Wood Processing, Pulp",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.14,
-  "trade_ratio": 0.86,
-  "n_elite_roles": 0
- },
- "D113": {
-  "domain_name": "Glass, Ceramics, Building Materials",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D114": {
-  "domain_name": "Assembly, Packaging",
-  "cluster": "Manufacturing & Industrial Plant Operations",
-  "clusters": [
-   "Manufacturing & Industrial Plant Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D115": {
-  "domain_name": "Road Transport Operations (Drivers",
-  "cluster": "Transport & Driving Operations",
-  "clusters": [
-   "Transport & Driving Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D116": {
-  "domain_name": "Heavy Equipment, Earthmoving",
-  "cluster": "Transport & Driving Operations",
-  "clusters": [
-   "Transport & Driving Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D117": {
-  "domain_name": "Railway",
-  "cluster": "Transport & Driving Operations",
-  "clusters": [
-   "Transport & Driving Operations"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.12,
-  "trade_ratio": 0.75,
-  "n_elite_roles": 0
- },
- "D118": {
-  "domain_name": "Crop Production, Horticulture",
-  "cluster": "Agriculture, Fishing & Natural Resources",
-  "clusters": [
-   "Agriculture, Fishing & Natural Resources"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 1
- },
- "D119": {
-  "domain_name": "Livestock, Poultry, Dairy",
-  "cluster": "Agriculture, Fishing & Natural Resources",
-  "clusters": [
-   "Agriculture, Fishing & Natural Resources"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.0,
-  "trade_ratio": 1.0,
-  "n_elite_roles": 0
- },
- "D120": {
-  "domain_name": "Fisheries, Aquaculture",
-  "cluster": "Agriculture, Fishing & Natural Resources",
-  "clusters": [
-   "Agriculture, Fishing & Natural Resources"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.05,
-  "trade_ratio": 0.95,
-  "n_elite_roles": 0
- },
- "D121": {
-  "domain_name": "Forestry, Wildlife Management",
-  "cluster": "Agriculture, Fishing & Natural Resources",
-  "clusters": [
-   "Agriculture, Fishing & Natural Resources"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.18,
-  "trade_ratio": 0.82,
-  "n_elite_roles": 0
- },
- "D122": {
-  "domain_name": "Medical Laboratory Technology",
-  "cluster": "Community Health & Paramedical",
-  "clusters": [
-   "Community Health & Paramedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D123": {
-  "domain_name": "Radiography, Medical Imaging",
-  "cluster": "Community Health & Paramedical",
-  "clusters": [
-   "Community Health & Paramedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D124": {
-  "domain_name": "Community Health Extension",
-  "cluster": "Community Health & Paramedical",
-  "clusters": [
-   "Community Health & Paramedical"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.5,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D125": {
-  "domain_name": "Medical Secretarial",
-  "cluster": "Community Health & Paramedical",
-  "clusters": [
-   "Community Health & Paramedical"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.57,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D126": {
-  "domain_name": "Complementary, Alternative",
-  "cluster": "Community Health & Paramedical",
-  "clusters": [
-   "Community Health & Paramedical"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D127": {
-  "domain_name": "Early Childhood Education, Nursery",
-  "cluster": "Childcare & Early Learning",
-  "clusters": [
-   "Childcare & Early Learning"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.42,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D129": {
-  "domain_name": "Military, Defence",
-  "cluster": "Defence & Military",
-  "clusters": [
-   "Defence & Military"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D131": {
-  "domain_name": "Motorsport Engineering",
-  "cluster": "High-Performance Engineering",
-  "clusters": [
-   "High-Performance Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D132": {
-  "domain_name": "Space Science, Exploration",
-  "cluster": "High-Performance Engineering",
-  "clusters": [
-   "High-Performance Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 6
- },
- "D133": {
-  "domain_name": "Luxury",
-  "cluster": "High-Performance Engineering",
-  "clusters": [
-   "High-Performance Engineering"
-  ],
-  "institution_type": [
-   "polytechnic",
-   "technical_college"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.27,
-  "trade_ratio": 0.7,
-  "n_elite_roles": 0
- },
- "D134": {
-  "domain_name": "Naval Architecture, Marine Engineering",
-  "cluster": "High-Performance Engineering",
-  "clusters": [
-   "High-Performance Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 1
- },
- "D166": {
-  "domain_name": "Autonomous Vehicles, Self-Driving Systems",
-  "cluster": "High-Performance Engineering",
-  "clusters": [
-   "High-Performance Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0
- },
- "D135": {
-  "domain_name": "Nuclear Engineering, Radiation Science",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 6
- },
- "D136": {
-  "domain_name": "Aeronautical",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 0.9,
-  "trade_ratio": 0.1,
-  "n_elite_roles": 0
- },
- "D137": {
-  "domain_name": "Medical Physics, Radiation Therapy",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D138": {
-  "domain_name": "Biomedical Engineering",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 8
- },
- "D142": {
-  "domain_name": "Bioinformatics, Computational Biology",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 37
- },
- "D144": {
-  "domain_name": "Climate Science, Meteorology",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D145": {
-  "domain_name": "Neuroscience, Cognitive Science",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 11
- },
- "D155": {
-  "domain_name": "Nanotechnology, Advanced Materials",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 12
- },
- "D141": {
-  "domain_name": "Quantum Computing, Quantum Information",
-  "cluster": "Advanced Science & Engineering",
-  "clusters": [
-   "Advanced Science & Engineering"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 8
- },
- "D167": {
-  "domain_name": "XR & Immersive Technology",
-  "cluster": "Emerging Technology",
-  "clusters": [
-   "Emerging Technology",
-   "Information & Communication Technology",
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": true,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 5
- },
- "D168": {
-  "domain_name": "Esports & Creator Economy",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media",
-   "Information & Communication Technology",
-   "Sports & Recreation"
-  ],
-  "institution_type": [
-   "university",
-   "polytechnic"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 0,
-  "note": "multi-cluster: competitive play(Sports), broadcast/streaming(Creative), tech(Computing); remote/global path"
- },
- "D070": {
-  "domain_name": "Performing Arts & Entertainment",
-  "cluster": "Creative & Media",
-  "clusters": [
-   "Creative & Media"
-  ],
-  "institution_type": [
-   "university"
-  ],
-  "elite_domain": false,
-  "excluded": false,
-  "professional_ratio": 1.0,
-  "trade_ratio": 0.0,
-  "n_elite_roles": 2
- },
- "D086": {
-  "domain_name": "Gaming, Betting & Lottery",
-  "excluded": true,
-  "reason": "gambling — not appropriate for students",
-  "institution_type": []
- }
+  "D001": {
+    "domain_name": "Software Engineering",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Software engineering is the discipline of designing, building and testing computer programs and mobile applications. Practitioners write and debug code, analyse what a program should do, test software at different levels, and manage changes to systems, in roles such as software analyst, tester, mobile application developer and cloud engineer. They typically work in technology firms, banks, telecoms companies and government agencies."
+  },
+  "D002": {
+    "domain_name": "Data Engineering",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Data engineering focuses on building the systems that collect, store and move an organisation's information. People in the field design data warehouses, connect databases to other software, write queries, and plan how information is structured so others can use it. Employers include banks, telecoms companies, technology firms and any large organisation that keeps substantial records."
+  },
+  "D003": {
+    "domain_name": "Artificial Intelligence",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 16,
+    "description": "Artificial intelligence covers building computer systems that learn from data to recognise images, understand language and make predictions. Machine learning engineers, data scientists and researchers write computer programs, apply statistics, run computer simulations and train models, then present their results visually. Typical workplaces include technology companies, research institutes, banks and universities."
+  },
+  "D004": {
+    "domain_name": "Cybersecurity",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Cybersecurity is the practice of protecting computers, networks and information from attack. Day to day, professionals administer security settings, investigate digital evidence after incidents, respond to cyber attacks, test defences as ethical hackers and manage security risks. They work in banks, telecoms companies, government agencies and any organisation that runs computer systems."
+  },
+  "D005": {
+    "domain_name": "Cloud Computing",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Cloud computing deals with running software and storing information on remote servers reached through the internet rather than on one office machine. Cloud architects plan these systems, engineers build and program them, administrators keep networks and data centres running, and specialists monitor security and compliance. Common employers are technology firms, banks, telecoms companies and data centres."
+  },
+  "D006": {
+    "domain_name": "Internet of Things",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "The Internet of Things connects everyday devices such as sensors, meters and appliances to the internet so they can send and receive information. Specialists write the firmware inside these devices, design the networks that link them, plan complete solutions, secure them against attack, and test that everything works, documenting any faults. Manufacturers, telecoms companies and technology firms are typical employers."
+  },
+  "D007": {
+    "domain_name": "UI/UX Design",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "UI/UX design is about how websites and apps look, feel and respond when people use them. Designers plan screens and web pages, create graphics, illustrations and animation, follow client briefs, and test digital products for ease of use and accessibility. They work in design studios, technology firms, media houses and marketing departments."
+  },
+  "D008": {
+    "domain_name": "Telecommunications",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.94,
+    "trade_ratio": 0.06,
+    "n_elite_roles": 1,
+    "description": "Telecommunications is the engineering behind phone calls, internet connections and data networks. Engineers design radio-frequency and signal systems, planners work out how much network capacity is needed, technicians install and maintain equipment, and managers direct projects, budgets and technical teams. Telecoms companies and government agencies are the usual employers, and practising engineers in Nigeria register with COREN."
+  },
+  "D139": {
+    "domain_name": "Game Design",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Game design covers the creation of video games and animated worlds. Illustrators, animators and 3D artists build models, characters and visual environments; programmers code game mechanics and player-facing features; and directors lead the artistic and technical vision of a production. Most roles are based in game and animation studios."
+  },
+  "D140": {
+    "domain_name": "Robotics Engineering, Systems Design",
+    "cluster": "Information & Communication Technology",
+    "clusters": [
+      "Information & Communication Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 7,
+    "description": "Robotics engineering designs machines that sense, move and act with little human control. Robotics, automation and controls engineers develop the mechanical parts, control systems and software that make robots work, relying on technical drawings and mathematics. They typically work for manufacturing companies, engineering firms and research organisations."
+  },
+  "D009": {
+    "domain_name": "Data Science",
+    "cluster": "Data & Analytics",
+    "clusters": [
+      "Data & Analytics"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 31,
+    "description": "Data science uses statistics and computer programming to draw useful conclusions from large collections of information. Some practitioners build data pipelines, artificial-intelligence models and software systems, while others model data with advanced mathematics, manage research information and write up findings in technical reports. Banks, telecoms companies, research bodies and government agencies all employ them."
+  },
+  "D010": {
+    "domain_name": "Business Intelligence",
+    "cluster": "Data & Analytics",
+    "clusters": [
+      "Data & Analytics"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Business intelligence turns an organisation's records into information that managers can act on. Teams include engineers and architects who build analytics systems, analysts and consultants who study business processes and recommend improvements, and mathematicians and statisticians who build quantitative models from the numbers. Such roles exist in banks, telecoms companies, retailers and large organisations of every kind."
+  },
+  "D011": {
+    "domain_name": "Quantitative Finance",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Quantitative finance applies mathematics, statistics and economics to financial markets. Some practitioners buy and sell shares, currencies and other assets as traders; others analyse investments, risk and market trends to guide decisions; a third group builds the mathematical models behind pricing and risk. They usually work in banks, investment firms, insurance companies and trading houses."
+  },
+  "D012": {
+    "domain_name": "FinTech Engineering",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "FinTech engineering builds the software that powers financial services such as payments, banking apps and blockchain systems. Developers write backend code, data engineers manage the information flowing through these systems, and testers run structured checks, record faults and document results so money-handling software works reliably. Banks, payment companies and technology firms employ these teams."
+  },
+  "D013": {
+    "domain_name": "Investment Analysis",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 25,
+    "description": "Investment analysis is the study of companies, markets and financial products to decide where money should be placed. Analysts examine businesses and market trends, investment managers run funds and portfolios, financial planners advise clients, and traders buy and sell shares, currencies and securities. Banks, investment firms, insurance companies and pension organisations are the main employers."
+  },
+  "D014": {
+    "domain_name": "Actuarial Science",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 3,
+    "description": "Actuarial science uses mathematics and statistics to measure risk, mainly for insurance and pensions. Actuaries model how likely future events are and what cover should cost, underwriters and rating analysts assess individual risks, and claims handlers process what policyholders are owed. Most work in insurance companies, consulting firms and banks, and full actuaries qualify through professional fellowship examinations."
+  },
+  "D015": {
+    "domain_name": "Accounting",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.71,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Accounting is the recording, checking and reporting of an organisation's money. Accountants prepare and interpret financial statements, audit records, advise on tax, control budgets, and handle billing, payroll and back-office processing. They work in accounting firms, banks, government agencies and businesses of all sizes; in Nigeria the chartered route runs through bodies such as ICAN or ANAN."
+  },
+  "D060": {
+    "domain_name": "Banking, Credit",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.67,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Keeping money safe and lending it out is the everyday business of banking and credit. Bank tellers and cashiers serve customers, credit analysts and advisers assess loans and mortgages, clerks handle settlements and foreign exchange records, and managers lead branches and credit unions. Banks, mortgage firms and credit unions are the natural workplaces."
+  },
+  "D061": {
+    "domain_name": "Insurance",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.92,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Insurance protects people and businesses against loss in exchange for regular payments. Underwriters assess risk and price cover, claims handlers and managers settle claims, brokers arrange policies for clients, fraud investigators check suspicious cases, and some specialists run pension schemes. Insurance companies and brokerages employ most of the profession."
+  },
+  "D062": {
+    "domain_name": "Trading",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Trading is the buying and selling of financial assets such as currencies, shares, commodities and energy. Traders deal on markets throughout the day, securities analysts study market trends and financial products, and investment managers and planners advise clients on funds and risk. Banks, investment firms and brokerages are the typical employers."
+  },
+  "D158": {
+    "domain_name": "Corporate Finance, Investment Banking",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 20,
+    "description": "Corporate finance and investment banking deal with how companies raise, invest and manage money. Securities and mergers analysts study company performance and financial statements, while controllers, budget analysts and bank managers oversee funds and financial processes. Banks, investment firms and large corporations are the main employers."
+  },
+  "D159": {
+    "domain_name": "Credit Analysis, Structured Finance",
+    "cluster": "Financial Services",
+    "clusters": [
+      "Financial Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 20,
+    "description": "Credit analysis is the work of judging whether borrowers can repay what they owe. Credit analysts and advisers examine financial statements, analyse loans and assess borrower risk, while credit managers and mortgage brokers arrange and oversee lending. Banks and other lending institutions employ most people in this field."
+  },
+  "D016": {
+    "domain_name": "Electrical",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Electrical engineering deals with electricity, circuits and electronic devices. Engineers design power systems, batteries, sensors and electronics for products ranging from medical devices to satellites, while technicians test, calibrate and maintain electrical equipment and lines. Power companies, manufacturers, telecoms companies and construction firms employ them, and practising engineers in Nigeria register with COREN."
+  },
+  "D017": {
+    "domain_name": "Mechanical",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Mechanical engineering is the design and production of machines and moving systems, from engines to heating, ventilation and cooling equipment. Practitioners draft technical drawings with CAD software, design machinery from scratch, and supervise production and assembly lines. Manufacturers, oil and gas companies and construction firms are typical employers, with COREN registration required to practise in Nigeria."
+  },
+  "D018": {
+    "domain_name": "Civil",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Civil engineering plans and builds the physical structures communities depend on, including roads, drainage, water systems and buildings. Engineers design construction and energy projects, quantity surveyors estimate costs, and technicians draft plans and inspect buildings, safety and energy performance on site. Construction firms, consultancies and government agencies employ them; practising in Nigeria requires COREN registration."
+  },
+  "D019": {
+    "domain_name": "Renewable Energy Engineering",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.88,
+    "trade_ratio": 0.12,
+    "n_elite_roles": 0,
+    "description": "Renewable energy engineering produces electricity from sources such as sunlight, water and wind. Engineers design solar, wind and battery generation systems, operators run power plants and transmission networks, and technicians install and maintain power lines and solar equipment under strict electrical safety rules. Power companies, utilities and engineering firms are the usual employers."
+  },
+  "D020": {
+    "domain_name": "Environmental Engineering",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Environmental engineering tackles pollution, waste and water quality. Technicians operate water, wastewater and waste treatment plants, engineers design solutions to pollution, climate and sustainability problems, and inspectors check that organisations comply with environmental, health and safety laws. Water utilities, waste management companies, mining firms and government agencies employ people in this field."
+  },
+  "D021": {
+    "domain_name": "Architecture",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Architecture is the design of buildings, interiors and the spaces around them. Architects draw up designs that satisfy building codes and regulations, urban and transport planners shape how cities and land are used, and site staff inspect, survey and support construction on the ground. Architectural practices, construction firms and government planning agencies are typical workplaces; Nigerian architects register with ARCON."
+  },
+  "D022": {
+    "domain_name": "Mining",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.67,
+    "trade_ratio": 0.33,
+    "n_elite_roles": 0,
+    "description": "Mining is the finding and extraction of minerals, oil and gas from the earth. Geologists and engineers explore and plan extraction sites, crews operate rigs, drills and underground machinery, managers run mines, quarries and production sites, and specialists survey ground, test metals and enforce safety rules. Mining companies, oil and gas producers and quarrying firms are the main employers."
+  },
+  "D069": {
+    "domain_name": "Aviation",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.69,
+    "trade_ratio": 0.21,
+    "n_elite_roles": 1,
+    "description": "Aviation is the operation of aircraft and the systems that keep air travel safe. Pilots fly aeroplanes, helicopters and drones, air traffic controllers direct aircraft movements, technicians overhaul engines and service flight systems, and cabin crew look after passengers on board. Work is typically found with airlines, airports and civil aviation agencies."
+  },
+  "D072": {
+    "domain_name": "Geospatial Science",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Geospatial science involves measuring, mapping and studying the Earth's land, water and minerals. Surveyors take precise measurements of land, mines and seabeds for maps and property records, while geologists, hydrologists and oceanographers study rocks, groundwater and the sea using mathematics and geographic information systems. Typical employers include mining companies, construction firms and government agencies."
+  },
+  "D074": {
+    "domain_name": "Occupational Health, Safety",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Occupational health and safety focuses on preventing accidents, illness and harmful conditions at work. Inspectors visit factories, building sites, food businesses and hospitals to check that health, hygiene and waste laws are being followed, carrying out audits and reporting hazards. Many are employed by government agencies, with others working for large industrial and transport companies."
+  },
+  "D146": {
+    "domain_name": "Building Services Engineering — Mechanical, Electrical",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Building services engineering deals with the mechanical and electrical systems that make buildings work, such as lighting, air conditioning, fire protection and automation. Engineers in this field design these systems from drawings, maintain them, and increasingly connect them to smart controls. Construction firms and engineering consultancies are the main employers."
+  },
+  "D147": {
+    "domain_name": "Process Automation, SCADA, PLC",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Process automation keeps factories and plants running through computer-controlled systems. Control room operators monitor automated machines in refineries, gas plants and production lines, troubleshoot faults and write reports, while automation and instrumentation engineers design the control systems themselves. Manufacturing companies and oil and gas facilities employ most of these professionals."
+  },
+  "D156": {
+    "domain_name": "Land Surveying, Cadastral Mapping",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Land surveying and cadastral mapping measure land and record its boundaries. Surveyors take precise measurements on building sites, mines and waterways, while cartographers, photogrammetrists and geographic information systems specialists turn those measurements into maps and digital records. Government agencies, construction firms and mining companies rely on their work."
+  },
+  "D164": {
+    "domain_name": "Urban Mobility, Smart City Systems",
+    "cluster": "Engineering & Built Environment",
+    "clusters": [
+      "Engineering & Built Environment"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Urban mobility and smart city planning organise how people and transport move around cities. Transport planners and engineers design road, rail and airport projects, while land planners and smart city consultants apply urban planning and environmental policy to make cities work better. Government agencies, engineering firms and construction companies carry out this work."
+  },
+  "D023": {
+    "domain_name": "Medicine",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Medicine is the profession of diagnosing and treating illness. General practitioners and specialist doctors examine patients and decide on treatment, technical staff provide laboratory, audiology and prosthetic support, and managers run hospitals and clinical information systems. Hospitals, clinics and government health agencies are the main workplaces, and doctors in Nigeria must register with the Medical and Dental Council."
+  },
+  "D024": {
+    "domain_name": "Nursing",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.91,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Nursing centres on the day-to-day care of patients. Specialist nurses and advanced practitioners deliver nursing, mental-health and midwifery care, paramedics and ambulance crews respond to emergencies, and support workers assist with procedures, records and hands-on personal care. Most work in hospitals, clinics, maternity units and community health services, and Nigerian practice requires registration with the Nursing and Midwifery Council."
+  },
+  "D025": {
+    "domain_name": "Pharmacy",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 11,
+    "description": "Pharmacy is the science and practice of preparing and dispensing medicines. Pharmacists dispense drugs in hospitals and community pharmacies, industrial pharmacists and quality specialists oversee safe manufacturing, and technicians and assistants support dispensing, clinical trials and daily operations. The training draws on chemistry, physics and microbiology, and pharmacists in Nigeria must be licensed by the Pharmacists Council."
+  },
+  "D026": {
+    "domain_name": "Public Health",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Public health protects the health of whole communities rather than one patient at a time. Inspectors enforce food, workplace and community health standards, officers and physicians coordinate emergency responses and prevention work, and scientists track diseases and analyse health statistics. Government agencies, hospitals and international health organisations are typical employers."
+  },
+  "D027": {
+    "domain_name": "Biomedical",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 36,
+    "description": "Biomedical science studies living things, from microbes to the human body, mainly through laboratory work. Microbiologists, pharmacologists and physiologists research organisms, medicines and how bodies function, while technicians run laboratory tests and support biology and agricultural science. Hospitals, research institutes, universities and pharmaceutical companies employ them; medical laboratory scientists in Nigeria are licensed by MLSCN."
+  },
+  "D064": {
+    "domain_name": "Psychology, Counselling",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Psychology and counselling deal with how people think, feel and behave, and with helping them through personal difficulty. Educational and health psychologists assess and support clients, while counsellors work with problems such as addiction, marriage and family planning, using client-centred methods. Hospitals, schools, social service agencies and private practices are typical settings."
+  },
+  "D066": {
+    "domain_name": "Veterinary Science",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Veterinary science is the study and treatment of animal health and welfare. Veterinarians diagnose, treat and rehabilitate sick or injured animals, veterinary nurses assist with care and breeding procedures, and others provide animal therapy or study behaviour and nutrition. Practitioners work in veterinary clinics, on farms and for government agencies, and must register with the Veterinary Council of Nigeria to practise."
+  },
+  "D067": {
+    "domain_name": "Dentistry",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 5,
+    "description": "Dentistry is the branch of medicine concerned with teeth, gums and the mouth. Dentists examine patients and diagnose oral health problems, dental technicians make models and appliances, hygienists and chairside assistants support treatment, and maxillofacial surgeons operate on the mouth and jaw. Most work in hospitals, dental clinics and laboratories, and practising in Nigeria requires registration with the Medical and Dental Council."
+  },
+  "D068": {
+    "domain_name": "Allied Health",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Allied health covers the healthcare professions that support diagnosis, treatment and recovery alongside doctors and nurses. Physiotherapists and occupational therapists help patients regain movement and daily skills, biomedical scientists analyse samples in laboratories, and radiographers produce medical images, supported by assistants and technicians. Hospitals, clinics, rehabilitation centres and sports organisations are the main employers."
+  },
+  "D154": {
+    "domain_name": "Exercise Science, Sports Therapy",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 3,
+    "description": "Exercise science and sports therapy focus on how the body moves, performs and recovers. Physiotherapists and sport therapists treat injuries, kinesiologists assess physical condition, dietitians advise on nutrition, and instructors coach fitness and pilates. Hospitals, clinics, sports clubs and fitness centres employ most people in the field."
+  },
+  "D165": {
+    "domain_name": "Wellness Coaching, Lifestyle Medicine",
+    "cluster": "Health & Biomedical",
+    "clusters": [
+      "Health & Biomedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Wellness coaching and lifestyle medicine help people stay healthy through everyday habits. Dietitians and nutritionists advise on food, fitness instructors and pilates teachers lead exercise, and music and dance therapists use creative activities to support healing. Clinics, gyms, wellness centres and private practice are typical settings."
+  },
+  "D028": {
+    "domain_name": "General Management",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 3,
+    "description": "General management is the running of organisations and their departments. Managers direct budgets, finance, quality and facilities, consultants advise on strategy and business improvements, and senior executives and entrepreneurs lead whole organisations. Because every sector needs this work, managers are found in banks, factories, retailers, government agencies and non-profit organisations alike."
+  },
+  "D029": {
+    "domain_name": "Human Resources",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.94,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Human resources manages the people side of an organisation. Practitioners recruit staff, train and coach employees, analyse pay and benefits, handle labour relations under employment law, and guide careers, equality and inclusion programmes. HR roles exist wherever people are employed, from banks and manufacturers to government agencies, schools and charities."
+  },
+  "D030": {
+    "domain_name": "Marketing, Brand",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Marketing builds brands and persuades customers to choose a product or service. Creatives and analysts research markets, run campaigns, manage online communities and sales channels, and shape how an organisation presents itself, while senior leaders steer overall marketing, sales and communication strategy. Marketing departments, advertising agencies and media houses are common workplaces."
+  },
+  "D031": {
+    "domain_name": "Sales",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.81,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Sales is the business of getting goods and services to buyers. Some practitioners purchase, broker and trade goods and commodities, others sell machinery, energy and technical products to businesses, manage key customer accounts, or serve shoppers on the shop floor, while directors set commercial strategy. Retailers, wholesalers, manufacturers and trading companies employ them."
+  },
+  "D032": {
+    "domain_name": "Project Management",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Project management is the planning and coordination of work so it finishes on time and within budget. Coordinators organise projects, procurement and office operations, senior managers lead programmes and departmental strategy, and analysts study processes to drive agile and lean improvements, often working with spreadsheets and business analysis. Construction firms, banks, government agencies and charities all need these skills."
+  },
+  "D033": {
+    "domain_name": "Product Management",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Product management is the work of guiding a product from idea to finished item and setting the direction a business takes with it. Product owners and development managers lead strategy, engineers and architects build the underlying technology, and analysts scope requirements, costs and processes. Most work in manufacturing companies, technology firms and other large businesses."
+  },
+  "D130": {
+    "domain_name": "Recruitment, Employment",
+    "cluster": "Business & Management",
+    "clusters": [
+      "Business & Management"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Recruitment and employment services match people to jobs. Recruitment consultants, talent acquisition specialists and employment agents advertise vacancies, interview and select candidates, follow labour legislation and keep candidate information confidential, while employer branding specialists present organisations attractively to job seekers. Recruitment agencies and company human resources departments are the typical employers."
+  },
+  "D034": {
+    "domain_name": "Supply Chain Management",
+    "cluster": "Supply Chain & Logistics",
+    "clusters": [
+      "Supply Chain & Logistics"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.59,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Supply chain management is about moving goods from where they are made to where they are needed, at the right time and cost. People in this field schedule freight, ships, rail and cargo movements, run warehouses and distribution, handle customs and sourcing, and analyse logistics costs. Employers include shipping lines, airlines, ports, manufacturers and trading companies."
+  },
+  "D035": {
+    "domain_name": "Logistics",
+    "cluster": "Supply Chain & Logistics",
+    "clusters": [
+      "Supply Chain & Logistics"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.6,
+    "trade_ratio": 0.4,
+    "n_elite_roles": 0,
+    "description": "Logistics deals with the practical movement of goods and people by road, rail, air and sea. Some workers drive buses, trucks and forklifts; others load and dispatch goods in warehouses and docks, manage fleets and ports, or coordinate shipping, customs and forwarding. Transport companies, warehouses, ports and event organisers are typical employers."
+  },
+  "D036": {
+    "domain_name": "Procurement",
+    "cluster": "Supply Chain & Logistics",
+    "clusters": [
+      "Supply Chain & Logistics"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Procurement is the business of buying the goods and services an organisation needs to operate. Buyers identify suppliers, maintain supplier relationships and purchase goods or trade commodities, freight and imports, while analysts study costs and processes to improve purchasing decisions. Manufacturers, trading companies, wholesalers and government agencies employ most procurement staff."
+  },
+  "D076": {
+    "domain_name": "Maritime",
+    "cluster": "Supply Chain & Logistics",
+    "clusters": [
+      "Supply Chain & Logistics"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.6,
+    "trade_ratio": 0.4,
+    "n_elite_roles": 1,
+    "description": "Maritime work covers life and labour at sea, from sailing and fishing to ship engineering and diving. Officers navigate and command vessels, deckhands and engine crew keep ships running, naval engineers design ships and marine structures, and divers work underwater on construction, harvesting and rescue. Shipping companies, ports, fishing fleets and offshore firms provide most of the work."
+  },
+  "D079": {
+    "domain_name": "Customs, Trade",
+    "cluster": "Supply Chain & Logistics",
+    "clusters": [
+      "Supply Chain & Logistics"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Customs and trade is about moving goods and people legally across borders and through supply chains. Customs and immigration officers inspect cargo and clear travellers, while import-export specialists, forwarding managers and distribution managers organise shipping, warehousing and transport. Employers include government border agencies, shipping and logistics companies, and freight forwarding firms."
+  },
+  "D037": {
+    "domain_name": "Legal Practice",
+    "cluster": "Legal & Compliance",
+    "clusters": [
+      "Legal & Compliance"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Legal practice covers the making, interpretation and application of law. Lawyers and legal consultants advise clients and argue cases, judges and court clerks run court processes and enforce decisions, and legal assistants compile documents and carry out legal research. Typical workplaces include law firms, courts, companies and government agencies."
+  },
+  "D038": {
+    "domain_name": "Compliance, Regulation",
+    "cluster": "Legal & Compliance",
+    "clusters": [
+      "Legal & Compliance"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Compliance and regulation work makes sure people and organisations follow laws, rules and government policy. Officers inspect goods and borders, enforce tax and safety rules, shape public policy and programmes, and manage contracts, procurement and regulatory affairs inside organisations. Government agencies, banks and large companies employ most of them."
+  },
+  "D157": {
+    "domain_name": "Tax Advisory, Transfer Pricing",
+    "cluster": "Legal & Compliance",
+    "clusters": [
+      "Legal & Compliance"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 16,
+    "description": "Tax advisory helps people and organisations understand and follow tax law. Tax advisors and compliance officers interpret legislation, inspect tax returns and study financial statements, while auditors, budget analysts and financial controllers check that accounts are accurate. Accounting firms, government revenue agencies and large companies employ most practitioners, and chartered qualifications are required to practise."
+  },
+  "D162": {
+    "domain_name": "Immigration Law, Asylum",
+    "cluster": "Legal & Compliance",
+    "clusters": [
+      "Legal & Compliance"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Immigration law and asylum practice deal with the legal side of people moving between countries. Immigration lawyers and human rights officers represent migrants and asylum seekers, while advisers, clerks and legal assistants compile documents, conduct legal research and manage casework. Law firms, government agencies and charities are the main employers."
+  },
+  "D149": {
+    "domain_name": "Diplomacy, International Relations",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 7,
+    "description": "Diplomacy and international relations manage a country's dealings with other nations. Diplomats and ambassadors lead embassies and represent their nation abroad, while political affairs and intelligence officers handle foreign policy, trade, election observation and humanitarian issues. Ministries of foreign affairs, embassies and international organisations are the typical employers."
+  },
+  "D163": {
+    "domain_name": "Intellectual Property Law, Patents",
+    "cluster": "Legal & Compliance",
+    "clusters": [
+      "Legal & Compliance"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 4,
+    "description": "Intellectual property law protects inventions, brand names and creative works. Patent and trademark attorneys prepare applications, present legal arguments and protect their clients' interests, while paralegals and administrators manage case files and paperwork. Most work is found in law firms, large companies and government registries, and practising as a lawyer requires being called to the Bar."
+  },
+  "D039": {
+    "domain_name": "Higher Education",
+    "cluster": "Education & Research",
+    "clusters": [
+      "Education & Research"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Higher education centres on teaching and leading colleges and universities, though the field also includes school-level teaching. Lecturers in subjects such as economics and medicine prepare lesson content, teach classes and assess students, while heads of institutions lead schools and faculties. Universities, colleges and other education institutions are the main employers."
+  },
+  "D040": {
+    "domain_name": "Vocational",
+    "cluster": "Education & Research",
+    "clusters": [
+      "Education & Research"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.89,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Vocational education means teaching practical, job-focused skills such as hospitality, food service and occupational driving. Teachers and assessors prepare lessons, demonstrate trades and assess learners, classroom assistants support pupils including those with special needs, and corporate trainers coach professionals at work. Technical colleges, schools, training centres and companies are common workplaces."
+  },
+  "D041": {
+    "domain_name": "Scientific Research",
+    "cluster": "Education & Research",
+    "clusters": [
+      "Education & Research"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 3,
+    "description": "Scientific research is the systematic study of the natural world through observation and experiment. Chemists, geologists and environmental scientists design studies and draft scientific papers, while technicians run laboratory tests, collect samples and support biology and agriculture research. Laboratories, research institutes, universities and government agencies are the usual workplaces."
+  },
+  "D078": {
+    "domain_name": "Social Sciences",
+    "cluster": "Education & Research",
+    "clusters": [
+      "Education & Research"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Social sciences study how people, societies and institutions behave and change over time. Researchers such as sociologists, historians, criminologists and archaeologists design studies, gather and analyse data, and write academic papers and policy reports, often using statistics. They commonly work in universities, research institutes and government agencies."
+  },
+  "D042": {
+    "domain_name": "Media Production",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Media production brings performances and broadcast content to audiences on stage and screen. Actors, dancers, musicians and directors lead artistic productions; crew handle staging, lighting, costumes and sets; and technicians operate camera, audio and broadcast equipment. Theatres, studios, broadcasting stations and event companies are typical employers."
+  },
+  "D043": {
+    "domain_name": "Journalism",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Journalism involves gathering information and turning it into accurate news and written content. Correspondents and vloggers report stories, presenters deliver them on air, and editors, fact checkers and translators check grammar, accuracy and editorial standards before publication. Newspapers, broadcasting stations, publishing houses and online media provide most of the work."
+  },
+  "D044": {
+    "domain_name": "Graphic Design",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Graphic design uses drawing and computer graphics to create visual work for clients. Illustrators, web designers and 3D modellers design graphics, interfaces and products to a brief; artistic painters create hand-drawn and painted art; and photographers capture images for news and commercial use. Design studios, advertising agencies and media houses are common employers."
+  },
+  "D065": {
+    "domain_name": "Translation, Interpretation",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Translation and interpretation is the work of converting speech and writing from one language into another so that people who speak different languages can understand each other. Translators work on written texts while interpreters convert speech in real time; others subtitle films, interpret sign language or compile dictionaries. Typical employers include courts, media houses, publishers and international organisations."
+  },
+  "D071": {
+    "domain_name": "Sports Management",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Sports management is about training athletes and running the organisations, venues and competitions around them. Coaches plan sessions and lead teams, performance analysts study matches, talent scouts identify promising players and referees officiate games, while academy and athletic directors manage clubs and facilities. Jobs are usually with sports clubs, academies, schools and government sports bodies."
+  },
+  "D080": {
+    "domain_name": "Interior Design",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Interior design shapes how indoor spaces and visual scenes look and function. Interior designers and planners arrange rooms, furniture and lighting for homes and businesses, while related roles build and paint sets, design stage lighting, dress shop displays or create illustrations and animations. Design firms, theatres, studios and retail companies are the usual employers."
+  },
+  "D152": {
+    "domain_name": "Museum Curation, Cultural Heritage, Archives",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.92,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Museum curation, cultural heritage and archives work protects and organises a society's art, objects and records. Curators plan collections and exhibitions, art restorers repair damaged works, and librarians and archivists manage information, from physical documents to digital archives. Museums, galleries, libraries and cultural institutions provide most of the work."
+  },
+  "D153": {
+    "domain_name": "Music Production",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Music production is the craft of creating and recording music and sound. Sound engineers record, mix, edit and master audio for songs, media and games, while conductors, arrangers and music directors compose and lead performances. Recording studios, broadcasters and live event organisations are common workplaces."
+  },
+  "D160": {
+    "domain_name": "Fashion Styling, Image Consulting",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.43,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Fashion styling and image consulting shape how people, products and brands look. Personal and fashion stylists put outfits together for clients, make-up artists and hair designers create complete looks, and visual merchandisers design shop displays and negotiate with suppliers. They work with fashion brands, retail stores, media productions and private clients."
+  },
+  "D045": {
+    "domain_name": "Public Administration",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Public administration is the running of government and public institutions. Civil registration officers, urban planners and policy officers develop policy and public programmes, inspectors enforce customs, tax and safety rules, and senior officials and ambassadors lead ministries and diplomacy. Nearly all work in government ministries, agencies, local councils and embassies."
+  },
+  "D046": {
+    "domain_name": "Social Work",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.92,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Social work supports people facing difficulty, from children in care to families in crisis. Qualified social workers and counsellors guide individuals through problems such as family planning and recovery from violence, frontline workers support vulnerable adults and children in residential settings, and nannies and day-care workers mind children. Employers include government social services, care homes, charities and schools."
+  },
+  "D063": {
+    "domain_name": "Economics",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Economics studies how money, markets and government policy shape a society. Economists and researchers analyse statistics and market trends, while advisers and policy analysts guide decisions on tax, trade and economic development, often working closely with local representatives. Government ministries, research bodies and banks are common employers."
+  },
+  "D073": {
+    "domain_name": "Library, Archive",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.93,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Library and archive work is about organising, preserving and sharing information, records and cultural collections. Librarians and information managers help people find the material they need, curators plan exhibitions, and conservators and art handlers care for artefacts and digitise documents. Most posts are in libraries, museums, universities and government archives."
+  },
+  "D077": {
+    "domain_name": "Security Services",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.1,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Security services protect people, property and public order. Security guards watch over buildings and events, lifeguards and industrial firefighters respond to emergencies, prison officers supervise inmates, and police detectives investigate crimes. Employment is found with private security companies, prisons, the police and other government agencies."
+  },
+  "D128": {
+    "domain_name": "Social Welfare, Youth Services",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Social welfare and youth services support vulnerable people and young people in the community. Social workers and youth workers guide and assist individuals and families, while managers run public housing, elderly homes, youth centres and social services within legal and budget rules. Government agencies, charities and community organisations provide most roles."
+  },
+  "D143": {
+    "domain_name": "Forensic Science, Digital Forensics",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Forensic science applies science and computing to the investigation of crime. Digital forensics experts and security specialists recover evidence from computers and respond to cyber attacks, laboratory technicians run biological analyses, detectives gather evidence, and pathologists examine medical evidence. Employers include police services, government agencies and security firms."
+  },
+  "D150": {
+    "domain_name": "Religious Ministry, Theology",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Religious ministry and theology involve leading faith communities and studying religion. Ministers, chaplains and pastoral workers perform ceremonies, interpret religious texts, counsel people and provide charity services, while researchers and teachers study and teach religion. They serve in places of worship, schools, hospitals and charitable organisations."
+  },
+  "D151": {
+    "domain_name": "Criminology, Criminal Justice",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.7,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Criminology and criminal justice cover the study of crime and the running of the justice system. Police officers and detectives investigate offences and handle evidence, prison officers guard and manage correctional facilities, and criminologists study why crime happens and supervise offender rehabilitation. Police services, prisons and government agencies are the main employers."
+  },
+  "D161": {
+    "domain_name": "Humanitarian Aid, Emergency Response",
+    "cluster": "Public Sector & Social Services",
+    "clusters": [
+      "Public Sector & Social Services"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Humanitarian aid and emergency response deliver help to communities hit by disaster, conflict or hardship. Aid workers and project officers manage relief programmes, coordinators organise disaster response, logistics officers move supplies, and monitoring officers track whether help reaches the people who need it. Charities, international organisations and government agencies do this work."
+  },
+  "D047": {
+    "domain_name": "Agricultural Science",
+    "cluster": "Agriculture & Food Systems",
+    "clusters": [
+      "Agriculture & Food Systems"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.59,
+    "trade_ratio": 0.41,
+    "n_elite_roles": 1,
+    "description": "From crops to livestock, agricultural science combines farming practice with the study of plants, animals and the environment. Crop production managers, breeders and shepherds grow crops and raise animals, researchers study genetics, biology and aquaculture, and technicians supervise farm and fish sites. Farms, research institutes, agribusinesses and government agricultural agencies offer most positions."
+  },
+  "D048": {
+    "domain_name": "Food Science",
+    "cluster": "Agriculture & Food Systems",
+    "clusters": [
+      "Agriculture & Food Systems"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.18,
+    "trade_ratio": 0.82,
+    "n_elite_roles": 0,
+    "description": "Food science covers how raw ingredients become safe, packaged food and drink. Machine operators run baking, blending and drinks production lines, bakers and meat cutters handcraft speciality foods, scientists research nutrition and microbiology, and supervisors apply hygiene and safety rules such as HACCP. Food and beverage factories, bakeries and dairies are the main workplaces."
+  },
+  "D049": {
+    "domain_name": "Automotive Engineering",
+    "cluster": "Advanced Manufacturing",
+    "clusters": [
+      "Advanced Manufacturing"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.76,
+    "trade_ratio": 0.24,
+    "n_elite_roles": 0,
+    "description": "Automotive engineering is the design, testing and upkeep of vehicles and their systems. Engineers design engines, powertrains and mechanical systems, technicians test, inspect and maintain vehicles and machinery, and mechanics repair, restore and service cars and their components. Vehicle manufacturers, engineering workshops and transport companies are typical employers."
+  },
+  "D050": {
+    "domain_name": "Industrial Automation",
+    "cluster": "Advanced Manufacturing",
+    "clusters": [
+      "Advanced Manufacturing"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.65,
+    "trade_ratio": 0.35,
+    "n_elite_roles": 0,
+    "description": "Industrial automation focuses on the machines and control systems that run modern factories. PLC programmers and automation engineers design automated machinery, instrumentation technicians keep control systems working, and assemblers and supervisors build equipment and run automated production lines. Manufacturing plants and engineering firms are the usual employers."
+  },
+  "D075": {
+    "domain_name": "Fashion, Textiles",
+    "cluster": "Advanced Manufacturing",
+    "clusters": [
+      "Advanced Manufacturing"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.23,
+    "trade_ratio": 0.74,
+    "n_elite_roles": 0,
+    "description": "Fashion and textiles is the making of clothing, shoes, fabrics and accessories. Some workers cut, sew and craft garments by hand, others operate cutting, sewing, dyeing and finishing machines, and patternmakers and prototypers develop new designs, fabrics and products. Garment factories, textile mills, tailoring workshops and design studios are the typical workplaces."
+  },
+  "D051": {
+    "domain_name": "Real Estate",
+    "cluster": "Real Estate & Construction",
+    "clusters": [
+      "Real Estate & Construction"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Real estate is the business of land, buildings and property. Property managers look after buildings and tenants, brokers and investors arrange sales and purchases, and mortgage advisors and conveyancers handle finance, legal transfer and property financial analysis. Estate firms, banks and property companies are the typical workplaces."
+  },
+  "D052": {
+    "domain_name": "Construction Management",
+    "cluster": "Real Estate & Construction",
+    "clusters": [
+      "Real Estate & Construction"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.8,
+    "trade_ratio": 0.2,
+    "n_elite_roles": 0,
+    "description": "Construction management is the planning and supervision of building work from start to finish. Quantity surveyors estimate costs, site managers and supervisors direct trades and enforce safety on site, bricklayers and plumbers carry out the building work, and engineers handle roads, water and structures. Construction firms, engineering companies and government agencies run most projects."
+  },
+  "D053": {
+    "domain_name": "Hospitality",
+    "cluster": "Hospitality & Tourism",
+    "clusters": [
+      "Hospitality & Tourism"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.46,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Hospitality is the service of looking after guests in hotels, restaurants and tourism. Receptionists and concierges welcome visitors, chefs lead kitchens, waiters and guides serve guests directly, and managers run hotels, events and tour operations while handling budgets and complaints. Hotels, restaurants, resorts and event companies provide the work."
+  },
+  "D054": {
+    "domain_name": "Oil",
+    "cluster": "Energy & Resources",
+    "clusters": [
+      "Energy & Resources"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.62,
+    "trade_ratio": 0.38,
+    "n_elite_roles": 0,
+    "description": "Finding petroleum underground and turning it into usable products is the focus of oil and gas work. Petroleum geologists and drilling engineers study rock and plan wells, operators run drills, pumps and refinery control rooms, and managers oversee offshore installations and production. Oil companies, refineries and servicing firms are the principal employers."
+  },
+  "D055": {
+    "domain_name": "Chemical Engineering",
+    "cluster": "Energy & Resources",
+    "clusters": [
+      "Energy & Resources"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.42,
+    "trade_ratio": 0.58,
+    "n_elite_roles": 0,
+    "description": "Chemical engineering turns raw materials into chemicals, fuels, medicines and everyday products. Engineers design chemical, gas and pharmaceutical processes, operators run mixers, kilns and production machines, and plant staff control quality and handle hazardous waste safely. Chemical plants, refineries and manufacturing factories are where most of the work happens."
+  },
+  "D148": {
+    "domain_name": "Offshore, Subsea",
+    "cluster": "Energy & Resources",
+    "clusters": [
+      "Energy & Resources"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.95,
+    "trade_ratio": 0.05,
+    "n_elite_roles": 0,
+    "description": "Offshore and subsea work centres on producing oil and gas at sea. Drilling and equipment engineers design wells, subsea structures and production systems, while operators run refineries, gas plants and remotely operated underwater vehicles. Oil and gas companies and offshore platforms are the usual workplaces, and safety training is required before anyone works offshore."
+  },
+  "D056": {
+    "domain_name": "Blockchain",
+    "cluster": "Emerging Technology",
+    "clusters": [
+      "Emerging Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Blockchain work involves building software that records transactions on shared computer networks rather than in one central place. Smart contract and blockchain developers write the programs, security auditors and cryptography engineers test them for weaknesses, and architects and analysts design the wider systems. Software companies and financial organisations offer most roles."
+  },
+  "D057": {
+    "domain_name": "Digital Health",
+    "cluster": "Emerging Technology",
+    "clusters": [
+      "Emerging Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Digital health applies computers and data to the running of healthcare. Clinical coders and records staff manage patient records and coding, analysts study health data, engineers build health information systems and mobile health apps, and managers lead healthcare institutions and informatics teams. Hospitals, clinics, health agencies and technology firms are the main employers."
+  },
+  "D058": {
+    "domain_name": "EdTech",
+    "cluster": "Emerging Technology",
+    "clusters": [
+      "Emerging Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "EdTech joins teaching with digital tools to help people learn. Instructional designers and e-learning developers build online courses and learning experiences, ICT trainers and digital literacy teachers deliver lessons, and administrators keep learning management systems running. Schools, training providers and organisations that train their own staff employ these specialists."
+  },
+  "D059": {
+    "domain_name": "Space Technology",
+    "cluster": "Emerging Technology",
+    "clusters": [
+      "Emerging Technology"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 7,
+    "description": "Space technology concerns the design and operation of spacecraft and satellites. Aerospace, avionics and satellite systems engineers design and test flight hardware, propulsion engineers work on spacecraft engines, and mission operations engineers run missions once craft are in orbit, drawing heavily on physics. Space agencies, aerospace companies and research organisations are the usual employers."
+  },
+  "D081": {
+    "domain_name": "Office Administration, Secretarial",
+    "cluster": "Office & Administrative Services",
+    "clusters": [
+      "Office & Administrative Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Office administration keeps organisations running through everyday paperwork and communication. Secretaries, clerks and typists file documents, handle mail and correspondence, type letters, keep records and enter data into computer systems. Almost every type of employer needs them, from companies and schools to hospitals and government offices."
+  },
+  "D082": {
+    "domain_name": "Customer Service, Contact Centre",
+    "cluster": "Office & Administrative Services",
+    "clusters": [
+      "Office & Administrative Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.16,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Customer service is the work of helping people by phone, at reception desks and at service counters. Representatives answer calls and handle complaints, receptionists and concierges greet and assist visitors, dispatchers take emergency calls, and medical administrative assistants manage patient records and appointments. Call centres, hotels, hospitals, banks and telecoms companies employ them."
+  },
+  "D083": {
+    "domain_name": "Travel, Tourism",
+    "cluster": "Office & Administrative Services",
+    "clusters": [
+      "Office & Administrative Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.04,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Travel and tourism serves people on the move for holidays, business and leisure. Travel consultants plan trips and sell tickets, tour organisers and park guides lead visitors around attractions, and stewards look after passengers on flights, ships and trains. Airlines, travel agencies, hotels, parks and tour companies are the common employers."
+  },
+  "D084": {
+    "domain_name": "Payroll, Bookkeeping",
+    "cluster": "Office & Administrative Services",
+    "clusters": [
+      "Office & Administrative Services"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.08,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Payroll and bookkeeping is the careful recording of an organisation's money, including wages, taxes, sales and payments. Clerks maintain records of financial transactions, prepare staff salaries, process insurance and tax paperwork, and support auditors and back-office operations using office software. Banks, insurance companies and businesses of every size employ them."
+  },
+  "D085": {
+    "domain_name": "Retail Sales, Shop Operations",
+    "cluster": "Retail, Sales & Commerce",
+    "clusters": [
+      "Retail, Sales & Commerce"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.04,
+    "trade_ratio": 0.04,
+    "n_elite_roles": 0,
+    "description": "Retail sales is the selling of goods and services directly to customers. Cashiers operate tills, shop assistants help buyers find and understand products, specialised sellers advise on items such as vehicle parts, and rental and leasing agents arrange hire agreements. They work in shops, supermarkets, showrooms and call centres."
+  },
+  "D087": {
+    "domain_name": "Hairdressing, Barbering",
+    "cluster": "Beauty, Personal Care & Wellness",
+    "clusters": [
+      "Beauty, Personal Care & Wellness"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0
+  },
+  "D088": {
+    "domain_name": "Beauty Therapy, Aesthetics",
+    "cluster": "Beauty, Personal Care & Wellness",
+    "clusters": [
+      "Beauty, Personal Care & Wellness"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0
+  },
+  "D089": {
+    "domain_name": "Funeral",
+    "cluster": "Beauty, Personal Care & Wellness",
+    "clusters": [
+      "Beauty, Personal Care & Wellness"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0
+  },
+  "D090": {
+    "domain_name": "Animal Care, Grooming",
+    "cluster": "Beauty, Personal Care & Wellness",
+    "clusters": [
+      "Beauty, Personal Care & Wellness"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Animal care and grooming is the everyday looking after of animals, from feeding and cleaning to training and grooming. Attendants and kennel workers care for animals in shelters and boarding facilities, trainers teach dogs and horses, breeders raise animals, and groomers keep coats healthy and tidy. Kennels, stables, zoos and grooming salons are the typical workplaces."
+  },
+  "D091": {
+    "domain_name": "Driving Instruction",
+    "cluster": "Beauty, Personal Care & Wellness",
+    "clusters": [
+      "Beauty, Personal Care & Wellness"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Driving instruction is the teaching of people to drive safely and pass their licence tests. Instructors give practical lessons in cars, buses, trucks, motorcycles and even vessels, follow a set curriculum, guard each student's safety and explain the rules of the road. Most work for driving schools accredited by the road safety authorities or run their own."
+  },
+  "D092": {
+    "domain_name": "Culinary Arts, Catering",
+    "cluster": "Culinary Arts & Food Service",
+    "clusters": [
+      "Culinary Arts & Food Service"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.04,
+    "trade_ratio": 0.22,
+    "n_elite_roles": 0,
+    "description": "Culinary arts and catering is the preparation and serving of food and drink. Cooks and industrial cooks prepare meals, bartenders and sommeliers serve and recommend drinks, waiters and crew members attend to customers, and kitchen assistants support food preparation and hygiene. Restaurants, hotels, fast-food outlets and catering companies are the usual employers."
+  },
+  "D093": {
+    "domain_name": "Electrical Installation, Wiring",
+    "cluster": "Electrical & Electronics Trades",
+    "clusters": [
+      "Electrical & Electronics Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.05,
+    "trade_ratio": 0.95,
+    "n_elite_roles": 0,
+    "description": "Electrical installation is the fitting and repair of wiring and electrical equipment in buildings, vehicles and industry. Electricians read wiring plans, install cables and equipment, inspect electrical supplies and resolve faults in homes, factories and vehicles. They work for construction firms, electricity companies and maintenance contractors, and contracting work in Nigeria requires a statutory licence."
+  },
+  "D094": {
+    "domain_name": "Electronics Servicing, ICT Equipment",
+    "cluster": "Electrical & Electronics Trades",
+    "clusters": [
+      "Electrical & Electronics Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.35,
+    "trade_ratio": 0.65,
+    "n_elite_roles": 0,
+    "description": "Electronics servicing is the repair and maintenance of electronic devices and communication equipment. Technicians read circuit diagrams to repair phones, computers, alarms and telecoms equipment, install smart-home systems, and test microelectronics and hardware against quality standards. Telecoms companies, repair workshops and manufacturing firms are the typical employers."
+  },
+  "D095": {
+    "domain_name": "Motor Vehicle Mechanics, Repairs",
+    "cluster": "Mechanical & Automotive Trades",
+    "clusters": [
+      "Mechanical & Automotive Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Motor vehicle mechanics keep cars, trucks, motorcycles and even bicycles running. Mechanics and technicians service engines, repair vehicle electrical systems, restore and refurbish older vehicles and rebuild bodywork, while supervisors oversee maintenance workshops. Garages, vehicle workshops and transport companies provide most of the work."
+  },
+  "D096": {
+    "domain_name": "Agricultural",
+    "cluster": "Mechanical & Automotive Trades",
+    "clusters": [
+      "Mechanical & Automotive Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.1,
+    "trade_ratio": 0.9,
+    "n_elite_roles": 0,
+    "description": "Agricultural work combines farming with the machinery that makes it possible. Farmers grow crops and raise livestock, operators drive tractors and forestry equipment, and technicians repair and maintain agricultural machines, often on site in the field. Farms, plantations, forestry companies and equipment dealers are the main employers."
+  },
+  "D097": {
+    "domain_name": "Welding, Fabrication, Blacksmithing",
+    "cluster": "Metal, Welding & Fabrication Trades",
+    "clusters": [
+      "Metal, Welding & Fabrication Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Welding and fabrication is the shaping and joining of metal into useful products. Welders and solderers fuse metal parts together, operators run plasma cutters and forging presses, and craft workers such as farriers, riveters and gunsmiths make and repair metal items to quality standards. Workshops, factories and construction firms are the usual workplaces."
+  },
+  "D098": {
+    "domain_name": "Precision Engineering, Toolmaking",
+    "cluster": "Metal, Welding & Fabrication Trades",
+    "clusters": [
+      "Metal, Welding & Fabrication Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Precision engineering is the making, testing and repair of small, exact components and instruments. Watchmakers and instrument assemblers build and fix watches and optical devices, inspectors test electronics and other products for quality, and toolmakers craft moulds and precision metal parts using measuring equipment. Manufacturing plants, workshops and quality-control laboratories are the typical workplaces."
+  },
+  "D099": {
+    "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+    "cluster": "Building & Construction Trades",
+    "clusters": [
+      "Building & Construction Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Masonry and its related trades build and finish the solid parts of buildings, such as walls, floors and ceilings. Bricklayers lay blocks, tile fitters and floor layers finish surfaces, ceiling and glass installers fit out interiors, and stone engravers carve decorative work, all under construction safety rules. Most work is with construction firms, and skills can be certified through government trade tests."
+  },
+  "D100": {
+    "domain_name": "Plumbing, Pipefitting",
+    "cluster": "Building & Construction Trades",
+    "clusters": [
+      "Building & Construction Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0
+  },
+  "D101": {
+    "domain_name": "Painting, Decorating",
+    "cluster": "Building & Construction Trades",
+    "clusters": [
+      "Building & Construction Trades"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0
+  },
+  "D102": {
+    "domain_name": "Carpentry, Joinery, Wood Technology",
+    "cluster": "Wood, Furniture & Craft",
+    "clusters": [
+      "Wood, Furniture & Craft"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Carpentry and wood technology is the craft of shaping wood into buildings, furniture and everyday objects. Carpenters build frames and install doors, windows and staircases, machine operators shape and dry timber, furniture makers craft tables and chairs, and artisans handcraft baskets, carvings and toys. Construction firms, furniture workshops and joinery factories are the usual employers."
+  },
+  "D103": {
+    "domain_name": "Jewellery Making, Goldsmithing",
+    "cluster": "Wood, Furniture & Craft",
+    "clusters": [
+      "Wood, Furniture & Craft"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Jewellery making and goldsmithing is the craft of shaping precious metals and stones into rings, chains and other ornaments. Goldsmiths, jewellers, engravers, stone cutters and setters create new pieces, mount and adjust stones, and repair damaged items using specialist equipment. Most practitioners work in small workshops, jewellery shops or craft studios."
+  },
+  "D104": {
+    "domain_name": "Pottery, Ceramics, Glass",
+    "cluster": "Wood, Furniture & Craft",
+    "clusters": [
+      "Wood, Furniture & Craft"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Pottery, ceramics and glass covers the craft of forming clay, porcelain and glass into useful and decorative objects. Practitioners such as ceramic painters, glass-blowers, pottery casters, brick moulders and engravers mould, cast, blow, paint and engrave their pieces, often working from their own sketches. They typically work in potteries, glassworks, brickyards and craft studios."
+  },
+  "D105": {
+    "domain_name": "Handicraft, Basketry, Textile Craft",
+    "cluster": "Wood, Furniture & Craft",
+    "clusters": [
+      "Wood, Furniture & Craft"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Handicraft, basketry and textile craft is about making goods by hand from fibres, yarn, wicker and similar materials. Weavers, knitters, carpet makers, wicker furniture makers, brush makers, toymakers and artisan papermakers shape these materials using hand techniques and simple equipment they maintain themselves. Work is usually based in small workshops, craft centres and cottage industries."
+  },
+  "D106": {
+    "domain_name": "Garment Making, Tailoring, Dressmaking",
+    "cluster": "Textiles, Garments & Leather",
+    "clusters": [
+      "Textiles, Garments & Leather"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Garment making, tailoring and dressmaking turns fabric into clothing and covered furnishings. Dressmakers, sewing machinists, patternmakers and embroiderers cut and sew garments, grade clothing sizes and work to standard sizing systems, while upholsterers cover seats for boats and railway cars. Typical workplaces include tailoring shops, garment factories and fashion houses."
+  },
+  "D107": {
+    "domain_name": "Leather Technology, Shoemaking",
+    "cluster": "Textiles, Garments & Leather",
+    "clusters": [
+      "Textiles, Garments & Leather"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.5,
+    "trade_ratio": 0.46,
+    "n_elite_roles": 0,
+    "description": "Leather technology and shoemaking covers turning hides into leather and making footwear, bags and other leather goods. Tanners process hides; makers and machine operators cut, stitch, last and finish shoes, including bespoke and orthopaedic footwear; technicians test quality while designers and managers develop products and run production. Employers include tanneries, footwear factories, workshops and leather goods shops."
+  },
+  "D108": {
+    "domain_name": "Printing Technology, Pre-press",
+    "cluster": "Printing & Graphic Production",
+    "clusters": [
+      "Printing & Graphic Production"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.14,
+    "trade_ratio": 0.86,
+    "n_elite_roles": 0
+  },
+  "D109": {
+    "domain_name": "Metal Processing, Foundry",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.05,
+    "trade_ratio": 0.95,
+    "n_elite_roles": 0,
+    "description": "Metal processing and foundry work is about shaping and finishing metal in industrial plants. Operators run casting, coating, drawing, grinding and abrasive blasting machines, load and remove workpieces, reject faulty ones and keep equipment running to quality standards. They are employed mainly by foundries, steel plants and metal manufacturing factories."
+  },
+  "D110": {
+    "domain_name": "Chemical, Rubber",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.02,
+    "trade_ratio": 0.98,
+    "n_elite_roles": 0,
+    "description": "Chemical and rubber processing involves running plants that convert raw materials into products such as soap, lime and other chemicals. Operators control distillation units, kilns, blenders and soap-making machines, adjust process settings, troubleshoot faults and follow strict safety rules with protective equipment. Common employers are chemical plants, soap factories and other process industries."
+  },
+  "D111": {
+    "domain_name": "Textile, Garment",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.13,
+    "trade_ratio": 0.87,
+    "n_elite_roles": 0,
+    "description": "Textile and garment manufacturing runs the machinery that spins fibre into yarn and turns yarn into fabric and clothing. Spinning and twisting operators, knitting and finishing technicians and pattern-printing workers run machines, measure yarn, test fabric quality and inspect finished goods, with supervisors managing operations. Textile mills and garment factories are the usual workplaces."
+  },
+  "D112": {
+    "domain_name": "Wood Processing, Pulp",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.14,
+    "trade_ratio": 0.86,
+    "n_elite_roles": 0,
+    "description": "Wood processing and pulp work converts logs into sawn timber, veneer, pellets, pulp and paper. Machine operators run saws, debarkers, planers, bleachers and paper machines, perform test runs, troubleshoot faults and work safely in protective gear, while supervisors oversee production lines. Sawmills, paper mills and wood products factories are the main employers."
+  },
+  "D113": {
+    "domain_name": "Glass, Ceramics, Building Materials",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0
+  },
+  "D114": {
+    "domain_name": "Assembly, Packaging",
+    "cluster": "Manufacturing & Industrial Plant Operations",
+    "clusters": [
+      "Manufacturing & Industrial Plant Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Assembly and packaging is the factory work of putting products together and preparing them for sale. Assemblers build motorcycles, aircraft engines, medical devices and electronics by reading assembly drawings and aligning components, while other operators run cartoning, labelling and filling machines. This work happens in factories and assembly plants across many industries."
+  },
+  "D115": {
+    "domain_name": "Road Transport Operations (Drivers",
+    "cluster": "Transport & Driving Operations",
+    "clusters": [
+      "Transport & Driving Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Road transport operations covers moving people and goods by road. Bus, delivery, cargo and refuse vehicle drivers plan routes, obey traffic laws, communicate with customers and understand the basic mechanics of their vehicles. Employers include transport and logistics companies, government agencies and any organisation that runs its own vehicle fleet."
+  },
+  "D116": {
+    "domain_name": "Heavy Equipment, Earthmoving",
+    "cluster": "Transport & Driving Operations",
+    "clusters": [
+      "Transport & Driving Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Heavy equipment and earthmoving is the operation of cranes, graders, rollers, dredgers and similar machines. Operators lift loads with tower and mobile cranes, level and compact ground for roads, keep their machines in good condition and follow construction safety procedures. Construction firms, ports and plant hire companies are typical employers."
+  },
+  "D117": {
+    "domain_name": "Railway",
+    "cluster": "Transport & Driving Operations",
+    "clusters": [
+      "Transport & Driving Operations"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.12,
+    "trade_ratio": 0.75,
+    "n_elite_roles": 0,
+    "description": "Railway work keeps trains and rail yards running. Train drivers operate services, dispatchers and signalpersons control movements from signal boxes and level crossings, shunters and train preparers couple wagons and follow switching instructions, and conductors look after passengers. Most roles are with railway corporations and rail freight operators."
+  },
+  "D118": {
+    "domain_name": "Crop Production, Horticulture",
+    "cluster": "Agriculture, Fishing & Natural Resources",
+    "clusters": [
+      "Agriculture, Fishing & Natural Resources"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 1,
+    "description": "Crop production and horticulture is the growing of food crops, fruit, vegetables and garden plants. Managers and supervisors plan planting, fertilisation and pest control; workers pick produce, apply crop protection and operate vineyard machinery; inspectors check that farms follow agricultural and environmental rules. Farms, plantations, nurseries and agricultural agencies provide most of the work."
+  },
+  "D119": {
+    "domain_name": "Livestock, Poultry, Dairy",
+    "cluster": "Agriculture, Fishing & Natural Resources",
+    "clusters": [
+      "Agriculture, Fishing & Natural Resources"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.0,
+    "trade_ratio": 1.0,
+    "n_elite_roles": 0,
+    "description": "Livestock, poultry and dairy work is the rearing of animals for food and other products. Farmers and breeders raise cattle, poultry, sheep, horses and bees and run dairy farms, while livestock workers feed, handle and groom animals under animal-welfare rules. Work is based on farms, ranches and dairies."
+  },
+  "D120": {
+    "domain_name": "Fisheries, Aquaculture",
+    "cluster": "Agriculture, Fishing & Natural Resources",
+    "clusters": [
+      "Agriculture, Fishing & Natural Resources"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.05,
+    "trade_ratio": 0.95,
+    "n_elite_roles": 0,
+    "description": "Fisheries and aquaculture covers catching fish and farming aquatic stock. Managers run hatcheries and fish farms, technicians monitor fish health and mortality, and workers harvest stock, dive, moor cages and crew fishing boats, all within biosecurity and fisheries law. Fish farms, hatcheries and fishing companies are the main employers."
+  },
+  "D121": {
+    "domain_name": "Forestry, Wildlife Management",
+    "cluster": "Agriculture, Fishing & Natural Resources",
+    "clusters": [
+      "Agriculture, Fishing & Natural Resources"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.18,
+    "trade_ratio": 0.82,
+    "n_elite_roles": 0,
+    "description": "Forestry and wildlife management deals with harvesting timber and protecting forests and wild animals. Loggers fell trees, graders inspect lumber, boards and pulp against quality standards, and conservation officers and pest management workers guard forests and wildlife. Forestry companies, sawmills, government agencies and nature reserves offer most positions."
+  },
+  "D122": {
+    "domain_name": "Medical Laboratory Technology",
+    "cluster": "Community Health & Paramedical",
+    "clusters": [
+      "Community Health & Paramedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Medical laboratory technology is the testing of blood and other body samples to help doctors diagnose and treat illness. Phlebotomists collect blood, while technologists and technicians run clinical chemistry and molecular tests, classify blood types, maintain laboratory equipment and keep patient records. Hospitals, clinics and diagnostic laboratories employ most practitioners."
+  },
+  "D123": {
+    "domain_name": "Radiography, Medical Imaging",
+    "cluster": "Community Health & Paramedical",
+    "clusters": [
+      "Community Health & Paramedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Radiography and medical imaging uses X-rays, CT, MRI, ultrasound and related technology to see inside the body and to treat disease with radiation. Radiographers and imaging technologists position patients and operate scanners, sonographers perform ultrasound examinations, and radiation therapists deliver radiotherapy. They work mainly in hospitals and diagnostic imaging centres."
+  },
+  "D124": {
+    "domain_name": "Community Health Extension",
+    "cluster": "Community Health & Paramedical",
+    "clusters": [
+      "Community Health & Paramedical"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.5,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Community health extension provides frontline basic health care close to where people live. Practitioners give first aid, assist nurses with patient care, collect blood samples, fit spectacles as opticians or optical technicians, sterilise equipment and support patients at home or as hospital porters. Health centres, hospitals and home-care services are the usual workplaces."
+  },
+  "D125": {
+    "domain_name": "Medical Secretarial",
+    "cluster": "Community Health & Paramedical",
+    "clusters": [
+      "Community Health & Paramedical"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.57,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Medical secretarial work is the administration that keeps clinics and hospitals organised. Medical secretaries and receptionists book appointments, greet patients, answer their questions and transcribe notes, keeping health records accurate and confidential, while practice managers run the office. Hospitals, clinics and veterinary practices employ people in this line of work."
+  },
+  "D126": {
+    "domain_name": "Complementary, Alternative",
+    "cluster": "Community Health & Paramedical",
+    "clusters": [
+      "Community Health & Paramedical"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Complementary and alternative medicine treats patients using therapies outside conventional hospital care, such as acupuncture, herbal medicine, homeopathy and aromatherapy. Practitioners including acupuncturists, herbal therapists, chiropractors and naturopaths assess clients, draw on knowledge of human anatomy and physiology, and give hands-on treatments. Many work in private clinics and wellness centres."
+  },
+  "D127": {
+    "domain_name": "Early Childhood Education, Nursery",
+    "cluster": "Childcare & Early Learning",
+    "clusters": [
+      "Childcare & Early Learning"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.42,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Early childhood education and nursery work is the care and teaching of young children before primary school. Childcare workers and nannies play with children, help them develop personal skills and handle everyday problems, while coordinators and head teachers run nurseries and lead early-years teaching. Nursery schools, day-care centres and private homes are common workplaces."
+  },
+  "D129": {
+    "domain_name": "Military, Defence",
+    "cluster": "Defence & Military",
+    "clusters": [
+      "Defence & Military"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Military and defence careers involve protecting the nation as part of the armed forces. Officers command army, navy and air force units, while corporals, engineers and specialists handle weaponry, drill, combat techniques, military engineering and intelligence work such as communications interception. Service is within the armed forces and defence establishments."
+  },
+  "D131": {
+    "domain_name": "Motorsport Engineering",
+    "cluster": "High-Performance Engineering",
+    "clusters": [
+      "High-Performance Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Motorsport engineering applies mechanical and production engineering to high-performance vehicles. Powertrain, composites, welding and fluid power engineers design engines, aerodynamics and vehicle systems from technical drawings, while technicians and supervisors test parts and oversee manufacturing. Racing teams, engineering workshops and vehicle manufacturers offer the main opportunities."
+  },
+  "D132": {
+    "domain_name": "Space Science, Exploration",
+    "cluster": "High-Performance Engineering",
+    "clusters": [
+      "High-Performance Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 6,
+    "description": "Space science and exploration studies space and builds the craft that travel there. Aerospace and satellite systems engineers design spacecraft, flight and mission controllers monitor missions, and physicists, astrophysicists and astrobiologists carry out research using tools such as spectroscopy. Space agencies, research institutes and universities are the usual employers."
+  },
+  "D133": {
+    "domain_name": "Luxury",
+    "cluster": "High-Performance Engineering",
+    "clusters": [
+      "High-Performance Engineering"
+    ],
+    "institution_type": [
+      "polytechnic",
+      "technical_college"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.27,
+    "trade_ratio": 0.7,
+    "n_elite_roles": 0,
+    "description": "Luxury craft and design covers the making and presentation of high-quality handmade goods. Craftspeople make jewellery, cut gems, engrave, sew bespoke clothing and restore antique furniture; designers create fashion, jewellery, furniture and perfumes; visual merchandisers and interior designers present the finished products. Workshops, fashion houses, design studios and upmarket shops provide the work."
+  },
+  "D134": {
+    "domain_name": "Naval Architecture, Marine Engineering",
+    "cluster": "High-Performance Engineering",
+    "clusters": [
+      "High-Performance Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 1,
+    "description": "Naval architecture and marine engineering is the design of ships and the running of their machinery. Naval architects design and survey vessels and offshore energy installations, while marine engineers operate and maintain ship engines and systems at sea, from assistant to chief engineer. Shipyards, shipping companies and offshore energy firms are typical employers."
+  },
+  "D166": {
+    "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+    "cluster": "High-Performance Engineering",
+    "clusters": [
+      "High-Performance Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "description": "Autonomous vehicle engineering develops cars and other vehicles that can drive themselves. Automotive and powertrain engineers design the vehicle's mechanical systems, while software, embedded systems and machine learning engineers build the computing that senses the road and controls the car. Vehicle manufacturers, engineering firms and technology companies employ these specialists."
+  },
+  "D135": {
+    "domain_name": "Nuclear Engineering, Radiation Science",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 6,
+    "description": "Nuclear engineering and radiation science applies physics to nuclear energy and radiation. Nuclear engineers and reactor operators run and decommission reactors, health and medical physicists keep people safe from radiation and support radiotherapy, and radiochemists work in laboratories using mathematical modelling and spectroscopy. Power stations, hospitals, research institutes and regulators employ them."
+  },
+  "D136": {
+    "domain_name": "Aeronautical",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 0.9,
+    "trade_ratio": 0.1,
+    "n_elite_roles": 0,
+    "description": "Aeronautical engineering is the design, building and upkeep of aircraft. Aerodynamics engineers and engine designers develop new aircraft, flight test engineers prove them in the air, and avionics inspectors, maintenance engineers and assembly supervisors keep production and finished aircraft safe. Aircraft factories, airlines, maintenance organisations and air forces are the main employers."
+  },
+  "D137": {
+    "domain_name": "Medical Physics, Radiation Therapy",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Medical physics and radiation therapy apply the science of radiation to diagnosing and treating illness, particularly cancer. Radiation therapists deliver treatment to patients, radiographers capture medical images, and medical physicists plan doses and keep equipment safe and accurate. People in this field work mainly in hospitals and cancer treatment centres."
+  },
+  "D138": {
+    "domain_name": "Biomedical Engineering",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 8,
+    "description": "Biomedical engineering combines engineering with biology and medicine to design equipment and materials used in healthcare. Biomedical engineers and biomaterials scientists develop and test medical devices, while research and robotics engineers work on new technologies for the body. They are employed by hospitals, medical device manufacturers and research laboratories."
+  },
+  "D142": {
+    "domain_name": "Bioinformatics, Computational Biology",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 37,
+    "description": "Bioinformatics and computational biology use computers and data analysis to study living things, from microbes to human genes. Scientists such as geneticists, microbiologists and bioinformatics specialists run laboratory experiments, analyse biological data and write scientific papers. They generally work in research institutes, universities and hospitals."
+  },
+  "D144": {
+    "domain_name": "Climate Science, Meteorology",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Climate science and meteorology study the weather and the long-term behaviour of the atmosphere. Forecasters and meteorologists use instruments and specialised computer models to predict weather conditions, while climatologists, hydrologists and oceanographers analyse climate, water and ocean patterns. Typical employers are government weather agencies, aviation organisations and research institutes."
+  },
+  "D145": {
+    "domain_name": "Neuroscience, Cognitive Science",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 11,
+    "description": "Neuroscience and cognitive science investigate the brain, thought and behaviour. One side of the field involves scientists studying how the brain and mind work; the other involves psychologists and psychotherapists who assess and treat mental and behavioural health. They work in hospitals, clinics, schools and universities."
+  },
+  "D155": {
+    "domain_name": "Nanotechnology, Advanced Materials",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 12,
+    "description": "Nanotechnology and advanced materials involve studying and building substances at extremely small scales to give them new properties. Chemists, materials scientists and nanofabrication technicians run experiments, analyse chemical substances, make tiny components and write up their findings in technical papers. Research laboratories, universities and manufacturing companies are the usual employers."
+  },
+  "D141": {
+    "domain_name": "Quantum Computing, Quantum Information",
+    "cluster": "Advanced Science & Engineering",
+    "clusters": [
+      "Advanced Science & Engineering"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 8,
+    "description": "Quantum computing builds a new kind of computer based on the physics of atoms and light. Some specialists write quantum software, algorithms and cryptography, while others engineer the hardware, sensors and devices that run them. Work in this field is usually found in research laboratories, universities and technology companies."
+  },
+  "D167": {
+    "domain_name": "XR & Immersive Technology",
+    "cluster": "Emerging Technology",
+    "clusters": [
+      "Emerging Technology",
+      "Information & Communication Technology",
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": true,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 5,
+    "description": "Immersive technology, often called XR, creates virtual and augmented reality experiences that blend digital content with the real world. Developers code AR, VR and spatial computing applications, while hardware engineers design headsets, optics, haptics and motion capture systems. Technology companies, studios and research laboratories are where most of this work happens."
+  },
+  "D168": {
+    "domain_name": "Esports & Creator Economy",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media",
+      "Information & Communication Technology",
+      "Sports & Recreation"
+    ],
+    "institution_type": [
+      "university",
+      "polytechnic"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 0,
+    "note": "multi-cluster: competitive play(Sports), broadcast/streaming(Creative), tech(Computing); remote/global path",
+    "description": "Esports and the creator economy turn competitive gaming and online content into careers. Casters commentate on matches, coaches and analysts prepare teams, content creators build audiences and earn through sponsorships and subscriptions, and managers run events, teams and communities. Gaming organisations, media companies and marketing agencies offer most of the roles."
+  },
+  "D070": {
+    "domain_name": "Performing Arts & Entertainment",
+    "cluster": "Creative & Media",
+    "clusters": [
+      "Creative & Media"
+    ],
+    "institution_type": [
+      "university"
+    ],
+    "elite_domain": false,
+    "excluded": false,
+    "professional_ratio": 1.0,
+    "trade_ratio": 0.0,
+    "n_elite_roles": 2,
+    "description": "Performing arts and entertainment covers live and recorded performance, including acting, music, dance and stage production. Performers such as dancers, musicians, conductors and presenters create the show itself, while technical crews run lighting, sound, props, costumes and stage machinery behind the scenes. Theatres, studios, broadcasters and event companies are the usual employers."
+  },
+  "D086": {
+    "domain_name": "Gaming, Betting & Lottery",
+    "excluded": true,
+    "reason": "gambling — not appropriate for students",
+    "institution_type": []
+  }
 }

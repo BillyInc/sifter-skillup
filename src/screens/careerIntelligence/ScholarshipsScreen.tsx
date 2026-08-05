@@ -17,6 +17,7 @@ import {
 import { useRouter } from "expo-router";
 import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
 import { careerData } from "../../lib/careerData";
+import { opportunitiesNav } from "../../lib/opportunitiesNav";
 import {
   comingSoon,
   type DataState,
@@ -53,7 +54,8 @@ export function ScholarshipsScreen() {
         <TouchableOpacity
           onPress={() => {
             if (router.canGoBack()) router.back();
-            else router.replace("/(tabs)/explore/pathways" as any);
+            // Scholarships lives under Opportunities, not Explore > Pathways.
+            else opportunitiesNav.hub(router);
           }}
           hitSlop={10}
           style={styles.back}

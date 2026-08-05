@@ -12,7 +12,7 @@ import {
 
 // ── ApplicationWindowTimeline ──────────────────────────────────
 // Horizontal timeline: months across, window bars, today-line.
-// Shows application windows (JAMB reg, Post-UTME, scholarships) on a
+// Shows application windows (JAMB reg, scholarships) on a
 // month-based timeline with bars indicating open/closed/upcoming periods.
 
 export interface TimelineWindow {

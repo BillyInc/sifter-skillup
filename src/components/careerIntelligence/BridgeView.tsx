@@ -3,7 +3,11 @@
  *
  * Renders a (start → destination) plan as the fixed, ordered set of bridge
  * layers: Global standard → Nigerian qualification map → Bridge inventory →
- * Timeline & cost → Nigerian employer entry point → Ownership path.
+ * Timeline & cost → Nigerian employer entry point → Proof of Concept.
+ *
+ * Layer 6 ("Proof of Concept") means real, NAMED Nigerians who have actually
+ * walked the route. No profile is ever invented here: until verified people are
+ * supplied on the plan, the layer renders an explicit locked state.
  *
  * The six layer TITLES are the model's spine (structure, not data), so they
  * always render — that's how the app communicates what a bridge will cover.
@@ -89,7 +93,14 @@ export function BridgeView({ plan, caption }: BridgeViewProps) {
               <Text style={[styles.layerBody, { color: colors.textSoft }]}>
                 {layer.body}
               </Text>
-            ) : layer?.items?.length ? null : (
+            ) : layer?.items?.length ? null : spec.key === "ownership_path" ? (
+              // Proof of Concept can only ever hold real, verified people.
+              // Never fabricate profiles — show an explicit locked state.
+              <Text style={[styles.pending, { color: colors.textMuted }]}>
+                🔒 No verified profiles yet — this layer opens only when real,
+                named Nigerians who took this route are confirmed.
+              </Text>
+            ) : (
               <Text style={[styles.pending, { color: colors.textMuted }]}>
                 🕐 Being populated
               </Text>

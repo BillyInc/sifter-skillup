@@ -155,7 +155,6 @@ async def get_cutoffs(
                 year=r["year"],
                 aggregateCutoff=r.get("aggregate_cutoff"),
                 jambCutoff=r.get("jamb_cutoff"),
-                postUtmeCutoff=r.get("postutme_cutoff"),
                 form=r["form"],
                 sourceUrl=r["source_url"],
                 verifiedAt=r.get("verified_at"),
@@ -175,7 +174,7 @@ async def get_cutoffs(
 
 @router.get("/formula", response_model=ResponseModel)
 async def get_school_formula(school_id: str, year: Optional[int] = None):
-    """How a university calculates aggregate (JAMB% + Post-UTME% + O'level%)."""
+    """How a university calculates aggregate (JAMB% + O'level%)."""
     try:
         svc = db.get_service_client().schema(_SCHEMA)
         target_year = year or _active_snapshot_year(svc)
@@ -196,7 +195,6 @@ async def get_school_formula(school_id: str, year: Optional[int] = None):
             schoolName=r.get("schools", {}).get("name") or "Unknown",
             year=r["year"],
             jambWeight=float(r["jamb_weight"]),
-            postUtmeWeight=float(r["postutme_weight"]),
             olevelWeight=float(r["olevel_weight"]),
             description=r.get("description"),
             sourceUrl=r.get("source_url"),

@@ -404,14 +404,12 @@ function FormulaExplainCard({
   colors: ColorPalette;
 }) {
   const jambPct = Math.round(formula.jambWeight * 100);
-  const postUtmePct = Math.round(formula.postUtmeWeight * 100);
   const olevelPct = Math.round(formula.olevelWeight * 100);
-  const total = jambPct + postUtmePct + olevelPct;
+  const total = jambPct + olevelPct;
 
   const schoolName = formula.schoolName ?? "this university";
   const equationParts: string[] = [];
   if (formula.jambWeight > 0) equationParts.push(`UTME/${Math.round(1 / formula.jambWeight)}`);
-  if (formula.postUtmeWeight > 0) equationParts.push(`Post-UTME/${Math.round(1 / formula.postUtmeWeight)}`);
   if (formula.olevelWeight > 0) equationParts.push(`O'Level/${Math.round(1 / formula.olevelWeight)}`);
   const equation = equationParts.length
     ? `Aggregate = ${equationParts.join(" + ")}`
@@ -441,16 +439,6 @@ function FormulaExplainCard({
               </Text>
               <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.accentRole.action }]}>
                 {jambPct}%
-              </Text>
-            </View>
-          )}
-          {formula.postUtmeWeight > 0 && (
-            <View style={[styles.weightPill, { backgroundColor: colors.infoSoft }]}>
-              <Text style={[styles.weightPillLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Post-UTME
-              </Text>
-              <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.info }]}>
-                {postUtmePct}%
               </Text>
             </View>
           )}
@@ -496,7 +484,6 @@ function CutoffCard({
   cutoff: ProgrammeSchoolCutoff;
   colors: ColorPalette;
 }) {
-  const hasSchoolReq = cutoff.schoolRequirements?.hasInstitutionNote;
   return (
     <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.cutoffHeader}>
@@ -534,27 +521,9 @@ function CutoffCard({
             </Text>
           </View>
         )}
-        {cutoff.postUtmeCutoff != null && (
-          <View style={[styles.scorePill, { backgroundColor: colors.successSoft }]}>
-            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
-              Post-UTME
-            </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.success }]}>
-              {cutoff.postUtmeCutoff}
-            </Text>
-          </View>
-        )}
       </View>
 
       <View style={styles.cutoffMeta}>
-        {hasSchoolReq && (
-          <View style={[styles.reqBadge, { backgroundColor: colors.infoSoft }]}>
-            <Feather name="file-text" size={10} color={colors.info} />
-            <Text style={[styles.reqBadgeText, { color: colors.info }, CompassFonts.bodyMedium]}>
-              Has institution requirements
-            </Text>
-          </View>
-        )}
         <Text style={[styles.cutoffSource, { color: colors.textRole.muted }]}>
           Source: {cutoff.sourceUrl}
         </Text>
@@ -820,15 +789,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: Spacing.xs,
   },
-  reqBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
-  },
-  reqBadgeText: { fontSize: FontSize.xs },
   cutoffSource: { fontSize: FontSize.xs },
 
   // ── Competitiveness ───────────────────────────────────────

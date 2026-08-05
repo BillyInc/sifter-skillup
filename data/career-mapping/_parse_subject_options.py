@@ -38,6 +38,10 @@ from collections import Counter
 HERE = os.path.dirname(os.path.abspath(__file__))
 NS = uuid.UUID("5c1f7e00-0000-4000-8000-0000ca4ee401")  # same namespace as seeds
 NOW = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+# All subject-requirement rows are parsed from the JAMB IBASS brochure. There
+# are no per-programme source pages, so provenance is this single canonical URL
+# (row-level detail lives in source_text). See §0.8 provisioning parity.
+SOURCE_URL = "https://ibass.jamb.gov.ng/brochure-by-programme"
 
 
 def uid(*parts):
@@ -394,10 +398,10 @@ def main():
             n_req = sum(1 for x in parts if x[0] == "required")
             n_grp = sum(x[1] for x in parts if x[0] == "one_of")
             SQL.append(
-                f"INSERT INTO programme_subject_options (id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text) "
-                f"SELECT {q(oid)}, {q(jid)}, {q(rid)}, 'utme', 'UTME combination', {n_req + n_grp}, {q(utme)} "
+                f"INSERT INTO programme_subject_options (id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text, source_url) "
+                f"SELECT {q(oid)}, {q(jid)}, {q(rid)}, 'utme', 'UTME combination', {n_req + n_grp}, {q(utme)}, {q(SOURCE_URL)} "
                 f"WHERE EXISTS (SELECT 1 FROM jamb_programmes WHERE id = {q(jid)}) "
-                f"ON CONFLICT (id) DO UPDATE SET min_required=EXCLUDED.min_required, source_text=EXCLUDED.source_text;"
+                f"ON CONFLICT (id) DO UPDATE SET min_required=EXCLUDED.min_required, source_text=EXCLUDED.source_text, source_url=EXCLUDED.source_url;"
             )
             gi = 0
             for part in parts:
@@ -437,10 +441,10 @@ def main():
                 n_min = NUM_WORDS.get(mc.group(1).lower(), 5)
                 ooid = uid("subj_opt", jname, "olevel")
                 SQL.append(
-                    f"INSERT INTO programme_subject_options (id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text) "
-                    f"SELECT {q(ooid)}, {q(jid)}, {q(rid)}, 'olevel', '{n_min} credit passes', {n_min}, {q(olevel)} "
+                    f"INSERT INTO programme_subject_options (id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text, source_url) "
+                    f"SELECT {q(ooid)}, {q(jid)}, {q(rid)}, 'olevel', '{n_min} credit passes', {n_min}, {q(olevel)}, {q(SOURCE_URL)} "
                     f"WHERE EXISTS (SELECT 1 FROM jamb_programmes WHERE id = {q(jid)}) "
-                    f"ON CONFLICT (id) DO UPDATE SET min_required=EXCLUDED.min_required, source_text=EXCLUDED.source_text;"
+                    f"ON CONFLICT (id) DO UPDATE SET min_required=EXCLUDED.min_required, source_text=EXCLUDED.source_text, source_url=EXCLUDED.source_url;"
                 )
                 for code in dict.fromkeys(named):
                     SQL.append(
