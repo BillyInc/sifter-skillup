@@ -335,7 +335,7 @@ export function DomainReachAuditScreen() {
           </View>
           <ComingSoonPanel
             state={board}
-            empty={(rows) => rows.length === 0}
+            empty={(rows) => (rows?.length ?? 0) === 0}
             emptyTitle="Leaderboard not available"
             emptyBody="The national domain-reach leaderboard appears here once the registry index is built."
           >

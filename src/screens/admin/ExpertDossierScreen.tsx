@@ -245,6 +245,7 @@ export function ExpertDossierScreen() {
             }}
             placeholder="Why this edge does not hold in practice."
             placeholderTextColor={colors.textMuted}
+            accessibilityLabel="What's wrong (required)"
             multiline
             textAlignVertical="top"
             style={[
@@ -265,6 +266,7 @@ export function ExpertDossierScreen() {
             onChangeText={setCorrection}
             placeholder="What the mapping should say instead."
             placeholderTextColor={colors.textMuted}
+            accessibilityLabel="Suggested correction (optional)"
             multiline
             textAlignVertical="top"
             style={[
@@ -301,7 +303,7 @@ export function ExpertDossierScreen() {
 
         <TouchableOpacity
           activeOpacity={0.85}
-          disabled={!canSubmit}
+          disabled={status.kind === "sending"}
           onPress={submit}
           accessibilityRole="button"
           style={[

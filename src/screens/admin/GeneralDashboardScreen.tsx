@@ -59,7 +59,6 @@ import { StatCard } from "./StatCard";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { IntelligenceAlerts } from "./IntelligenceAlerts";
 
-const TOTAL_DOMAINS = 168; // the fixed national domain taxonomy size (§5.1)
 const PREVIEW_ROWS = 5; // a home-screen preview, never the full table
 
 /**
@@ -75,11 +74,6 @@ const PREVIEW_ROWS = 5; // a home-screen preview, never the full table
  * safety net is what made the bug silent. Using the real types means tsc
  * catches the next one.
  */
-/** Narrow an untyped envelope payload to the fields this screen reads. */
-function view<T>(data: unknown): T {
-  return (data ?? {}) as T;
-}
-
 function loadingState<T>(): DataState<T> {
   return { status: "pending", data: null };
 }
@@ -104,14 +98,21 @@ export function GeneralDashboardScreen() {
     useState<DataState<IntelligenceAlert[]>>(loadingState);
   const [domains, setDomains] =
     useState<DataState<DomainRankItem[]>>(loadingState);
-  const [reach, setReach] = useState<DataState<unknown>>(loadingState);
-  const [students, setStudents] = useState<DataState<unknown>>(loadingState);
+  const [reach, setReach] = useState<DataState<DomainReachAudit>>(loadingState);
+  const [students, setStudents] = useState<DataState<StudentIntelligenceSummary>>(loadingState);
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
-      if (active) setProfile(p);
-    });
+    getEducatorProfile().then(
+      (p) => {
+        if (active) setProfile(p);
+      },
+      () => {
+        // Chrome only (the institution name) — a failure must not surface as an
+        // unhandled rejection, matching the settle() pattern in the effect below.
+        if (active) setProfile(null);
+      },
+    );
     return () => {
       active = false;
     };
@@ -166,9 +167,10 @@ export function GeneralDashboardScreen() {
     };
   }, []);
 
-  const reachView = view<DomainReachAudit>(
-    reach.status === "real" ? reach.data : null,
-  );
+  // Typed, not cast: `reach` is DataState<DomainReachAudit>, so a field-name
+  // drift against the API is a compile error rather than a silent blank.
+  const reachView: Partial<DomainReachAudit> =
+    (reach.status === "real" ? reach.data : null) ?? {};
   const orgName =
     (summary.status === "real" ? summary.data?.institutionName : null) ||
     profile?.organizationName ||
@@ -220,9 +222,16 @@ export function GeneralDashboardScreen() {
           />
           <StatCard
             icon="🧭"
-            label={`Domains reached / ${TOTAL_DOMAINS}`}
+            label="Domains reached"
             state={summary}
-            select={(d) => `${fmtInt(d.domainsAccessible)}/${TOTAL_DOMAINS}`}
+            select={(d) =>
+              // The LIVE universe from the reach audit, never a constant: the
+              // audit screen dropped its hardcoded 168 and these two must not
+              // disagree about the same denominator.
+              reachView.domainUniverse != null
+                ? `${fmtInt(d.domainsAccessible)}/${fmtInt(reachView.domainUniverse)}`
+                : fmtInt(d.domainsAccessible)
+            }
             selectDelta={() =>
               reachView.nationalRank != null
                 ? `#${reachView.nationalRank} nationally`
@@ -375,7 +384,7 @@ export function GeneralDashboardScreen() {
             emptyBody="Direct, functional and adjacent domain coverage appears here once your programme mix is mapped."
           >
             {(data) => {
-              const r = view<DomainReachAudit>(data);
+              const r = data;
               return (
                 <View style={styles.reach}>
                   <View style={styles.reachRow}>
@@ -428,7 +437,7 @@ export function GeneralDashboardScreen() {
             emptyBody="Affiliation, provisioning and aggregate domain interest appear here once students join."
           >
             {(data) => {
-              const s = view<StudentIntelligenceSummary>(data);
+              const s = data;
               const top = (s.topDomains ?? []).filter((d) => d.label);
               return (
                 <View style={styles.reach}>

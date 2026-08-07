@@ -157,8 +157,11 @@ class TestAccessCodeRecordsTheGrant:
         assert r.json()["data"]["accepted"] is True
 
         writes = [
-            c.args[0] for c in update.call_args_list
-            if isinstance(c.args[0], dict) and "admin_access_granted_at" in c.args[0]
+            c.args[0]
+            for c in update.call_args_list
+            if c.args
+            and isinstance(c.args[0], dict)
+            and "admin_access_granted_at" in c.args[0]
         ]
         assert writes, "the grant was never recorded"
         assert writes[-1]["admin_access_granted_at"]
@@ -180,8 +183,11 @@ class TestAccessCodeRecordsTheGrant:
         )
         assert r.json()["success"] is False
         writes = [
-            c.args[0] for c in update.call_args_list
-            if isinstance(c.args[0], dict) and "admin_access_granted_at" in c.args[0]
+            c.args[0]
+            for c in update.call_args_list
+            if c.args
+            and isinstance(c.args[0], dict)
+            and "admin_access_granted_at" in c.args[0]
         ]
         assert not writes, f"a rejected code still recorded a grant: {writes}"
 
