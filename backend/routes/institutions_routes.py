@@ -37,7 +37,7 @@ from datetime import datetime, timedelta, timezone
 import hmac
 from typing import List, Literal, Optional
 
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body, Depends, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
 from auth import Auth
@@ -359,12 +359,44 @@ def _domain_map(domain_ids: list) -> dict:
     return {d["id"]: d for d in (res.data or [])}
 
 
-def _school_programmes(institution_id: str, current_user: dict, cap: int = 100) -> list:
+def _assert_own_institution(institution_id: str, current_user: dict) -> str:
+    """Resolve the caller's institution, refusing to serve anyone else's id.
+
+    These routes take an `{institution_id}` path parameter that the handlers
+    then ignored entirely — every read resolved the org from `current_user`.
+    That is not a data leak (you always got your own institution back), but the
+    API lied: a request for institution X returned the caller's own numbers
+    stamped `institution_code: "X"`, which is worse than an error because it
+    reads as real cross-institution data.
+
+    Now the parameter means what it says. "me" is accepted as the caller's own
+    institution — the frontend has always called `/api/institutions/me/...`,
+    which only ever worked because the value was discarded.
+    """
+    org_id = _resolve_org(current_user)
+    if institution_id in ("me", "self"):
+        return org_id or ""
+    if org_id and str(institution_id) == str(org_id):
+        return org_id
+    # Deliberately 403, not 404: whether an institution id exists is not a
+    # secret, but which one the caller administers is not the requester's to
+    # probe either. A caller with no org at all also lands here.
+    raise HTTPException(
+        status_code=403,
+        detail="You can only read data for the institution you administer.",
+    )
+
+
+def _school_programmes(current_user: dict, cap: int = 100) -> list:
     """Programme rows for the current admin's institution.
 
     Resolves via org membership; when that's unavailable (no org row yet) falls
     back to a bounded ALL-programmes sample so the endpoint still demonstrates
     real taxonomy structure rather than an empty list.
+
+    NOTE: this used to take an `institution_id` argument that it never read.
+    Callers must gate on _assert_own_institution first; the identity used here
+    is always the caller's own.
     """
     svc = _svc()
     org_id = _resolve_org(current_user)
@@ -884,28 +916,31 @@ async def submit_verification(
 @router.get("/{institution_id}/summary", response_model=ResponseModel)
 async def get_institution_summary(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """InstitutionSummary — the boardroom stat cards.
 
     Programme + domain counts are REAL (from the taxonomy); demand/salary/gap
     numbers stay zeroed with data_status='coming_soon' until ingestion.
     """
+    # The RESOLVED org, never the raw path value. Echoing the URL back is how
+    # `institution_code: "me"` used to reach the client as if it were real.
+    org_id = _assert_own_institution(institution_id, current_user)
     try:
-        programmes = _school_programmes(institution_id, current_user, cap=1000)
+        programmes = _school_programmes(current_user, cap=1000)
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
         domains_accessible = len({r["domain_id"] for r in pd_rows})
         summary = InstitutionSummary(
             institution_name="",
-            institution_code=institution_id,
+            institution_code=org_id or "",
             active_programmes=len(programmes),
             domains_accessible=domains_accessible,
         )
         return ResponseModel(data=summary.model_dump(by_alias=True))
     except Exception as exc:  # noqa: BLE001
         log.error("institutions summary failed", error=str(exc))
-        summary = InstitutionSummary(institution_name="", institution_code=institution_id)
+        summary = InstitutionSummary(institution_name="", institution_code=org_id or "")
         return ResponseModel(data=summary.model_dump(by_alias=True))
 
 
@@ -917,12 +952,13 @@ async def get_programme_demand(
     high_demand: Optional[bool] = None,
     custom_mapping: Optional[bool] = None,
     query: Optional[str] = None,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """list[ProgrammeDemandRow] — real programme→domain structure; demand fields
     stay 0/None until ingestion (no fabricated numbers)."""
+    _assert_own_institution(institution_id, current_user)
     try:
-        programmes = _school_programmes(institution_id, current_user, cap=100)
+        programmes = _school_programmes(current_user, cap=100)
         if discipline:
             programmes = [p for p in programmes if (p.get("discipline") or "") == discipline]
         if query:
@@ -967,13 +1003,14 @@ async def get_programme_demand(
 async def get_domain_ranking(
     institution_id: str,
     scope: Literal["nigerian", "global", "remote"] = "nigerian",
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """list[DomainRankItem] — ranked by a structural PROXY (how many of the
     school's programmes feed each domain), since posting volume isn't ingested.
     postings_per_month stays 0; bar_ratio comes from the feeder count."""
+    _assert_own_institution(institution_id, current_user)
     try:
-        programmes = _school_programmes(institution_id, current_user, cap=1000)
+        programmes = _school_programmes(current_user, cap=1000)
         rank_lens = _RANK_LENS[scope]
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
@@ -1033,9 +1070,10 @@ async def get_domain_ranking(
 @router.get("/{institution_id}/alerts", response_model=ResponseModel)
 async def get_alerts(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """list[IntelligenceAlert] — empty until ingestion."""
+    _assert_own_institution(institution_id, current_user)
     # TODO(institutions): surface gaps / drift / opportunity signals
     rows: List[IntelligenceAlert] = []
     return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
@@ -1044,13 +1082,14 @@ async def get_alerts(
 @router.get("/{institution_id}/skills-gap", response_model=ResponseModel)
 async def get_skills_gap(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """list[SkillGapRow] — the top foundation skills of each programme's direct/
     functional domains. in_curriculum stays False (the programmes table carries
     no skills column to verify coverage against); demand_pct None until ingest."""
+    _assert_own_institution(institution_id, current_user)
     try:
-        programmes = _school_programmes(institution_id, current_user, cap=60)
+        programmes = _school_programmes(current_user, cap=60)
         prog_ids = [p["id"] for p in programmes]
         pd_rows = [
             r for r in _programme_domain_rows(prog_ids)
@@ -1102,12 +1141,13 @@ async def get_skills_gap(
 @router.get("/{institution_id}/role-demand", response_model=ResponseModel)
 async def get_role_demand(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """list[RoleDemandRow] — roles reachable from the school's domains. Demand
     and salary fields stay None until ingestion (no fabricated numbers)."""
+    _assert_own_institution(institution_id, current_user)
     try:
-        programmes = _school_programmes(institution_id, current_user, cap=1000)
+        programmes = _school_programmes(current_user, cap=1000)
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
         domain_ids = list({r["domain_id"] for r in pd_rows})
@@ -1170,6 +1210,7 @@ async def get_peers(
     lands real posting volume). `unique_domains` = domains the current school
     covers that a peer does not.
     """
+    _assert_own_institution(institution_id, current_user)
     try:
         svc = _svc()
         # Resolve the current admin's school (may be None → all-programmes self).
@@ -1277,16 +1318,19 @@ async def get_peers(
 @router.get("/{institution_id}/affiliation", response_model=ResponseModel)
 async def get_affiliation_stats(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """AffiliationStats — aggregate, k-anonymised.
 
     Until ingestion: affiliated_students=None + below_threshold=True placeholder.
     No individual student data is exposed here or anywhere in this module.
     """
+    org_id = _assert_own_institution(institution_id, current_user)
     # TODO(institutions): COUNT self-reported affiliations, suppress below k
     stats = AffiliationStats(
-        organization_id=institution_id,
+        # The caller's resolved org, not the raw path value — echoing back
+        # whatever was in the URL is how "me" ended up as an institution code.
+        organization_id=org_id or institution_id,
         affiliated_students=None,
         below_threshold=True,
         school_code="",
@@ -1308,7 +1352,7 @@ _RANK_LENS = {
 @router.get("/me/vs-national", response_model=ResponseModel)
 async def get_vs_national(
     scope: Literal["nigerian", "global", "remote"] = "nigerian",
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
     """NationalBenchmarkRow rows — institution vs national aggregate.
 

@@ -105,7 +105,11 @@ class TestFeedbackInboxGate:
     def test_submit_feedback_still_open_to_any_user(
         self, client, auth_header, feedback_db
     ):
-        """POST /api/feedback is untouched: plain students may submit."""
+        """POST /api/feedback stays open to plain students (§6A.4).
+
+        A category is now required for student submissions, so this sends one —
+        what is under test here is the ACCOUNT type, not the payload shape.
+        """
         _login_as(feedback_db, _user_row(account_type="student"))
         sc = feedback_db.get_service_client.return_value
         (
@@ -115,10 +119,97 @@ class TestFeedbackInboxGate:
         r = client.post(
             "/api/feedback",
             headers=auth_header,
-            json={"type": "bug", "message": "hello"},
+            json={"type": "bug", "message": "hello", "studentCategory": "bug"},
         )
         assert r.status_code == 200, r.text
         assert r.json()["success"] is True
+
+
+class TestFeedbackStorage:
+    """The insert targeted skillup_dev.user_feedback, which did not exist —
+    every submission failed and the broad except reported it as a storage
+    hiccup. These lock in the payload the table must accept."""
+
+    def _capture_insert(self, feedback_db):
+        sc = feedback_db.get_service_client.return_value
+        insert = sc.schema.return_value.table.return_value.insert
+        insert.return_value.execute.return_value = MagicMock(data=[{"id": "fb-1"}])
+        return insert
+
+    def test_insert_targets_user_feedback_with_category(
+        self, client, auth_header, feedback_db
+    ):
+        _login_as(feedback_db, _user_row(account_type="student"))
+        insert = self._capture_insert(feedback_db)
+        sc = feedback_db.get_service_client.return_value
+
+        r = client.post(
+            "/api/feedback",
+            headers=auth_header,
+            json={
+                "type": "bug",
+                "message": "blank screen on domain D011",
+                "entityType": "domain",
+                "entityId": "D011",
+                "rating": 2,
+                "studentCategory": "bug",
+            },
+        )
+        assert r.status_code == 200, r.text
+        assert r.json()["success"] is True
+
+        sc.schema.return_value.table.assert_any_call("user_feedback")
+        row = insert.call_args.args[0]
+        assert row["student_category"] == "bug"
+        assert row["entity_type"] == "domain"
+        assert row["entity_id"] == "D011"
+        assert row["rating"] == 2
+
+    def test_student_must_choose_a_category(self, client, auth_header, feedback_db):
+        """§6A.3 — free text alone does not let the team aggregate what
+        students are actually reporting on, so the category is required."""
+        _login_as(feedback_db, _user_row(account_type="student"))
+        insert = self._capture_insert(feedback_db)
+        r = client.post(
+            "/api/feedback",
+            headers=auth_header,
+            json={"type": "bug", "message": "it broke"},
+        )
+        assert r.json()["success"] is False
+        assert "what your feedback is about" in r.json()["message"]
+        insert.assert_not_called()
+
+    def test_unknown_category_rejected_before_the_db(
+        self, client, auth_header, feedback_db
+    ):
+        """Rejected as a bad request, NOT swallowed by the storage except —
+        otherwise a typo reads to the user as 'our servers are broken'."""
+        _login_as(feedback_db, _user_row(account_type="student"))
+        insert = self._capture_insert(feedback_db)
+        r = client.post(
+            "/api/feedback",
+            headers=auth_header,
+            json={"type": "bug", "message": "x", "studentCategory": "not_a_category"},
+        )
+        assert r.json()["success"] is False
+        assert "Unknown feedback category" in r.json()["message"]
+        insert.assert_not_called()
+
+    def test_admin_may_submit_without_a_category(
+        self, client, auth_header, feedback_db
+    ):
+        """Admin/educator submissions carry their structure via the
+        mapping-flag form (§6A.2), so the requirement is student-only."""
+        _login_as(feedback_db, _user_row(account_type="institution_admin"))
+        insert = self._capture_insert(feedback_db)
+        r = client.post(
+            "/api/feedback",
+            headers=auth_header,
+            json={"type": "mapping", "message": "D011 mapping looks wrong"},
+        )
+        assert r.status_code == 200, r.text
+        assert r.json()["success"] is True
+        assert insert.call_args.args[0]["student_category"] is None
 
 
 class TestRequireInternalStaffDependency:
