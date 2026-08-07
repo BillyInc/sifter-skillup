@@ -1,222 +1,325 @@
 /**
- * ExpertDossierScreen — expert review dashboard for mapping feedback.
+ * ExpertDossierScreen — the mapping-flag SUBMIT form (§6A.2).
  *
- * Displays a list of mapping feedback items (programme-domain, domain-role, and
- * role-skill edge reviews) submitted by educators/domain experts. Each item
- * shows the edge details and feedback type.
+ * Admins and educators are domain experts in this context, so the capability
+ * retained from the old Expert Dossier is: flag one programme→domain,
+ * domain→role, or role→skill edge as wrong. In admin mode this is a submit
+ * form, NOT the previous list/review UI — triaging submitted flags against the
+ * Direct/Functional/Adjacent evidence thresholds is internal Sifter-team
+ * tooling and explicitly out of admin-mode scope (§6A.2, §6A.4).
  *
- * Wire plan:
- *  - GET /api/career/feedback returns MappingFeedback[] (coming_soon this phase)
- *  - POST /api/career/feedback submits a new feedback item
- *  - MappingFeedbackButton is a standalone component for embedding on detail screens
+ * Route params pre-fill the entity when the form is opened from a detail
+ * screen: ?edgeType=domain_role&sourceId=...&targetId=...
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, CompassFonts, webContainer } from "../../theme";
+import { useLocalSearchParams } from "expo-router";
+import {
+  useTheme,
+  Spacing,
+  Radius,
+  FontSize,
+  CompassFonts,
+  webContainer,
+} from "@/theme";
+import { adminData } from "@/lib/adminData";
 import { AdminShell } from "./AdminShell";
-import { ComingSoonPanel } from "./ComingSoonPanel";
-import { careerData } from "../../lib/careerData";
-import type { DataState, MappingFeedback, FeedbackType } from "../../types/career";
 
-const FEEDBACK_COLORS: Record<FeedbackType, { bg: string; text: string; label: string }> = {
-  confirm: { bg: "#d4edda", text: "#155724", label: "CONFIRMED" },
-  flag: { bg: "#f8d7da", text: "#721c24", label: "FLAGGED" },
-  suggest: { bg: "#cce5ff", text: "#004085", label: "SUGGESTION" },
-};
-// Unknown values (e.g. legacy rows) fall back to a neutral chip instead of crashing.
-const FEEDBACK_FALLBACK = { bg: "#e2e3e5", text: "#383d41", label: "OTHER" };
+type EdgeType = "programme_domain" | "domain_role" | "role_skill";
 
-function reviewAnchor(item: MappingFeedback): string {
-  if (item.edgeType === "programme_domain") return item.targetId;
-  if (item.edgeType === "domain_role") return item.sourceId;
-  return "Role and skill reviews";
+const EDGE_TYPES: {
+  key: EdgeType;
+  label: string;
+  sourceLabel: string;
+  targetLabel: string;
+}[] = [
+  {
+    key: "programme_domain",
+    label: "Programme → Domain",
+    sourceLabel: "Programme",
+    targetLabel: "Domain",
+  },
+  {
+    key: "domain_role",
+    label: "Domain → Role",
+    sourceLabel: "Domain",
+    targetLabel: "Role",
+  },
+  {
+    key: "role_skill",
+    label: "Role → Skill",
+    sourceLabel: "Role",
+    targetLabel: "Skill",
+  },
+];
+
+function asEdgeType(value: unknown): EdgeType | null {
+  const raw = Array.isArray(value) ? value[0] : value;
+  return EDGE_TYPES.some((e) => e.key === raw) ? (raw as EdgeType) : null;
 }
 
-function edgeTitle(item: MappingFeedback): string {
-  if (item.edgeType === "programme_domain") return "Programme → domain";
-  if (item.edgeType === "domain_role") return "Domain → role";
-  if (item.edgeType === "role_skill") return "Role → skill";
-  return item.edgeType.replace(/_/g, " → ");
+function asText(value: unknown): string {
+  const raw = Array.isArray(value) ? value[0] : value;
+  return typeof raw === "string" ? raw : "";
 }
+
+type Status =
+  | { kind: "idle" }
+  | { kind: "sending" }
+  | { kind: "sent" }
+  | { kind: "error"; message: string };
 
 export function ExpertDossierScreen() {
   const { colors } = useTheme();
-  const [feedback, setFeedback] = useState<DataState<MappingFeedback[]>>({
-    status: "pending",
-    data: null,
-  });
+  const params = useLocalSearchParams();
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      const result = await careerData.getFeedback();
-      if (active) setFeedback(result);
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
+  const [edgeType, setEdgeType] = useState<EdgeType>(
+    asEdgeType(params.edgeType) ?? "programme_domain",
+  );
+  const [sourceId, setSourceId] = useState(asText(params.sourceId));
+  const [targetId, setTargetId] = useState(asText(params.targetId));
+  const [notes, setNotes] = useState("");
+  const [correction, setCorrection] = useState("");
+  const [status, setStatus] = useState<Status>({ kind: "idle" });
 
-  const grouped = useMemo(() => {
-    const rows = feedback.data ?? [];
-    const byAnchor = new Map<string, MappingFeedback[]>();
-    for (const item of rows) {
-      const anchor = reviewAnchor(item);
-      byAnchor.set(anchor, [...(byAnchor.get(anchor) ?? []), item]);
+  const edge = EDGE_TYPES.find((e) => e.key === edgeType) ?? EDGE_TYPES[0];
+  const canSubmit =
+    sourceId.trim().length > 0 &&
+    targetId.trim().length > 0 &&
+    notes.trim().length > 0 &&
+    status.kind !== "sending";
+
+  const submit = async () => {
+    if (!canSubmit) {
+      setStatus({
+        kind: "error",
+        message:
+          "Name both ends of the edge and tell us what's wrong with it.",
+      });
+      return;
     }
-    return Array.from(byAnchor.entries()).map(([anchor, items]) => ({
-      anchor,
-      items,
-      flags: items.filter((item) => item.feedbackType === "flag").length,
-      suggestions: items.filter((item) => item.feedbackType === "suggest").length,
-      confirmations: items.filter((item) => item.feedbackType === "confirm").length,
-    }));
-  }, [feedback.data]);
+    setStatus({ kind: "sending" });
+    const result = await adminData.submitMappingFlag({
+      edgeType,
+      sourceId: sourceId.trim(),
+      targetId: targetId.trim(),
+      notes: notes.trim(),
+      suggestedCorrection: correction.trim() || undefined,
+    });
+    if (result.ok) {
+      setStatus({ kind: "sent" });
+      setNotes("");
+      setCorrection("");
+    } else {
+      setStatus({
+        kind: "error",
+        message: result.message ?? "Could not send your report. Try again.",
+      });
+    }
+  };
+
+  const inputStyle = [
+    styles.input,
+    { color: colors.text, borderColor: colors.border, backgroundColor: colors.card },
+  ];
 
   return (
-    <AdminShell title="Expert Dossier" eyebrow="Mapping review">
+    <AdminShell title="Flag a mapping issue" eyebrow="Expert dossier">
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}
         contentContainerStyle={[styles.scroll, webContainer as object]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Mapping feedback
+          <Text
+            style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}
+          >
+            Flag a mapping issue
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            Programme-domain, domain-role, and role-skill edge reviews submitted
-            by domain experts and educators. Each item flags a mapping as
-            correct, incorrect, unsure, or carries a suggestion.
+            Tell the Sifter team which mapping edge is wrong. Submissions go
+            straight to us for review — there is no shared queue here.
           </Text>
-          <ComingSoonPanel
-            state={feedback}
-            empty={(rows) => rows.length === 0}
-            emptyTitle="No feedback yet"
-            emptyBody="Mapping feedback appears here once educators begin reviewing edges."
-          >
-            {() => (
-              <View style={styles.feedbackList}>
-                <View style={styles.summaryGrid}>
-                  <MetricCard label="Review groups" value={String(grouped.length)} colors={colors} />
-                  <MetricCard
-                    label="Flags"
-                    value={String(grouped.reduce((sum, g) => sum + g.flags, 0))}
-                    colors={colors}
-                  />
-                  <MetricCard
-                    label="Suggestions"
-                    value={String(grouped.reduce((sum, g) => sum + g.suggestions, 0))}
-                    colors={colors}
-                  />
-                </View>
+        </View>
 
-                {grouped.map((group) => (
-                  <View
-                    key={group.anchor}
+        {/* Edge type */}
+        <View style={styles.section}>
+          <Text style={[styles.label, CompassFonts.bodySemibold, { color: colors.text }]}>
+            Edge type
+          </Text>
+          <View style={styles.chipRow}>
+            {EDGE_TYPES.map((option) => {
+              const active = option.key === edgeType;
+              return (
+                <TouchableOpacity
+                  key={option.key}
+                  activeOpacity={0.75}
+                  accessibilityRole="radio"
+                  accessibilityState={{ selected: active }}
+                  onPress={() => {
+                    setEdgeType(option.key);
+                    setStatus({ kind: "idle" });
+                  }}
+                  style={[
+                    styles.chip,
+                    {
+                      borderColor: active ? colors.accent : colors.border,
+                      backgroundColor: active ? colors.accentSoft : colors.card,
+                    },
+                  ]}
+                >
+                  <Text
                     style={[
-                      styles.groupCard,
-                      {
-                        backgroundColor: colors.card,
-                        borderColor: colors.border,
-                      },
+                      styles.chipText,
+                      active ? CompassFonts.bodySemibold : CompassFonts.bodyMedium,
+                      { color: active ? colors.text : colors.textSoft },
                     ]}
                   >
-                    <View style={styles.groupHeader}>
-                      <View>
-                        <Text style={[styles.edgeType, { color: colors.textMuted }]}>
-                          DOMAIN / REVIEW ANCHOR
-                        </Text>
-                        <Text style={[styles.groupTitle, { color: colors.text }]}>
-                          {group.anchor}
-                        </Text>
-                      </View>
-                      <Text style={[styles.meta, { color: colors.textMuted }]}>
-                        {group.items.length} review{group.items.length === 1 ? "" : "s"}
-                      </Text>
-                    </View>
-
-                    <View style={styles.groupStats}>
-                      <Text style={[styles.meta, { color: colors.textMuted }]}>
-                        {group.confirmations} confirmed · {group.flags} flagged · {group.suggestions} suggested
-                      </Text>
-                    </View>
-
-                    {group.items.map((item) => (
-                      <View
-                        key={item.id}
-                        style={[styles.feedbackCard, { borderColor: colors.border }]}
-                      >
-                        <View style={styles.cardTop}>
-                          <Text style={[styles.edgeType, { color: colors.textMuted }]}>
-                            {edgeTitle(item)}
-                          </Text>
-                          <View
-                            style={[
-                              styles.badge,
-                              {
-                                backgroundColor: (FEEDBACK_COLORS[item.feedbackType] ?? FEEDBACK_FALLBACK).bg,
-                              },
-                            ]}
-                          >
-                            <Text
-                              style={[
-                                styles.badgeText,
-                                { color: (FEEDBACK_COLORS[item.feedbackType] ?? FEEDBACK_FALLBACK).text },
-                              ]}
-                            >
-                              {(FEEDBACK_COLORS[item.feedbackType] ?? FEEDBACK_FALLBACK).label}
-                            </Text>
-                          </View>
-                        </View>
-                        <Text style={[styles.edgeLabel, { color: colors.text }]}>
-                          {item.sourceId} → {item.targetId}
-                        </Text>
-                        {item.notes ? (
-                          <Text style={[styles.notes, { color: colors.textSoft }]}>
-                            {item.notes}
-                          </Text>
-                        ) : null}
-                        <Text style={[styles.meta, { color: colors.textMuted }]}>
-                          Trust: {Math.round(item.trustWeight * 100)}% ·{" "}
-                          {new Date(item.createdAt).toLocaleDateString()}
-                        </Text>
-                      </View>
-                    ))}
-                  </View>
-                ))}
-              </View>
-            )}
-          </ComingSoonPanel>
+                    {option.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
+
+        {/* Entity — pre-filled from route params when opened from a detail screen */}
+        <View style={styles.section}>
+          <Text style={[styles.label, CompassFonts.bodySemibold, { color: colors.text }]}>
+            Entity
+          </Text>
+          <Text style={[styles.hint, { color: colors.textMuted }]}>
+            Both ends of the edge. Pre-filled when you arrive from a detail
+            screen.
+          </Text>
+          <TextInput
+            value={sourceId}
+            onChangeText={setSourceId}
+            placeholder={edge.sourceLabel}
+            placeholderTextColor={colors.textMuted}
+            style={inputStyle}
+            accessibilityLabel={edge.sourceLabel}
+          />
+          <Text style={[styles.arrow, { color: colors.textMuted }]}>↓</Text>
+          <TextInput
+            value={targetId}
+            onChangeText={setTargetId}
+            placeholder={edge.targetLabel}
+            placeholderTextColor={colors.textMuted}
+            style={inputStyle}
+            accessibilityLabel={edge.targetLabel}
+          />
+        </View>
+
+        {/* What's wrong */}
+        <View style={styles.section}>
+          <Text style={[styles.label, CompassFonts.bodySemibold, { color: colors.text }]}>
+            What&apos;s wrong
+          </Text>
+          <TextInput
+            value={notes}
+            onChangeText={(t) => {
+              setNotes(t);
+              if (status.kind !== "idle") setStatus({ kind: "idle" });
+            }}
+            placeholder="Why this edge does not hold in practice."
+            placeholderTextColor={colors.textMuted}
+            multiline
+            textAlignVertical="top"
+            style={[
+              styles.textArea,
+              { color: colors.text, borderColor: colors.border, backgroundColor: colors.card },
+            ]}
+          />
+        </View>
+
+        {/* Suggested correction */}
+        <View style={styles.section}>
+          <Text style={[styles.label, CompassFonts.bodySemibold, { color: colors.text }]}>
+            Suggested correction{" "}
+            <Text style={{ color: colors.textMuted }}>(optional)</Text>
+          </Text>
+          <TextInput
+            value={correction}
+            onChangeText={setCorrection}
+            placeholder="What the mapping should say instead."
+            placeholderTextColor={colors.textMuted}
+            multiline
+            textAlignVertical="top"
+            style={[
+              styles.textArea,
+              { color: colors.text, borderColor: colors.border, backgroundColor: colors.card },
+            ]}
+          />
+        </View>
+
+        {status.kind === "sent" ? (
+          <View
+            style={[
+              styles.banner,
+              { borderColor: colors.green, backgroundColor: colors.greenSoft },
+            ]}
+          >
+            <Text style={[styles.bannerText, CompassFonts.bodySemibold, { color: colors.green }]}>
+              Thanks — the Sifter team has your mapping report.
+            </Text>
+          </View>
+        ) : null}
+        {status.kind === "error" ? (
+          <View
+            style={[
+              styles.banner,
+              { borderColor: colors.red, backgroundColor: colors.redSoft },
+            ]}
+          >
+            <Text style={[styles.bannerText, CompassFonts.bodySemibold, { color: colors.red }]}>
+              {status.message}
+            </Text>
+          </View>
+        ) : null}
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          disabled={!canSubmit}
+          onPress={submit}
+          accessibilityRole="button"
+          style={[
+            styles.submit,
+            {
+              backgroundColor: canSubmit ? colors.accent : colors.bgTertiary,
+              opacity: canSubmit ? 1 : 0.7,
+            },
+          ]}
+        >
+          {status.kind === "sending" ? (
+            <ActivityIndicator color={colors.textInverse} />
+          ) : (
+            <Text
+              style={[
+                styles.submitText,
+                CompassFonts.bodyBold,
+                { color: canSubmit ? colors.textInverse : colors.textMuted },
+              ]}
+            >
+              Submit to Sifter team
+            </Text>
+          )}
+        </TouchableOpacity>
       </ScrollView>
     </AdminShell>
   );
 }
 
 export default ExpertDossierScreen;
-
-function MetricCard({
-  label,
-  value,
-  colors,
-}: {
-  label: string;
-  value: string;
-  colors: ReturnType<typeof useTheme>["colors"];
-}) {
-  return (
-    <View style={[styles.metricCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-      <Text style={[styles.metricValue, { color: colors.text }]}>{value}</Text>
-      <Text style={[styles.metricLabel, { color: colors.textMuted }]}>{label}</Text>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   scroll: {
@@ -225,86 +328,49 @@ const styles = StyleSheet.create({
     gap: Spacing.xl,
     flexGrow: 1,
   },
-  section: { gap: Spacing.md },
+  section: { gap: Spacing.sm },
   sectionTitle: { fontSize: FontSize.lg },
-  lede: {
+  lede: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  label: { fontSize: FontSize.md },
+  hint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },
+  chipRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  chip: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    minHeight: 34,
+    justifyContent: "center",
+  },
+  chipText: { fontSize: FontSize.sm },
+  input: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.md,
+    minHeight: 42,
     fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.5,
-    marginTop: -Spacing.xs,
   },
-  feedbackList: { gap: Spacing.md },
-  summaryGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.sm,
-  },
-  metricCard: {
+  arrow: { fontSize: FontSize.md, textAlign: "center" },
+  textArea: {
     borderWidth: 1,
     borderRadius: Radius.md,
     padding: Spacing.md,
-    minWidth: 130,
-    flexGrow: 1,
+    minHeight: 100,
+    fontSize: FontSize.sm,
   },
-  metricValue: {
-    fontSize: FontSize.xl,
-  },
-  metricLabel: {
-    fontSize: FontSize.xs,
-    textTransform: "uppercase",
-  },
-  groupCard: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    gap: Spacing.md,
-  },
-  groupHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: Spacing.md,
-  },
-  groupTitle: {
-    fontSize: FontSize.md,
-  },
-  groupStats: {
-    marginTop: -Spacing.xs,
-  },
-  feedbackCard: {
+  banner: {
     borderWidth: 1,
     borderRadius: Radius.md,
     padding: Spacing.md,
-    gap: Spacing.xs,
   },
-  cardTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  bannerText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
+  submit: {
+    minHeight: 46,
+    borderRadius: Radius.full,
     alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Spacing.xl,
   },
-  edgeType: {
-    fontSize: FontSize.xs,
-    letterSpacing: 0.5,
-    textTransform: "uppercase",
-    flex: 1,
-  },
-  badge: {
-    borderRadius: Radius.sm,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-  },
-  badgeText: {
-    fontSize: 10,
-    letterSpacing: 0.3,
-    textTransform: "uppercase",
-  },
-  edgeLabel: {
-    fontSize: FontSize.md,
-  },
-  notes: {
-    fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.4,
-  },
-  meta: {
-    fontSize: FontSize.xs,
-    marginTop: Spacing.xs,
-  },
+  submitText: { fontSize: FontSize.md },
 });

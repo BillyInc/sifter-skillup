@@ -32,12 +32,15 @@
 #   GET  /{institution_id}/role-demand    — list[RoleDemandRow]
 #   GET  /{institution_id}/peers          — list[PeerInstitutionRow]
 #   GET  /{institution_id}/affiliation    — AffiliationStats (aggregate, k-anonymised)
+#   GET  /{institution_id}/domain-reach   — DomainReachAudit (§5.1)
+#   GET  /{institution_id}/domain-reach/leaderboard?filter=all|federal|state|private
+#   GET  /{institution_id}/student-intelligence — StudentIntelligence rollup (§5.5)
 # ============================================================
 from datetime import datetime, timedelta, timezone
 import hmac
 from typing import List, Literal, Optional
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from auth import Auth
@@ -431,6 +434,150 @@ def _programme_domain_rows(programme_ids: list, cap: int = 4000) -> list:
 
 
 # ─────────────────────────────────────────────────────────────
+# Domain Reach Audit helpers (§5.1)
+#
+# SCHEMA NOTE — the spec's SQL names three tables that DO NOT EXIST in
+# skillup_dev. The real chain, verified against migration_career_pilot.sql and
+# migration_career_v2.sql, is:
+#
+#   spec name                  real name
+#   ─────────────────────────  ─────────────────────────────────────────────
+#   institution_programmes     school_programmes(school_id, jamb_programme_id)
+#   programme_domain_mappings  programme_domain(programme_id, domain_id, match_type)
+#   (spec joins pdm straight   programme_mapping(jamb_programme_id → programme_id)
+#    to jamb_programme_id)     is the missing hop: programme_domain hangs off the
+#                              CCMAS programme, never off the JAMB programme.
+#
+# `domains` and `schools` DO exist; `domains` carries `cluster` (singular), not
+# `cluster_name`, and `domain_key` ('D001…'), not `domain_code`. `schools` has
+# NO `state` column and NO federal/state/private ownership column at all — see
+# _leaderboard_rows for how that is reported honestly rather than guessed.
+# ─────────────────────────────────────────────────────────────
+
+# Documented size of the CCMAS 2022–2023 domain universe. Only used as a
+# fallback label when the domains table cannot be read; the live row count wins.
+_CCMAS_DOMAIN_UNIVERSE = 168
+_NATIONAL_SCAN_CAP = 20000
+
+
+def _all_domains(cap: int = 1000) -> list:
+    """Every domain row (id, domain_key, name, cluster); [] when unreadable."""
+    try:
+        return (
+            _svc()
+            .table("domains")
+            .select("id, domain_key, name, cluster")
+            .limit(cap)
+            .execute()
+            .data
+        ) or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: domains read skipped", error=str(exc))
+        return []
+
+
+def _reach_buckets(pd_rows: list) -> dict:
+    """Split programme_domain rows into distinct-domain sets per match_type.
+
+    Mirrors the spec's COUNT(DISTINCT CASE WHEN match_type = …) — a domain
+    reached by one programme directly and another functionally counts in BOTH
+    buckets, so direct+functional+adjacent can exceed `all`.
+    """
+    buckets = {"direct": set(), "functional": set(), "adjacent": set(), "all": set()}
+    for r in pd_rows:
+        did = r.get("domain_id")
+        if not did:
+            continue
+        buckets["all"].add(did)
+        mt = r.get("match_type")
+        if mt in buckets:
+            buckets[mt].add(did)
+    return buckets
+
+
+def _national_reach_index() -> tuple:
+    """(reach_by_school, schools_by_id) for every school in the registry.
+
+    Computed with four bounded bulk reads rather than per-school queries:
+    school_programmes → programme_mapping → programme_domain, plus the school
+    registry itself. Returns ({}, {}) when any leg is unreadable — an empty
+    index means "we could not rank", never a fabricated ranking.
+    """
+    try:
+        svc = _svc()
+        sp = (
+            svc.table("school_programmes")
+            .select("school_id, jamb_programme_id")
+            .limit(_NATIONAL_SCAN_CAP)
+            .execute()
+            .data
+        ) or []
+        if not sp:
+            return {}, {}
+        jamb_ids = list({r["jamb_programme_id"] for r in sp if r.get("jamb_programme_id")})
+        pm = (
+            svc.table("programme_mapping")
+            .select("jamb_programme_id, programme_id")
+            .in_("jamb_programme_id", jamb_ids)
+            .limit(_NATIONAL_SCAN_CAP)
+            .execute()
+            .data
+        ) or []
+        ccmas_by_jamb = {
+            r["jamb_programme_id"]: r["programme_id"]
+            for r in pm
+            if r.get("jamb_programme_id") and r.get("programme_id")
+        }
+        prog_ids = list(set(ccmas_by_jamb.values()))
+        pd_rows = _programme_domain_rows(prog_ids, cap=_NATIONAL_SCAN_CAP)
+        links_by_prog: dict = {}
+        for r in pd_rows:
+            links_by_prog.setdefault(r.get("programme_id"), []).append(r)
+
+        reach: dict = {}
+        for row in sp:
+            school_id = row.get("school_id")
+            ccmas_id = ccmas_by_jamb.get(row.get("jamb_programme_id"))
+            if not school_id or not ccmas_id:
+                continue
+            reach.setdefault(school_id, []).extend(links_by_prog.get(ccmas_id, []))
+        reach_by_school = {sid: _reach_buckets(rows) for sid, rows in reach.items()}
+
+        # select("*"): `state` is read opportunistically because the column is
+        # not in any migration — naming it explicitly would 400 on a schema
+        # that never had it.
+        schools = (
+            svc.table("schools").select("*").limit(5000).execute().data
+        ) or []
+        schools_by_id = {s["id"]: s for s in schools if s.get("id")}
+        return reach_by_school, schools_by_id
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: national reach index skipped", error=str(exc))
+        return {}, {}
+
+
+def _rank_of(school_id: Optional[str], reach_by_school: dict) -> tuple:
+    """(national_rank, total_institutions) by distinct domain reach.
+
+    Standard competition ranking (ties share a rank). (None, count) when the
+    school has no reach row — we know the cohort size but not its place in it.
+    """
+    if not reach_by_school:
+        return None, None
+    totals = sorted(
+        ((sid, len(b["all"])) for sid, b in reach_by_school.items()),
+        key=lambda kv: kv[1],
+        reverse=True,
+    )
+    total_institutions = len(totals)
+    if not school_id or school_id not in reach_by_school:
+        return None, total_institutions
+    mine = len(reach_by_school[school_id]["all"])
+    rank = sum(1 for _sid, n in totals if n > mine) + 1
+    return rank, total_institutions
+
+
+# ─────────────────────────────────────────────────────────────
 # Pydantic v2 response models — field-compatible with
 # src/types/institution.ts. Internally we keep snake_case; over the wire we
 # accept and emit camelCase so the TypeScript contracts line up.
@@ -649,6 +796,82 @@ class AffiliationStats(_InstitutionBase):
     affiliated_students: Optional[int] = None
     below_threshold: bool = True
     school_code: str
+
+
+class DomainRef(_InstitutionBase):
+    domain_key: str
+    name: str
+
+
+class ProgrammeDomainReachRow(_InstitutionBase):
+    programme_id: str
+    programme_name: str
+    direct: int = 0
+    functional: int = 0
+    adjacent: int = 0
+    total: int = 0
+
+
+class UnreachedClusterRow(_InstitutionBase):
+    cluster: str
+    domains: List[DomainRef] = Field(default_factory=list)
+
+
+class DomainReachAudit(_InstitutionBase):
+    institution_id: str
+    programme_count: int = 0
+    total_domains: int = 0
+    direct_domains: int = 0
+    functional_domains: int = 0
+    adjacent_domains: int = 0
+    unreached_domains: int = 0
+    # Size of the CCMAS domain universe the counts above are "out of" — the
+    # live domains row count when readable, else the documented 168.
+    domain_universe: int = _CCMAS_DOMAIN_UNIVERSE
+    # None (not 0, not 1) when the national index could not be built: an
+    # unknown rank is reported as unknown.
+    national_rank: Optional[int] = None
+    total_institutions: Optional[int] = None
+    programme_breakdown: List[ProgrammeDomainReachRow] = Field(default_factory=list)
+    unreached_by_cluster: List[UnreachedClusterRow] = Field(default_factory=list)
+
+
+class DomainReachLeaderboardRow(_InstitutionBase):
+    institution_id: str
+    institution_name: str
+    # `control` is federal|state|private. NOT RECORDED in skillup_dev.schools —
+    # always None until an ownership column exists. institution_type is the
+    # registry's real column (university|secondary_school|…).
+    control: Optional[str] = None
+    institution_type: Optional[str] = None
+    state: Optional[str] = None
+    total_domains: int = 0
+    direct_domains: int = 0
+    functional_domains: int = 0
+    adjacent_domains: int = 0
+    national_rank: int
+    is_self: bool = False
+
+
+class StudentIntelligenceDomain(_InstitutionBase):
+    domain_key: str
+    label: str
+    pct: float
+
+
+class StudentIntelligence(_InstitutionBase):
+    """AGGREGATE rollup only — §5.5. Never carries a student id, name, class,
+    claim code or any other per-row field."""
+
+    organization_id: str
+    total_affiliated: int = 0
+    self_signed_up: int = 0
+    provisioned_by_you: int = 0
+    unclaimed_codes: int = 0
+    top_domains: List[StudentIntelligenceDomain] = Field(default_factory=list)
+    # True when the cohort is under the k-anonymity threshold; the mix is
+    # suppressed rather than published.
+    below_threshold: bool = True
 
 
 class NationalBenchmarkRow(BaseModel):
@@ -1336,6 +1559,315 @@ async def get_affiliation_stats(
         school_code="",
     )
     return ResponseModel(data=stats.model_dump(by_alias=True))
+
+
+# ─────────────────────────────────────────────────────────────
+# Domain Reach Audit (§5.1) — CURRICULUM STRUCTURE ONLY.
+# Every number here comes from the CCMAS mapping tables. Nothing in
+# this section is market/demand data, and nothing is estimated: when a
+# table cannot be read the counts stay 0 and rank stays None, with a
+# message saying so.
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/{institution_id}/domain-reach", response_model=ResponseModel)
+async def get_domain_reach(
+    institution_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """DomainReachAudit — how much of the CCMAS domain universe this
+    institution's programme portfolio reaches, and what it misses."""
+    org_id = _assert_own_institution(institution_id, current_user)
+    try:
+        programmes = _school_programmes(current_user, cap=1000)
+        prog_ids = [p["id"] for p in programmes]
+        pd_rows = _programme_domain_rows(prog_ids)
+        buckets = _reach_buckets(pd_rows)
+        reached = buckets["all"]
+
+        domains = _all_domains()
+        universe = len(domains) or _CCMAS_DOMAIN_UNIVERSE
+
+        by_prog: dict = {}
+        for r in pd_rows:
+            by_prog.setdefault(r.get("programme_id"), []).append(r)
+        breakdown: List[ProgrammeDomainReachRow] = []
+        for p in programmes:
+            b = _reach_buckets(by_prog.get(p["id"], []))
+            breakdown.append(
+                ProgrammeDomainReachRow(
+                    programme_id=p["id"],
+                    programme_name=p.get("name") or "",
+                    direct=len(b["direct"]),
+                    functional=len(b["functional"]),
+                    adjacent=len(b["adjacent"]),
+                    total=len(b["all"]),
+                )
+            )
+        breakdown.sort(key=lambda r: r.total, reverse=True)
+
+        clusters: dict = {}
+        for d in domains:
+            if d.get("id") in reached:
+                continue
+            clusters.setdefault(d.get("cluster") or "Unclassified", []).append(
+                DomainRef(domain_key=d.get("domain_key") or "", name=d.get("name") or "")
+            )
+        unreached_by_cluster = [
+            UnreachedClusterRow(
+                cluster=cluster,
+                domains=sorted(refs, key=lambda x: x.domain_key),
+            )
+            for cluster, refs in sorted(clusters.items())
+        ]
+        unreached_count = (
+            sum(len(c.domains) for c in unreached_by_cluster)
+            if domains
+            else max(universe - len(reached), 0)
+        )
+
+        reach_by_school, _schools = _national_reach_index()
+        national_rank, total_institutions = _rank_of(org_id, reach_by_school)
+
+        audit = DomainReachAudit(
+            institution_id=org_id or "",
+            programme_count=len(programmes),
+            total_domains=len(reached),
+            direct_domains=len(buckets["direct"]),
+            functional_domains=len(buckets["functional"]),
+            adjacent_domains=len(buckets["adjacent"]),
+            unreached_domains=unreached_count,
+            domain_universe=universe,
+            national_rank=national_rank,
+            total_institutions=total_institutions,
+            programme_breakdown=breakdown,
+            unreached_by_cluster=unreached_by_cluster,
+        )
+        message = None
+        if not reached:
+            message = (
+                "No CCMAS domain mappings are linked to this institution's "
+                "programmes yet, so domain reach cannot be computed."
+            )
+        elif national_rank is None:
+            message = (
+                "National rank is unavailable: the cross-institution reach "
+                "index could not be built."
+            )
+        return ResponseModel(data=audit.model_dump(by_alias=True), message=message)
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions domain_reach failed", error=str(exc))
+        audit = DomainReachAudit(institution_id=org_id or "")
+        return ResponseModel(
+            data=audit.model_dump(by_alias=True),
+            message="Domain reach is temporarily unavailable.",
+        )
+
+
+@router.get("/{institution_id}/domain-reach/leaderboard", response_model=ResponseModel)
+async def get_domain_reach_leaderboard(
+    institution_id: str,
+    filter_: Literal["all", "federal", "state", "private"] = Query(
+        "all", alias="filter"
+    ),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """National leaderboard by domain reach.
+
+    IMPORTANT — the federal/state/private filter cannot be honoured: the
+    `schools` registry records `institution_type` (university /
+    secondary_school / …) but has NO ownership/control column and no `state`
+    column. Rather than guess a control from the name, those filters return an
+    empty list with a message, and `control`/`state` stay None on every row.
+    """
+    org_id = _assert_own_institution(institution_id, current_user)
+    if filter_ != "all":
+        return ResponseModel(
+            data=[],
+            message=(
+                "Institution control (federal/state/private) is not recorded "
+                "in the school registry, so this filter cannot be applied. "
+                "Use filter=all."
+            ),
+        )
+    try:
+        reach_by_school, schools_by_id = _national_reach_index()
+        if not reach_by_school:
+            return ResponseModel(
+                data=[],
+                message=(
+                    "The cross-institution domain reach index could not be "
+                    "built, so no leaderboard is available."
+                ),
+            )
+
+        ordered = sorted(
+            reach_by_school.items(), key=lambda kv: len(kv[1]["all"]), reverse=True
+        )
+        # Standard competition ranking in one pass: equal totals share a rank.
+        ranks: dict = {}
+        prev_total = None
+        for idx, (_sid, b) in enumerate(ordered):
+            total = len(b["all"])
+            if total != prev_total:
+                ranks[total] = idx + 1
+                prev_total = total
+
+        rows: List[DomainReachLeaderboardRow] = []
+        for school_id, b in ordered[:200]:
+            school = schools_by_id.get(school_id) or {}
+            total = len(b["all"])
+            rank = ranks.get(total, 1)
+            rows.append(
+                DomainReachLeaderboardRow(
+                    institution_id=school_id,
+                    institution_name=school.get("name") or "",
+                    control=None,  # not recorded — see docstring
+                    institution_type=school.get("institution_type"),
+                    state=school.get("state"),
+                    total_domains=total,
+                    direct_domains=len(b["direct"]),
+                    functional_domains=len(b["functional"]),
+                    adjacent_domains=len(b["adjacent"]),
+                    national_rank=rank,
+                    is_self=bool(org_id and school_id == org_id),
+                )
+            )
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions domain_reach_leaderboard failed", error=str(exc))
+        return ResponseModel(
+            data=[], message="The domain reach leaderboard is temporarily unavailable."
+        )
+
+
+# ─────────────────────────────────────────────────────────────
+# Student Intelligence (§5.5) — AGGREGATE ROLLUP ONLY.
+# Groups the existing affiliation/roster data by users.provenance. There
+# is deliberately no per-student field on the response model, so no
+# individual record can leak through this endpoint even by accident;
+# the domain mix is additionally suppressed below the k threshold.
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/{institution_id}/student-intelligence", response_model=ResponseModel)
+async def get_student_intelligence(
+    institution_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """StudentIntelligence — affiliated / self-signed-up / provisioned counts
+    plus the aggregate domain mix. No individual student data, ever."""
+    org_id = _assert_own_institution(institution_id, current_user)
+    try:
+        svc = _svc()
+        aff = (
+            svc.table("student_affiliations")
+            .select("student_id")
+            .eq("school_id", org_id)
+            .limit(20000)
+            .execute()
+            .data
+        ) or []
+        student_ids = [a["student_id"] for a in aff if a.get("student_id")]
+        total_affiliated = len(student_ids)
+        if not total_affiliated:
+            stats = StudentIntelligence(organization_id=org_id or "")
+            return ResponseModel(
+                data=stats.model_dump(by_alias=True),
+                message="No students are affiliated with this institution yet.",
+            )
+
+        self_count = 0
+        provisioned_count = 0
+        domain_counts: dict = {}
+        directions_seen = 0
+        for i in range(0, len(student_ids), 500):
+            chunk = student_ids[i:i + 500]
+            rows = (
+                svc.table("users")
+                .select("id, provenance, chosen_direction")
+                .in_("id", chunk)
+                .execute()
+                .data
+            ) or []
+            for u in rows:
+                if (u.get("provenance") or "self") == "provisioned":
+                    provisioned_count += 1
+                else:
+                    self_count += 1
+                direction = u.get("chosen_direction") or {}
+                key = direction.get("domain_key") if isinstance(direction, dict) else None
+                if key:
+                    directions_seen += 1
+                    domain_counts[key] = domain_counts.get(key, 0) + 1
+
+        unclaimed_codes = 0
+        try:
+            codes = (
+                svc.table("claim_codes")
+                .select("id")
+                .eq("school_id", org_id)
+                .is_("redeemed_at", "null")
+                .is_("revoked_at", "null")
+                .limit(20000)
+                .execute()
+                .data
+            ) or []
+            unclaimed_codes = len(codes)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: unclaimed claim_codes read skipped", error=str(exc))
+
+        below_threshold = total_affiliated < _K_ANON_THRESHOLD
+        top_domains: List[StudentIntelligenceDomain] = []
+        if not below_threshold and directions_seen:
+            labels: dict = {}
+            try:
+                drows = (
+                    svc.table("domains")
+                    .select("domain_key, name")
+                    .in_("domain_key", list(domain_counts.keys()))
+                    .execute()
+                    .data
+                ) or []
+                labels = {d["domain_key"]: d.get("name") for d in drows if d.get("domain_key")}
+            except Exception as exc:  # noqa: BLE001
+                log.warning("institutions: domain label read skipped", error=str(exc))
+            ranked = sorted(domain_counts.items(), key=lambda kv: kv[1], reverse=True)[:5]
+            top_domains = [
+                StudentIntelligenceDomain(
+                    domain_key=key,
+                    label=labels.get(key) or key,
+                    pct=round((n / directions_seen) * 100.0, 1),
+                )
+                for key, n in ranked
+            ]
+
+        stats = StudentIntelligence(
+            organization_id=org_id or "",
+            total_affiliated=total_affiliated,
+            self_signed_up=self_count,
+            provisioned_by_you=provisioned_count,
+            unclaimed_codes=unclaimed_codes,
+            top_domains=top_domains,
+            below_threshold=below_threshold,
+        )
+        message = None
+        if below_threshold:
+            # The counts themselves are already visible to this admin via the
+            # roster totals; it is the per-domain mix that re-identifies a tiny
+            # cohort, so only that is withheld.
+            message = (
+                f"Fewer than {_K_ANON_THRESHOLD} affiliated students — the "
+                "domain mix is suppressed."
+            )
+        elif not directions_seen:
+            message = "No affiliated student has chosen a career direction yet."
+        return ResponseModel(data=stats.model_dump(by_alias=True), message=message)
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions student_intelligence failed", error=str(exc))
+        stats = StudentIntelligence(organization_id=org_id or "")
+        return ResponseModel(
+            data=stats.model_dump(by_alias=True),
+            message="Student intelligence is temporarily unavailable.",
+        )
 
 
 # ─────────────────────────────────────────────────────────────

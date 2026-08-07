@@ -43,12 +43,25 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
 
   const handleSubmitFeedback = async () => {
     await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
-    // Also route low-star written feedback to the admin feedback inbox so the
-    // product team triages it alongside bug/idea/content reports (Phase 12).
+    // Also route written feedback to the Sifter team so it is triaged
+    // alongside bug/idea/content reports (Phase 12; outbound-only per §6A.1 —
+    // this is not an inbox any institution admin can read).
     await offlineWrite(
       '/api/feedback',
       'POST',
-      { type: 'review', rating, message: review, entityType: 'app', entityId: context },
+      {
+        type: 'review',
+        rating,
+        message: review,
+        entityType: 'app',
+        entityId: context,
+        // Required for student submissions (§6A.3/§6A.4). This flow IS the
+        // app-rating channel — the spec's own wording for the category is
+        // "App rating / general praise" — so it maps here regardless of star
+        // count; the star rating carries the sentiment, the category carries
+        // the topic. Without this the submission is refused.
+        studentCategory: 'praise',
+      },
       'normal',
     );
     setPhase('done');

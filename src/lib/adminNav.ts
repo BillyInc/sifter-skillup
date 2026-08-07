@@ -43,26 +43,26 @@ export const adminNav = {
   profile(router: Nav) {
     router.push("/(admin)/profile" as never);
   },
-  domainIntelligence(router: Nav) {
-    router.push("/(admin)/domain-intelligence" as never);
+  /**
+   * Market Intelligence (§5.2) — the merge point for what used to be five
+   * separate screens: domain-intelligence, role-demand, trends, remote and
+   * salary. All five read from only two endpoints (getDomainRanking,
+   * getRoleDemand) and three of them rendered a single column of the same
+   * data, so they are one screen with lenses now.
+   */
+  marketIntelligence(router: Nav) {
+    router.push("/(admin)/market-intelligence" as never);
   },
-  roleDemand(router: Nav) {
-    router.push("/(admin)/role-demand" as never);
+  /** §5.1 View A — curriculum portfolio reach. Structural, NOT market data. */
+  domainReach(router: Nav) {
+    router.push("/(admin)/domain-reach" as never);
   },
   skillsGap(router: Nav) {
     router.push("/(admin)/skills-gap" as never);
   },
-  trends(router: Nav) {
-    router.push("/(admin)/trends" as never);
-  },
-  salary(router: Nav) {
-    router.push("/(admin)/salary" as never);
-  },
-  remote(router: Nav) {
-    router.push("/(admin)/remote" as never);
-  },
-  vsNational(router: Nav) {
-    router.push("/(admin)/vs-national" as never);
+  /** §5.4 — the student Explore catalogue, caps lifted for verified admins. */
+  explore(router: Nav) {
+    router.push("/(admin)/explore" as never);
   },
   peers(router: Nav) {
     router.push("/(admin)/peers" as never);
@@ -161,21 +161,39 @@ export function getAdminNavGroups(
           go: (n) => adminNav.students(n),
         };
 
-  const intelligenceItems: AdminNavItem[] = [
-    dashboardItem(dashboardLabel),
-    {
-      key: "domain-intelligence",
-      label: audience === "university" ? "Domain lens" : "Domain lens",
+  // §5.0 sidebar, in the spec's order:
+  //   General Dashboard · Domain Reach Audit · Market Intelligence ·
+  //   Skills Gap · Explore · Students · Feedback
+  //   —— Workspace: Profile + team · Affiliation · Verification
+  //
+  // Replaces the v1 grouping (Domain lens / Role value / Trends / Peer
+  // benchmarks). Three of those were separate screens rendering one column of
+  // the same two endpoints; §5.2 merges all five into Market Intelligence.
+  const intelligenceItems: AdminNavItem[] = [dashboardItem(dashboardLabel)];
+
+  // Domain Reach Audit is UNIVERSITIES ONLY (§5.1: "University administrators
+  // only, institution_type = 'university'"). It is CCMAS curriculum-portfolio
+  // planning — meaningless for a secondary school or tutorial centre.
+  if (audience === "university") {
+    intelligenceItems.push({
+      key: "domain-reach",
+      label: "Domain reach audit",
       icon: "🧭",
-      match: "domain-intelligence",
-      go: (n) => adminNav.domainIntelligence(n),
-    },
+      match: "domain-reach",
+      go: (n) => adminNav.domainReach(n),
+    });
+  }
+
+  intelligenceItems.push(
     {
-      key: "role-demand",
-      label: audience === "university" ? "Role value" : "Role value",
-      icon: "💼",
-      match: "role-demand",
-      go: (n) => adminNav.roleDemand(n),
+      key: "market-intelligence",
+      label:
+        audience === "university"
+          ? "Market intelligence"
+          : "Guidance intelligence",
+      icon: "📊",
+      match: "market-intelligence",
+      go: (n) => adminNav.marketIntelligence(n),
     },
     {
       key: "skills-gap",
@@ -185,13 +203,26 @@ export function getAdminNavGroups(
       go: (n) => adminNav.skillsGap(n),
     },
     {
-      key: "trends",
-      label: "Trends",
-      icon: "📈",
-      match: "trends",
-      go: (n) => adminNav.trends(n),
+      key: "explore",
+      label: "Explore",
+      icon: "🔎",
+      match: "explore",
+      go: (n) => adminNav.explore(n),
     },
-  ];
+    learnerItem,
+    {
+      // §5.6/§6A.1 — SUBMIT only. This is not an inbox: feedback is outbound to
+      // the Sifter team and no admin can read anyone else's.
+      key: "feedback",
+      label: "Feedback",
+      icon: "✉️",
+      match: "feedback",
+      go: (n) => adminNav.feedback(n),
+    },
+  );
+
+  // Peer benchmarking stays university-only (§0.6): schools must not see other
+  // institutions' comparative data.
   if (audience === "university") {
     intelligenceItems.push({
       key: "peers",
@@ -204,12 +235,12 @@ export function getAdminNavGroups(
 
   return [
     {
-      title: audience === "university" ? "Market intelligence" : "Guidance intelligence",
+      title: audience === "university" ? "Intelligence" : "Guidance",
       items: intelligenceItems,
     },
     {
       title: setupTitle,
-      items: [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM, learnerItem],
+      items: [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM],
     },
   ];
 }

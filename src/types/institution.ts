@@ -375,5 +375,113 @@ export interface AffiliationStats {
   schoolCode: string;
 }
 
+// ─── Domain Reach Audit — View A (spec §5.1) ──────────────────
+/**
+ * STRUCTURAL DATA ONLY. Everything below is derived from the NUC CCMAS
+ * 2022–2023 programme→domain mapping. It describes what an institution's
+ * programme mix *can reach*, never what the labour market *wants* — that is
+ * Market Intelligence (§5.2) and lives in the demand types above.
+ */
+
+/** Control filter for the national leaderboard (federal/state/private). */
+export type InstitutionControlFilter = "all" | "federal" | "state" | "private";
+
+/** A domain referenced by key + display name (no demand attached). */
+export interface DomainRef {
+  domainKey: string;
+  name: string;
+}
+
+/** One row of the per-programme domain-reach breakdown. */
+export interface ProgrammeDomainReachRow {
+  programmeId: string;
+  programmeName: string;
+  direct: number;
+  functional: number;
+  adjacent: number;
+  total: number;
+}
+
+/** Unreached domains grouped by CCMAS discipline cluster. */
+export interface UnreachedClusterRow {
+  cluster: string;
+  domains: DomainRef[];
+}
+
+/** The institution's own curriculum-portfolio reach audit. */
+export interface DomainReachAudit {
+  institutionId: string;
+  programmeCount: number;
+  totalDomains: number;
+  directDomains: number;
+  functionalDomains: number;
+  adjacentDomains: number;
+  unreachedDomains: number;
+  /** Size of the CCMAS domain universe the counts are "out of" (168). */
+  domainUniverse: number;
+  /** null (never 0 or 1) when the national index could not be built. */
+  nationalRank: number | null;
+  totalInstitutions: number | null;
+  programmeBreakdown: ProgrammeDomainReachRow[];
+  unreachedByCluster: UnreachedClusterRow[];
+  meta?: DataMeta;
+}
+
+/** One institution on the national domain-reach leaderboard. */
+export interface DomainReachLeaderboardRow {
+  institutionId: string;
+  institutionName: string;
+  /** federal | state | private — null until an ownership column exists. */
+  control?: string | null;
+  /** The registry's real column (university | secondary_school | …). */
+  institutionType?: string | null;
+  state?: string | null;
+  totalDomains: number;
+  directDomains: number;
+  functionalDomains: number;
+  adjacentDomains: number;
+  nationalRank: number;
+  /** True for the caller's own institution — highlighted in the table. */
+  isSelf: boolean;
+}
+
+// ─── Student intelligence rollup (AGGREGATE — §5.5) ───────────
+/** A domain slice of the affiliated cohort's interest mix. */
+export interface StudentIntelligenceDomain {
+  domainKey: string;
+  label: string;
+  pct: number;
+}
+
+/** Aggregate, k-anonymised roster rollup. Carries no per-student field. */
+export interface StudentIntelligenceSummary {
+  organizationId: string;
+  totalAffiliated: number;
+  selfSignedUp: number;
+  provisionedByYou: number;
+  unclaimedCodes: number;
+  topDomains: StudentIntelligenceDomain[];
+  /** True when the cohort is under the k-anonymity threshold (mix suppressed). */
+  belowThreshold?: boolean;
+}
+
+// ─── Feedback (§6A) ───────────────────────────────────────────
+/** The eight required student-feedback categories (§6A.3 / §6A.5 CHECK). */
+export type StudentFeedbackCategory =
+  | "mapping_wrong"
+  | "data_outdated"
+  | "bug"
+  | "confusing"
+  | "missing_info"
+  | "feature_request"
+  | "praise"
+  | "other";
+
+/** Which mapping edge a correction report targets (§6A.2). */
+export type MappingEdgeType =
+  | "programme_domain"
+  | "domain_role"
+  | "role_skill";
+
 /** Re-export the academic institution-type union for convenience. */
 export type { AcademicInstitutionType };
