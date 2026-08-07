@@ -1058,6 +1058,29 @@ async def validate_admin_access_code(
             data=None,
         )
 
+    # PERSIST the grant. This endpoint used to validate the code and then store
+    # nothing — the "accepted" flag lived only in the client's local state, so
+    # the documented "owner-issued code required before entering admin mode"
+    # gate could be skipped entirely by calling POST /verify directly. The
+    # server now remembers, and /verify refuses without it.
+    try:
+        _svc().table("users").update(
+            {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
+        ).eq("id", current_user["id"]).execute()
+    except Exception as exc:  # noqa: BLE001
+        # Fail CLOSED: if we cannot record the grant we must not report success,
+        # or the user is told they are unlocked while /verify will refuse them.
+        log.error(
+            "institutions: could not record admin access grant",
+            user_id=current_user["id"],
+            error=str(exc),
+        )
+        return ResponseModel(
+            success=False,
+            message="Could not unlock admin access right now. Please try again.",
+            data=None,
+        )
+
     log.info(
         "Institution access code accepted",
         user_id=current_user["id"],
@@ -1087,6 +1110,26 @@ async def submit_verification(
     organisation shell and links the current user so admin/provisioning routes
     can scope correctly, while verification itself remains pending.
     """
+    # ── The owner-code gate, enforced server-side ──────────────
+    # Without this, /verify is a one-request privilege escalation: any
+    # authenticated account could post an arbitrary organisation name, receive
+    # account_type 'educator', and thereby satisfy Auth.require_admin on every
+    # institution endpoint — including the eight gated in this same change.
+    # The code itself has always been validated by
+    # POST /access-code/validate; it simply was not remembered.
+    if not current_user.get("admin_access_granted_at"):
+        log.warning(
+            "institutions: verify claim refused, no owner-code grant",
+            user_id=current_user["id"],
+        )
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Admin access requires an owner-issued access code. "
+                "Enter your code first, then claim your organisation."
+            ),
+        )
+
     status = "pending" if claim.verification_method else "claimed"
     account_type = _normal_account_type(claim.account_type, claim.role)
     try:
