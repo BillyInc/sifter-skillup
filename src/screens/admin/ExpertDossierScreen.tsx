@@ -107,21 +107,33 @@ export function ExpertDossierScreen() {
       return;
     }
     setStatus({ kind: "sending" });
-    const result = await adminData.submitMappingFlag({
-      edgeType,
-      sourceId: sourceId.trim(),
-      targetId: targetId.trim(),
-      notes: notes.trim(),
-      suggestedCorrection: correction.trim() || undefined,
-    });
-    if (result.ok) {
-      setStatus({ kind: "sent" });
-      setNotes("");
-      setCorrection("");
-    } else {
+    try {
+      const result = await adminData.submitMappingFlag({
+        edgeType,
+        sourceId: sourceId.trim(),
+        targetId: targetId.trim(),
+        notes: notes.trim(),
+        suggestedCorrection: correction.trim() || undefined,
+      });
+      if (result.ok) {
+        setStatus({ kind: "sent" });
+        setNotes("");
+        setCorrection("");
+      } else {
+        setStatus({
+          kind: "error",
+          message: result.message ?? "Could not send your report. Try again.",
+        });
+      }
+    } catch (e) {
+      // Never leave the form stuck in `sending` — that permanently disables
+      // the submit button and the user can never retry.
       setStatus({
         kind: "error",
-        message: result.message ?? "Could not send your report. Try again.",
+        message:
+          e instanceof Error && e.message
+            ? e.message
+            : "Could not send your report. Try again.",
       });
     }
   };

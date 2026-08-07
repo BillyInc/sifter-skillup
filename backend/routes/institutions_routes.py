@@ -1064,9 +1064,20 @@ async def validate_admin_access_code(
     # gate could be skipped entirely by calling POST /verify directly. The
     # server now remembers, and /verify refuses without it.
     try:
-        _svc().table("users").update(
-            {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
-        ).eq("id", current_user["id"]).execute()
+        res = (
+            _svc()
+            .table("users")
+            .update({"admin_access_granted_at": datetime.now(timezone.utc).isoformat()})
+            .eq("id", current_user["id"])
+            .execute()
+        )
+        # PostgREST does not raise when an UPDATE matches no row — it returns an
+        # empty result. Catching only exceptions would therefore report
+        # accepted=true for a write that changed nothing, and /verify would then
+        # refuse the same user: exactly the contradiction this block exists to
+        # prevent. An empty result is a failure.
+        if not res.data:
+            raise RuntimeError("admin access grant matched no user row")
     except Exception as exc:  # noqa: BLE001
         # Fail CLOSED: if we cannot record the grant we must not report success,
         # or the user is told they are unlocked while /verify will refuse them.

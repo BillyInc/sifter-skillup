@@ -34,7 +34,7 @@ import {
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
-import type { DataState } from "../../types/career";
+import { comingSoon, type DataState } from "../../types/career";
 import type {
   DomainReachAudit,
   DomainReachLeaderboardRow,
@@ -96,12 +96,27 @@ export function DomainReachAuditScreen() {
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
-      if (active) setInstitutionName(p?.organizationName ?? null);
-    });
-    adminData.getDomainReachAudit().then((d) => {
-      if (active) setAudit(d);
-    });
+    getEducatorProfile()
+      .then((p) => {
+        if (active) setInstitutionName(p?.organizationName ?? null);
+      })
+      .catch(() => {
+        if (active) setInstitutionName(null);
+      });
+    adminData
+      .getDomainReachAudit()
+      .then((d) => {
+        if (active) setAudit(d);
+      })
+      .catch(() => {
+        if (active) {
+          setAudit(
+            comingSoon<DomainReachAudit>(
+              "Your domain reach audit could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
     return () => {
       active = false;
     };
@@ -110,9 +125,20 @@ export function DomainReachAuditScreen() {
   useEffect(() => {
     let active = true;
     setBoard({ status: "pending", data: null });
-    adminData.getDomainReachLeaderboard(filter).then((d) => {
-      if (active) setBoard(d);
-    });
+    adminData
+      .getDomainReachLeaderboard(filter)
+      .then((d) => {
+        if (active) setBoard(d);
+      })
+      .catch(() => {
+        if (active) {
+          setBoard(
+            comingSoon<DomainReachLeaderboardRow[]>(
+              "The national domain-reach leaderboard could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
     return () => {
       active = false;
     };
@@ -388,7 +414,9 @@ function SummaryRow({
 
 function SummaryBlock({ audit }: { audit: DomainReachAudit }) {
   const { colors } = useTheme();
-  const universe = audit.domainUniverse ?? 168;
+  // Never a fabricated denominator: the ratio is shown only when the API
+  // supplies the live domain universe, otherwise just the count.
+  const universe = audit.domainUniverse;
   const rank =
     audit.nationalRank != null && audit.totalInstitutions != null
       ? `#${audit.nationalRank} of ${audit.totalInstitutions}`
@@ -409,7 +437,11 @@ function SummaryBlock({ audit }: { audit: DomainReachAudit }) {
       />
       <SummaryRow
         label="Total domains reachable"
-        value={`${audit.totalDomains ?? 0} of ${universe}`}
+        value={
+          universe != null
+            ? `${audit.totalDomains ?? 0} of ${universe}`
+            : String(audit.totalDomains ?? 0)
+        }
         emphasis
       />
       <SummaryRow label="Direct" value={String(audit.directDomains ?? 0)} indent />

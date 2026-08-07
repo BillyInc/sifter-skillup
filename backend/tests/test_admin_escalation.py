@@ -185,6 +185,30 @@ class TestAccessCodeRecordsTheGrant:
         ]
         assert not writes, f"a rejected code still recorded a grant: {writes}"
 
+    def test_zero_row_update_reports_failure(
+        self, client, auth_header, inst_db, monkeypatch
+    ):
+        """PostgREST does not raise when an UPDATE matches no row — it returns an
+        empty result. Catching only exceptions would report accepted=true for a
+        write that changed nothing, and /verify would then refuse the same user:
+        the exact contradiction the fail-closed block exists to prevent."""
+        from config import settings
+
+        monkeypatch.setattr(settings, "EDUCATOR_ACCESS_CODES", ["LETMEIN"], raising=False)
+        _login_as(inst_db, _user_row())
+        sc = inst_db.get_service_client.return_value
+        # Matched nothing: no exception, empty data.
+        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
+
+        r = client.post(
+            "/api/institutions/access-code/validate",
+            headers=auth_header,
+            json={"code": "LETMEIN"},
+        )
+        assert r.json()["success"] is False, (
+            "a write that matched no row was reported as an unlocked grant"
+        )
+
     def test_failure_to_record_reports_failure(
         self, client, auth_header, inst_db, monkeypatch
     ):

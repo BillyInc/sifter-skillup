@@ -260,6 +260,8 @@ function Segmented<T extends string>({
             key={o.value}
             onPress={() => onChange(o.value)}
             activeOpacity={0.8}
+            accessibilityRole="radio"
+            accessibilityState={{ selected: active }}
             style={[styles.segment, active && { backgroundColor: colors.card }]}
           >
             <Text
@@ -400,6 +402,10 @@ function DetailGroup({ title, items }: { title: string; items: string[] }) {
 // ─── By Programme mode ───────────────────────────────────────────
 type ProgrammeSort = "demand" | "trend" | "name";
 
+/** Roles shown inside a programme drill-down. The remainder is counted, not
+ *  silently dropped — see the module comment. */
+const ROLE_DRILLDOWN_LIMIT = 10;
+
 function ProgrammeRow({
   row,
   domains,
@@ -436,17 +442,20 @@ function ProgrammeRow({
 
   // Roles reachable through this programme's domains — remote % and salary
   // inline as columns, exactly as §5.2 requires.
+  const matchedRoles =
+    roles.status === "real" && roles.data
+      ? roles.data.filter((r) =>
+          r.domainName ? domainNames.has(r.domainName.toLowerCase()) : false,
+        )
+      : [];
   const roleState: DataState<RoleDemandRow[]> =
     roles.status === "real" && roles.data
-      ? {
-          ...roles,
-          data: roles.data
-            .filter((r) =>
-              r.domainName ? domainNames.has(r.domainName.toLowerCase()) : false,
-            )
-            .slice(0, 10),
-        }
+      ? { ...roles, data: matchedRoles.slice(0, ROLE_DRILLDOWN_LIMIT) }
       : roles;
+  const hiddenRoleCount = Math.max(
+    0,
+    matchedRoles.length - ROLE_DRILLDOWN_LIMIT,
+  );
 
   const band = formatSalary(row.entrySalaryMin, row.entrySalaryMax);
 
@@ -569,6 +578,12 @@ function ProgrammeRow({
             >
               {(rows) => <AdminDataTable columns={ROLE_COLUMNS} data={rows} />}
             </ComingSoonPanel>
+            {hiddenRoleCount > 0 ? (
+              <Text style={[styles.detailNote, { color: colors.textMuted }]}>
+                Showing the top {ROLE_DRILLDOWN_LIMIT} of{" "}
+                {matchedRoles.length} roles · {hiddenRoleCount} more not shown.
+              </Text>
+            ) : null}
           </View>
 
           {row.detail ? (
@@ -609,9 +624,12 @@ function AdvisorySignals({ rows }: { rows: ProgrammeDemandRow[] }) {
     (a, b) => b.ngPostingsPerMonth - a.ngPostingsPerMonth,
   );
   const withTrend = rows.filter((r) => r.trendPct != null);
-  const fastest = [...withTrend].sort(
-    (a, b) => (b.trendPct ?? 0) - (a.trendPct ?? 0),
-  )[0];
+  // A "fastest growing" claim requires actual growth — the highest trend can be
+  // negative when every programme is declining, which would otherwise label a
+  // declining programme as growing AND list it under "Declining programmes".
+  const fastest = [...withTrend]
+    .filter((r) => (r.trendPct ?? 0) > 0)
+    .sort((a, b) => (b.trendPct ?? 0) - (a.trendPct ?? 0))[0];
   const declining = withTrend.filter((r) => (r.trendPct ?? 0) < 0);
   const top = byDemand[0];
 
@@ -785,15 +803,48 @@ export function MarketIntelligenceScreen() {
   // Scope-independent reads.
   useEffect(() => {
     let active = true;
-    adminData.getProgrammeDemand({}).then((d) => {
-      if (active) setProgrammes(d);
-    });
-    adminData.getRoleDemand().then((d) => {
-      if (active) setRoles(d);
-    });
-    adminData.getSkillsGapReport().then((d) => {
-      if (active) setSkillsGap(d);
-    });
+    adminData
+      .getProgrammeDemand({})
+      .then((d) => {
+        if (active) setProgrammes(d);
+      })
+      .catch(() => {
+        if (active) {
+          setProgrammes(
+            comingSoon<ProgrammeDemandRow[]>(
+              "Programme demand could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
+    adminData
+      .getRoleDemand()
+      .then((d) => {
+        if (active) setRoles(d);
+      })
+      .catch(() => {
+        if (active) {
+          setRoles(
+            comingSoon<RoleDemandRow[]>(
+              "Role-level demand could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
+    adminData
+      .getSkillsGapReport()
+      .then((d) => {
+        if (active) setSkillsGap(d);
+      })
+      .catch(() => {
+        if (active) {
+          setSkillsGap(
+            comingSoon<SkillGapRow[]>(
+              "The skills-gap report could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
     return () => {
       active = false;
     };
@@ -804,9 +855,20 @@ export function MarketIntelligenceScreen() {
     let active = true;
     setDomains({ status: "pending", data: null });
     setBenchmark({ status: "pending", data: null });
-    adminData.getDomainRanking(scope).then((d) => {
-      if (active) setDomains(d);
-    });
+    adminData
+      .getDomainRanking(scope)
+      .then((d) => {
+        if (active) setDomains(d);
+      })
+      .catch(() => {
+        if (active) {
+          setDomains(
+            comingSoon<DomainRankItem[]>(
+              "Domain demand rankings could not be loaded. Try again shortly.",
+            ),
+          );
+        }
+      });
     fetchVsNational(scope).then((d) => {
       if (active) setBenchmark(d);
     });
@@ -1018,33 +1080,27 @@ export function MarketIntelligenceScreen() {
               }}
             </ComingSoonPanel>
 
-            {/* Roles outside the ranked domains still have to be reachable. */}
-            <ComingSoonPanel
-              state={unmappedRoles}
-              compact
-              empty={(rows) => rows.length === 0}
-              emptyTitle=""
-              emptyBody=""
-            >
-              {(rows) =>
-                rows.length === 0 ? (
-                  <View />
-                ) : (
-                  <View style={{ gap: Spacing.xs }}>
-                    <Text
-                      style={[
-                        styles.detailTitle,
-                        CompassFonts.bodyBold,
-                        { color: colors.textMuted },
-                      ]}
-                    >
-                      OTHER ROLES
-                    </Text>
-                    <AdminDataTable columns={ROLE_COLUMNS} data={rows} />
-                  </View>
-                )
-              }
-            </ComingSoonPanel>
+            {/* Roles outside the ranked domains still have to be reachable.
+                Rendered only when real rows exist — a state panel here would be
+                a stray empty box under the domain list. */}
+            {unmappedRoles.status === "real" &&
+            (unmappedRoles.data?.length ?? 0) > 0 ? (
+              <View style={{ gap: Spacing.xs }}>
+                <Text
+                  style={[
+                    styles.detailTitle,
+                    CompassFonts.bodyBold,
+                    { color: colors.textMuted },
+                  ]}
+                >
+                  OTHER ROLES
+                </Text>
+                <AdminDataTable
+                  columns={ROLE_COLUMNS}
+                  data={unmappedRoles.data ?? []}
+                />
+              </View>
+            ) : null}
           </View>
         )}
 

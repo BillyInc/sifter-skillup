@@ -44,13 +44,15 @@ import { PdfExportButton } from "@/components/careerIntelligence/PdfExportButton
 import { adminData } from "@/lib/adminData";
 import { adminNav, type Nav } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
-import type { DataState } from "../../types/career";
+import { comingSoon, type DataState } from "../../types/career";
 import type {
   InstitutionSummary,
   ProgrammeDemandRow,
   DomainRankItem,
   IntelligenceAlert,
   EducatorProfile,
+  DomainReachAudit,
+  StudentIntelligenceSummary,
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { StatCard } from "./StatCard";
@@ -61,45 +63,18 @@ const TOTAL_DOMAINS = 168; // the fixed national domain taxonomy size (§5.1)
 const PREVIEW_ROWS = 5; // a home-screen preview, never the full table
 
 /**
- * The two v2 reads (`getDomainReachAudit`, `getStudentIntelligenceSummary`)
- * return envelopes whose payload types (`DomainReachAudit`,
- * `StudentIntelligenceSummary`) are declared in adminData.ts but do not yet
- * exist in src/types/institution.ts — that file is owned elsewhere.
+ * The §5.1 and §5.5 payload types are the canonical ones from
+ * src/types/institution.ts, matched to the backend's camelCase alias generator.
  *
- * These read-only view shapes name exactly the fields this screen consumes,
- * per the §5.1 / §5.5 mockups. Every field is optional and read through
- * `view()`, so nothing renders unless the payload actually carries it — the
- * screen degrades to "—" rather than inventing a number.
- *
- * TODO(types): drop these once `DomainReachAudit` and
- * `StudentIntelligenceSummary` land in src/types/institution.ts and import
- * the canonical types instead.
+ * They were local hand-written view shapes, read through an unchecked
+ * `as T` cast. Four field names did not match what the API actually sends
+ * (provisioned/unclaimedProvisioned/domainId/domainName vs
+ * provisionedByYou/unclaimedCodes/domainKey/label), and because the cast hid it
+ * from the compiler the screen simply rendered blanks forever — the very
+ * "degrade to — rather than invent a number" property that was supposed to be a
+ * safety net is what made the bug silent. Using the real types means tsc
+ * catches the next one.
  */
-interface DomainReachView {
-  programmeCount?: number;
-  totalDomains?: number;
-  directDomains?: number;
-  functionalDomains?: number;
-  adjacentDomains?: number;
-  unreachedDomains?: number;
-  nationalRank?: number;
-  totalInstitutions?: number;
-}
-
-interface StudentDomainShareView {
-  domainId?: string;
-  domainName?: string;
-  pct?: number;
-}
-
-interface StudentIntelligenceView {
-  totalAffiliated?: number;
-  selfSignedUp?: number;
-  provisioned?: number;
-  unclaimedProvisioned?: number;
-  topDomains?: StudentDomainShareView[];
-}
-
 /** Narrow an untyped envelope payload to the fields this screen reads. */
 function view<T>(data: unknown): T {
   return (data ?? {}) as T;
@@ -142,33 +117,56 @@ export function GeneralDashboardScreen() {
     };
   }, []);
 
-  // All aggregate (no PII). Each resolves into its own envelope so one
-  // unpopulated area never blanks the rest of the page.
+  // All aggregate (no PII). Each read settles INDEPENDENTLY so one unpopulated
+  // or failing area never blanks the rest of the page.
+  //
+  // This used to be a single Promise.all, which contradicted that comment twice
+  // over: one rejection rejected the whole batch, so none of the six setState
+  // calls ran and every section stayed pending forever with an unhandled
+  // rejection in the log; and every section waited on the slowest read, which
+  // is the reach audit — the heaviest endpoint in the feature.
   useEffect(() => {
     let active = true;
-    (async () => {
-      const [s, p, a, d, r, si] = await Promise.all([
-        adminData.getInstitutionSummary(),
-        adminData.getProgrammeDemand(),
-        adminData.getIntelligenceAlerts(),
-        adminData.getDomainRanking("nigerian"),
-        adminData.getDomainReachAudit(),
-        adminData.getStudentIntelligenceSummary(),
-      ]);
-      if (!active) return;
-      setSummary(s);
-      setProgrammes(p);
-      setAlerts(a);
-      setDomains(d);
-      setReach(r as DataState<unknown>);
-      setStudents(si as DataState<unknown>);
-    })();
+    const settle =
+      <T,>(set: (v: DataState<T>) => void, notice: string) =>
+      (p: Promise<DataState<T>>) => {
+        p.then(
+          (v) => {
+            if (active) set(v);
+          },
+          () => {
+            // adminData already converts most failures into a coming_soon
+            // envelope; this catches the rest so a section can never be
+            // stranded on `pending`.
+            if (active) set(comingSoon<T>(notice));
+          },
+        );
+      };
+
+    settle(setSummary, "Institution intelligence is being populated.")(
+      adminData.getInstitutionSummary(),
+    );
+    settle(setProgrammes, "Programme-domain-demand data is being populated.")(
+      adminData.getProgrammeDemand(),
+    );
+    settle(setAlerts, "Intelligence alerts are being populated.")(
+      adminData.getIntelligenceAlerts(),
+    );
+    settle(setDomains, "Domain demand rankings are being populated.")(
+      adminData.getDomainRanking("nigerian"),
+    );
+    settle(setReach, "Your domain reach audit is being compiled.")(
+      adminData.getDomainReachAudit(),
+    );
+    settle(setStudents, "Student intelligence is being compiled.")(
+      adminData.getStudentIntelligenceSummary(),
+    );
     return () => {
       active = false;
     };
   }, []);
 
-  const reachView = view<DomainReachView>(
+  const reachView = view<DomainReachAudit>(
     reach.status === "real" ? reach.data : null,
   );
   const orgName =
@@ -324,7 +322,7 @@ export function GeneralDashboardScreen() {
                                 .join(" · ")
                             : undefined
                         }
-                        value={`${row.ngPostingsPerMonth.toLocaleString()}/mo`}
+                        value={`${fmtInt(row.ngPostingsPerMonth)}/mo`}
                       />
                     ))}
                   </View>
@@ -352,7 +350,7 @@ export function GeneralDashboardScreen() {
                         key={row.domainId}
                         label={`${row.rank}. ${row.domainName}`}
                         sub={row.routeNote}
-                        value={`${row.postingsPerMonth.toLocaleString()}/mo`}
+                        value={`${fmtInt(row.postingsPerMonth)}/mo`}
                       />
                     ))}
                   </View>
@@ -377,7 +375,7 @@ export function GeneralDashboardScreen() {
             emptyBody="Direct, functional and adjacent domain coverage appears here once your programme mix is mapped."
           >
             {(data) => {
-              const r = view<DomainReachView>(data);
+              const r = view<DomainReachAudit>(data);
               return (
                 <View style={styles.reach}>
                   <View style={styles.reachRow}>
@@ -405,7 +403,7 @@ export function GeneralDashboardScreen() {
                     >
                       National rank #{r.nationalRank}
                       {r.totalInstitutions != null
-                        ? ` of ${r.totalInstitutions.toLocaleString()}`
+                        ? ` of ${fmtInt(r.totalInstitutions)}`
                         : ""}
                     </Text>
                   ) : null}
@@ -430,8 +428,8 @@ export function GeneralDashboardScreen() {
             emptyBody="Affiliation, provisioning and aggregate domain interest appear here once students join."
           >
             {(data) => {
-              const s = view<StudentIntelligenceView>(data);
-              const top = (s.topDomains ?? []).filter((d) => d.domainName);
+              const s = view<StudentIntelligenceSummary>(data);
+              const top = (s.topDomains ?? []).filter((d) => d.label);
               return (
                 <View style={styles.reach}>
                   <View style={styles.reachRow}>
@@ -445,12 +443,12 @@ export function GeneralDashboardScreen() {
                     />
                     <MiniStat
                       label="Provisioned by you"
-                      value={fmtInt(s.provisioned)}
+                      value={fmtInt(s.provisionedByYou)}
                     />
-                    {s.unclaimedProvisioned != null ? (
+                    {s.unclaimedCodes != null ? (
                       <MiniStat
                         label="Unclaimed codes"
-                        value={fmtInt(s.unclaimedProvisioned)}
+                        value={fmtInt(s.unclaimedCodes)}
                       />
                     ) : null}
                   </View>
@@ -463,7 +461,7 @@ export function GeneralDashboardScreen() {
                         .slice(0, 3)
                         .map(
                           (d) =>
-                            `${d.domainName}${
+                            `${d.label}${
                               d.pct != null ? ` ${fmtPct(d.pct)}` : ""
                             }`,
                         )
