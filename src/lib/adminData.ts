@@ -29,6 +29,13 @@ import type {
   OrganizationTeam,
   OrganizationInvite,
   OrgRole,
+  // v2 admin side: §5.1 domain reach, §5.5 student intelligence, §6A feedback.
+  DomainReachAudit,
+  DomainReachLeaderboardRow,
+  InstitutionControlFilter,
+  StudentIntelligenceSummary,
+  StudentFeedbackCategory,
+  MappingEdgeType,
 } from "../types/institution";
 
 function fromApi<T>(value: T | DataState<T>): DataState<T> {
@@ -210,6 +217,131 @@ export const adminData = {
       return fromApi(await request<AffiliationStats | DataState<AffiliationStats>>(`/api/institutions/me/affiliation`));
     } catch {
       return comingSoon<AffiliationStats>("Affiliation analytics come online with the school-code rollout.");
+    }
+  },
+
+  // ─── Domain Reach Audit — View A (spec §5.1) ─────────────────
+  /**
+   * Curriculum portfolio reach: how many of the 168 domains this institution's
+   * programme mix touches, split direct / functional / adjacent, plus the
+   * unreached remainder, a national rank and a per-programme breakdown.
+   *
+   * STRUCTURAL DATA ONLY — CCMAS mapping, never market demand (§5.1). The
+   * screen carries that warning; it is restated here so a future caller cannot
+   * mistake this for Market Intelligence.
+   */
+  async getDomainReachAudit(): Promise<DataState<DomainReachAudit>> {
+    try {
+      return fromApi(
+        await request<DomainReachAudit | DataState<DomainReachAudit>>(
+          `/api/institutions/me/domain-reach`,
+        ),
+      );
+    } catch {
+      return comingSoon<DomainReachAudit>("Your domain reach audit is being compiled.");
+    }
+  },
+
+  /** National leaderboard by domain reach, optionally filtered by control. */
+  async getDomainReachLeaderboard(
+    filter: InstitutionControlFilter = "all",
+  ): Promise<DataState<DomainReachLeaderboardRow[]>> {
+    try {
+      return fromApi(
+        await request<
+          DomainReachLeaderboardRow[] | DataState<DomainReachLeaderboardRow[]>
+        >(`/api/institutions/me/domain-reach/leaderboard?filter=${filter}`),
+      );
+    } catch {
+      return comingSoon<DomainReachLeaderboardRow[]>(
+        "The national domain-reach leaderboard is being compiled.",
+      );
+    }
+  },
+
+  // ─── Student intelligence rollup (AGGREGATE — §5.5/§7.14) ────
+  /**
+   * Headline rollup over the existing roster read, grouped by the `provenance`
+   * field that every RosterStudent already carries but which nothing
+   * aggregated. Aggregate and k-anonymised: this deliberately does NOT become
+   * a route to individuals, which stays consent-gated below.
+   */
+  async getStudentIntelligenceSummary(): Promise<
+    DataState<StudentIntelligenceSummary>
+  > {
+    try {
+      return fromApi(
+        await request<
+          StudentIntelligenceSummary | DataState<StudentIntelligenceSummary>
+        >(`/api/institutions/me/student-intelligence`),
+      );
+    } catch {
+      return comingSoon<StudentIntelligenceSummary>(
+        "Student intelligence is being compiled.",
+      );
+    }
+  },
+
+  // ─── Outbound feedback (§6A.1 — never an inbox) ──────────────
+  /**
+   * Send feedback to the Sifter team. Outbound ONLY: there is intentionally no
+   * read method on this client. The platform-wide inbox is internal-staff
+   * tooling (§6A.4) and institution admins must not reach it — enforced by the
+   * require_internal_staff gate on GET /api/feedback.
+   */
+  async submitFeedback(payload: {
+    category: StudentFeedbackCategory;
+    message: string;
+    entityType?: string;
+    entityId?: string;
+  }): Promise<{ ok: boolean; message?: string }> {
+    try {
+      await request(`/api/feedback`, {
+        method: "POST",
+        body: JSON.stringify({
+          type: "general",
+          studentCategory: payload.category,
+          message: payload.message,
+          entityType: payload.entityType,
+          entityId: payload.entityId,
+        }),
+      });
+      return { ok: true };
+    } catch (e) {
+      return {
+        ok: false,
+        message: e instanceof Error ? e.message : "Could not send your feedback.",
+      };
+    }
+  },
+
+  /** Flag a mapping edge as wrong (§6A.2). Submit-only, same as above. */
+  async submitMappingFlag(payload: {
+    edgeType: MappingEdgeType;
+    sourceId: string;
+    targetId: string;
+    notes: string;
+    suggestedCorrection?: string;
+  }): Promise<{ ok: boolean; message?: string }> {
+    try {
+      await request(`/api/career/feedback`, {
+        method: "POST",
+        body: JSON.stringify({
+          edgeType: payload.edgeType,
+          sourceId: payload.sourceId,
+          targetId: payload.targetId,
+          feedbackType: "incorrect",
+          notes: payload.suggestedCorrection
+            ? `${payload.notes}\n\nSuggested correction: ${payload.suggestedCorrection}`
+            : payload.notes,
+        }),
+      });
+      return { ok: true };
+    } catch (e) {
+      return {
+        ok: false,
+        message: e instanceof Error ? e.message : "Could not send your report.",
+      };
     }
   },
 

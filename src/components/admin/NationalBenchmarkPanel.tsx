@@ -1,6 +1,6 @@
 /**
  * NationalBenchmarkPanel — shows "your institution vs national average" cards.
- * Used in VsNationalScreen to give a quick visual comparison of key metrics
+ * Used in Market Intelligence (§5.2) to give a quick visual comparison of key metrics
  * (domains accessible, postings per month, skills gaps, remote eligibility).
  */
 import React from "react";

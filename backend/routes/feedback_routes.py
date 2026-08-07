@@ -28,20 +28,59 @@ _SCHEMA = "skillup_dev"
 # so the client can evolve without a backend deploy, but this documents intent.
 _KNOWN_TYPES = {"review", "bug", "suggestion", "mapping", "general"}
 
+# §6A.3 — the student categories, mirrored from the CHECK constraint in
+# migration_feedback_storage.sql. Kept in sync deliberately: the DB is the
+# enforcement point, this list is for a 400 with a useful message instead of a
+# 500 from a constraint violation.
+_STUDENT_CATEGORIES = {
+    "mapping_wrong", "data_outdated", "bug", "confusing",
+    "missing_info", "feature_request", "praise", "other",
+}
+
+# Account types that must supply a category (§6A.4: "category required for
+# student submissions"). Admin/educator submissions carry their structure via
+# the mapping-flag form (§6A.2) instead.
+_STUDENT_ACCOUNT_TYPES = {"student"}
+
 
 @router.post("", response_model=ResponseModel)
 async def create_feedback(
     body: dict = Body(default_factory=dict),
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """Submit a piece of feedback.
+    """Submit a piece of feedback (§6A.1 — outbound only, to the Sifter team).
 
-    Body: {type, message, entityType?, entityId?, rating?}. Inserts one row
-    into skillup_dev.user_feedback and returns the created row envelope.
+    Body: {type, message, entityType?, entityId?, rating?, studentCategory?}.
+    Inserts one row into skillup_dev.user_feedback and returns the created row.
+
+    `studentCategory` is REQUIRED for student accounts: free text alone does not
+    let the team aggregate what students are actually reporting on (§6A.3).
     """
+    fb_type = body.get("type") or "general"
+    message = body.get("message")
+    category = body.get("studentCategory") or body.get("student_category")
+    is_student = (current_user.get("account_type") or "student") in _STUDENT_ACCOUNT_TYPES
+
+    # Validate BEFORE the try/except below — that block deliberately swallows
+    # storage errors so a feedback write never breaks the client, and a bad
+    # request must not be reported as a storage failure.
+    if category is not None and category not in _STUDENT_CATEGORIES:
+        return ResponseModel(
+            success=False,
+            message=(
+                "Unknown feedback category. Expected one of: "
+                + ", ".join(sorted(_STUDENT_CATEGORIES))
+            ),
+            data=None,
+        )
+    if is_student and not category:
+        return ResponseModel(
+            success=False,
+            message="Please choose what your feedback is about before sending.",
+            data=None,
+        )
+
     try:
-        fb_type = body.get("type") or "general"
-        message = body.get("message")
         rating = body.get("rating")
         # Coerce rating to a 1..5 smallint when present; drop anything invalid.
         rating_val: Optional[int] = None
@@ -58,6 +97,7 @@ async def create_feedback(
             "entity_type": body.get("entityType"),
             "entity_id": body.get("entityId"),
             "rating": rating_val,
+            "student_category": category,
         }
         res = (
             db.get_service_client()

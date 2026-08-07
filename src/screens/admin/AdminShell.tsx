@@ -32,7 +32,7 @@ import {
   CompassFonts,
   Shadow,
 } from "@/theme";
-import { adminNav } from "@/lib/adminNav";
+import { adminNav, getAdminNavGroups } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import {
   adminAudienceForProfile,
@@ -44,7 +44,10 @@ import type { EducatorProfile } from "../../types/institution";
 const SIDEBAR_WIDTH = 232;
 const WIDE_BREAKPOINT = 900;
 
-type Nav = Parameters<(typeof adminNav)["domainIntelligence"]>[0];
+// Keyed on `dashboard` because every audience has it. This was keyed on
+// `domainIntelligence`, which §5.2 merged away — a nav helper rename broke
+// an unrelated type alias here.
+type Nav = Parameters<(typeof adminNav)["dashboard"]>[0];
 
 interface AdminNavItem {
   key: string;
@@ -57,177 +60,24 @@ interface AdminNavItem {
   locked?: boolean;
 }
 
+/**
+ * The sidebar is built by getAdminNavGroups() in src/lib/adminNav.ts — the
+ * single source of truth for admin navigation.
+ *
+ * This file previously carried its OWN inline copy of the whole nav tree and
+ * never called getAdminNavGroups, so that exported function was dead code and
+ * the two definitions had already drifted apart (different group titles,
+ * different membership). Editing adminNav.ts had no effect on what users
+ * actually saw. One definition now, shaped by audience there.
+ */
 function navGroupsFor(
   audience: AdminAudience,
   profile: EducatorProfile | null,
 ): { title: string; items: AdminNavItem[] }[] {
-  if (audience === "university") {
-    return [
-      {
-        title: "Programme intelligence",
-        items: [
-          {
-            key: "dashboard",
-            label: "Dashboard",
-            icon: "📊",
-            match: "dashboard",
-            go: (n) => adminNav.dashboard(n),
-          },
-          {
-            key: "peers",
-            label: "Peer benchmarks",
-            icon: "🏛️",
-            match: "peers",
-            go: (n) => adminNav.peers(n),
-          },
-        ],
-      },
-      {
-        title: "Market intelligence",
-        items: [
-          {
-            key: "domain-intelligence",
-            label: "Domain lens",
-            icon: "🧭",
-            match: "domain-intelligence",
-            go: (n) => adminNav.domainIntelligence(n),
-          },
-          {
-            key: "role-demand",
-            label: "Role value",
-            icon: "💼",
-            match: "role-demand",
-            go: (n) => adminNav.roleDemand(n),
-          },
-          {
-            key: "skills-gap",
-            label: "Skills gaps",
-            icon: "🧩",
-            match: "skills-gap",
-            go: (n) => adminNav.skillsGap(n),
-          },
-          {
-            key: "trends",
-            label: "Trends",
-            icon: "📈",
-            match: "trends",
-            go: (n) => adminNav.trends(n),
-          },
-        ],
-      },
-      {
-        title: "Setup",
-        items: [
-          {
-            key: "profile",
-            label: "Profile + team",
-            icon: "◎",
-            match: "profile",
-            go: (n) => adminNav.profile(n),
-          },
-          {
-            key: "verify",
-            label: "Verification",
-            icon: "✅",
-            match: "verify",
-            go: (n) => adminNav.verify(n),
-          },
-          {
-            key: "affiliation",
-            label: "Affiliation",
-            icon: "🔗",
-            match: "affiliation",
-            go: (n) => adminNav.affiliation(n),
-          },
-        ],
-      },
-    ];
-  }
-
-  const providerOnly = Boolean(profile?.providerSessionOnly);
-  return [
-    {
-      title: "Guidance intelligence",
-      items: [
-        {
-          key: "guidance",
-          label: "Guidance dashboard",
-          icon: "🧭",
-          match: "guidance",
-          go: (n) => adminNav.guidanceDashboard(n),
-        },
-        {
-          key: "domain-intelligence",
-          label: "Domain lens",
-          icon: "◈",
-          match: "domain-intelligence",
-          go: (n) => adminNav.domainIntelligence(n),
-        },
-        {
-          key: "role-demand",
-          label: "Role value",
-          icon: "▤",
-          match: "role-demand",
-          go: (n) => adminNav.roleDemand(n),
-        },
-        {
-          key: "skills-gap",
-          label: "Learning gaps",
-          icon: "▦",
-          match: "skills-gap",
-          go: (n) => adminNav.skillsGap(n),
-        },
-        {
-          key: "trends",
-          label: "Trends",
-          icon: "↗",
-          match: "trends",
-          go: (n) => adminNav.trends(n),
-        },
-        providerOnly
-          ? {
-              key: "session",
-              label: "Session workspace",
-              icon: "📚",
-              match: "session",
-              go: (n) => adminNav.session(n),
-            }
-          : {
-              key: "students",
-              label: "Students",
-              icon: "👥",
-              match: "students",
-              go: (n) => adminNav.students(n),
-            },
-      ],
-    },
-    {
-      title: "Setup",
-      items: [
-        {
-          key: "profile",
-          label: "Profile + team",
-          icon: "◎",
-          match: "profile",
-          go: (n) => adminNav.profile(n),
-        },
-        {
-          key: "verify",
-          label: "Verification",
-          icon: "✅",
-          match: "verify",
-          go: (n) => adminNav.verify(n),
-        },
-        {
-          key: "affiliation",
-          label: "Affiliation",
-          icon: "🔗",
-          match: "affiliation",
-          go: (n) => adminNav.affiliation(n),
-        },
-      ],
-    },
-  ];
+  return getAdminNavGroups({
+    organizationType: profile?.organizationType,
+    providerSessionOnly: profile?.providerSessionOnly,
+  }) as { title: string; items: AdminNavItem[] }[];
 }
 
 export interface AdminShellProps {
