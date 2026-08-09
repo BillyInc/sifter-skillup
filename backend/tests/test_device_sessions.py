@@ -174,3 +174,68 @@ class TestGetMySession:
         assert data["device_id"] == "devA"
 
 
+class TestGuestAuthRegistersDevice:
+    """Guest auth must create a device session like every other auth route.
+
+    It was the only one of the five that skipped _post_auth_device_register.
+    With SINGLE_DEVICE_ENFORCEMENT on, that left guests with no active_sessions
+    row, so validate_device_header rejected every subsequent authenticated
+    request with device_mismatch — and guest is how the web app browses, so
+    nothing worked past sign-in.
+    """
+
+    @staticmethod
+    def _stub_user(monkeypatch):
+        """conftest's autouse DB mock makes _create_user return a MagicMock,
+        which cannot be JSON-serialised — the response would fail to encode for
+        reasons unrelated to what these tests assert."""
+        import main as main_mod
+        monkeypatch.setattr(
+            main_mod, "_create_user",
+            lambda **kw: {"id": "guest-1", "username": "Guest_x",
+                          "auth_provider": "guest", "points": 0},
+        )
+        monkeypatch.setattr(Auth, "create_jwt", lambda uid: "test.jwt.token")
+
+    def test_guest_auth_registers_the_device(self, monkeypatch):
+        self._stub_user(monkeypatch)
+        registered = {}
+
+        async def fake_register(user_id, device_id, device_name, platform,
+                                app_version, push_token):
+            registered.update(
+                user_id=user_id, device_id=device_id, platform=platform
+            )
+
+        import middleware.device_sessions as md
+        monkeypatch.setattr(md, "register_device_for_user", fake_register)
+
+        with TestClient(app) as c:
+            res = c.post(
+                "/api/auth/guest",
+                json={},
+                headers={"X-Device-Id": "web_test_device", "X-Platform": "web"},
+            )
+
+        assert res.status_code == 200, res.text
+        assert registered.get("device_id") == "web_test_device", (
+            "guest auth did not register the device — every authenticated "
+            "request after this will 401 with device_mismatch"
+        )
+        assert registered.get("platform") == "web"
+
+    def test_guest_auth_survives_an_empty_body(self, monkeypatch):
+        """The route reads request.json() for a body device_id; a client that
+        sends no body at all must still authenticate."""
+        self._stub_user(monkeypatch)
+
+        async def fake_register(*a, **k):
+            return None
+
+        import middleware.device_sessions as md
+        monkeypatch.setattr(md, "register_device_for_user", fake_register)
+
+        with TestClient(app) as c:
+            res = c.post("/api/auth/guest", headers={"X-Device-Id": "d1"})
+        assert res.status_code == 200, res.text
+

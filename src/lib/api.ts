@@ -12,6 +12,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { logger, logApiCall } from './logger';
 import { API_BASE } from './config';
+import { getOrCreateDeviceId } from './deviceId';
 import type {
   UserProfile, AuthResponse, LevelCompletePayload, LevelCompleteResult,
   GameState, UserProgress, LastPosition, Badge, UserBadge,
@@ -63,9 +64,43 @@ async function getToken(): Promise<string | null> {
   return null;
 }
 
+/**
+ * The device id every authenticated request must carry.
+ *
+ * The backend runs DeviceSessionMiddleware with SINGLE_DEVICE_ENFORCEMENT=true,
+ * which 401s any authenticated request lacking a valid `X-Device-Id`. Only
+ * offlineStorage's sync-drain ever sent it, so on a deployed server every other
+ * authenticated call failed — sign-in succeeded and then everything after it
+ * returned "This account is active on another device."
+ *
+ * Resolved once and cached: getOrCreateDeviceId touches SecureStore/AsyncStorage
+ * and this sits in the hot path of every request.
+ */
+let deviceIdPromise: Promise<string | null> | null = null;
+function getDeviceIdCached(): Promise<string | null> {
+  if (!deviceIdPromise) {
+    deviceIdPromise = getOrCreateDeviceId().catch((e) => {
+      // Never block a request on this: an unauthenticated call does not need
+      // the header at all, and a failure here should surface as the server's
+      // own 401 rather than an opaque client crash.
+      logger.warn('Failed to resolve device id', { error: e });
+      return null;
+    });
+  }
+  return deviceIdPromise;
+}
+
 export async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const startTime = Date.now();
   const token = await getToken();
+  // Sent on EVERY request, not just authenticated ones. The auth endpoints
+  // are where the session is created: _post_auth_device_register reads
+  // `X-Device-Id` (or a body device_id) after a successful login and only
+  // registers a session when one is present. Gating this on `token` would mean
+  // login never registers a device, and then every later request fails
+  // validate_device_header with "no active session" — trading a
+  // `device_required` 401 for a `device_mismatch` 401.
+  const deviceId = await getDeviceIdCached();
 
   logger.debug('API request started', {
     endpoint: path,
@@ -79,6 +114,7 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(deviceId ? { 'X-Device-Id': deviceId } : {}),
         ...options.headers,
       },
     });

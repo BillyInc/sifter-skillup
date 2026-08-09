@@ -109,6 +109,19 @@ async def auth_guest(request: Request):
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
     token = Auth.create_jwt(user["id"])
+    # Guest was the ONLY auth route that skipped device registration — telegram,
+    # base-wallet, signup and login all call this. Without it no active_sessions
+    # row exists, so validate_device_header rejects ("no session row at all")
+    # and EVERY authenticated request afterwards 401s with device_mismatch.
+    # Guest is the web app's main entry point, so browsing was dead end-to-end.
+    body: dict = {}
+    try:
+        parsed = await request.json()
+        if isinstance(parsed, dict):
+            body = parsed
+    except Exception:  # noqa: BLE001 — empty or non-JSON body is fine here
+        pass
+    await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
 
 
