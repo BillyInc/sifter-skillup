@@ -8,7 +8,7 @@ import { AdminShell } from "@/screens/admin/AdminShell";
  * Mounts the SAME screens as `app/(tabs)/explore` — the spec is explicit that
  * we do not build new ones — but binds exploreNav to the `(admin)` base so a
  * tap on a domain, role or programme pushes onto THIS stack. Before this
- * layout existed, `/(admin)/explore` was a single leaf route and every card on
+ * layout existed, `/(admin)/workspace-explore` was a single leaf route and every card on
  * it pushed `/(tabs)/explore/...`: the sidebar disappeared and the adviser was
  * dropped into the student app mid-lookup.
  *
