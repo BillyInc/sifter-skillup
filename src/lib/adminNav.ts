@@ -4,6 +4,7 @@
  */
 import type { Router } from "expo-router";
 import type { OrganizationType } from "../types/institution";
+import { adminAudienceForOrg } from "./adminAudience";
 
 export type Nav = Pick<Router, "push" | "replace" | "back">;
 
@@ -40,6 +41,14 @@ export const adminNav = {
   guidanceDashboard(router: Nav) {
     router.push("/(admin)/guidance" as never);
   },
+  /** Audience-correct home. Universities summarise; advisers look things up. */
+  home(router: Nav, audience: AdminAudience) {
+    router.replace(
+      (audience === "university"
+        ? "/(admin)/dashboard"
+        : "/(admin)/explore") as never,
+    );
+  },
   profile(router: Nav) {
     router.push("/(admin)/profile" as never);
   },
@@ -60,9 +69,18 @@ export const adminNav = {
   skillsGap(router: Nav) {
     router.push("/(admin)/skills-gap" as never);
   },
-  /** §5.4 — the student Explore catalogue, caps lifted for verified admins. */
-  explore(router: Nav) {
-    router.push("/(admin)/explore" as never);
+  /**
+   * §5.4 — the student Explore catalogue, caps lifted for verified admins.
+   * `query` seeds the search box, so a dashboard search field can hand off
+   * mid-thought instead of dropping the adviser on an empty landing.
+   */
+  explore(router: Nav, query?: string) {
+    const q = (query ?? "").trim();
+    router.push(
+      (q
+        ? `/(admin)/explore?q=${encodeURIComponent(q)}`
+        : "/(admin)/explore") as never,
+    );
   },
   peers(router: Nav) {
     router.push("/(admin)/peers" as never);
@@ -95,18 +113,54 @@ function audienceFor(ctx?: AdminNavContext | null): AdminAudience {
   ) {
     return "provider";
   }
-  return ctx?.organizationType === "university" ? "university" : "school";
+  // Delegate the university/school split to adminAudience — the shell reads
+  // that module, so a second copy here is how the two drift.
+  return adminAudienceForOrg(ctx?.organizationType) === "university"
+    ? "university"
+    : "school";
 }
 
-function dashboardItem(label: string): AdminNavItem {
+/**
+ * The home row.
+ *
+ * Universities get the General Dashboard (§5.0). School and provider
+ * audiences get the COHORT view at /(admin)/guidance instead: it was already
+ * built (SchoolGuidanceDashboardScreen) but nothing routed to it — every
+ * audience's home row pointed at /(admin)/dashboard, so secondary schools and
+ * tutorial centres were shown the university dashboard, with a Domain Reach
+ * Audit preview and a national rank that mean nothing for an organisation
+ * with no programme mix.
+ *
+ * `match` was "(admin)", which is a group segment and never the last path
+ * segment of /(admin)/dashboard — so the row could not highlight on its own
+ * page. It matches the real leaf now.
+ */
+function dashboardItem(
+  label: string,
+  audience: AdminAudience,
+): AdminNavItem {
+  const university = audience === "university";
   return {
-    key: "dashboard",
+    key: university ? "dashboard" : "guidance",
     label,
     icon: "📊",
-    match: "(admin)",
-    go: (n) => adminNav.dashboard(n),
+    match: university ? "dashboard" : "guidance",
+    go: (n) =>
+      university ? adminNav.dashboard(n) : adminNav.guidanceDashboard(n),
   };
 }
+
+/**
+ * §5.4 Explore. First in the list for advisory audiences because it is their
+ * landing page and their main working surface — see adminHomeForProfile.
+ */
+const EXPLORE_ITEM: AdminNavItem = {
+  key: "explore",
+  label: "Explore",
+  icon: "🔎",
+  match: "explore",
+  go: (n) => adminNav.explore(n),
+};
 
 const PROFILE_ITEM: AdminNavItem = {
   key: "profile",
@@ -136,8 +190,12 @@ export function getAdminNavGroups(
   ctx?: AdminNavContext | null,
 ): AdminNavGroup[] {
   const audience = audienceFor(ctx);
+  // "Cohort", not "Cohort dashboard": for an advisory organisation this row is
+  // not the home page and does not summarise the other views. It is one view —
+  // learner aggregates — and naming it a dashboard is what made it read as a
+  // duplicate of Explore.
   const dashboardLabel =
-    audience === "university" ? "Programme dashboard" : "Cohort dashboard";
+    audience === "university" ? "Programme dashboard" : "Cohort";
   const setupTitle =
     audience === "university"
       ? "Institution workspace"
@@ -161,15 +219,24 @@ export function getAdminNavGroups(
           go: (n) => adminNav.students(n),
         };
 
-  // §5.0 sidebar, in the spec's order:
+  // §5.0 sidebar, in the spec's order for universities:
   //   General Dashboard · Domain Reach Audit · Market Intelligence ·
   //   Skills Gap · Explore · Students · Feedback
   //   —— Workspace: Profile + team · Affiliation · Verification
   //
+  // Advisory audiences reorder deliberately: Explore · Cohort · Guidance
+  // Intelligence · Learning Gaps · Learners · Feedback. Their job is lookup,
+  // so the catalogue leads and the aggregates follow.
+  //
   // Replaces the v1 grouping (Domain lens / Role value / Trends / Peer
   // benchmarks). Three of those were separate screens rendering one column of
   // the same two endpoints; §5.2 merges all five into Market Intelligence.
-  const intelligenceItems: AdminNavItem[] = [dashboardItem(dashboardLabel)];
+  // Advisory audiences lead with Explore (their landing and their working
+  // surface); the cohort view follows. Universities lead with the dashboard.
+  const intelligenceItems: AdminNavItem[] =
+    audience === "university"
+      ? [dashboardItem(dashboardLabel, audience)]
+      : [EXPLORE_ITEM, dashboardItem(dashboardLabel, audience)];
 
   // Domain Reach Audit is UNIVERSITIES ONLY (§5.1: "University administrators
   // only, institution_type = 'university'"). It is CCMAS curriculum-portfolio
@@ -202,13 +269,9 @@ export function getAdminNavGroups(
       match: "skills-gap",
       go: (n) => adminNav.skillsGap(n),
     },
-    {
-      key: "explore",
-      label: "Explore",
-      icon: "🔎",
-      match: "explore",
-      go: (n) => adminNav.explore(n),
-    },
+    // Universities meet Explore here, in the middle of the intelligence group;
+    // advisory audiences already have it pinned at the top.
+    ...(audience === "university" ? [EXPLORE_ITEM] : []),
     learnerItem,
     {
       // §5.6/§6A.1 — SUBMIT only. This is not an inbox: feedback is outbound to

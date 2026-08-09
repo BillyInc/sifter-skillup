@@ -106,7 +106,9 @@ export function AdminShell({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const audience = adminAudienceForProfile(profile);
   const navGroups = navGroupsFor(audience, profile);
-  const homeMatch = audience === "university" ? "dashboard" : "guidance";
+  // Universities land on the dashboard; advisory organisations land on
+  // Explore (adminHomeForProfile). This drives whether the Back button shows.
+  const homeMatch = audience === "university" ? "dashboard" : "explore";
 
   useEffect(() => {
     let active = true;
@@ -118,26 +120,28 @@ export function AdminShell({
     };
   }, []);
 
+  // Match against EVERY path segment, not just the last one. Explore is a
+  // nested stack now (/explore/domain/D001), so the last segment is often an
+  // id — keying on it alone left the whole stack with no highlighted nav row
+  // and, worse, made isHome true on a detail screen, hiding the Back button.
+  const segments = (pathname ?? "").split("/").filter(Boolean);
+  const lastSegment = segments[segments.length - 1] ?? "";
   const activeKey = (() => {
-    const segment = (pathname ?? "").split("/").filter(Boolean).pop() ?? "";
     for (const group of navGroups) {
       for (const item of group.items) {
-        if (segment === item.match) return item.key;
+        if (segments.includes(item.match)) return item.key;
       }
     }
-    return audience === "university" ? "dashboard" : "guidance";
+    return homeMatch;
   })();
-  const isHome = activeKey === homeMatch;
+  // Home means the home route ITSELF, not anything pushed on top of it.
+  const isHome = activeKey === homeMatch && lastSegment === homeMatch;
   const goBack = () => {
     if (router.canGoBack()) {
       router.back();
       return;
     }
-    if (audience === "university") {
-      adminNav.dashboard(router as Nav);
-    } else {
-      adminNav.guidanceDashboard(router as Nav);
-    }
+    adminNav.home(router as Nav, audience);
   };
 
   const navigate = (item: AdminNavItem) => {

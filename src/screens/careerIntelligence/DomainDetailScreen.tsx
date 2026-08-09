@@ -27,7 +27,7 @@ import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
   type DataState,
@@ -116,6 +116,7 @@ function DomainBody({
 }) {
   const { colors } = useTheme();
   const router = useRouter();
+  const exploreNav = useExploreNav();
   const resp = useResponsive();
 
   const cluster = domain.cluster ?? domain.clusters?.[0];
