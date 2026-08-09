@@ -34,6 +34,7 @@ import {
 } from "@/theme";
 import { adminNav, getAdminNavGroups } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { ADMIN_EXPLORE_SEGMENT } from "@/lib/exploreNav";
 import {
   adminAudienceForProfile,
   adminAudienceLabel,
@@ -108,7 +109,15 @@ export function AdminShell({
   const navGroups = navGroupsFor(audience, profile);
   // Universities land on the dashboard; advisory organisations land on
   // Explore (adminHomeForProfile). This drives whether the Back button shows.
-  const homeMatch = audience === "university" ? "dashboard" : "explore";
+  //
+  // Key and URL segment are tracked separately because they stopped being the
+  // same string: the admin Explore stack lives at /workspace-explore (the plain
+  // /explore path collides with the student stack) while its nav key is still
+  // "explore". One `homeMatch` compared against both would always be wrong for
+  // one of them.
+  const homeKey = audience === "university" ? "dashboard" : "explore";
+  const homeSegment =
+    audience === "university" ? "dashboard" : ADMIN_EXPLORE_SEGMENT;
 
   useEffect(() => {
     let active = true;
@@ -132,10 +141,10 @@ export function AdminShell({
         if (segments.includes(item.match)) return item.key;
       }
     }
-    return homeMatch;
+    return homeKey;
   })();
   // Home means the home route ITSELF, not anything pushed on top of it.
-  const isHome = activeKey === homeMatch && lastSegment === homeMatch;
+  const isHome = activeKey === homeKey && lastSegment === homeSegment;
   const goBack = () => {
     if (router.canGoBack()) {
       router.back();

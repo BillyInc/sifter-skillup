@@ -5,7 +5,7 @@
  * takes the expo-router `router` (from useRouter()).
  *
  * BASE-AWARE. The same Explore screens are mounted twice: under
- * `/(tabs)/explore` for students and under `/(admin)/explore` for verified
+ * `/(tabs)/explore` for students and under `/(admin)/workspace-explore` for verified
  * admins (§5.4: "do not build new screens. Reuse the existing student-facing
  * Explore detail screens inside the admin shell"). These helpers used to
  * hardcode the `(tabs)` prefix, so every card and every search result on the
@@ -22,7 +22,18 @@ import type { Router } from "expo-router";
 type Nav = Pick<Router, "push" | "replace" | "back">;
 
 export const TABS_EXPLORE_BASE = "/(tabs)/explore";
-export const ADMIN_EXPLORE_BASE = "/(admin)/explore";
+/**
+ * NOT `/(admin)/explore`. Expo-router group names are invisible in the URL, so
+ * `(tabs)/explore/domains` and `(admin)/explore/domains` both serialise to
+ * `/explore/domains` — the same 15 paths declared twice. On a cold load of that
+ * URL the router picked the admin file, so a signed-out guest opening a shared
+ * link landed inside the "School guidance workspace" shell (the admin group has
+ * no auth guard). A distinct segment is what actually removes the ambiguity;
+ * guarding the group would only have changed which wrong thing happened.
+ */
+export const ADMIN_EXPLORE_BASE = "/(admin)/workspace-explore";
+/** URL segment for ADMIN_EXPLORE_BASE — what `useSegments()` reports. */
+export const ADMIN_EXPLORE_SEGMENT = "workspace-explore";
 
 export type ExploreNav = ReturnType<typeof makeExploreNav>;
 
@@ -97,7 +108,7 @@ const adminExploreNav = makeExploreNav(ADMIN_EXPLORE_BASE);
 const ExploreBaseContext = React.createContext<string>(TABS_EXPLORE_BASE);
 
 /**
- * Mounted by `app/(admin)/explore/_layout.tsx` so every Explore screen beneath
+ * Mounted by `app/(admin)/workspace-explore/_layout.tsx` so every Explore screen beneath
  * it navigates within the admin stack. Absent it, the default is `(tabs)`.
  */
 export function ExploreBaseProvider({

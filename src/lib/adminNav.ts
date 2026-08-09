@@ -5,6 +5,7 @@
 import type { Router } from "expo-router";
 import type { OrganizationType } from "../types/institution";
 import { adminAudienceForOrg } from "./adminAudience";
+import { ADMIN_EXPLORE_SEGMENT } from "./exploreNav";
 
 export type Nav = Pick<Router, "push" | "replace" | "back">;
 
@@ -46,7 +47,7 @@ export const adminNav = {
     router.replace(
       (audience === "university"
         ? "/(admin)/dashboard"
-        : "/(admin)/explore") as never,
+        : "/(admin)/workspace-explore") as never,
     );
   },
   profile(router: Nav) {
@@ -78,8 +79,8 @@ export const adminNav = {
     const q = (query ?? "").trim();
     router.push(
       (q
-        ? `/(admin)/explore?q=${encodeURIComponent(q)}`
-        : "/(admin)/explore") as never,
+        ? `/(admin)/workspace-explore?q=${encodeURIComponent(q)}`
+        : "/(admin)/workspace-explore") as never,
     );
   },
   peers(router: Nav) {
@@ -158,7 +159,10 @@ const EXPLORE_ITEM: AdminNavItem = {
   key: "explore",
   label: "Explore",
   icon: "🔎",
-  match: "explore",
+  // The URL segment, which is deliberately NOT "explore" — see
+  // ADMIN_EXPLORE_BASE. Matching on "explore" here would also light this row up
+  // on the student stack, whose segment really is "explore".
+  match: ADMIN_EXPLORE_SEGMENT,
   go: (n) => adminNav.explore(n),
 };
 
