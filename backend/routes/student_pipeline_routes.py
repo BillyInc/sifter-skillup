@@ -416,7 +416,30 @@ async def get_jamb_programme(jamb_programme_id: str):
         return ResponseModel(data=_coming_soon("JAMB programme detail is temporarily unavailable."))
 
 
+def _skill_list(value: Any) -> list[str]:
+    """A JSONB text[] from the skills profile, defensively flattened."""
+    if not isinstance(value, list):
+        return []
+    return [s.strip() for s in value if isinstance(s, str) and s.strip()]
+
+
 def _jamb_detail_out(r: dict) -> dict:
+    """Shape a JAMB programme for the student surface.
+
+    The student's identifier is the JAMB NAME — what their school calls the
+    course. CCMAS is the mapping substrate underneath it: it is how a JAMB name
+    resolves to domains and roles, and it is not something a student needs to
+    read. `canonicalProgrammeName`, `discipline`, `mappingType`, `mappingNote`
+    and `confidence` are therefore no longer emitted here; the mapping still
+    happens, it just stops being presented as a curriculum fact.
+
+    What replaces it is the thing a student actually asked: what this degree
+    teaches. `skillsTechnical` is derived from the CCMAS course learning
+    outcomes, `skillsTransferable` from the employability and 21st-century
+    skill lists.
+    """
+    technical = _skill_list(r.get("skills_technical"))
+    transferable = _skill_list(r.get("skills_transferable"))
     return {
         "id": r.get("jamb_programme_id"),
         "jambProgrammeId": r.get("jamb_programme_id"),
@@ -424,14 +447,14 @@ def _jamb_detail_out(r: dict) -> dict:
         "jambFaculty": r.get("jamb_faculty"),
         "degreeType": r.get("degree_type"),
         "isBlend": bool(r.get("is_blend")),
+        # Kept: the id is needed to fetch schools/domains/requirements, and
+        # institutionType drives which registry a result belongs to. Neither is
+        # CCMAS vocabulary shown to the student.
         "programmeId": r.get("programme_id"),
-        "canonicalProgrammeName": r.get("canonical_programme_name"),
-        "displayName": r.get("display_name"),
         "institutionType": r.get("institution_type"),
-        "discipline": r.get("discipline"),
-        "mappingType": r.get("mapping_type"),
-        "mappingNote": r.get("mapping_note"),
-        "confidence": r.get("confidence"),
+        "skillsTechnical": technical,
+        "skillsTransferable": transferable,
+        "skillsCount": len(technical) + len(transferable),
     }
 
 
@@ -459,6 +482,80 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb domains failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Domain paths are temporarily unavailable."))
+
+
+@router.get("/schools/{school_id}/programmes", response_model=ResponseModel)
+async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
+    """The courses a given university actually offers, by JAMB name.
+
+    The entry point for a student who is ALREADY ENROLLED. They do not need the
+    national picker — they know their university and their course, so they name
+    the school and pick their course off its list. `v_school_jamb_programmes`
+    covers all 778 schools (7,888 offerings).
+
+    A second read attaches the skills profile: the offerings view carries the
+    JAMB name but not `skills_technical` / `skills_transferable`, and those are
+    the point of the row.
+    """
+    try:
+        svc = _svc()
+        query = (
+            svc.table("v_school_jamb_programmes")
+            .select("*")
+            .eq("school_id", school_id)
+        )
+        if q and q.strip():
+            query = query.ilike("jamb_name", f"%{q.strip()}%")
+        res = query.order("jamb_name").limit(400).execute()
+        rows = res.data or []
+        if not rows:
+            return ResponseModel(
+                data=_real([], "No course list recorded for this institution yet.")
+            )
+
+        skills_by_id: dict[str, dict] = {}
+        jamb_ids = list({r["jamb_programme_id"] for r in rows if r.get("jamb_programme_id")})
+        if jamb_ids:
+            try:
+                sk = (
+                    svc.table("jamb_programmes")
+                    .select("id, skills_technical, skills_transferable")
+                    .in_("id", jamb_ids)
+                    .execute()
+                )
+                skills_by_id = {r["id"]: r for r in (sk.data or [])}
+            except Exception as exc:  # noqa: BLE001
+                # Degrade to names only rather than failing the whole list.
+                log.warning("school programme skills lookup skipped", error=str(exc))
+
+        items = []
+        for r in rows:
+            sk = skills_by_id.get(r.get("jamb_programme_id")) or {}
+            technical = _skill_list(sk.get("skills_technical"))
+            transferable = _skill_list(sk.get("skills_transferable"))
+            items.append(
+                {
+                    "schoolId": r.get("school_id"),
+                    "schoolName": r.get("school_name"),
+                    "institutionType": r.get("institution_type"),
+                    "jambProgrammeId": r.get("jamb_programme_id"),
+                    # The name THIS school uses. Deliberately not the CCMAS
+                    # canonical name, which the view also carries.
+                    "jambName": r.get("jamb_name"),
+                    "utmeSubjects": r.get("utme_subjects"),
+                    "olevelRequirement": r.get("olevel_requirement"),
+                    "directEntry": r.get("direct_entry"),
+                    "skillsTechnical": technical,
+                    "skillsTransferable": transferable,
+                    "skillsCount": len(technical) + len(transferable),
+                }
+            )
+        return ResponseModel(data=_real(items))
+    except Exception as exc:  # noqa: BLE001
+        log.error("student school programmes failed", error=str(exc))
+        return ResponseModel(
+            data=_coming_soon("This institution's course list is temporarily unavailable.")
+        )
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/schools", response_model=ResponseModel)

@@ -28,6 +28,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  TextInput,
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
@@ -211,6 +212,15 @@ export function GeneralDashboardScreen() {
             </Text>
           ) : null}
         </View>
+
+        {/* ── Search entry point → Explore ──
+            The dashboard is institution-scoped and glanceable; Explore is the
+            national catalogue and is reached by asking it something. Rather
+            than merge two different scopes onto one surface, this is a single
+            row that carries the question across. */}
+        <ExploreSearchEntry
+          onSubmit={(q) => adminNav.explore(router as Nav, q)}
+        />
 
         {/* ── Stat row (§5.0) ── */}
         <View style={styles.stats}>
@@ -492,6 +502,61 @@ export function GeneralDashboardScreen() {
   );
 }
 
+/**
+ * A one-row hand-off into Explore (§5.4).
+ *
+ * Deliberately NOT an inline results panel: Explore is the national catalogue
+ * with its own navigation stack, and embedding it would nest a whole
+ * back-history inside a summary page while putting national figures next to
+ * institution-scoped ones. Submitting navigates, carrying the query.
+ */
+function ExploreSearchEntry({ onSubmit }: { onSubmit: (q: string) => void }) {
+  const { colors } = useTheme();
+  const [term, setTerm] = useState("");
+  const go = () => {
+    const q = term.trim();
+    if (q.length < 2) return;
+    onSubmit(q);
+  };
+  return (
+    <View
+      style={[
+        styles.searchRow,
+        { backgroundColor: colors.card, borderColor: colors.border },
+      ]}
+    >
+      <Text style={styles.searchIcon}>🔎</Text>
+      <TextInput
+        value={term}
+        onChangeText={setTerm}
+        onSubmitEditing={go}
+        returnKeyType="search"
+        placeholder="Search any programme, domain or role nationally"
+        placeholderTextColor={colors.textMuted}
+        accessibilityLabel="Search the national programme map"
+        style={[styles.searchInput, { color: colors.text }]}
+      />
+      <TouchableOpacity
+        onPress={go}
+        activeOpacity={0.75}
+        accessibilityRole="button"
+        accessibilityLabel="Open Explore with this search"
+        style={styles.link}
+      >
+        <Text
+          style={[
+            styles.linkText,
+            CompassFonts.bodySemibold,
+            { color: colors.accent },
+          ]}
+        >
+          Explore →
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 /** A titled block; used for the plain (link-less) sections. */
 function Section({
   title,
@@ -654,6 +719,18 @@ const styles = StyleSheet.create({
   dataNote: { fontSize: FontSize.xs, marginTop: -Spacing.md },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },
+  searchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
+    minHeight: 52,
+  },
+  searchIcon: { fontSize: FontSize.md },
+  searchInput: { flex: 1, fontSize: FontSize.sm, minHeight: 40 },
   grid: { gap: Spacing.lg },
   gridWide: { flexDirection: "row", alignItems: "flex-start" },
   gridCell: { flex: 1, minWidth: 260 },

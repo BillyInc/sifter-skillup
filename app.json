@@ -62,7 +62,8 @@
       "bundler": "metro",
       "output": "single",
       "favicon": "./assets/icon.png",
-      "themeColor": "#111827"
+      "themeColor": "#111827",
+      "description": "Search any Nigerian university programme and see the skills it teaches, the career fields it opens, and every university that offers it."
     },
     "platforms": [
       "ios",

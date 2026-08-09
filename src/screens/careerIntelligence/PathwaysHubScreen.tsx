@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter, type Router } from "expo-router";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav, type ExploreNav } from "@/lib/exploreNav";
 import {
   useTheme,
   Spacing,
@@ -31,48 +31,52 @@ import {
 type Nav = Pick<Router, "push" | "replace" | "back">;
 
 // The special flows — fixed structure, always rendered. Each navigates via
-// exploreNav so the route strings stay centralised.
+// exploreNav so the route strings stay centralised. `go` takes the navigator
+// as an argument rather than closing over the module-level one: this list is
+// built at import time, but which stack it should route into (student tabs vs
+// the admin shell) is only known at render.
 const PATHWAYS: {
   icon: string;
   title: string;
   body: string;
-  go: (router: Nav) => void;
+  go: (router: Nav, nav: ExploreNav) => void;
 }[] = [
   {
     icon: "🎓",
     title: "PhD — beyond the lectureship",
     body: "The non-academic routes a doctorate actually opens, including the PhD-quant standalone.",
-    go: (router) => exploreNav.phd(router),
+    go: (router, nav) => nav.phd(router),
   },
   {
     icon: "🔄",
     title: "Career change",
     body: "Translate what you already have — job switch, adjacent pivot, significant or forced change.",
-    go: (router) => exploreNav.careerChange(router),
+    go: (router, nav) => nav.careerChange(router),
   },
   {
     icon: "⬆️",
     title: "Qualification upgrades",
     body: "Move up the ladder — OND → Direct Entry → B.Sc, HND top-ups and ELR routes.",
-    go: (router) => exploreNav.qualificationUpgrades(router),
+    go: (router, nav) => nav.qualificationUpgrades(router),
   },
   {
     icon: "◆",
     title: "Chartership & credentials",
     body: "Chartered routes and the credentials that travel — CEng/COREN, CFA, ICAN/ACCA, PLAB, SQE.",
-    go: (router) => exploreNav.charterships(router),
+    go: (router, nav) => nav.charterships(router),
   },
   {
     icon: "▦",
     title: "Build a business",
     body: "For students and founders who want to turn a skill, market problem or programme into a venture path.",
-    go: (router) => exploreNav.entrepreneurship(router),
+    go: (router, nav) => nav.entrepreneurship(router),
   },
 ];
 
 export function PathwaysHubScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const exploreNav = useExploreNav();
 
   return (
     <ScrollView
@@ -97,7 +101,7 @@ export function PathwaysHubScreen() {
             icon={p.icon}
             title={p.title}
             body={p.body}
-            onPress={() => p.go(router)}
+            onPress={() => p.go(router, exploreNav)}
             colors={colors}
           />
         ))}

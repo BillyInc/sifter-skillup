@@ -24,7 +24,7 @@ import {
 } from "@/components/careerIntelligence";
 import { DemandMetricsBlock } from "@/components/careerIntelligence/DemandMetricsBlock";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
   type DataState,
@@ -85,6 +85,7 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
 function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   const { colors } = useTheme();
   const router = useRouter();
+  const exploreNav = useExploreNav();
   const resp = useResponsive();
 
   const aka = role.alsoKnownAs?.length ? role.alsoKnownAs.join(", ") : null;
@@ -315,6 +316,7 @@ function RouteIntoSection({
   router: ReturnType<typeof useRouter>;
   colors: ColorPalette;
 }) {
+  const exploreNav = useExploreNav();
   const hasLadder = careerLadder?.length;
   const hasDomains = appearsIn.length;
 

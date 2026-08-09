@@ -27,7 +27,7 @@ import {
 } from "@/components/careerIntelligence";
 import { StaggerReveal } from "@/components/animations";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import { comingSoon, type DataState } from "@/types/career";
 import {
   useTheme,
@@ -46,6 +46,7 @@ import { getClusterColor, getClusterIcon } from "@/data/clusterMaps";
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const exploreNav = useExploreNav();
   const resp = useResponsive();
   const [filter, setFilter] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
