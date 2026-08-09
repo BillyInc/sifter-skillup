@@ -82,13 +82,22 @@ export interface JambProgrammeSuggestion {
   degreeType?: string | null;
   isBlend?: boolean;
   programmeId?: string | null;
-  canonicalProgrammeName?: string | null;
-  displayName?: string | null;
   institutionType?: string | null;
-  discipline?: string | null;
-  mappingType?: string | null;
-  mappingNote?: string | null;
-  confidence?: string | null;
+  /**
+   * What this degree teaches — derived from the CCMAS course learning
+   * outcomes. `skillsTechnical` is the differentiating set ("explain the
+   * concept of random variables…"), `skillsTransferable` the cross-cutting one
+   * ("collaboration", "information literacy").
+   *
+   * The CCMAS presentation fields that used to sit here
+   * (canonicalProgrammeName, displayName, discipline, mappingType,
+   * mappingNote, confidence) are gone. CCMAS is how a JAMB name resolves to
+   * domains and roles; it is not a curriculum fact a student reads. They see
+   * the JAMB name their school uses, and what it teaches.
+   */
+  skillsTechnical?: string[] | null;
+  skillsTransferable?: string[] | null;
+  skillsCount?: number | null;
 }
 
 /** General requirements block from programme_subject_requirements (brochure
@@ -129,6 +138,32 @@ export interface JambProgrammeSchool {
   jambCutoff?: number | null;
   form?: "UTME" | "DE" | null;
   sourceUrl?: string | null;
+}
+
+/** A university in the admission registry (school typeahead result). */
+export interface AdmissionSchool {
+  id: string;
+  name: string;
+  institutionType: string;
+}
+
+/**
+ * A course as a specific university lists it — the enrolled student's entry
+ * point. `jambName` is the name THAT school uses, never the CCMAS canonical
+ * name.
+ */
+export interface SchoolProgrammeOffering {
+  schoolId: string;
+  schoolName: string;
+  institutionType?: string | null;
+  jambProgrammeId: string;
+  jambName: string;
+  utmeSubjects?: string | null;
+  olevelRequirement?: string | null;
+  directEntry?: string | null;
+  skillsTechnical?: string[] | null;
+  skillsTransferable?: string[] | null;
+  skillsCount?: number | null;
 }
 
 export interface StudentAffiliation {
@@ -254,6 +289,23 @@ export const careerData = {
     } catch {
       return comingSoon<JambProgrammeSchool[]>(
         "Schools and cut-offs are unavailable.",
+      );
+    }
+  },
+
+  /** Courses offered by one institution (the enrolled-student entry point). */
+  async getSchoolProgrammes(
+    schoolId: string,
+    q?: string,
+  ): Promise<DataState<SchoolProgrammeOffering[]>> {
+    try {
+      const qs = q && q.trim() ? `?q=${encodeURIComponent(q.trim())}` : "";
+      return await request<DataState<SchoolProgrammeOffering[]>>(
+        `/api/student/schools/${encodeURIComponent(schoolId)}/programmes${qs}`,
+      );
+    } catch {
+      return comingSoon<SchoolProgrammeOffering[]>(
+        "That institution's course list is unavailable.",
       );
     }
   },
@@ -699,11 +751,11 @@ export const careerData = {
   /** Typeahead over universities with admission data (onboarding picker). */
   async searchAdmissionSchools(
     q: string,
-  ): Promise<DataState<{ id: string; name: string; institutionType: string }[]>> {
+  ): Promise<DataState<AdmissionSchool[]>> {
     try {
-      return await request<
-        DataState<{ id: string; name: string; institutionType: string }[]>
-      >(`/api/admission/schools?q=${encodeURIComponent(q)}`);
+      return await request<DataState<AdmissionSchool[]>>(
+        `/api/admission/schools?q=${encodeURIComponent(q)}`,
+      );
     } catch {
       return comingSoon("School search is temporarily unavailable.");
     }

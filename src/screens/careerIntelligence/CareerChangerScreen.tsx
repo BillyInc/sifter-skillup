@@ -34,7 +34,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { DataStateView } from "@/components/careerIntelligence";
 import { SifterCard, PressableCard, SectionHeader, ProgressBar } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav, type ExploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
   type DataState,
@@ -577,7 +577,7 @@ function IntroCard({ colors }: { colors: ColorPalette }) {
 }
 
 /** Result display for Scenario A: Fields you can move into */
-type PivotRouter = Parameters<typeof exploreNav.domain>[0];
+type PivotRouter = Parameters<ExploreNav["domain"]>[0];
 
 function PivotResults({
   data,
@@ -588,6 +588,7 @@ function PivotResults({
   colors: ColorPalette;
   router: PivotRouter;
 }) {
+  const exploreNav = useExploreNav();
   const topOverlap = data.moves[0]?.overlapScore ?? 0;
   const isStretch = topOverlap < STRETCH_THRESHOLD;
 

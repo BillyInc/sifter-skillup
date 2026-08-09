@@ -26,7 +26,7 @@ import {
   NotesWidget,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
   type AdmissionInsight,
@@ -262,6 +262,7 @@ function ProgrammeCompareCard({
   colors: ColorPalette;
   router: ReturnType<typeof useRouter>;
 }) {
+  const exploreNav = useExploreNav();
   return (
     <DataStateView
       state={item.programme}

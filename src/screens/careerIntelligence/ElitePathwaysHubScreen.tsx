@@ -11,7 +11,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { DataStateView, ElitePathwayCard } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import { ELITE_DOMAIN_COUNT } from "@/lib/elitePathwayPolicy";
 import {
   comingSoon,
@@ -30,6 +30,7 @@ import {
 export function ElitePathwaysHubScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const exploreNav = useExploreNav();
   const [state, setState] = useState<DataState<ElitePathwaySummary[]>>(() =>
     comingSoon<ElitePathwaySummary[]>("Elite pathways are being populated."),
   );

@@ -19,7 +19,6 @@ import {
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useResponsive } from "@/hooks/useResponsive";
-import { exploreNav } from "@/lib/exploreNav";
 import {
   type DataState,
   type ProgrammeSchoolCutoff,

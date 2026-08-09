@@ -81,13 +81,6 @@ interface LearnerIntelligenceView {
   topDomains?: LearnerDomainShareView[];
 }
 
-/** The workflow steps are static copy, not data — §6.0's numbered guidance. */
-const WORKFLOW_STEPS: readonly string[] = [
-  "Pick a domain with the student.",
-  "Compare universities that offer programmes feeding it.",
-  "Shortlist roles and check their demand signal.",
-];
-
 function loadingState<T>(): DataState<T> {
   return { status: "pending", data: null };
 }
@@ -143,7 +136,11 @@ export function SchoolGuidanceDashboardScreen() {
 
   const providerOnly = Boolean(profile?.providerSessionOnly);
   const learnerNoun = providerOnly ? "Sessions" : "Learners";
-  const title = providerOnly ? "Guidance sessions" : "General dashboard";
+  // NOT "General dashboard". An advisory organisation's home is Explore (see
+  // adminHomeForProfile) — this is one view among several, and calling it a
+  // general dashboard is what made it read as a second, worse copy of the
+  // catalogue. It is the cohort: who your learners are, in aggregate.
+  const title = providerOnly ? "Guidance sessions" : "Cohort";
   const orgName =
     (summary.status === "real" ? summary.data?.institutionName : null) ||
     profile?.organizationName ||
@@ -185,10 +182,10 @@ export function SchoolGuidanceDashboardScreen() {
               .join("  ·  ")}
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            Programme and career advisory for your learners: which JAMB
-            programmes have real Nigerian demand, and which universities offer
-            them. Aggregate only — you never see an individual learner's
-            choices unless they explicitly link their account.
+            Who your learners are, in aggregate. Programme and university
+            lookup lives in Explore. Aggregate only — you never see an
+            individual learner's choices unless they explicitly link their
+            account.
           </Text>
         </View>
 
@@ -275,37 +272,19 @@ export function SchoolGuidanceDashboardScreen() {
           <IntelligenceAlerts state={alerts} />
         </View>
 
-        {/* ── Two panels: workflow + guidance market intelligence ── */}
+        {/* ── Two panels: lookup hand-off + guidance market intelligence ── */}
         <View style={[styles.grid, wide && styles.gridWide]}>
           <View style={wide ? styles.gridCell : undefined}>
             <Panel
-              title="Guidance workflow"
-              linkLabel="Open compare"
-              // §6.3 University Comparison is not built yet (PART 6 educator
-              // views are out of scope for this change). Market Intelligence is
-              // the honest destination until it lands — it is the same data,
-              // without the educator-specific comparison framing.
-              onPress={() => adminNav.marketIntelligence(router as Nav)}
+              title="Advising a learner?"
+              linkLabel="Open Explore"
+              onPress={() => adminNav.explore(router as Nav)}
             >
-              {WORKFLOW_STEPS.map((step, i) => (
-                <View
-                  key={step}
-                  style={[styles.step, { borderTopColor: colors.border }]}
-                >
-                  <Text
-                    style={[
-                      styles.stepIndex,
-                      CompassFonts.data,
-                      { color: colors.textMuted },
-                    ]}
-                  >
-                    {i + 1}
-                  </Text>
-                  <Text style={[styles.stepBody, { color: colors.text }]}>
-                    {step}
-                  </Text>
-                </View>
-              ))}
+              <Text style={[styles.panelNote, { color: colors.textMuted }]}>
+                Programmes, universities, requirements and cut-offs are in
+                Explore — your home page. This screen answers a different
+                question: who your learners are, taken together.
+              </Text>
             </Panel>
           </View>
 

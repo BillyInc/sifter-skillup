@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+  Web HTML template — overrides @expo/cli's built-in one.
+
+  Why this file and not `app/+html.tsx`: `+html.tsx` is only consulted for
+  static rendering (`web.output: "static"`). This app is `output: "single"`, and
+  in that mode @expo/cli builds index.html via createTemplateHtmlAsync, which
+  reads `public/index.html` when present and otherwise falls back to its own
+  template. A `+html.tsx` here is silently ignored.
+
+  Expo's contract with this file: it substitutes two percent-delimited tokens
+  (the lang one on <html>, the title one inside <title>) with web.lang and the
+  app name, then appends script/link tags plus theme-color and description meta
+  immediately before the closing head tag.
+
+  DO NOT write those two tokens anywhere else in this file, including in a
+  comment. @expo/cli substitutes them with String.replace and a string pattern,
+  which replaces only the FIRST match — a mention up here silently eats the
+  substitution and ships a literal placeholder as the page title.
+
+  Everything below exists because a shared link previewed as a bare URL: the
+  default template emits no Open Graph or Twitter Card tags at all.
+
+  og:image MUST be absolute — every major scraper ignores relative paths. It is
+  hardcoded to the prod origin on purpose: dev and prod serve the same bundle,
+  and a preview is a shared, public artefact, so it should show the canonical
+  card rather than leaking a dev hostname into someone's timeline.
+-->
+<html lang="%LANG_ISO_CODE%">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>%WEB_TITLE%</title>
+
+    <link rel="canonical" href="https://levelup.com.ng" />
+
+    <!-- Open Graph — WhatsApp, Facebook, LinkedIn, Slack, Discord -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sifter LevelUp" />
+    <meta property="og:title" content="Sifter LevelUp — what your degree actually teaches you" />
+    <meta
+      property="og:description"
+      content="Search any Nigerian university programme and see the skills it teaches, the career fields it opens, the roles inside them, and every university that offers it — with entry requirements and cut-offs."
+    />
+    <meta property="og:url" content="https://levelup.com.ng" />
+    <meta property="og:image" content="https://levelup.com.ng/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <!-- Declaring dimensions lets a scraper reserve the 1.91:1 box before the
+         image loads, which is what stops the card collapsing to a square. -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Sifter LevelUp — 420 programmes, 778 universities, 168 domains"
+    />
+    <meta property="og:locale" content="en_NG" />
+
+    <!-- Twitter/X reads its own namespace; it does not fall back to og:* for cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sifter LevelUp — what your degree actually teaches you" />
+    <meta
+      name="twitter:description"
+      content="Search any Nigerian university programme and see the skills it teaches, the career fields it opens, and every university that offers it."
+    />
+    <meta name="twitter:image" content="https://levelup.com.ng/og.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Sifter LevelUp — 420 programmes, 778 universities, 168 domains"
+    />
+
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      /* These styles make the body full-height */
+      html,
+      body {
+        height: 100%;
+      }
+      /* These styles disable body scrolling if you are using <ScrollView> */
+      body {
+        overflow: hidden;
+      }
+      /* These styles make the root element full-height */
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

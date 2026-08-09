@@ -33,7 +33,7 @@ celery.conf.update(
         "fetch-labour-market-demand": {"task": "celery_worker.fetch_labour_market_demand", "schedule": crontab(hour="*/6", minute=30)},
         "compute-elite-composite": {"task": "celery_worker.compute_elite_composite", "schedule": crontab(hour=5, minute=0)},
         # Phase 8 — Annual admission snapshot version (placeholder)
-        "compile-admission-snapshot": {"task": "celery_worker.compile_admission_snapshot", "schedule": crontab(month=1, day=15, hour=10, minute=0)},
+        "compile-admission-snapshot": {"task": "celery_worker.compile_admission_snapshot", "schedule": crontab(month_of_year=1, day_of_month=15, hour=10, minute=0)},
         # Phase 9 — Enrichment freshness check (weekly)
         "check-enrichment-freshness": {"task": "celery_worker.check_enrichment_freshness", "schedule": crontab(day_of_week="monday", hour=6, minute=0)},
         # Provisioning Phase 6 — duplicate shell reconciliation candidates

@@ -155,3 +155,7 @@ export type { BannerVariant } from "./LayoutPrimitives";
 // ── Domain icon system (Phase 12) ────────────────────────────
 export { DomainIcon } from "./DomainIcon";
 export type { DomainIconProps } from "./DomainIcon";
+
+// ── What a degree teaches (CCMAS learning-outcome profile) ────
+export { DegreeSkills } from "./DegreeSkills";
+export type { DegreeSkillsProps } from "./DegreeSkills";

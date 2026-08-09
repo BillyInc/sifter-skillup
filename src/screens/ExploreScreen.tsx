@@ -39,7 +39,7 @@ import {
 } from "@/components/careerIntelligence";
 import { SifterButton, SifterCard, PressableCard } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav, type ExploreNav } from "@/lib/exploreNav";
 import { locked, type DataState, type CareerSearchResult } from "@/types/career";
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -83,19 +83,44 @@ const asTier = (t?: string): TierType | undefined =>
 const isEmptyResult = (r: CareerSearchResult): boolean =>
   r.domains.length === 0 && r.roles.length === 0 && r.programmes.length === 0;
 
-export default function ExploreScreen() {
+export interface ExploreScreenProps {
+  /**
+   * Seeds the search box. Used by the admin dashboard's search entry point so
+   * a hand-off arrives on results rather than on an empty landing.
+   */
+  initialQuery?: string;
+  /**
+   * Rendered between the header and the search box. The admin stack passes an
+   * audience-specific explainer here; the student stack passes nothing.
+   */
+  intro?: React.ReactNode;
+  /** Overrides the student-facing headline for other audiences. */
+  heading?: string;
+}
+
+export default function ExploreScreen({
+  initialQuery = "",
+  intro,
+  heading,
+}: ExploreScreenProps = {}) {
   const { colors } = useTheme();
   const { user, signInGuest } = useAuth();
   const router = useRouter();
+  const exploreNav = useExploreNav();
   const responsive = useResponsive();
   const isGuest = !user || user.auth_provider === "guest";
   const hasSession = Boolean(user);
 
   const searchRef = useRef<TextInput>(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState<ResultFilter>("all");
   const [loading, setLoading] = useState(false);
-  const [recents, setRecents] = useState<string[]>(["Medicine", "Data analyst", "Law"]);
+  // Starts EMPTY. This was seeded with ["Medicine", "Data analyst", "Law"] and
+  // labelled "Recent" — three searches the user had never run, presented as
+  // their own history. In a product whose stated rule is "degrade to '—'
+  // rather than invent a number", inventing history is the same defect with a
+  // friendlier face. Suggested searches below are honestly labelled as such.
+  const [recents, setRecents] = useState<string[]>([]);
   const [results, setResults] = useState<DataState<CareerSearchResult> | null>(
     null,
   );
@@ -169,7 +194,7 @@ export default function ExploreScreen() {
       </Text>
       <View style={styles.titleRow}>
         <Text style={[styles.title, { color: colors.textRole.primary }]}>
-          Find your field, role{"\n"}or programme
+          {heading ?? `Find your field, role\nor programme`}
         </Text>
         <InfoTooltip
           label="Field, role, programme"
@@ -203,6 +228,8 @@ export default function ExploreScreen() {
           ) : null}
         </View>
       ) : null}
+
+      {intro}
 
       {/* ── Search ────────────────────────────────────────────── */}
       <CoachMark
@@ -243,6 +270,7 @@ export default function ExploreScreen() {
           recents={recents}
           isGuest={isGuest}
           router={router}
+          nav={exploreNav}
           onPick={(term) => {
             setQuery(term);
             searchRef.current?.focus();
@@ -398,12 +426,15 @@ function ExploreIdle({
   recents,
   isGuest,
   router,
+  nav,
   onPick,
   onFocusSearch,
 }: {
   recents: string[];
   isGuest: boolean;
   router: ReturnType<typeof useRouter>;
+  /** Base-aware: the same cards route into whichever stack is mounted. */
+  nav: ExploreNav;
   onPick: (term: string) => void;
   onFocusSearch: () => void;
 }) {
@@ -427,9 +458,7 @@ function ExploreIdle({
               <StaggerReveal key={c.id} index={i}>
                 <TouchableOpacity
                   activeOpacity={0.85}
-                  onPress={() => {
-                    router.push("/(tabs)/explore/domains" as never);
-                  }}
+                  onPress={() => nav.domains(router)}
                   style={[styles.clusterCard, { borderColor: c.color + "30" }]}
                 >
                   <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
@@ -450,9 +479,7 @@ function ExploreIdle({
                 <StaggerReveal key={c.id} index={i}>
                   <TouchableOpacity
                     activeOpacity={0.85}
-                    onPress={() => {
-                      router.push("/(tabs)/explore/domains" as never);
-                    }}
+                    onPress={() => nav.domains(router)}
                     style={[
                       styles.clusterGridCard,
                       { borderColor: c.color + "30", width: cardW },
@@ -472,7 +499,7 @@ function ExploreIdle({
         )}
         <TouchableOpacity
           activeOpacity={0.75}
-          onPress={() => exploreNav.domains(router)}
+          onPress={() => nav.domains(router)}
           style={styles.seeAllLink}
         >
           <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
@@ -493,7 +520,7 @@ function ExploreIdle({
             <StaggerReveal key={p.key} index={i}>
               <TouchableOpacity
                 activeOpacity={0.85}
-                onPress={() => exploreNav.pathways(router)}
+                onPress={() => nav.pathways(router)}
                 style={[
                   styles.pathwayCard,
                   {
@@ -515,9 +542,7 @@ function ExploreIdle({
       {/* ── Admission intelligence card ────────────────────────── */}
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={() =>
-          router.push("/(tabs)/explore/admission?mode=programme" as never)
-        }
+        onPress={() => nav.admissionHub(router, "programme")}
         style={[
           styles.admissionCard,
           {
@@ -547,7 +572,7 @@ function ExploreIdle({
       {/* ── Elite pathways gold strip ─────────────────────────── */}
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={() => exploreNav.elitePathways(router)}
+        onPress={() => nav.elitePathways(router)}
         style={[styles.eliteStrip, { backgroundColor: "#B8860B10", borderColor: "#B8860B30" }]}
       >
         <Feather name="award" size={18} color="#B8860B" />
@@ -603,8 +628,8 @@ function ExploreIdle({
                 d.key === "know"
                   ? onFocusSearch
                   : d.key === "what"
-                    ? () => router.push("/(tabs)/explore/admission?mode=programme" as never)
-                    : () => router.push("/(tabs)/explore/admission?mode=subjects" as never)
+                    ? () => nav.admissionHub(router, "programme")
+                    : () => nav.admissionHub(router, "subjects")
               }
               style={[
                 styles.card,

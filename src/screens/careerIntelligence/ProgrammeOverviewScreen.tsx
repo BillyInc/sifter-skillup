@@ -2,11 +2,11 @@
  * ProgrammeOverviewScreen — the student-facing view of a programme.
  *
  * Primary identifier: JAMB programme name (what the university calls it).
- * CCMAS programme details (standard name, duration, qualification) are in the
- * background as canonical metadata.
+ * CCMAS stays in the background entirely: it is the substrate that resolves a
+ * JAMB name to domains and roles, and is never shown as a programme fact.
  *
  * Sections:
- * 1. Hero — JAMB name, institution type, CCMAS metadata card
+ * 1. Hero — JAMB name, institution type, and what the degree teaches
  * 2. Entry requirements — O-Level + UTME subject combos (from JAMB schools)
  * 3. Schools — universities offering this programme
  * 4. Career outcomes — 3-tab layout: Employment, Entrepreneurship, Admission
@@ -21,6 +21,7 @@ import {
   DetailScaffold,
   DomainChip,
   DataSourceBadge,
+  DegreeSkills,
   NotesWidget,
   LevelUpCTA,
   SectionLabel,
@@ -37,7 +38,7 @@ import {
   requirementFallbackText,
   type RequirementField,
 } from "@/lib/sanitizeRequirementText";
-import { exploreNav } from "@/lib/exploreNav";
+import { useExploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
   type DataState,
@@ -259,6 +260,7 @@ function ProgrammeBody({
   jambSchools: JambProgrammeSchool[];
   jambRequirements: JambProgrammeRequirements | null;
 }) {
+  const exploreNav = useExploreNav();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   if (tab === "entrepreneurship") {
@@ -338,44 +340,42 @@ function ProgrammeBody({
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
         <View style={styles.programmeMeta}>
-          {/* CCMAS canonical name + metadata */}
-          <View style={[styles.metaCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.metaLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-              CCMAS programme details
+          {/* The CCMAS details card used to sit here: standard name,
+              qualification, duration, discipline. CCMAS is the substrate that
+              maps a JAMB name to domains and roles — it is not a fact a
+              student needs to read, and leading the page with it made the
+              course they applied for look like an alias of something else.
+              The heading is already the JAMB name their school uses; what
+              belongs underneath is what the degree teaches.
+
+              Qualification and duration survive as a single plain line — they
+              are answers to real student questions ("is it a B.Sc?", "how many
+              years?") and are not CCMAS vocabulary. */}
+          {data.qualification || data.durationYears ? (
+            <Text style={[styles.awardLine, { color: colors.textRole.secondary }]}>
+              {[
+                data.qualification,
+                data.durationYears ? `${data.durationYears} years` : null,
+              ]
+                .filter(Boolean)
+                .join("  ·  ")}
             </Text>
-            <View style={styles.metaRows}>
-              {data.name ? (
-                <View style={styles.metaRow}>
-                  <Text style={[styles.metaKey, { color: colors.textRole.secondary }]}>Standard name</Text>
-                  <Text style={[styles.metaVal, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{data.name}</Text>
-                </View>
-              ) : null}
-              {data.qualification ? (
-                <View style={styles.metaRow}>
-                  <Text style={[styles.metaKey, { color: colors.textRole.secondary }]}>Qualification</Text>
-                  <Text style={[styles.metaVal, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{data.qualification}</Text>
-                </View>
-              ) : null}
-              {data.durationYears ? (
-                <View style={styles.metaRow}>
-                  <Text style={[styles.metaKey, { color: colors.textRole.secondary }]}>Duration</Text>
-                  <Text style={[styles.metaVal, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{data.durationYears} years</Text>
-                </View>
-              ) : null}
-              {data.discipline ? (
-                <View style={styles.metaRow}>
-                  <Text style={[styles.metaKey, { color: colors.textRole.secondary }]}>Discipline</Text>
-                  <Text style={[styles.metaVal, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{data.discipline}</Text>
-                </View>
-              ) : null}
-            </View>
-          </View>
+          ) : null}
+
+          <DegreeSkills
+            technical={jambSuggestions[0]?.skillsTechnical}
+            transferable={jambSuggestions[0]?.skillsTransferable}
+          />
 
           {/* JAMB name variations */}
           {jambSuggestions.length > 1 ? (
             <View style={styles.jambNames}>
               <Text style={[styles.metaLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Also known as
+                Also called
+              </Text>
+              <Text style={[styles.provenanceNote, { color: colors.textRole.muted }]}>
+                Different universities list this course under different names.
+                All of them lead here.
               </Text>
               <View style={styles.jambChips}>
                 {jambSuggestions.slice(1, 6).map((j) => (
@@ -548,6 +548,7 @@ function ProgrammeBody({
 }
 
 function TrackBEntrepreneurship({ colors, router }: { colors: ColorPalette; router: Router }) {
+  const exploreNav = useExploreNav();
   return (
     <View style={[styles.business, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.businessEyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
@@ -577,6 +578,7 @@ function TrackCAdmission({
 }: {
   programmeId: string; colors: ColorPalette; admissionState: DataState<AdmissionInsight>; router: Router;
 }) {
+  const exploreNav = useExploreNav();
   return (
     <View style={[styles.business, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.businessEyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
@@ -641,25 +643,12 @@ const styles = StyleSheet.create({
 
   // ── Overview ──────────────────────────────────────────────
   programmeMeta: { gap: Spacing.md },
-  metaCard: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
-    gap: Spacing.sm,
-  },
+  awardLine: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   metaLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.7,
     textTransform: "uppercase",
   },
-  metaRows: { gap: Spacing.sm },
-  metaRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  metaKey: { fontSize: FontSize.sm },
-  metaVal: { fontSize: FontSize.sm, textAlign: "right", flex: 1, marginLeft: Spacing.md },
 
   // JAMB variations
   jambNames: { gap: Spacing.sm },
