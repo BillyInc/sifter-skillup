@@ -254,7 +254,14 @@ jobs:
       - name: Export web bundle (prod)
         run: npx expo export --platform web
         env:
-          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL || 'https://api.levelup.com.ng' }}
+          # Deliberately a DIFFERENT variable from dev's. Both workflows used to
+          # read vars.EXPO_PUBLIC_API_URL; that variable is set to the dev API,
+          # and a set variable means the prod fallback never fires — so a prod
+          # release would have shipped a bundle pointing at api.dev, with no
+          # error anywhere. The documented workaround was "flip the var before
+          # tagging", which breaks dev the moment you forget to flip it back.
+          # Unset is the correct default here: the fallback IS the prod URL.
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL_PROD || 'https://api.levelup.com.ng' }}
           EXPO_PUBLIC_PRIVY_APP_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_APP_ID }}
           EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID }}
           EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID }}
