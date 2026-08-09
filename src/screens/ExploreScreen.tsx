@@ -277,7 +277,14 @@ export default function ExploreScreen({
           }}
           onFocusSearch={() => searchRef.current?.focus()}
         />
-      ) : isGuest ? (
+      ) : !hasSession ? (
+        // Gate on "no session at all", NOT on isGuest. A guest IS a session:
+        // gating on isGuest made this branch permanent for every guest, so the
+        // "Start guest preview" button re-created a guest profile and rendered
+        // the same panel again — search results were unreachable for guests,
+        // even though the fetch had already succeeded. Every other gate in this
+        // file (the search effect at 135, the banner CTA at 219) already uses
+        // hasSession; this was the one that drifted.
         <GuestLimitedSearch query={trimmed} onStartGuest={() => void signInGuest()} />
       ) : loading ? (
         <SearchLoadingRows />
