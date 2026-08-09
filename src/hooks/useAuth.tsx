@@ -9,6 +9,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
+import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
 import type { StarkzapWallet } from '../lib/starkzap';
@@ -184,9 +185,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await _handleAuthResponse(data);
   }
 
+  /**
+   * Guest sign-in.
+   *
+   * Calls POST /api/auth/guest so the session is REAL: a users row, a JWT, and
+   * an active_sessions row for this device. This used to fabricate a profile
+   * client-side ("local-first guest: no backend required") and stop there — no
+   * token was ever issued, so every request went out unauthenticated. Guest is
+   * the web app's main entry point, so in practice that meant /api/users/me
+   * 401'd on every boot, anything behind auth was dead, and only the handful of
+   * public endpoints (career search) worked at all.
+   *
+   * The local profile survives as a FALLBACK, not the happy path: if the
+   * network is unreachable the app still opens in a browsable state, which is
+   * what the original local-first intent was actually protecting. It just can't
+   * be the normal case, because it silently downgrades every logged-in feature.
+   */
   async function authGuest() {
-    // Local-first guest: no backend required.
-    // The auth layout detects auth_provider === 'guest' and redirects to Explore.
+    try {
+      const data = await API.authGuest();
+      await _handleAuthResponse(data);
+      return;
+    } catch (e) {
+      logger.warn('Guest session could not be created on the server; opening offline guest', {
+        error: e instanceof Error ? e.message : String(e),
+      });
+    }
     const guestProfile = _normalise({
       id: `guest_${Date.now()}`,
       username: 'Guest',

@@ -58,7 +58,7 @@ export default function SettingsScreen() {
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('/(auth)');
+    router.replace('/(auth)/sign-in');
   };
 
   return (

@@ -153,7 +153,7 @@ export default function ProfileScreen() {
     try {
       await signOut();
     } finally {
-      navigation.replace('/(auth)');
+      navigation.replace('/(auth)/sign-in');
     }
   }, [signOut, navigation]);
 

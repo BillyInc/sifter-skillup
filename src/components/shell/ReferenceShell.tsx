@@ -458,7 +458,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         isGuest={!user}
         onSignIn={() => {
           setOverlayVisible(false);
-          router.push("/(auth)" as any);
+          router.push("/(auth)/sign-in" as any);
         }}
       />
     </View>
