@@ -12,8 +12,19 @@ on:
 # same box and both can run `nginx -t` / `systemctl reload nginx` / `certbot`.
 # Not ref-scoped, so a dispatch from a branch cannot race a push to main.
 # cancel-in-progress:false so deploys queue instead of being killed mid-rsync.
+# Per-workflow group. These two USED to share one group
+# ("levelup-deploy-dev-storytime") to serialise nginx access — but GitHub keeps
+# only ONE pending run per group and CANCELS the older one rather than queueing
+# it. Since a push to main triggers both, one was silently dropped every time:
+# deploy-backend had 4 cancelled / 5 failed / 0 successful runs, having never
+# once completed.
+#
+# Serialisation still happens where it actually matters — server-side, via
+# `flock /tmp/levelup-nginx-deploy.lock` around the nginx/certbot block, which
+# both workflows already take. That lock, not the GitHub group, is what keeps a
+# concurrent deploy from breaking nginx for KYS and the other apps on this box.
 concurrency:
-  group: levelup-deploy-dev-storytime
+  group: levelup-deploy-dev-backend
   cancel-in-progress: false
 
 permissions:

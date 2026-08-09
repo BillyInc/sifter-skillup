@@ -20,8 +20,19 @@ on:
 # Same fixed group as deploy-backend.yml — a push touching both backend/ and src/
 # triggers both workflows at once, and both drive nginx/certbot on the shared box.
 # Not ref-scoped; cancel-in-progress:false so they queue rather than overlap.
+# Per-workflow group. These two USED to share one group
+# ("levelup-deploy-dev-storytime") to serialise nginx access — but GitHub keeps
+# only ONE pending run per group and CANCELS the older one rather than queueing
+# it. Since a push to main triggers both, one was silently dropped every time:
+# deploy-backend had 4 cancelled / 5 failed / 0 successful runs, having never
+# once completed.
+#
+# Serialisation still happens where it actually matters — server-side, via
+# `flock /tmp/levelup-nginx-deploy.lock` around the nginx/certbot block, which
+# both workflows already take. That lock, not the GitHub group, is what keeps a
+# concurrent deploy from breaking nginx for KYS and the other apps on this box.
 concurrency:
-  group: levelup-deploy-dev-storytime
+  group: levelup-deploy-dev-frontend
   cancel-in-progress: false
 
 permissions:
