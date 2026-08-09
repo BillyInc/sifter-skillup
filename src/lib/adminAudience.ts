@@ -49,7 +49,7 @@ export function adminAudienceForProfile(
 export function adminHomeForProfile(profile?: EducatorProfile | null): string {
   return adminAudienceForProfile(profile) === "university"
     ? "/(admin)/dashboard"
-    : "/(admin)/explore";
+    : "/(admin)/workspace-explore";
 }
 
 export function adminAudienceLabel(audience: AdminAudience): string {

@@ -1,6 +1,6 @@
 /**
  * AdminExploreIntro — the framing block above the search box on
- * `/(admin)/explore`.
+ * `/(admin)/workspace-explore`.
  *
  * Explore mounts the student screen unmodified (§5.4: "do not build new
  * screens"), and the student framing is wrong for an admin in two different
