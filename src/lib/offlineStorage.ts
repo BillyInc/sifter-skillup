@@ -9,7 +9,7 @@ const POSITION_KEY = 'ss_last_position_v2';
 const QUEUE_KEY = 'ss_sync_queue_v2';
 const MANIFEST_KEY = 'ss_content_manifest_v2';
 const TRACK_CONTENT_PREFIX = 'ss_track_content_v2:';
-const DEVICE_ID_KEY = 'sifter_device_id_v2';
+import { DEVICE_ID_KEY, getOrCreateDeviceId } from './deviceId';
 
 const PRIORITY_ORDER = {
   critical: 0,
@@ -315,38 +315,10 @@ async function buildHeaders(getToken: () => Promise<string | null>) {
   };
 }
 
-export async function getOrCreateDeviceId(): Promise<string> {
-  try {
-    if (!IS_WEB) {
-      const secureId = await SecureStore.getItemAsync(DEVICE_ID_KEY);
-      if (secureId) return secureId;
-    }
-  } catch {}
-
-  const storedId = await getStoredString(DEVICE_ID_KEY);
-  if (storedId) return storedId;
-
-  let digest: string;
-  try {
-    digest = await Crypto.digestStringAsync(
-      Crypto.CryptoDigestAlgorithm.SHA256,
-      `${Date.now()}_${Math.random()}`,
-    );
-  } catch {
-    digest = `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
-  }
-  const prefix = IS_WEB ? 'web' : 'dev';
-  const nextId = `${prefix}_${digest.slice(0, 24)}`;
-
-  try {
-    if (!IS_WEB) {
-      await SecureStore.setItemAsync(DEVICE_ID_KEY, nextId);
-    }
-  } catch {}
-
-  await setStoredString(DEVICE_ID_KEY, nextId);
-  return nextId;
-}
+// Re-exported, not reimplemented: api.ts needs this without dragging in
+// netinfo, so the implementation moved to ./deviceId. One device id per
+// install, one place that mints it.
+export { getOrCreateDeviceId };
 
 export async function saveProgressLocally(progress: Partial<LocalProgress>): Promise<void> {
   const existing = await getStoredProgress();

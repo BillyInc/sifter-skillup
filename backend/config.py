@@ -68,6 +68,16 @@ class Settings:
         os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000"),
         "https://t.me",
         "https://web.telegram.org",
+        # The self-hosted origins. These were missing entirely: the only
+        # non-localhost entry was WEB_DASHBOARD_URL, still pointing at the
+        # decommissioned Netlify site, so every browser request from
+        # dev.levelup.com.ng failed CORS preflight with a 400 and no
+        # access-control-allow-origin. curl never noticed — it does not enforce
+        # CORS — which is why the API looked healthy while the app could not
+        # reach it at all.
+        "https://levelup.com.ng",
+        "https://www.levelup.com.ng",
+        "https://dev.levelup.com.ng",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:5173",
