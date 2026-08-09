@@ -144,7 +144,7 @@ export default function CareerProfileScreen() {
     try {
       await signOut();
     } finally {
-      router.replace("/(auth)");
+      router.replace("/(auth)/sign-in");
     }
   }, [signOut, router]);
 

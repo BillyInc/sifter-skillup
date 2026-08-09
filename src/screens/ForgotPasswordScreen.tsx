@@ -105,7 +105,7 @@ export default function ForgotPasswordScreen() {
           />
           <TouchableOpacity
             style={styles.row}
-            onPress={() => router.replace("/(auth)")}
+            onPress={() => router.replace("/(auth)/sign-in")}
             hitSlop={8}
           >
             <Text style={[styles.link, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
