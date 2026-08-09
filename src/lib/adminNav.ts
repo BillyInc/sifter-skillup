@@ -50,8 +50,13 @@ export const adminNav = {
         : "/(admin)/workspace-explore") as never,
     );
   },
+  /**
+   * NOT `/(admin)/profile` — that path is the student profile tab. Group names
+   * are stripped from the URL, so the two files collided on `/profile` exactly
+   * the way the Explore trees collided on `/explore`.
+   */
   profile(router: Nav) {
-    router.push("/(admin)/profile" as never);
+    router.push("/(admin)/workspace-profile" as never);
   },
   /**
    * Market Intelligence (§5.2) — the merge point for what used to be five
@@ -170,7 +175,7 @@ const PROFILE_ITEM: AdminNavItem = {
   key: "profile",
   label: "Profile + team",
   icon: "◎",
-  match: "profile",
+  match: "workspace-profile",
   go: (n) => adminNav.profile(n),
 };
 

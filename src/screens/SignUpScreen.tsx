@@ -123,7 +123,7 @@ export default function SignUpScreen() {
         <Text style={[styles.muted, { color: colors.textRole.muted }, CompassFonts.body]}>
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => router.replace("/(auth)")} hitSlop={8}>
+        <TouchableOpacity onPress={() => router.replace("/(auth)/sign-in")} hitSlop={8}>
           <Text style={[styles.link, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             Sign in
           </Text>

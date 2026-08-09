@@ -277,7 +277,7 @@ export default function StarknetTrackScreen() {
 
   async function handleConnectWallet() {
     if (!user) {
-      navigation.push('/(auth)');
+      navigation.push('/(auth)/sign-in');
       return;
     }
     if (!user.email) {
@@ -294,7 +294,7 @@ export default function StarknetTrackScreen() {
         'To connect a live Starknet wallet, continue through the Starknet sign-in flow.',
         [
           { text: 'Cancel', style: 'cancel' },
-          { text: 'Continue', onPress: () => navigation.push('/(auth)') },
+          { text: 'Continue', onPress: () => navigation.push('/(auth)/sign-in') },
         ],
       );
       return;
