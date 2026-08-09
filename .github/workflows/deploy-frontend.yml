@@ -127,7 +127,14 @@ jobs:
               exit 1
             fi
             sudo systemctl reload nginx
-            sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?) — re-run after DNS resolves."
+            # Fail LOUDLY. This was `|| echo "certbot failed (DNS not ready?)"`, which
+            # swallowed the error and let the job go green with no certificate — the
+            # deploy would report success while every browser refused the site. A
+            # missing cert is a failed deploy, not a warning.
+            if ! sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng; then
+              echo "::error::certbot failed for $DOMAIN — TLS is NOT configured. Check that $DOMAIN resolves to this host and that :80 is reachable." >&2
+              exit 1
+            fi
           fi
           EOSSH
 
