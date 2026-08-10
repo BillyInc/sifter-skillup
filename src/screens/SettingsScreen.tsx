@@ -4,8 +4,6 @@ import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'r
 import { useRouter } from 'expo-router';
 import { CompassFonts, FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
-import { resolveTrackContext } from '@/lib/trackContext';
-import { useStarknetWalletBridge } from '@/components/auth/StarknetWalletBridge';
 
 function SettingsCard({
   title,
@@ -44,17 +42,7 @@ function Row({
 export default function SettingsScreen() {
   const router = useRouter();
   const { colors, isDark, toggle } = useTheme();
-  const { user, signOut, starknetReady, starknetWalletAddress, starknetWalletStatus } = useAuth();
-  const starknetBridge = useStarknetWalletBridge();
-  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
-  const workspaceHref = trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/fields';
-  const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'No active workspace';
-  const workspaceCta = trackContext.mode === 'track' ? 'Open Current Workspace' : 'Explore Tracks';
-  const workspaceStatus = trackContext.fieldId === 'starknet' || starknetReady
-    ? (starknetReady
-        ? `Wallet bridge ready as ${starknetWalletAddress?.slice(0, 10)}...${starknetWalletAddress?.slice(-6)}.`
-        : `Wallet bridge status: ${starknetWalletStatus}.`)
-    : 'This workspace does not need a Starknet wallet to continue.';
+  const { user, signOut } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -68,7 +56,7 @@ export default function SettingsScreen() {
           <Text style={[styles.heroEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>Settings</Text>
           <Text style={[styles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Light mode is the default. Dark mode is opt-in.</Text>
           <Text style={[styles.heroBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Your preferences, account state, and Starknet readiness are collected here so the shell stays honest about what is live and what still needs setup.
+            Your account preferences, notifications, school link, and privacy controls live here.
           </Text>
         </View>
 
@@ -89,43 +77,9 @@ export default function SettingsScreen() {
         </SettingsCard>
 
         <SettingsCard title="ACCOUNT">
-          <Row label="Username" value={user?.username ?? 'Learner'} />
+          <Row label="Name" value={user?.username ?? 'Learner'} />
           <Row label="Email" value={user?.email || 'Not set'} />
           <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
-          <Row label="Starknet Address" value={starknetWalletAddress ?? user?.starknet_address ?? 'Not connected'} />
-          <Row label="Starknet Bridge" value={starknetReady ? 'Connected' : starknetWalletStatus} />
-          <Row label="Fee Mode" value={starknetBridge.connectionMode ?? 'self-paid'} />
-          <Row label="Active Field" value={user?.activeFieldId ?? user?.active_field_id ?? 'Not selected'} />
-          <Row label="Active Track" value={user?.currentTrackName ?? user?.currentTrackId ?? 'Not selected'} />
-          {user?.starknet_address ? (
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={starknetBridge.status === 'disconnected' ? starknetBridge.connect : starknetBridge.disconnect}
-              style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
-            >
-              <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-                {starknetBridge.status === 'disconnected' ? 'Reconnect Starknet Wallet' : 'Disconnect Starknet Wallet'}
-              </Text>
-            </TouchableOpacity>
-          ) : null}
-        </SettingsCard>
-
-        <SettingsCard title="WORKSPACE">
-          <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-            {trackContext.mode === 'track' ? `${workspaceLabel} is active` : 'Choose the workspace you want to continue'}
-          </Text>
-          <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            {trackContext.mode === 'track'
-              ? `${trackContext.description} ${workspaceStatus}`
-              : 'Pick a track from the dashboard to unlock contextual islands, guild views, portfolio targets, and continue actions.'}
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.85}
-            onPress={() => router.push(workspaceHref as any)}
-            style={[styles.toggleBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
-          >
-            <Text style={[styles.toggleBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{workspaceCta}</Text>
-          </TouchableOpacity>
         </SettingsCard>
 
         <SettingsCard title="MY SCHOOL">

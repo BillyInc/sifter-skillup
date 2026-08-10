@@ -22,7 +22,6 @@ import {
   Modal,
 } from "react-native";
 import { useRouter } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   useTheme,
@@ -31,14 +30,12 @@ import {
   FontSize,
   Brand,
   webContainer,
-  INTRO_SEEN_KEY,
   CompassFonts,
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
-import { IntroCarousel } from "@/components/brand/IntroCarousel";
 import {
   AuthField,
   LegalFooter,
@@ -55,7 +52,6 @@ export default function AuthScreen() {
   const resp = useResponsive();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
-  const [intro, setIntro] = useState<"loading" | "show" | "done">("loading");
   const [mode, setMode] = useState<Mode>("welcome");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,32 +64,12 @@ export default function AuthScreen() {
   const cardAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    AsyncStorage.getItem(INTRO_SEEN_KEY)
-      .then((v) => setIntro(v ? "done" : "show"))
-      .catch(() => setIntro("done"));
-  }, []);
-
-  useEffect(() => {
-    if (intro === "done") {
-      Animated.timing(cardAnim, {
-        toValue: 1,
-        duration: 420,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [intro, cardAnim]);
-
-  if (intro === "loading") {
-    return (
-      <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>
-        <ActivityIndicator color={Brand.primary} size="large" />
-      </View>
-    );
-  }
-
-  if (intro === "show") {
-    return <IntroCarousel onDone={() => setIntro("done")} />;
-  }
+    Animated.timing(cardAnim, {
+      toValue: 1,
+      duration: 420,
+      useNativeDriver: true,
+    }).start();
+  }, [cardAnim]);
 
   const routeToHome = () => {
     router.replace("/(tabs)/home");
@@ -140,7 +116,9 @@ export default function AuthScreen() {
     }
     setEmailLoading(true);
     try {
-      await signUpEmail(email, password, username || undefined);
+      await signUpEmail(email, password, {
+        first_name: username || undefined,
+      });
       // Auth layout detects user && !onboarding_completed → redirects
     } catch (e: any) {
       setError(e?.message || "Could not create your account.");
@@ -280,7 +258,7 @@ export default function AuthScreen() {
                   CompassFonts.bodyBold,
                 ]}
               >
-                SKILL PLATFORM
+                CAREER INTELLIGENCE
               </Text>
               <Text
                 style={[
@@ -289,17 +267,11 @@ export default function AuthScreen() {
                   CompassFonts.bodyMedium,
                 ]}
               >
-                {isDesktop
-                  ? "Track-first onboarding. Saved progress. Guest mode."
-                  : "Every path. Every role. Clearer choices."}
+                "Every programme has a route. See yours."
               </Text>
 
               <View style={styles.featureList}>
-                {[
-                  "Track-first onboarding",
-                  "Saved progress across devices",
-                  "Guest mode if you want to explore first",
-                ].map((item) => (
+                {["Map your programme to real career routes", "Explore before you set up a profile", "Return to your progress when you are ready"].map((item) => (
                   <View
                     key={item}
                     style={[
@@ -444,15 +416,15 @@ export default function AuthScreen() {
                 ]}
               >
                 {mode === "login"
-                  ? "Return to your saved track and continue."
-                  : "Create an account to save your track setup and progress."}
+                  ? "Return to your saved guidance, maps, and learning progress."
+                  : "Create an account to save your guidance profile, maps, and learning progress."}
               </Text>
 
               <ErrorNote message={error} />
 
               {mode === "signup" ? (
                 <AuthField
-                  label="Username"
+                  label="First name"
                   value={username}
                   onChangeText={setUsername}
                   placeholder="Chidi"

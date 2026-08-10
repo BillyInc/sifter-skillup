@@ -30,7 +30,6 @@ import { useAuth } from '@/hooks/useAuth';
 import { useResume } from '@/hooks/useResume';
 import { useResponsive } from '@/hooks/useResponsive';
 import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
-import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
 import { findTrackById, getTrackHref, resolveTrackContext } from '@/lib/trackContext';
 import { buildResumeHref, getResumeSummary, normaliseResumePosition } from '@/lib/resumeNavigation';
 import {
@@ -98,24 +97,6 @@ function buildTrackAwarePins(trackContext: ReturnType<typeof resolveTrackContext
     name: trackContext.focusAreas[index] ?? pin.name,
     color: index === 0 ? trackContext.color : pin.color,
   }));
-}
-
-function StreakBanner({ status }: { status: StreakStatus }) {
-  const { colors } = useTheme();
-  const atRisk = (status as any).isAtRisk;
-  if (!atRisk && status.streak < 2) return null;
-
-  const backgroundColor = atRisk ? `${colors.accentRole.status}18` : `${colors.accentRole.success}18`;
-  const color = atRisk ? colors.accentRole.status : colors.accentRole.success;
-  const msg = atRisk
-    ? `Streak at risk. ${(((status as any).hoursUntilLoss ?? 0) as number).toFixed(0)}h left to save it.`
-    : `${status.streak}-day streak active. Keep it moving.`;
-
-  return (
-    <View style={[styles.streakBanner, { backgroundColor }]}>
-      <Text style={[styles.streakBannerText, { color }, CompassFonts.bodyBold]}>{msg}</Text>
-    </View>
-  );
 }
 
 function XPProgressBar({
@@ -390,7 +371,6 @@ export default function HomeScreen() {
   const resumeSummary = useMemo(() => getResumeSummary(resumePosition), [resumePosition]);
 
   const [xp, setXp] = useState<XPSnapshot | null>(null);
-  const [streak, setStreak] = useState<StreakStatus | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const headerAnim = useSharedValue(0);
@@ -406,9 +386,8 @@ export default function HomeScreen() {
   }));
 
   const loadData = useCallback(async () => {
-    const [xpSnap, streakSnap] = await Promise.all([xpEngine.snapshot(), streakEngine.status()]);
+    const xpSnap = await xpEngine.snapshot();
     setXp(xpSnap);
-    setStreak(streakSnap);
   }, []);
 
   useFocusEffect(useCallback(() => {
@@ -479,20 +458,12 @@ export default function HomeScreen() {
         points: ['Planning', 'Flow control', 'Operations analytics'],
       },
       {
-        id: 'onchain-analyst',
-        iconLabel: 'ON',
-        name: 'Onchain Track',
-        color: '#3b82f6',
-        summary: 'Protocol intelligence, smart-money analysis, and wallet tracing.',
-        points: ['Wallet flows', 'Protocol maps', 'On-chain signals'],
-      },
-      {
-        id: 'starknet-defi-navigator',
-        iconLabel: 'SN',
-        name: 'Starknet Track',
-        color: '#f59e0b',
-        summary: 'Live Starknet wallet actions, labs, and on-chain execution practice.',
-        points: ['Sepolia practice', 'Wallet actions', 'Live labs'],
+        id: 'supply-chain-analyst',
+        iconLabel: 'SC',
+        name: 'Supply Chain Analyst',
+        color: '#0EA5E9',
+        summary: 'Demand, inventory, logistics, and operations intelligence.',
+        points: ['Demand planning', 'Inventory signals', 'Operations decisions'],
       },
     ];
 
@@ -501,7 +472,7 @@ export default function HomeScreen() {
         <WebShell>
           <WebPageHeader
             title={trackContext.mode === 'track' ? `${trackContext.trackName} Dashboard` : `${getGreeting()}, your dashboard is ready.`}
-            subtitle={trackContext.mode === 'track' ? trackContext.tagline : 'Keep your streak, XP, and next move in one compact workspace.'}
+            subtitle={trackContext.mode === 'track' ? trackContext.tagline : 'Your guidance, XP, and next move in one compact workspace.'}
             accentColor={accentColor}
             right={(
               <TouchableOpacity
@@ -513,8 +484,6 @@ export default function HomeScreen() {
               </TouchableOpacity>
             )}
           />
-
-          {streak ? <StreakBanner status={streak} /> : null}
 
           <WebRow>
             <WebCol weight={2}>
@@ -560,7 +529,7 @@ export default function HomeScreen() {
 
             <WebCol weight={1}>
               <WebCard title={trackContext.mode === 'track' ? 'Track Snapshot' : 'Today'} accentBar accentColor={colors.accentRole.success}>
-                <WebStatTile emoji="DAY" label="Streak" value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Checked in today' : 'Complete one lesson'} color={colors.accentRole.status} />
+                <WebStatTile emoji="NEXT" label="Next action" value={resumeSummary ? 'Resume' : 'Explore'} sub={resumeSummary ?? 'Choose a programme, domain, or route'} color={colors.accentRole.status} />
                 <WebStatTile emoji="XP" label="Total XP" value={`${xp?.totalXp ?? 0}`} sub={`${xp?.xpToNextStage ?? '-'} to next stage`} color={accentColor} />
                 <WebStatTile
                   emoji="GOAL"
@@ -648,15 +617,15 @@ export default function HomeScreen() {
 
             <WebCol weight={1}>
               <WebCard accentBar accentColor={colors.accentRole.status} style={{ marginBottom: GRID_GAP }}>
-                <Text style={[styles.webStreakLabel, { color: colors.textRole.muted }, CompassFonts.data]}>ACTIVE STREAK</Text>
-                <Text style={[styles.webStreakNum, { color: colors.accentRole.status }, CompassFonts.data]}>{streak?.streak ?? 0} days</Text>
+                <Text style={[styles.webStreakLabel, { color: colors.textRole.muted }, CompassFonts.data]}>CAREER CONTEXT</Text>
+                <Text style={[styles.webStreakNum, { color: colors.accentRole.status }, CompassFonts.data]}>{resumeSummary ? 'In progress' : 'Ready'}</Text>
                 <Text style={[styles.webStreakSub, { color: colors.textRole.secondary }, CompassFonts.body]}>
-                  {streak?.completedToday ? 'Lesson completed today.' : 'Complete a lesson to extend it.'}
+                  {resumeSummary ?? 'Start from Explore to compare programmes, schools, and pathways.'}
                 </Text>
               </WebCard>
               <WebCard title="Signals" accentBar accentColor={colors.accentRole.success}>
                 <WebListRow icon="LAB" title={trackContext.mode === 'track' ? `${trackContext.trackName} board` : 'Vol Arb Challenge'} sub={trackContext.mode === 'track' ? trackContext.challengeSummary : 'Trading competition'} onPress={() => go('/(tabs)/guild')} />
-                <WebListRow icon="LIVE" title="Feed + Guild Signals" sub="Track news, jobs, and collaboration" badge="Live" badgeColor={accentColor} onPress={() => go('/(tabs)/feed')} />
+                <WebListRow icon="WORLD" title="My World" sub="Saved routes, notes, learning, and community" badge="Saved" badgeColor={accentColor} onPress={() => go('/(tabs)/my-world')} />
               </WebCard>
             </WebCol>
           </WebRow>
@@ -697,8 +666,8 @@ export default function HomeScreen() {
                     sub: continueSub,
                     route: continueHref,
                   },
-                  { emoji: 'MAP', label: 'Explore Tracks', sub: 'Browse career fields', route: '/(tabs)/fields' },
-                  { emoji: 'NEWS', label: 'Open Feed', sub: 'News, data, jobs', route: '/(tabs)/feed' },
+                  { emoji: 'MAP', label: 'Explore Pathways', sub: 'Browse programmes, roles, and pathways', route: '/(tabs)/explore' },
+                  { emoji: 'WORLD', label: 'My World', sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
                   { emoji: 'XP', label: 'Artifacts + XP', sub: 'Tasks, artifacts, pushes', route: '/(tabs)/portfolio' },
                 ].map((item) => (
                   <WebListRow
@@ -735,7 +704,7 @@ export default function HomeScreen() {
               {trackContext.mode === 'track' ? trackContext.trackName : 'Your dashboard'}
             </Text>
             <Text style={[styles.mobileHeaderSub, CompassFonts.body, { color: colors.textRole.secondary }]}>
-              {trackContext.mode === 'track' ? trackContext.tagline : 'Streak, XP, and next actions in one place.'}
+              {trackContext.mode === 'track' ? trackContext.tagline : 'Guidance, XP, and next actions in one place.'}
             </Text>
           </View>
           <TouchableOpacity
@@ -746,8 +715,6 @@ export default function HomeScreen() {
             <TheBolt size={40} animate />
           </TouchableOpacity>
         </Animated.View>
-
-        {streak ? <StreakBanner status={streak} /> : null}
 
         {/* ── Hero: Your Route card ── */}
         <Animated.View style={[styles.heroRouteCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, contentAnimatedStyle]}>
@@ -822,11 +789,11 @@ export default function HomeScreen() {
           <SectionLabel>Your numbers</SectionLabel>
           <View style={styles.statTileGrid}>
             <StatTile
-              value={streak?.streak ?? 0}
-              label="Day streak"
-              delta={streak?.completedToday ? { trend: 'up', text: 'Checked in today' } : undefined}
+              value={resumeSummary ? 'Resume' : 'Explore'}
+              label="Next action"
+              delta={resumeSummary ? { trend: 'up', text: resumeSummary } : { trend: 'up', text: 'Choose a route' }}
               tone={colors.accentRole.status}
-              stamp="Active"
+              stamp="Guidance"
               style={styles.statTile}
             />
             <StatTile
@@ -859,8 +826,8 @@ export default function HomeScreen() {
         <Animated.View style={[styles.actionsSection, contentAnimatedStyle]}>
           <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
           <QuickAction iconLabel="GO" label={trackContext.mode === 'track' ? 'Resume Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? continueSub : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
-          <QuickAction iconLabel="MAP" label="Explore Tracks" sub="Browse career fields" color={colors.accentRole.success} onPress={() => go('/(tabs)/fields')} />
-          <QuickAction iconLabel="NEWS" label="Open Feed" sub="News, data, jobs for your track" color={colors.accentRole.status} onPress={() => go('/(tabs)/feed')} />
+          <QuickAction iconLabel="MAP" label="Explore Pathways" sub="Browse programmes, roles, and pathways" color={colors.accentRole.success} onPress={() => go('/(tabs)/explore')} />
+          <QuickAction iconLabel="WORLD" label="My World" sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} />
           <QuickAction iconLabel="XP" label="Artifacts + XP" sub="View tasks, artifacts, and pushes" color={colors.accentRole.status} onPress={() => go('/(tabs)/portfolio')} />
         </Animated.View>
       </ScrollView>
@@ -886,9 +853,6 @@ const styles = StyleSheet.create({
   routeSection: { marginVertical: Spacing.sm },
   statTileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },
   statTile: { minWidth: 140 },
-
-  streakBanner: { borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 10 : 12, marginBottom: Spacing.md },
-  streakBannerText: { fontSize: FontSize.sm, textAlign: 'center' },
 
   progressLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   progressLabel: { fontSize: FontSize.xs },

@@ -14,7 +14,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
-import { OptionCard, ChoiceChips, SearchField, type ChoiceOption } from "./primitives";
+import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
+import { OptionCard, ChoiceChips, type ChoiceOption } from "./primitives";
 import type { SetupFormProps } from "../../types/onboarding";
 
 const SS_CLASSES: {
@@ -115,6 +116,18 @@ export function SeniorSecondaryExploreSetupForm({
         eligibility.
       </Text>
 
+      <LiveAdmissionSearchField
+        label="Your secondary school"
+        value={value.secondarySchoolName ?? ""}
+        onSelect={(item) => onChange({
+          secondarySchoolName: item.name,
+          secondarySchoolId: item.id || undefined,
+        })}
+        placeholder="Search or type your school name"
+        kind="school"
+        institutionType="secondary_school"
+      />
+
       <ChoiceChips
         label="Subjects you&apos;re strongest in / enjoy"
         options={SUBJECTS}
@@ -136,11 +149,15 @@ export function SeniorSecondaryExploreSetupForm({
       />
 
       <View style={{ gap: Spacing.lg }}>
-        <SearchField
+        <LiveAdmissionSearchField
           label="Programme you're curious about (optional)"
           value={value.intendedProgramme ?? ""}
-          onChangeText={(v) => onChange({ intendedProgramme: v })}
+          onSelect={(item) => onChange({
+            intendedProgramme: item.name,
+            intendedJambProgrammeId: item.id || undefined,
+          })}
           placeholder="Search programmes"
+          kind="programme"
         />
         <Text style={[styles.note, { color: colors.textMuted }]}>
           We will use your subjects and interests to start with realistic

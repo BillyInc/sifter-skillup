@@ -278,11 +278,11 @@ export default function StreaksScreen() {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.85}
-            onPress={() => router.push('/(tabs)/feed')}
+            onPress={() => router.push('/(tabs)/myworld' as any)}
             style={[styles.secondaryBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
-            <Feather name="activity" size={14} color={colors.textRole.primary} />
-            <Text style={[styles.secondaryBtnText, { color: colors.textRole.primary }]}>Open Feed</Text>
+            <Feather name="bookmark" size={14} color={colors.textRole.primary} />
+            <Text style={[styles.secondaryBtnText, { color: colors.textRole.primary }]}>Open My World</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

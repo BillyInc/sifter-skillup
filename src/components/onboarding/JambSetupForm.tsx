@@ -14,16 +14,13 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
 } from "react-native";
-import { useTheme, Spacing, FontSize, Radius, Brand } from "../../theme";
+import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
-import { careerData } from "../../lib/careerData";
+import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
 import {
   OptionCard,
   ChoiceChips,
-  SearchField,
   type ChoiceOption,
 } from "./primitives";
 import type {
@@ -48,7 +45,7 @@ const DOORS: {
     value: "know_what",
     icon: "📖",
     title: "I know what to study, not where",
-    subtitle: "We'll surface schools and cut-offs for it",
+    subtitle: "We'll show universities, variants, and requirements",
   },
   {
     value: "unsure",
@@ -104,106 +101,6 @@ const SCORE_BANDS: ChoiceOption[] = [
   "280+",
 ].map((b) => ({ label: b, value: b }));
 
-type Suggestion = { id: string; name: string };
-
-/**
- * Live typeahead over admission programmes/schools. Debounced; taps a
- * suggestion to fill `value`. Falls back silently if the endpoint is empty.
- */
-function LiveSearchField({
-  label,
-  value,
-  onSelect,
-  placeholder,
-  kind,
-}: {
-  label: string;
-  value: string;
-  onSelect: (item: Suggestion) => void;
-  placeholder: string;
-  kind: "programme" | "school";
-}) {
-  const { colors } = useTheme();
-  const [query, setQuery] = React.useState(value);
-  const [results, setResults] = React.useState<Suggestion[]>([]);
-  const [loading, setLoading] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const q = query.trim();
-    if (q.length < 2) {
-      setResults([]);
-      return;
-    }
-    let active = true;
-    setLoading(true);
-    const t = setTimeout(async () => {
-      const state =
-        kind === "programme"
-          ? await careerData.searchJambProgrammes(q)
-          : await careerData.searchAdmissionSchools(q);
-      if (!active) return;
-      setLoading(false);
-      setResults(
-        state.status === "real" && Array.isArray(state.data)
-          ? state.data.map((r) => ({
-              id: r.id,
-              name: "jambName" in r ? r.jambName : r.name,
-            }))
-          : [],
-      );
-    }, 275);
-    return () => {
-      active = false;
-      clearTimeout(t);
-    };
-  }, [query, kind]);
-
-  return (
-    <View style={{ gap: 6 }}>
-      <SearchField
-        label={label}
-        value={query}
-        onChangeText={(v) => {
-          setQuery(v);
-          setOpen(true);
-          onSelect({ id: "", name: v });
-        }}
-        placeholder={placeholder}
-      />
-      {loading ? (
-        <ActivityIndicator size="small" color={Brand.primary} />
-      ) : null}
-      {open && results.length ? (
-        <View
-          style={[
-            styles.suggestions,
-            { backgroundColor: colors.card, borderColor: colors.border },
-          ]}
-        >
-          {results.slice(0, 6).map((r) => (
-            <TouchableOpacity
-              key={r.id}
-              activeOpacity={0.7}
-              onPress={() => {
-                setQuery(r.name);
-                onSelect(r);
-                setOpen(false);
-                setResults([]);
-              }}
-              style={styles.suggestion}
-            >
-              <Text style={[styles.suggestionText, { color: colors.text }]}>
-                {r.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ) : null}
-    </View>
-  );
-}
-
 export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const { colors } = useTheme();
   const door = value.ssDoor;
@@ -242,9 +139,21 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         Stream helps sort suggestions, but selected subjects decide eligibility.
       </Text>
 
+      <LiveAdmissionSearchField
+        label="Your secondary school"
+        value={value.secondarySchoolName ?? ""}
+        onSelect={(item) => onChange({
+          secondarySchoolName: item.name,
+          secondarySchoolId: item.id || undefined,
+        })}
+        placeholder="Search or type your school name"
+        kind="school"
+        institutionType="secondary_school"
+      />
+
       {door === "know_where" ? (
         <View style={{ gap: Spacing.lg }}>
-          <LiveSearchField
+          <LiveAdmissionSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
             onSelect={(item) => onChange({
@@ -262,7 +171,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
               onChange({ preferredInstitutionType: v as InstitutionType })
             }
           />
-          <LiveSearchField
+          <LiveAdmissionSearchField
             label="Preferred school"
             value={value.preferredSchool ?? ""}
             onSelect={(item) => onChange({
@@ -271,13 +180,14 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             })}
             placeholder="Search universities"
             kind="school"
+            institutionType={value.preferredInstitutionType ?? "university"}
           />
         </View>
       ) : null}
 
       {door === "know_what" ? (
         <View style={{ gap: Spacing.lg }}>
-          <LiveSearchField
+          <LiveAdmissionSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
             onSelect={(item) => onChange({
@@ -288,8 +198,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            🎓 We&apos;ll surface the universities offering this programme and their
-            JAMB cut-offs from the latest admission snapshot.
+            🎓 We&apos;ll show the universities offering this programme, its naming
+            variants, and cycle-labelled requirements where they are published.
           </Text>
         </View>
       ) : null}
@@ -304,8 +214,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             multi
           />
           <Text style={[styles.caption, { color: colors.textMuted }]}>
-            We&apos;ll match these to programmes you qualify for once programme data
-            is live.
+            We&apos;ll match these to programme options first, then help you choose
+            a university before career mapping starts.
           </Text>
           <ChoiceChips
             label="Your JAMB score band (optional)"
@@ -338,16 +248,6 @@ const styles = StyleSheet.create({
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   note: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   caption: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
-  suggestions: {
-    borderWidth: 1,
-    borderRadius: Radius.md,
-    overflow: "hidden",
-  },
-  suggestion: {
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
-  },
-  suggestionText: { fontSize: FontSize.sm },
 });
 
 export default JambSetupForm;

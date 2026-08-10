@@ -23,6 +23,7 @@ import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import { Spring, useReducedMotion } from "../../theme/motion";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface SaveButtonProps {
   entityType: SavedEntityType;
@@ -46,6 +47,8 @@ export function SaveButton({
   style,
 }: SaveButtonProps) {
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
   const reduced = useReducedMotion();
   const [saved, setSaved] = useState(initialSaved);
   const [busy, setBusy] = useState(false);
@@ -74,6 +77,10 @@ export function SaveButton({
 
   const onPress = async () => {
     if (busy) return;
+    if (isGuest) {
+      showHint("Create an account to save this item.");
+      return;
+    }
     pop();
     setBusy(true);
     setHint(null);

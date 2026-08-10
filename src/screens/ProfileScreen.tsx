@@ -189,14 +189,14 @@ export default function ProfileScreen() {
   const workspaceBody = trackContext.mode === 'track'
     ? trackContext.description
     : 'Select an active track so your profile, streaks, and portfolio all stay aligned.';
-  const trackId = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'crypto';
+  const trackId = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'default';
 
   // Mock skill bars — replace with real data from user profile
   const skillBars = [
-    { label: 'DeFi Fundamentals',    value: 82, color: colors.accentRole.success },
-    { label: 'On-Chain Analysis',    value: 65, color: colors.accentRole.action },
-    { label: 'Smart Contracts',      value: 48, color: colors.accentRole.warning },
-    { label: 'Quant Finance',        value: 30, color: colors.accentRole.status },
+    { label: 'Programme mapping', value: 82, color: colors.accentRole.success },
+    { label: 'Domain exploration', value: 65, color: colors.accentRole.action },
+    { label: 'Role discovery', value: 48, color: colors.accentRole.warning },
+    { label: 'Opportunity readiness', value: 30, color: colors.accentRole.status },
   ];
 
   const allStages  = XP_STAGES;

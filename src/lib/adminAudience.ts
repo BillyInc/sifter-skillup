@@ -39,17 +39,13 @@ export function adminAudienceForProfile(
  * Universities land on the General Dashboard (§5.0): a summary of their
  * institutional position, each block handing off to the real view.
  *
- * Advisory organisations land on EXPLORE, not on a dashboard. A tutorial
- * centre has no programme mix to summarise, so a "general dashboard" for them
- * was mostly re-presenting the national catalogue that Explore already is —
- * two surfaces doing one job. Their cohort aggregates (learner counts,
- * unclaimed codes, alerts) are real but they are not a landing page; they live
- * on /(admin)/guidance, reachable from the sidebar.
+ * Advisory organisations land on Guidance. Explore remains a national catalogue
+ * they intentionally open from the guidance workspace.
  */
 export function adminHomeForProfile(profile?: EducatorProfile | null): string {
   return adminAudienceForProfile(profile) === "university"
     ? "/(admin)/dashboard"
-    : "/(admin)/workspace-explore";
+    : "/(admin)/guidance";
 }
 
 export function adminAudienceLabel(audience: AdminAudience): string {

@@ -1,0 +1,462 @@
+{
+  "schema_version": "1.0.0",
+  "authoritative_domain_file": "data/career-mapping/domain_meta.json",
+  "purpose": "Resolve global and Nigerian role evidence for every domain without assuming that a role belongs to one domain only.",
+  "resolution_order": [
+    "default_sources",
+    "cluster_sources[domain.cluster]",
+    "domain_overrides[domain_id]"
+  ],
+  "source_catalog": {
+    "global_esco": {
+      "name": "ESCO occupations and skills",
+      "region": "global",
+      "evidence_type": "occupation_taxonomy",
+      "url": "https://esco.ec.europa.eu/en/use-esco",
+      "access": "public_download_api",
+      "notes": "Primary global occupation/skill spine; use preferred and non-preferred terms as normalized titles and aliases."
+    },
+    "global_onet": {
+      "name": "O*NET 30.3 Database",
+      "region": "global_proxy",
+      "evidence_type": "occupation_taxonomy_and_job_titles",
+      "url": "https://www.onetcenter.org/database.html",
+      "access": "public_download_api",
+      "notes": "US-economy source used as a global proxy for occupation descriptions, alternate titles, tasks and technology skills; do not label US counts as Nigerian demand."
+    },
+    "global_isco": {
+      "name": "ILO ISCO-08",
+      "region": "global",
+      "evidence_type": "international_occupation_standard",
+      "url": "https://isco.ilo.org/en/isco-08/",
+      "access": "public",
+      "notes": "Use for internationally comparable occupation grouping and deduplication."
+    },
+    "global_wef": {
+      "name": "World Economic Forum Future of Jobs 2025",
+      "region": "global",
+      "evidence_type": "emerging_role_signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+      "access": "public_report",
+      "notes": "Trend and emerging-role evidence, not a complete title dictionary."
+    },
+    "global_sfia": {
+      "name": "SFIA 9",
+      "region": "global",
+      "evidence_type": "digital_skill_and_role_framework",
+      "url": "https://sfia-online.org/en/sfia-9",
+      "access": "public_reference",
+      "notes": "Technology, data, cloud, software, architecture, service and digital-management role vocabulary."
+    },
+    "global_nice": {
+      "name": "NIST NICE Workforce Framework",
+      "region": "global",
+      "evidence_type": "cybersecurity_work_role_framework",
+      "url": "https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center",
+      "access": "public",
+      "notes": "Cybersecurity work roles, tasks, knowledge and skills; use as a role framework, not as a Nigeria vacancy count."
+    },
+    "global_supply_chain": {
+      "name": "ASCM supply-chain body of knowledge",
+      "region": "global",
+      "evidence_type": "professional_role_and_competency_framework",
+      "url": "https://www.ascm.org/",
+      "access": "public_reference",
+      "notes": "Supply-chain, planning, operations, inventory and procurement terminology."
+    },
+    "global_cips": {
+      "name": "CIPS Global Standard for Procurement and Supply",
+      "region": "global",
+      "evidence_type": "professional_role_and_competency_framework",
+      "url": "https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply",
+      "access": "public_reference",
+      "notes": "Procurement, sourcing, supplier relationship and commercial supply role terminology."
+    },
+    "global_project_management": {
+      "name": "Project Management Institute standards",
+      "region": "global",
+      "evidence_type": "professional_role_and_competency_framework",
+      "url": "https://www.pmi.org/standards",
+      "access": "public_reference",
+      "notes": "Project, programme, portfolio and delivery role terminology."
+    },
+    "global_health": {
+      "name": "WHO health workforce resources",
+      "region": "global",
+      "evidence_type": "health_workforce_context",
+      "url": "https://www.who.int/teams/health-workforce",
+      "access": "public",
+      "notes": "Health occupation and workforce context; regulated titles still require Nigerian regulator confirmation."
+    },
+    "global_fao": {
+      "name": "FAO agriculture and food systems resources",
+      "region": "global",
+      "evidence_type": "sector_role_context",
+      "url": "https://www.fao.org/",
+      "access": "public",
+      "notes": "Agriculture, food, fisheries, forestry and natural-resource role context."
+    },
+    "global_woah": {
+      "name": "WOAH animal-health standards",
+      "region": "global",
+      "evidence_type": "sector_role_context",
+      "url": "https://www.woah.org/",
+      "access": "public",
+      "notes": "Veterinary and animal-health terminology."
+    },
+    "global_icao_iata": {
+      "name": "ICAO and IATA aviation standards",
+      "region": "global",
+      "evidence_type": "sector_role_and_standards",
+      "urls": ["https://www.icao.int/", "https://www.iata.org/"],
+      "access": "public_reference",
+      "notes": "Aviation operations, safety, airports, air cargo and airline role vocabulary."
+    },
+    "global_imo_imarest": {
+      "name": "IMO and IMarEST maritime standards",
+      "region": "global",
+      "evidence_type": "sector_role_and_standards",
+      "urls": ["https://www.imo.org/", "https://www.imarest.org/"],
+      "access": "public_reference",
+      "notes": "Maritime, marine engineering, shipping and seafaring terminology."
+    },
+    "global_built_environment": {
+      "name": "RICS built-environment and property standards",
+      "region": "global",
+      "evidence_type": "professional_role_and_competency_framework",
+      "url": "https://www.rics.org/",
+      "access": "public_reference",
+      "notes": "Surveying, valuation, property, construction and built-environment role terminology."
+    },
+    "global_energy": {
+      "name": "SPE petroleum engineering competency resources",
+      "region": "global",
+      "evidence_type": "professional_role_and_competency_framework",
+      "url": "https://www.spe.org/en/training/competency-management/",
+      "access": "public_reference",
+      "notes": "Oil, gas, drilling, production and energy technical role terminology."
+    },
+    "global_nuclear": {
+      "name": "IAEA nuclear and radiation resources",
+      "region": "global",
+      "evidence_type": "sector_role_and_standards",
+      "url": "https://www.iaea.org/",
+      "access": "public",
+      "notes": "Nuclear engineering, radiation science, medical physics and safety terminology."
+    },
+    "global_unesco": {
+      "name": "UNESCO education, science and culture resources",
+      "region": "global",
+      "evidence_type": "sector_role_context",
+      "url": "https://www.unesco.org/",
+      "access": "public",
+      "notes": "Education, research, libraries, archives, culture and science-sector role context."
+    },
+    "global_creative": {
+      "name": "ScreenSkills creative-industry role profiles",
+      "region": "global",
+      "evidence_type": "industry_role_profiles",
+      "url": "https://www.screenskills.com/",
+      "access": "public",
+      "notes": "Film, television, animation, games and production role profiles; supplement with ESCO/O*NET."
+    },
+    "global_game_dev": {
+      "name": "International Game Developers Association resources",
+      "region": "global",
+      "evidence_type": "industry_role_context",
+      "url": "https://igda.org/resources/",
+      "access": "public_reference",
+      "notes": "Game-development role vocabulary and industry context for the sparse Game Design domain."
+    },
+    "global_xr": {
+      "name": "Khronos Group open standards",
+      "region": "global",
+      "evidence_type": "technology_role_context",
+      "url": "https://www.khronos.org/",
+      "access": "public",
+      "notes": "OpenXR, 3D graphics and real-time technology terminology for XR and immersive roles."
+    },
+    "global_esports": {
+      "name": "Hitmarker esports and gaming jobs",
+      "region": "global",
+      "evidence_type": "industry_vacancy_and_role_context",
+      "url": "https://hitmarker.net/",
+      "access": "public",
+      "notes": "Specialist live role signal for esports, gaming and creator-economy work; use carefully because coverage is selective."
+    },
+    "global_music": {
+      "name": "IFPI global music-industry resources",
+      "region": "global",
+      "evidence_type": "industry_role_context",
+      "url": "https://www.ifpi.org/",
+      "access": "public",
+      "notes": "Music production, recording, publishing and creator-economy context."
+    },
+    "global_wipo": {
+      "name": "WIPO intellectual-property resources",
+      "region": "global",
+      "evidence_type": "professional_role_and_regulatory_context",
+      "url": "https://www.wipo.int/",
+      "access": "public",
+      "notes": "Patent, trademark, copyright and technology-transfer terminology."
+    },
+    "ng_jobberman": {
+      "name": "Jobberman Nigeria jobs",
+      "region": "nigeria",
+      "evidence_type": "live_vacancy_title_signal",
+      "url": "https://www.jobberman.com/jobs",
+      "access": "public_listing",
+      "notes": "Observed Nigerian vacancy titles, categories, locations and employers; store aggregates or derived title counts rather than republishing listings."
+    },
+    "ng_myjobmag": {
+      "name": "MyJobMag Nigeria feeds",
+      "region": "nigeria",
+      "evidence_type": "live_vacancy_title_signal",
+      "url": "https://www.myjobmag.com/feeds",
+      "access": "public_feed",
+      "notes": "Nigerian job-title, employer and category signal; use feed terms as aliases and retain provenance."
+    },
+    "ng_nbs": {
+      "name": "National Bureau of Statistics Nigeria Labour Force Survey",
+      "region": "nigeria",
+      "evidence_type": "labour_market_context",
+      "url": "https://microdata.nigerianstat.gov.ng/index.php/catalog/151/study-description",
+      "access": "public",
+      "notes": "National employment, sector and labour-context evidence; not a replacement for role-level vacancy data."
+    },
+    "ng_nbte": {
+      "name": "NBTE National Occupational Standards and curricula",
+      "region": "nigeria",
+      "evidence_type": "national_occupational_standard",
+      "url": "https://web.nbte.gov.ng/downloads",
+      "access": "public",
+      "notes": "Primary Nigerian source for technical, vocational, trade and technician role names and performance standards."
+    },
+    "ng_nuc": {
+      "name": "National Universities Commission CCMAS and standards",
+      "region": "nigeria",
+      "evidence_type": "education_and_profession_feeder_context",
+      "url": "https://www.nuc.edu.ng/",
+      "access": "public_reference",
+      "notes": "Use to validate Nigerian university pathways feeding professional roles; do not treat curriculum titles as vacancy demand."
+    },
+    "ng_cpn": {
+      "name": "Computer Professionals Registration Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://www.cpn.gov.ng/",
+      "access": "public",
+      "notes": "Computing profession standards, registration and local terminology."
+    },
+    "ng_telecom": {
+      "name": "NCC and NITDA ICT ecosystem sources",
+      "region": "nigeria",
+      "evidence_type": "regulatory_and_sector_context",
+      "urls": ["https://www.ncc.gov.ng/", "https://nitda.gov.ng/"],
+      "access": "public",
+      "notes": "Telecommunications, digital economy, ICT and technology-sector context."
+    },
+    "ng_engineering": {
+      "name": "COREN and Nigerian Society of Engineers",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "urls": ["https://coren.gov.ng/", "https://www.nse.org.ng/"],
+      "access": "public",
+      "notes": "Engineering registration, disciplines and local professional terminology."
+    },
+    "ng_built_environment": {
+      "name": "Nigerian built-environment regulators and bodies",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "urls": ["https://arcon.gov.ng/", "https://surcon.org.ng/", "https://qsrbn.gov.ng/", "https://toprec.org.ng/"],
+      "access": "public_reference",
+      "notes": "Architecture, quantity surveying, surveying, town planning and real-estate role/licensing context."
+    },
+    "ng_health": {
+      "name": "Nigerian health-profession regulators",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "urls": ["https://www.mdcn.gov.ng/", "https://www.nmcn.gov.ng/", "https://www.pcn.gov.ng/", "https://vcn.gov.ng/", "https://web.mlscn.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Use the relevant council for regulated titles, scope of practice and licensure; vacancy evidence still comes from Nigerian job sources."
+    },
+    "ng_finance": {
+      "name": "Nigerian finance and accounting bodies/regulators",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "urls": ["https://icanig.org/", "https://anan.org.ng/", "https://www.cibng.org/", "https://sec.gov.ng/", "https://www.cbn.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Accounting, banking, credit, capital markets, insurance and investment terminology; apply the relevant regulator per role."
+    },
+    "ng_business": {
+      "name": "CIPM Nigeria and Nigerian Institute of Management",
+      "region": "nigeria",
+      "evidence_type": "professional_role_context",
+      "urls": ["https://cipmnigeria.org/", "https://managementnigeria.org/"],
+      "access": "public_reference",
+      "notes": "Human resources, management, administration and organisational role terminology."
+    },
+    "ng_supply_chain": {
+      "name": "CILT Nigeria and Nigerian supply-chain bodies",
+      "region": "nigeria",
+      "evidence_type": "professional_role_context",
+      "urls": ["https://ciltnigeria.org/", "https://www.cipmnigeria.org/"],
+      "access": "public_reference",
+      "notes": "Logistics, transport, procurement, inventory, supplier and supply-chain terminology. Verify body-specific scope before using a title as regulated."
+    },
+    "ng_legal": {
+      "name": "Nigerian Bar Association and legal regulators",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://nigerianbar.org.ng/",
+      "access": "public_reference",
+      "notes": "Legal practice, immigration, intellectual property, compliance and regulated legal titles."
+    },
+    "ng_education": {
+      "name": "NUC, NCCE and Nigerian education standards",
+      "region": "nigeria",
+      "evidence_type": "education_and_profession_context",
+      "urls": ["https://www.nuc.edu.ng/", "https://ncce.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Teaching, research, higher education, vocational and early-learning pathway context."
+    },
+    "ng_agriculture": {
+      "name": "Nigerian agriculture, food and veterinary authorities",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "urls": ["https://fmard.gov.ng/", "https://www.nafdac.gov.ng/", "https://vcn.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Agriculture, food, livestock, fisheries and veterinary naming; use job boards for current openings."
+    },
+    "ng_energy": {
+      "name": "Nigerian upstream, midstream and downstream energy regulators",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "urls": ["https://www.nuprc.gov.ng/", "https://www.nmdpra.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Oil, gas, energy, process and offshore role terminology."
+    },
+    "ng_aviation_maritime": {
+      "name": "Nigerian aviation and maritime authorities",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "urls": ["https://ncaa.gov.ng/", "https://nimasa.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Aviation, airport, maritime, marine engineering and shipping context."
+    },
+    "ng_creative": {
+      "name": "Nigerian creative-industry and media sources",
+      "region": "nigeria",
+      "evidence_type": "industry_role_context",
+      "urls": ["https://www.nuj.org.ng/", "https://www.nfvcb.gov.ng/", "https://copyright.gov.ng/"],
+      "access": "public_reference",
+      "notes": "Journalism, media, film, music, copyright and creative-production context."
+    },
+    "ng_gaming": {
+      "name": "National Lottery Regulatory Commission and Nigerian gaming ecosystem",
+      "region": "nigeria",
+      "evidence_type": "sector_regulatory_context",
+      "url": "https://nlrc-gov.ng/",
+      "access": "public_reference",
+      "notes": "Gaming, betting and lottery regulation; pair with live vacancy sources for actual titles."
+    },
+    "ng_environment": {
+      "name": "NESREA and Nigerian environmental regulators",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "url": "https://nesrea.gov.ng/",
+      "access": "public_reference",
+      "notes": "Environmental engineering, climate, occupational safety and environmental compliance context."
+    }
+  },
+  "default_sources": ["global_esco", "global_onet", "global_isco", "global_wef", "ng_jobberman", "ng_myjobmag", "ng_nbs"],
+  "cluster_sources": {
+    "Information & Communication Technology": ["global_sfia", "ng_cpn", "ng_telecom"],
+    "Data & Analytics": ["global_sfia", "ng_cpn"],
+    "Financial Services": ["ng_finance"],
+    "Engineering & Built Environment": ["global_built_environment", "ng_engineering", "ng_built_environment"],
+    "Health & Biomedical": ["global_health", "ng_health"],
+    "Business & Management": ["global_project_management", "ng_business"],
+    "Supply Chain & Logistics": ["global_supply_chain", "global_cips", "ng_supply_chain"],
+    "Legal & Compliance": ["global_wipo", "ng_legal"],
+    "Education & Research": ["global_unesco", "ng_nuc", "ng_education"],
+    "Creative & Media": ["global_creative", "global_music", "ng_creative"],
+    "Agriculture & Food Systems": ["global_fao", "ng_agriculture"],
+    "Advanced Manufacturing": ["ng_engineering", "ng_nbte"],
+    "Real Estate & Construction": ["global_built_environment", "ng_built_environment"],
+    "Hospitality & Tourism": ["ng_jobberman", "ng_myjobmag"],
+    "Energy & Resources": ["global_energy", "ng_energy"],
+    "Emerging Technology": ["global_sfia", "global_wef", "ng_cpn"],
+    "Office & Administrative Services": ["ng_business"],
+    "Retail, Sales & Commerce": ["ng_jobberman", "ng_myjobmag"],
+    "Beauty, Personal Care & Wellness": ["ng_nbte", "ng_jobberman", "ng_myjobmag"],
+    "Culinary Arts & Food Service": ["global_fao", "ng_nbte", "ng_agriculture"],
+    "Electrical & Electronics Trades": ["ng_nbte", "ng_engineering"],
+    "Mechanical & Automotive Trades": ["ng_nbte", "ng_engineering"],
+    "Metal, Welding & Fabrication Trades": ["ng_nbte", "ng_engineering"],
+    "Building & Construction Trades": ["ng_nbte", "ng_built_environment"],
+    "Wood, Furniture & Craft": ["ng_nbte"],
+    "Textiles, Garments & Leather": ["ng_nbte"],
+    "Printing & Graphic Production": ["ng_nbte", "ng_creative"],
+    "Manufacturing & Industrial Plant Operations": ["ng_nbte", "ng_engineering"],
+    "Transport & Driving Operations": ["ng_nbte", "ng_aviation_maritime"],
+    "Agriculture, Fishing & Natural Resources": ["global_fao", "ng_agriculture", "ng_nbte"],
+    "Community Health & Paramedical": ["global_health", "ng_health"],
+    "Childcare & Early Learning": ["ng_education"],
+    "Defence & Military": ["ng_jobberman", "ng_myjobmag"],
+    "Advanced Science & Engineering": ["global_nuclear", "ng_engineering"],
+    "High-Performance Engineering": ["ng_engineering", "ng_aviation_maritime"],
+    "Public Sector & Social Services": ["ng_nbs", "ng_jobberman", "ng_myjobmag"]
+  },
+  "domain_overrides": {
+    "D004": ["global_nice"],
+    "D054": ["global_energy", "ng_energy"],
+    "D055": ["global_energy", "ng_energy"],
+    "D059": ["global_wef", "ng_engineering"],
+    "D069": ["global_icao_iata", "ng_aviation_maritime"],
+    "D076": ["global_imo_imarest", "ng_aviation_maritime"],
+    "D086": ["global_game_dev", "global_esports", "ng_gaming"],
+    "D129": ["ng_jobberman", "ng_myjobmag"],
+    "D131": ["global_icao_iata", "ng_engineering"],
+    "D132": ["global_wef", "ng_engineering"],
+    "D134": ["global_imo_imarest", "ng_engineering", "ng_aviation_maritime"],
+    "D135": ["global_nuclear", "ng_engineering"],
+    "D137": ["global_nuclear", "global_health", "ng_health"],
+    "D139": ["global_game_dev", "global_creative", "ng_creative"],
+    "D141": ["global_wef", "global_sfia", "ng_cpn"],
+    "D143": ["global_nice", "ng_cpn"],
+    "D148": ["global_energy", "global_imo_imarest", "ng_energy", "ng_aviation_maritime"],
+    "D153": ["global_music", "global_creative", "ng_creative"],
+    "D157": ["global_wipo", "ng_finance", "ng_legal"],
+    "D162": ["ng_legal"],
+    "D163": ["global_wipo", "ng_legal"],
+    "D166": ["global_sfia", "global_xr", "ng_cpn", "ng_engineering"],
+    "D167": ["global_xr", "global_sfia", "ng_cpn"],
+    "D168": ["global_game_dev", "global_esports", "global_creative", "ng_creative"]
+  },
+  "cross_domain_role_policy": {
+    "canonical_role_rule": "Create one canonical role record and attach domain_ids; do not create a separate role merely because the same title appears under another domain.",
+    "primary_domain_rule": "Choose the domain that best describes the role's principal work output; use secondary domains for material adjacent responsibilities.",
+    "example_third_party_cybersecurity": {
+      "canonical_role_family": "Third-party cyber risk and supplier security",
+      "primary_domain_id": "D004",
+      "secondary_domain_ids": ["D034", "D036", "D038"],
+      "aliases": ["Third Party Risk Analyst", "Third Party Risk Manager", "Third Party Security Consultant", "Third Party Assurance Analyst", "Third Party Assurance Manager", "Third Party Risk Officer", "Third Party Cybersecurity Program Manager", "Vendor Risk Analyst", "Vendor Risk Manager", "Supplier Assurance Lead", "Security Due Diligence Analyst", "Vendor Security Assessment Analyst", "Vendor Security Assessment Manager"],
+      "global_sources": ["global_nice", "global_esco", "global_onet", "global_supply_chain", "global_cips"],
+      "nigeria_sources": ["ng_jobberman", "ng_myjobmag", "ng_cpn", "ng_supply_chain", "ng_legal"],
+      "notes": "Third party, vendor and supplier are aliases. The supply-chain link is valid when the role owns supplier governance, procurement assurance or vendor lifecycle controls; the cyber link remains primary when the work is security due diligence, control assessment or cyber risk."
+    }
+  },
+  "sparse_domain_policy": {
+    "rule": "Sparse posting volume is not evidence that the domain has no roles. Use specialist industry sources plus ESCO/O*NET/ISCO for the role spine, and label Nigerian evidence as limited when Jobberman/MyJobMag do not produce a stable sample.",
+    "priority_domain_ids": ["D086", "D139", "D141", "D153", "D167", "D168"],
+    "minimum_evidence": ["one global taxonomy source", "one specialist global industry source where available", "one Nigerian vacancy source", "one Nigerian regulator/industry source where available"]
+  },
+  "implementation_notes": [
+    "Resolve the source set for a domain by unioning default_sources, the domain cluster rule and domain_overrides.",
+    "Use evidence_type to keep role-title evidence separate from labour-market context and professional/licensing context.",
+    "Store source_id and checked_at on every normalized role observation; source URL alone is not sufficient provenance.",
+    "This registry intentionally does not copy role names from role_library_v3; it is driven by domain_meta and source families, then used to collect or validate role names.",
+    "Validate that every key in domain_meta.json resolves to at least one global/global_proxy source and both ng_jobberman and ng_myjobmag."
+  ]
+}
