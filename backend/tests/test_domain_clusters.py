@@ -28,8 +28,9 @@ DOMAINS = [
      "elite_domain": False, "excluded": False},
 ]
 METRICS = [
-    {"domain_id": "u1", "volume_score": 71.5},
-    {"domain_id": "u9", "volume_score": 3},  # orphan: no such domain
+    {"domain_id": "u1", "volume_score": 71.5, "demand_band": "medium"},
+    {"domain_id": "u4", "volume_score": 20.0, "demand_band": "LOW "},
+    {"domain_id": "u9", "volume_score": 3, "demand_band": "high"},  # orphan
 ]
 
 
@@ -78,7 +79,17 @@ class TestDomainClusters:
         assert by_name["Zebra Studies"]["inDemandScore"] == 71.5
         # Absent rather than 0 — a domain with no metric has no score, and 0
         # would read as "measured, and it is zero".
-        assert "inDemandScore" not in by_name["Nursing"]
+        assert "inDemandScore" not in by_name["Alpha Systems"]
+
+    def test_demand_band_is_normalised(self):
+        # The band drives the meter. volume_score is on the source's own scale
+        # (13..56 in production) and is NOT a percentage — a UI that treated it
+        # as one drew every domain as full demand.
+        out = _call()
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Zebra Studies"]["demandBand"] == "medium"
+        assert by_name["Nursing"]["demandBand"] == "low"  # "LOW " normalised
+        assert "demandBand" not in by_name["Alpha Systems"]
 
     def test_elite_flag_survives(self):
         out = _call()
