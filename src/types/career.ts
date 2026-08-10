@@ -112,6 +112,15 @@ export interface Programme {
   discipline: string;
   qualification?: string; // B.Sc, NCE, ND, HND, ...
   durationYears?: number;
+  /**
+   * What this degree teaches. Resolved server-side by following
+   * programme_mapping to the JAMB names' CCMAS skills profile, and unioned when
+   * several names map to this one programme. Empty means genuinely unmapped —
+   * 106 of 239 programmes are.
+   */
+  skillsTechnical?: string[] | null;
+  skillsTransferable?: string[] | null;
+  skillsCount?: number | null;
   /** Domain links, each with its match type. */
   domains: DomainLink[];
 }
