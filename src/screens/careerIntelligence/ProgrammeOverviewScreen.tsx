@@ -39,6 +39,7 @@ import {
   type RequirementField,
 } from "@/lib/sanitizeRequirementText";
 import { useExploreNav } from "@/lib/exploreNav";
+import { awardLine } from "@/lib/programmeAward";
 import {
   comingSoon,
   type DataState,
@@ -351,14 +352,9 @@ function ProgrammeBody({
               Qualification and duration survive as a single plain line — they
               are answers to real student questions ("is it a B.Sc?", "how many
               years?") and are not CCMAS vocabulary. */}
-          {data.qualification || data.durationYears ? (
+          {awardLine(data.name, data.qualification, data.durationYears) ? (
             <Text style={[styles.awardLine, { color: colors.textRole.secondary }]}>
-              {[
-                data.qualification,
-                data.durationYears ? `${data.durationYears} years` : null,
-              ]
-                .filter(Boolean)
-                .join("  ·  ")}
+              {awardLine(data.name, data.qualification, data.durationYears)}
             </Text>
           ) : null}
 
