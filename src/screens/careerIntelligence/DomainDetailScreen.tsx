@@ -127,14 +127,18 @@ function DomainBody({
 
   const isDesktop = resp.isDesktop && resp.isWeb;
 
+  // No match/coverageRatio passed: the domain endpoint does not return ESCO
+  // coverage for these roles. This used to pass `match="match"
+  // coverageRatio={0}` to satisfy a required prop, so every role on every
+  // domain rendered "Match · 0%" — claiming >=50% coverage and 0% coverage in
+  // the same badge. Both props are optional now, and the badge renders nothing
+  // when there is nothing to say.
   const renderRoleCard = (role: DomainRoleSummary) => (
     <RoleCard
       key={role.key}
       id={role.key}
       name={role.name}
       alsoKnownAs={role.alsoKnownAs}
-      match="match"
-      coverageRatio={0}
       eliteFlag={isElite(role.eliteStatus)}
       onPress={() => exploreNav.role(router, role.key)}
     />

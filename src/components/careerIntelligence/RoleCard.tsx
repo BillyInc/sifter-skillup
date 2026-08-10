@@ -19,8 +19,16 @@ export interface RoleCardProps {
   id: string;
   name: string;
   alsoKnownAs?: string[];
-  match: RoleMatchType;
-  coverageRatio: number;
+  /**
+   * ESCO skill-coverage label. OPTIONAL: omit it where coverage has not been
+   * computed. It was required, so callers with no coverage data passed
+   * `match="match" coverageRatio={0}` to satisfy the type — which rendered
+   * "Match · 0%" on every role of every domain, asserting >=50% coverage and
+   * 0% coverage in the same badge.
+   */
+  match?: RoleMatchType;
+  /** 0..1 ESCO coverage. Omit when unknown; 0 means "measured, and it is 0". */
+  coverageRatio?: number;
   readiness?: Readiness;
   tier?: TierType;
   inDemandScore?: number;
@@ -97,11 +105,13 @@ export function RoleCard({
             </Text>
           ) : null}
         </View>
-        <RoleMatchBadge
-          match={match}
-          coverageRatio={coverageRatio}
-          elite={eliteFlag}
-        />
+        {match || eliteFlag ? (
+          <RoleMatchBadge
+            match={match}
+            coverageRatio={coverageRatio}
+            elite={eliteFlag}
+          />
+        ) : null}
       </View>
 
       {(readiness || tier) ? (
