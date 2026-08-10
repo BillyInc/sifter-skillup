@@ -457,8 +457,7 @@ function ProgrammeBody({
                     </Text>
                     {s.form ? (
                       <Text style={[styles.schoolMeta, { color: colors.textRole.muted }]}>
-                        {s.form === "UTME" ? "UTME" : "Direct Entry"}
-                        {s.aggregateCutoff ? ` · Cut-off: ${s.aggregateCutoff}` : ""}
+                        {s.form === "UTME" ? "UTME" : "Direct Entry"} · cycle details only where published
                       </Text>
                     ) : null}
                   </View>
@@ -590,22 +589,22 @@ function TrackCAdmission({
         {admissionState.status === "real" && admissionState.data ? (
           <>
             <Text style={[styles.businessTitle, { color: colors.textRole.primary }, CompassFonts.displaySemi]}>
-              Cut-offs & Formula ({admissionState.data.year})
+              Schools & admission ({admissionState.data.year})
             </Text>
             <Text style={[styles.admissionLabel, { color: colors.textRole.secondary }]}>
               {admissionState.data.label}
             </Text>
             <Text style={[styles.admissionLabel, { color: colors.textRole.muted }]}>
-              {admissionState.data.programmeCount} programme(s) with cut-off data
+              {admissionState.data.programmeCount} programme admission row(s) in the dataset
             </Text>
             <Text style={[styles.admissionNote, { color: colors.textRole.muted }]}>
-              Data is indicative — based on the {admissionState.data.year} admission cycle.
+              Use this with the published JAMB cycle and the university's current admission notice.
             </Text>
           </>
         ) : admissionState.status === "fallback" ? (
           <>
             <Text style={[styles.businessTitle, { color: colors.textRole.primary }, CompassFonts.displaySemi]}>
-              Admission data (fallback)
+              Admission data unavailable
             </Text>
             <Text style={[styles.admissionNote, { color: colors.textRole.secondary }]}>
               {admissionState.meta?.notice}
@@ -617,7 +616,7 @@ function TrackCAdmission({
               University Admission Intelligence
             </Text>
             <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>
-              Annual Dec/Jan compile of JAMB cut-offs, aggregate formulas, and national competitiveness. Data will appear here once compiled.
+              Annual admission-cycle requirements, universal JAMB floor where published, and national competitiveness context appear here once compiled.
             </Text>
             <Text style={[styles.admissionNote, { color: colors.textRole.muted }]}>
               {admissionState.meta?.notice}

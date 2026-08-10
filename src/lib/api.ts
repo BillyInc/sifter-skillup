@@ -170,10 +170,15 @@ export const API = {
     // type assertion: call sites extend UserProfile with store-local fields
     request<AuthResponse>('/api/auth/guest', { method: 'POST' }) as Promise<{ token: string; user: CompatAny }>,
 
-  authSignup: (email: string, password: string, username?: string) =>
+  authSignup: (email: string, password: string, profile?: {
+    first_name?: string;
+    middle_name?: string;
+    last_name?: string;
+    date_of_birth?: string;
+  }) =>
     // type assertion: call sites extend UserProfile with store-local fields
     request<AuthResponse>('/api/auth/signup', {
-      method: 'POST', body: JSON.stringify({ email, password, username }),
+      method: 'POST', body: JSON.stringify({ email, password, ...profile }),
     }) as Promise<{ token: string; user: CompatAny }>,
 
   authLogin: (email: string, password: string) =>

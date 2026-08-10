@@ -1,20 +1,24 @@
-/**
- * EntrepreneurshipPathwayScreen — first-class "build a business" route.
- *
- * Entrepreneurship is not just a JAMB programme match. It is a venture pathway
- * that can start from a skill, a domain, a market problem or a school project.
- * This page gives it a dedicated product surface while the enrichment graph
- * catches up with venture-specific skills, tools and demand signals.
- */
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
+  ActivityIndicator,
   ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { useRouter } from "expo-router";
+
+import { useAuth } from "@/hooks/useAuth";
+import { entrepreneurshipData } from "@/lib/entrepreneurshipData";
+import { getStartingPoint } from "@/lib/startingPoint";
+import type {
+  EntrepreneurshipEntryMode,
+  EntrepreneurshipOpportunityMap,
+  EntrepreneurshipRole,
+  OpportunityLens,
+  VentureMode,
+} from "@/types/entrepreneurship";
 import {
   useTheme,
   Spacing,
@@ -26,50 +30,88 @@ import {
   type ColorPalette,
 } from "@/theme";
 
-const STARTING_POINTS = [
-  {
-    title: "I have an idea",
-    body: "Test the customer, problem, price and channel before choosing what to build.",
-  },
-  {
-    title: "I have a skill",
-    body: "Turn design, food, coding, repair, tutoring, sales or craft skill into a service or product path.",
-  },
-  {
-    title: "I know my programme",
-    body: "Map your course to venture routes, useful domains and the practical skills you still need.",
-  },
-  {
-    title: "I see a market problem",
-    body: "Start from demand: who pays, how often, what substitute exists, and what proof you can collect.",
-  },
+const ENTRY_MODES: { label: string; value: EntrepreneurshipEntryMode }[] = [
+  { label: "Saved context", value: "programme" },
+  { label: "Idea", value: "idea" },
+  { label: "Skill", value: "skill" },
+  { label: "Market problem", value: "market_problem" },
 ];
 
-const BUSINESS_CAPABILITIES = [
-  "Customer discovery",
-  "Sales and distribution",
-  "Pricing and unit economics",
-  "Bookkeeping and tax readiness",
-  "Operations and supply chains",
-  "Digital marketing",
-  "Product design",
-  "Regulation and compliance",
+const VENTURE_MODES: { label: string; value: VentureMode }[] = [
+  { label: "Micro", value: "micro" },
+  { label: "Service", value: "service" },
+  { label: "Creator", value: "creator" },
+  { label: "Scalable", value: "scalable" },
+  { label: "Research", value: "research" },
+  { label: "Trade", value: "trade" },
 ];
 
-const DOMAIN_LINKS = [
-  "Accounting and finance",
-  "Marketing and growth",
-  "Operations management",
-  "Product and design",
-  "Software and automation",
-  "Supply chain and logistics",
-  "Legal and compliance",
-  "Data and market research",
+const LENSES: { label: string; value: OpportunityLens }[] = [
+  { label: "Replicate", value: "replicate" },
+  { label: "Adapt", value: "adapt" },
+  { label: "Digitize", value: "digitize" },
+  { label: "Productize", value: "productize" },
+  { label: "Distribute", value: "distribute" },
+  { label: "Regulated", value: "regulated" },
 ];
+
+function toggle<T>(list: T[], value: T): T[] {
+  return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
+}
 
 export function EntrepreneurshipPathwayScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
+  const [entryMode, setEntryMode] = React.useState<EntrepreneurshipEntryMode>("programme");
+  const [map, setMap] = React.useState<EntrepreneurshipOpportunityMap | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [selectedDomainId, setSelectedDomainId] = React.useState<string | null>(null);
+  const [ventureModes, setVentureModes] = React.useState<VentureMode[]>([]);
+  const [lenses, setLenses] = React.useState<OpportunityLens[]>([]);
+  const [showAll, setShowAll] = React.useState(false);
+  const [selectedRole, setSelectedRole] = React.useState<EntrepreneurshipRole | null>(null);
+  const [lockedMessage, setLockedMessage] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    let active = true;
+    (async () => {
+      setLoading(true);
+      const startingPoint = await getStartingPoint();
+      const state = await entrepreneurshipData.getOpportunityMap({
+        entryMode,
+        domainId: startingPoint?.priorFieldDomainKey,
+        programmeName: startingPoint?.intendedProgramme ?? startingPoint?.programmeName,
+      });
+      if (!active) return;
+      setMap(state.data);
+      const firstDomain = state.data?.domains?.[0]?.id ?? null;
+      setSelectedDomainId((current) => current ?? firstDomain);
+      setLoading(false);
+    })();
+    return () => {
+      active = false;
+    };
+  }, [entryMode]);
+
+  const roles = React.useMemo(() => {
+    if (!map) return [];
+    return entrepreneurshipData.filterRoles(map, {
+      domainId: selectedDomainId,
+      ventureModes,
+      lenses,
+      showAll,
+    });
+  }, [map, selectedDomainId, ventureModes, lenses, showAll]);
+
+  const locked = (action: string) => {
+    setLockedMessage(
+      isGuest
+        ? `Create an account to ${action}.`
+        : `${action} will unlock when the Entrepreneurship evidence registry and entitlement rules are configured.`,
+    );
+  };
 
   return (
     <ScrollView
@@ -90,114 +132,307 @@ export function EntrepreneurshipPathwayScreen() {
       </TouchableOpacity>
 
       <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
-        ENTREPRENEURSHIP PATHWAY
+        BUILD PATHWAY
       </Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Build a business
+        Opportunity Map
       </Text>
       <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        A venture path for students, graduates and early founders. Start from
-        what you know, what you can make, or the market problem you want to
-        solve.
+        Explore business routes from a saved programme, domain, idea, skill, or market problem.
+        Evidence-backed data appears as it is validated; unsupported claims stay marked as not yet evidenced.
       </Text>
 
-      <View style={styles.grid}>
-        {STARTING_POINTS.map((item) => (
-          <InfoCard key={item.title} title={item.title} body={item.body} colors={colors} />
+      <View style={styles.toolbar}>
+        {ENTRY_MODES.map((item) => (
+          <FilterChip
+            key={item.value}
+            label={item.label}
+            active={entryMode === item.value}
+            onPress={() => {
+              setEntryMode(item.value);
+              setSelectedRole(null);
+            }}
+            colors={colors}
+          />
         ))}
       </View>
 
-      <Section title="What the graph will track" colors={colors}>
-        <Text style={[styles.copy, { color: colors.textRole.muted }, CompassFonts.body]}>
-          Entrepreneurship needs a different readiness model from employment.
-          LevelUp will track capability, evidence and market access: customer
-          proof, revenue model, route to market, operating costs, compliance
-          risk, tools, and the domains that strengthen the venture.
-        </Text>
-      </Section>
+      {loading ? <ActivityIndicator color={colors.accentRole.action} /> : null}
 
-      <Section title="Core capabilities" colors={colors}>
-        <View style={styles.chips}>
-          {BUSINESS_CAPABILITIES.map((item) => (
-            <Text
-              key={item}
-              style={[
-                styles.chip,
-                { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, CompassFonts.bodyBold,
-              ]}
-            >
-              {item}
+      {map ? (
+        <>
+          <Section title="Choose a domain lens" colors={colors}>
+            <View style={styles.domainGrid}>
+              {map.domains.map((domain) => (
+                <TouchableOpacity
+                  key={domain.id}
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    setSelectedDomainId(domain.id);
+                    setSelectedRole(null);
+                  }}
+                  style={[
+                    styles.domainCard,
+                    {
+                      backgroundColor: selectedDomainId === domain.id ? colors.accentRole.action : colors.surface.raised,
+                      borderColor: selectedDomainId === domain.id ? colors.accentRole.action : colors.borderRole.subtle,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.domainRank,
+                      { color: selectedDomainId === domain.id ? "#FFFFFF" : colors.textRole.muted },
+                      CompassFonts.data,
+                    ]}
+                  >
+                    {domain.rank ? `#${domain.rank}` : "ALT"}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.domainName,
+                      { color: selectedDomainId === domain.id ? "#FFFFFF" : colors.textRole.primary },
+                      CompassFonts.bodyBold,
+                    ]}
+                  >
+                    {domain.name}
+                  </Text>
+                  <EvidenceLine evidence={domain.evidence.status} inverse={selectedDomainId === domain.id} colors={colors} />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </Section>
+
+          <Section title="Filter opportunity roles" colors={colors}>
+            <Text style={[styles.smallLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+              Venture modes
             </Text>
-          ))}
-        </View>
-      </Section>
-
-      <Section title="Useful domain lenses" colors={colors}>
-        <View style={styles.chips}>
-          {DOMAIN_LINKS.map((item) => (
-            <Text
-              key={item}
-              style={[
-                styles.chip,
-                { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, CompassFonts.bodyBold,
-              ]}
-            >
-              {item}
+            <View style={styles.toolbar}>
+              {VENTURE_MODES.map((item) => (
+                <FilterChip
+                  key={item.value}
+                  label={item.label}
+                  active={ventureModes.includes(item.value)}
+                  onPress={() => setVentureModes((current) => toggle(current, item.value))}
+                  colors={colors}
+                />
+              ))}
+            </View>
+            <Text style={[styles.smallLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+              Opportunity lenses
             </Text>
-          ))}
-        </View>
-      </Section>
+            <View style={styles.toolbar}>
+              {LENSES.map((item) => (
+                <FilterChip
+                  key={item.value}
+                  label={item.label}
+                  active={lenses.includes(item.value)}
+                  onPress={() => setLenses((current) => toggle(current, item.value))}
+                  colors={colors}
+                />
+              ))}
+              <FilterChip
+                label={showAll ? "Ranked view" : "Show all"}
+                active={showAll}
+                onPress={() => setShowAll((value) => !value)}
+                colors={colors}
+              />
+            </View>
+          </Section>
 
-      <View
-        style={[
-          styles.note,
-          { backgroundColor: colors.accentRole.action + "0A", borderColor: colors.accentRole.action },
-        ]}
-      >
-        <Text style={[styles.noteTitle, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          Product decision
-        </Text>
-        <Text style={[styles.noteBody, { color: colors.textRole.primary }, CompassFonts.body]}>
-          Entrepreneurship stays inside LevelUp as a pathway, but it is not
-          forced into the same job-posting rank as employed roles. It will use
-          business-readiness evidence plus adjacent domain skills and tools.
-        </Text>
-      </View>
+          {lockedMessage ? (
+            <View style={[styles.notice, { backgroundColor: colors.warningSoft, borderColor: colors.warning }]}>
+              <Text style={[styles.noticeText, { color: colors.textRole.primary }, CompassFonts.body]}>
+                {lockedMessage}
+              </Text>
+            </View>
+          ) : null}
+
+          <View style={styles.roleGrid}>
+            {roles.map((role) => (
+              <RoleCard
+                key={role.id}
+                role={role}
+                selected={selectedRole?.id === role.id}
+                onPress={() => setSelectedRole(role)}
+                onSave={() => locked("save this venture role")}
+                onCompare={() => locked("compare venture roles")}
+                colors={colors}
+              />
+            ))}
+          </View>
+
+          {selectedRole ? <RoleDetail role={selectedRole} colors={colors} /> : null}
+        </>
+      ) : (
+        <View style={[styles.notice, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.noticeText, { color: colors.textRole.secondary }, CompassFonts.body]}>
+            Opportunity Map data is not available yet.
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 }
 
-function Section({
-  title,
-  children,
-  colors,
-}: {
-  title: string;
-  children: React.ReactNode;
-  colors: ColorPalette;
-}) {
+function Section({ title, children, colors }: { title: string; children: React.ReactNode; colors: ColorPalette }) {
   return (
-    <View style={[styles.section, { borderColor: colors.borderRole.subtle }]}>
-      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
+    <View style={[styles.section, { borderTopColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        {title}
+      </Text>
       {children}
     </View>
   );
 }
 
-function InfoCard({
-  title,
-  body,
+function FilterChip({
+  label,
+  active,
+  onPress,
   colors,
 }: {
-  title: string;
-  body: string;
+  label: string;
+  active: boolean;
+  onPress: () => void;
   colors: ColorPalette;
 }) {
   return (
-    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
-      <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{body}</Text>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={onPress}
+      style={[
+        styles.chip,
+        {
+          backgroundColor: active ? colors.accentRole.action : colors.surface.raised,
+          borderColor: active ? colors.accentRole.action : colors.borderRole.subtle,
+        },
+      ]}
+    >
+      <Text style={[styles.chipText, { color: active ? "#FFFFFF" : colors.textRole.primary }, CompassFonts.bodyBold]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+function EvidenceLine({ evidence, inverse, colors }: { evidence: string; inverse?: boolean; colors: ColorPalette }) {
+  const label = evidence === "not_yet_evidenced" ? "Not yet evidenced" : evidence;
+  return (
+    <Text style={[styles.evidence, { color: inverse ? "#FFFFFF" : colors.textRole.muted }, CompassFonts.bodySemibold]}>
+      {label}
+    </Text>
+  );
+}
+
+function RoleCard({
+  role,
+  selected,
+  onPress,
+  onSave,
+  onCompare,
+  colors,
+}: {
+  role: EntrepreneurshipRole;
+  selected: boolean;
+  onPress: () => void;
+  onSave: () => void;
+  onCompare: () => void;
+  colors: ColorPalette;
+}) {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.86}
+      onPress={onPress}
+      style={[
+        styles.roleCard,
+        {
+          backgroundColor: colors.surface.raised,
+          borderColor: selected ? colors.accentRole.action : colors.borderRole.subtle,
+        },
+      ]}
+    >
+      <View style={styles.roleHeader}>
+        <Text style={[styles.roleType, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+          {role.roleType.toUpperCase()}
+        </Text>
+        <EvidenceLine evidence={role.evidence.status} colors={colors} />
+      </View>
+      <Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        {role.title}
+      </Text>
+      <Text style={[styles.roleSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        {role.summary}
+      </Text>
+      <View style={styles.inlineChips}>
+        {role.ventureModes.slice(0, 3).map((mode) => (
+          <Text key={mode} style={[styles.metaChip, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle }]}>
+            {mode}
+          </Text>
+        ))}
+      </View>
+      <View style={styles.actions}>
+        <ActionButton label="Details" onPress={onPress} colors={colors} />
+        <ActionButton label="Save" onPress={onSave} colors={colors} />
+        <ActionButton label="Compare" onPress={onCompare} colors={colors} />
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function RoleDetail({ role, colors }: { role: EntrepreneurshipRole; colors: ColorPalette }) {
+  return (
+    <View style={[styles.detail, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        {role.title}
+      </Text>
+      <Text style={[styles.roleSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        {role.summary}
+      </Text>
+      <DetailList title="Capability layers" items={role.capabilityLayers} colors={colors} />
+      <DetailList title="Partner requirements" items={role.partnerRequirements} colors={colors} />
+      <DetailList title="Regulation" items={role.regulationNotes} colors={colors} />
+      <View style={styles.contextGrid}>
+        <ContextBlock title="Nigeria context" body={role.nigeriaContext} colors={colors} />
+        <ContextBlock title="Global context" body={role.globalContext} colors={colors} />
+      </View>
     </View>
+  );
+}
+
+function DetailList({ title, items, colors }: { title: string; items: string[]; colors: ColorPalette }) {
+  return (
+    <View style={{ gap: Spacing.xs }}>
+      <Text style={[styles.smallLabel, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
+      {items.map((item) => (
+        <Text key={item} style={[styles.bullet, { color: colors.textRole.secondary }, CompassFonts.body]}>
+          - {item}
+        </Text>
+      ))}
+    </View>
+  );
+}
+
+function ContextBlock({ title, body, colors }: { title: string; body: string; colors: ColorPalette }) {
+  return (
+    <View style={[styles.contextBlock, { borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.smallLabel, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
+      <Text style={[styles.roleSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{body}</Text>
+    </View>
+  );
+}
+
+function ActionButton({ label, onPress, colors }: { label: string; onPress: () => void; colors: ColorPalette }) {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.78}
+      onPress={onPress}
+      style={[styles.actionButton, { borderColor: colors.borderRole.subtle }]}
+    >
+      <Text style={[styles.actionText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
   );
 }
 
@@ -219,10 +454,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
     justifyContent: "center",
   },
-  backText: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
-  },
+  backText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   eyebrow: {
     fontSize: FontSize.xs,
     fontWeight: FontWeight.heavy,
@@ -232,49 +464,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FontSize.display,
     fontWeight: FontWeight.black,
-    lineHeight: FontSize.display * 1.15,
+    lineHeight: FontSize.display * 1.12,
   },
   lead: {
     fontSize: FontSize.md,
-    lineHeight: FontSize.md * 1.45,
-    maxWidth: 780,
+    lineHeight: FontSize.md * 1.5,
+    maxWidth: 820,
   },
-  grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.md,
-    marginTop: Spacing.sm,
-  },
-  card: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.lg,
-    gap: Spacing.xs,
-    minWidth: 240,
-    flex: 1,
-  },
-  cardTitle: {
-    fontSize: FontSize.lg,
-    fontWeight: FontWeight.black,
-  },
-  cardBody: {
-    fontSize: FontSize.sm,
-    lineHeight: FontSize.sm * 1.5,
-  },
-  section: {
-    borderTopWidth: 1,
-    paddingTop: Spacing.lg,
-    gap: Spacing.md,
-  },
-  sectionTitle: {
-    fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
-  },
-  copy: {
-    fontSize: FontSize.md,
-    lineHeight: FontSize.md * 1.55,
-  },
-  chips: {
+  toolbar: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.sm,
@@ -284,21 +481,102 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
   },
-  note: {
+  chipText: { fontSize: FontSize.sm },
+  section: {
+    borderTopWidth: 1,
+    paddingTop: Spacing.lg,
+    gap: Spacing.md,
+  },
+  sectionTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  smallLabel: { fontSize: FontSize.sm },
+  domainGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  domainCard: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+    minWidth: 220,
+    flex: 1,
+  },
+  domainRank: { fontSize: FontSize.xs },
+  domainName: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.35 },
+  evidence: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.5 },
+  notice: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+  },
+  noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  roleGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  roleCard: {
     borderWidth: 1,
     borderRadius: Radius.lg,
     padding: Spacing.lg,
+    gap: Spacing.sm,
+    minWidth: 270,
+    flex: 1,
+  },
+  roleHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.sm,
+  },
+  roleType: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  roleTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  roleSummary: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  inlineChips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: Spacing.xs,
   },
-  noteTitle: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+  metaChip: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+    fontSize: FontSize.xs,
+    textTransform: "capitalize",
   },
-  noteBody: {
-    fontSize: FontSize.md,
-    lineHeight: FontSize.md * 1.5,
+  actions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  actionButton: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
+  actionText: { fontSize: FontSize.sm },
+  detail: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  bullet: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  contextGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  contextBlock: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+    minWidth: 240,
+    flex: 1,
   },
 });

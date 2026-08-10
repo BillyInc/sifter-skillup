@@ -55,9 +55,9 @@ const SLIDES: Slide[] = [
     body: "Search any programme and see the domains, roles and skills it unlocks — and the internships and jobs that follow, local, global and remote.",
   },
   {
-    eyebrow: "THE GOAL",
-    title: "Level up into\nreal work",
-    body: Brand.tagline,
+    eyebrow: "WHAT YOU GET",
+    title: "Real opportunities,\ntailored to you",
+    body: "See the domains, roles and skills connected to your programme, then discover the opportunities that follow.",
   },
 ];
 

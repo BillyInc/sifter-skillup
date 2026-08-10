@@ -11,9 +11,9 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
+import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
 import {
   ChoiceChips,
-  SearchField,
   SelectField,
   type ChoiceOption,
 } from "./primitives";
@@ -64,12 +64,16 @@ export function CurrentStudentSetupForm({
         onChange={(v) => onChange({ institutionType: v })}
       />
 
-      <SearchField
+      <LiveAdmissionSearchField
         label="Your school"
         value={value.schoolName ?? ""}
-        onChangeText={(v) => onChange({ schoolName: v })}
-        placeholder="Search your institution…"
-        comingSoon
+        onSelect={(item) => onChange({
+          schoolName: item.name,
+          preferredSchoolId: item.id || undefined,
+        })}
+        placeholder="Search or type your institution"
+        kind="school"
+        institutionType={typeof value.institutionType === "string" ? value.institutionType : undefined}
       />
 
       <SelectField
@@ -79,11 +83,16 @@ export function CurrentStudentSetupForm({
         comingSoon
       />
 
-      <SelectField
+      <LiveAdmissionSearchField
         label="Programme"
-        value={value.programmeName}
-        placeholder="Select your programme…"
-        comingSoon
+        value={value.programmeName ?? ""}
+        onSelect={(item) => onChange({
+          programmeName: item.name,
+          intendedProgramme: item.name,
+          intendedJambProgrammeId: item.id || undefined,
+        })}
+        placeholder="Search or type your programme"
+        kind="programme"
       />
 
       <ChoiceChips

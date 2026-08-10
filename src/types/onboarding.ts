@@ -48,6 +48,8 @@ export interface StartingPointProfile {
   preferredInstitutionType?: InstitutionType;
   preferredSchoolId?: string;
   preferredSchool?: string;
+  secondarySchoolId?: string;
+  secondarySchoolName?: string;
   intendedProgrammeId?: string;
   intendedJambProgrammeId?: string;
   intendedProgramme?: string;
