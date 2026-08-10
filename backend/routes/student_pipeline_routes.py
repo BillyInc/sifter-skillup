@@ -140,6 +140,7 @@ def _resolve_subject_catalog(subjects: list[str]) -> dict[str, dict]:
 
 
 def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
+    raw = row.get("raw_profile") or {}
     return {
         "id": row.get("id"),
         "userId": row.get("user_id"),
@@ -152,9 +153,13 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
         "preferredInstitutionType": row.get("preferred_institution_type"),
         "preferredSchoolId": row.get("preferred_school_id"),
         "preferredSchool": row.get("preferred_school_name"),
+        "schoolName": row.get("preferred_school_name"),
+        "secondarySchoolId": raw.get("secondarySchoolId"),
+        "secondarySchoolName": raw.get("secondarySchoolName"),
         "intendedJambProgrammeId": row.get("intended_jamb_programme_id"),
         "intendedProgrammeId": row.get("intended_programme_id"),
         "intendedProgramme": row.get("intended_programme_name"),
+        "programmeName": row.get("intended_programme_name"),
         "priorFieldDomainKey": row.get("prior_field_domain_key"),
         "regions": row.get("work_regions") or [],
         "workTypes": row.get("work_types") or [],
@@ -170,6 +175,13 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
 
 class StartingPointIn(BaseModel):
     userType: str
+    institutionType: Optional[str] = None
+    schoolName: Optional[str] = None
+    programmeName: Optional[str] = None
+    discipline: Optional[str] = None
+    yearOfStudy: Optional[str] = None
+    secondarySchoolId: Optional[str] = None
+    secondarySchoolName: Optional[str] = None
     ssDoor: Optional[str] = None
     ssClass: Optional[str] = None
     stream: Optional[str] = None
@@ -186,6 +198,67 @@ class StartingPointIn(BaseModel):
     regions: list[str] = Field(default_factory=list)
     workTypes: list[str] = Field(default_factory=list)
     notifications: dict[str, Any] = Field(default_factory=dict)
+
+
+def _admission_resolution_complete(payload: StartingPointIn) -> bool:
+    if payload.userType not in ("jamb", "senior_secondary"):
+        return True
+    programme = (
+        _clean_text(payload.intendedJambProgrammeId)
+        or _clean_text(payload.intendedProgrammeId)
+        or _clean_text(payload.intendedProgramme)
+        or _clean_text(payload.programmeName)
+    )
+    school = (
+        _clean_text(payload.preferredSchoolId)
+        or _clean_text(payload.preferredSchool)
+    )
+    return bool(programme and school)
+
+
+def _upsert_secondary_school_affiliation(svc, user_id: str, payload: StartingPointIn) -> None:
+    school_id = _clean_text(payload.secondarySchoolId)
+    if not school_id or payload.userType not in ("jamb", "senior_secondary"):
+        return
+    try:
+        svc.table("student_affiliations").upsert({
+            "id": str(uuid.uuid4()),
+            "student_id": user_id,
+            "school_id": school_id,
+            "source": "self_reported",
+            "self_reported": True,
+        }, on_conflict="student_id,school_id").execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("student secondary school affiliation skipped", error=str(exc))
+
+
+def _record_admission_pathway_choice(svc, user_id: str, starting_id: str, payload: StartingPointIn) -> None:
+    school_id = _clean_text(payload.preferredSchoolId)
+    jamb_programme_id = _clean_text(payload.intendedJambProgrammeId)
+    if not school_id or not jamb_programme_id:
+        return
+    try:
+        svc.table("student_pathway_choices").update({"status": "replaced"}).eq(
+            "user_id", user_id
+        ).eq("source", "onboarding").in_("stage", ["programme", "school"]).eq(
+            "status", "active"
+        ).execute()
+        svc.table("student_pathway_choices").insert({
+            "user_id": user_id,
+            "starting_point_id": starting_id,
+            "stage": "school",
+            "school_id": school_id,
+            "jamb_programme_id": jamb_programme_id,
+            "programme_id": _clean_text(payload.intendedProgrammeId),
+            "source": "onboarding",
+            "status": "active",
+            "evidence": {
+                "selectionStatus": "programme_and_university_resolved",
+                "domainResolved": False,
+            },
+        }).execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("student admission pathway choice skipped", error=str(exc))
 
 
 @router.get("/starting-point", response_model=ResponseModel)
@@ -237,18 +310,18 @@ async def save_starting_point(
             "stream": _clean_text(payload.stream),
             "explore_intent": _clean_list(payload.exploreIntent),
             "jamb_score_band": _clean_text(payload.jambScoreBand),
-            "preferred_institution_type": _clean_text(payload.preferredInstitutionType),
+            "preferred_institution_type": _clean_text(payload.preferredInstitutionType or payload.institutionType),
             "preferred_school_id": _clean_text(payload.preferredSchoolId),
-            "preferred_school_name": _clean_text(payload.preferredSchool),
+            "preferred_school_name": _clean_text(payload.preferredSchool or payload.schoolName),
             "intended_jamb_programme_id": _clean_text(payload.intendedJambProgrammeId),
             "intended_programme_id": _clean_text(payload.intendedProgrammeId),
-            "intended_programme_name": _clean_text(payload.intendedProgramme),
+            "intended_programme_name": _clean_text(payload.intendedProgramme or payload.programmeName),
             "prior_field_domain_key": _clean_text(payload.priorFieldDomainKey),
             "work_regions": _clean_list(payload.regions),
             "work_types": _clean_list(payload.workTypes),
             "notification_prefs": payload.notifications or {},
             "raw_profile": payload.model_dump(),
-            "completed_at": now,
+            "completed_at": now if _admission_resolution_complete(payload) else None,
             "updated_at": now,
         }
         existing = (
@@ -294,7 +367,11 @@ async def save_starting_point(
         if subject_rows:
             svc.table("student_subject_choices").insert(subject_rows).execute()
 
-        _users().update({"onboarding_completed": True}).eq("id", user_id).execute()
+        _upsert_secondary_school_affiliation(svc, user_id, payload)
+        admission_complete = _admission_resolution_complete(payload)
+        if admission_complete:
+            _record_admission_pathway_choice(svc, user_id, starting_id, payload)
+        _users().update({"onboarding_completed": admission_complete}).eq("id", user_id).execute()
         row = (res.data or [{}])[0]
         return ResponseModel(data=_real(_profile_out(row, subject_rows)))
     except Exception as exc:  # noqa: BLE001
@@ -635,11 +712,11 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 }
                 for r in (offerings.data or [])
             ]
-            return ResponseModel(data=_fallback(items, "No cutoffs found yet; showing schools offering the programme."))
+            return ResponseModel(data=_fallback(items, "No admission rows found yet; showing schools offering the programme."))
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb schools failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("Schools and cutoffs are temporarily unavailable."))
+        return ResponseModel(data=_coming_soon("Schools and admission rows are temporarily unavailable."))
 
 
 def _cutoff_out(r: dict) -> dict:
@@ -653,8 +730,8 @@ def _cutoff_out(r: dict) -> dict:
         "programmeId": r.get("programme_id"),
         "programmeName": r.get("canonical_programme_name"),
         "year": r.get("year"),
-        "aggregateCutoff": r.get("aggregate_cutoff"),
-        "jambCutoff": r.get("jamb_cutoff"),
+        "aggregateCutoff": None,
+        "jambCutoff": None,
         "form": r.get("form"),
         "sourceUrl": r.get("source_url"),
         "verifiedAt": r.get("verified_at"),

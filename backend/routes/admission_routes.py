@@ -4,8 +4,6 @@
 # ============================================================
 
 from typing import Any, List, Optional, Literal
-from datetime import date
-
 from fastapi import APIRouter, Query
 
 from database import db
@@ -97,11 +95,7 @@ async def get_jamb_floor(year: Optional[int] = Query(None)):
 
         res = svc.table("national_jamb_floor").select("*").eq("year", target_year).limit(1).execute()
         if not res.data:
-            return ResponseModel(data=_fallback(
-                {"year": target_year, "floorScore": 150, "contextNote": "Default university floor (indicative)"},
-                notice=f"Floor for {target_year} not published; showing default.",
-                data_date=str(date.today()),
-            ))
+            return ResponseModel(data=_coming_soon(f"Universal JAMB floor for {target_year} is not published in this dataset yet."))
         return ResponseModel(data=_real(JambFloorOut(**res.data[0]).model_dump()))
     except Exception as exc:
         log.error("admission get_floor failed", error=str(exc))
@@ -125,11 +119,7 @@ async def get_cutoffs(
             return ResponseModel(data=_coming_soon("No admission data year available."))
 
         if not school_id and not programme_id:
-            return ResponseModel(data=_fallback(
-                [],
-                notice="Provide school_id or programme_id to query cut-offs.",
-                data_date=str(date.today()),
-            ))
+            return ResponseModel(data=_coming_soon("Choose a programme or university before viewing admission cycle data."))
 
         query = (
             svc.table("programme_school_cutoff")
@@ -163,8 +153,8 @@ async def get_cutoffs(
 
         notice = None
         if not items:
-            notice = f"No cut-offs found for {target_year} with given filters."
-        return ResponseModel(data=_real(items, notice=notice, data_date=str(date.today()), sources=["school_portal", "jamb_brochure", "news"]))
+            notice = f"No admission cycle rows found for {target_year} with the selected filters."
+        return ResponseModel(data=_real(items, notice=notice, sources=["school_portal", "jamb_brochure", "news"]))
     except Exception as exc:
         log.error("admission get_cutoffs failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Cut-offs temporarily unavailable."))
@@ -183,11 +173,7 @@ async def get_school_formula(school_id: str, year: Optional[int] = None):
 
         res = svc.table("school_aggregate_formula").select("*, schools(name)").eq("school_id", school_id).eq("year", target_year).limit(1).execute()
         if not res.data:
-            return ResponseModel(data=_fallback(
-                None,
-                notice=f"No aggregate formula published for this school in {target_year}.",
-                data_date=str(date.today()),
-            ))
+            return ResponseModel(data=_coming_soon(f"No aggregate formula published for this university in {target_year}."))
         r = res.data[0]
         return ResponseModel(data=_real(SchoolAggregateFormulaOut(
             id=r["id"],
@@ -225,7 +211,7 @@ async def get_competitiveness(year: Optional[int] = None, broad_course: Optional
         notice = None
         if not items:
             notice = f"No competitiveness data for {target_year}."
-        return ResponseModel(data=_real(items, notice=notice, data_date=str(date.today()), sources=["JAMB_annual_report", "NBS"]))
+        return ResponseModel(data=_real(items, notice=notice, sources=["JAMB_annual_report", "NBS"]))
     except Exception as exc:
         log.error("admission get_competitiveness failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Competitiveness temporarily unavailable."))
@@ -269,19 +255,23 @@ async def jamb_admission_insight(jamb_name: str):
 # ── 7. School / programme search (onboarding pickers) ─────────
 
 @router.get("/schools", response_model=ResponseModel)
-async def search_schools(q: Optional[str] = Query(None), limit: int = Query(20)):
-    """Typeahead over universities that have admission data.
+async def search_schools(
+    q: Optional[str] = Query(None),
+    limit: int = Query(20),
+    institution_type: Optional[str] = Query(None),
+):
+    """Typeahead over known schools, filtered to universities by default.
 
-    Used by JambSetupForm's "preferred school" picker. Returns a lightweight
-    list [{id, name, institutionType}] filtered to `university` scope (Phase 8).
+    Used by onboarding school pickers. Returns a lightweight list
+    [{id, name, institutionType}] and accepts free-text fallback client-side.
     """
     try:
         svc = db.get_service_client().schema(_SCHEMA)
         query = (
             svc.table("schools")
             .select("id, name, institution_type")
-            .eq("institution_type", "university")
         )
+        query = query.eq("institution_type", institution_type or "university")
         if q:
             query = query.ilike("name", f"%{q}%")
         res = query.order("name").limit(min(limit, 50)).execute()
