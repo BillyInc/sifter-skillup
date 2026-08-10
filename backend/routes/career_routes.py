@@ -215,6 +215,74 @@ async def list_programmes(
         return ResponseModel(data=_coming_soon("Programme search is temporarily unavailable."))
 
 
+def _dedup(values: Any) -> list[str]:
+    """Order-preserving dedup of a JSONB string list."""
+    if not isinstance(values, list):
+        return []
+    seen: set[str] = set()
+    out: list[str] = []
+    for v in values:
+        if not isinstance(v, str):
+            continue
+        s = v.strip()
+        key = s.lower()
+        if s and key not in seen:
+            seen.add(key)
+            out.append(s)
+    return out
+
+
+def _programme_skills(svc: Any, programme_id: str) -> dict:
+    """"What this degree teaches", for a CANONICAL programme.
+
+    The skills profile lives on `jamb_programmes` (built from CCMAS course
+    learning outcomes), and a programme reaches it through `programme_mapping`.
+    This endpoint never made that hop, so ProgrammeOverviewScreen — the main
+    place a student reads "what this degree teaches" — rendered the component's
+    "not been mapped yet" empty state for EVERY programme, including the 133 of
+    239 that do have a profile. The honest empty state was hiding a wiring gap
+    rather than a data gap, which is the one thing it must not do.
+
+    80 programmes have more than one JAMB name mapped to them. Their outcomes
+    are unioned: the canonical programme is what those names collapse into, so
+    the union is what studying it covers. Deduped case-insensitively, because
+    shared CCMAS courses repeat verbatim across names.
+
+    Degrades to an empty profile rather than failing the page.
+    """
+    try:
+        pm = (
+            svc.table("programme_mapping")
+            .select("jamb_programme_id")
+            .eq("programme_id", programme_id)
+            .execute()
+        )
+        jamb_ids = [x["jamb_programme_id"] for x in (pm.data or []) if x.get("jamb_programme_id")]
+        if not jamb_ids:
+            return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
+        jp = (
+            svc.table("jamb_programmes")
+            .select("skills_technical, skills_transferable")
+            .in_("id", jamb_ids)
+            .execute()
+        )
+        technical: list[str] = []
+        transferable: list[str] = []
+        for row in jp.data or []:
+            technical.extend(_dedup(row.get("skills_technical")))
+            transferable.extend(_dedup(row.get("skills_transferable")))
+        technical = _dedup(technical)
+        transferable = _dedup(transferable)
+        return {
+            "skillsTechnical": technical,
+            "skillsTransferable": transferable,
+            "skillsCount": len(technical) + len(transferable),
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.warning("programme skills lookup skipped", error=str(exc))
+        return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
+
+
 @router.get("/programmes/{programme_id}", response_model=ResponseModel)
 async def get_programme(programme_id: str):
     """Programme detail incl. its domain links (grouped/sorted client-side).
@@ -279,6 +347,7 @@ async def get_programme(programme_id: str):
             "qualification": r.get("qualification"),
             "durationYears": float(duration) if duration is not None else None,
             "domains": domains,
+            **_programme_skills(svc, programme_id),
         }
         notice = None if domains else "Domain links are being populated."
         return ResponseModel(data=_real(programme, notice=notice))
