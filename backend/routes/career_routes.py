@@ -215,6 +215,74 @@ async def list_programmes(
         return ResponseModel(data=_coming_soon("Programme search is temporarily unavailable."))
 
 
+def _dedup(values: Any) -> list[str]:
+    """Order-preserving dedup of a JSONB string list."""
+    if not isinstance(values, list):
+        return []
+    seen: set[str] = set()
+    out: list[str] = []
+    for v in values:
+        if not isinstance(v, str):
+            continue
+        s = v.strip()
+        key = s.lower()
+        if s and key not in seen:
+            seen.add(key)
+            out.append(s)
+    return out
+
+
+def _programme_skills(svc: Any, programme_id: str) -> dict:
+    """"What this degree teaches", for a CANONICAL programme.
+
+    The skills profile lives on `jamb_programmes` (built from CCMAS course
+    learning outcomes), and a programme reaches it through `programme_mapping`.
+    This endpoint never made that hop, so ProgrammeOverviewScreen — the main
+    place a student reads "what this degree teaches" — rendered the component's
+    "not been mapped yet" empty state for EVERY programme, including the 133 of
+    239 that do have a profile. The honest empty state was hiding a wiring gap
+    rather than a data gap, which is the one thing it must not do.
+
+    80 programmes have more than one JAMB name mapped to them. Their outcomes
+    are unioned: the canonical programme is what those names collapse into, so
+    the union is what studying it covers. Deduped case-insensitively, because
+    shared CCMAS courses repeat verbatim across names.
+
+    Degrades to an empty profile rather than failing the page.
+    """
+    try:
+        pm = (
+            svc.table("programme_mapping")
+            .select("jamb_programme_id")
+            .eq("programme_id", programme_id)
+            .execute()
+        )
+        jamb_ids = [x["jamb_programme_id"] for x in (pm.data or []) if x.get("jamb_programme_id")]
+        if not jamb_ids:
+            return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
+        jp = (
+            svc.table("jamb_programmes")
+            .select("skills_technical, skills_transferable")
+            .in_("id", jamb_ids)
+            .execute()
+        )
+        technical: list[str] = []
+        transferable: list[str] = []
+        for row in jp.data or []:
+            technical.extend(_dedup(row.get("skills_technical")))
+            transferable.extend(_dedup(row.get("skills_transferable")))
+        technical = _dedup(technical)
+        transferable = _dedup(transferable)
+        return {
+            "skillsTechnical": technical,
+            "skillsTransferable": transferable,
+            "skillsCount": len(technical) + len(transferable),
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.warning("programme skills lookup skipped", error=str(exc))
+        return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
+
+
 @router.get("/programmes/{programme_id}", response_model=ResponseModel)
 async def get_programme(programme_id: str):
     """Programme detail incl. its domain links (grouped/sorted client-side).
@@ -279,12 +347,94 @@ async def get_programme(programme_id: str):
             "qualification": r.get("qualification"),
             "durationYears": float(duration) if duration is not None else None,
             "domains": domains,
+            **_programme_skills(svc, programme_id),
         }
         notice = None if domains else "Domain links are being populated."
         return ResponseModel(data=_real(programme, notice=notice))
     except Exception as exc:  # noqa: BLE001
         log.error("career get_programme failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Programme detail is temporarily unavailable."))
+
+
+# Declared BEFORE /domains/{domain_id} — FastAPI matches in definition order,
+# and a literal path registered after a parameterised sibling is unreachable.
+@router.get("/domains", response_model=ResponseModel)
+async def list_domain_clusters():
+    """Every domain, grouped by cluster — the context-free Domain Explorer.
+
+    This endpoint did not exist. `careerData.getDomainClusters()` was a stub
+    returning a hardcoded `coming_soon`, so the Domain Explorer — linked from
+    the main Explore page as "Browse all clusters" — was permanently empty,
+    under a header that asserted "168 domains across 37 clusters". The data was
+    there the whole time (160 domains, 35 clusters); nothing read it.
+
+    `inDemandScore` is the ng_local volume score. The three lenses (ng_local,
+    ng_remote, global) are kept separate by product rule — local is the right
+    default for the Nigerian student this screen serves — so this deliberately
+    does NOT blend them.
+    """
+    try:
+        svc = _svc()
+        res = (
+            svc.table("domains")
+            .select("id, domain_key, name, cluster, elite_domain, excluded")
+            .order("cluster")
+            .execute()
+        )
+        rows = [r for r in (res.data or []) if not r.get("excluded")]
+        if not rows:
+            return ResponseModel(data=_coming_soon("Domains are being populated."))
+
+        scores: dict[str, float] = {}
+        bands: dict[str, str] = {}
+        try:
+            dm = (
+                svc.table("domain_demand_metrics")
+                # demand_band is the SOURCE's own categorisation (low/medium/
+                # high). The raw volume_score is on a scale the UI cannot know
+                # — it runs 13..56 here, and a meter that assumed 0..10 drew
+                # every one of the 160 domains as a full bar, reading as "high
+                # demand" for the 108 the data calls low. Ship the band and let
+                # the UI render what the source actually says.
+                .select("domain_id, volume_score, demand_band")
+                .eq("rank_lens", "ng_local")
+                .execute()
+            )
+            for m in dm.data or []:
+                v = _num(m.get("volume_score"))
+                if v is not None:
+                    scores[m["domain_id"]] = v
+                band = (m.get("demand_band") or "").strip().lower()
+                if band:
+                    bands[m["domain_id"]] = band
+        except Exception as exc:  # noqa: BLE001
+            # Demand is an enrichment, not the point of the screen.
+            log.warning("domain demand lookup skipped", error=str(exc))
+
+        grouped: dict[str, list] = {}
+        for r in rows:
+            entry = {
+                # The domain route keys on domain_key, not the uuid.
+                "id": r.get("domain_key") or r["id"],
+                "name": r.get("name"),
+                "eliteFlag": bool(r.get("elite_domain")),
+            }
+            score = scores.get(r["id"])
+            if score is not None:
+                entry["inDemandScore"] = score
+            band = bands.get(r["id"])
+            if band:
+                entry["demandBand"] = band
+            grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
+
+        out = [
+            {"cluster": cluster, "domains": sorted(domains, key=lambda d: d["name"] or "")}
+            for cluster, domains in sorted(grouped.items())
+        ]
+        return ResponseModel(data=_real(out))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career list_domain_clusters failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("The domain explorer is temporarily unavailable."))
 
 
 @router.get("/domains/{domain_id}", response_model=ResponseModel)

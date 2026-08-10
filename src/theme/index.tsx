@@ -530,6 +530,26 @@ export const webContainer: { maxWidth?: number; alignSelf?: 'center'; width?: Di
   ? { maxWidth: 1088, alignSelf: 'center', width: '100%' as DimensionValue, paddingHorizontal: 14, paddingTop: 14 }
   : { paddingHorizontal: 14, paddingTop: 12 };
 
+/**
+ * Style for a HORIZONTAL ScrollView (a chip row, a carousel strip).
+ *
+ * react-native-web gives every ScrollView `flexGrow: 1`. On a vertical
+ * scroller that is what you want; on a horizontal one it means the strip
+ * expands to eat all the spare height in its parent column, and the content
+ * container's default `align-items: stretch` then stretches each child to
+ * match. On the Domain Explorer that rendered "All / In-Demand / Elite" as
+ * 327px-tall vertical pills sitting above 300px of blank space, pushing the
+ * domain list itself off-screen.
+ *
+ * It only shows up when the parent column HAS spare height, which is why the
+ * same chip renders correctly on a busier screen: the bug is latent in every
+ * horizontal ScrollView and visible in only a few.
+ *
+ * Spread onto `style`; pair with `alignItems: "center"` on the
+ * contentContainerStyle so children keep their own height.
+ */
+export const hScroll = { flexGrow: 0, flexShrink: 0 } as const;
+
 // ─── Brand ────────────────────────────────────────────────────
 // Sifter LevelUp brand constants. The name is intentionally also the
 // product's core call-to-action ("Level Up").
