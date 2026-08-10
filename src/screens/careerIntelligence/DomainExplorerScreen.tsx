@@ -35,6 +35,7 @@ import {
   Radius,
   FontSize,
   CompassFonts,
+  hScroll,
 } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 
@@ -73,6 +74,38 @@ export function DomainExplorerScreen() {
     }
     return Array.from(seen);
   }, [state]);
+
+  /**
+   * Counted from the payload, never asserted. This line read "168 domains
+   * across 37 clusters" as a literal while the list beneath it was empty and
+   * the real figures were 160 and 35 — a hardcoded number that was wrong AND
+   * described data the screen did not have.
+   */
+  const counts = useMemo(() => {
+    if (!state.data) return "";
+    const domains = state.data.reduce((n, g) => n + g.domains.length, 0);
+    if (!domains) return "";
+    return `${domains} domain${domains === 1 ? "" : "s"} across ${
+      state.data.length
+    } cluster${state.data.length === 1 ? "" : "s"}`;
+  }, [state]);
+
+  /**
+   * Elite is hidden unless something is actually flagged. No domain currently
+   * carries elite_domain, so the chip was a filter guaranteed to return an
+   * empty screen.
+   */
+  const hasElite = useMemo(
+    () => (state.data ?? []).some((g) => g.domains.some((d) => d.eliteFlag)),
+    [state],
+  );
+  const hasDemand = useMemo(
+    () =>
+      (state.data ?? []).some((g) =>
+        g.domains.some((d) => (d.inDemandScore ?? 0) > 0),
+      ),
+    [state],
+  );
 
   const filtered = useMemo(() => {
     if (!state.data) return state;
@@ -149,7 +182,7 @@ export function DomainExplorerScreen() {
           { color: colors.textRole.secondary },
         ]}
       >
-        168 domains across 37 clusters
+        {counts}
       </Text>
 
       <SearchBar
@@ -162,6 +195,7 @@ export function DomainExplorerScreen() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={hScroll}
         contentContainerStyle={styles.chipRow}
         keyboardShouldPersistTaps="handled"
       >
@@ -170,16 +204,20 @@ export function DomainExplorerScreen() {
           active={activeFilter === "all"}
           onPress={() => setActiveFilter("all")}
         />
-        <FilterChip
-          label="In-Demand"
-          active={activeFilter === "in_demand"}
-          onPress={() => setActiveFilter("in_demand")}
-        />
-        <FilterChip
-          label="Elite"
-          active={activeFilter === "elite"}
-          onPress={() => setActiveFilter("elite")}
-        />
+        {hasDemand ? (
+          <FilterChip
+            label="In-Demand"
+            active={activeFilter === "in_demand"}
+            onPress={() => setActiveFilter("in_demand")}
+          />
+        ) : null}
+        {hasElite ? (
+          <FilterChip
+            label="Elite"
+            active={activeFilter === "elite"}
+            onPress={() => setActiveFilter("elite")}
+          />
+        ) : null}
         {clusterKeys.map((key) => (
           <FilterChip
             key={key}
@@ -365,6 +403,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.md * 1.4,
   },
   chipRow: {
+    alignItems: "center",
     flexDirection: "row",
     gap: Spacing.sm,
     paddingVertical: Spacing.xs,

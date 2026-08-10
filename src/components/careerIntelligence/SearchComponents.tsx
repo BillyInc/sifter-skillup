@@ -21,6 +21,7 @@ import {
   Radius,
   Spacing,
   useTheme,
+  hScroll,
 } from "../../theme";
 import { SearchBar } from "./RedesignPrimitives";
 import type { SearchResult, SearchResultType, SearchScope } from "../../types/career";
@@ -444,6 +445,7 @@ export function SearchOverlay({
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
+          style={hScroll}
           contentContainerStyle={styles.overlayScopes}
         >
           {SCOPE_OPTIONS.map((opt) => (
@@ -776,6 +778,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
   },
   overlayScopes: {
+    alignItems: "center",
     paddingHorizontal: Spacing.md,
     paddingBottom: Spacing.sm,
     gap: Spacing.sm,
