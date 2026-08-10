@@ -12,7 +12,8 @@ import { useTheme, Radius, FontSize, getRoleBadge } from "../../theme";
 import type { RoleMatchType } from "../../types/career";
 
 export interface RoleMatchBadgeProps {
-  match: RoleMatchType;
+  /** Omit where coverage has not been computed — see RoleCard.match. */
+  match?: RoleMatchType;
   /** 0..1 ESCO coverage ratio; shown as a percentage when provided. */
   coverageRatio?: number;
   elite?: boolean;
@@ -25,25 +26,29 @@ export function RoleMatchBadge({
   elite,
   style,
 }: RoleMatchBadgeProps) {
-  const { isDark } = useTheme();
-  const badge = getRoleBadge(match, isDark);
+  const { isDark, colors } = useTheme();
+  // Nothing to say about fit, and not elite either: say nothing. A default
+  // label here is how "Match · 0%" ended up on roles with no coverage data.
+  if (!match && !elite) return null;
+  const badge = match ? getRoleBadge(match, isDark) : null;
   const pct =
     typeof coverageRatio === "number"
       ? `${Math.round(coverageRatio * 100)}%`
       : null;
 
+  // Elite with no coverage label still deserves its star, on neutral chrome.
+  const bg = badge?.bg ?? "transparent";
+  const border = badge?.border ?? colors.borderRole.subtle;
+  const text = badge?.text ?? colors.textRole.secondary;
+
   return (
     <View
-      style={[
-        styles.badge,
-        { backgroundColor: badge.bg, borderColor: badge.border },
-        style,
-      ]}
+      style={[styles.badge, { backgroundColor: bg, borderColor: border }, style]}
     >
-      <Text style={[styles.text, { color: badge.text }]}>
+      <Text style={[styles.text, { color: text }]}>
         {elite ? "⭐ " : ""}
-        {badge.label}
-        {pct ? ` · ${pct}` : ""}
+        {badge?.label ?? (elite ? "Elite" : "")}
+        {badge && pct ? ` · ${pct}` : ""}
       </Text>
     </View>
   );
