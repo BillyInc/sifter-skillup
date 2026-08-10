@@ -1,13 +1,15 @@
 /**
- * DomainExplorerScreen — the context-free map of every domain across all
- * 37 clusters. Masonry/editorial grid: cluster colour accent bar at top,
- * Feather icon, domain name, subgroup count, demand meter (teal), elite
- * badge. Whole card is the tap target.
+ * DomainExplorerScreen — the context-free map of every domain, across every
+ * cluster. Masonry/editorial grid: cluster colour accent bar at top, Feather
+ * icon, domain name, count, demand band, elite badge. Whole card is the tap
+ * target.
  *
- * Supports filter chips: "All", "In-Demand", "Elite", plus text search.
- * getDomainClusters currently returns a `coming_soon` envelope, so
- * DataStateView renders the graceful state; the populated branch is what
- * ships once the domain map lands.
+ * Filter chips: "All", plus "In-Demand"/"Elite" when anything actually
+ * qualifies, plus one per cluster, plus text search.
+ *
+ * Counts and cluster names come from GET /api/career/domains. Nothing on this
+ * screen is a literal: the header used to claim "168 domains across 37
+ * clusters" while getDomainClusters was a stub and the grid was empty.
  */
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -40,6 +42,33 @@ import {
 import { useResponsive } from "@/hooks/useResponsive";
 
 type FilterKey = "all" | "in_demand" | "elite" | string;
+
+/**
+ * The source's demand bands, rendered as what they say.
+ *
+ * The meter used to compute `score / 10 * 100` and clamp at 100%. The score is
+ * `domain_demand_metrics.volume_score`, which runs 13..56 — so every one of
+ * the 160 domains drew a full green bar labelled "Demand". For the 108 the
+ * data itself bands as LOW, that read as a claim of high demand.
+ *
+ * Bands come from the source, so the UI states its categorisation rather than
+ * inventing a scale. `high` is defined but currently unused: no domain reaches
+ * it today, and a band that appears later should render, not fall through.
+ */
+const DEMAND_BANDS: Record<string, { label: string; fill: number }> = {
+  low: { label: "Low demand", fill: 33 },
+  medium: { label: "Medium demand", fill: 66 },
+  high: { label: "High demand", fill: 100 },
+};
+
+function demandColor(
+  band: string | undefined,
+  colors: { accentRole: { success: string; warning: string }; textRole: { muted: string } },
+): string {
+  if (band === "high") return colors.accentRole.success;
+  if (band === "medium") return colors.accentRole.warning;
+  return colors.textRole.muted;
+}
 
 // ─── Cluster identity map (from shared source) ─────────────
 import { getClusterColor, getClusterIcon } from "@/data/clusterMaps";
@@ -102,7 +131,9 @@ export function DomainExplorerScreen() {
   const hasDemand = useMemo(
     () =>
       (state.data ?? []).some((g) =>
-        g.domains.some((d) => (d.inDemandScore ?? 0) > 0),
+        g.domains.some(
+          (d) => d.demandBand === "medium" || d.demandBand === "high",
+        ),
       ),
     [state],
   );
@@ -112,10 +143,14 @@ export function DomainExplorerScreen() {
     let data = state.data;
 
     if (activeFilter === "in_demand") {
+      // Band, not "has a score". Every domain has a score, so the old test
+      // selected all 160 — a filter that changed nothing.
       data = data
         .map((g) => ({
           ...g,
-          domains: g.domains.filter((d) => (d.inDemandScore ?? 0) > 0),
+          domains: g.domains.filter(
+            (d) => d.demandBand === "medium" || d.demandBand === "high",
+          ),
         }))
         .filter((g) => g.domains.length > 0);
     } else if (activeFilter === "elite") {
@@ -265,7 +300,8 @@ export function DomainExplorerScreen() {
                             { color: colors.textRole.muted },
                           ]}
                         >
-                          {g.domains.length} domains
+                          {g.domains.length} domain
+                          {g.domains.length === 1 ? "" : "s"}
                         </Text>
                       </View>
                     </View>
@@ -304,15 +340,21 @@ export function DomainExplorerScreen() {
                               {d.name}
                             </Text>
 
-                            {/* Demand meter */}
-                            {(d.inDemandScore ?? 0) > 0 ? (
+                            {/* Demand meter.
+                                Driven by the source's own band, not by the raw
+                                score. The score is on an unknown scale (13..56
+                                in practice); the old meter assumed 0..10 and
+                                clamped, so all 160 domains drew a full green
+                                bar labelled "Demand" — reading as high demand
+                                for the 108 the data calls low. */}
+                            {DEMAND_BANDS[d.demandBand ?? ""] ? (
                               <View style={styles.demandRow}>
                                 <View
                                   style={[
                                     styles.demandBar,
                                     {
                                       backgroundColor:
-                                        colors.accentRole.success + "20",
+                                        colors.textRole.muted + "20",
                                     },
                                   ]}
                                 >
@@ -320,12 +362,13 @@ export function DomainExplorerScreen() {
                                     style={[
                                       styles.demandFill,
                                       {
-                                        backgroundColor:
-                                          colors.accentRole.success,
-                                        width: `${Math.min(
-                                          100,
-                                          ((d.inDemandScore ?? 0) / 10) * 100,
-                                        )}%`,
+                                        backgroundColor: demandColor(
+                                          d.demandBand,
+                                          colors,
+                                        ),
+                                        width: `${
+                                          DEMAND_BANDS[d.demandBand ?? ""].fill
+                                        }%`,
                                       },
                                     ]}
                                   />
@@ -334,12 +377,10 @@ export function DomainExplorerScreen() {
                                   style={[
                                     styles.demandLabel,
                                     CompassFonts.bodySemibold,
-                                    {
-                                      color: colors.accentRole.success,
-                                    },
+                                    { color: demandColor(d.demandBand, colors) },
                                   ]}
                                 >
-                                  Demand
+                                  {DEMAND_BANDS[d.demandBand ?? ""].label}
                                 </Text>
                               </View>
                             ) : null}
