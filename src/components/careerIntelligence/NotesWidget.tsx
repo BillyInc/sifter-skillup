@@ -21,6 +21,7 @@ import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import { SifterButton } from "../ui";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface NotesWidgetProps {
   entityType: SavedEntityType;
@@ -30,6 +31,8 @@ export interface NotesWidgetProps {
 
 export function NotesWidget({ entityType, entityId, style }: NotesWidgetProps) {
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
   const [hint, setHint] = useState<string | null>(
@@ -97,6 +100,7 @@ export function NotesWidget({ entityType, entityId, style }: NotesWidgetProps) {
           style={[styles.input, { color: colors.text }]}
           value={body}
           onChangeText={setBody}
+          editable={!isGuest}
           placeholder="Jot a thought about this…"
           placeholderTextColor={colors.textMuted}
           multiline
@@ -104,8 +108,8 @@ export function NotesWidget({ entityType, entityId, style }: NotesWidgetProps) {
         />
       </View>
 
-      {hint ? (
-        <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
+      {hint || isGuest ? (
+        <Text style={[styles.hint, { color: colors.textMuted }]}>{isGuest ? "Create an account to keep private notes." : hint}</Text>
       ) : null}
 
       <SifterButton
@@ -115,7 +119,7 @@ export function NotesWidget({ entityType, entityId, style }: NotesWidgetProps) {
         variant="ghost"
         size="sm"
         loading={busy}
-        disabled={body.trim().length === 0}
+        disabled={isGuest || body.trim().length === 0}
         fullWidth={false}
         style={{ alignSelf: "flex-start" }}
       />

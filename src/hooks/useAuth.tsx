@@ -81,7 +81,12 @@ interface AuthContextType {
   authGuest: () => Promise<void>;
   signInGuest: () => Promise<void>;
   signInEmail: (email: string, password: string) => Promise<void>;
-  signUpEmail: (email: string, password: string, username?: string) => Promise<void>;
+  signUpEmail: (email: string, password: string, profile?: {
+    first_name?: string;
+    middle_name?: string;
+    last_name?: string;
+    date_of_birth?: string;
+  }) => Promise<void>;
   authStarknet: (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<{
     isNewUser: boolean;
     nextPath: string;
@@ -226,8 +231,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await _handleAuthResponse(data);
   }
 
-  async function signUpEmail(email: string, password: string, username?: string) {
-    const data = await API.authSignup(email, password, username);
+  async function signUpEmail(email: string, password: string, profile?: {
+    first_name?: string;
+    middle_name?: string;
+    last_name?: string;
+    date_of_birth?: string;
+  }) {
+    const data = await API.authSignup(email, password, profile);
     await _handleAuthResponse(data);
   }
 

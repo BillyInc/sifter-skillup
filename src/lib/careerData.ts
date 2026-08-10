@@ -288,7 +288,7 @@ export const careerData = {
       );
     } catch {
       return comingSoon<JambProgrammeSchool[]>(
-        "Schools and cut-offs are unavailable.",
+        "Schools and admission rows are unavailable.",
       );
     }
   },
@@ -751,10 +751,14 @@ export const careerData = {
   /** Typeahead over universities with admission data (onboarding picker). */
   async searchAdmissionSchools(
     q: string,
+    institutionType?: string,
   ): Promise<DataState<AdmissionSchool[]>> {
     try {
+      const qs = new URLSearchParams();
+      qs.set("q", q);
+      if (institutionType) qs.set("institution_type", institutionType);
       return await request<DataState<AdmissionSchool[]>>(
-        `/api/admission/schools?q=${encodeURIComponent(q)}`,
+        `/api/admission/schools?${qs.toString()}`,
       );
     } catch {
       return comingSoon("School search is temporarily unavailable.");

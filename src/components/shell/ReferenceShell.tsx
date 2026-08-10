@@ -239,7 +239,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               </View>
               <View>
                 <Text style={[styles.profileMiniLabel, { color: colors.textRole.primary }]}>Profile</Text>
-                <Text style={[styles.profileMiniSub, { color: colors.textRole.muted }]}>Topbar shortcut too</Text>
+                <Text style={[styles.profileMiniSub, { color: colors.textRole.muted }]}>Account & saved</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -407,18 +407,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
               <View style={[styles.drawerSecondary, { borderTopColor: colors.borderRole.subtle }]}>
-                <TouchableOpacity
-                  activeOpacity={0.85}
-                  onPress={() => {
-                    setDrawerOpen(false);
-                    router.push('/(tabs)/feed' as any);
-                  }}
-                  style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
-                >
-                  <Feather name="activity" size={16} color={colors.textRole.muted} />
-                  <Text style={[styles.secondaryBtnLabel, { color: colors.textRole.primary }]}>Open Feed</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={() => {

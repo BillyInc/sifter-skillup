@@ -25,6 +25,9 @@ import {
   webContainer,
 } from "../src/theme";
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
+import { IntroCarousel } from "../src/components/brand/IntroCarousel";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { INTRO_SEEN_KEY } from "../src/theme";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -35,6 +38,13 @@ export default function LandingPage() {
   const [profileHydrated, setProfileHydrated] = useState(false);
   const [guestBusy, setGuestBusy] = useState(false);
   const [guestError, setGuestError] = useState<string | null>(null);
+  const [introState, setIntroState] = useState<"loading" | "show" | "done">("loading");
+
+  useEffect(() => {
+    AsyncStorage.getItem(INTRO_SEEN_KEY)
+      .then((value) => setIntroState(value ? "done" : "show"))
+      .catch(() => setIntroState("show"));
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -56,13 +66,17 @@ export default function LandingPage() {
     return resolvePostAuthHref(user);
   }, [accountType, educatorProfile, user]);
 
-  if (loading || (user && (!hydrated || !profileHydrated))) {
+  if (introState === "loading" || loading || (user && (!hydrated || !profileHydrated))) {
     return (
       <View style={[styles.loading, { backgroundColor: colors.bg }]}>
         <LevelUpLogo size={96} animated />
         <ActivityIndicator color={Brand.primary} />
       </View>
     );
+  }
+
+  if (!user && introState === "show") {
+    return <IntroCarousel onDone={() => setIntroState("done")} />;
   }
 
   if (signedInHref) {

@@ -19,6 +19,9 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { careerData } from "@/lib/careerData";
+import { API } from "@/lib/api";
+import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
+import { useAuth } from "@/hooks/useAuth";
 import { DegreeSkills } from "@/components/careerIntelligence";
 import { useExploreNav } from "@/lib/exploreNav";
 import type {
@@ -67,6 +70,7 @@ export default function AdmissionBrowseScreen() {
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
+  const { refreshUser } = useAuth();
   const { colors } = useTheme();
   const rawMode = readParam(params.mode);
   const initialMode: Mode =
@@ -81,6 +85,7 @@ export default function AdmissionBrowseScreen() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [selected, setSelected] = useState<Candidate | null>(null);
   const [schools, setSchools] = useState<JambProgrammeSchool[]>([]);
+  const [selectedAdmissionSchool, setSelectedAdmissionSchool] = useState<JambProgrammeSchool | null>(null);
   const [domains, setDomains] = useState<JambDomainResult | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -171,19 +176,59 @@ export default function AdmissionBrowseScreen() {
   const selectCandidate = async (candidate: Candidate) => {
     setSelected(candidate);
     setSchools([]);
+    setSelectedAdmissionSchool(null);
     setDomains(null);
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
-    const [schoolState, domainState] = await Promise.all([
-      careerData.getJambProgrammeSchools(id),
-      careerData.getJambProgrammeDomains(id),
-    ]);
+    const schoolState = await careerData.getJambProgrammeSchools(id);
     setSchools(
       (schoolState.status === "real" || schoolState.status === "fallback") && schoolState.data
         ? schoolState.data
         : [],
     );
+    if (chosenSchool) {
+      await finalizeAdmissionChoice(candidate, {
+        schoolId: chosenSchool.id,
+        schoolName: chosenSchool.name,
+        institutionType: chosenSchool.institutionType,
+        jambProgrammeId: id,
+        jambName: candidate.jambName,
+        programmeId: null,
+        programmeName: candidate.jambName,
+        year: undefined,
+        aggregateCutoff: null,
+        jambCutoff: null,
+        form: null,
+        sourceUrl: null,
+      });
+    }
+  };
+
+  const finalizeAdmissionChoice = async (candidate: Candidate, school: JambProgrammeSchool) => {
+    const id = candidate.jambProgrammeId || candidate.id;
+    if (!id) return;
+    setSelectedAdmissionSchool(school);
+    const domainState = await careerData.getJambProgrammeDomains(id);
     setDomains(domainState.status === "real" && domainState.data ? domainState.data : null);
+    try {
+      const existing = await getStartingPoint();
+      const updated = {
+        userType: existing?.userType ?? "jamb",
+        ...(existing ?? {}),
+        preferredSchoolId: school.schoolId,
+        preferredSchool: school.schoolName,
+        schoolName: school.schoolName,
+        intendedJambProgrammeId: id,
+        intendedProgramme: candidate.jambName,
+        programmeName: candidate.jambName,
+        completedAt: new Date().toISOString(),
+      };
+      await saveStartingPoint(updated);
+      await API.completeOnboarding({});
+      await refreshUser();
+    } catch {
+      // Do not block browsing if profile finalization is temporarily unavailable.
+    }
   };
 
   useEffect(() => {
@@ -205,7 +250,7 @@ export default function AdmissionBrowseScreen() {
     >
       <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>ADMISSION PATH</Text>
       <Text style={[styles.title, { color: colors.text }]}>
-        Find programmes, schools, cut-offs and career paths
+        Find programmes, universities, requirements and career paths
       </Text>
 
       <View style={styles.modeRow}>
@@ -398,7 +443,7 @@ export default function AdmissionBrowseScreen() {
 
       <View style={styles.results}>
         {candidates.map((item) => {
-          const active = selected?.jambProgrammeId === item.jambProgrammeId;
+          const active = (selected?.jambProgrammeId || selected?.id) === (item.jambProgrammeId || item.id);
           return (
             <TouchableOpacity
               key={item.jambProgrammeId || item.id}
@@ -433,7 +478,7 @@ export default function AdmissionBrowseScreen() {
               ) : null}
               {"matchedSubjectCount" in item ? (
                 <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
-                  {item.matchedSubjectCount} subject match · {item.matchBasis}
+                  Matches your selected subjects where requirements are parsed · {item.matchBasis}
                 </Text>
               ) : null}
             </TouchableOpacity>
@@ -448,11 +493,16 @@ export default function AdmissionBrowseScreen() {
             transferable={selected.skillsTransferable}
           />
 
-          <Text style={[styles.section, { color: colors.textSoft }]}>Schools and cut-offs</Text>
+          <Text style={[styles.section, { color: colors.textSoft }]}>Schools & admission</Text>
+          <Text style={[styles.hint, { color: colors.textMuted }]}>
+            Choose a university before career-domain mapping starts.
+          </Text>
           {schools.length ? (
             schools.slice(0, 12).map((school) => (
-              <View
+              <TouchableOpacity
                 key={`${school.schoolId}-${school.form ?? "offer"}`}
+                activeOpacity={0.8}
+                onPress={() => finalizeAdmissionChoice(selected, school)}
                 style={[styles.infoRow, { backgroundColor: colors.card, borderColor: colors.border }]}
               >
                 <View style={{ flex: 1 }}>
@@ -462,12 +512,12 @@ export default function AdmissionBrowseScreen() {
                   </Text>
                 </View>
                 <Text style={[styles.score, { color: colors.text }]}>
-                  {school.jambCutoff ?? school.aggregateCutoff ?? "—"}
+                  {selectedAdmissionSchool?.schoolId === school.schoolId ? "Selected" : "Choose"}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))
           ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>No school/cut-off rows yet.</Text>
+            <Text style={[styles.hint, { color: colors.textMuted }]}>No university admission rows are available yet.</Text>
           )}
 
           <Text style={[styles.section, { color: colors.textSoft }]}>Domains and roles</Text>
@@ -489,7 +539,11 @@ export default function AdmissionBrowseScreen() {
               </TouchableOpacity>
             ))
           ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>No domain paths yet.</Text>
+            <Text style={[styles.hint, { color: colors.textMuted }]}>
+              {selectedAdmissionSchool
+                ? "No domain paths yet."
+                : "Choose a university above to unlock programme-to-domain mapping."}
+            </Text>
           )}
         </View>
       ) : null}
