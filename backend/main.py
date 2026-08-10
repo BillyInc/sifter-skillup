@@ -129,16 +129,41 @@ async def auth_guest(request: Request):
 async def auth_signup(body: dict, request: Request):
     email = (body.get("email") or "").strip().lower()
     password = body.get("password") or ""
-    username = body.get("username") or email.split("@")[0]
+    first_name = (body.get("first_name") or "").strip()
+    middle_name = (body.get("middle_name") or "").strip()
+    last_name = (body.get("last_name") or "").strip()
+    date_of_birth = (body.get("date_of_birth") or "").strip() or None
+    username = " ".join(part for part in (first_name, middle_name, last_name) if part) or email.split("@")[0]
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
-    existing = db.get_service_client().table("users").select("id").eq("email", email).execute()
+    existing = db.get_service_client().table("users").select("*").eq("email", email).execute()
     if existing.data:
-        raise HTTPException(status_code=409, detail="Email already registered")
+        existing_user = existing.data[0]
+        # A failed post-signup step can leave the user row without credentials.
+        # Complete that partial row instead of making the user retry into a 409.
+        if not existing_user.get("password_hash"):
+            password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+            result = db.get_service_client().table("users").update({
+                "username": username,
+                "first_name": first_name or None,
+                "middle_name": middle_name or None,
+                "last_name": last_name or None,
+                "date_of_birth": date_of_birth,
+                "password_hash": password_hash,
+                "auth_provider": "email",
+                "last_login": datetime.now().isoformat(),
+            }).eq("id", existing_user["id"]).execute()
+            user = result.data[0]
+            token = Auth.create_jwt(user["id"])
+            await _post_auth_device_register(user["id"], body, request)
+            return ResponseModel(data={"token": token, "user": user})
+        raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
     password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-    user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash)
+    user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
+                        first_name=first_name, middle_name=middle_name, last_name=last_name,
+                        date_of_birth=date_of_birth)
     token = Auth.create_jwt(user["id"])
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
@@ -190,11 +215,14 @@ async def _post_auth_device_register(user_id: str, body: dict, request: Request)
 
 
 def _create_user(telegram_id=None, wallet_address=None, username="Learner",
-                 avatar_url=None, auth_provider="guest", email=None, password_hash=None) -> dict:
+                 avatar_url=None, auth_provider="guest", email=None, password_hash=None,
+                 first_name=None, middle_name=None, last_name=None, date_of_birth=None) -> dict:
     payload = {
         "id": str(uuid.uuid4()), "telegram_id": telegram_id,
         "wallet_address": wallet_address, "email": email, "password_hash": password_hash,
         "username": username, "avatar_url": avatar_url, "auth_provider": auth_provider,
+        "first_name": first_name, "middle_name": middle_name, "last_name": last_name,
+        "date_of_birth": date_of_birth,
         "account_type": "student",
         "points": settings.WELCOME_BONUS, "streak": 1,
         "last_played": date.today().isoformat(), "current_level": 1,
@@ -444,6 +472,9 @@ app.include_router(admission_router)
 
 from routes.student_pipeline_routes import router as student_pipeline_router
 app.include_router(student_pipeline_router)
+
+from routes.entrepreneurship_routes import router as entrepreneurship_router
+app.include_router(entrepreneurship_router)
 
 from routes.feedback_routes import router as feedback_router
 app.include_router(feedback_router)
