@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS skillup_dev.users (
     email                     TEXT UNIQUE,
     password_hash             TEXT,
     username                  TEXT,
+    first_name                TEXT,
+    middle_name               TEXT,
+    last_name                 TEXT,
+    date_of_birth             DATE,
     avatar_url                TEXT,
     auth_provider             TEXT NOT NULL DEFAULT 'guest',
     account_type              TEXT NOT NULL DEFAULT 'student'
