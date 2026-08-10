@@ -384,10 +384,15 @@ export const careerData = {
 
   /** All domains grouped by cluster, for the context-free Domain Explorer. */
   async getDomainClusters(): Promise<DataState<DomainClusterGroup[]>> {
-    // TODO(career-data): GET /api/career/domains (grouped by cluster)
-    return comingSoon<DomainClusterGroup[]>(
-      "Explore career domains by cluster, then open the paths that match your programme and goals.",
-    );
+    try {
+      return await request<DataState<DomainClusterGroup[]>>(
+        "/api/career/domains",
+      );
+    } catch {
+      return comingSoon<DomainClusterGroup[]>(
+        "The domain explorer is temporarily unavailable.",
+      );
+    }
   },
 
   /** Disambiguation search: domains, roles (+aliases), programmes. */
