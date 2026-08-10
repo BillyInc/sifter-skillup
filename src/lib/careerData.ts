@@ -62,7 +62,19 @@ const DETAIL_TTL_MS = 15 * 60 * 1000;
 /** A cluster of domains for the context-free Domain Explorer (no programme). */
 export interface DomainClusterGroup {
   cluster: string;
-  domains: { id: string; name: string; inDemandScore?: number; eliteFlag?: boolean }[];
+  domains: {
+    id: string;
+    name: string;
+    /**
+     * Raw volume score on the source's own scale (13..56 today) — NOT a
+     * percentage, and not safe to render as a bar without normalising.
+     * Prefer `demandBand`, which is the source's own categorisation.
+     */
+    inDemandScore?: number;
+    /** "low" | "medium" | "high", straight from domain_demand_metrics. */
+    demandBand?: string;
+    eliteFlag?: boolean;
+  }[];
 }
 
 export interface SubjectCatalogItem {
