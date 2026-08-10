@@ -39,6 +39,7 @@ import {
   type RequirementField,
 } from "@/lib/sanitizeRequirementText";
 import { useExploreNav } from "@/lib/exploreNav";
+import { awardLine } from "@/lib/programmeAward";
 import {
   comingSoon,
   type DataState,
@@ -351,20 +352,21 @@ function ProgrammeBody({
               Qualification and duration survive as a single plain line — they
               are answers to real student questions ("is it a B.Sc?", "how many
               years?") and are not CCMAS vocabulary. */}
-          {data.qualification || data.durationYears ? (
+          {awardLine(data.name, data.qualification, data.durationYears) ? (
             <Text style={[styles.awardLine, { color: colors.textRole.secondary }]}>
-              {[
-                data.qualification,
-                data.durationYears ? `${data.durationYears} years` : null,
-              ]
-                .filter(Boolean)
-                .join("  ·  ")}
+              {awardLine(data.name, data.qualification, data.durationYears)}
             </Text>
           ) : null}
 
+          {/* From the programme itself, not jambSuggestions[0]. The suggestion
+              list is a name-search result — it is empty whenever the student
+              arrived by any route other than typing a JAMB name, and it now
+              carries only a 3-item preview. The programme endpoint resolves the
+              full profile through programme_mapping. */}
           <DegreeSkills
-            technical={jambSuggestions[0]?.skillsTechnical}
-            transferable={jambSuggestions[0]?.skillsTransferable}
+            technical={data.skillsTechnical}
+            transferable={data.skillsTransferable}
+            total={data.skillsCount}
           />
 
           {/* JAMB name variations */}

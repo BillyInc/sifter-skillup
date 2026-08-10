@@ -49,6 +49,14 @@ const FULL_INITIAL = 8;
 export interface DegreeSkillsProps {
   technical?: string[] | null;
   transferable?: string[] | null;
+  /**
+   * True size of the profile, when `technical`/`transferable` are only a
+   * preview. List endpoints send three outcomes plus this count — MBBS alone
+   * has 1560 technical outcomes, and shipping every one per row made a single
+   * university's course list 2.0 MB. Without it the teaser would count what it
+   * was handed and tell the student "+0 more" for a 1560-outcome degree.
+   */
+  total?: number | null;
   variant?: "teaser" | "full";
   /** Overrides the muted colour, for use on an inverted/active card. */
   color?: string;
@@ -57,6 +65,7 @@ export interface DegreeSkillsProps {
 export function DegreeSkills({
   technical,
   transferable,
+  total: totalProp,
   variant = "full",
   color,
 }: DegreeSkillsProps) {
@@ -71,7 +80,9 @@ export function DegreeSkills({
     () => (transferable ?? []).filter((s) => s && s.trim()),
     [transferable],
   );
-  const total = tech.length + soft.length;
+  const shipped = tech.length + soft.length;
+  // Never let the declared total fall below what we were actually handed.
+  const total = Math.max(shipped, totalProp ?? 0);
 
   if (variant === "teaser") {
     if (!total) return null;
@@ -102,6 +113,9 @@ export function DegreeSkills({
   }
 
   const shown = expanded ? tech : tech.slice(0, FULL_INITIAL);
+  // Count against what is HERE, not the declared total: "Show all N" must
+  // reveal N rows. A full view fed a preview would otherwise promise 1560 and
+  // expand to 3.
   const hidden = tech.length - shown.length;
 
   return (

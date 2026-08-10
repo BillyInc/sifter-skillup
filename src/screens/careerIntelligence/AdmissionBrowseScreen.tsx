@@ -367,6 +367,7 @@ export default function AdmissionBrowseScreen() {
                           <DegreeSkills
                             technical={o.skillsTechnical}
                             transferable={o.skillsTransferable}
+                            total={o.skillsCount}
                             variant="teaser"
                             color={active ? colors.textInverse : undefined}
                           />
@@ -468,6 +469,7 @@ export default function AdmissionBrowseScreen() {
               <DegreeSkills
                 technical={item.skillsTechnical}
                 transferable={item.skillsTransferable}
+                total={item.skillsCount}
                 variant="teaser"
                 color={active ? colors.textInverse : undefined}
               />

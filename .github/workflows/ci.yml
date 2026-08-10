@@ -57,8 +57,17 @@ jobs:
         with:
           python-version: '3.13'
       - run: uv sync --extra test
+      # The whole suite, not a hand-maintained list of five files.
+      #
+      # This step named its test files explicitly, so every file added since
+      # was silently excluded — test_cors_origins, test_skills_payload,
+      # test_domain_clusters, test_auth, test_portfolio, test_game and the rest
+      # never ran in CI. A test that cannot fail the build is documentation, and
+      # nobody edits an allowlist they don't know exists.
+      #
+      # All 199 currently pass under exactly this environment.
       - name: Tests
-        run: uv run pytest tests/test_offline_sync.py tests/test_device_sessions.py tests/test_starknet_routes.py tests/test_phase5_routes.py tests/test_migration_smoke.py -v
+        run: uv run pytest -v
         env:
           DEBUG: 'true'
           JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
