@@ -25,6 +25,7 @@ import {
   FontSize,
   CompassFonts,
   type TierType,
+  hScroll,
 } from "@/theme";
 import {
   DataStateView,
@@ -456,6 +457,7 @@ function ExploreIdle({
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
+            style={hScroll}
             contentContainerStyle={styles.clusterCarousel}
             decelerationRate="fast"
             snapToInterval={CLUSTER_CARD_W + Spacing.sm}
@@ -510,7 +512,10 @@ function ExploreIdle({
           style={styles.seeAllLink}
         >
           <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
-            Browse all 37 clusters →
+            {/* No count. "37 clusters" was a literal, and the real figure is
+                35 — the Domain Explorer states its own totals from the data it
+                actually loaded. */}
+            Browse all clusters →
           </Text>
         </TouchableOpacity>
       </View>
@@ -521,6 +526,7 @@ function ExploreIdle({
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
+          style={hScroll}
           contentContainerStyle={styles.pathwayCarousel}
         >
           {PATHWAYS.map((p, i) => (
@@ -823,6 +829,7 @@ const styles = StyleSheet.create({
 
   // Cluster carousel
   clusterCarousel: {
+    alignItems: "center",
     flexDirection: "row",
     gap: Spacing.sm,
     paddingVertical: Spacing.xs,
@@ -869,6 +876,7 @@ const styles = StyleSheet.create({
 
   // Pathways strip
   pathwayCarousel: {
+    alignItems: "center",
     flexDirection: "row",
     gap: Spacing.sm,
     paddingVertical: Spacing.xs,
