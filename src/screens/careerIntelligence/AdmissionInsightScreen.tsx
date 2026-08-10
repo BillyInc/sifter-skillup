@@ -1,6 +1,6 @@
 /**
  * AdmissionInsightScreen — standalone screen for admission intelligence
- * (SS → University cut-offs, formulas, competitiveness).
+ * (SS → University requirements, cycle data, and competitiveness context).
  *
  * Phase 10 redesign: editorial hero, mono equation formula block,
  * competitiveness bands (success/warning/danger washes), responsive
@@ -15,7 +15,6 @@ import {
   DataSourceBadge,
   NotesWidget,
   SectionLabel,
-  StatTile,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -48,7 +47,7 @@ const SECTIONS = [
   { key: "overview", label: "Overview" },
   { key: "floor", label: "JAMB Floor" },
   { key: "formula", label: "Formula" },
-  { key: "cutoffs", label: "Cut-offs" },
+  { key: "admission", label: "Schools & admission" },
   { key: "competitiveness", label: "Competitiveness" },
 ] as const;
 
@@ -72,7 +71,7 @@ export function AdmissionInsightScreen({
     DataState<AdmissionSnapshotVersion>
   >(() => comingSoon<AdmissionSnapshotVersion>("Snapshot version not yet loaded."));
   const [cutoffsState, setCutoffsState] = useState<DataState<ProgrammeSchoolCutoff[]>>(
-    () => comingSoon<ProgrammeSchoolCutoff[]>("Cut-offs not yet loaded."),
+    () => comingSoon<ProgrammeSchoolCutoff[]>("Admission rows not yet loaded."),
   );
   const [formulaState, setFormulaState] = useState<DataState<SchoolAggregateFormula | null>>(
     () => comingSoon<SchoolAggregateFormula | null>("Formula not yet loaded."),
@@ -115,7 +114,7 @@ export function AdmissionInsightScreen({
         const res = await careerData.getCutoffs({ programmeId, schoolId, year });
         if (active) setCutoffsState(res);
       } catch {
-        if (active) setCutoffsState(comingSoon<ProgrammeSchoolCutoff[]>("Cut-offs unavailable."));
+        if (active) setCutoffsState(comingSoon<ProgrammeSchoolCutoff[]>("Admission rows unavailable."));
       }
     })();
     return () => { active = false; };
@@ -190,8 +189,8 @@ export function AdmissionInsightScreen({
               Admission Intelligence
             </Text>
             <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
-              Verified cut-off scores, aggregate formulas, and competitiveness data compiled from
-              JAMB, university admissions offices, and the Joint Admissions and Matriculation Board.
+              Cycle-labelled requirements, universal JAMB floor where published, and competitiveness context compiled from
+              JAMB, university admissions offices, and national datasets.
             </Text>
           </View>
           <DataSourceBadge
@@ -228,14 +227,14 @@ export function AdmissionInsightScreen({
             ) : floorState.status === "fallback" ? (
               <View style={styles.floorInner}>
                 <Text style={[styles.floorScore, CompassFonts.data, { color: colors.warning }]}>
-                  ~150
+                  —
                 </Text>
                 <View style={styles.floorMeta}>
                   <Text style={[styles.floorLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
-                    Indicative minimum
+                    Floor unavailable
                   </Text>
                   <Text style={[styles.floorNote, { color: colors.textRole.secondary }]}>
-                    Live floor data pending — showing estimated minimum
+                    Universal JAMB floor is not published in this dataset yet.
                   </Text>
                 </View>
               </View>
@@ -276,16 +275,16 @@ export function AdmissionInsightScreen({
         </View>
       </View>
 
-      {/* ── Cut-offs ─────────────────────────────────────────── */}
+      {/* ── Schools & admission ─────────────────────────────── */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("cutoffs", e.nativeEvent.layout.y)} />
+        <View onLayout={(e) => onSectionLayout("admission", e.nativeEvent.layout.y)} />
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>
             {programmeId
-              ? "Programme cut-offs"
+              ? "Schools & admission"
               : schoolId
-              ? "School cut-offs"
-              : "Cut-offs by programme and school"}
+              ? "Programme admission rows"
+              : "Admission rows by programme and school"}
           </SectionLabel>
           {cutoffsState.status === "real" && cutoffsState.data?.length ? (
             <View style={resp.isDesktop ? styles.cutoffGrid : { gap: Spacing.sm }}>
@@ -296,12 +295,12 @@ export function AdmissionInsightScreen({
           ) : cutoffsState.status === "fallback" ? (
             <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
               <Text style={{ color: colors.textRole.muted }}>
-                No cut-off data for this selection in {year}.
+                No admission rows for this selection in {year}.
               </Text>
             </View>
           ) : (
             <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <Text style={{ color: colors.textRole.muted }}>Loading cut-offs...</Text>
+              <Text style={{ color: colors.textRole.muted }}>Loading admission rows...</Text>
             </View>
           )}
         </View>
@@ -500,26 +499,22 @@ function CutoffCard({
       </View>
 
       <View style={styles.cutoffScores}>
-        {cutoff.aggregateCutoff != null && (
-          <View style={[styles.scorePill, { backgroundColor: colors.infoSoft }]}>
-            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
-              Aggregate
-            </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.info }]}>
-              {cutoff.aggregateCutoff}
-            </Text>
-          </View>
-        )}
-        {cutoff.jambCutoff != null && (
-          <View style={[styles.scorePill, { backgroundColor: colors.accentSoft }]}>
-            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
-              JAMB
-            </Text>
-            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.accentRole.action }]}>
-              {cutoff.jambCutoff}
-            </Text>
-          </View>
-        )}
+        <View style={[styles.scorePill, { backgroundColor: colors.accentSoft }]}>
+          <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
+            Published cycle
+          </Text>
+          <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.accentRole.action }]}>
+            {cutoff.year}
+          </Text>
+        </View>
+        <View style={[styles.scorePill, { backgroundColor: colors.infoSoft }]}>
+          <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
+            Score detail
+          </Text>
+          <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.info }]}>
+            Not shown
+          </Text>
+        </View>
       </View>
 
       <View style={styles.cutoffMeta}>

@@ -219,8 +219,27 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
 }
 
 export default function MyWorldScreen() {
+  const { user } = useAuth();
+  if (!user || user.auth_provider === "guest") return <GuestMyWorldGate />;
   // Pre-launch the flag is OFF → personal page. Live → learning-world gateway.
   return featureFlags.myWorldLive ? <LiveWorldHub /> : <PersonalPage />;
+}
+
+function GuestMyWorldGate() {
+  const router = useRouter();
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.guestGate, { backgroundColor: colors.surface.base }]}>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Your private space</Text>
+      <Text style={[styles.bannerText, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        Create an account to access saved paths, notes, progress, portfolio, guild and Feed.
+      </Text>
+      <TouchableOpacity onPress={() => router.push("/(auth)/signup" as any)} style={[styles.guestCta, { backgroundColor: colors.accentRole.action }]}>
+        <Text style={[styles.guestCtaText, CompassFonts.bodyBold]}>Create account</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -994,6 +1013,19 @@ function formatWhen(iso: string): string {
 }
 
 const styles = StyleSheet.create({
+  guestGate: {
+    flex: 1,
+    padding: Spacing.xl,
+    gap: Spacing.md,
+    justifyContent: "center",
+  },
+  guestCta: {
+    alignSelf: "flex-start",
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+  },
+  guestCtaText: { color: "#fff", fontSize: FontSize.sm },
   scroll: {
     paddingVertical: Spacing.xl,
     paddingHorizontal: Spacing.lg,

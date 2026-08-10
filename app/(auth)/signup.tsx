@@ -18,6 +18,8 @@ import {
   Pressable,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUpScreen from "../../src/screens/SignUpScreen";
@@ -30,6 +32,8 @@ import {
   webContainer,
 } from "../../src/theme";
 import { SifterButton } from "../../src/components/ui";
+import TermsScreen from "../../src/screens/TermsScreen";
+import PrivacyScreen from "../../src/screens/PrivacyScreen";
 
 // Storage keys — analytics stays opt-IN and is read by the analytics layer.
 export const TERMS_ACCEPTED_KEY = "@sifter_terms_accepted_v1";
@@ -76,6 +80,7 @@ export default function SignUpPage() {
   const [accepted, setAccepted] = useState(false);
   const [terms, setTerms] = useState(false);
   const [analytics, setAnalytics] = useState(false);
+  const [legalPage, setLegalPage] = useState<"terms" | "privacy" | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -106,6 +111,7 @@ export default function SignUpPage() {
       <View style={[styles.center, { backgroundColor: colors.bg }]}>
         <ActivityIndicator color={Brand.primary} />
       </View>
+
     );
   }
 
@@ -154,6 +160,15 @@ export default function SignUpPage() {
         </CheckRow>
       </View>
 
+      <View style={styles.legalLinks}>
+        <TouchableOpacity onPress={() => setLegalPage("terms")}>
+          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>Read Terms & Conditions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setLegalPage("privacy")}>
+          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>Read Privacy Policy</Text>
+        </TouchableOpacity>
+      </View>
+
       <SifterButton
         label="Continue →"
         onPress={onContinue}
@@ -167,6 +182,9 @@ export default function SignUpPage() {
       <Text style={[styles.fine, { color: colors.textMuted }]}>
         You can change your analytics choice any time in Settings.
       </Text>
+      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
+        {legalPage === "terms" ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}
+      </Modal>
     </ScrollView>
   );
 }
@@ -218,4 +236,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: FontSize.xs * 1.5,
   },
+  legalLinks: { flexDirection: "row", justifyContent: "center", gap: Spacing.lg, flexWrap: "wrap" },
+  legalLink: { fontSize: FontSize.xs, fontWeight: "800" },
 });

@@ -98,6 +98,21 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   return "/(tabs)/home";
 }
 
+function needsAdmissionResolution(profile: StartingPointProfile): boolean {
+  if (profile.userType !== "jamb" && profile.userType !== "senior_secondary") {
+    return false;
+  }
+  const programme =
+    profile.intendedJambProgrammeId ||
+    profile.intendedProgrammeId ||
+    profile.intendedProgramme ||
+    profile.programmeName;
+  const school =
+    profile.preferredSchoolId ||
+    profile.preferredSchool;
+  return !(programme && school);
+}
+
 export default function OnboardingFlow({
   initialPersona,
 }: {
@@ -128,8 +143,10 @@ export default function OnboardingFlow({
     };
     try {
       await saveStartingPoint(full);
-      await API.completeOnboarding({});
-      await refreshUser();
+      if (!needsAdmissionResolution(full)) {
+        await API.completeOnboarding({});
+        await refreshUser();
+      }
     } catch {
       // Even if the network call fails, the local profile is saved; proceed.
     } finally {

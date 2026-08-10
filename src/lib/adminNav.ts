@@ -47,7 +47,7 @@ export const adminNav = {
     router.replace(
       (audience === "university"
         ? "/(admin)/dashboard"
-        : "/(admin)/workspace-explore") as never,
+        : "/(admin)/guidance") as never,
     );
   },
   /**
@@ -233,9 +233,8 @@ export function getAdminNavGroups(
   //   Skills Gap · Explore · Students · Feedback
   //   —— Workspace: Profile + team · Affiliation · Verification
   //
-  // Advisory audiences reorder deliberately: Explore · Cohort · Guidance
-  // Intelligence · Learning Gaps · Learners · Feedback. Their job is lookup,
-  // so the catalogue leads and the aggregates follow.
+  // Advisory audiences work from Guidance; Explore is an intentional catalogue
+  // tool opened from that workspace.
   //
   // Replaces the v1 grouping (Domain lens / Role value / Trends / Peer
   // benchmarks). Three of those were separate screens rendering one column of
@@ -245,7 +244,7 @@ export function getAdminNavGroups(
   const intelligenceItems: AdminNavItem[] =
     audience === "university"
       ? [dashboardItem(dashboardLabel, audience)]
-      : [EXPLORE_ITEM, dashboardItem(dashboardLabel, audience)];
+      : [dashboardItem("Guidance", audience), EXPLORE_ITEM];
 
   // Domain Reach Audit is UNIVERSITIES ONLY (§5.1: "University administrators
   // only, institution_type = 'university'"). It is CCMAS curriculum-portfolio

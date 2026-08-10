@@ -386,7 +386,7 @@ export default function ExploreScreen({
                 <View style={styles.group}>
                   <View style={styles.groupHead}>
                     <SectionLabel>Programmes</SectionLabel>
-                    <TouchableOpacity
+                    {!isGuest ? <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
                         exploreNav.compare(
@@ -399,7 +399,9 @@ export default function ExploreScreen({
                       <Text style={[styles.compareText, { color: colors.accentRole.action }]}>
                         Compare visible →
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> : (
+                      <Text style={[styles.compareText, { color: colors.textRole.muted }]}>Sign in to compare</Text>
+                    )}
                   </View>
                   {data.programmes.map((p, i) => {
                     const meta = p.discipline ?? p.institutionType;
@@ -563,15 +565,15 @@ function ExploreIdle({
             ADMISSION INTELLIGENCE
           </Text>
           <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>
-            Programme cut-offs,{"\n"}requirements &amp; competition
+            Programmes, universities{"\n"}& requirements
           </Text>
         </View>
         <View style={[styles.admissionNumeral, { backgroundColor: colors.accentRole.action + "10" }]}>
           <Text style={[styles.admissionNumeralText, { color: colors.accentRole.action }]}>
-            280
+            JAMB
           </Text>
           <Text style={[styles.admissionNumeralUnit, { color: colors.textRole.muted }]}>
-            JAMB
+            cycle data
           </Text>
         </View>
       </TouchableOpacity>
@@ -684,7 +686,7 @@ const DOORS = [
     key: "what",
     icon: "\uD83C\uDFEB",
     title: "I know what, not where",
-    body: "See which institutions offer it, with JAMB cut-offs.",
+    body: "See which institutions offer it, then review cycle-labelled requirements.",
     live: true,
   },
   {
