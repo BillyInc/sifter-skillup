@@ -333,7 +333,9 @@ export default function WorldScreen() {
 
   const handleCTA = () => {
     if (!live) return;
-    if (trackId.startsWith('quant')) { router.push('/quant-map' as any); return; }
+    // /quant-map is not a route — the screen lives in the tab stack. Every
+    // quant track's CTA pushed a path with no file behind it.
+    if (trackId.startsWith('quant')) { router.push('/(tabs)/skills/quant-map' as any); return; }
     if (trackId === 'starknet-defi-navigator') { router.push('/starknet-track' as any); return; }
     if (trackId === 'starknet-ecosystem-deep-dive') { router.push('/ecosystem-track' as any); return; }
     if (trackId === 'cairo-builder') { router.push('/cairo-builder-track' as any); return; }

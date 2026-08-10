@@ -387,7 +387,7 @@ async def get_jamb_programme(jamb_programme_id: str):
         )
         if not res.data:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
-        out = _jamb_detail_out(res.data[0])
+        out = _jamb_detail_out(res.data[0], full=True)
         # Requirements block: general brochure text + parse status. Programmes whose
         # requirement is institution-variant prose (parse_status = needs_review)
         # surface it as "requirements vary by institution" info, not a gap.
@@ -423,7 +423,34 @@ def _skill_list(value: Any) -> list[str]:
     return [s.strip() for s in value if isinstance(s, str) and s.strip()]
 
 
-def _jamb_detail_out(r: dict) -> dict:
+# How many outcomes a LIST row carries. The card renders three and a count, so
+# shipping the whole profile per row is pure waste: MBBS alone has 1560
+# technical outcomes, and one university's 81-course list weighed 2.0 MB and
+# took 3.5s. Detail responses still carry the full profile — that is the screen
+# that displays it.
+SKILLS_PREVIEW_MAX = 3
+
+
+def _skills_out(r: dict, *, full: bool) -> dict:
+    """The skills half of a programme payload.
+
+    `skillsCount` is always the TRUE total, never the length of what was sent.
+    The teaser reads "+N more" off it, so a count derived from a truncated
+    preview would quietly understate every long profile.
+    """
+    technical = _skill_list(r.get("skills_technical"))
+    transferable = _skill_list(r.get("skills_transferable"))
+    return {
+        "skillsTechnical": technical if full else technical[:SKILLS_PREVIEW_MAX],
+        "skillsTransferable": transferable if full else transferable[:SKILLS_PREVIEW_MAX],
+        "skillsTechnicalCount": len(technical),
+        "skillsTransferableCount": len(transferable),
+        "skillsCount": len(technical) + len(transferable),
+        "skillsTruncated": not full,
+    }
+
+
+def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
     """Shape a JAMB programme for the student surface.
 
     The student's identifier is the JAMB NAME — what their school calls the
@@ -437,9 +464,9 @@ def _jamb_detail_out(r: dict) -> dict:
     teaches. `skillsTechnical` is derived from the CCMAS course learning
     outcomes, `skillsTransferable` from the employability and 21st-century
     skill lists.
+
+    `full` is False for list rows — see SKILLS_PREVIEW_MAX.
     """
-    technical = _skill_list(r.get("skills_technical"))
-    transferable = _skill_list(r.get("skills_transferable"))
     return {
         "id": r.get("jamb_programme_id"),
         "jambProgrammeId": r.get("jamb_programme_id"),
@@ -452,9 +479,7 @@ def _jamb_detail_out(r: dict) -> dict:
         # CCMAS vocabulary shown to the student.
         "programmeId": r.get("programme_id"),
         "institutionType": r.get("institution_type"),
-        "skillsTechnical": technical,
-        "skillsTransferable": transferable,
-        "skillsCount": len(technical) + len(transferable),
+        **_skills_out(r, full=full),
     }
 
 
@@ -531,8 +556,6 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
         items = []
         for r in rows:
             sk = skills_by_id.get(r.get("jamb_programme_id")) or {}
-            technical = _skill_list(sk.get("skills_technical"))
-            transferable = _skill_list(sk.get("skills_transferable"))
             items.append(
                 {
                     "schoolId": r.get("school_id"),
@@ -545,9 +568,8 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
                     "utmeSubjects": r.get("utme_subjects"),
                     "olevelRequirement": r.get("olevel_requirement"),
                     "directEntry": r.get("direct_entry"),
-                    "skillsTechnical": technical,
-                    "skillsTransferable": transferable,
-                    "skillsCount": len(technical) + len(transferable),
+                    # Preview only — this list runs to 400 rows.
+                    **_skills_out(sk, full=False),
                 }
             )
         return ResponseModel(data=_real(items))

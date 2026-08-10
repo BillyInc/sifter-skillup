@@ -362,9 +362,15 @@ function ProgrammeBody({
             </Text>
           ) : null}
 
+          {/* From the programme itself, not jambSuggestions[0]. The suggestion
+              list is a name-search result — it is empty whenever the student
+              arrived by any route other than typing a JAMB name, and it now
+              carries only a 3-item preview. The programme endpoint resolves the
+              full profile through programme_mapping. */}
           <DegreeSkills
-            technical={jambSuggestions[0]?.skillsTechnical}
-            transferable={jambSuggestions[0]?.skillsTransferable}
+            technical={data.skillsTechnical}
+            transferable={data.skillsTransferable}
+            total={data.skillsCount}
           />
 
           {/* JAMB name variations */}

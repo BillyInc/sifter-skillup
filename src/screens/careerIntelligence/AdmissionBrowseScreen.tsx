@@ -174,10 +174,27 @@ export default function AdmissionBrowseScreen() {
     setDomains(null);
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
-    const [schoolState, domainState] = await Promise.all([
+    // The detail read is what carries the FULL skills profile. List rows now
+    // ship three outcomes and a count, so rendering the selected card straight
+    // from the list row would show three bullets and call it the whole degree.
+    const [schoolState, domainState, detailState] = await Promise.all([
       careerData.getJambProgrammeSchools(id),
       careerData.getJambProgrammeDomains(id),
+      careerData.getJambProgramme(id),
     ]);
+    if (detailState.status === "real" && detailState.data) {
+      const detail = detailState.data;
+      setSelected((prev) =>
+        prev && (prev.jambProgrammeId || prev.id) === id
+          ? {
+              ...prev,
+              skillsTechnical: detail.skillsTechnical,
+              skillsTransferable: detail.skillsTransferable,
+              skillsCount: detail.skillsCount,
+            }
+          : prev,
+      );
+    }
     setSchools(
       (schoolState.status === "real" || schoolState.status === "fallback") && schoolState.data
         ? schoolState.data
@@ -322,6 +339,7 @@ export default function AdmissionBrowseScreen() {
                           <DegreeSkills
                             technical={o.skillsTechnical}
                             transferable={o.skillsTransferable}
+                            total={o.skillsCount}
                             variant="teaser"
                             color={active ? colors.textInverse : undefined}
                           />
@@ -423,6 +441,7 @@ export default function AdmissionBrowseScreen() {
               <DegreeSkills
                 technical={item.skillsTechnical}
                 transferable={item.skillsTransferable}
+                total={item.skillsCount}
                 variant="teaser"
                 color={active ? colors.textInverse : undefined}
               />
