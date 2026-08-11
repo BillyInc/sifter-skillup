@@ -4,7 +4,7 @@
  * Garbled source data (run-together words, mojibake, literal escape
  * sequences) must never reach the UI; callers should swap in the
  * matching `requirementFallbackText` placeholder instead. Text that is
- * merely HTML-entity-encoded is fine — it gets decoded before display.
+ * merely HTML-entity-encoded is fine; it gets decoded before display.
  */
 
 export type RequirementField =
@@ -23,7 +23,7 @@ export interface SanitizedRequirementText {
 const RUN_TOGETHER_PATTERN = /[a-z][A-Z]|[a-zA-Z]{25,}/;
 
 /** Mojibake fragments and literal \u00 escape sequences from bad scrapes. */
-const ENCODING_ARTIFACT_PATTERN = /â€|Ã¢|Ã©|\\u00/;
+const ENCODING_ARTIFACT_PATTERN = /\u00e2\u20ac|\u00c3\u00a2|\u00c3\u00a9|\\u00/;
 
 const HTML_ENTITY_REPLACEMENTS: Array<[RegExp, string]> = [
   [/&amp;/g, "&"],
@@ -33,8 +33,8 @@ const HTML_ENTITY_REPLACEMENTS: Array<[RegExp, string]> = [
   [/&ldquo;/g, '"'],
   [/&rdquo;/g, '"'],
   [/&quot;/g, '"'],
-  [/&ndash;/g, "–"],
-  [/&mdash;/g, "—"],
+  [/&ndash;/g, "-"],
+  [/&mdash;/g, "-"],
   [/&nbsp;/g, " "],
 ];
 

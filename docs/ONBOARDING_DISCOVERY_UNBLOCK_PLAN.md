@@ -19,16 +19,23 @@ Date: 2026-08-11
 
 ## Current blockers found
 
-- `app/(auth)/_layout.tsx` already contains the route-loop guard for onboarding, but onboarding state is not yet persisted through the actual student/admin screens.
-- `src/lib/resumeNavigation.ts` still resolves `last_position` and `current_track_id` into lesson/track routes, despite its comment saying that fallback was removed.
-- `src/screens/HomeScreen.tsx` still builds the main continue action from `last_position`, which can send users back into `/map/lesson` instead of Home/admission/discovery.
-- `src/lib/startingPoint.ts`, `src/lib/educatorProfile.ts`, and `src/lib/accountType.ts` use global AsyncStorage keys. That can leak account A's local onboarding/admin state into account B on the same browser if cleanup misses or server reads fail.
-- `OnboardingBackGuard` exists, but only offers logout/continue and does not expose the product decision to delete the just-created account.
-- `AccountTypeGate`, `OnboardingFlow`, and `EducatorOnboarding` do not yet hydrate/save the `onboardingDraft` helper, so incomplete users restart at the persona gate instead of resuming.
-- `EducatorOnboarding.finish` catches all backend failures and routes into admin from local state. That hides verification/access failures and can make admin onboarding appear complete when the server refused it.
-- `app/(admin)/_layout.tsx` does not enforce admin access itself. It depends on upstream redirects and screen-level API gates. Add a stack guard so direct admin URLs cannot render for non-admin or incomplete users.
-- The admission implementation brief still has unfinished follow-up tasks. The implementation must audit the current state against that doc before claiming completion.
-- Old SkillUp/lightning branding must not appear in onboarding or loading states. If a loading state is unavoidable, it should be neutral or LevelUp-branded and must not trap routing.
+- Patched: `app/(auth)/_layout.tsx` no longer redirects away from the onboarding route it is already rendering.
+- Patched: guest sessions skip onboarding and land in Explore.
+- Patched: Home/Profile onboarding entry points send guests to signup, not account onboarding.
+- Patched: explicit logout marks a local logout flag so the next root open goes to sign-in instead of intro/onboarding.
+- Patched: local starting point, account type, educator profile, and onboarding draft state are user-scoped to avoid same-device account leakage.
+- Patched: AccountTypeGate, OnboardingFlow, and EducatorOnboarding hydrate/save user-scoped onboarding drafts.
+- Patched: onboarding back/exit guard offers continue onboarding, continue later, or delete account.
+- Patched: admin layout blocks signed-out, incomplete, guest, and non-admin direct admin access.
+- Patched: educator onboarding does not silently enter admin when backend verification/completion fails.
+- Patched: post-auth routing no longer resumes lesson/track routes by default; learning stays behind My World.
+- Patched: the SkillUp/lightning loading blocker has been removed from auth/onboarding routing.
+- Patched: PDF HTML report output includes a `Sifter LevelUp` watermark plus school name when available.
+- Patched schema: `backend/migration_auth_onboarding_security_patch.sql` adds durable auth email codes, onboarding drafts, admin MFA settings, and resume/checkpoint user columns.
+- Still to wire fully: frontend onboarding drafts are local-first today. The schema now exists, but backend routes are still needed for cross-device draft save/resume.
+- Still to wire fully: signup email verification has a dev/in-memory backend path today. Production should switch it to `auth_email_codes` plus a real email provider.
+- Still to wire fully: admin 2FA is prompted/deferable in Settings, but real MFA enforcement requires backend challenge verification against `user_mfa_settings` and `auth_email_codes`.
+- Still to audit separately: bulk imported seed SQL contains source-data encoding artifacts. App/source files touched for onboarding are repaired; imported data should be cleaned from source imports or regenerated.
 
 ## Implementation plan
 
@@ -73,3 +80,33 @@ Date: 2026-08-11
 9. PDF watermark audit:
    - find current PDF/export code;
    - add or document the required watermark path for Sifter LevelUp + school name.
+
+## Supabase patch sequence
+
+For an existing Supabase project, apply only migrations that have not already been applied. The patch order is:
+
+1. `supabase-schema.sql` for the base `skillup_dev` schema and users table.
+2. `backend/migration_auth_profile.sql` for first name, middle name, last name, and date of birth.
+3. `backend/migration_v2.sql` for auth/session support, active device sessions, and legacy SkillUp/My World data.
+4. `backend/migration_career_base_registry.sql`, then `backend/migration_career_v2.sql`, then `backend/migration_career_intelligence.sql` for programme/domain/role discovery foundations.
+5. `backend/migration_admission_intelligence.sql`, then `backend/migration_remove_postutme_from_cutoff_view.sql`, then `backend/migration_student_pipeline_live.sql` for Admission Intelligence and onboarding-to-discovery data.
+6. `backend/seed_subject_catalog.sql`, `backend/seed_subject_options.sql`, `backend/seed_phase8_9_enrichment.sql`, and the admission importer/seed files already used by the project.
+7. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
+8. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
+9. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
+10. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.
+
+## Application sequence
+
+1. First signed-out root visit shows intro carousel, then auth landing.
+2. Signup requires legal consent, profile fields, password confirmation, and email code verification before account creation.
+3. Successful signup creates an incomplete account and routes to `/(auth)/onboarding`.
+4. Account onboarding opens the real `AccountTypeGate`, not a loading/logo screen.
+5. Student personas save a user-scoped onboarding draft and continue through student setup.
+6. JAMB/senior-secondary users must resolve programme plus university through Admission Intelligence before onboarding is completed.
+7. After admission resolution, the user moves into programme mapping, then domains, subgroups, roles, skills/opportunities.
+8. Student/graduate/professional/skilled-worker users who do not require admission resolution complete onboarding and land on Home/Explore discovery, not lesson tracks.
+9. Educator/institution users complete educator onboarding, then land on the correct admin dashboard/guidance surface.
+10. Guest creates a guest session and lands in Explore preview. Guest does not enter onboarding from Home, Profile, or Explore.
+11. Explicit logout routes future opens to sign-in/signup. Browser close keeps the saved session and resumes from the current URL or correct post-auth surface.
+12. A second active device invalidates the previous active session; the rejected device clears its token and returns to login.

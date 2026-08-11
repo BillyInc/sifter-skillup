@@ -12,6 +12,9 @@ class Settings:
     APP_NAME: str = "Sifter LevelUp API"
     APP_VERSION: str = "2.0.0"
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
+    EMAIL_VERIFICATION_DEV_CODES: bool = (
+        os.getenv("EMAIL_VERIFICATION_DEV_CODES", os.getenv("DEBUG", "false")).lower() == "true"
+    )
 
     # ── Supabase ─────────────────────────────────────────────
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
