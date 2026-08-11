@@ -40,14 +40,14 @@ export default function AuthLayout() {
   }
 
   // Guests skip onboarding entirely and land in Explore "browse everything" mode.
-  // Redirect replaces the entire auth stack — no back-button return to auth.
+  // Redirect replaces the entire auth stack, so there is no back-button return to auth.
   if (user && user.auth_provider === 'guest') {
     return <Redirect href="/(tabs)/explore" />;
   }
 
   // Signed-up users who haven't finished onboarding go to onboarding.
   // The Redirect component replaces the Stack, so there is nothing to go
-  // back to — preventing the broken back-to-signup loop.
+  // back to, preventing the broken back-to-signup loop.
   const isOnboardingRoute = pathname === '/onboarding' || pathname?.endsWith('/onboarding');
   if (user && !user.onboarding_completed && !isOnboardingRoute) {
     return <Redirect href="/(auth)/onboarding" />;
@@ -69,7 +69,7 @@ export default function AuthLayout() {
     return <Redirect href={(pendingRedirect ?? resolvePostAuthHref(user)) as any} />;
   }
 
-  // No user — show the auth stack (welcome / login / signup / forgot).
+  // No user: show the auth stack (welcome / login / signup / forgot).
   return (
     <Stack screenOptions={{ headerShown: false }} />
   );
@@ -78,3 +78,4 @@ export default function AuthLayout() {
 const styles = StyleSheet.create({
   loading: { flex: 1, backgroundColor: Colors.bg, alignItems: 'center', justifyContent: 'center', gap: 20 },
 });
+

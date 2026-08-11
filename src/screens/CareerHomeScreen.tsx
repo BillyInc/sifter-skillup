@@ -1,10 +1,10 @@
 /**
- * CareerHomeScreen — the personalised returning-user Home (Mockup Part 7).
+ * CareerHomeScreen - the personalised returning-user Home (Mockup Part 7).
  *
  * Editorial magazine layout: greeting + persona context, hero "Your Route"
  * card, asymmetric grid of market intelligence, saved domains, and quick
  * actions. Every data-backed section reads through `careerData`, which returns
- * `coming_soon` envelopes for now — rendered gracefully via <DataStateView>.
+ * `coming_soon` envelopes for now - rendered gracefully via <DataStateView>.
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
@@ -41,28 +41,28 @@ import type { StartingPointProfile, UserType } from "../types/onboarding";
 
 const QUICK = [
   {
-    icon: "🔍",
+    icon: "Search",
     title: "Explore programmes",
     body: "Domains, roles and skills your programme unlocks",
     href: "/(tabs)/explore" as const,
     locked: false,
   },
   {
-    icon: "⭐",
+    icon: "Star",
     title: "Elite & special pathways",
     body: "Aspirational routes & every starting point",
     href: "/(tabs)/explore/elite" as const,
     locked: false,
   },
   {
-    icon: "🔒",
+    icon: "Lock",
     title: "My World",
     body: "Locked tracks, portfolio proof and guild progress",
     href: "/(tabs)/myworld" as const,
     locked: true,
   },
   {
-    icon: "👤",
+    icon: "User",
     title: "Profile",
     body: "Your account, saved items and notes",
     href: "/(tabs)/profile" as const,
@@ -120,7 +120,7 @@ function summariseStartingPoint(p: StartingPointProfile): string {
       break;
     }
   }
-  return bits.length ? bits.join(" · ") : "Profile saved";
+  return bits.length ? bits.join(" / ") : "Profile saved";
 }
 
 function nextStartingPointAction(p: StartingPointProfile): {
@@ -259,7 +259,7 @@ export default function CareerHomeScreen() {
         </View>
       ) : null}
 
-      {/* ── Your starting point ── */}
+      {/* Your starting point */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Your starting point
       </Text>
@@ -287,7 +287,7 @@ export default function CareerHomeScreen() {
                   : undefined,
               ]
                 .filter(Boolean)
-                .join(" · ")}
+                .join(" / ")}
             </Text>
           ) : null}
           <View style={styles.cardActions}>
@@ -303,10 +303,10 @@ export default function CareerHomeScreen() {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cardLink}
-              onPress={() => router.push("/(auth)/onboarding")}
+              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
             >
               <Text style={[styles.cardLinkText, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-                Update
+                {isGuest ? "Create account" : "Update"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -314,27 +314,28 @@ export default function CareerHomeScreen() {
       ) : (
         <TouchableOpacity
           activeOpacity={0.85}
-          onPress={() => router.push("/(auth)/onboarding")}
+          onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
           style={[
             styles.card,
             { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
         >
-          <Text style={styles.promptIcon}>🧭</Text>
+          <Text style={styles.promptIcon}>Start</Text>
           <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-            Tell us where you&apos;re starting from
+            {isGuest ? "Create an account to personalise LevelUp" : "Tell us where you&apos;re starting from"}
           </Text>
           <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Complete a quick onboarding so we can tailor programmes, domains and
-            demand signals to you.
+            {isGuest
+              ? "Guest mode can browse Explore. An account lets us save your matches, notes and starting point."
+              : "Complete a quick onboarding so we can tailor programmes, domains and demand signals to you."}
           </Text>
           <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-            Start onboarding →
+            Start onboarding
           </Text>
         </TouchableOpacity>
       )}
 
-      {/* ── Market intelligence ── */}
+      {/* Market intelligence */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Market intelligence
       </Text>
@@ -357,7 +358,7 @@ export default function CareerHomeScreen() {
         </Text>
       </View>
 
-      {/* ── Your domains ── */}
+      {/* Your domains */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Your domains
       </Text>
@@ -378,7 +379,7 @@ export default function CareerHomeScreen() {
                   ]}
                 >
                   <Text style={styles.rowIcon}>
-                    {it.entityType === "role" ? "🧩" : "🗺️"}
+                    {it.entityType === "role" ? "Role" : "Map"}
                   </Text>
                   <View style={{ flex: 1 }}>
                     <Text
@@ -406,11 +407,11 @@ export default function CareerHomeScreen() {
         onPress={() => router.push("/(tabs)/explore")}
       >
         <Text style={[styles.linkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          Explore & save domains →
+          Explore and save domains
         </Text>
       </TouchableOpacity>
 
-      {/* ── Quick actions ── */}
+      {/* Quick actions */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Quick actions
       </Text>
@@ -535,3 +536,4 @@ const styles = StyleSheet.create({
   },
   tileBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
 });
+

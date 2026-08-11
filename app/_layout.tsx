@@ -1,4 +1,4 @@
-// Polyfills â€” must load before any code that touches crypto/buffer/text-encoding.
+// Polyfills — must load before any code that touches crypto/buffer/text-encoding.
 // Order matters: random-values, then fast-text-encoding, then ethers shims (Buffer + FileReader).
 import 'react-native-get-random-values';
 import 'fast-text-encoding';
