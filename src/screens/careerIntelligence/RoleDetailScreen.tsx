@@ -16,7 +16,6 @@ import {
   TierBadgeView,
   NotesWidget,
   LevelUpCTA,
-  SkillsBridge,
   MappingFeedbackButton,
   SectionLabel,
   StatTile,
@@ -166,17 +165,20 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
 
       {/* 3 — Skills gap */}
       <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
-      {essential.length ? (
-        <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>Skills gap</SectionLabel>
-          <SkillsBridge
-            domainBridgeSkills={essential.map((name) => ({ name }))}
-            roleBridgeSkills={optional.map((name) => ({ name }))}
-          />
-        </View>
-      ) : null}
+      {/* A <SkillsBridge> used to sit here, fed the SAME two arrays as the
+          chip clouds below: `essential` as domainBridgeSkills and `optional` as
+          roleBridgeSkills. So every role rendered its skills twice, adjacent,
+          under four headings — "Domain bridge skills" / "Role-specific skills"
+          and then "Essential" / "Optional / edge".
+
+          Two of those headings were also wrong. SkillsBridge models the bridge
+          FROM a domain INTO a role, and it takes `conceptualPrerequisites` and
+          `matchType` to do it; this call site passed neither, so it contributed
+          nothing the chip clouds do not, and mislabelled ESCO essential/
+          optional skills as bridge layers while doing it. */}
       {(essential.length || optional.length) ? (
         <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>Skills gap</SectionLabel>
           {essential.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
