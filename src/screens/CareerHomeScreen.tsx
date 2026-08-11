@@ -123,6 +123,50 @@ function summariseStartingPoint(p: StartingPointProfile): string {
   return bits.length ? bits.join(" · ") : "Profile saved";
 }
 
+function nextStartingPointAction(p: StartingPointProfile): {
+  label: string;
+  href: string;
+} {
+  const isAdmissionUser = p.userType === "jamb" || p.userType === "senior_secondary";
+  const programmeId = p.intendedJambProgrammeId ?? p.intendedProgrammeId;
+  const programmeName = p.intendedProgramme ?? p.programmeName ?? "";
+  const hasProgramme = Boolean(programmeId || programmeName);
+  const hasSchool = Boolean(p.preferredSchoolId || p.preferredSchool || p.schoolName);
+
+  if ((p.userType === "student" || p.userType === "graduate") && programmeId) {
+    return {
+      label: "Continue to career mapping",
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`,
+    };
+  }
+
+  if (isAdmissionUser && hasProgramme && hasSchool && programmeId) {
+    return {
+      label: "Continue to career mapping",
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`,
+    };
+  }
+
+  if (isAdmissionUser && hasProgramme) {
+    return {
+      label: "Choose university",
+      href: `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programmeName || programmeId || "")}`,
+    };
+  }
+
+  if (isAdmissionUser && p.jambSubjects?.length) {
+    return {
+      label: "Match programmes",
+      href: `/(tabs)/explore/admission?mode=subjects&subjects=${encodeURIComponent(p.jambSubjects.join(","))}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+    };
+  }
+
+  return {
+    label: "Explore career intelligence",
+    href: "/(tabs)/explore",
+  };
+}
+
 export default function CareerHomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -138,12 +182,13 @@ export default function CareerHomeScreen() {
   const [saved, setSaved] = useState<DataState<SavedItem[]>>(() =>
     comingSoon<SavedItem[]>(),
   );
+  const nextAction = starting ? nextStartingPointAction(starting) : null;
 
   useEffect(() => {
     let active = true;
     (async () => {
       const [sp, items] = await Promise.all([
-        getStartingPoint(),
+        getStartingPoint(user?.id),
         careerData.getSavedItems(),
       ]);
       if (!active) return;
@@ -154,7 +199,7 @@ export default function CareerHomeScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   // Only saved domains & roles belong in "Your domains".
   const filterDomainsRoles = (items: SavedItem[]): DataState<SavedItem[]> => ({
@@ -245,15 +290,26 @@ export default function CareerHomeScreen() {
                 .join(" · ")}
             </Text>
           ) : null}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={styles.cardLink}
-            onPress={() => router.push("/(auth)/onboarding")}
-          >
-            <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-              Update →
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.cardActions}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={styles.cardLink}
+              onPress={() => nextAction ? router.push(nextAction.href as any) : router.push("/(tabs)/explore")}
+            >
+              <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
+                {nextAction?.label ?? "Explore career intelligence"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={styles.cardLink}
+              onPress={() => router.push("/(auth)/onboarding")}
+            >
+              <Text style={[styles.cardLinkText, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
+                Update
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <TouchableOpacity
@@ -427,6 +483,13 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   promptIcon: { fontSize: 28 },
+  cardActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: Spacing.md,
+    marginTop: Spacing.xs,
+  },
   cardLink: {
     minHeight: 44,
     justifyContent: "center",

@@ -163,7 +163,8 @@ def validate_device_header(user_id: str, device_id: str) -> bool:
 
     existing = _get_existing_session(user_id)
     if not existing:
-        return True   # No session yet — let auth flow create one
+        log.warning("Device validation: no active session for user", user_id=user_id)
+        return False
 
     if existing["device_id"] != device_id:
         log.warning(

@@ -213,6 +213,8 @@ export const API = {
     }
   },
   getToken,  // exported for offline sync engines
+  deleteMe: (): Promise<void> =>
+    request<void>('/api/users/me', { method: 'DELETE' }),
 
   // AI Scoring — routes through backend so API key never lives in client
   scoreSimulator: (body: AIScoreRequest) =>

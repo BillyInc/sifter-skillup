@@ -1,6 +1,6 @@
 /**
- * OnboardingBackGuard — intercepts hardware back / browser back during
- * onboarding and shows a modal: "Log out" or "Continue onboarding".
+ * OnboardingBackGuard intercepts hardware back and browser back during
+ * account onboarding.
  *
  * Prevents the broken back-to-signup loop after account creation.
  * Covers Android BackHandler, iOS gesture, and browser popstate.
@@ -23,7 +23,7 @@ import { SifterButton } from "../ui";
 export function OnboardingBackGuard() {
   const router = useRouter();
   const navigation = useNavigation();
-  const { signOut, user } = useAuth();
+  const { signOut, deleteAccount, user } = useAuth();
   const { colors } = useTheme();
   const [showModal, setShowModal] = useState(false);
   const pendingPop = useRef<(() => void) | null>(null);
@@ -33,7 +33,7 @@ export function OnboardingBackGuard() {
     user.auth_provider !== "guest" &&
     user.onboarding_completed !== true;
 
-  // ─── Android hardware back ──────────────────────────────────
+  // Android hardware back.
   useEffect(() => {
     if (!canGuard) return;
 
@@ -45,7 +45,7 @@ export function OnboardingBackGuard() {
     return () => handler.remove();
   }, [canGuard]);
 
-  // ─── React Navigation pop intercept (covers web browser back) ──
+  // React Navigation pop intercept. This also covers browser back on web.
   useEffect(() => {
     if (!canGuard) return;
 
@@ -61,15 +61,24 @@ export function OnboardingBackGuard() {
     return () => unsubscribe();
   }, [canGuard, navigation]);
 
-  const handleLogout = useCallback(async () => {
+  const handleContinueLater = useCallback(async () => {
     setShowModal(false);
     try {
-      await signOut();
+      await signOut({ preserveLocalUserState: true });
     } catch {
       // signOut is best-effort
     }
-    // After signOut, user is null → auth layout shows the auth stack
+    // After signOut, user is null and the auth layout shows sign in/sign up.
   }, [signOut]);
+
+  const handleDeleteAccount = useCallback(async () => {
+    setShowModal(false);
+    try {
+      await deleteAccount();
+    } catch {
+      // deleteAccount clears the local session in its finally block.
+    }
+  }, [deleteAccount]);
 
   const handleContinue = useCallback(() => {
     setShowModal(false);
@@ -99,14 +108,21 @@ export function OnboardingBackGuard() {
             Leave onboarding?
           </Text>
           <Text style={[styles.body, { color: colors.textSoft }]}>
-            You have an account. If you leave, you can log in again or create a
-            new account.
+            Going back will leave onboarding. You can continue later with this
+            account, or delete the account and start again.
           </Text>
 
           <View style={styles.actions}>
             <SifterButton
-              label="Log out"
-              onPress={handleLogout}
+              label="Delete account"
+              onPress={handleDeleteAccount}
+              variant="ghost"
+              size="md"
+              fullWidth
+            />
+            <SifterButton
+              label="Continue later"
+              onPress={handleContinueLater}
               variant="ghost"
               size="md"
               fullWidth

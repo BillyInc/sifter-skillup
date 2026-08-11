@@ -22,6 +22,7 @@ import {
   webContainer,
 } from "@/theme";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import { comingSoon } from "../../types/career";
 import type { EducatorProfile } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
@@ -47,12 +48,13 @@ const SESSION_STEPS = [
 
 export function SessionModeScreen() {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
+    getEducatorProfile(user?.id).then((p) => {
       if (!active) return;
       setProfile(p);
       setLoaded(true);
@@ -60,7 +62,7 @@ export function SessionModeScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   const isProvider =
     profile?.providerSessionOnly === true ||

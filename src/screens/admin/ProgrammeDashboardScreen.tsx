@@ -31,6 +31,7 @@ import {
 import { PdfExportButton } from "@/components/careerIntelligence/PdfExportButton";
 import { adminData } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import type { DataState } from "../../types/career";
 import type {
   InstitutionSummary,
@@ -55,6 +56,7 @@ export function ProgrammeDashboardScreen() {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
   const wide = width >= 900;
+  const { user } = useAuth();
 
   const [orgName, setOrgName] = useState<string>("");
 
@@ -71,13 +73,13 @@ export function ProgrammeDashboardScreen() {
   // Pull the institution name for the header from the local educator profile.
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
+    getEducatorProfile(user?.id).then((p) => {
       if (active && p?.organizationName) setOrgName(p.organizationName);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   // Aggregate reads (no PII). All resolve to coming_soon this phase.
   useEffect(() => {

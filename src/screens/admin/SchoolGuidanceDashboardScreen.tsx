@@ -43,6 +43,7 @@ import {
 import { adminData } from "@/lib/adminData";
 import { adminNav, type Nav } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import type { DataState } from "../../types/career";
 import type {
   EducatorProfile,
@@ -97,6 +98,7 @@ export function SchoolGuidanceDashboardScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const wide = width >= 900;
+  const { user } = useAuth();
 
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [summary, setSummary] =
@@ -107,13 +109,13 @@ export function SchoolGuidanceDashboardScreen() {
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
+    getEducatorProfile(user?.id).then((p) => {
       if (active) setProfile(p);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   // Aggregate reads only — educators never receive individual learner rows.
   useEffect(() => {
@@ -190,6 +192,37 @@ export function SchoolGuidanceDashboardScreen() {
         </View>
 
         {/* ── Aggregate learner stats ── */}
+        <View style={styles.guidanceActions}>
+          {!providerOnly ? (
+            <TouchableOpacity
+              onPress={() => adminNav.students(router as Nav)}
+              style={[styles.guidanceAction, { borderColor: colors.border }]}
+            >
+              <Text style={[styles.guidanceActionTitle, { color: colors.text }, CompassFonts.bodySemibold]}>
+                Create student accounts
+              </Text>
+              <Text style={[styles.guidanceActionBody, { color: colors.textMuted }]}>
+                Provision learners and print claim cards.
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+          <TouchableOpacity
+            onPress={() =>
+              providerOnly
+                ? adminNav.session(router as Nav)
+                : adminNav.explore(router as Nav)
+            }
+            style={[styles.guidanceAction, { borderColor: colors.border }]}
+          >
+            <Text style={[styles.guidanceActionTitle, { color: colors.text }, CompassFonts.bodySemibold]}>
+              Skip to guidance
+            </Text>
+            <Text style={[styles.guidanceActionBody, { color: colors.textMuted }]}>
+              Open the catalogue without creating a student account.
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.stats}>
           <StatCard
             icon="👥"
@@ -505,6 +538,21 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.5,
   },
   stats: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  guidanceActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  guidanceAction: {
+    flex: 1,
+    minWidth: 220,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  guidanceActionTitle: { fontSize: FontSize.sm },
+  guidanceActionBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
   dataNote: { fontSize: FontSize.xs, marginTop: -Spacing.md },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },

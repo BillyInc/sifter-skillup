@@ -1,19 +1,16 @@
 /**
- * EducatorOnboarding — the institutional/administrator entry flow (Part 1, the
- * educator fork of onboarding). Mirrors OnboardingFlow's Stepper shape:
+ * EducatorOnboarding is the institutional/administrator entry flow.
  *
- *   Step 1  Your organisation   → OrganizationType + name + role
- *   Step 2  Access code         → owner-issued admin-mode gate
- *   Step 3  Verify              → work email / registry code (intent only)
- *   Step 4  Confirm             → summary → Enter dashboard
+ * Step 1: organisation type, name, and role
+ * Step 2: owner-issued access code
+ * Step 3: work email / registry-code intent
+ * Step 4: summary and dashboard entry
  *
- * Finishing persists the educator profile locally (src/lib/educatorProfile.ts —
- * the seam to swap for a real endpoint later), flips the local account type so
- * routing sends them to the admin side, fires a (currently coming_soon)
- * verification submit, completes onboarding on the backend, then lands on
- * /(admin). Access code is not proof; verification stays pending.
+ * Finishing creates the admin workspace through the backend, completes
+ * onboarding, stores the educator profile for routing, and lands on the
+ * correct admin workspace. Access code is not proof; verification stays pending.
  */
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
@@ -24,6 +21,7 @@ import { saveEducatorProfile } from "@/lib/educatorProfile";
 import { setLocalAccountType } from "@/lib/accountType";
 import { adminData } from "@/lib/adminData";
 import { adminHomeForProfile } from "@/lib/adminAudience";
+import { clearOnboardingDraft, getOnboardingDraft, patchOnboardingDraft } from "@/lib/onboardingDraft";
 import type {
   AccountType,
   OrganizationType,
@@ -39,7 +37,7 @@ import {
   SearchField,
 } from "@/components/onboarding/primitives";
 
-// ─── Organisation types ───────────────────────────────────────
+// Organisation types.
 const ORGS: {
   type: OrganizationType;
   icon: string;
@@ -87,7 +85,7 @@ const ROLES_FOR: Record<OrganizationType, { label: string; value: OrgRole }[]> =
     jamb_cafe: [{ label: "Owner / Operator", value: "owner" }],
   };
 
-/** Centres/cafés are provider/session only — never a student roster. */
+/** Centres/cafes are provider/session only, never a student roster. */
 function isProviderSession(t: OrganizationType): boolean {
   return t === "tutorial_centre" || t === "jamb_cafe";
 }
@@ -105,8 +103,8 @@ function registryLabel(t: OrganizationType): string {
 }
 
 /**
- * Owners/deans run institution-wide management → institution_admin.
- * Everyone else (counsellors, advisors, HODs, tutors) → educator.
+ * Owners/deans run institution-wide management as institution_admin.
+ * Everyone else (counsellors, advisors, HODs, tutors) is an educator.
  */
 function accountTypeFor(
   t: OrganizationType,
@@ -121,7 +119,7 @@ function accountTypeFor(
 export default function EducatorOnboarding() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { refreshUser } = useAuth();
+  const { refreshUser, user } = useAuth();
 
   const [step, setStep] = useState(1);
   const [orgType, setOrgType] = useState<OrganizationType | undefined>();
@@ -134,6 +132,50 @@ export default function EducatorOnboarding() {
   const [accessError, setAccessError] = useState<string | null>(null);
   const [checkingAccess, setCheckingAccess] = useState(false);
   const [finishing, setFinishing] = useState(false);
+  const [finishError, setFinishError] = useState<string | null>(null);
+  const draftLoaded = useRef(false);
+
+  useEffect(() => {
+    let active = true;
+    getOnboardingDraft(user?.id).then((draft) => {
+      if (!active) return;
+      if (draft?.mode === "educator") {
+        if (draft.step) setStep(draft.step);
+        const saved = draft.educatorProfile;
+        if (saved) {
+          setOrgType(saved.organizationType);
+          setOrgName(saved.organizationName ?? "");
+          setRole(saved.role);
+          setWorkEmail(saved.workEmail ?? "");
+          setRegistryCode(saved.registryCode ?? "");
+          setAccessCode(saved.accessCode ?? "");
+          setAccessGranted(Boolean(saved.accessGranted));
+        }
+      }
+      draftLoaded.current = true;
+    });
+    return () => {
+      active = false;
+    };
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+    patchOnboardingDraft(user?.id, {
+      mode: "educator",
+      choice: "educator",
+      step,
+      educatorProfile: {
+        organizationType: orgType,
+        organizationName: orgName,
+        role,
+        workEmail,
+        registryCode,
+        accessCode,
+        accessGranted,
+      },
+    }).catch(() => {});
+  }, [accessCode, accessGranted, orgName, orgType, registryCode, role, step, user?.id, workEmail]);
 
   const back = () => setStep((s) => Math.max(1, s - 1));
 
@@ -177,6 +219,7 @@ export default function EducatorOnboarding() {
   const finish = async () => {
     if (!orgType || !role) return;
     setFinishing(true);
+    setFinishError(null);
 
     const accountType = accountTypeFor(orgType, role);
     const hasEmail = workEmail.trim().length > 0;
@@ -200,23 +243,29 @@ export default function EducatorOnboarding() {
       adminAccessStatus: "owner_code",
       adminAccessGrantedAt: new Date().toISOString(),
       completedAt: new Date().toISOString(),
-      // Centres/cafés are provider/session only — captured for downstream gating.
+      // Centres/cafes are provider/session only; downstream screens use this for gating.
       ...(isProviderSession(orgType) ? { providerSessionOnly: true } : {}),
     } as EducatorProfile & { providerSessionOnly?: boolean };
 
-    await saveEducatorProfile(profile);
-    await setLocalAccountType(accountType);
-
     try {
-      // coming_soon now — fired so the seam is exercised; result ignored.
-      await adminData.submitVerification(profile);
+      // The backend must create a real workspace; coming_soon is treated as failure.
+      const verification = await adminData.submitVerification(profile);
+      if (verification.status !== "real" || !verification.data) {
+        throw new Error(
+          verification.meta?.notice ??
+            "Could not create the admin workspace right now.",
+        );
+      }
       await API.completeOnboarding({});
       await refreshUser();
-    } catch {
-      // Even if the network calls fail, the local profile + account type are
-      // saved, so routing into the admin side still works. Proceed.
-    } finally {
+      await saveEducatorProfile(profile, user?.id);
+      await setLocalAccountType(accountType, user?.id);
+      await clearOnboardingDraft(user?.id);
       router.replace(adminHomeForProfile(profile) as any);
+    } catch (e) {
+      setFinishError((e as Error)?.message ?? "Could not finish admin onboarding.");
+    } finally {
+      setFinishing(false);
     }
   };
 
@@ -231,7 +280,7 @@ export default function EducatorOnboarding() {
     >
       <Stepper step={step} total={4} onBack={step > 1 ? back : undefined} />
 
-      {/* ── Step 1: Your organisation ── */}
+      {/* Step 1: Your organisation */}
       {step === 1 ? (
         <View style={{ gap: Spacing.md }}>
           <Text style={[styles.title, { color: colors.text }]}>
@@ -283,7 +332,7 @@ export default function EducatorOnboarding() {
         </View>
       ) : null}
 
-      {/* ── Step 2: Verify your institution ── */}
+      {/* Step 2: Verify your institution */}
       {step === 2 ? (
         <View style={{ gap: Spacing.lg }}>
           <Text style={[styles.title, { color: colors.text }]}>
@@ -329,7 +378,7 @@ export default function EducatorOnboarding() {
         </View>
       ) : null}
 
-      {/* ── Step 3: Verify your institution ── */}
+      {/* Step 3: Verify your institution */}
       {step === 3 ? (
         <View style={{ gap: Spacing.lg }}>
           <Text style={[styles.title, { color: colors.text }]}>
@@ -374,7 +423,7 @@ export default function EducatorOnboarding() {
         </View>
       ) : null}
 
-      {/* ── Step 4: Confirm ── */}
+      {/* Step 4: Confirm */}
       {step === 4 ? (
         <View style={{ gap: Spacing.xl }}>
           <View style={{ gap: Spacing.xs }}>
@@ -424,6 +473,12 @@ export default function EducatorOnboarding() {
               <SummaryRow label="Mode" value="Provider / session — no roster" />
             ) : null}
           </View>
+
+          {finishError ? (
+            <Text style={[styles.error, { color: colors.danger }]}>
+              {finishError}
+            </Text>
+          ) : null}
 
           <SifterButton
             label="Enter dashboard →"

@@ -14,7 +14,7 @@
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme, Spacing, FontSize, CompassFonts } from "@/theme";
@@ -23,6 +23,7 @@ import { SifterButton } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 import { saveStartingPoint } from "@/lib/startingPoint";
+import { clearOnboardingDraft, getOnboardingDraft, patchOnboardingDraft } from "@/lib/onboardingDraft";
 import type { StartingPointProfile, UserType } from "@/types/onboarding";
 import {
   Stepper,
@@ -121,13 +122,50 @@ export default function OnboardingFlow({
   const router = useRouter();
   const { colors } = useTheme();
   const resp = useResponsive();
-  const { refreshUser } = useAuth();
+  const { refreshUser, user } = useAuth();
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<Partial<StartingPointProfile>>({
     userType: initialPersona,
     notifications: Object.fromEntries(NOTIFS.map((n) => [n.key, n.default])),
   });
   const [finishing, setFinishing] = useState(false);
+  const draftLoaded = useRef(false);
+
+  useEffect(() => {
+    let active = true;
+    getOnboardingDraft(user?.id).then((draft) => {
+      if (!active) return;
+      if (draft?.mode === "student") {
+        if (draft.step) setStep(draft.step);
+        if (draft.studentProfile) {
+          const savedProfile = draft.studentProfile;
+          setProfile((prev) => ({
+            ...prev,
+            ...savedProfile,
+            userType: savedProfile.userType ?? initialPersona ?? prev.userType,
+            notifications: {
+              ...Object.fromEntries(NOTIFS.map((n) => [n.key, n.default])),
+              ...(savedProfile.notifications ?? prev.notifications),
+            },
+          }));
+        }
+      }
+      draftLoaded.current = true;
+    });
+    return () => {
+      active = false;
+    };
+  }, [initialPersona, user?.id]);
+
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+    patchOnboardingDraft(user?.id, {
+      mode: "student",
+      choice: (profile.userType ?? initialPersona) as UserType,
+      step,
+      studentProfile: profile,
+    }).catch(() => {});
+  }, [initialPersona, profile, step, user?.id]);
 
   const patch = (p: Partial<StartingPointProfile>) =>
     setProfile((prev) => ({ ...prev, ...p }));
@@ -142,10 +180,11 @@ export default function OnboardingFlow({
       completedAt: new Date().toISOString(),
     };
     try {
-      await saveStartingPoint(full);
+      await saveStartingPoint(full, user?.id);
       if (!needsAdmissionResolution(full)) {
         await API.completeOnboarding({});
         await refreshUser();
+        await clearOnboardingDraft(user?.id);
       }
     } catch {
       // Even if the network call fails, the local profile is saved; proceed.
