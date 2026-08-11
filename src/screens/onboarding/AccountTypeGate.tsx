@@ -1,7 +1,7 @@
-/**
- * AccountTypeGate — the first fork in onboarding.
+﻿/**
+ * AccountTypeGate - the first fork in onboarding.
  *
- * 6 large selectable persona cards (BRIEF: "Account-type gate — 6 large
+ * 6 large selectable persona cards (BRIEF: "Account-type gate - 6 large
  * selectable persona cards with photography"). Student personas drop into
  * OnboardingFlow's setup steps. Educators get the institutional
  * EducatorOnboarding flow.
@@ -40,7 +40,7 @@ const PERSONAS: {
     type: "senior_secondary",
     icon: "map",
     title: "Senior-Secondary Student",
-    subtitle: "SS1–SS3 — exploring career & subject guidance",
+    subtitle: "SS1-SS3 - exploring career and subject guidance",
   },
   {
     type: "jamb",
@@ -52,7 +52,7 @@ const PERSONAS: {
     type: "student",
     icon: "users",
     title: "Current University Student",
-    subtitle: "University · Polytechnic · College of Education",
+    subtitle: "University / Polytechnic / College of Education",
   },
   {
     type: "graduate",
@@ -70,13 +70,13 @@ const PERSONAS: {
     type: "professional",
     icon: "briefcase",
     title: "Career Changer",
-    subtitle: "Professional · White-collar · Blue-collar — changing direction",
+    subtitle: "Professional / white-collar / blue-collar - changing direction",
   },
   {
     type: "educator",
     icon: "home",
     title: "Educator / Institution",
-    subtitle: "School, university, tutorial centre — career intelligence dashboard",
+    subtitle: "School, university, tutorial centre - career intelligence dashboard",
   },
 ];
 
@@ -201,3 +201,4 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: FontSize.md },
   cardSub: { fontSize: FontSize.xs, marginTop: 2, lineHeight: FontSize.xs * 1.5 },
 });
+

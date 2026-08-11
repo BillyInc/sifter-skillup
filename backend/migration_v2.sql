@@ -1,5 +1,5 @@
 -- ============================================================
--- SIFTER SKILL_UP â€” COMPLETE MIGRATION v2
+-- SIFTER SKILL_UP — COMPLETE MIGRATION v2
 -- Run AFTER existing supabase-schema.sql
 -- Adds ALL tables needed across the full upgrade
 -- Includes: interview sessions, push tokens, content cache,
@@ -8,7 +8,7 @@
 --           starknet txs, merch, notifications, referrals
 -- ============================================================
 
--- â”€â”€ 1. EXTEND USERS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 1. EXTEND USERS TABLE ────────────────────────────────────
 BEGIN;
 
 ALTER TABLE skillup_dev.users
@@ -36,7 +36,7 @@ CREATE INDEX IF NOT EXISTS idx_users_starknet ON skillup_dev.users(starknet_addr
 CREATE INDEX IF NOT EXISTS idx_users_starknet_wallet_id ON skillup_dev.users(starknet_wallet_id);
 CREATE INDEX IF NOT EXISTS idx_users_email    ON skillup_dev.users(email);
 
--- â”€â”€ 2. DEVICE SESSIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 2. DEVICE SESSIONS ─────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.active_sessions (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id      UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.active_sessions (
 );
 CREATE INDEX IF NOT EXISTS idx_sessions_user_active ON skillup_dev.active_sessions(user_id, is_active);
 
--- â”€â”€ 3. PUSH TOKENS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 3. PUSH TOKENS ────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.push_tokens (
     user_id    UUID PRIMARY KEY REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
     token      TEXT NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.push_tokens (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 4. OFFLINE SYNC LOG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 4. OFFLINE SYNC LOG ───────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.sync_log (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     item_id     TEXT NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.sync_log (
 );
 CREATE INDEX IF NOT EXISTS idx_sync_log_user ON skillup_dev.sync_log(user_id, applied_at);
 
--- â”€â”€ 5. XP EVENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 5. XP EVENTS ──────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.xp_events (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.xp_events (
 );
 CREATE INDEX IF NOT EXISTS idx_xp_events_user ON skillup_dev.xp_events(user_id, created_at DESC);
 
--- â”€â”€ 6. BADGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 6. BADGES ─────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.badges (
     id          TEXT PRIMARY KEY,
     name        TEXT NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.badges (
 INSERT INTO skillup_dev.badges (id, name, description, icon, xp_reward, rarity, sort_order) VALUES
   ('first_level',       'First Step',           'Complete your very first lesson',                   'ðŸŽ¯', 50,   'common',    1),
   ('week_warrior',      'Week Warrior',          'Maintain a 7-day streak',                           'ðŸ”¥', 200,  'rare',      2),
-  ('month_master',      'Month Master',          'Maintain a 30-day streak',                          'ðŸŒŸ', 500,  'epic',      3),
+  ('month_master',      'Month Master',          'Maintain a 30-day streak',                          '🌟', 500,  'epic',      3),
   ('boss_slayer',       'Boss Slayer',           'Defeat a boss level',                               'âš”ï¸', 150, 'rare',      4),
   ('lab_grad',          'Lab Graduate',          'Complete a full lab',                               'ðŸŽ“', 200,  'common',    5),
   ('track_certified',   'Track Certified',       'Complete an entire track',                          'ðŸ†', 1000, 'legendary', 6),
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.user_badges (
 );
 CREATE INDEX IF NOT EXISTS idx_user_badges_user ON skillup_dev.user_badges(user_id);
 
--- â”€â”€ 7. CONTENT CACHE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 7. CONTENT CACHE ──────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.content_cache (
     id            TEXT PRIMARY KEY,
     content_type  TEXT NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.sync_meta (
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 8. FEED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 8. FEED ───────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.feed_items (
     id              UUID PRIMARY KEY,
     track_id        TEXT NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.track_subscriptions (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 9. CHALLENGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 9. CHALLENGES ──────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.challenges (
     id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title          TEXT NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.challenge_participants (
     UNIQUE(challenge_id, user_id)
 );
 
--- â”€â”€ 10. SOCIAL SHARES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 10. SOCIAL SHARES ──────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.social_shares (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id      UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.social_shares (
 );
 CREATE INDEX IF NOT EXISTS idx_social_shares_user ON skillup_dev.social_shares(user_id, created_at DESC);
 
--- â”€â”€ 11. PORTFOLIO ATTRIBUTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 11. PORTFOLIO ATTRIBUTIONS ────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.portfolio_attributions (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.portfolio_attributions (
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 12. STARKNET TRANSACTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 12. STARKNET TRANSACTIONS ─────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.starknet_transactions (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id      UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.starknet_transactions (
 );
 CREATE INDEX IF NOT EXISTS idx_starknet_tx_user ON skillup_dev.starknet_transactions(user_id, created_at DESC);
 
--- â”€â”€ 13. MERCHANDISE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 13. MERCHANDISE ───────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.merchandise_items (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name         TEXT NOT NULL,
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.merchandise_orders (
     created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 14. NOTIFICATION PREFERENCES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 14. NOTIFICATION PREFERENCES ──────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.notification_prefs (
     user_id          UUID PRIMARY KEY REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
     streak_reminders BOOLEAN NOT NULL DEFAULT true,
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.notification_prefs (
     updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- â”€â”€ 15. REFERRALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 15. REFERRALS ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.referrals (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     referrer_id  UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.referrals (
     UNIQUE(referee_id)
 );
 
--- â”€â”€ 16. INTERVIEW SESSIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 16. INTERVIEW SESSIONS ────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.interview_sessions (
     id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id      UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.interview_questions (
 );
 CREATE INDEX IF NOT EXISTS idx_interview_q_track ON skillup_dev.interview_questions(track_id, level);
 
--- â”€â”€ HELPER FUNCTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── HELPER FUNCTIONS ──────────────────────────────────────────
 
 CREATE OR REPLACE FUNCTION skillup_dev.get_user_rank(user_id UUID)
 RETURNS INTEGER AS $$
@@ -313,7 +313,7 @@ RETURNS INTEGER AS $$
   WHERE points > (SELECT points FROM skillup_dev.users WHERE id = user_id)
 $$ LANGUAGE sql STABLE;
 
--- â”€â”€ ROW LEVEL SECURITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── ROW LEVEL SECURITY ────────────────────────────────────────
 
 ALTER TABLE skillup_dev.active_sessions       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.sync_log              ENABLE ROW LEVEL SECURITY;

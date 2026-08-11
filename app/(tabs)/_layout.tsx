@@ -1,6 +1,7 @@
-import { Tabs, useRouter } from "expo-router";
+import { Redirect, Tabs, useRouter } from "expo-router";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
 import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
+import { useAuth } from "../../src/hooks/useAuth";
 
 // Navigation chrome (web sidebar + mobile bottom bar) is owned by ReferenceShell,
 // so the expo-router Tabs bar is hidden on every platform and every screen is
@@ -9,6 +10,19 @@ import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
 // live behind the shell.
 export default function TabsLayout() {
   const router = useRouter();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  if (!user) {
+    return <Redirect href="/(auth)/sign-in" />;
+  }
+
+  if (user.auth_provider !== "guest" && !user.onboarding_completed) {
+    return <Redirect href="/(auth)/onboarding" />;
+  }
 
   return (
     <ScreenErrorBoundary

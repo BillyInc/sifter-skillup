@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, TextInput, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
 import { SifterButton } from "@/components/ui";
 import {
@@ -18,6 +19,52 @@ import {
   ErrorNote,
   TermsModal,
 } from "./auth/authShared";
+
+function toIsoDate(value: string): string | null {
+  const trimmed = value.trim();
+  const slash = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (slash) {
+    const [, dd, mm, yyyy] = slash;
+    const day = Number(dd);
+    const month = Number(mm);
+    const year = Number(yyyy);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (
+      date.getUTCFullYear() === year &&
+      date.getUTCMonth() === month - 1 &&
+      date.getUTCDate() === day
+    ) {
+      return `${yyyy}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+    return null;
+  }
+  const iso = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return iso ? trimmed : null;
+}
+
+function friendlySignupError(error: unknown, fallback: string) {
+  const message = error instanceof Error ? error.message : String(error || "");
+  if (!message) return fallback;
+  if (/already registered|already exists/i.test(message)) {
+    return "An account already exists for this email. Please log in instead.";
+  }
+  if (/invalid verification code/i.test(message)) {
+    return "That code is not correct. Check the email and try again.";
+  }
+  if (/expired/i.test(message)) {
+    return "That code has expired. Please request a new one.";
+  }
+  if (/request a verification code/i.test(message)) {
+    return "Please request a new verification code before creating your account.";
+  }
+  if (/too many attempts/i.test(message)) {
+    return "Too many attempts. Please request a new verification code.";
+  }
+  if (/bad request|internal server error|schema|column|relation|violates|null value/i.test(message)) {
+    return fallback;
+  }
+  return message;
+}
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -32,35 +79,83 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [emailCode, setEmailCode] = useState("");
+  const [codeSent, setCodeSent] = useState(false);
+  const [devCode, setDevCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [showTerms, setShowTerms] = useState(false);
+  const passwordMismatch = Boolean(confirmPassword && password !== confirmPassword);
 
-  const handleCreate = async () => {
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    setCodeSent(false);
+    setDevCode("");
+    setEmailCode("");
+    setError("");
+  };
+
+  const validateBaseFields = () => {
     setError("");
     if (!firstName || !lastName || !email || !password || !dateOfBirth) {
       setError("Complete your name, date of birth, email and password.");
-      return;
+      return false;
+    }
+    if (!toIsoDate(dateOfBirth)) {
+      setError("Enter date of birth as DD/MM/YYYY.");
+      return false;
     }
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
-      return;
+      return false;
     }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSendCode = async () => {
+    if (!validateBaseFields()) return;
+    setBusy(true);
+    try {
+      const result = await API.requestEmailVerificationCode(email.trim());
+      setCodeSent(true);
+      setDevCode(result.devCode ?? "");
+      setError("");
+    } catch (e: any) {
+      setError(friendlySignupError(e, "We could not send your code. Please try again."));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!validateBaseFields()) {
+      return;
+    }
+    if (!emailCode.trim()) {
+      setError("Enter the verification code sent to your email.");
       return;
     }
     setBusy(true);
     try {
-      await signUpEmail(email, password, {
+      const isoDob = toIsoDate(dateOfBirth);
+      if (!isoDob) {
+        setError("Enter date of birth as DD/MM/YYYY.");
+        return;
+      }
+      await signUpEmail(email.trim(), password, {
         first_name: firstName,
         middle_name: middleName || undefined,
         last_name: lastName,
-        date_of_birth: dateOfBirth,
+        date_of_birth: isoDob,
+        email_code: emailCode.trim(),
       });
       router.replace("/(auth)/onboarding");
     } catch (e: any) {
-      setError(e?.message || "Could not create your account.");
+      setError(friendlySignupError(e, "We could not create your account. Please try again."));
     } finally {
       setBusy(false);
     }
@@ -90,7 +185,6 @@ export default function SignUpScreen() {
             label="First name"
             value={firstName}
             onChangeText={setFirstName}
-            placeholder="Chidi"
             autoFocus
           />
         </View>
@@ -99,7 +193,6 @@ export default function SignUpScreen() {
             label="Last name"
             value={lastName}
             onChangeText={setLastName}
-            placeholder="Okafor"
           />
         </View>
       </View>
@@ -108,7 +201,6 @@ export default function SignUpScreen() {
         label="Middle name (optional)"
         value={middleName}
         onChangeText={setMiddleName}
-        placeholder="Chinedu"
       />
 
       <View style={styles.fieldGroup}>
@@ -135,7 +227,7 @@ export default function SignUpScreen() {
       <AuthField
         label="Email address"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={handleEmailChange}
         keyboardType="email-address"
         placeholder="you@example.com"
       />
@@ -154,16 +246,33 @@ export default function SignUpScreen() {
         secure
         placeholder="••••••••"
       />
+      {passwordMismatch ? (
+        <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>
+          Passwords do not match.
+        </Text>
+      ) : null}
+
+      {codeSent ? (
+        <AuthField
+          label="Email verification code"
+          value={emailCode}
+          onChangeText={setEmailCode}
+          keyboardType="number-pad"
+          placeholder="123456"
+          hint={devCode ? `Development code: ${devCode} or 000000` : "Enter the 6-digit code sent to your email"}
+        />
+      ) : null}
 
       <SifterButton
-        label="Create Account →"
-        onPress={handleCreate}
+        label={codeSent ? "Verify & create account →" : "Send email code →"}
+        onPress={codeSent ? handleCreate : handleSendCode}
         loading={busy}
         variant="track"
         color={Brand.primary}
         size="lg"
         fullWidth
       />
+      <ErrorNote message={error} />
 
       <View style={styles.row}>
         <Text style={[styles.muted, { color: colors.textRole.muted }, CompassFonts.body]}>
@@ -254,4 +363,5 @@ const styles = StyleSheet.create({
   },
   muted: { fontSize: FontSize.sm },
   link: { fontSize: FontSize.sm },
+  inlineError: { fontSize: FontSize.sm, marginTop: -Spacing.xs },
 });
