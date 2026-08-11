@@ -31,7 +31,7 @@ import { useResume } from '@/hooks/useResume';
 import { useResponsive } from '@/hooks/useResponsive';
 import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
 import { findTrackById, getTrackHref, resolveTrackContext } from '@/lib/trackContext';
-import { buildResumeHref, getResumeSummary, normaliseResumePosition } from '@/lib/resumeNavigation';
+import { getResumeSummary, normaliseResumePosition } from '@/lib/resumeNavigation';
 import {
   GRID_GAP,
   WebCard,
@@ -367,7 +367,6 @@ export default function HomeScreen() {
     trackId: resumePosition?.trackId,
     trackName: resumePosition?.trackName,
   }), [resumePosition?.trackId, resumePosition?.trackName, user]);
-  const resumeHref = useMemo(() => buildResumeHref(resumePosition), [resumePosition]);
   const resumeSummary = useMemo(() => getResumeSummary(resumePosition), [resumePosition]);
 
   const [xp, setXp] = useState<XPSnapshot | null>(null);
@@ -413,7 +412,7 @@ export default function HomeScreen() {
     !trackContext.trackId;
   const heroVisual = isCryptoOrIsland ? 'globe' : 'isometric';
   const trackAwarePins = useMemo(() => buildTrackAwarePins(trackContext), [trackContext]);
-  const continueHref = resumeHref || trackContext.continueHref || '/(tabs)/fields';
+  const continueHref = '/(tabs)/explore';
   const continueLabel = trackContext.mode === 'track'
     ? (resumeSummary ? 'Continue where you left off' : trackContext.continueLabel)
     : 'Explore tracks';

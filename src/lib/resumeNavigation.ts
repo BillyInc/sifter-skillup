@@ -32,8 +32,8 @@ type UserResumeLike = {
   resumeState?: { deep_link?: string | null; deepLink?: string | null } | null;
 };
 
-/** Where a guest lands: onboarding, not a lesson. */
-export const GUEST_POST_AUTH_HREF = '/(auth)/onboarding';
+/** Where a guest lands: Explore preview, never onboarding. */
+export const GUEST_POST_AUTH_HREF = '/(tabs)/explore';
 /** Where an admin/educator lands. */
 export const ADMIN_POST_AUTH_HREF = '/(admin)/dashboard';
 /** The default landing surface for everyone else. */
@@ -139,11 +139,11 @@ export function resolveUserResumeHref(user: UserResumeLike | null | undefined): 
 /**
  * Where a user lands immediately after authenticating.
  *
- * Order (§12.3):
- *   1. guests   → onboarding
- *   2. admins   → the admin dashboard
- *   3. an explicit saved resume deep link, when present
- *   4. home
+ * Order:
+ *   1. guests go to Explore preview
+ *   2. admins go to the admin dashboard
+ *   3. an explicit saved deep link, when it is not a locked lesson/track path
+ *   4. students go to Home
  *
  * There is deliberately NO skill-track fallback: sending a returning student
  * into a skill track ('starknet-islands') was a leftover from the other
@@ -167,7 +167,7 @@ export function resolvePostAuthHref(
 
   const resumeState = user.resume_state ?? user.resumeState ?? null;
   const deepLink = (resumeState?.deepLink ?? resumeState?.deep_link ?? '').trim();
-  if (deepLink) {
+  if (deepLink && !deepLink.startsWith('/map') && !deepLink.includes('/lesson') && !deepLink.includes('/track')) {
     return deepLink;
   }
 
@@ -189,5 +189,5 @@ export function getResumeSummary(position: ResumePosition | null | undefined): s
     return null;
   }
 
-  return `Last stop: ${parts.join(' · ')}`;
+  return `Last stop: ${parts.join(' / ')}`;
 }

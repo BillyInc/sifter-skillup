@@ -78,7 +78,7 @@ export function EntrepreneurshipPathwayScreen() {
     let active = true;
     (async () => {
       setLoading(true);
-      const startingPoint = await getStartingPoint();
+      const startingPoint = await getStartingPoint(user?.id);
       const state = await entrepreneurshipData.getOpportunityMap({
         entryMode,
         domainId: startingPoint?.priorFieldDomainKey,
@@ -93,7 +93,7 @@ export function EntrepreneurshipPathwayScreen() {
     return () => {
       active = false;
     };
-  }, [entryMode]);
+  }, [entryMode, user?.id]);
 
   const roles = React.useMemo(() => {
     if (!map) return [];

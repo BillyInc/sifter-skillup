@@ -29,6 +29,7 @@ import {
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import type { DataState } from "../../types/career";
 import type {
   EducatorProfile,
@@ -69,6 +70,7 @@ const TIERS = [
 
 export function VerificationScreen() {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [, setOrg] = useState<DataState<Organization>>({
@@ -80,7 +82,7 @@ export function VerificationScreen() {
 
   useEffect(() => {
     let active = true;
-    Promise.all([getEducatorProfile(), adminData.getMyOrganization()]).then(
+    Promise.all([getEducatorProfile(user?.id), adminData.getMyOrganization()]).then(
       ([p, o]) => {
         if (!active) return;
         setProfile(p);
@@ -91,7 +93,7 @@ export function VerificationScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   const status: VerificationStatus = profile?.verificationStatus ?? "unverified";
   const meta = STATUS_META[status];

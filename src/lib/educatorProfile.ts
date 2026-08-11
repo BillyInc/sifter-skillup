@@ -12,9 +12,13 @@ import type { EducatorProfile } from "../types/institution";
 
 const KEY = "@levelup_educator_profile_v1";
 
-export async function getEducatorProfile(): Promise<EducatorProfile | null> {
+function keyFor(userId?: string | null): string {
+  return userId ? `${KEY}:${userId}` : KEY;
+}
+
+export async function getEducatorProfile(userId?: string | null): Promise<EducatorProfile | null> {
   try {
-    const raw = await AsyncStorage.getItem(KEY);
+    const raw = await AsyncStorage.getItem(keyFor(userId));
     return raw ? (JSON.parse(raw) as EducatorProfile) : null;
   } catch {
     return null;
@@ -23,17 +27,21 @@ export async function getEducatorProfile(): Promise<EducatorProfile | null> {
 
 export async function saveEducatorProfile(
   profile: EducatorProfile,
+  userId?: string | null,
 ): Promise<void> {
   try {
-    await AsyncStorage.setItem(KEY, JSON.stringify(profile));
+    await AsyncStorage.setItem(keyFor(userId), JSON.stringify(profile));
   } catch {
     // Non-fatal: onboarding still completes even if local persistence fails.
   }
 }
 
-export async function clearEducatorProfile(): Promise<void> {
+export async function clearEducatorProfile(userId?: string | null): Promise<void> {
   try {
-    await AsyncStorage.removeItem(KEY);
+    await AsyncStorage.removeItem(keyFor(userId));
+    if (userId) {
+      await AsyncStorage.removeItem(KEY);
+    }
   } catch {
     // ignore
   }

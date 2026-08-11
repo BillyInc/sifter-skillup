@@ -4,6 +4,7 @@ import ExploreScreen from "@/screens/ExploreScreen";
 import { AdminExploreIntro } from "@/screens/admin/AdminExploreIntro";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { adminAudienceForProfile, type AdminAudience } from "@/lib/adminAudience";
+import { useAuth } from "@/hooks/useAuth";
 import type { EducatorProfile } from "@/types/institution";
 
 /**
@@ -23,11 +24,12 @@ function readParam(value: string | string[] | undefined): string {
 
 export default function AdminExploreRoute() {
   const params = useLocalSearchParams<{ q?: string | string[] }>();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then(
+    getEducatorProfile(user?.id).then(
       (p) => {
         if (active) setProfile(p);
       },
@@ -40,7 +42,7 @@ export default function AdminExploreRoute() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   const audience: AdminAudience = adminAudienceForProfile(profile);
 

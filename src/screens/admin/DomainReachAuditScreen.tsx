@@ -34,6 +34,7 @@ import {
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import { comingSoon, type DataState } from "../../types/career";
 import type {
   DomainReachAudit,
@@ -84,6 +85,7 @@ function RankCell({ rank }: { rank: number }) {
 
 export function DomainReachAuditScreen() {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [institutionName, setInstitutionName] = useState<string | null>(null);
   const [filter, setFilter] = useState<InstitutionControlFilter>("all");
   const [audit, setAudit] = useState<DataState<DomainReachAudit>>({
@@ -96,7 +98,7 @@ export function DomainReachAuditScreen() {
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile()
+    getEducatorProfile(user?.id)
       .then((p) => {
         if (active) setInstitutionName(p?.organizationName ?? null);
       })
@@ -120,7 +122,7 @@ export function DomainReachAuditScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   useEffect(() => {
     let active = true;

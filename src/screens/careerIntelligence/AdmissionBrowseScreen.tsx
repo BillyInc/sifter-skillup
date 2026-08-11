@@ -21,6 +21,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { careerData } from "@/lib/careerData";
 import { API } from "@/lib/api";
 import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
+import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { DegreeSkills } from "@/components/careerIntelligence";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -70,7 +71,7 @@ export default function AdmissionBrowseScreen() {
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
-  const { refreshUser } = useAuth();
+  const { refreshUser, user } = useAuth();
   const { colors } = useTheme();
   const rawMode = readParam(params.mode);
   const initialMode: Mode =
@@ -211,7 +212,7 @@ export default function AdmissionBrowseScreen() {
     const domainState = await careerData.getJambProgrammeDomains(id);
     setDomains(domainState.status === "real" && domainState.data ? domainState.data : null);
     try {
-      const existing = await getStartingPoint();
+      const existing = await getStartingPoint(user?.id);
       const updated = {
         userType: existing?.userType ?? "jamb",
         ...(existing ?? {}),
@@ -223,9 +224,10 @@ export default function AdmissionBrowseScreen() {
         programmeName: candidate.jambName,
         completedAt: new Date().toISOString(),
       };
-      await saveStartingPoint(updated);
+      await saveStartingPoint(updated, user?.id);
       await API.completeOnboarding({});
       await refreshUser();
+      await clearOnboardingDraft(user?.id);
     } catch {
       // Do not block browsing if profile finalization is temporarily unavailable.
     }
