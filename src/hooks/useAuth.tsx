@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Sifter LevelUp - useAuth
  *
  * Full UserProfile with all upgrade fields.
@@ -88,6 +88,7 @@ interface AuthContextType {
     middle_name?: string;
     last_name?: string;
     date_of_birth?: string;
+    email_code?: string;
   }) => Promise<void>;
   authStarknet: (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<{
     isNewUser: boolean;
@@ -205,7 +206,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    *
    * Calls POST /api/auth/guest so the session is REAL: a users row, a JWT, and
    * an active_sessions row for this device. This used to fabricate a profile
-   * client-side ("local-first guest: no backend required") and stop there — no
+   * client-side ("local-first guest: no backend required") and stop there: no
    * token was ever issued, so every request went out unauthenticated. Guest is
    * the web app's main entry point, so in practice that meant /api/users/me
    * 401'd on every boot, anything behind auth was dead, and only the handful of
@@ -246,6 +247,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     middle_name?: string;
     last_name?: string;
     date_of_birth?: string;
+    email_code?: string;
   }) {
     const data = await API.authSignup(email, password, profile);
     await _handleAuthResponse(data);
@@ -469,3 +471,4 @@ function _normalise(raw: any): UserProfile {
     challenge_room_ids: raw.challenge_room_ids ?? [],
   };
 }
+

@@ -26,8 +26,6 @@ import {
 } from "../src/theme";
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 import { IntroCarousel } from "../src/components/brand/IntroCarousel";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { INTRO_SEEN_KEY } from "../src/theme";
 import { hasExplicitLogout } from "../src/lib/logoutState";
 
 export default function LandingPage() {
@@ -42,8 +40,8 @@ export default function LandingPage() {
   const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
 
   useEffect(() => {
-    Promise.all([AsyncStorage.getItem(INTRO_SEEN_KEY), hasExplicitLogout()])
-      .then(([value, loggedOut]) => setIntroState(loggedOut ? "logged_out" : value ? "done" : "show"))
+    hasExplicitLogout()
+      .then((loggedOut) => setIntroState(loggedOut ? "logged_out" : "show"))
       .catch(() => setIntroState("show"));
   }, []);
 

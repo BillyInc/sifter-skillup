@@ -122,7 +122,10 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     const json = await res.json();
 
     if (!res.ok || !json.success) {
-      throw new Error(json.error ?? res.statusText);
+      const detail = typeof json.detail === "string" ? json.detail : undefined;
+      const error = typeof json.error === "string" ? json.error : undefined;
+      const message = typeof json.message === "string" ? json.message : undefined;
+      throw new Error(error ?? detail ?? message ?? res.statusText);
     }
 
     logger.info('API request completed', {
@@ -175,11 +178,17 @@ export const API = {
     middle_name?: string;
     last_name?: string;
     date_of_birth?: string;
+    email_code?: string;
   }) =>
     // type assertion: call sites extend UserProfile with store-local fields
     request<AuthResponse>('/api/auth/signup', {
       method: 'POST', body: JSON.stringify({ email, password, ...profile }),
     }) as Promise<{ token: string; user: CompatAny }>,
+
+  requestEmailVerificationCode: (email: string) =>
+    request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/email-code/request', {
+      method: 'POST', body: JSON.stringify({ email }),
+    }),
 
   authLogin: (email: string, password: string) =>
     // type assertion: call sites extend UserProfile with store-local fields
