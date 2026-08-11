@@ -3,7 +3,8 @@
 # Extended: offline sync, device sessions,
 #           Starknet, feed, badges, challenges
 # ============================================
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import AliasGenerator, BaseModel, ConfigDict, Field, field_validator
+from pydantic.alias_generators import to_snake
 from typing import Optional, List, Dict, Any, Literal
 from enum import Enum
 
@@ -509,15 +510,40 @@ class SubscriptionOut(_CareerBase):
 
 # ── Admission Intelligence (Phase 8) ────────────────────────
 
-class JambFloorOut(BaseModel):
+class DbRowOut(BaseModel):
+    """Response model built directly from a database row.
+
+    These are constructed as `Model(**row)` straight off a Supabase result, so
+    the INPUT keys are snake_case (`compiled_at`, `is_active`) while the fields
+    — and the JSON the app expects — are camelCase. Without a validation alias
+    every such construction raised ValidationError, and the routes caught it and
+    returned `coming_soon("... temporarily unavailable.")`. Four admission
+    endpoints could therefore never succeed, with real rows sitting behind them:
+    1 snapshot, 2 JAMB floors, 20 competitiveness rows, 17 formulas.
+
+    Validation accepts snake_case (alias) or camelCase (populate_by_name);
+    serialisation stays camelCase, so the wire format is unchanged.
+    """
+
+    model_config = ConfigDict(
+        alias_generator=AliasGenerator(validation_alias=to_snake),
+        populate_by_name=True,
+    )
+
+
+class JambFloorOut(DbRowOut):
     year: int
     floorScore: int
     contextNote: Optional[str] = None
     sourceUrl: Optional[str] = None
-    dataDate: str
+    # OPTIONAL: national_jamb_floor has no data_date column. It was required,
+    # so JambFloorOut(**row) raised on every real row and /floor answered
+    # "temporarily unavailable" forever. The response envelope carries the
+    # date via _real(data_date=...); the item does not need to repeat it.
+    dataDate: Optional[str] = None
 
 
-class ProgrammeSchoolCutoffOut(BaseModel):
+class ProgrammeSchoolCutoffOut(DbRowOut):
     id: str
     schoolId: str
     schoolName: str
@@ -532,7 +558,7 @@ class ProgrammeSchoolCutoffOut(BaseModel):
     dataDate: str
 
 
-class SchoolAggregateFormulaOut(BaseModel):
+class SchoolAggregateFormulaOut(DbRowOut):
     id: str
     schoolId: str
     schoolName: str
@@ -541,10 +567,11 @@ class SchoolAggregateFormulaOut(BaseModel):
     olevelWeight: float
     description: Optional[str] = None
     sourceUrl: Optional[str] = None
-    dataDate: str
+    # OPTIONAL: school_aggregate_formula has no created_at/data_date column.
+    dataDate: Optional[str] = None
 
 
-class CourseCompetitivenessOut(BaseModel):
+class CourseCompetitivenessOut(DbRowOut):
     id: str
     broadCourse: str
     year: int
@@ -553,10 +580,11 @@ class CourseCompetitivenessOut(BaseModel):
     ratio: Optional[float] = None
     source: Optional[str] = None
     note: Optional[str] = None
-    dataDate: str
+    # OPTIONAL: course_competitiveness has no data_date column — see JambFloorOut.
+    dataDate: Optional[str] = None
 
 
-class AdmissionSnapshotVersionOut(BaseModel):
+class AdmissionSnapshotVersionOut(DbRowOut):
     id: str
     label: str
     year: int

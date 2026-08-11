@@ -175,16 +175,21 @@ async def get_school_formula(school_id: str, year: Optional[int] = None):
         if not res.data:
             return ResponseModel(data=_coming_soon(f"No aggregate formula published for this university in {target_year}."))
         r = res.data[0]
+        # `created_at` is NOT a column on school_aggregate_formula — reading it
+        # raised KeyError on every row, so this endpoint always answered
+        # "Formula temporarily unavailable" despite 17 rows being present.
+        # `schools` is also None (not {}) when the embed misses, so .get(...)
+        # with a {} default still returned None and then threw on .get("name").
+        school = r.get("schools") or {}
         return ResponseModel(data=_real(SchoolAggregateFormulaOut(
             id=r["id"],
             schoolId=r["school_id"],
-            schoolName=r.get("schools", {}).get("name") or "Unknown",
+            schoolName=school.get("name") or "Unknown",
             year=r["year"],
             jambWeight=float(r["jamb_weight"]),
             olevelWeight=float(r["olevel_weight"]),
             description=r.get("description"),
             sourceUrl=r.get("source_url"),
-            dataDate=r["created_at"],
         ).model_dump()))
     except Exception as exc:
         log.error("admission get_formula failed", error=str(exc))
