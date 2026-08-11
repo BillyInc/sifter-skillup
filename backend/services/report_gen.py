@@ -59,6 +59,7 @@ def build_report_html(ctx: ReportContext) -> str:
         if ctx.admission_note else ""
     )
     school = f"<div class='school'>{e(ctx.school_name)}</div>" if ctx.school_name else ""
+    watermark = "Sifter LevelUp" + (f" - {ctx.school_name}" if ctx.school_name else "")
     meta = " · ".join(part for part in [ctx.student_class, ctx.stream] if part)
     cls = f" · {e(meta)}" if meta else ""
 
@@ -68,6 +69,10 @@ def build_report_html(ctx: ReportContext) -> str:
   @media print {{ @page {{ margin: 18mm; }} }}
   body {{ font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a; max-width: 720px;
          margin: 0 auto; padding: 32px; line-height: 1.55; }}
+  .watermark {{ position: fixed; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-28deg);
+         font-family: Arial, sans-serif; font-size: 42px; font-weight: 800; letter-spacing: 2px;
+         color: rgba(31, 94, 255, 0.08); white-space: nowrap; z-index: 0; pointer-events: none; }}
+  .content {{ position: relative; z-index: 1; }}
   .head {{ border-bottom: 2px solid #1a1a1a; padding-bottom: 14px; margin-bottom: 22px; }}
   .school {{ font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #666; }}
   h1 {{ font-size: 26px; margin: 6px 0 2px; }}
@@ -83,6 +88,8 @@ def build_report_html(ctx: ReportContext) -> str:
            font-size: 11px; color: #888; }}
 </style></head>
 <body>
+  <div class="watermark">{e(watermark)}</div>
+  <div class="content">
   <div class="head">
     {school}
     <h1>{e(ctx.student_name)}</h1>
@@ -106,6 +113,7 @@ def build_report_html(ctx: ReportContext) -> str:
     Generated {e(ctx.generated_on)} by Sifter LevelUp. This report maps your chosen
     direction to the skills and roles it unlocks. Labour-market demand figures are
     added as they are published.
+  </div>
   </div>
 </body></html>"""
 

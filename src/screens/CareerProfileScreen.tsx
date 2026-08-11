@@ -101,7 +101,7 @@ export default function CareerProfileScreen() {
       let active = true;
       (async () => {
         const [sp, savedState, notesState, subsState] = await Promise.all([
-          getStartingPoint(),
+          getStartingPoint(user?.id),
           careerData.getSavedItems(),
           careerData.getAllNotes(),
           careerData.getSubscriptions(),
@@ -115,7 +115,7 @@ export default function CareerProfileScreen() {
       return () => {
         active = false;
       };
-    }, []),
+    }, [user?.id]),
   );
 
   const displayName =
@@ -135,7 +135,7 @@ export default function CareerProfileScreen() {
         ...prev,
         notifications: { ...(prev.notifications ?? {}), [key]: val },
       };
-      void saveStartingPoint(next);
+      void saveStartingPoint(next, user?.id);
       return next;
     });
   };

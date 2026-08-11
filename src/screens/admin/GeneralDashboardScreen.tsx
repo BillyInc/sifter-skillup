@@ -45,6 +45,7 @@ import { PdfExportButton } from "@/components/careerIntelligence/PdfExportButton
 import { adminData } from "@/lib/adminData";
 import { adminNav, type Nav } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import { comingSoon, type DataState } from "../../types/career";
 import type {
   InstitutionSummary,
@@ -88,6 +89,7 @@ export function GeneralDashboardScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const wide = width >= 900;
+  const { user } = useAuth();
 
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
 
@@ -104,7 +106,7 @@ export function GeneralDashboardScreen() {
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then(
+    getEducatorProfile(user?.id).then(
       (p) => {
         if (active) setProfile(p);
       },
@@ -117,7 +119,7 @@ export function GeneralDashboardScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   // All aggregate (no PII). Each read settles INDEPENDENTLY so one unpopulated
   // or failing area never blanks the rest of the page.

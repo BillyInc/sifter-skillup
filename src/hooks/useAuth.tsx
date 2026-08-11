@@ -12,6 +12,8 @@ import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
 import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
+import { clearExplicitLogout, markExplicitLogout } from '../lib/logoutState';
+import { clearLocalUserState } from '../lib/localUserState';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
   StarknetWalletBridgeProvider,
@@ -96,7 +98,8 @@ interface AuthContextType {
   starknetReady: boolean;
   starknetWalletAddress: string | null;
   starknetWalletStatus: string;
-  signOut: () => Promise<void>;
+  signOut: (options?: { preserveLocalUserState?: boolean }) => Promise<void>;
+  deleteAccount: () => Promise<void>;
   refreshUser: () => Promise<void>;
   updateActiveField: (fieldId: string, color: string, trackId?: string, trackName?: string) => Promise<void>;
   quantTraderUnlocked: boolean;
@@ -159,8 +162,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       API.checkStreak().catch(() => {});
       const token = await API.getToken();
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
-    } catch {
-      // No saved session.
+    } catch (e) {
+      const message = (e as Error)?.message ?? "";
+      if (message === "device_mismatch" || message === "device_required") {
+        await API.clearToken();
+        await markExplicitLogout();
+      }
+      // No saved session, expired token, or device session was transferred.
     } finally {
       setLoading(false);
     }
@@ -168,6 +176,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function _handleAuthResponse(data: { token: string; user: any }) {
     await API.saveToken(data.token);
+    await clearLocalUserState();
+    await clearExplicitLogout();
     const profile = _normalise(data.user);
     setPendingPostAuthRedirect(resolvePostAuthHref(profile));
     setUser(profile);
@@ -286,9 +296,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function signOut() {
+  async function signOut(options: { preserveLocalUserState?: boolean } = {}) {
     await API.clearToken();
+    await markExplicitLogout();
+    if (!options.preserveLocalUserState) {
+      await clearLocalUserState(user?.id);
+    }
     setUser(null);
+  }
+
+  async function deleteAccount() {
+    try {
+      await API.deleteMe();
+    } finally {
+      await API.clearToken();
+      await markExplicitLogout();
+      await clearLocalUserState(user?.id);
+      setUser(null);
+    }
   }
 
   async function refreshUser() {
@@ -344,6 +369,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signUpEmail,
         authStarknet,
         signOut,
+        deleteAccount,
         refreshUser,
         updateActiveField,
         starknetLoading,
