@@ -1,4 +1,4 @@
-﻿# ============================================
+# ============================================
 # Sifter LevelUp - FastAPI Backend v2
 # All routers registered, all middleware wired
 # ============================================
@@ -18,9 +18,9 @@ from auth import Auth
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # App setup
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     log.info(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION, lifespan=lifespan)
 
-# â"€â"€ Middleware (order matters: CORS first, then device check) â"€â"€
+# ── Middleware (order matters: CORS first, then device check) ──
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
@@ -39,7 +39,7 @@ app.add_middleware(
 )
 app.add_middleware(DeviceSessionMiddleware)
 
-# â"€â"€ Request logging â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ── Request logging ────────────────────────────────────────────
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):
     start_time = datetime.now()
@@ -57,9 +57,9 @@ async def logging_middleware(request: Request, call_next):
         raise
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # Health
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 @app.get("/health")
 async def health():
     return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
@@ -130,9 +130,9 @@ async def request_email_code(body: dict):
     return ResponseModel(data=data)
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # AUTH ROUTES (unchanged from original)
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 
 @app.post("/api/auth/telegram", response_model=ResponseModel)
 async def auth_telegram(body: dict, request: Request):
@@ -289,7 +289,7 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
     return ResponseModel(data=result.data[0])
 
 
-# â"€â"€ Shared helper â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ── Shared helper ──────────────────────────────────────────────
 
 async def _post_auth_device_register(user_id: str, body: dict, request: Request):
     """Register/refresh device session after any successful auth."""
@@ -326,16 +326,16 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
     return result.data[0]
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # USER ROUTES
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 
 @app.get("/api/users/me", response_model=ResponseModel)
 async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     rank_result = db.get_client().rpc("get_user_rank", {"user_id": current_user["id"]}).execute()
     current_user["rank"] = rank_result.data if rank_result.data else None
     current_user.pop("password_hash", None)
-    # Backward-compatible: legacy rows predate account_type â€" default to student.
+    # Backward-compatible: legacy rows predate account_type — default to student.
     current_user.setdefault("account_type", "student")
     return ResponseModel(data=current_user)
 
@@ -355,7 +355,7 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
         if k not in _PRIVILEGED_USER_COLUMNS
     }
     if not payload:
-        # Nothing writable was supplied â€" return the current row unchanged.
+        # Nothing writable was supplied — return the current row unchanged.
         current_user.pop("password_hash", None)
         return ResponseModel(data=current_user)
     result = db.get_client().table("users").update(
@@ -386,9 +386,9 @@ async def check_streak(current_user: dict = Depends(Auth.get_current_user)):
     return ResponseModel(data={"streak": new_streak, "bonus_earned": bonus})
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # GAME / PROGRESS (unchanged from original)
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 
 @app.post("/api/game/complete-level", response_model=ResponseModel)
 async def complete_level(level_data: LevelComplete, background_tasks: BackgroundTasks, current_user: dict = Depends(Auth.get_current_user)):
@@ -450,13 +450,13 @@ async def quant_gate_status(current_user: dict = Depends(Auth.get_current_user))
     return ResponseModel(data={"quant_trader_unlocked": True, "quant_researcher_unlocked": True, "quant_developer_unlocked": dev_unlocked, "python_chapters_completed": len(completed_chapters), "python_chapters_required_for_dev": settings.QUANT_DEV_PYTHON_GATE_CHAPTERS, "chapters_done": completed_chapters})
 
 
-# â"€â"€ Leaderboard / Guilds / Withdrawals / Feedback / Analytics (unchanged) â"€â"€â"€â"€â"€â"€
-# (copy these blocks from original main.py unchanged â€" omitted here for brevity)
+# ── Leaderboard / Guilds / Withdrawals / Feedback / Analytics (unchanged) ──────
+# (copy these blocks from original main.py unchanged — omitted here for brevity)
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # HELPERS
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 def _get_python_chapter(level_id: int) -> Optional[int]:
     if 2001 <= level_id <= 2080: return ((level_id - 2001) // 10) + 1
     return None
@@ -483,11 +483,11 @@ async def _check_achievements(user_id: str, completed: list, streak: int):
         db.get_client().table("users").update({"achievements": list(current | set(new_ach))}).eq("id", user_id).execute()
 
 
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 # INCLUDE ALL ROUTERS
-# â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ─────────────────────────────────────────────────────────────
 
-# â"€â"€ Original routers â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ── Original routers ──────────────────────────────────────────
 from routes.portfolio_routes import portfolio_router
 app.include_router(portfolio_router)
 
@@ -510,7 +510,7 @@ app.include_router(community_v2_router)
 app.include_router(ai_router)
 app.include_router(scenarios_router)
 
-# â"€â"€ New routers â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+# ── New routers ───────────────────────────────────────────────
 from services.offline_sync import router as offline_router
 app.include_router(offline_router)
 

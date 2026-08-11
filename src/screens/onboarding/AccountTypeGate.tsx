@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AccountTypeGate - the first fork in onboarding.
  *
  * 6 large selectable persona cards (BRIEF: "Account-type gate - 6 large
