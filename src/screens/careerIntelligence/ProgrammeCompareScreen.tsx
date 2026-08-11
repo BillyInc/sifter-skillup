@@ -27,6 +27,7 @@ import {
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
+import { displayAward } from "@/lib/programmeAward";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
   type AdmissionInsight,
@@ -282,7 +283,14 @@ function ProgrammeCompareCard({
                   {programme.displayName ?? programme.name}
                 </Text>
                 <Text style={[styles.cardMeta, { color: colors.textRole.muted }]} numberOfLines={1}>
-                  {[programme.qualification, programme.discipline, programme.institutionType]
+                  {/* displayAward, not the raw column — otherwise comparing
+                      MBBS against Computer Science shows "B.Sc" here and
+                      "MBBS/MBChB" on the programme page for the same row. */}
+                  {[
+                    displayAward(programme.name, programme.qualification),
+                    programme.discipline,
+                    programme.institutionType,
+                  ]
                     .filter(Boolean)
                     .join(" · ")}
                 </Text>
