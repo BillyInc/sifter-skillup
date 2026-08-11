@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CareerHomeScreen - the personalised returning-user Home (Mockup Part 7).
  *
  * Editorial magazine layout: greeting + persona context, hero "Your Route"

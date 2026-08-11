@@ -1,4 +1,4 @@
-﻿import { Stack, Redirect, usePathname } from 'expo-router';
+import { Stack, Redirect, usePathname } from 'expo-router';
 import { useAuth } from '../../src/hooks/useAuth';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Colors } from '../../src/theme';
