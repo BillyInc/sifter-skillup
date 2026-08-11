@@ -155,3 +155,67 @@ class TestRoutesReturnRealData:
         out = asyncio.run(ar.get_school_formula(school_id="s1")).data
         assert out["status"] == "real"
         assert out["data"]["schoolName"] == "Unknown"
+
+
+class TestCompetitivenessMatching:
+    """The caller's course name and the stored one are different vocabularies.
+
+    AdmissionInsightScreen passes the student's JAMB name — "Medicine and
+    Surgery (Human Medicine)" — while course_competitiveness stores the BROAD
+    course, "Medicine". `broad_course ilike %needle%` could never match: the
+    needle was longer than the haystack. The section then sat on "Loading
+    competitiveness..." forever, because a real-but-empty result rendered the
+    same as a pending one.
+    """
+
+    ROWS = [
+        {"id": "1", "broad_course": "Medicine", "year": 2025, "applied": 100,
+         "admitted": 10, "ratio": 0.1, "source": "JAMB", "note": None},
+        {"id": "2", "broad_course": "Law", "year": 2025, "applied": 50,
+         "admitted": 10, "ratio": 0.2, "source": "JAMB", "note": None},
+        {"id": "3", "broad_course": "Computer Science", "year": 2025,
+         "applied": 80, "admitted": 20, "ratio": 0.25, "source": "JAMB",
+         "note": None},
+    ]
+
+    def _call(self, broad_course, monkeypatch):
+        import asyncio
+        from unittest.mock import MagicMock
+        import routes.admission_routes as ar
+
+        def table(name):
+            t = MagicMock()
+            for m in ("select", "eq", "order", "limit", "ilike"):
+                getattr(t, m).return_value = t
+            t.execute.return_value = MagicMock(
+                data=self.ROWS if name == "course_competitiveness"
+                else [dict(SNAPSHOT_ROW)]
+            )
+            return t
+
+        svc = MagicMock()
+        svc.table = table
+        client = MagicMock()
+        client.schema.return_value = svc
+        monkeypatch.setattr(ar.db, "get_service_client", lambda: client)
+        out = asyncio.run(
+            ar.get_competitiveness(year=2025, broad_course=broad_course)
+        ).data
+        return [i["broadCourse"] for i in out["data"]]
+
+    def test_jamb_name_finds_its_broad_course(self, monkeypatch):
+        got = self._call("Medicine and Surgery (Human Medicine)", monkeypatch)
+        assert got == ["Medicine"]
+
+    def test_exact_broad_course_still_matches(self, monkeypatch):
+        assert self._call("Medicine", monkeypatch) == ["Medicine"]
+
+    def test_partial_broad_course_still_matches(self, monkeypatch):
+        # The original direction — needle shorter than the stored value.
+        assert self._call("Computer", monkeypatch) == ["Computer Science"]
+
+    def test_unrelated_course_matches_nothing(self, monkeypatch):
+        assert self._call("Fine Art", monkeypatch) == []
+
+    def test_no_filter_returns_everything(self, monkeypatch):
+        assert len(self._call(None, monkeypatch)) == 3
