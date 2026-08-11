@@ -25,6 +25,7 @@ import {
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import type { DataState } from "../../types/career";
 import type {
   EducatorProfile,
@@ -60,6 +61,7 @@ const ROLE_OPTIONS: { value: OrgRole; label: string; body: string }[] = [
 
 export function InstitutionProfileScreen() {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [team, setTeam] = useState<DataState<OrganizationTeam>>({
     status: "pending",
@@ -72,7 +74,7 @@ export function InstitutionProfileScreen() {
 
   useEffect(() => {
     let active = true;
-    Promise.all([getEducatorProfile(), adminData.getOrganizationTeam()]).then(
+    Promise.all([getEducatorProfile(user?.id), adminData.getOrganizationTeam()]).then(
       ([p, t]) => {
         if (!active) return;
         setProfile(p);
@@ -82,7 +84,7 @@ export function InstitutionProfileScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   const canInvite = team.status === "real" ? Boolean(team.data?.canInvite) : false;
   const orgName =

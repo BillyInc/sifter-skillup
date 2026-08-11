@@ -15,14 +15,18 @@ export type AccountType = "student" | "educator" | "institution_admin";
 
 const KEY = "@levelup_account_type_v1";
 
+function keyFor(userId?: string | null): string {
+  return userId ? `${KEY}:${userId}` : KEY;
+}
+
 /** Treat educator + institution_admin as "the admin side" for routing. */
 export function isAdminAccount(t: AccountType | undefined | null): boolean {
   return t === "educator" || t === "institution_admin";
 }
 
-export async function getLocalAccountType(): Promise<AccountType | null> {
+export async function getLocalAccountType(userId?: string | null): Promise<AccountType | null> {
   try {
-    const raw = await AsyncStorage.getItem(KEY);
+    const raw = await AsyncStorage.getItem(keyFor(userId));
     return raw === "educator" || raw === "institution_admin" || raw === "student"
       ? (raw as AccountType)
       : null;
@@ -31,17 +35,20 @@ export async function getLocalAccountType(): Promise<AccountType | null> {
   }
 }
 
-export async function setLocalAccountType(type: AccountType): Promise<void> {
+export async function setLocalAccountType(type: AccountType, userId?: string | null): Promise<void> {
   try {
-    await AsyncStorage.setItem(KEY, type);
+    await AsyncStorage.setItem(keyFor(userId), type);
   } catch {
     // Non-fatal: onboarding still completes; routing falls back to backend value.
   }
 }
 
-export async function clearLocalAccountType(): Promise<void> {
+export async function clearLocalAccountType(userId?: string | null): Promise<void> {
   try {
-    await AsyncStorage.removeItem(KEY);
+    await AsyncStorage.removeItem(keyFor(userId));
+    if (userId) {
+      await AsyncStorage.removeItem(KEY);
+    }
   } catch {
     // ignore
   }
@@ -52,7 +59,7 @@ export async function clearLocalAccountType(): Promise<void> {
  * otherwise the local override. `hydrated` is false until the local read
  * resolves so callers can hold routing decisions for a tick.
  */
-export function useEffectiveAccountType(backendType?: AccountType | string): {
+export function useEffectiveAccountType(backendType?: AccountType | string, userId?: string | null): {
   accountType: AccountType;
   hydrated: boolean;
 } {
@@ -61,7 +68,7 @@ export function useEffectiveAccountType(backendType?: AccountType | string): {
 
   useEffect(() => {
     let active = true;
-    getLocalAccountType().then((t) => {
+    getLocalAccountType(userId).then((t) => {
       if (!active) return;
       setLocal(t);
       setHydrated(true);
@@ -69,7 +76,7 @@ export function useEffectiveAccountType(backendType?: AccountType | string): {
     return () => {
       active = false;
     };
-  }, []);
+  }, [userId]);
 
   const resolved: AccountType =
     backendType === "educator" ||

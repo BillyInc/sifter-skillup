@@ -1,5 +1,8 @@
 /**
- * Sifter LevelUp - Onboarding Screen
+ * Sifter SkillUp learning setup inside Sifter LevelUp.
+ *
+ * This legacy screen belongs behind My World/SkillUp. Account onboarding uses
+ * AccountTypeGate and must not route through this screen.
  */
 
 import React, { useMemo, useState } from 'react';
@@ -199,11 +202,11 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <ScrollView contentContainerStyle={styles.scrollBody}>
           <SifterCard style={[styles.disclaimerHero, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>WELCOME</Text>
-            <Text style={styles.heroEmoji}>⚡</Text>
-            <Text style={[styles.heroTitle, { color: colors.text }]}>Build real skills, not just streaks</Text>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SIFTER SKILLUP</Text>
+            <Text style={styles.heroEmoji}>SkillUp</Text>
+            <Text style={[styles.heroTitle, { color: colors.text }]}>Build real skills inside My World</Text>
             <Text style={[styles.heroSub, { color: colors.textSoft }]}>
-              Sifter gives you a structured path, but strong outcomes still come from practice outside the app too.
+              SkillUp is the gamified learning layer inside Sifter LevelUp. It supports practice, projects, and evidence of growth after career onboarding is complete.
             </Text>
           </SifterCard>
 
@@ -256,7 +259,7 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
             <Text style={styles.heroEmoji}>🧭</Text>
             <Text style={[styles.heroTitle, { color: colors.text }]}>Choose how you want to start</Text>
             <Text style={[styles.heroSub, { color: colors.textSoft }]}>
-              Go straight to browsing, start with beginner crypto, or let the platform suggest a match.
+              Go straight to SkillUp browsing, start with beginner crypto, or let the platform suggest a learning match.
             </Text>
           </SifterCard>
 

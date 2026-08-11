@@ -8,7 +8,7 @@
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -18,6 +18,8 @@ import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard
 import OnboardingFlow from "@/screens/OnboardingFlow";
 import EducatorOnboarding from "@/screens/admin/EducatorOnboarding";
 import type { UserType } from "@/types/onboarding";
+import { useAuth } from "@/hooks/useAuth";
+import { getOnboardingDraft, patchOnboardingDraft } from "@/lib/onboardingDraft";
 
 type Choice =
   | "senior_secondary"
@@ -82,7 +84,28 @@ export default function AccountTypeGate() {
   const { colors } = useTheme();
   const router = useRouter();
   const resp = useResponsive();
+  const { user } = useAuth();
   const [choice, setChoice] = useState<Choice | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    getOnboardingDraft(user?.id).then((draft) => {
+      if (!active || !draft?.choice) return;
+      setChoice(draft.choice as Choice);
+    });
+    return () => {
+      active = false;
+    };
+  }, [user?.id]);
+
+  const choose = (next: Choice) => {
+    setChoice(next);
+    patchOnboardingDraft(user?.id, {
+      mode: next === "educator" ? "educator" : "student",
+      choice: next,
+      step: 1,
+    }).catch(() => {});
+  };
 
   if (choice === "educator") return <EducatorOnboarding />;
   if (choice) return <OnboardingFlow initialPersona={choice as UserType} />;
@@ -116,7 +139,7 @@ export default function AccountTypeGate() {
             <TouchableOpacity
               key={p.type}
               activeOpacity={0.85}
-              onPress={() => setChoice(p.type)}
+              onPress={() => choose(p.type)}
               style={[
                 styles.card,
                 { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },

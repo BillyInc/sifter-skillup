@@ -34,6 +34,7 @@ import {
 } from "@/theme";
 import { adminNav, getAdminNavGroups } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { useAuth } from "@/hooks/useAuth";
 import { ADMIN_EXPLORE_SEGMENT } from "@/lib/exploreNav";
 import {
   adminAudienceForProfile,
@@ -101,6 +102,7 @@ export function AdminShell({
   const { width } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
@@ -121,13 +123,13 @@ export function AdminShell({
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((p) => {
+    getEducatorProfile(user?.id).then((p) => {
       if (active) setProfile(p);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   // Match against EVERY path segment, not just the last one. Explore is a
   // nested stack now (/explore/domain/D001), so the last segment is often an

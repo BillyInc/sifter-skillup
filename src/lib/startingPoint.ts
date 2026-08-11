@@ -12,18 +12,22 @@ import { careerData } from "./careerData";
 
 const KEY = "@levelup_starting_point_v1";
 
-export async function getStartingPoint(): Promise<StartingPointProfile | null> {
+function keyFor(userId?: string | null): string {
+  return userId ? `${KEY}:${userId}` : KEY;
+}
+
+export async function getStartingPoint(userId?: string | null): Promise<StartingPointProfile | null> {
   try {
     const server = await careerData.getStartingPoint();
     if (server.status === "real" && server.data) {
-      await AsyncStorage.setItem(KEY, JSON.stringify(server.data));
+      await AsyncStorage.setItem(keyFor(userId), JSON.stringify(server.data));
       return server.data;
     }
   } catch {
     // Fall through to local cache.
   }
   try {
-    const raw = await AsyncStorage.getItem(KEY);
+    const raw = await AsyncStorage.getItem(keyFor(userId));
     return raw ? (JSON.parse(raw) as StartingPointProfile) : null;
   } catch {
     return null;
@@ -32,6 +36,7 @@ export async function getStartingPoint(): Promise<StartingPointProfile | null> {
 
 export async function saveStartingPoint(
   profile: StartingPointProfile,
+  userId?: string | null,
 ): Promise<void> {
   try {
     await careerData.saveStartingPoint(profile);
@@ -39,15 +44,18 @@ export async function saveStartingPoint(
     // Local persistence below is the offline fallback.
   }
   try {
-    await AsyncStorage.setItem(KEY, JSON.stringify(profile));
+    await AsyncStorage.setItem(keyFor(userId), JSON.stringify(profile));
   } catch {
     // Non-fatal: onboarding still completes even if local persistence fails.
   }
 }
 
-export async function clearStartingPoint(): Promise<void> {
+export async function clearStartingPoint(userId?: string | null): Promise<void> {
   try {
-    await AsyncStorage.removeItem(KEY);
+    await AsyncStorage.removeItem(keyFor(userId));
+    if (userId) {
+      await AsyncStorage.removeItem(KEY);
+    }
   } catch {
     // ignore
   }

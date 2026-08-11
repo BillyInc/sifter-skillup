@@ -28,27 +28,28 @@ import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 import { IntroCarousel } from "../src/components/brand/IntroCarousel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { INTRO_SEEN_KEY } from "../src/theme";
+import { hasExplicitLogout } from "../src/lib/logoutState";
 
 export default function LandingPage() {
   const router = useRouter();
   const { colors } = useTheme();
   const { user, loading, signInGuest } = useAuth();
-  const { accountType, hydrated } = useEffectiveAccountType(user?.account_type);
+  const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
   const [educatorProfile, setEducatorProfile] = useState<EducatorProfile | null>(null);
   const [profileHydrated, setProfileHydrated] = useState(false);
   const [guestBusy, setGuestBusy] = useState(false);
   const [guestError, setGuestError] = useState<string | null>(null);
-  const [introState, setIntroState] = useState<"loading" | "show" | "done">("loading");
+  const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
 
   useEffect(() => {
-    AsyncStorage.getItem(INTRO_SEEN_KEY)
-      .then((value) => setIntroState(value ? "done" : "show"))
+    Promise.all([AsyncStorage.getItem(INTRO_SEEN_KEY), hasExplicitLogout()])
+      .then(([value, loggedOut]) => setIntroState(loggedOut ? "logged_out" : value ? "done" : "show"))
       .catch(() => setIntroState("show"));
   }, []);
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile().then((profile) => {
+    getEducatorProfile(user?.id).then((profile) => {
       if (!active) return;
       setEducatorProfile(profile);
       setProfileHydrated(true);
@@ -56,7 +57,7 @@ export default function LandingPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   const signedInHref = useMemo(() => {
     if (!user) return null;
@@ -77,6 +78,10 @@ export default function LandingPage() {
 
   if (!user && introState === "show") {
     return <IntroCarousel onDone={() => setIntroState("done")} />;
+  }
+
+  if (!user && introState === "logged_out") {
+    return <Redirect href="/(auth)/sign-in" />;
   }
 
   if (signedInHref) {
@@ -129,7 +134,7 @@ export default function LandingPage() {
 
       <View style={styles.grid}>
         {[
-          ["Students", "Resume lessons, explore domains, and compare role signals."],
+          ["Students", "Continue career discovery, explore domains, and compare role signals."],
           ["Universities", "See programme-to-domain demand and skills gaps."],
           ["Schools & tutorials", "Guide SS students outward across universities and roles."],
         ].map(([title, body]) => (

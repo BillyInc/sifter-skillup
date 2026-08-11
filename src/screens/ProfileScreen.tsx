@@ -158,9 +158,9 @@ export default function ProfileScreen() {
   }, [signOut, navigation]);
 
   const handleAdminWorkspace = useCallback(async () => {
-    const profile = await getEducatorProfile();
+    const profile = await getEducatorProfile(user?.id);
     go(adminHomeForProfile(profile));
-  }, [go]);
+  }, [go, user?.id]);
 
   const [xp, setXp]         = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
