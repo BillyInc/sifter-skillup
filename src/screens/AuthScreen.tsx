@@ -1,36 +1,32 @@
 /**
- * AuthScreen — Sifter LevelUp entry point.
+ * AuthScreen - Sifter LevelUp sign-in and auth landing.
  *
- * Multi-mode flow with redesign visual grammar:
- *   - CompassFonts (Hanken Grotesk) for all text
- *   - Semantic tokens: surface.*, textRole.*, borderRole.*, accentRole.*
- *   - Hairline borders, one accent per screen (Brand.primary for CTA only)
- *   - 4px grid spacing
+ * Account creation lives only at /(auth)/signup so every signup path uses the
+ * full profile, date-of-birth, legal, and email-code flow.
  */
 import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
-  ScrollView,
   Animated,
-  Platform,
   KeyboardAvoidingView,
-  SafeAreaView,
   Modal,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import {
-  useTheme,
-  Spacing,
-  Radius,
-  FontSize,
   Brand,
-  webContainer,
   CompassFonts,
+  FontSize,
+  Radius,
+  Spacing,
+  useTheme,
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -38,28 +34,36 @@ import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
 import {
   AuthField,
-  LegalFooter,
   ErrorNote,
+  LegalFooter,
   TermsModal,
 } from "@/screens/auth/authShared";
 
-type Mode = "welcome" | "login" | "signup" | "connecting";
+type Mode = "welcome" | "login" | "connecting";
+
+function friendlyAuthError(error: unknown, fallback: string) {
+  const message = error instanceof Error ? error.message : String(error || "");
+  if (!message) return fallback;
+  if (/unauthorized/i.test(message)) return "Invalid email or password.";
+  if (/bad request/i.test(message)) return fallback;
+  return message;
+}
 
 export default function AuthScreen() {
   const router = useRouter();
   const { colors, isDark } = useTheme();
-  const { signInEmail, signUpEmail, signInGuest } = useAuth();
+  const { signInEmail, signInGuest } = useAuth();
   const resp = useResponsive();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   const [mode, setMode] = useState<Mode>("welcome");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [emailLoading, setEmailLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [showSignupGuard, setShowSignupGuard] = useState(false);
 
   const cardAnim = useRef(new Animated.Value(0)).current;
 
@@ -70,70 +74,6 @@ export default function AuthScreen() {
       useNativeDriver: true,
     }).start();
   }, [cardAnim]);
-
-  const routeToHome = () => {
-    router.replace("/(tabs)/home");
-  };
-
-  const handleGuest = async () => {
-    setError("");
-    setGuestLoading(true);
-    try {
-      await signInGuest();
-    } catch (e: any) {
-      setError(e?.message || "Could not continue as guest.");
-    } finally {
-      setGuestLoading(false);
-    }
-  };
-
-  const handleLogin = async () => {
-    setError("");
-    if (!email || !password) {
-      setError("Enter your email and password.");
-      return;
-    }
-    setEmailLoading(true);
-    try {
-      await signInEmail(email, password);
-      routeToHome();
-    } catch (e: any) {
-      setError(e?.message || "Could not sign you in.");
-    } finally {
-      setEmailLoading(false);
-    }
-  };
-
-  const handleSignup = async () => {
-    setError("");
-    if (!email || !password) {
-      setError("Enter your email and a password.");
-      return;
-    }
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-    setEmailLoading(true);
-    try {
-      await signUpEmail(email, password, {
-        first_name: username || undefined,
-      });
-      // Auth layout detects user && !onboarding_completed → redirects
-    } catch (e: any) {
-      setError(e?.message || "Could not create your account.");
-    } finally {
-      setEmailLoading(false);
-    }
-  };
-
-  const goToWelcome = () => {
-    setError("");
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setMode("welcome");
-  };
 
   const cardStyle = {
     opacity: cardAnim,
@@ -147,7 +87,62 @@ export default function AuthScreen() {
     ],
   };
 
-  // ─── Connecting spinner ───────────────────────────────────
+  const resetLoginFields = () => {
+    setEmail("");
+    setPassword("");
+  };
+
+  const goToSignup = () => {
+    setError("");
+    resetLoginFields();
+    setShowSignupGuard(false);
+    router.push("/(auth)/signup" as any);
+  };
+
+  const requestSignup = () => {
+    if (mode === "login" && (email.trim() || password.trim())) {
+      setShowSignupGuard(true);
+      return;
+    }
+    goToSignup();
+  };
+
+  const goToWelcome = () => {
+    setError("");
+    resetLoginFields();
+    setShowSignupGuard(false);
+    setMode("welcome");
+  };
+
+  const handleGuest = async () => {
+    setError("");
+    setGuestLoading(true);
+    try {
+      await signInGuest();
+    } catch (e) {
+      setError(friendlyAuthError(e, "Could not continue as guest."));
+    } finally {
+      setGuestLoading(false);
+    }
+  };
+
+  const handleLogin = async () => {
+    setError("");
+    if (!email.trim() || !password) {
+      setError("Enter your email and password.");
+      return;
+    }
+    setEmailLoading(true);
+    try {
+      await signInEmail(email.trim(), password);
+      router.replace("/(tabs)/home");
+    } catch (e) {
+      setError(friendlyAuthError(e, "Could not sign you in."));
+    } finally {
+      setEmailLoading(false);
+    }
+  };
+
   if (mode === "connecting") {
     return (
       <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>
@@ -165,27 +160,15 @@ export default function AuthScreen() {
     );
   }
 
-  // ─── Welcome landing ──────────────────────────────────────
-  if (mode === "welcome") {
-    const welcomeGradient: [string, string] = isDark
-      ? ["#0B0B10", "#13100A"]
-      : [colors.surface.base, colors.surface.subtle];
+  const gradient: [string, string] = isDark
+    ? ["#0B0B10", "#13100A"]
+    : [colors.surface.base, colors.surface.subtle];
 
+  if (mode === "welcome") {
     return (
       <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>
-        <LinearGradient
-          colors={welcomeGradient}
-          style={StyleSheet.absoluteFill}
-        />
-
-        {/* Split layout on wide web, stacked on mobile */}
-        <View
-          style={[
-            styles.splitContainer,
-            isDesktop && styles.splitWide,
-          ]}
-        >
-          {/* Left panel — brand (wide web only) */}
+        <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
+        <View style={[styles.splitContainer, isDesktop && styles.splitWide]}>
           {isDesktop ? (
             <View
               style={[
@@ -217,7 +200,6 @@ export default function AuthScreen() {
             </View>
           ) : null}
 
-          {/* Right panel — auth card */}
           <ScrollView
             contentContainerStyle={[
               styles.welcomeContent,
@@ -267,11 +249,15 @@ export default function AuthScreen() {
                   CompassFonts.bodyMedium,
                 ]}
               >
-                "Every programme has a route. See yours."
+                Every programme has a route. See yours.
               </Text>
 
               <View style={styles.featureList}>
-                {["Map your programme to real career routes", "Explore before you set up a profile", "Return to your progress when you are ready"].map((item) => (
+                {[
+                  "Map your programme to real career routes",
+                  "Explore before you set up a profile",
+                  "Return to your progress when you are ready",
+                ].map((item) => (
                   <View
                     key={item}
                     style={[
@@ -298,21 +284,23 @@ export default function AuthScreen() {
               <View style={styles.btnGroup}>
                 <SifterButton
                   label="Create account"
-                  onPress={() => setMode("signup")}
+                  onPress={goToSignup}
                   variant="primary"
                   color={Brand.primary}
                   size="lg"
                   fullWidth
                 />
-
                 <SifterButton
                   label="Log in"
-                  onPress={() => setMode("login")}
+                  onPress={() => {
+                    setError("");
+                    resetLoginFields();
+                    setMode("login");
+                  }}
                   variant="ghost"
                   size="lg"
                   fullWidth
                 />
-
                 <View
                   style={[
                     styles.authDivider,
@@ -329,7 +317,6 @@ export default function AuthScreen() {
                     Explore without setup
                   </Text>
                 </View>
-
                 <SifterButton
                   label="Continue as Guest"
                   onPress={handleGuest}
@@ -340,7 +327,7 @@ export default function AuthScreen() {
                 />
               </View>
 
-              {error ? <ErrorNote message={error} /> : null}
+              <ErrorNote message={error} />
             </Animated.View>
 
             <LegalFooter
@@ -355,14 +342,9 @@ export default function AuthScreen() {
     );
   }
 
-  // ─── Login / Signup forms ─────────────────────────────────
-  const formGradient: [string, string] = isDark
-    ? ["#0B0B10", "#13100A"]
-    : [colors.surface.base, colors.surface.subtle];
-
   return (
     <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>
-      <LinearGradient colors={formGradient} style={StyleSheet.absoluteFill} />
+      <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
@@ -395,7 +377,7 @@ export default function AuthScreen() {
                     CompassFonts.bodyBold,
                   ]}
                 >
-                  ← Back
+                  Back
                 </Text>
               </TouchableOpacity>
 
@@ -406,7 +388,7 @@ export default function AuthScreen() {
                   CompassFonts.displayBold,
                 ]}
               >
-                {mode === "login" ? "Welcome back" : "Create your account"}
+                Welcome back
               </Text>
               <Text
                 style={[
@@ -415,22 +397,10 @@ export default function AuthScreen() {
                   CompassFonts.body,
                 ]}
               >
-                {mode === "login"
-                  ? "Return to your saved guidance, maps, and learning progress."
-                  : "Create an account to save your guidance profile, maps, and learning progress."}
+                Return to your saved guidance, maps, and learning progress.
               </Text>
 
               <ErrorNote message={error} />
-
-              {mode === "signup" ? (
-                <AuthField
-                  label="First name"
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Chidi"
-                  autoFocus
-                />
-              ) : null}
 
               <AuthField
                 label="Email address"
@@ -438,7 +408,7 @@ export default function AuthScreen() {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 placeholder="you@example.com"
-                autoFocus={mode === "login"}
+                autoFocus
               />
 
               <AuthField
@@ -446,13 +416,12 @@ export default function AuthScreen() {
                 value={password}
                 onChangeText={setPassword}
                 secure
-                placeholder="••••••••"
-                hint={mode === "signup" ? "At least 8 characters" : undefined}
+                placeholder="Password"
               />
 
               <SifterButton
-                label={mode === "login" ? "Log in" : "Create account →"}
-                onPress={mode === "login" ? handleLogin : handleSignup}
+                label="Log in"
+                onPress={handleLogin}
                 loading={emailLoading}
                 variant="track"
                 color={Brand.primary}
@@ -462,10 +431,7 @@ export default function AuthScreen() {
 
               <TouchableOpacity
                 style={{ alignSelf: "center", paddingVertical: Spacing.sm }}
-                onPress={() => {
-                  setError("");
-                  setMode(mode === "login" ? "signup" : "login");
-                }}
+                onPress={requestSignup}
                 hitSlop={8}
               >
                 <Text
@@ -477,9 +443,7 @@ export default function AuthScreen() {
                     CompassFonts.bodyBold,
                   ]}
                 >
-                  {mode === "login"
-                    ? "Don't have an account? Create one"
-                    : "Already have an account? Log in"}
+                  Don't have an account? Create one
                 </Text>
               </TouchableOpacity>
 
@@ -519,6 +483,58 @@ export default function AuthScreen() {
       </SafeAreaView>
 
       <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
+      <Modal
+        visible={showSignupGuard}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowSignupGuard(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          <View
+            style={[
+              styles.modalCard,
+              {
+                backgroundColor: colors.surface.raised,
+                borderColor: colors.borderRole.subtle,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.modalTitle,
+                { color: colors.textRole.primary },
+                CompassFonts.displayBold,
+              ]}
+            >
+              Create an account instead?
+            </Text>
+            <Text
+              style={[
+                styles.modalBody,
+                { color: colors.textRole.secondary },
+                CompassFonts.body,
+              ]}
+            >
+              For your privacy, account creation starts on a fresh form.
+            </Text>
+            <View style={styles.modalActions}>
+              <SifterButton
+                label="Stay on login"
+                onPress={() => setShowSignupGuard(false)}
+                variant="ghost"
+                size="md"
+              />
+              <SifterButton
+                label="Continue to create account"
+                onPress={goToSignup}
+                variant="track"
+                color={Brand.primary}
+                size="md"
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -548,11 +564,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.xxxl,
   },
-  welcomeContentWide: {
-    width: "50%",
-  },
+  welcomeContentWide: { width: "50%" },
   formContent: {
-    ...(webContainer as object),
     flexGrow: 1,
     justifyContent: "center",
     paddingHorizontal: Spacing.xl,
@@ -561,54 +574,61 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "100%",
-    maxWidth: 430,
-    borderRadius: Radius.xl,
-    padding: Spacing.lg,
+    maxWidth: 440,
     borderWidth: 1,
-    gap: Spacing.sm,
+    borderRadius: Radius.xl,
+    padding: Spacing.xl,
+    gap: Spacing.md,
   },
-  logoWrap: {
-    alignItems: "center",
-    gap: Spacing.sm,
-    marginBottom: Spacing.sm,
-  },
-  brand: { fontSize: FontSize.xxl },
+  logoWrap: { alignItems: "center", gap: Spacing.sm },
+  brand: { fontSize: FontSize.xxl, fontWeight: "900" },
   eyebrow: {
     fontSize: FontSize.xs,
-    letterSpacing: 1,
-    textAlign: "center",
+    letterSpacing: 0,
+    textTransform: "uppercase",
   },
-  tagline: {
-    fontSize: FontSize.sm,
-    textAlign: "center",
-    lineHeight: 20,
-    marginBottom: Spacing.sm,
-  },
-  featureList: { gap: Spacing.xs, marginBottom: Spacing.sm },
+  tagline: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
+  featureList: { gap: Spacing.sm },
   featureItem: {
-    borderRadius: Radius.md,
     borderWidth: 1,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
   },
-  featureText: { fontSize: FontSize.xs, textAlign: "center" },
+  featureText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   btnGroup: { gap: Spacing.sm },
   authDivider: {
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    alignItems: "center",
     marginVertical: Spacing.xs,
     paddingTop: Spacing.sm,
   },
-  authDividerText: {
-    fontSize: FontSize.xs,
-    textAlign: "center",
-    letterSpacing: 0.3,
+  authDividerText: { fontSize: FontSize.xs },
+  connectingText: { marginTop: Spacing.md, fontSize: FontSize.md },
+  backBtn: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  backText: { fontSize: FontSize.sm },
+  formTitle: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.15 },
+  formSub: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.45)",
+    justifyContent: "center",
+    padding: Spacing.xl,
   },
-  backBtn: { alignSelf: "flex-start", marginBottom: Spacing.md },
-  backText: { fontSize: FontSize.md },
-  formTitle: { fontSize: FontSize.xxl },
-  formSub: { fontSize: FontSize.sm, lineHeight: 19 },
-  connectingText: {
-    fontSize: FontSize.md,
-    marginTop: Spacing.lg,
+  modalCard: {
+    width: "100%",
+    maxWidth: 420,
+    alignSelf: "center",
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.xl,
+    gap: Spacing.md,
+  },
+  modalTitle: { fontSize: FontSize.xl },
+  modalBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  modalActions: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
   },
 });

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { CompassFonts, FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
+import { API } from '@/lib/api';
+import { isAdminAccount } from '@/lib/accountType';
 
 function SettingsCard({
   title,
@@ -42,11 +44,28 @@ function Row({
 export default function SettingsScreen() {
   const router = useRouter();
   const { colors, isDark, toggle } = useTheme();
-  const { user, signOut } = useAuth();
+  const { user, signOut, refreshUser } = useAuth();
+  const isAdmin = isAdminAccount(user?.account_type);
+  const admin2FA = useMemo(
+    () => (user?.settings?.admin2fa ?? {}) as { setupRequestedAt?: string; deferredAt?: string },
+    [user?.settings],
+  );
 
   const handleSignOut = async () => {
     await signOut();
     router.replace('/(auth)/sign-in');
+  };
+
+  const updateAdmin2FA = async (patch: Record<string, unknown>) => {
+    const settings = {
+      ...(user?.settings ?? {}),
+      admin2fa: {
+        ...admin2FA,
+        ...patch,
+      },
+    };
+    await API.updateMe({ settings });
+    await refreshUser();
   };
 
   return (
@@ -96,6 +115,41 @@ export default function SettingsScreen() {
             <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Open My School</Text>
           </TouchableOpacity>
         </SettingsCard>
+
+        {isAdmin ? (
+          <SettingsCard title="ADMIN SECURITY">
+            <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+              Two-factor authentication
+            </Text>
+            <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Admin accounts can manage learners and institution data, so 2FA is recommended after onboarding. You can defer this, but it will remain visible here.
+            </Text>
+            <Row
+              label="Status"
+              value={admin2FA.setupRequestedAt ? 'Setup requested' : admin2FA.deferredAt ? 'Deferred' : 'Recommended'}
+            />
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={() => updateAdmin2FA({ setupRequestedAt: new Date().toISOString() })}
+              style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
+            >
+              <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+                Start 2FA setup
+              </Text>
+            </TouchableOpacity>
+            {!admin2FA.setupRequestedAt ? (
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => updateAdmin2FA({ deferredAt: new Date().toISOString() })}
+                style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
+              >
+                <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+                  Remind me later
+                </Text>
+              </TouchableOpacity>
+            ) : null}
+          </SettingsCard>
+        ) : null}
 
         <SettingsCard title="NOTIFICATIONS">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Reminder delivery</Text>
