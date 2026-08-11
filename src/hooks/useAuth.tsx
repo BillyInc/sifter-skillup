@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Sifter LevelUp - useAuth
  *
  * Full UserProfile with all upgrade fields.
