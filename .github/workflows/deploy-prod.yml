@@ -306,12 +306,27 @@ jobs:
           flock 9
           DOMAIN=levelup.com.ng
           SITE=/etc/nginx/sites-available/levelup-web-prod
+
+          # Written unconditionally and BEFORE the site block: the include below
+          # would fail `nginx -t` if prod were provisioned on a box where the
+          # dev workflow had never run and created this snippet.
+          sudo mkdir -p /etc/nginx/snippets
+          sudo tee /etc/nginx/snippets/levelup-gzip.conf >/dev/null <<'NGINX'
+          # Managed by the deploy workflows. Edits here are overwritten.
+          gzip on;
+          gzip_vary on;
+          gzip_comp_level 6;
+          gzip_min_length 1024;
+          gzip_types application/javascript text/javascript application/json application/manifest+json text/css text/plain image/svg+xml;
+          NGINX
+
           if [ ! -f "$SITE" ]; then
             sudo tee "$SITE" >/dev/null <<NGINX
           server {
               server_name $DOMAIN;
               root /home/ubuntu/levelup-frontend-prod;
               index index.html;
+              include snippets/levelup-gzip.conf;
               location / { try_files \$uri \$uri/ /index.html; }
               location /assets { expires 1y; add_header Cache-Control "public, immutable"; }
               add_header X-Frame-Options "SAMEORIGIN" always;
