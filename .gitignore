@@ -54,3 +54,13 @@ data/career-mapping/*.out
 backend/seed_career_v2.sql
 backend/seed_career_pilot.sql
 nul
+
+# Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks
+# (mode 160000) with no .gitmodules, so every CI checkout emitted
+# "fatal: No url found for submodule path ..." and exit code 128.
+# .claude/settings.json is shared config and stays tracked -- do not widen this.
+.claude/worktrees/
+
+# Unrelated local tool checkouts, likewise committed as stray gitlinks.
+/claude-code-proxy/
+/free-claude-code/
