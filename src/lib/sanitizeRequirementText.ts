@@ -33,8 +33,11 @@ const HTML_ENTITY_REPLACEMENTS: Array<[RegExp, string]> = [
   [/&ldquo;/g, '"'],
   [/&rdquo;/g, '"'],
   [/&quot;/g, '"'],
-  [/&ndash;/g, "-"],
-  [/&mdash;/g, "-"],
+  // Escapes, not literals, so this file stays ASCII-only, but they must
+  // still decode to real dashes. Flattening these to "-" silently changes
+  // displayed copy and breaks sanitizeRequirementText's own tests.
+  [/&ndash;/g, "\u2013"],
+  [/&mdash;/g, "\u2014"],
   [/&nbsp;/g, " "],
 ];
 

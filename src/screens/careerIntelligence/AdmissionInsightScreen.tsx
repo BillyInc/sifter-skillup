@@ -269,7 +269,11 @@ export function AdmissionInsightScreen({
             </View>
           ) : (
             <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <Text style={{ color: colors.textRole.muted }}>Loading formula...</Text>
+              <Text style={{ color: colors.textRole.muted }}>
+                {schoolId
+                  ? "Loading formula\u2026"
+                  : "Pick a university to see how it weights JAMB and O\u2019level."}
+              </Text>
             </View>
           )}
         </View>
@@ -300,7 +304,11 @@ export function AdmissionInsightScreen({
             </View>
           ) : (
             <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <Text style={{ color: colors.textRole.muted }}>Loading admission rows...</Text>
+              <Text style={{ color: colors.textRole.muted }}>
+                {programmeId || schoolId
+                  ? "Loading admission rows\u2026"
+                  : "Pick a programme or university to see cut-offs for this cycle."}
+              </Text>
             </View>
           )}
         </View>
@@ -325,7 +333,11 @@ export function AdmissionInsightScreen({
             </View>
           ) : (
             <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <Text style={{ color: colors.textRole.muted }}>Loading competitiveness...</Text>
+              <Text style={{ color: colors.textRole.muted }}>
+                {competitivenessState.status === "real"
+                  ? `No national competitiveness figures for this course in ${year}.`
+                  : "Loading competitiveness\u2026"}
+              </Text>
             </View>
           )}
         </View>
