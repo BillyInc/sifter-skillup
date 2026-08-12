@@ -2,11 +2,11 @@
  * Institutional / administrator data contract.
  *
  * The institutional side delivers labour-market *intelligence* (aggregate
- * programme → domain → demand for an institution's programme mix) and a gated
+ * programme -> domain -> demand for an institution's programme mix) and a gated
  * *management* capability. Two hard rules baked into these types:
  *  - Institutional Intelligence is AGGREGATE and carries NO student PII.
  *  - Individual student visibility is consent-gated (aggregate-only until a
- *    guardian consents) — see {@link StudentConsent}.
+ *    guardian consents) - see {@link StudentConsent}.
  *
  * Like the student-side contract (src/types/career.ts), no data ships yet:
  * adminData returns `coming_soon` envelopes and screens render gracefully.
@@ -19,8 +19,8 @@ import type {
 
 export type { DataMeta };
 
-// ─── Accounts & organisations ─────────────────────────────────
-export type AccountType = "student" | "educator" | "institution_admin";
+//  Accounts & organisations 
+export type AccountType = "pending" | "student" | "educator" | "institution_admin";
 
 /** The kind of organisation an educator represents. */
 export type OrganizationType =
@@ -44,10 +44,10 @@ export type OrgRole =
 
 /** Tiered identity assurance. Real verification logic lands with data/ops. */
 export type VerificationStatus =
-  | "unverified" // T0 — self-declared; national aggregate only
-  | "claimed" // T1 — claimed an institution; awaiting proof
+  | "unverified" // T0 - self-declared; national aggregate only
+  | "claimed" // T1 - claimed an institution; awaiting proof
   | "pending" // proof submitted; under review
-  | "verified" // T2 — verified org member
+  | "verified" // T2 - verified org member
   | "rejected";
 
 export type VerificationMethod =
@@ -65,7 +65,7 @@ export interface Organization {
   jambCode?: string; // JAMB/CAPS institution code (universities)
   nucCode?: string; // NUC accreditation (universities)
   moeApprovalNo?: string; // state Ministry of Education approval (sec. schools)
-  cacNo?: string; // CAC business registration (centres/cafés)
+  cacNo?: string; // CAC business registration (centres/cafes)
   state?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
@@ -107,7 +107,7 @@ export interface OrganizationTeam {
 
 /** The educator's own onboarding/profile (persisted locally for now). */
 export interface EducatorProfile {
-  accountType: Exclude<AccountType, "student">;
+  accountType: Exclude<AccountType, "pending" | "student">;
   organizationType: OrganizationType;
   organizationName?: string;
   /** Set once an org record exists; before that the claim is free-text. */
@@ -116,7 +116,7 @@ export interface EducatorProfile {
   workEmail?: string;
   /** Registry anchor entered at onboarding (JAMB/NUC/MoE/CAC, per org type). */
   registryCode?: string;
-  /** True for tutorial_centre/jamb_cafe — provider/session only, no roster. */
+  /** True for tutorial_centre/jamb_cafe - provider/session only, no roster. */
   providerSessionOnly?: boolean;
   /** Owner-issued code gate state. This is admin access, not proof/verification. */
   adminAccessStatus?: "owner_code";
@@ -126,9 +126,9 @@ export interface EducatorProfile {
   completedAt?: string;
 }
 
-// ─── Student affiliation & consent (the gate) ─────────────────
+//  Student affiliation & consent (the gate) 
 /** A SELF-REPORTED link from a student to an org via the school code. Powers
- *  attribution + aggregate analytics only — never individual visibility. */
+ *  attribution + aggregate analytics only - never individual visibility. */
 export interface StudentAffiliation {
   id: string;
   studentId: string;
@@ -150,7 +150,7 @@ export interface StudentConsent {
   revokedAt?: string;
 }
 
-// ─── Provisioning: drafts → review grid → generate → roster ───
+//  Provisioning: drafts -> review grid -> generate -> roster 
 export type ProvisioningStream = "science" | "art" | "commercial";
 
 /** A staged student row in the assisted-import review grid, before any account
@@ -166,7 +166,7 @@ export interface ProvisionDraft {
   status: "draft" | "generated" | "discarded";
 }
 
-/** The career direction picked from the (in-memory) mapping — the only derived
+/** The career direction picked from the (in-memory) mapping - the only derived
  *  data that persists. Subjects/grades that produced it are never stored. */
 export interface ChosenDirection {
   domainKey?: string;
@@ -197,7 +197,7 @@ export interface RosterStudent {
 }
 
 /** The roster payload: visible rows + the counts that make the aggregate-only
- *  cohort legible ("142 affiliated · 118 aggregate-only · 24 shared"). */
+ *  cohort legible ("142 affiliated / 118 aggregate-only / 24 shared"). */
 export interface RosterSummary {
   students: RosterStudent[];
   totalAffiliated: number;
@@ -222,7 +222,7 @@ export interface ProvisioningMergeCandidate {
   createdAt?: string | null;
 }
 
-// ─── Aggregate dashboard (the 5 stat cards) ───────────────────
+//  Aggregate dashboard (the 5 stat cards) 
 export interface InstitutionSummary {
   institutionName: string;
   institutionCode: string;
@@ -240,7 +240,7 @@ export interface InstitutionSummary {
   dataAsOf?: string;
 }
 
-// ─── Programme × Domain × Demand table ────────────────────────
+//  Programme x Domain x Demand table 
 export type MappingSource = "ccmas" | "custom";
 export type TrendDirection = "up" | "down" | "flat";
 
@@ -269,7 +269,7 @@ export interface ProgrammeDemandRow {
   id: string;
   programmeName: string;
   jambName: string;
-  qualification?: string; // B.Sc, LL.B…
+  qualification?: string; // B.Sc, LL.B...
   mappingSource: MappingSource; // ccmas | custom (drives the CCMAS/CUSTOM tag)
   domains: ProgrammeDomainBadge[];
   domainOverflow?: number; // "+N more"
@@ -292,7 +292,7 @@ export interface ProgrammeFilter {
   query?: string;
 }
 
-// ─── Domain demand ranking (right panel) ──────────────────────
+//  Domain demand ranking (right panel) 
 export type RankScope = "nigerian" | "global" | "remote";
 export type MarketValueBand = "high" | "medium" | "low" | "unknown";
 export type MarketDemandBand = "high" | "medium" | "low" | "unknown";
@@ -308,7 +308,7 @@ export interface DomainRankItem {
   rank: number;
   domainId: string;
   domainName: string;
-  /** e.g. "Direct: CS, IT, CE" — which of the institution's programmes route in. */
+  /** e.g. "Direct: CS, IT, CE" - which of the institution's programmes route in. */
   routeNote?: string;
   postingsPerMonth: number;
   /** 0..1 relative bar fill within the current ranking. */
@@ -321,7 +321,7 @@ export interface DomainRankItem {
   interpretation?: string;
 }
 
-// ─── Intelligence alerts ──────────────────────────────────────
+//  Intelligence alerts 
 export type AlertSeverity = "info" | "opportunity" | "warning" | "critical";
 
 export interface IntelligenceAlert {
@@ -331,7 +331,7 @@ export interface IntelligenceAlert {
   body: string;
 }
 
-// ─── Skills gap report / role demand / peer comparison ────────
+//  Skills gap report / role demand / peer comparison 
 export interface SkillGapRow {
   programmeName: string;
   domainName: string;
@@ -366,7 +366,7 @@ export interface PeerInstitutionRow {
   uniqueDomains?: string[];
 }
 
-// ─── Affiliation attribution (aggregate, k-anonymised) ────────
+//  Affiliation attribution (aggregate, k-anonymised) 
 export interface AffiliationStats {
   organizationId: string;
   /** Self-reported affiliations; suppressed below the k-anonymity threshold. */
@@ -375,12 +375,12 @@ export interface AffiliationStats {
   schoolCode: string;
 }
 
-// ─── Domain Reach Audit — View A (spec §5.1) ──────────────────
+//  Domain Reach Audit - View A (spec Section 5.1) 
 /**
  * STRUCTURAL DATA ONLY. Everything below is derived from the NUC CCMAS
- * 2022–2023 programme→domain mapping. It describes what an institution's
- * programme mix *can reach*, never what the labour market *wants* — that is
- * Market Intelligence (§5.2) and lives in the demand types above.
+ * 2022-2023 programme->domain mapping. It describes what an institution's
+ * programme mix *can reach*, never what the labour market *wants* - that is
+ * Market Intelligence (Section 5.2) and lives in the demand types above.
  */
 
 /** Control filter for the national leaderboard (federal/state/private). */
@@ -431,9 +431,9 @@ export interface DomainReachAudit {
 export interface DomainReachLeaderboardRow {
   institutionId: string;
   institutionName: string;
-  /** federal | state | private — null until an ownership column exists. */
+  /** federal | state | private - null until an ownership column exists. */
   control?: string | null;
-  /** The registry's real column (university | secondary_school | …). */
+  /** The registry's real column (university | secondary_school | ...). */
   institutionType?: string | null;
   state?: string | null;
   totalDomains: number;
@@ -441,11 +441,11 @@ export interface DomainReachLeaderboardRow {
   functionalDomains: number;
   adjacentDomains: number;
   nationalRank: number;
-  /** True for the caller's own institution — highlighted in the table. */
+  /** True for the caller's own institution - highlighted in the table. */
   isSelf: boolean;
 }
 
-// ─── Student intelligence rollup (AGGREGATE — §5.5) ───────────
+//  Student intelligence rollup (AGGREGATE - Section 5.5) 
 /** A domain slice of the affiliated cohort's interest mix. */
 export interface StudentIntelligenceDomain {
   domainKey: string;
@@ -465,8 +465,8 @@ export interface StudentIntelligenceSummary {
   belowThreshold?: boolean;
 }
 
-// ─── Feedback (§6A) ───────────────────────────────────────────
-/** The eight required student-feedback categories (§6A.3 / §6A.5 CHECK). */
+//  Feedback (Section 6A) 
+/** The eight required student-feedback categories (Section 6A.3 / Section 6A.5 CHECK). */
 export type StudentFeedbackCategory =
   | "mapping_wrong"
   | "data_outdated"
@@ -477,7 +477,7 @@ export type StudentFeedbackCategory =
   | "praise"
   | "other";
 
-/** Which mapping edge a correction report targets (§6A.2). */
+/** Which mapping edge a correction report targets (Section 6A.2). */
 export type MappingEdgeType =
   | "programme_domain"
   | "domain_role"

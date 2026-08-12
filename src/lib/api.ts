@@ -305,7 +305,7 @@ export const API = {
     request<void>('/api/game/last-position', { method: 'DELETE' }),
 
   // Onboarding
-  completeOnboarding: (data: { active_track?: string; recommended_tracks?: string[] }) =>
+  completeOnboarding: (data: { active_track?: string; recommended_tracks?: string[]; account_type?: 'student' | 'educator' | 'institution_admin' }) =>
     request<UserProfile>('/api/users/onboarding-complete', {
       method: 'POST', body: JSON.stringify(data),
     }),

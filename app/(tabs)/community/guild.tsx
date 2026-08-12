@@ -1,5 +1,5 @@
-import { Redirect } from 'expo-router';
+import { LegacyRouteRedirect } from '@/components/navigation/LegacyRouteRedirect';
 
 export default function GuildTabScreen() {
-  return <Redirect href="/(tabs)/guild" />;
+  return <LegacyRouteRedirect />;
 }
