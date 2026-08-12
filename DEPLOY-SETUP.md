@@ -75,6 +75,8 @@ REDIS_URL=redis://localhost:6379/12          # prod: /13
 CELERY_BROKER_URL=redis://localhost:6379/12  # prod: /13
 CELERY_RESULT_BACKEND=redis://localhost:6379/12  # prod: /13
 PRIVY_APP_ID=...  PRIVY_APP_SECRET=...  PRIVY_VERIFICATION_KEY=...
+RESEND_API_KEY=re_...       # signup verification email; without it signup 502s
+EMAIL_FROM=LevelUp <noreply@levelup.com.ng>   # sending domain must be verified in Resend
 ALLOWED_ORIGINS=https://dev.levelup.com.ng   # prod: https://levelup.com.ng
 API_BASE_URL=https://api.dev.levelup.com.ng  # prod: https://api.levelup.com.ng
 WEB_DASHBOARD_URL=https://dev.levelup.com.ng # prod: https://levelup.com.ng
