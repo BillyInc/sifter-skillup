@@ -74,6 +74,7 @@ export function CurrentStudentSetupForm({
         placeholder="Search or type your institution"
         kind="school"
         institutionType={typeof value.institutionType === "string" ? value.institutionType : undefined}
+        helperText="If your institution is not listed, type the name and continue."
       />
 
       <SelectField

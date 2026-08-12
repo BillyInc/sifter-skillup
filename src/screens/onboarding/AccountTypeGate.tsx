@@ -10,7 +10,6 @@
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -19,15 +18,15 @@ import OnboardingFlow from "@/screens/OnboardingFlow";
 import EducatorOnboarding from "@/screens/admin/EducatorOnboarding";
 import type { UserType } from "@/types/onboarding";
 import { useAuth } from "@/hooks/useAuth";
-import { getOnboardingDraft, patchOnboardingDraft } from "@/lib/onboardingDraft";
+import { getOnboardingDraft, saveOnboardingDraft } from "@/lib/onboardingDraft";
+import type { StartingPointProfile } from "@/types/onboarding";
 
 type Choice =
-  | "senior_secondary"
+  | "ss1_secondary"
+  | "ss2_secondary"
+  | "ss3_secondary"
   | "jamb"
   | "student"
-  | "graduate"
-  | "skilled_worker"
-  | "professional"
   | "educator";
 
 const PERSONAS: {
@@ -35,42 +34,48 @@ const PERSONAS: {
   icon: keyof typeof Feather.glyphMap;
   title: string;
   subtitle: string;
+  userType?: UserType;
+  preset?: Partial<import("@/types/onboarding").StartingPointProfile>;
 }[] = [
   {
-    type: "senior_secondary",
+    type: "ss1_secondary",
     icon: "map",
-    title: "Senior-Secondary Student",
-    subtitle: "SS1-SS3 - exploring career and subject guidance",
+    title: "SS1 Student",
+    subtitle: "Start broad: school, stream and early subject guidance",
+    userType: "senior_secondary",
+    preset: { userType: "senior_secondary", ssClass: "ss1" },
+  },
+  {
+    type: "ss2_secondary",
+    icon: "map",
+    title: "SS2 Student",
+    subtitle: "Narrow subjects before SS3 and UTME decisions",
+    userType: "senior_secondary",
+    preset: { userType: "senior_secondary", ssClass: "ss2" },
+  },
+  {
+    type: "ss3_secondary",
+    icon: "book",
+    title: "SS3 Student",
+    subtitle: "School-based admission guidance for final-year secondary students",
+    userType: "ss3_secondary",
+    preset: { userType: "ss3_secondary", ssClass: "ss3" },
   },
   {
     type: "jamb",
     icon: "book-open",
     title: "JAMB Candidate",
-    subtitle: "SS3 student / UTME candidate",
+    subtitle: "Tutorial centre or self-taught UTME admission guidance",
+    userType: "jamb",
+    preset: { userType: "jamb" },
   },
   {
     type: "student",
     icon: "users",
-    title: "Current University Student",
-    subtitle: "University / Polytechnic / College of Education",
-  },
-  {
-    type: "graduate",
-    icon: "globe",
-    title: "Graduate",
-    subtitle: "NYSC / job seeker / early career",
-  },
-  {
-    type: "skilled_worker",
-    icon: "tool",
-    title: "Skilled Worker / Professional",
-    subtitle: "Trades, artisan work, vocational skills",
-  },
-  {
-    type: "professional",
-    icon: "briefcase",
-    title: "Career Changer",
-    subtitle: "Professional / white-collar / blue-collar - changing direction",
+    title: "Undergraduate Student",
+    subtitle: "Start from your university and programme",
+    userType: "student",
+    preset: { userType: "student", institutionType: "university" },
   },
   {
     type: "educator",
@@ -80,18 +85,24 @@ const PERSONAS: {
   },
 ];
 
+const ALLOWED_CHOICES = new Set<Choice>(PERSONAS.map((p) => p.type));
+
 export default function AccountTypeGate() {
   const { colors } = useTheme();
-  const router = useRouter();
   const resp = useResponsive();
   const { user } = useAuth();
   const [choice, setChoice] = useState<Choice | null>(null);
+  const [selectedProfile, setSelectedProfile] =
+    useState<Partial<StartingPointProfile> | null>(null);
 
   useEffect(() => {
     let active = true;
     getOnboardingDraft(user?.id).then((draft) => {
       if (!active || !draft?.choice) return;
-      setChoice(draft.choice as Choice);
+      if (ALLOWED_CHOICES.has(draft.choice as Choice)) {
+        setChoice(draft.choice as Choice);
+        setSelectedProfile(draft.studentProfile ?? null);
+      }
     });
     return () => {
       active = false;
@@ -99,19 +110,41 @@ export default function AccountTypeGate() {
   }, [user?.id]);
 
   const choose = (next: Choice) => {
+    const persona = PERSONAS.find((p) => p.type === next);
+    const profile = persona?.preset ?? null;
     setChoice(next);
-    patchOnboardingDraft(user?.id, {
+    setSelectedProfile(profile);
+    saveOnboardingDraft({
+      userId: user?.id,
       mode: next === "educator" ? "educator" : "student",
       choice: next,
+      step: 1,
+      studentProfile: profile ?? undefined,
+    }).catch(() => {});
+  };
+
+  const backToChoices = () => {
+    setChoice(null);
+    setSelectedProfile(null);
+    saveOnboardingDraft({
+      userId: user?.id,
       step: 1,
     }).catch(() => {});
   };
 
-  if (choice === "educator") return <EducatorOnboarding />;
-  if (choice) return <OnboardingFlow initialPersona={choice as UserType} />;
+  if (choice === "educator") return <EducatorOnboarding onBackToChoices={backToChoices} />;
+  if (choice) {
+    const persona = PERSONAS.find((p) => p.type === choice);
+    return (
+      <OnboardingFlow
+        initialPersona={(persona?.userType ?? choice) as UserType}
+        initialProfile={selectedProfile ?? persona?.preset}
+        onBackToChoices={backToChoices}
+      />
+    );
+  }
 
   const isGrid = resp.isDesktop;
-  const columns = isGrid ? 2 : 1;
 
   return (
     <ScrollView

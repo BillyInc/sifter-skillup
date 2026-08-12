@@ -5,7 +5,7 @@ import type { EducatorProfile } from "../types/institution";
 export type OnboardingDraft = {
   userId?: string;
   mode?: "student" | "educator";
-  choice?: UserType | "educator";
+  choice?: UserType | "educator" | string;
   step?: number;
   studentProfile?: Partial<StartingPointProfile>;
   educatorProfile?: Partial<EducatorProfile> & {

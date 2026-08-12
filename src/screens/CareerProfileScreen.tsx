@@ -1,15 +1,15 @@
 /**
- * CareerProfileScreen — the LevelUp Profile tab (career intelligence).
+ * CareerProfileScreen - the LevelUp Profile tab (career intelligence).
  *
  * This is the career-side profile: the user's starting point, everything they
  * have saved/bookmarked, their notes (grouped by category), their opportunity
  * subscriptions, notification preferences, account actions, and an "About"
  * blurb. The gamified learning profile (worker character / XP / portfolio) is
- * the legacy ProfileScreen and folds into My World in a later phase — it is
+ * the legacy ProfileScreen and folds into My World in a later phase - it is
  * intentionally preserved and NOT shown here.
  *
  * All data-driven blocks read careerData (currently `coming_soon`) through
- * DataStateView, so they degrade gracefully — never mock rows.
+ * DataStateView, so they degrade gracefully - never mock rows.
  */
 import React, { useCallback, useState } from "react";
 import {
@@ -59,23 +59,21 @@ const USER_TYPE_LABEL: Record<UserType, string> = {
 };
 
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
-  programme: { icon: "🎓", label: "Programme" },
-  school: { icon: "🏫", label: "School" },
-  domain: { icon: "🧭", label: "Domain" },
-  subgroup: { icon: "📚", label: "Subgroup" },
-  role: { icon: "💼", label: "Role" },
-  comparison: { icon: "⚖️", label: "Comparison" },
-  opportunity: { icon: "📌", label: "Opportunity" },
-  organisation: { icon: "🏢", label: "Employer" },
-  elite_pathway: { icon: "⭐", label: "Pathway" },
+  programme: { icon: "PRG", label: "Programme" },
+  school: { icon: "SCH", label: "School" },
+  domain: { icon: "DOM", label: "Domain" },
+  subgroup: { icon: "SUB", label: "Subgroup" },
+  role: { icon: "ROL", label: "Role" },
+  comparison: { icon: "CMP", label: "Comparison" },
+  opportunity: { icon: "OPP", label: "Opportunity" },
+  organisation: { icon: "ORG", label: "Employer" },
+  elite_pathway: { icon: "ELT", label: "Pathway" },
 };
-
 const SUBSCRIPTION_META: Record<SubscriptionTarget, { icon: string; label: string }> = {
-  opportunity: { icon: "📌", label: "Opportunity" },
-  organisation: { icon: "🏢", label: "Employer" },
-  application_window: { icon: "🗓️", label: "Application window" },
+  opportunity: { icon: "OPP", label: "Opportunity" },
+  organisation: { icon: "ORG", label: "Employer" },
+  application_window: { icon: "WIN", label: "Application window" },
 };
-
 const NOTIF_LABELS: { key: string; label: string; fallback: boolean }[] = [
   { key: "internships", label: "Internship openings", fallback: true },
   { key: "graduate_deadlines", label: "Graduate programme deadlines", fallback: true },
@@ -122,7 +120,7 @@ export default function CareerProfileScreen() {
     user?.username && user.username !== "Learner" ? user.username : null;
 
   // Notifications: edit the local profile copy and persist it (only when a
-  // starting-point profile already exists — we don't fabricate one here).
+  // starting-point profile already exists - we don't fabricate one here).
   const notifValue = (key: string) =>
     profile?.notifications?.[key] ??
     NOTIF_LABELS.find((n) => n.key === key)?.fallback ??
@@ -182,7 +180,7 @@ export default function CareerProfileScreen() {
           </View>
         ) : null}
 
-        {/* ── Starting point ─────────────────────────────────────── */}
+        {/*  Starting point  */}
         <Section title="Your starting point">
           <View
             style={[
@@ -216,7 +214,7 @@ export default function CareerProfileScreen() {
           </View>
         </Section>
 
-        {/* ── Saved & bookmarked ─────────────────────────────────── */}
+        {/*  Saved & bookmarked  */}
         <Section title="Saved & bookmarked">
           {saved ? (
             <DataStateView
@@ -240,12 +238,12 @@ export default function CareerProfileScreen() {
             style={styles.linkBtn}
           >
             <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
-              Explore & save domains →
+              Explore & save domains 
             </Text>
           </TouchableOpacity>
         </Section>
 
-        {/* ── My notes ───────────────────────────────────────────── */}
+        {/*  My notes  */}
         <Section title="My notes">
           {notes ? (
             <DataStateView
@@ -272,7 +270,7 @@ export default function CareerProfileScreen() {
           ) : null}
         </Section>
 
-        {/* ── My subscriptions ───────────────────────────────────── */}
+        {/*  My subscriptions  */}
         <Section title="My subscriptions">
           {subs ? (
             <DataStateView
@@ -296,12 +294,12 @@ export default function CareerProfileScreen() {
             style={styles.linkBtn}
           >
             <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
-              Browse opportunities →
+              Browse opportunities 
             </Text>
           </TouchableOpacity>
         </Section>
 
-        {/* ── Notifications ──────────────────────────────────────── */}
+        {/*  Notifications  */}
         <Section title="Notifications">
           <View
             style={[
@@ -337,7 +335,7 @@ export default function CareerProfileScreen() {
           </View>
         </Section>
 
-        {/* ── My World (locked) ──────────────────────────────────── */}
+        {/*  My World (locked)  */}
         <Section title="My World">
           <TouchableOpacity
             activeOpacity={0.85}
@@ -348,9 +346,7 @@ export default function CareerProfileScreen() {
             ]}
           >
             <View style={styles.lockedHead}>
-              <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary, flex: 1 }]}>
-                🎮 Learning Tracks & Portfolio
-              </Text>
+              <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary, flex: 1 }]}>Learning Tracks and Portfolio</Text>
               <LockedPill />
             </View>
             <Text style={[styles.subtle, { color: colors.textRole.secondary }]}>
@@ -360,7 +356,7 @@ export default function CareerProfileScreen() {
           </TouchableOpacity>
         </Section>
 
-        {/* ── Account ────────────────────────────────────────────── */}
+        {/*  Account  */}
         <Section title="Account">
           <View
             style={[
@@ -369,13 +365,13 @@ export default function CareerProfileScreen() {
             ]}
           >
             <AccountRow
-              icon="⚙️"
+              icon="SET"
               label="Settings"
               sub="Theme, account and app preferences"
               onPress={() => router.push("/(tabs)/settings")}
             />
             <AccountRow
-              icon="↩️"
+              icon="OUT"
               label="Sign out"
               danger
               onPress={handleSignOut}
@@ -383,7 +379,7 @@ export default function CareerProfileScreen() {
           </View>
         </Section>
 
-        {/* ── About ──────────────────────────────────────────────── */}
+        {/*  About  */}
         <Section title={`About ${Brand.name}`}>
           <View
             style={[
@@ -396,7 +392,7 @@ export default function CareerProfileScreen() {
             </Text>
             <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
               {Brand.name} maps your discipline to the domains, roles and jobs it
-              unlocks — local, global and remote — and shows the honest bridge to
+              unlocks - local, global and remote - and shows the honest bridge to
               get there. {Brand.tagline}
             </Text>
           </View>
@@ -444,7 +440,7 @@ function summariseStartingPoint(p: StartingPointProfile): string {
       if (p.yearsExperience) parts.push(`${p.yearsExperience} experience`);
       break;
   }
-  return parts.filter(Boolean).join(" · ") || "Profile saved";
+  return parts.filter(Boolean).join(" / ") || "Profile saved";
 }
 
 /** Group notes by category; ungrouped fall under "Uncategorised" (always last). */
@@ -525,7 +521,7 @@ function SubscriptionRow({ sub }: { sub: Subscription }) {
           {sub.targetId}
         </Text>
       </View>
-      <Text style={[styles.rowMeta, { color: colors.accentRole.success }]}>🔔 On</Text>
+      <Text style={[styles.rowMeta, { color: colors.accentRole.success }]}>On</Text>
     </View>
   );
 }
@@ -586,7 +582,7 @@ function AccountRow({
           </Text>
         ) : null}
       </View>
-      <Text style={[styles.accountArrow, { color: colors.textRole.muted }]}>›</Text>
+      <Text style={[styles.accountArrow, { color: colors.textRole.muted }]}>{">"}</Text>
     </TouchableOpacity>
   );
 }

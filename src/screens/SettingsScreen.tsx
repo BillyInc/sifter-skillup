@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { CompassFonts, FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
+import { CompassFonts, FontSize, FontWeight, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import { API } from '@/lib/api';
 import { isAdminAccount } from '@/lib/accountType';
@@ -52,8 +52,22 @@ export default function SettingsScreen() {
   );
 
   const handleSignOut = async () => {
-    await signOut();
-    router.replace('/(auth)/sign-in');
+    const confirm = async () => {
+      await signOut();
+      router.replace('/(auth)/sign-in');
+    };
+
+    if (Platform.OS === 'web') {
+      if (globalThis.confirm?.('Sign out of this account?')) {
+        await confirm();
+      }
+      return;
+    }
+
+    Alert.alert('Sign out?', 'You will need to log in again to continue.', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Sign out', style: 'destructive', onPress: () => void confirm() },
+    ]);
   };
 
   const updateAdmin2FA = async (patch: Record<string, unknown>) => {
@@ -98,7 +112,6 @@ export default function SettingsScreen() {
         <SettingsCard title="ACCOUNT">
           <Row label="Name" value={user?.username ?? 'Learner'} />
           <Row label="Email" value={user?.email || 'Not set'} />
-          <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
         </SettingsCard>
 
         <SettingsCard title="MY SCHOOL">
@@ -152,17 +165,10 @@ export default function SettingsScreen() {
         ) : null}
 
         <SettingsCard title="NOTIFICATIONS">
-          <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Reminder delivery</Text>
+          <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Notification controls</Text>
           <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Provider: {NOTIFICATION_CONFIG.provider}. Weekly digest day: {NOTIFICATION_CONFIG.weeklyDigestDay}. Default reminder hour: {NOTIFICATION_CONFIG.weeklyDigestHour}:00.
+            Alerts for deadlines, saved programmes and school updates will appear here once those features are live.
           </Text>
-          <TouchableOpacity
-            activeOpacity={0.85}
-            onPress={() => router.push('/(tabs)/streaks')}
-            style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
-          >
-            <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Review streak timing</Text>
-          </TouchableOpacity>
         </SettingsCard>
 
         <SettingsCard title="LEGAL">

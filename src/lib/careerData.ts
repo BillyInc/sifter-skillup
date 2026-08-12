@@ -132,8 +132,18 @@ export interface JambProgrammeDetail extends JambProgrammeSuggestion {
 export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
   matchedSubjectCount: number;
   matchedSubjects: string[];
+  missingSubjects?: string[];
+  olevelMatchedSubjectCount?: number;
+  olevelMatchedSubjects?: string[];
+  olevelMissingSubjects?: string[];
+  olevelRequirementText?: string | null;
+  eligibilityStatus?:
+    | "eligible"
+    | "utme_match_olevel_gap"
+    | "utme_match_olevel_unparsed"
+    | string;
   requirementText?: string | null;
-  matchBasis: "structured" | "text";
+  matchBasis: "structured" | "text" | "utme" | "olevel" | "combined";
 }
 
 export interface JambProgrammeSchool {
@@ -232,11 +242,13 @@ export const careerData = {
   async getSubjects(
     q?: string,
     stream?: string,
+    examType?: "utme" | "olevel",
   ): Promise<DataState<SubjectCatalogItem[]>> {
     try {
       const qs = new URLSearchParams();
       if (q) qs.set("q", q);
       if (stream) qs.set("stream", stream);
+      if (examType) qs.set("exam_type", examType);
       return await request<DataState<SubjectCatalogItem[]>>(
         `/api/student/subjects${qs.toString() ? `?${qs.toString()}` : ""}`,
       );
@@ -262,11 +274,19 @@ export const careerData = {
   async getProgrammesBySubjects(
     subjects: string[],
     stream?: string,
+    options?: {
+      examType?: "utme" | "olevel" | "combined";
+      olevelSubjects?: string[];
+    },
   ): Promise<DataState<SubjectProgrammeMatch[]>> {
     try {
       const qs = new URLSearchParams();
       qs.set("subjects", subjects.join(","));
       if (stream) qs.set("stream", stream);
+      if (options?.examType) qs.set("exam_type", options.examType);
+      if (options?.olevelSubjects?.length) {
+        qs.set("olevel_subjects", options.olevelSubjects.join(","));
+      }
       return await request<DataState<SubjectProgrammeMatch[]>>(
         `/api/student/programmes/by-subjects?${qs.toString()}`,
       );

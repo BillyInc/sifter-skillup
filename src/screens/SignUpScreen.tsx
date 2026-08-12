@@ -1,7 +1,7 @@
 /**
- * SignUpScreen — create a Sifter LevelUp account.
+ * SignUpScreen - create a Sifter LevelUp account.
  * Email/password live via useAuth.signUpEmail.
- * On success → onboarding (AccountTypeGate → persona setup).
+ * On success -> onboarding (AccountTypeGate -> persona setup).
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
@@ -66,6 +66,60 @@ function friendlySignupError(error: unknown, fallback: string) {
   return message;
 }
 
+const DEV_SIGNUP_PRESETS = [
+  {
+    label: "SS Student",
+    firstName: "Dev",
+    lastName: "Senior",
+    email: "levelup.dev+ss@student.test",
+  },
+  {
+    label: "JAMB",
+    firstName: "Dev",
+    lastName: "Jamb",
+    email: "levelup.dev+jamb@student.test",
+  },
+  {
+    label: "University",
+    firstName: "Dev",
+    lastName: "University",
+    email: "levelup.dev+university@student.test",
+  },
+  {
+    label: "Graduate",
+    firstName: "Dev",
+    lastName: "Graduate",
+    email: "levelup.dev+graduate@student.test",
+  },
+  {
+    label: "Skilled",
+    firstName: "Dev",
+    lastName: "Skilled",
+    email: "levelup.dev+skilled@student.test",
+  },
+  {
+    label: "Professional",
+    firstName: "Dev",
+    lastName: "Professional",
+    email: "levelup.dev+professional@student.test",
+  },
+  {
+    label: "School Admin",
+    firstName: "Dev",
+    lastName: "SchoolAdmin",
+    email: "levelup.dev+school-admin@educator.test",
+  },
+  {
+    label: "University Admin",
+    firstName: "Dev",
+    lastName: "UniversityAdmin",
+    email: "levelup.dev+university-admin@educator.test",
+  },
+] as const;
+
+const DEV_PASSWORD = "Password123!";
+const DEV_EMAIL_CODE = "000000";
+
 export default function SignUpScreen() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -114,6 +168,20 @@ export default function SignUpScreen() {
       return false;
     }
     return true;
+  };
+
+  const applyDevPreset = (preset: (typeof DEV_SIGNUP_PRESETS)[number]) => {
+    setFirstName(preset.firstName);
+    setMiddleName("");
+    setLastName(preset.lastName);
+    setDateOfBirth("01/01/2000");
+    setEmail(preset.email);
+    setPassword(DEV_PASSWORD);
+    setConfirmPassword(DEV_PASSWORD);
+    setEmailCode(DEV_EMAIL_CODE);
+    setCodeSent(true);
+    setDevCode(DEV_EMAIL_CODE);
+    setError("");
   };
 
   const handleSendCode = async () => {
@@ -169,7 +237,7 @@ export default function SignUpScreen() {
         hitSlop={8}
       >
         <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          ← Back
+          {"<- Back"}
         </Text>
       </TouchableOpacity>
 
@@ -178,6 +246,30 @@ export default function SignUpScreen() {
       </Text>
 
       <ErrorNote message={error} />
+
+      {typeof __DEV__ !== "undefined" && __DEV__ ? (
+        <View style={[styles.devPanel, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <Text style={[styles.devTitle, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
+            Dev test accounts
+          </Text>
+          <View style={styles.devGrid}>
+            {DEV_SIGNUP_PRESETS.map((preset) => (
+              <TouchableOpacity
+                key={preset.email}
+                onPress={() => applyDevPreset(preset)}
+                style={[styles.devChip, { borderColor: colors.borderRole.subtle }]}
+              >
+                <Text style={[styles.devChipText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
+                  {preset.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <Text style={[styles.devHint, { color: colors.textRole.muted }, CompassFonts.body]}>
+            Password: {DEV_PASSWORD} / code: {DEV_EMAIL_CODE}
+          </Text>
+        </View>
+      ) : null}
 
       <View style={styles.nameRow}>
         <View style={{ flex: 1 }}>
@@ -236,7 +328,7 @@ export default function SignUpScreen() {
         value={password}
         onChangeText={setPassword}
         secure
-        placeholder="••••••••"
+        placeholder="********"
         hint="At least 8 characters"
       />
       <AuthField
@@ -244,7 +336,7 @@ export default function SignUpScreen() {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secure
-        placeholder="••••••••"
+        placeholder="********"
       />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>
@@ -264,7 +356,7 @@ export default function SignUpScreen() {
       ) : null}
 
       <SifterButton
-        label={codeSent ? "Verify & create account →" : "Send email code →"}
+        label={codeSent ? "Verify & create account ->" : "Send email code ->"}
         onPress={codeSent ? handleCreate : handleSendCode}
         loading={busy}
         variant="track"
@@ -364,4 +456,10 @@ const styles = StyleSheet.create({
   muted: { fontSize: FontSize.sm },
   link: { fontSize: FontSize.sm },
   inlineError: { fontSize: FontSize.sm, marginTop: -Spacing.xs },
+  devPanel: { borderWidth: 1, borderRadius: 12, padding: Spacing.md, gap: Spacing.sm },
+  devTitle: { fontSize: FontSize.sm },
+  devGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
+  devChip: { borderWidth: 1, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 8 },
+  devChipText: { fontSize: FontSize.xs },
+  devHint: { fontSize: FontSize.xs },
 });

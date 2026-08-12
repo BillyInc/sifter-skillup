@@ -24,6 +24,7 @@ import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
 import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { DegreeSkills } from "@/components/careerIntelligence";
+import { LiveSubjectMultiSelect } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
 import type {
   AdmissionSchool,
@@ -62,11 +63,29 @@ function readParam(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
+function matchSummary(item: SubjectProgrammeMatch): string {
+  if (item.matchBasis === "combined") {
+    if (item.eligibilityStatus === "eligible") {
+      return "UTME gate matches and O-level requirement is satisfied.";
+    }
+    if (item.eligibilityStatus === "utme_match_olevel_gap") {
+      return "UTME gate matches, but the O-level requirement still has gaps.";
+    }
+    return "UTME gate matches. O-level requirement needs review before this is treated as eligible.";
+  }
+  if (item.matchBasis === "olevel") {
+    return "O-level requirement matches your selected subjects. Check the UTME subjects before applying.";
+  }
+  return "UTME subjects match where requirements are parsed. Check O-level subjects before deciding.";
+}
+
 export default function AdmissionBrowseScreen() {
   const params = useLocalSearchParams<{
     mode?: string | string[];
     q?: string | string[];
     subjects?: string | string[];
+    olevel_subjects?: string | string[];
+    exam_type?: string | string[];
     stream?: string | string[];
   }>();
   const router = useRouter();
@@ -80,6 +99,13 @@ export default function AdmissionBrowseScreen() {
   const [query, setQuery] = useState(readParam(params.q));
   const [subjectText, setSubjectText] = useState(
     decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
+  );
+  const [olevelSubjectText, setOlevelSubjectText] = useState(
+    decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
+  );
+  const rawExamType = readParam(params.exam_type);
+  const [subjectExamType] = useState<"olevel" | "combined">(
+    rawExamType === "olevel" ? "olevel" : "combined",
   );
   const [stream] = useState(readParam(params.stream));
   const [loading, setLoading] = useState(false);
@@ -101,6 +127,10 @@ export default function AdmissionBrowseScreen() {
     () => subjectText.split(",").map((s) => s.trim()).filter(Boolean),
     [subjectText],
   );
+  const olevelSubjects = useMemo(
+    () => olevelSubjectText.split(",").map((s) => s.trim()).filter(Boolean),
+    [olevelSubjectText],
+  );
 
   const runProgrammeSearch = async (term = query) => {
     const q = term.trim();
@@ -118,14 +148,39 @@ export default function AdmissionBrowseScreen() {
   };
 
   const runSubjectMatch = async () => {
-    if (!subjects.length) return;
+    if (subjectExamType === "olevel" && olevelSubjects.length < 5) {
+      setCandidates([]);
+      setNotice("Choose at least five O-level subjects before checking programme fit.");
+      return;
+    }
+    if (subjectExamType === "combined" && subjects.length < 4) {
+      setCandidates([]);
+      setNotice("Choose Use of English and three other UTME subjects before matching programmes.");
+      return;
+    }
+    if (subjectExamType === "combined" && olevelSubjects.length < 5) {
+      setCandidates([]);
+      setNotice("Choose at least five O-level subjects so we can check the programme requirement, not only the UTME gate.");
+      return;
+    }
     setLoading(true);
     setNotice(null);
     setSelected(null);
     try {
-      const state = await careerData.getProgrammesBySubjects(subjects, stream || undefined);
+      const state = await careerData.getProgrammesBySubjects(
+        subjectExamType === "olevel" ? olevelSubjects : subjects,
+        stream || undefined,
+        {
+          examType: subjectExamType,
+          olevelSubjects,
+        },
+      );
       setCandidates((state.status === "real" || state.status === "fallback") && state.data ? state.data : []);
-      setNotice(state.meta?.notice ?? null);
+      setNotice(
+        state.status === "fallback"
+          ? "We found possible programmes from the published requirement text. Confirm each university's current requirements before deciding."
+          : state.meta?.notice ?? null,
+      );
     } finally {
       setLoading(false);
     }
@@ -222,10 +277,12 @@ export default function AdmissionBrowseScreen() {
         intendedJambProgrammeId: id,
         intendedProgramme: candidate.jambName,
         programmeName: candidate.jambName,
+        jambSubjects: subjects,
+        olevelSubjects,
         completedAt: new Date().toISOString(),
       };
       await saveStartingPoint(updated, user?.id);
-      await API.completeOnboarding({});
+      await API.completeOnboarding({ account_type: "student" });
       await refreshUser();
       await clearOnboardingDraft(user?.id);
     } catch {
@@ -234,7 +291,7 @@ export default function AdmissionBrowseScreen() {
   };
 
   useEffect(() => {
-    if (initialMode === "subjects" && subjects.length) {
+    if (initialMode === "subjects" && (subjects.length || olevelSubjects.length)) {
       void runSubjectMatch();
     } else if (initialMode === "programme" && query.trim().length >= 2) {
       void runProgrammeSearch(query);
@@ -406,28 +463,69 @@ export default function AdmissionBrowseScreen() {
               <Text style={styles.actionText}>Search</Text>
             </TouchableOpacity>
           </View>
+          <LiveSubjectMultiSelect
+            label="O-level subjects for requirement check"
+            stream={stream || undefined}
+            examType="olevel"
+            value={olevelSubjects}
+            onChange={(next) => setOlevelSubjectText(next.join(", "))}
+            minSelected={5}
+            maxSelected={9}
+            showSearch={false}
+            helperText="Optional for programme search, but needed before treating a programme and school as a strong fit."
+          />
         </View>
       ) : (
         <View style={styles.panel}>
-          <Text style={[styles.label, { color: colors.textSoft }]}>Subjects</Text>
-          <View style={[styles.inputRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <TextInput
-              value={subjectText}
-              onChangeText={setSubjectText}
-              placeholder="English, Mathematics, Economics"
-              placeholderTextColor={colors.textMuted}
-              style={[styles.input, { color: colors.text }]}
-              returnKeyType="search"
-              onSubmitEditing={runSubjectMatch}
+          {subjectExamType === "combined" ? (
+            <LiveSubjectMultiSelect
+              label="Your UTME subjects"
+              examType="utme"
+              value={subjects}
+              onChange={(next) => setSubjectText(next.join(", "))}
+              minSelected={4}
+              maxSelected={4}
+              showSearch={false}
+              fixedSubjects={["English Language"]}
+              helperText="Use of English is fixed. Choose 3 other UTME subjects for the JAMB gate."
             />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={runSubjectMatch}
-              style={[styles.actionBtn, { backgroundColor: Brand.primary }]}
-            >
-              <Text style={styles.actionText}>Match</Text>
-            </TouchableOpacity>
-          </View>
+          ) : null}
+          <LiveSubjectMultiSelect
+            label={
+              subjectExamType === "olevel"
+                ? "O-level subjects you are taking or considering"
+                : "Your O-level subjects"
+            }
+            stream={stream || undefined}
+            examType="olevel"
+            value={olevelSubjects}
+            onChange={(next) => setOlevelSubjectText(next.join(", "))}
+            minSelected={5}
+            maxSelected={9}
+            showSearch={false}
+            helperText={
+              subjectExamType === "olevel"
+                ? "Choose at least 5 O-level subjects for early programme guidance. UTME requirements appear after you open a programme."
+                : "Choose at least 5 O-level subjects so the result can show whether the programme requirement is satisfied or has gaps."
+            }
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={runSubjectMatch}
+            style={[
+              styles.actionBtn,
+              {
+                backgroundColor:
+                  (subjectExamType === "olevel" && olevelSubjects.length >= 5) ||
+                  (subjectExamType === "combined" && subjects.length >= 4 && olevelSubjects.length >= 5)
+                    ? Brand.primary
+                    : colors.border,
+                alignSelf: "flex-start",
+              },
+            ]}
+          >
+            <Text style={styles.actionText}>Match programmes</Text>
+          </TouchableOpacity>
           {stream ? (
             <Text style={[styles.hint, { color: colors.textMuted }]}>
               Stream: {stream}. Stream sorts suggestions; subjects decide eligibility.
@@ -481,9 +579,16 @@ export default function AdmissionBrowseScreen() {
                 </Text>
               ) : null}
               {"matchedSubjectCount" in item ? (
-                <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
-                  Matches your selected subjects where requirements are parsed · {item.matchBasis}
-                </Text>
+                <View style={styles.matchLines}>
+                  <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
+                    {matchSummary(item)}
+                  </Text>
+                  {item.olevelMissingSubjects?.length ? (
+                    <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
+                      O-level gaps: {item.olevelMissingSubjects.slice(0, 2).join("; ")}
+                    </Text>
+                  ) : null}
+                </View>
               ) : null}
             </TouchableOpacity>
           );
@@ -630,6 +735,7 @@ const styles = StyleSheet.create({
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  matchLines: { gap: 3 },
   chosenRow: {
     flexDirection: "row",
     alignItems: "center",

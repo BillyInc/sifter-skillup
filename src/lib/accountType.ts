@@ -1,5 +1,5 @@
 /**
- * accountType — local source of truth for which side of the app a user is on.
+ * accountType - local source of truth for which side of the app a user is on.
  *
  * The institutional/admin side is gated on `account_type`. The backend will
  * eventually persist this on the user record, but until that lands we keep a
@@ -11,7 +11,7 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type AccountType = "student" | "educator" | "institution_admin";
+export type AccountType = "pending" | "student" | "educator" | "institution_admin";
 
 const KEY = "@levelup_account_type_v1";
 
@@ -27,7 +27,7 @@ export function isAdminAccount(t: AccountType | undefined | null): boolean {
 export async function getLocalAccountType(userId?: string | null): Promise<AccountType | null> {
   try {
     const raw = await AsyncStorage.getItem(keyFor(userId));
-    return raw === "educator" || raw === "institution_admin" || raw === "student"
+    return raw === "pending" || raw === "educator" || raw === "institution_admin" || raw === "student"
       ? (raw as AccountType)
       : null;
   } catch {
@@ -79,11 +79,12 @@ export function useEffectiveAccountType(backendType?: AccountType | string, user
   }, [userId]);
 
   const resolved: AccountType =
+    backendType === "pending" ||
     backendType === "educator" ||
     backendType === "institution_admin" ||
     backendType === "student"
       ? (backendType as AccountType)
-      : (local ?? "student");
+      : (local ?? "pending");
 
   return { accountType: resolved, hydrated };
 }
