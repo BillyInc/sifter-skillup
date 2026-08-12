@@ -1,4 +1,4 @@
-// Polyfills — must load before any code that touches crypto/buffer/text-encoding.
+// Polyfills - must load before any code that touches crypto/buffer/text-encoding.
 // Order matters: random-values, then fast-text-encoding, then ethers shims (Buffer + FileReader).
 import 'react-native-get-random-values';
 import 'fast-text-encoding';
@@ -20,7 +20,7 @@ import { PRIVY_ENABLED } from '../src/lib/config';
 import { AppPrivyProvider } from '../src/lib/privy';
 
 export default function RootLayout() {
-  // COMPASS font gate — waits for Hanken Grotesk + Spline Sans Mono to load.
+  // COMPASS font gate - waits for Hanken Grotesk + Spline Sans Mono to load.
   const fontsReady = useCompassFonts();
   if (!fontsReady) return null;
 

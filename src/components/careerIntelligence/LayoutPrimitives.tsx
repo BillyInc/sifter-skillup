@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "../../theme";
 
-// ── ScreenHeader ────────────────────────────────────────────────
+//  ScreenHeader 
 // Reusable eyebrow + title + subtitle + optional back button.
 // Replaces the repeated header pattern found in 12/16 legacy screens.
 
@@ -74,7 +74,7 @@ export function ScreenHeader({
   );
 }
 
-// ── Card ────────────────────────────────────────────────────────
+//  Card 
 // Bordered container using semantic tokens. Use for repeated items,
 // compact summaries, and content blocks.
 
@@ -126,10 +126,9 @@ const Shadow = {
   elevation: 2,
 };
 
-// ── Banner ──────────────────────────────────────────────────────
-// Unified notice bar for info, warning, success, guest, offline, sync,
-// streak, and celebration states. Replaces scattered OfflineBanner,
-// StreakUrgencyBanner, and inline CelebrationOverlay message strips.
+//  Banner 
+// Banner
+// Unified notice bar for info, warning, success, guest, offline, sync, and celebration states.
 //
 // Semantic tokens only. Preserves existing 4-variant API and adds new ones.
 
@@ -140,7 +139,6 @@ export type BannerVariant =
   | "guest"
   | "offline"
   | "sync"
-  | "streak"
   | "celebration";
 
 export function Banner({
@@ -169,7 +167,6 @@ export function Banner({
     guest:        { bg: colors.accentRole.warning + "0A", border: colors.accentRole.warning + "20", text: colors.accentRole.warning,  icon: "gift" as const },
     offline:      { bg: colors.accentRole.danger + "12",  border: colors.accentRole.danger + "30",  text: colors.accentRole.danger,   icon: "wifi-off" as const },
     sync:         { bg: colors.accentRole.status + "0A",  border: colors.accentRole.status + "20",  text: colors.accentRole.status,   icon: "refresh-cw" as const },
-    streak:       { bg: colors.accentRole.warning + "10", border: colors.accentRole.warning + "28", text: colors.accentRole.warning,  icon: "zap" as const },
     celebration:  { bg: colors.accentRole.success + "10", border: colors.accentRole.success + "28", text: colors.accentRole.success,  icon: "star" as const },
   }[variant];
 
@@ -193,7 +190,7 @@ export function Banner({
   );
 }
 
-// ── SettingsRow ─────────────────────────────────────────────────
+//  SettingsRow 
 // Label + value/chevron/toggle row for settings and profile screens.
 
 export function SettingsRow({
@@ -269,7 +266,7 @@ export function SettingsRow({
   );
 }
 
-// ── LinkButton ──────────────────────────────────────────────────
+//  LinkButton 
 // Text-only button with arrow. Used for "View all", "Explore", etc.
 
 export function LinkButton({
@@ -299,7 +296,7 @@ export function LinkButton({
   );
 }
 
-// ── KeyValueRow ─────────────────────────────────────────────────
+//  KeyValueRow 
 // Label-value pair for admin/verification/inspection screens.
 
 export function KeyValueRow({
@@ -330,7 +327,7 @@ export function KeyValueRow({
   );
 }
 
-// ── InfoCard ────────────────────────────────────────────────────
+//  InfoCard 
 // Icon + title + body bordered card. Used for feature explanations,
 // requirement lists, and capability blocks.
 
@@ -370,7 +367,7 @@ export function InfoCard({
   );
 }
 
-// ── Callout ─────────────────────────────────────────────────────
+//  Callout 
 // Accent-bordered note block. Used for tips, warnings, product notes.
 
 export function Callout({
@@ -401,8 +398,8 @@ export function Callout({
   );
 }
 
-// ── StatCard ────────────────────────────────────────────────────
-// Label + mono value + optional delta. Used in streaks, guild, dashboards.
+//  StatCard 
+// Label + mono value + optional delta. Used in dashboards.
 
 export function StatCard({
   label,
@@ -449,7 +446,7 @@ export function StatCard({
   );
 }
 
-// ── EmptyState ──────────────────────────────────────────────────
+//  EmptyState 
 // Illustrated empty state with route-line motif and CTA.
 
 export function EmptyState({
@@ -489,7 +486,7 @@ export function EmptyState({
   );
 }
 
-// ── Styles ──────────────────────────────────────────────────────
+//  Styles 
 
 const styles = StyleSheet.create({
   // ScreenHeader

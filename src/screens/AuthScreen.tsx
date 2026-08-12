@@ -419,6 +419,26 @@ export default function AuthScreen() {
                 placeholder="Password"
               />
 
+              <TouchableOpacity
+                style={{ alignSelf: "flex-end", paddingVertical: Spacing.xs }}
+                onPress={() =>
+                  router.replace("/(auth)/forgot-password?intent=reset" as any)
+                }
+                hitSlop={8}
+              >
+                <Text
+                  style={[
+                    {
+                      fontSize: FontSize.sm,
+                      color: colors.accentRole.action,
+                    },
+                    CompassFonts.bodyBold,
+                  ]}
+                >
+                  Forgot password?
+                </Text>
+              </TouchableOpacity>
+
               <SifterButton
                 label="Log in"
                 onPress={handleLogin}

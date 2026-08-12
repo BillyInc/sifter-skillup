@@ -29,7 +29,7 @@ ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS date_of_birth DATE,
     ADD COLUMN IF NOT EXISTS avatar_url TEXT,
     ADD COLUMN IF NOT EXISTS auth_provider TEXT NOT NULL DEFAULT 'guest',
-    ADD COLUMN IF NOT EXISTS account_type TEXT NOT NULL DEFAULT 'student',
+    ADD COLUMN IF NOT EXISTS account_type TEXT NOT NULL DEFAULT 'pending',
     ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false,
     ADD COLUMN IF NOT EXISTS email_verified_at TIMESTAMPTZ,
     ADD COLUMN IF NOT EXISTS onboarding_checkpoint TEXT,
@@ -58,7 +58,10 @@ ALTER TABLE skillup_dev.users
 ALTER TABLE skillup_dev.users DROP CONSTRAINT IF EXISTS users_account_type_check;
 ALTER TABLE skillup_dev.users
     ADD CONSTRAINT users_account_type_check
-    CHECK (account_type IN ('student', 'educator', 'institution_admin'));
+    CHECK (account_type IN ('pending', 'student', 'educator', 'institution_admin'));
+
+ALTER TABLE skillup_dev.users
+    ALTER COLUMN account_type SET DEFAULT 'pending';
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_users_email
     ON skillup_dev.users(email)

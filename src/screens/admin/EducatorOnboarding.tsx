@@ -109,14 +109,24 @@ function registryLabel(t: OrganizationType): string {
 function accountTypeFor(
   t: OrganizationType,
   role: OrgRole | undefined,
-): Exclude<AccountType, "student"> {
+): Exclude<AccountType, "pending" | "student"> {
   if (role === "owner" || (t === "university" && role === "dean")) {
     return "institution_admin";
   }
   return "educator";
 }
 
-export default function EducatorOnboarding() {
+interface EducatorOnboardingProps {
+  /**
+   * Return to the persona picker. Optional so the screen still works when
+   * routed to directly, where there are no choices to go back to.
+   */
+  onBackToChoices?: () => void;
+}
+
+export default function EducatorOnboarding({
+  onBackToChoices,
+}: EducatorOnboardingProps = {}) {
   const router = useRouter();
   const { colors } = useTheme();
   const { refreshUser, user } = useAuth();
@@ -256,7 +266,7 @@ export default function EducatorOnboarding() {
             "Could not create the admin workspace right now.",
         );
       }
-      await API.completeOnboarding({});
+      await API.completeOnboarding({ account_type: accountType });
       await refreshUser();
       await saveEducatorProfile(profile, user?.id);
       await setLocalAccountType(accountType, user?.id);
@@ -278,7 +288,13 @@ export default function EducatorOnboarding() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <Stepper step={step} total={4} onBack={step > 1 ? back : undefined} />
+      {/*
+        On step 1 there is no earlier step, so `back` is undefined and the
+        Stepper rendered no control at all -- an educator who picked this
+        persona had no way back to the picker short of a browser reload.
+        Falling through to onBackToChoices gives step 1 a real destination.
+      */}
+      <Stepper step={step} total={4} onBack={step > 1 ? back : onBackToChoices} />
 
       {/* Step 1: Your organisation */}
       {step === 1 ? (

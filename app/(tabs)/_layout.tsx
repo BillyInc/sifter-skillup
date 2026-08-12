@@ -2,6 +2,11 @@ import { Redirect, Tabs, useRouter } from "expo-router";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
 import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
 import { useAuth } from "../../src/hooks/useAuth";
+import { useEffectiveAccountType } from "../../src/lib/accountType";
+
+export const unstable_settings = {
+  initialRouteName: "explore",
+};
 
 // Navigation chrome (web sidebar + mobile bottom bar) is owned by ReferenceShell,
 // so the expo-router Tabs bar is hidden on every platform and every screen is
@@ -11,8 +16,9 @@ import { useAuth } from "../../src/hooks/useAuth";
 export default function TabsLayout() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
 
-  if (loading) {
+  if (loading || (user && !hydrated)) {
     return null;
   }
 
@@ -20,7 +26,7 @@ export default function TabsLayout() {
     return <Redirect href="/(auth)/sign-in" />;
   }
 
-  if (user.auth_provider !== "guest" && !user.onboarding_completed) {
+  if (user.auth_provider !== "guest" && (!user.onboarding_completed || accountType === "pending")) {
     return <Redirect href="/(auth)/onboarding" />;
   }
 
@@ -31,6 +37,7 @@ export default function TabsLayout() {
     >
       <ReferenceShell>
         <Tabs
+          initialRouteName="explore"
           screenOptions={{
             headerShown: false,
             tabBarStyle: { display: "none" },

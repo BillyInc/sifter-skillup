@@ -29,7 +29,7 @@ export interface UserProfile {
   auth_provider: string;
   /** Discriminates the student app from the institutional/admin side. Defaults
    *  to 'student' (backend may omit it until the institutional slice lands). */
-  account_type?: 'student' | 'educator' | 'institution_admin';
+  account_type?: 'pending' | 'student' | 'educator' | 'institution_admin';
   email: string;
   points: number;
   streak: number;
@@ -180,7 +180,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await clearLocalUserState();
     await clearExplicitLogout();
     const profile = _normalise(data.user);
-    setPendingPostAuthRedirect(resolvePostAuthHref(profile));
+    setPendingPostAuthRedirect(
+      profile.onboarding_completed ? resolvePostAuthHref(profile) : null,
+      profile.id,
+    );
     setUser(profile);
     API.checkStreak().catch(() => {});
 
@@ -287,7 +290,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const isNewUser = Boolean(payload.is_new_user);
       const nextPath = resolvePostAuthHref(payload.user);
-      setPendingPostAuthRedirect(nextPath);
       await _handleAuthResponse({ token: payload.token, user: payload.user });
       return { isNewUser, nextPath };
     } catch (error) {

@@ -1,12 +1,8 @@
 /**
- * Onboarding form primitives — shared building blocks for every setup step.
+ * Shared onboarding form building blocks.
  *
- * Stepper · OptionCard · ChoiceChips · SelectField (modal picker) · SearchField
- * · ToggleRow. Selectors that depend on CCMAS/NCE/IBASS data accept a
- * `comingSoon` flag so they render an honest "Live soon" state instead of an
- * empty dropdown until that data is imported.
- *
- * Semantic tokens + CompassFonts (BRIEF chrome).
+ * Selectors that depend on CCMAS/NCE/IBASS data accept a `comingSoon` flag so
+ * they render an honest "Live soon" state instead of an empty dropdown.
  */
 import React, { useState } from "react";
 import {
@@ -21,10 +17,14 @@ import {
   Platform,
   type ViewStyle,
 } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, Brand, CompassFonts } from "../../theme";
+import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "../../theme";
 import { LockedPill } from "../careerIntelligence/ComingSoon";
 
-// ─── Stepper header (route-line stations) ─────────────────────
+export interface ChoiceOption {
+  label: string;
+  value: string;
+}
+
 export function Stepper({
   step,
   total,
@@ -35,18 +35,31 @@ export function Stepper({
   onBack?: () => void;
 }) {
   const { colors } = useTheme();
+
   return (
     <View style={styles.stepper}>
       {onBack ? (
         <TouchableOpacity onPress={onBack} hitSlop={10} style={styles.stepBack}>
-          <Text style={[styles.stepBackText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-            ← Back
+          <Text
+            style={[
+              styles.stepBackText,
+              { color: colors.accentRole.action },
+              CompassFonts.bodyBold,
+            ]}
+          >
+            Back
           </Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.stepBack} />
       )}
-      <Text style={[styles.stepLabel, { color: colors.textRole.muted }, CompassFonts.body]}>
+      <Text
+        style={[
+          styles.stepLabel,
+          { color: colors.textRole.muted },
+          CompassFonts.body,
+        ]}
+      >
         Step {step} of {total}
       </Text>
       <View style={styles.stepDots}>
@@ -56,7 +69,8 @@ export function Stepper({
             style={[
               styles.stepDot,
               {
-                backgroundColor: i < step ? colors.accentRole.action : colors.borderRole.subtle,
+                backgroundColor:
+                  i < step ? colors.accentRole.action : colors.borderRole.subtle,
               },
             ]}
           />
@@ -66,7 +80,6 @@ export function Stepper({
   );
 }
 
-// ─── Big tappable option card (WhoAreYou etc.) ────────────────
 export function OptionCard({
   icon,
   title,
@@ -81,6 +94,7 @@ export function OptionCard({
   onPress: () => void;
 }) {
   const { colors } = useTheme();
+
   return (
     <TouchableOpacity
       activeOpacity={0.85}
@@ -89,31 +103,51 @@ export function OptionCard({
         styles.optionCard,
         {
           backgroundColor: colors.surface.raised,
-          borderColor: selected ? colors.accentRole.action : colors.borderRole.subtle,
+          borderColor: selected
+            ? colors.accentRole.action
+            : colors.borderRole.subtle,
           borderWidth: selected ? 2 : 1,
         },
       ]}
     >
-      <Text style={styles.optionIcon}>{icon}</Text>
+      <Text style={[styles.optionIcon, { color: colors.textRole.primary }]}>
+        {icon}
+      </Text>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.optionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+        <Text
+          style={[
+            styles.optionTitle,
+            { color: colors.textRole.primary },
+            CompassFonts.bodyBold,
+          ]}
+        >
           {title}
         </Text>
         {subtitle ? (
-          <Text style={[styles.optionSub, { color: colors.textRole.muted }, CompassFonts.body]}>
+          <Text
+            style={[
+              styles.optionSub,
+              { color: colors.textRole.muted },
+              CompassFonts.body,
+            ]}
+          >
             {subtitle}
           </Text>
         ) : null}
       </View>
-      {selected ? <Text style={[styles.optionCheck, { color: colors.accentRole.action }]}>✓</Text> : null}
+      {selected ? (
+        <Text
+          style={[
+            styles.optionCheck,
+            { color: colors.accentRole.action },
+            CompassFonts.bodyBold,
+          ]}
+        >
+          Selected
+        </Text>
+      ) : null}
     </TouchableOpacity>
   );
-}
-
-// ─── Choice chips (single or multi) ───────────────────────────
-export interface ChoiceOption {
-  label: string;
-  value: string;
 }
 
 export function ChoiceChips({
@@ -122,12 +156,14 @@ export function ChoiceChips({
   onChange,
   multi,
   label,
+  maxSelected,
 }: {
   options: ChoiceOption[];
   value: string | string[] | undefined;
   onChange: (value: any) => void;
   multi?: boolean;
   label?: string;
+  maxSelected?: number;
 }) {
   const { colors } = useTheme();
   const selectedSet = new Set(
@@ -137,7 +173,11 @@ export function ChoiceChips({
   const toggle = (v: string) => {
     if (multi) {
       const next = new Set(selectedSet);
-      next.has(v) ? next.delete(v) : next.add(v);
+      if (next.has(v)) {
+        next.delete(v);
+      } else if (!maxSelected || next.size < maxSelected) {
+        next.add(v);
+      }
       onChange(Array.from(next));
     } else {
       onChange(v);
@@ -147,8 +187,15 @@ export function ChoiceChips({
   return (
     <View style={{ gap: Spacing.sm }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
+        <Text
+          style={[
+            styles.fieldLabel,
+            { color: colors.textRole.secondary },
+            CompassFonts.bodyBold,
+          ]}
+        >
           {label}
+          {multi && maxSelected ? ` (${selectedSet.size}/${maxSelected})` : ""}
         </Text>
       ) : null}
       <View style={styles.chipWrap}>
@@ -162,15 +209,23 @@ export function ChoiceChips({
               style={[
                 styles.chip,
                 {
-                  backgroundColor: on ? colors.accentRole.action : colors.surface.raised,
-                  borderColor: on ? colors.accentRole.action : colors.borderRole.subtle,
+                  backgroundColor: on
+                    ? colors.accentRole.action
+                    : colors.surface.raised,
+                  borderColor: on
+                    ? colors.accentRole.action
+                    : colors.borderRole.subtle,
                 },
               ]}
             >
               <Text
                 style={[
                   styles.chipText,
-                  { color: on ? colors.textRole.inverse : colors.textRole.primary },
+                  {
+                    color: on
+                      ? colors.textRole.inverse
+                      : colors.textRole.primary,
+                  },
                   CompassFonts.bodyBold,
                 ]}
               >
@@ -184,12 +239,11 @@ export function ChoiceChips({
   );
 }
 
-// ─── Select field with modal picker ───────────────────────────
 export function SelectField({
   label,
   value,
-  placeholder = "Select…",
-  options,
+  placeholder = "Select...",
+  options = [],
   onSelect,
   comingSoon,
   hint,
@@ -199,18 +253,34 @@ export function SelectField({
   placeholder?: string;
   options?: ChoiceOption[];
   onSelect?: (value: string) => void;
-  /** Data not yet imported → render a disabled "Live soon" field. */
   comingSoon?: boolean;
   hint?: string;
 }) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
-  const selectedLabel = options?.find((o) => o.value === value)?.label;
+  const [query, setQuery] = useState("");
+  const selectedLabel = options.find((o) => o.value === value)?.label;
+  const searchable = options.length > 8;
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredOptions = normalizedQuery
+    ? options.filter((o) => o.label.toLowerCase().includes(normalizedQuery))
+    : options;
+
+  const close = () => {
+    setOpen(false);
+    setQuery("");
+  };
 
   return (
     <View style={{ gap: 6 }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
+        <Text
+          style={[
+            styles.fieldLabel,
+            { color: colors.textRole.secondary },
+            CompassFonts.bodyBold,
+          ]}
+        >
           {label}
         </Text>
       ) : null}
@@ -219,53 +289,87 @@ export function SelectField({
         onPress={() => !comingSoon && setOpen(true)}
         style={[
           styles.select,
-          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
+          {
+            backgroundColor: colors.surface.subtle,
+            borderColor: colors.borderRole.subtle,
+          },
         ]}
       >
         <Text
           style={[
             styles.selectText,
-            { color: selectedLabel ? colors.textRole.primary : colors.textRole.placeholder },
+            {
+              color: selectedLabel
+                ? colors.textRole.primary
+                : colors.textRole.placeholder,
+            },
             CompassFonts.body,
           ]}
           numberOfLines={1}
         >
           {comingSoon
             ? "Available once your institution data is added"
-            : (selectedLabel ?? placeholder)}
+            : selectedLabel ?? placeholder}
         </Text>
         {comingSoon ? (
           <LockedPill label="Live soon" />
         ) : (
-          <Text style={{ color: colors.textRole.muted }}>▾</Text>
+          <Text style={[styles.chevron, { color: colors.textRole.muted }]}>v</Text>
         )}
       </TouchableOpacity>
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textRole.muted }, CompassFonts.body]}>{hint}</Text>
+        <Text
+          style={[
+            styles.hint,
+            { color: colors.textRole.muted },
+            CompassFonts.body,
+          ]}
+        >
+          {hint}
+        </Text>
       ) : null}
 
-      <Modal
-        visible={open}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setOpen(false)}
-      >
-        <TouchableOpacity
-          style={styles.modalOverlay}
-          activeOpacity={1}
-          onPress={() => setOpen(false)}
-        >
-          <View
+      <Modal visible={open} transparent animationType="fade" onRequestClose={close}>
+        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={close}>
+          <TouchableOpacity
+            activeOpacity={1}
             style={[
               styles.modalSheet,
-              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+              {
+                backgroundColor: colors.surface.raised,
+                borderColor: colors.borderRole.subtle,
+              },
             ]}
           >
-            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+            <Text
+              style={[
+                styles.modalTitle,
+                { color: colors.textRole.primary },
+                CompassFonts.bodyBold,
+              ]}
+            >
               {label ?? "Select"}
             </Text>
+            {searchable ? (
+              <TextInput
+                value={query}
+                onChangeText={setQuery}
+                placeholder="Search options"
+                placeholderTextColor={colors.textRole.placeholder}
+                style={[
+                  styles.modalSearch,
+                  {
+                    backgroundColor: colors.surface.subtle,
+                    borderColor: colors.borderRole.subtle,
+                    color: colors.textRole.primary,
+                  },
+                  CompassFonts.body,
+                ]}
+                autoCorrect={false}
+              />
+            ) : null}
             <ScrollView style={{ maxHeight: 360 }}>
-              {(options ?? []).map((o) => (
+              {filteredOptions.map((o) => (
                 <TouchableOpacity
                   key={o.value}
                   style={[
@@ -274,31 +378,55 @@ export function SelectField({
                   ]}
                   onPress={() => {
                     onSelect?.(o.value);
-                    setOpen(false);
+                    close();
                   }}
                 >
-                  <Text style={[styles.modalRowText, { color: colors.textRole.primary }, CompassFonts.body]}>
+                  <Text
+                    style={[
+                      styles.modalRowText,
+                      { color: colors.textRole.primary },
+                      CompassFonts.body,
+                    ]}
+                  >
                     {o.label}
                   </Text>
                   {value === o.value ? (
-                    <Text style={{ color: colors.accentRole.action }}>✓</Text>
+                    <Text
+                      style={[
+                        styles.selectedText,
+                        { color: colors.accentRole.action },
+                        CompassFonts.bodyBold,
+                      ]}
+                    >
+                      Selected
+                    </Text>
                   ) : null}
                 </TouchableOpacity>
               ))}
+              {filteredOptions.length === 0 ? (
+                <Text
+                  style={[
+                    styles.empty,
+                    { color: colors.textRole.muted },
+                    CompassFonts.body,
+                  ]}
+                >
+                  No matching options
+                </Text>
+              ) : null}
             </ScrollView>
-          </View>
+          </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
     </View>
   );
 }
 
-// ─── Search field ─────────────────────────────────────────────
 export function SearchField({
   label,
   value,
   onChangeText,
-  placeholder = "Search…",
+  placeholder = "Search...",
   comingSoon,
 }: {
   label?: string;
@@ -308,22 +436,44 @@ export function SearchField({
   comingSoon?: boolean;
 }) {
   const { colors } = useTheme();
+
   return (
     <View style={{ gap: 6 }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
+        <Text
+          style={[
+            styles.fieldLabel,
+            { color: colors.textRole.secondary },
+            CompassFonts.bodyBold,
+          ]}
+        >
           {label}
         </Text>
       ) : null}
       <View
         style={[
           styles.search,
-          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
+          {
+            backgroundColor: colors.surface.subtle,
+            borderColor: colors.borderRole.subtle,
+          },
         ]}
       >
-        <Text style={{ color: colors.textRole.muted }}>🔍</Text>
+        <Text
+          style={[
+            styles.searchIcon,
+            { color: colors.textRole.muted },
+            CompassFonts.bodyBold,
+          ]}
+        >
+          Search
+        </Text>
         <TextInput
-          style={[styles.searchInput, { color: colors.textRole.primary }, CompassFonts.body]}
+          style={[
+            styles.searchInput,
+            { color: colors.textRole.primary },
+            CompassFonts.body,
+          ]}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -337,7 +487,6 @@ export function SearchField({
   );
 }
 
-// ─── Toggle row ───────────────────────────────────────────────
 export function ToggleRow({
   label,
   value,
@@ -348,15 +497,25 @@ export function ToggleRow({
   onValueChange: (v: boolean) => void;
 }) {
   const { colors } = useTheme();
+
   return (
     <View style={styles.toggleRow}>
-      <Text style={[styles.toggleLabel, { color: colors.textRole.primary }, CompassFonts.body]}>
+      <Text
+        style={[
+          styles.toggleLabel,
+          { color: colors.textRole.primary },
+          CompassFonts.body,
+        ]}
+      >
         {label}
       </Text>
       <Switch
         value={value}
         onValueChange={onValueChange}
-        trackColor={{ true: colors.accentRole.action, false: colors.borderRole.subtle }}
+        trackColor={{
+          true: colors.accentRole.action,
+          false: colors.borderRole.subtle,
+        }}
         thumbColor={
           Platform.OS === "android"
             ? value
@@ -395,14 +554,14 @@ const styles = StyleSheet.create({
     borderRadius: Radius.lg,
     padding: Spacing.lg,
   },
-  optionIcon: { fontSize: 28 },
+  optionIcon: { fontSize: FontSize.md, fontWeight: "900", minWidth: 36 },
   optionTitle: { fontSize: FontSize.lg },
   optionSub: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.4,
     marginTop: 2,
   },
-  optionCheck: { fontSize: 18 },
+  optionCheck: { fontSize: FontSize.xs },
   fieldLabel: { fontSize: FontSize.sm },
   chipWrap: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   chip: {
@@ -426,6 +585,7 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   selectText: { flex: 1, fontSize: FontSize.md },
+  chevron: { fontSize: FontSize.md, fontWeight: "900" },
   hint: { fontSize: FontSize.xs },
   modalOverlay: {
     flex: 1,
@@ -443,14 +603,29 @@ const styles = StyleSheet.create({
     fontSize: FontSize.lg,
     marginBottom: Spacing.xs,
   },
+  modalSearch: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    minHeight: 44,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 10,
+    fontSize: FontSize.md,
+  },
   modalRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: Spacing.md,
     paddingVertical: 13,
     borderBottomWidth: 1,
   },
-  modalRowText: { fontSize: FontSize.md },
+  modalRowText: { flex: 1, fontSize: FontSize.md },
+  selectedText: { fontSize: FontSize.xs },
+  empty: {
+    paddingVertical: Spacing.lg,
+    textAlign: "center",
+    fontSize: FontSize.sm,
+  },
   search: {
     flexDirection: "row",
     alignItems: "center",
@@ -461,6 +636,7 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     minHeight: 48,
   },
+  searchIcon: { fontSize: FontSize.xs },
   searchInput: { flex: 1, fontSize: FontSize.md },
   toggleRow: {
     flexDirection: "row",
