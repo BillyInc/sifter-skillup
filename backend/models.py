@@ -1,5 +1,5 @@
 # ============================================
-# Sifter LevelUp — Pydantic Models
+# Sifter LevelUp - Pydantic Models
 # Extended: offline sync, device sessions,
 #           Starknet, feed, badges, challenges
 # ============================================
@@ -8,7 +8,7 @@ from typing import Optional, List, Dict, Any, Literal
 from enum import Enum
 
 
-# ── Enums ─────────────────────────────────────────────────────
+#  Enums 
 
 class TrackType(str, Enum):
     CRYPTO            = "crypto"
@@ -34,7 +34,7 @@ class SyncStatus(str, Enum):
     REJECTED  = "rejected"
 
 
-# ── Auth / User ────────────────────────────────────────────────
+#  Auth / User 
 
 class UserUpdate(BaseModel):
     username:           Optional[str]            = None
@@ -48,7 +48,7 @@ class UserUpdate(BaseModel):
     xp_stage:           Optional[int]            = None
     # SECURITY: `account_type` is deliberately NOT part of this model.
     # It gates require_admin (auth.py), so it must never be client-settable
-    # via PUT /api/users/me. It is managed server-side only — see the
+    # via PUT /api/users/me. It is managed server-side only - see the
     # institutions verify flow (routes/institutions_routes.py) and
     # provisioning (routes/provisioning_routes.py). Unknown fields in the
     # request body are ignored by Pydantic, and update_me additionally
@@ -58,16 +58,16 @@ class UserUpdate(BaseModel):
 class UserProfile(BaseModel):
     """Serialised user/profile shape returned to the client.
 
-    `account_type` mirrors the frontend AccountType union and defaults to
-    'student' so existing users (whose rows predate the column) are unaffected.
+    `account_type` mirrors the frontend AccountType union. New email users are
+    pending until AccountTypeGate writes the final choice.
     """
     id:           str
     username:     Optional[str] = None
     avatar_url:   Optional[str] = None
-    account_type: str           = "student"
+    account_type: str           = "pending"
 
 
-# ── Level / Progress ──────────────────────────────────────────
+#  Level / Progress 
 
 class LevelComplete(BaseModel):
     level_id:      int
@@ -85,7 +85,7 @@ class GameState(BaseModel):
     state: Dict[str, Any]
 
 
-# ── Offline Sync ───────────────────────────────────────────────
+#  Offline Sync 
 # The client accumulates a local queue while offline.
 # On reconnect it POSTs the whole queue to /api/sync/drain.
 # Server applies in order, returns per-item results.
@@ -103,7 +103,7 @@ class OfflineQueueItem(BaseModel):
 class OfflineSyncRequest(BaseModel):
     device_id:    str
     items:        List[OfflineQueueItem]
-    client_time:  str                                    # ISO — used for clock skew detection
+    client_time:  str                                    # ISO - used for clock skew detection
 
 class SyncItemResult(BaseModel):
     id:           str
@@ -117,7 +117,7 @@ class OfflineSyncResponse(BaseModel):
     clock_skew_seconds: int        = 0                  # non-zero warns client
 
 
-# ── Device Sessions ────────────────────────────────────────────
+#  Device Sessions 
 
 class DeviceRegister(BaseModel):
     device_id:       str           # stable hardware ID from expo-device
@@ -132,11 +132,11 @@ class PushTokenUpdate(BaseModel):
     token:           Optional[str] = None
 
 
-# ── Starknet ──────────────────────────────────────────────────
+#  Starknet 
 
 class StarknetAuthRequest(BaseModel):
     email:      Optional[str] = None
-    # Privy creates the wallet server-side — client can send email,
+    # Privy creates the wallet server-side - client can send email,
     # but the backend can also recover it from Privy/Supabase.
     privy_token: Optional[str] = None
     starknet_address: Optional[str] = None
@@ -144,7 +144,7 @@ class StarknetAuthRequest(BaseModel):
 # Read-only Starknet JSON-RPC methods this proxy is allowed to forward.
 # The endpoint is an unauthenticated-ish public relay, so we deliberately
 # exclude write methods (starknet_add*Transaction) and anything not on the
-# read spec — an unknown method is rejected at validation time (422).
+# read spec - an unknown method is rejected at validation time (422).
 ALLOWED_STARKNET_RPC_METHODS = frozenset({
     "starknet_call",
     "starknet_estimateFee",
@@ -185,7 +185,7 @@ class StarknetRPCRequest(BaseModel):
         return v
 
 
-# ── Guilds ────────────────────────────────────────────────────
+#  Guilds 
 
 class GuildCreate(BaseModel):
     name:              str
@@ -199,7 +199,7 @@ class GuildChatSend(BaseModel):
     message: str
 
 
-# ── Withdrawals ───────────────────────────────────────────────
+#  Withdrawals 
 
 class WithdrawalRequest(BaseModel):
     points_used: int
@@ -207,7 +207,7 @@ class WithdrawalRequest(BaseModel):
     destination: str   # wallet address or email
 
 
-# ── Feedback / Reviews ────────────────────────────────────────
+#  Feedback / Reviews 
 
 class FeedbackCreate(BaseModel):
     type:       str            # 'bug' | 'suggestion' | 'content'
@@ -218,7 +218,7 @@ class QuestClaim(BaseModel):
     quest_id: str
 
 
-# ── Analytics ─────────────────────────────────────────────────
+#  Analytics 
 
 class AnalyticsEvent(BaseModel):
     event_type:  str
@@ -226,7 +226,7 @@ class AnalyticsEvent(BaseModel):
     session_id:  Optional[str] = None
 
 
-# ── XP & Badges ──────────────────────────────────────────────
+#  XP & Badges 
 
 class XPEvent(BaseModel):
     event_type:   str           # 'level_complete' | 'boss_complete' | 'streak' | 'share' | 'portfolio_push'
@@ -240,7 +240,7 @@ class BadgeAward(BaseModel):
     reason:      Optional[str] = None
 
 
-# ── Feed ──────────────────────────────────────────────────────
+#  Feed 
 
 class FeedSubscribe(BaseModel):
     track_ids:  List[str]
@@ -251,7 +251,7 @@ class FeedItemReact(BaseModel):
     reaction:   Literal["like", "bookmark", "share"]
 
 
-# ── Challenges ────────────────────────────────────────────────
+#  Challenges 
 
 class ChallengeJoin(BaseModel):
     challenge_id: str
@@ -261,7 +261,7 @@ class ChallengeSubmit(BaseModel):
     submission:   Dict[str, Any]   # free-form: code, document, score, etc.
 
 
-# ── Social / Portfolio Attribution ───────────────────────────
+#  Social / Portfolio Attribution 
 
 class SocialShare(BaseModel):
     platform:     str             # 'twitter' | 'linkedin' | 'github' | etc.
@@ -270,7 +270,7 @@ class SocialShare(BaseModel):
     url:          Optional[str]   = None
 
 
-# ── Airtable Sync (internal, used by Celery task) ─────────────
+#  Airtable Sync (internal, used by Celery task) 
 
 class AirtableSyncStatus(BaseModel):
     table:        str
@@ -279,7 +279,7 @@ class AirtableSyncStatus(BaseModel):
     error:        Optional[str] = None
 
 
-# ── Career v2 (typed response payloads) ───────────────────────
+#  Career v2 (typed response payloads) 
 # These mirror src/types/career.ts (camelCase field names) and the plain
 # dicts the career read/user-owned routes build. Every field the DB might
 # omit or return NULL is Optional with a default so validation never crashes;
@@ -412,7 +412,7 @@ class ProgrammeDetail(_CareerBase):
     domains:         List[DomainLinkOut]   = []
 
 
-# ── Search (grouped disambiguation) ──
+#  Search (grouped disambiguation) 
 class SearchDomain(_CareerBase):
     id:      Optional[str] = None
     name:    Optional[str] = None
@@ -444,7 +444,7 @@ class CareerSearchResult(_CareerBase):
     programmes: List[SearchProgramme] = []
 
 
-# ── JAMB name → domains ──
+#  JAMB name -> domains 
 class JambDomainLink(_CareerBase):
     domainId:   Optional[str] = None
     domainName: Optional[str] = None
@@ -458,7 +458,7 @@ class JambDomainResult(_CareerBase):
     domains:  List[JambDomainLink] = []
 
 
-# ── Career-changer pivot ──
+#  Career-changer pivot 
 class PivotFrom(_CareerBase):
     id:   Optional[str] = None
     name: Optional[str] = None
@@ -478,7 +478,7 @@ class PivotResult(_CareerBase):
     moves:      List[PivotMove] = []
 
 
-# ── User-owned (saved / notes / subscriptions) ──
+#  User-owned (saved / notes / subscriptions) 
 class SavedItemOut(_CareerBase):
     id:         Optional[str] = None
     entityType: Optional[str] = None
@@ -505,9 +505,9 @@ class SubscriptionOut(_CareerBase):
     createdAt: Optional[str] = None
 
 
-# ── Response Envelope ─────────────────────────────────────────
+#  Response Envelope 
 
-# ── Admission Intelligence (Phase 8) ────────────────────────
+#  Admission Intelligence (Phase 8) 
 
 class JambFloorOut(BaseModel):
     year: int
@@ -573,7 +573,7 @@ class AdmissionInsightOut(BaseModel):
     programmeCount: int
 
 
-# ── Enrichment (Phase 9) ─────────────────────────────────────
+#  Enrichment (Phase 9) 
 
 class CertificationEnrichment(BaseModel):
     officialUrl: Optional[str] = None
@@ -603,7 +603,7 @@ class RoleCurrencyStatus(BaseModel):
     currencySource: Optional[Literal["wef_foj_2025", "onet_emerging", "lightcast", "curated"]] = None
 
 
-# ── Enrichment Version (tracks seed runs) ────────────────────
+#  Enrichment Version (tracks seed runs) 
 
 class EnrichmentVersionOut(BaseModel):
     id: str

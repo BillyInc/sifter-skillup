@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.student_starting_points (
     user_type                   TEXT NOT NULL CHECK (
                                   user_type IN (
                                     'senior_secondary',
+                                    'ss3_secondary',
                                     'jamb',
                                     'student',
                                     'skilled_worker',
