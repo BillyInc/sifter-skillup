@@ -82,8 +82,17 @@ def test_one_of_only_option_counts_group_matches(monkeypatch):
     assert row["jambProgrammeId"] == "jp1"
     # Previously 0: one_of matches were ignored entirely.
     assert row["matchedSubjectCount"] == 2
-    assert sorted(row["matchedSubjects"]) == ["chemistry", "physics"]
-    assert row["matchBasis"] == "structured"
+    # matchedSubjects echoes the CATALOGUE's canonical display name, not the
+    # caller's input casing -- the selected set above is lowercase. Subject
+    # names reach the UI directly, so "Chemistry" is the wanted form, as is
+    # the alias mapping ("maths" -> "Mathematics", "accounting" ->
+    # "Principles of Accounts").
+    assert sorted(row["matchedSubjects"]) == ["Chemistry", "Physics"]
+    # matchBasis names the exam basis that produced the match rather than the
+    # old constant "structured", which no longer exists anywhere: it is now
+    # "utme"/"olevel" (from exam_type, defaulting to utme), "combined", or
+    # "text" for the unstructured fallback.
+    assert row["matchBasis"] == "utme"
 
 
 def test_required_and_one_of_matches_are_deduped(monkeypatch):
@@ -113,7 +122,7 @@ def test_required_and_one_of_matches_are_deduped(monkeypatch):
 
     assert len(out) == 1
     assert out[0]["matchedSubjectCount"] == 2
-    assert out[0]["matchedSubjects"] == ["mathematics", "physics"]
+    assert out[0]["matchedSubjects"] == ["Mathematics", "Physics"]
 
 
 def test_unsatisfied_one_of_group_still_excludes_option(monkeypatch):
