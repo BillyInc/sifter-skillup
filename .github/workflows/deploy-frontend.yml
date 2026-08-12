@@ -117,12 +117,28 @@ jobs:
           flock 9
           DOMAIN=dev.levelup.com.ng
           SITE=/etc/nginx/sites-available/levelup-web-dev
+
+          # Written BEFORE the site block below, which includes it: on a fresh
+          # box the `nginx -t` in this step would otherwise fail on a missing
+          # snippet. The later "Enable gzip compression" step rewrites this same
+          # file idempotently for boxes provisioned before gzip existed.
+          sudo mkdir -p /etc/nginx/snippets
+          sudo tee /etc/nginx/snippets/levelup-gzip.conf >/dev/null <<'NGINX'
+          # Managed by the deploy workflows. Edits here are overwritten.
+          gzip on;
+          gzip_vary on;
+          gzip_comp_level 6;
+          gzip_min_length 1024;
+          gzip_types application/javascript text/javascript application/json application/manifest+json text/css text/plain image/svg+xml;
+          NGINX
+
           if [ ! -f "$SITE" ]; then
             sudo tee "$SITE" >/dev/null <<NGINX
           server {
               server_name $DOMAIN;
               root /home/ubuntu/levelup-frontend;
               index index.html;
+              include snippets/levelup-gzip.conf;
               location / { try_files \$uri \$uri/ /index.html; }
               location /assets { expires 1y; add_header Cache-Control "public, immutable"; }
               add_header X-Frame-Options "SAMEORIGIN" always;
@@ -147,6 +163,64 @@ jobs:
               exit 1
             fi
           fi
+          EOSSH
+
+      # The block above only runs on FIRST deploy (`if [ ! -f "$SITE" ]`), so a
+      # config improvement never reaches an already-provisioned box. This step
+      # runs every time and is idempotent.
+      #
+      # The web bundle is ~23 MB and was served with no Content-Encoding at all:
+      # 76s to download, domContentLoaded at 78s. gzip takes it to ~5.7 MB.
+      #
+      # certbot rewrites $SITE in place (adding the 443 block and TLS
+      # directives), so the snippet is INCLUDED rather than the file being
+      # regenerated — regenerating would silently drop TLS.
+      - name: Enable gzip compression
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          set -euo pipefail
+          SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -euo pipefail
+          exec 9>/tmp/levelup-nginx-deploy.lock
+          flock 9
+          SITE=/etc/nginx/sites-available/levelup-web-dev
+          SNIPPET=/etc/nginx/snippets/levelup-gzip.conf
+          test -f "$SITE"
+
+          sudo mkdir -p /etc/nginx/snippets
+          sudo tee "$SNIPPET" >/dev/null <<'NGINX'
+          # Managed by deploy-frontend.yml. Edits here are overwritten.
+          gzip on;
+          gzip_vary on;
+          gzip_comp_level 6;
+          gzip_min_length 1024;
+          gzip_types application/javascript text/javascript application/json application/manifest+json text/css text/plain image/svg+xml;
+          NGINX
+
+          BACKUP=$(mktemp /tmp/levelup-web-dev.XXXXXX)
+          sudo cp "$SITE" "$BACKUP"
+          if ! grep -q 'snippets/levelup-gzip.conf' "$SITE"; then
+            # Anchored on the root directive, so it lands in the block that
+            # serves the site and not in certbot's :80 redirect block.
+            sudo sed -i '/root \/home\/ubuntu\/levelup-frontend;/a\    include snippets/levelup-gzip.conf;' "$SITE"
+          fi
+
+          if ! sudo nginx -t; then
+            sudo cp "$BACKUP" "$SITE"
+            rm -f "$BACKUP"
+            echo "::error::nginx rejected the gzip config - rolled back, site untouched." >&2
+            exit 1
+          fi
+          rm -f "$BACKUP"
+          sudo systemctl reload nginx
+
+          # Prove it actually took effect, rather than trusting the reload.
+          ENC=$(curl -s -o /dev/null -D - -H 'Accept-Encoding: gzip' \
+                  https://dev.levelup.com.ng/ | grep -i '^content-encoding:' || true)
+          echo "index.html content-encoding: ${ENC:-<none>}"
           EOSSH
 
       - name: Cleanup
