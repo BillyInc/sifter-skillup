@@ -43,15 +43,22 @@ const QUICK = [
   {
     icon: "Search",
     title: "Explore programmes",
-    body: "Domains, roles and skills your programme unlocks",
+    body: "Find programmes, universities and connected domains",
     href: "/(tabs)/explore" as const,
     locked: false,
   },
   {
-    icon: "Star",
-    title: "Elite & special pathways",
-    body: "Aspirational routes & every starting point",
-    href: "/(tabs)/explore/elite" as const,
+    icon: "Build",
+    title: "Entrepreneurship",
+    body: "Business paths connected to your field",
+    href: "/(tabs)/explore/pathways/entrepreneurship" as const,
+    locked: false,
+  },
+  {
+    icon: "Brief",
+    title: "Opportunities",
+    body: "Internships, entry roles and application windows",
+    href: "/(tabs)/opportunities" as const,
     locked: false,
   },
   {
@@ -330,43 +337,21 @@ export default function CareerHomeScreen() {
               : "Complete a quick onboarding so we can tailor programmes, domains and demand signals to you."}
           </Text>
           <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-            Start onboarding
+            {isGuest ? "Create account" : "Start onboarding"}
           </Text>
         </TouchableOpacity>
       )}
 
       {/* Market intelligence */}
+      {/* Your saved paths */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        Market intelligence
-      </Text>
-      <View
-        style={[
-          styles.card,
-          { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-        ]}
-      >
-        <Text style={[styles.cardEyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          DEMAND + VALUE
-        </Text>
-        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-          Role signals will separate volume, value and access.
-        </Text>
-        <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-          Nigerian local, Nigerian remote and global demand should stay
-          separate. Low-volume/high-value roles will be labelled as selective
-          pathways, not buried as weak demand.
-        </Text>
-      </View>
-
-      {/* Your domains */}
-      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        Your domains
+        Saved paths
       </Text>
       <DataStateView
         state={saved.data ? filterDomainsRoles(saved.data) : saved}
         empty={(rows) => rows.length === 0}
-        emptyTitle="No saved domains yet"
-        emptyBody="Save domains & roles to track them here."
+        emptyTitle="Nothing saved yet"
+        emptyBody="Save programmes, domains or roles to return to them here."
       >
         {(rows) => (
           <View style={styles.list}>

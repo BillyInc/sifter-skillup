@@ -6,7 +6,7 @@ export default function CommunityStack() {
   const router = useRouter();
 
   return (
-    <ScreenErrorBoundary screenName="Guilds" onGoHome={() => router.replace('/(tabs)/guild')}>
+    <ScreenErrorBoundary screenName="Community" onGoHome={() => router.replace('/(tabs)/home')}>
       <Stack screenOptions={{ headerShown: false }} />
     </ScreenErrorBoundary>
   );

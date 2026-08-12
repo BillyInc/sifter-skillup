@@ -95,14 +95,18 @@ def _canonical_subject_name(value: str) -> str:
         "english": "English Language",
         "math": "Mathematics",
         "maths": "Mathematics",
-        "financial accounting": "Accounting/Financial Accounting",
-        "accounting": "Accounting/Financial Accounting",
+        "financial accounting": "Principles of Accounts",
+        "accounting": "Principles of Accounts",
+        "accounting/financial accounting": "Principles of Accounts",
+        "book keeping": "Principles of Accounts",
         "literature": "Literature in English",
         "lit in english": "Literature in English",
         "computer": "Computer Studies",
         "computer science": "Computer Studies",
-        "crs": "CRS/IRS",
-        "irs": "CRS/IRS",
+        "crs": "Christian Religious Studies",
+        "crk": "Christian Religious Studies",
+        "irs": "Islamic Religious Studies",
+        "irk": "Islamic Religious Studies",
     }
     return aliases.get(lower, value.strip())
 
@@ -156,6 +160,9 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
         "schoolName": row.get("preferred_school_name"),
         "secondarySchoolId": raw.get("secondarySchoolId"),
         "secondarySchoolName": raw.get("secondarySchoolName"),
+        "jambPrepMode": raw.get("jambPrepMode"),
+        "tutorialCentreId": raw.get("tutorialCentreId"),
+        "tutorialCentreName": raw.get("tutorialCentreName"),
         "intendedJambProgrammeId": row.get("intended_jamb_programme_id"),
         "intendedProgrammeId": row.get("intended_programme_id"),
         "intendedProgramme": row.get("intended_programme_name"),
@@ -168,6 +175,11 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
             s.get("subject_name_snapshot")
             for s in (subject_rows or [])
             if s.get("choice_type") in ("strongest", "utme", "preferred")
+        ],
+        "olevelSubjects": [
+            s.get("subject_name_snapshot")
+            for s in (subject_rows or [])
+            if s.get("choice_type") == "olevel"
         ],
         "completedAt": row.get("completed_at"),
     }
@@ -182,11 +194,15 @@ class StartingPointIn(BaseModel):
     yearOfStudy: Optional[str] = None
     secondarySchoolId: Optional[str] = None
     secondarySchoolName: Optional[str] = None
+    jambPrepMode: Optional[str] = None
+    tutorialCentreId: Optional[str] = None
+    tutorialCentreName: Optional[str] = None
     ssDoor: Optional[str] = None
     ssClass: Optional[str] = None
     stream: Optional[str] = None
     exploreIntent: list[str] = Field(default_factory=list)
     jambSubjects: list[str] = Field(default_factory=list)
+    olevelSubjects: list[str] = Field(default_factory=list)
     jambScoreBand: Optional[str] = None
     preferredInstitutionType: Optional[str] = None
     preferredSchoolId: Optional[str] = None
@@ -201,7 +217,7 @@ class StartingPointIn(BaseModel):
 
 
 def _admission_resolution_complete(payload: StartingPointIn) -> bool:
-    if payload.userType not in ("jamb", "senior_secondary"):
+    if payload.userType not in ("jamb", "ss3_secondary", "senior_secondary"):
         return True
     programme = (
         _clean_text(payload.intendedJambProgrammeId)
@@ -218,7 +234,7 @@ def _admission_resolution_complete(payload: StartingPointIn) -> bool:
 
 def _upsert_secondary_school_affiliation(svc, user_id: str, payload: StartingPointIn) -> None:
     school_id = _clean_text(payload.secondarySchoolId)
-    if not school_id or payload.userType not in ("jamb", "senior_secondary"):
+    if not school_id or payload.userType not in ("ss3_secondary", "senior_secondary"):
         return
     try:
         svc.table("student_affiliations").upsert({
@@ -350,7 +366,7 @@ async def save_starting_point(
                 .execute()
             )
 
-        catalog = _resolve_subject_catalog(payload.jambSubjects)
+        catalog = _resolve_subject_catalog(payload.jambSubjects + payload.olevelSubjects)
         subject_rows = []
         for idx, subject in enumerate(_clean_list(payload.jambSubjects)):
             canonical = _canonical_subject_name(subject)
@@ -360,7 +376,19 @@ async def save_starting_point(
                 "user_id": user_id,
                 "subject_id": match.get("id") if match else None,
                 "subject_name_snapshot": canonical,
-                "choice_type": "strongest",
+                "choice_type": "utme",
+                "rank": idx + 1,
+                "self_reported": True,
+            })
+        for idx, subject in enumerate(_clean_list(payload.olevelSubjects)):
+            canonical = _canonical_subject_name(subject)
+            match = catalog.get(_normalise_subject(canonical))
+            subject_rows.append({
+                "starting_point_id": starting_id,
+                "user_id": user_id,
+                "subject_id": match.get("id") if match else None,
+                "subject_name_snapshot": canonical,
+                "choice_type": "olevel",
                 "rank": idx + 1,
                 "self_reported": True,
             })
@@ -380,7 +408,11 @@ async def save_starting_point(
 
 
 @router.get("/subjects", response_model=ResponseModel)
-async def list_subjects(q: Optional[str] = Query(None), stream: Optional[str] = Query(None)):
+async def list_subjects(
+    q: Optional[str] = Query(None),
+    stream: Optional[str] = Query(None),
+    exam_type: Optional[str] = Query(None),
+):
     try:
         query = (
             _svc()
@@ -394,6 +426,8 @@ async def list_subjects(q: Optional[str] = Query(None), stream: Optional[str] = 
             # Containment filters can vary by PostgREST version. If unsupported,
             # the catch path falls back to a general subject list.
             query = query.contains("stream_tags", [stream.strip().lower()])
+        if exam_type:
+            query = query.contains("exam_types", [exam_type.strip().lower()])
         res = query.order("name").limit(80).execute()
         items = [
             {
@@ -742,32 +776,112 @@ def _cutoff_out(r: dict) -> dict:
 @router.get("/programmes/by-subjects", response_model=ResponseModel)
 async def programmes_by_subjects(
     subjects: str = Query(""),
+    olevel_subjects: str = Query(""),
+    exam_type: str = Query("combined"),
     stream: Optional[str] = Query(None),
     limit: int = Query(40),
 ):
-    selected = [_canonical_subject_name(s) for s in subjects.split(",") if s.strip()]
-    selected_norm = {_normalise_subject(s) for s in selected}
+    exam = (exam_type or "combined").strip().lower()
+    utme_selected = [_canonical_subject_name(s) for s in subjects.split(",") if s.strip()]
+    olevel_selected = [_canonical_subject_name(s) for s in olevel_subjects.split(",") if s.strip()]
+    if exam == "olevel" and not olevel_selected:
+        olevel_selected = utme_selected
+        utme_selected = []
+    utme_norm = {_normalise_subject(s) for s in utme_selected}
+    olevel_norm = {_normalise_subject(s) for s in olevel_selected}
+    selected_norm = utme_norm | olevel_norm
     if not selected_norm:
         return ResponseModel(data=_real([]))
+    if exam == "olevel" and len(olevel_norm) < 5:
+        return ResponseModel(
+            data=_real(
+                [],
+                "Choose at least five O-level subjects before checking programme fit.",
+            )
+        )
+    if exam != "olevel" and utme_norm and len(utme_norm) < 4:
+        return ResponseModel(
+            data=_real(
+                [],
+                "Choose Use of English and three other UTME subjects before matching programmes.",
+            )
+        )
 
     try:
-        structured = _match_structured_subject_options(selected_norm, limit=min(limit, 80))
+        if exam == "olevel":
+            structured = _match_structured_subject_options(
+                olevel_norm,
+                limit=min(limit, 80),
+                exam_type="olevel",
+                require_full=True,
+            )
+        elif utme_norm and olevel_norm:
+            utme_matches = _match_structured_subject_options(
+                utme_norm,
+                limit=200,
+                exam_type="utme",
+                require_full=True,
+            )
+            olevel_matches = _match_structured_subject_options(
+                olevel_norm,
+                limit=400,
+                exam_type="olevel",
+                require_full=False,
+            )
+            olevel_by_id = {m.get("jambProgrammeId"): m for m in olevel_matches}
+            structured = []
+            for match in utme_matches:
+                jid = match.get("jambProgrammeId")
+                olevel = olevel_by_id.get(jid)
+                if olevel:
+                    status = "eligible" if not olevel.get("missingSubjects") else "utme_match_olevel_gap"
+                    structured.append({
+                        **match,
+                        "olevelMatchedSubjectCount": olevel.get("matchedSubjectCount", 0),
+                        "olevelMatchedSubjects": olevel.get("matchedSubjects", []),
+                        "olevelMissingSubjects": olevel.get("missingSubjects", []),
+                        "olevelRequirementText": olevel.get("requirementText"),
+                        "eligibilityStatus": status,
+                        "matchBasis": "combined",
+                    })
+                else:
+                    structured.append({
+                        **match,
+                        "olevelMatchedSubjectCount": 0,
+                        "olevelMatchedSubjects": [],
+                        "olevelMissingSubjects": [],
+                        "eligibilityStatus": "utme_match_olevel_unparsed",
+                        "matchBasis": "combined",
+                    })
+            structured = structured[: min(limit, 80)]
+        else:
+            structured = _match_structured_subject_options(
+                utme_norm,
+                limit=min(limit, 80),
+                exam_type="utme",
+                require_full=True,
+            )
         if structured:
             return ResponseModel(data=_real(structured))
         fallback = _match_text_requirements(selected_norm, limit=min(limit, 80))
-        notice = "Structured subject requirements are not fully parsed yet; using official requirement text as a fallback."
+        notice = "Some requirements need review, so these are possible matches from the published requirement text. Confirm the programme details before deciding."
         return ResponseModel(data=_fallback(fallback, notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Subject-to-programme matching is temporarily unavailable."))
 
 
-def _match_structured_subject_options(selected_norm: set[str], limit: int) -> list[dict]:
+def _match_structured_subject_options(
+    selected_norm: set[str],
+    limit: int,
+    exam_type: str = "utme",
+    require_full: bool = True,
+) -> list[dict]:
     svc = _svc()
     options = (
         svc.table("programme_subject_options")
         .select("id, jamb_programme_id, exam_type, option_label, min_required, source_text")
-        .eq("exam_type", "utme")
+        .eq("exam_type", exam_type)
         .limit(2000)
         .execute()
     )
@@ -791,47 +905,62 @@ def _match_structured_subject_options(selected_norm: set[str], limit: int) -> li
         if not items:
             continue
         required = [
-            _normalise_subject((i.get("subject_catalog") or {}).get("name") or "")
+            {
+                "name": (i.get("subject_catalog") or {}).get("name") or "",
+                "norm": _normalise_subject((i.get("subject_catalog") or {}).get("name") or ""),
+            }
             for i in items
             if i.get("requirement_role") == "required"
         ]
-        required = [s for s in required if s]
-        if any(s not in selected_norm for s in required):
+        required = [s for s in required if s["norm"]]
+        missing_required = [s["name"] for s in required if s["norm"] not in selected_norm]
+        if require_full and missing_required:
             continue
-        grouped: dict[str, list[str]] = {}
+        grouped: dict[str, list[dict]] = {}
         group_min: dict[str, int] = {}
         for i in items:
             if i.get("requirement_role") != "one_of" or not i.get("group_key"):
                 continue
             key = i["group_key"]
-            grouped.setdefault(key, []).append(
-                _normalise_subject((i.get("subject_catalog") or {}).get("name") or "")
-            )
+            name = (i.get("subject_catalog") or {}).get("name") or ""
+            grouped.setdefault(key, []).append({
+                "name": name,
+                "norm": _normalise_subject(name),
+            })
             group_min[key] = int(i.get("min_from_group") or 1)
         failed_group = False
+        missing_groups: list[str] = []
         for key, names in grouped.items():
-            count = len([n for n in names if n in selected_norm])
+            count = len([n for n in names if n["norm"] in selected_norm])
             if count < group_min.get(key, 1):
-                failed_group = True
-                break
+                needed = group_min.get(key, 1) - count
+                options_text = ", ".join(n["name"] for n in names if n["name"])
+                missing_groups.append(f"{needed} from: {options_text}")
+                if require_full:
+                    failed_group = True
+                    break
         if failed_group:
             continue
         # Matched = the option's required subjects the student actually selected
         # (normalized names, mirroring _match_text_requirements' `hits`),
         # plus the selected subjects that satisfied each one_of group.
-        matched_subjects = [s for s in required if s in selected_norm]
+        matched_subjects = [s["name"] for s in required if s["norm"] in selected_norm]
         for names in grouped.values():
-            matched_subjects.extend(n for n in names if n in selected_norm)
+            matched_subjects.extend(n["name"] for n in names if n["norm"] in selected_norm)
         matched_subjects = list(dict.fromkeys(matched_subjects))
         matched_count = len(matched_subjects)
+        missing_subjects = list(dict.fromkeys([*missing_required, *missing_groups]))
+        if not require_full and matched_count == 0:
+            continue
         entry = scored.get(opt["jamb_programme_id"])
         if not entry or matched_count > entry["matchedSubjectCount"]:
             scored[opt["jamb_programme_id"]] = {
                 "jambProgrammeId": opt["jamb_programme_id"],
                 "matchedSubjectCount": matched_count,
                 "matchedSubjects": matched_subjects,
+                "missingSubjects": missing_subjects,
                 "requirementText": opt.get("source_text"),
-                "matchBasis": "structured",
+                "matchBasis": exam_type,
             }
 
     if not scored:

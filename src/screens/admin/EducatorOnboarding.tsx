@@ -109,7 +109,7 @@ function registryLabel(t: OrganizationType): string {
 function accountTypeFor(
   t: OrganizationType,
   role: OrgRole | undefined,
-): Exclude<AccountType, "student"> {
+): Exclude<AccountType, "pending" | "student"> {
   if (role === "owner" || (t === "university" && role === "dean")) {
     return "institution_admin";
   }
@@ -256,7 +256,7 @@ export default function EducatorOnboarding() {
             "Could not create the admin workspace right now.",
         );
       }
-      await API.completeOnboarding({});
+      await API.completeOnboarding({ account_type: accountType });
       await refreshUser();
       await saveEducatorProfile(profile, user?.id);
       await setLocalAccountType(accountType, user?.id);

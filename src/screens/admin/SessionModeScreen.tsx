@@ -1,47 +1,41 @@
 /**
- * SessionModeScreen — "Session / Provider mode" for tutorial centres & JAMB
- * registration cafés.
+ * SessionModeScreen - provider-led guidance for tutorial centres and JAMB cafes.
  *
- * These providers don't hold a student roster — they run a career-guidance
- * session WITH a walk-in student (provider-led, no stored PII). We read the
- * local educator profile: if providerSessionOnly is set (tutorial_centre /
- * jamb_cafe), we explain this is their mode and offer a disabled
- * "Start guidance session" CTA backed by a `coming_soon` envelope. Any other
- * org type sees a note that session mode is scoped to providers. No mock
- * sessions are ever rendered.
+ * Providers can run the same admission guidance flow used by students without
+ * creating a student account or storing personal data for a walk-in session.
  */
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+
 import {
-  useTheme,
-  Spacing,
-  Radius,
-  FontSize,
   CompassFonts,
+  FontSize,
+  Radius,
   Shadow,
+  Spacing,
+  useTheme,
   webContainer,
 } from "@/theme";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { useAuth } from "@/hooks/useAuth";
-import { comingSoon } from "../../types/career";
 import type { EducatorProfile } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
-import { ComingSoonPanel } from "./ComingSoonPanel";
 
 const SESSION_STEPS = [
   {
-    icon: "🪑",
+    icon: "1",
     title: "Sit with the student",
-    body: "A walk-in student sits with you — no account creation, no roster entry, nothing stored about them.",
+    body: "A walk-in student sits with you. No account creation, no roster entry, and no personal data stored.",
   },
   {
-    icon: "🧭",
+    icon: "2",
     title: "Run the guidance flow",
-    body: "Step through programmes, domains and the roles they unlock, live, as a provider-led conversation.",
+    body: "Step through subjects, programmes, universities, domains, and roles as a provider-led conversation.",
   },
   {
-    icon: "🗑️",
-    title: "Nothing persists",
+    icon: "3",
+    title: "End the session",
     body: "When the session ends, nothing about the student is saved. The session is for guidance, not record-keeping.",
   },
 ];
@@ -49,6 +43,7 @@ const SESSION_STEPS = [
 export function SessionModeScreen() {
   const { colors } = useTheme();
   const { user } = useAuth();
+  const router = useRouter();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -69,10 +64,6 @@ export function SessionModeScreen() {
     profile?.organizationType === "tutorial_centre" ||
     profile?.organizationType === "jamb_cafe";
 
-  const ctaState = comingSoon<never>(
-    "Guidance sessions come online with the provider rollout.",
-  );
-
   return (
     <AdminShell title="Session / Provider mode" eyebrow="Provider">
       <ScrollView
@@ -89,14 +80,14 @@ export function SessionModeScreen() {
                 Shadow.xs,
               ]}
             >
-              <Text style={styles.heroIcon}>🎯</Text>
+              <Text style={[styles.heroIcon, { color: colors.textMuted }]}>GUIDE</Text>
               <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
-                Run a career-guidance session
+                Run a guidance session
               </Text>
               <Text style={[styles.heroBody, { color: colors.textSoft }]}>
-                This is your mode. As a tutorial centre / JAMB café you guide
-                students one session at a time — provider-led, with no roster and
-                no personal data stored.
+                Use the admission guidance flow with a student sitting beside
+                you. The session uses subjects, programmes and universities
+                without saving personal learner data.
               </Text>
             </View>
 
@@ -110,13 +101,10 @@ export function SessionModeScreen() {
                     key={s.title}
                     style={[
                       styles.card,
-                      {
-                        backgroundColor: colors.card,
-                        borderColor: colors.border,
-                      },
+                      { backgroundColor: colors.card, borderColor: colors.border },
                     ]}
                   >
-                    <Text style={styles.cardIcon}>{s.icon}</Text>
+                    <Text style={[styles.cardIcon, { color: colors.textMuted }]}>{s.icon}</Text>
                     <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                       {s.title}
                     </Text>
@@ -130,9 +118,46 @@ export function SessionModeScreen() {
 
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
-                Start guidance session
+                Start guidance
               </Text>
-              <ComingSoonPanel state={ctaState}>{() => null}</ComingSoonPanel>
+              <View style={styles.actions}>
+                <TouchableOpacity
+                  activeOpacity={0.82}
+                  onPress={() =>
+                    router.push("/(admin)/workspace-explore/admission?mode=subjects" as never)
+                  }
+                  style={[
+                    styles.action,
+                    { backgroundColor: colors.accent, borderColor: colors.accent },
+                  ]}
+                >
+                  <Text style={[styles.actionTitle, { color: colors.textInverse }]}>
+                    Start from subjects
+                  </Text>
+                  <Text style={[styles.actionBody, { color: colors.textInverse }]}>
+                    Check UTME and O-level subjects together before discussing
+                    programme options.
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.82}
+                  onPress={() =>
+                    router.push("/(admin)/workspace-explore/admission?mode=programme" as never)
+                  }
+                  style={[
+                    styles.action,
+                    { backgroundColor: colors.card, borderColor: colors.border },
+                  ]}
+                >
+                  <Text style={[styles.actionTitle, { color: colors.text }]}>
+                    Start from programme
+                  </Text>
+                  <Text style={[styles.actionBody, { color: colors.textMuted }]}>
+                    Search the course first, then check schools, variants and
+                    requirements.
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </>
         ) : (
@@ -143,15 +168,14 @@ export function SessionModeScreen() {
               Shadow.xs,
             ]}
           >
-            <Text style={styles.heroIcon}>ℹ️</Text>
+            <Text style={[styles.heroIcon, { color: colors.textMuted }]}>INFO</Text>
             <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
               Session mode is for providers
             </Text>
             <Text style={[styles.heroBody, { color: colors.textSoft }]}>
-              Session / provider mode is designed for tutorial centres and JAMB
-              registration cafés, who run one-off career-guidance sessions with
-              walk-in students. Your organisation works from the aggregate
-              dashboard instead.
+              Session mode is designed for tutorial centres and JAMB cafes that
+              run one-off guidance sessions with walk-in students. Your
+              organisation works from the aggregate dashboard instead.
             </Text>
           </View>
         )}
@@ -171,12 +195,12 @@ const styles = StyleSheet.create({
   },
   hero: {
     borderWidth: 1,
-    borderRadius: Radius.xl,
+    borderRadius: Radius.lg,
     padding: Spacing.xxxl,
     alignItems: "center",
     gap: Spacing.sm,
   },
-  heroIcon: { fontSize: 30, marginBottom: Spacing.xs },
+  heroIcon: { fontSize: FontSize.xs, fontWeight: "900", letterSpacing: 1 },
   heroTitle: {
     fontSize: FontSize.xxl,
     textAlign: "center",
@@ -185,7 +209,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.6,
     textAlign: "center",
-    maxWidth: 460,
+    maxWidth: 520,
   },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },
@@ -194,11 +218,22 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 220,
     borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderRadius: Radius.sm,
     padding: Spacing.lg,
     gap: Spacing.xs,
   },
-  cardIcon: { fontSize: 22 },
+  cardIcon: { fontSize: FontSize.sm, fontWeight: "900" },
   cardTitle: { fontSize: FontSize.md },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  actions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
+  action: {
+    flex: 1,
+    minWidth: 240,
+    borderWidth: 1,
+    borderRadius: Radius.sm,
+    padding: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  actionTitle: { fontSize: FontSize.md, fontWeight: "800" },
+  actionBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
 });

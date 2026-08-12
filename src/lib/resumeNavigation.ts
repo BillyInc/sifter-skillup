@@ -39,6 +39,25 @@ export const ADMIN_POST_AUTH_HREF = '/(admin)/dashboard';
 /** The default landing surface for everyone else. */
 export const DEFAULT_POST_AUTH_HREF = '/(tabs)/home';
 
+const BLOCKED_POST_AUTH_SEGMENTS = [
+  '/community',
+  '/guild',
+  '/streaks',
+  '/skills',
+  '/fields',
+  '/map',
+  '/lesson',
+  '/track',
+  '/feed',
+  '/portfolio',
+];
+
+function isAllowedPostAuthPath(path: string | null | undefined): path is string {
+  if (!path) return false;
+  if (!path.startsWith('/')) return false;
+  return !BLOCKED_POST_AUTH_SEGMENTS.some((segment) => path.includes(segment));
+}
+
 function toNumber(value: unknown, fallback = 0) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
@@ -167,7 +186,7 @@ export function resolvePostAuthHref(
 
   const resumeState = user.resume_state ?? user.resumeState ?? null;
   const deepLink = (resumeState?.deepLink ?? resumeState?.deep_link ?? '').trim();
-  if (deepLink && !deepLink.startsWith('/map') && !deepLink.includes('/lesson') && !deepLink.includes('/track')) {
+  if (isAllowedPostAuthPath(deepLink)) {
     return deepLink;
   }
 

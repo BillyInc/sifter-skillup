@@ -20,6 +20,7 @@ export function LiveAdmissionSearchField({
   placeholder,
   kind,
   institutionType,
+  helperText,
 }: {
   label: string;
   value: string;
@@ -27,6 +28,7 @@ export function LiveAdmissionSearchField({
   placeholder: string;
   kind: "programme" | "school";
   institutionType?: string;
+  helperText?: string;
 }) {
   const { colors } = useTheme();
   const [query, setQuery] = React.useState(value);
@@ -81,6 +83,11 @@ export function LiveAdmissionSearchField({
         }}
         placeholder={placeholder}
       />
+      {helperText ? (
+        <Text style={[styles.helper, { color: colors.textMuted }]}>
+          {helperText}
+        </Text>
+      ) : null}
       {loading ? <ActivityIndicator size="small" color={Brand.primary} /> : null}
       {open && results.length ? (
         <View
@@ -123,6 +130,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
   },
   suggestionText: { fontSize: FontSize.sm },
+  helper: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
 });
 
 export default LiveAdmissionSearchField;

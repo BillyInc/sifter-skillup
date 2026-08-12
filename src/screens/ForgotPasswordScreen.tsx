@@ -53,7 +53,7 @@ export default function ForgotPasswordScreen() {
     <AuthScaffold showLogo={!sent}>
       <TouchableOpacity
         style={styles.back}
-        onPress={() => router.back()}
+        onPress={() => router.replace("/(auth)/sign-in")}
         hitSlop={8}
       >
         <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>← Back</Text>
