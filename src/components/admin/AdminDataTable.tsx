@@ -83,7 +83,7 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
               ]}
             >
               {col.render
-                ? col.render(row[col.key], row)
+                ? renderCellValue(col.render(row[col.key], row), colors)
                 : (
                   <Text
                     style={[styles.cellText, { color: colors.textRole.primary }]}
@@ -98,6 +98,18 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
       ))}
     </View>
   );
+}
+
+/** React Native <View> cannot contain a raw string/number. Custom column
+ * renderers are allowed to return primitives for convenience, so normalize
+ * those values at the table boundary and keep elements untouched. */
+function renderCellValue(
+  value: ReactNode,
+  colors: ReturnType<typeof useTheme>["colors"],
+): ReactNode {
+  return typeof value === "string" || typeof value === "number"
+    ? <Text style={[styles.cellText, { color: colors.textRole.primary }]} numberOfLines={2}>{String(value)}</Text>
+    : value;
 }
 
 export default AdminDataTable;

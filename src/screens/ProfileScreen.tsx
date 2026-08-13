@@ -7,7 +7,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated,
+  Animated, Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -143,19 +143,26 @@ function AccountRow({ emoji, label, sub, onPress, color }: {
 export default function ProfileScreen() {
   const navigation = useRouter();
   const { colors } = useTheme();
-  const { signOut, user } = useAuth();
+  const { signOut, deleteAccount, user } = useAuth();
+  const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
   const go = useCallback((href: string) => navigation.push(href as any), [navigation]);
   const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
   const isGuest = user?.auth_provider === 'guest';
   const isAdmin = isAdminAccount(user?.account_type);
 
-  const handleSignOut = useCallback(async () => {
+  const runAccountAction = useCallback(async () => {
+    if (!accountAction || actionBusy) return;
+    setActionBusy(true);
     try {
-      await signOut();
-    } finally {
+      if (accountAction === 'delete') await deleteAccount();
+      else await signOut();
+      setAccountAction(null);
       navigation.replace('/(auth)/sign-in');
+    } finally {
+      setActionBusy(false);
     }
-  }, [signOut, navigation]);
+  }, [accountAction, actionBusy, deleteAccount, navigation, signOut]);
 
   const handleAdminWorkspace = useCallback(async () => {
     const profile = await getEducatorProfile(user?.id);
@@ -335,13 +342,25 @@ export default function ProfileScreen() {
                 <AccountRow
                   emoji="O"
                   label="Sign Out"
-                  onPress={handleSignOut}
+                  onPress={() => setAccountAction('sign-out')}
                   color={colors.accentRole.danger}
                 />
               </WebCard>
             </WebCol>
           </WebRow>
         </WebShell>
+        <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+          <View style={styles.modalOverlay}>
+            <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}</Text>
+              <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}</Text>
+              <View style={styles.modalActions}>
+                <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text></TouchableOpacity>
+                <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}><Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text></TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     );
   }
@@ -486,13 +505,33 @@ export default function ProfileScreen() {
           />
           <AccountRow
             emoji="●" label="Sign Out"
-            onPress={handleSignOut}
+            onPress={() => setAccountAction('sign-out')}
             color={colors.accentRole.danger}
           />
         </SectionCard>
 
         <View style={{ height: Spacing.xxxl }} />
       </ScrollView>
+      <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+              {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
+            </Text>
+            <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              {accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}
+            </Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}>
+                <Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -547,4 +586,11 @@ const styles = StyleSheet.create({
   workspaceLabel:   { fontSize: FontSize.xs, letterSpacing: 0.8 },
   workspaceTitle:   { fontSize: FontSize.md },
   workspaceBody:    { fontSize: FontSize.sm, lineHeight: 20 },
+  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
+  modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  modalTitle: { fontSize: FontSize.xl },
+  modalBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  modalActions: { flexDirection: 'row', gap: Spacing.sm },
+  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.sm },
+  modalButtonText: { fontSize: FontSize.sm, fontWeight: '800' },
 });

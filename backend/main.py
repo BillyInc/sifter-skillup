@@ -3,11 +3,12 @@
 # All routers registered, all middleware wired
 # ============================================
 import uuid, bcrypt, base64, secrets, urllib.parse, httpx
+import re
 from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -66,6 +67,22 @@ _EMAIL_CODE_TTL_MINUTES = 15
 
 def _normalise_email(value: str) -> str:
     return (value or "").strip().lower()
+
+
+def _hydrate_account_type_selection(user: dict) -> dict:
+    """Read the selection marker from the compatibility settings fallback."""
+    if user.get("account_type_selected_at"):
+        return user
+    settings_value = user.get("settings")
+    if isinstance(settings_value, dict) and settings_value.get("account_type_selected_at"):
+        user["account_type_selected_at"] = settings_value["account_type_selected_at"]
+    return user
+
+
+def _is_dev_account_email(email: str) -> bool:
+    return settings.DEBUG and email.startswith("levelup.dev+") and email.endswith(
+        ("@student.test", "@educator.test")
+    )
 
 
 def _deliver_email_code(email: str, code: str):
@@ -241,6 +258,7 @@ async def auth_signup(body: dict, request: Request):
     email = (body.get("email") or "").strip().lower()
     password = body.get("password") or ""
     email_code = (body.get("email_code") or body.get("emailCode") or "").strip()
+    device_id = (body.get("device_id") or request.headers.get("X-Device-Id") or "").strip()
     first_name = (body.get("first_name") or "").strip()
     middle_name = (body.get("middle_name") or "").strip()
     last_name = (body.get("last_name") or "").strip()
@@ -251,10 +269,42 @@ async def auth_signup(body: dict, request: Request):
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
     _require_valid_email_code(email, email_code)
+    if device_id:
+        try:
+            cooldown = (
+                db.get_service_client().table("account_deletion_cooldowns")
+                .select("available_at")
+                .eq("device_id", device_id)
+                .gt("available_at", datetime.now().isoformat())
+                .order("available_at", desc=True)
+                .limit(1).execute().data or []
+            )
+        except Exception as exc:
+            # The cooldown table is introduced by the lifecycle migration. A
+            # pre-migration dev database must not make ordinary signup fail.
+            log.warning("Signup cooldown lookup skipped", error=str(exc))
+            cooldown = []
+        if cooldown:
+            raise HTTPException(status_code=429, detail="This device must wait before creating another account.")
     try:
         existing = db.get_service_client().table("users").select("*").eq("email", email).execute()
+        existing.data = [row for row in (existing.data or []) if row.get("is_deleted") is not True]
         if existing.data:
             existing_user = existing.data[0]
+            # Built-in development presets are reusable fixtures. Reset only
+            # their known dev password so repeated preset clicks can sign in;
+            # never apply this behavior to real accounts or production.
+            if _is_dev_account_email(email) and existing_user.get("password_hash"):
+                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                result = db.get_service_client().table("users").update({
+                    "password_hash": password_hash,
+                    "last_login": datetime.now().isoformat(),
+                }).eq("id", existing_user["id"]).execute()
+                user = result.data[0]
+                user.pop("password_hash", None)
+                token = Auth.create_jwt(user["id"])
+                await _post_auth_device_register(user["id"], body, request)
+                return ResponseModel(data={"token": token, "user": user})
             # A failed post-signup step can leave the user row without credentials.
             # Complete that partial row instead of making the user retry into a 409.
             if not existing_user.get("password_hash"):
@@ -311,6 +361,7 @@ async def auth_login(body: dict, request: Request):
     if not email or not password:
         raise HTTPException(status_code=400, detail="Email and password are required")
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
+    result.data = [row for row in (result.data or []) if row.get("is_deleted") is not True]
     if not result.data:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     user = result.data[0]
@@ -318,6 +369,7 @@ async def auth_login(body: dict, request: Request):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
     token = Auth.create_jwt(user["id"])
+    _hydrate_account_type_selection(user)
     user.pop("password_hash", None)
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
@@ -336,14 +388,33 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
             updates["account_type"] = requested_account_type
         else:
             raise HTTPException(status_code=400, detail="Choose a valid account type.")
+        updates["account_type_selected_at"] = datetime.now().isoformat()
     elif current_user.get("account_type") == "pending":
-        updates["account_type"] = "student"
+        # Do not silently turn an unselected legacy account into a student.
+        # It must return to the account-type gate on the next route decision.
+        pass
     if body.get("active_track"):
         updates["active_track"] = body["active_track"]
         updates["current_track_id"] = body["active_track"]
     if body.get("active_field_id"):
         updates["active_field_id"] = body["active_field_id"]
-    result = db.get_service_client().table("users").update(updates).eq("id", current_user["id"]).execute()
+    svc = db.get_service_client()
+    try:
+        result = svc.table("users").update(updates).eq("id", current_user["id"]).execute()
+    except Exception as exc:
+        # Older live projects may have the settings column but not the newer
+        # selection marker yet. Persist the same fact in settings so the
+        # account does not return to the gate after the user chooses a type.
+        if "account_type_selected_at" not in str(exc):
+            raise
+        compatibility_settings = dict(current_user.get("settings") or {})
+        compatibility_settings["account_type_selected_at"] = updates["account_type_selected_at"]
+        fallback_updates = dict(updates)
+        fallback_updates.pop("account_type_selected_at", None)
+        fallback_updates["settings"] = compatibility_settings
+        result = svc.table("users").update(fallback_updates).eq("id", current_user["id"]).execute()
+    if result.data and updates.get("account_type_selected_at"):
+        result.data[0]["account_type_selected_at"] = updates["account_type_selected_at"]
     return ResponseModel(data=result.data[0])
 
 
@@ -372,6 +443,7 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
         "first_name": first_name, "middle_name": middle_name, "last_name": last_name,
         "date_of_birth": date_of_birth,
         "onboarding_completed": onboarding_completed,
+        "is_deleted": False,
         "account_type": account_type,
         "points": settings.WELCOME_BONUS, "streak": 1,
         "last_played": date.today().isoformat(), "current_level": 1,
@@ -380,8 +452,22 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
         "achievements": [], "settings": {"notifications": True, "sound": True, "haptics": True},
         "created_at": datetime.now().isoformat(), "last_login": datetime.now().isoformat(),
     }
-    result = db.get_service_client().table("users").insert(payload).execute()
-    return result.data[0]
+    # Keep signup usable against older local schemas while migrations are
+    # being applied. PostgREST names the missing column in PGRST204 errors;
+    # remove only that optional field and retry. Required auth fields still
+    # fail normally and are not silently fabricated.
+    pending = dict(payload)
+    for _ in range(8):
+        try:
+            result = db.get_service_client().table("users").insert(pending).execute()
+            return result.data[0]
+        except Exception as exc:
+            match = re.search(r"'([^']+)' column", str(exc))
+            missing = match.group(1) if match else None
+            if not missing or missing not in pending or missing in {"id", "email", "password_hash", "username"}:
+                raise
+            pending.pop(missing, None)
+    raise RuntimeError("Could not create user with the available schema")
 
 
 # USER ROUTES
@@ -391,7 +477,10 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     rank_result = db.get_client().rpc("get_user_rank", {"user_id": current_user["id"]}).execute()
     current_user["rank"] = rank_result.data if rank_result.data else None
     current_user.pop("password_hash", None)
-    current_user.setdefault("account_type", "student")
+    # Legacy accounts may have completed the old flow without a persona.
+    # Keep them pending so the client routes them to user-type selection.
+    current_user.setdefault("account_type", "pending")
+    _hydrate_account_type_selection(current_user)
     return ResponseModel(data=current_user)
 
 
@@ -418,6 +507,40 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
     user = result.data[0]
     user.pop("password_hash", None)
     return ResponseModel(data=user)
+
+
+@app.delete("/api/users/me", response_model=ResponseModel)
+async def delete_me(
+    request: Request,
+    current_user: dict = Depends(Auth.get_current_user),
+    x_device_id: Optional[str] = Header(None, alias="X-Device-Id"),
+):
+    """Soft-delete the account, revoke its sessions and start the device cooldown."""
+    device_id = (x_device_id or "").strip()
+    deleted_at = datetime.now().isoformat()
+    available_at = (datetime.now() + timedelta(hours=24)).isoformat()
+    service = db.get_service_client()
+    service.table("account_deletion_cooldowns").insert({
+        "user_id": current_user["id"],
+        "device_id": device_id or "unknown",
+        "email": current_user.get("email"),
+        "deleted_at": deleted_at,
+        "available_at": available_at,
+    }).execute()
+    service.table("users").update({
+        "is_deleted": True,
+        "deleted_at": deleted_at,
+        "deletion_cooldown_until": available_at,
+        "deleted_device_id": device_id or None,
+        "email": f"deleted-{current_user['id']}@deleted.invalid",
+        "password_hash": None,
+        "onboarding_completed": False,
+    }).eq("id", current_user["id"]).execute()
+    service.table("active_sessions").update({
+        "is_active": False,
+        "revoked_at": deleted_at,
+    }).eq("user_id", current_user["id"]).execute()
+    return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 
 @app.post("/api/users/streak", response_model=ResponseModel)

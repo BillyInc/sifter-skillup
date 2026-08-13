@@ -133,6 +133,17 @@ async function removeStoredString(key: string): Promise<void> {
   } catch {}
 }
 
+/** Drop user-scoped local state before another account is restored on this device. */
+export async function switchLocalUser(userId: string): Promise<void> {
+  const existing = await getStoredProgress();
+  if (!existing.userId || existing.userId === userId) return;
+  await Promise.all([
+    removeStoredString(PROGRESS_KEY),
+    removeStoredString(POSITION_KEY),
+    removeStoredString(QUEUE_KEY),
+  ]);
+}
+
 async function getStoredJson<T>(key: string, fallback: T): Promise<T> {
   const raw = await getStoredString(key);
   if (!raw) return fallback;
@@ -620,6 +631,7 @@ export async function onLoginSync(
   getToken: () => Promise<string | null>,
 ): Promise<void> {
   try {
+    await switchLocalUser(userId);
     const net = await NetInfo.fetch();
     if (!isNetworkAvailable(net)) return;
 

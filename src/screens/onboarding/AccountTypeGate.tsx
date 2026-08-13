@@ -12,13 +12,14 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
+import { useLocalSearchParams } from "expo-router";
 import { useResponsive } from "@/hooks/useResponsive";
 import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
 import OnboardingFlow from "@/screens/OnboardingFlow";
 import EducatorOnboarding from "@/screens/admin/EducatorOnboarding";
 import type { UserType } from "@/types/onboarding";
 import { useAuth } from "@/hooks/useAuth";
-import { getOnboardingDraft, saveOnboardingDraft } from "@/lib/onboardingDraft";
+import { clearOnboardingDraft, getOnboardingDraft, saveOnboardingDraft } from "@/lib/onboardingDraft";
 import type { StartingPointProfile } from "@/types/onboarding";
 
 type Choice =
@@ -91,12 +92,19 @@ export default function AccountTypeGate() {
   const { colors } = useTheme();
   const resp = useResponsive();
   const { user } = useAuth();
+  const params = useLocalSearchParams<{ restart?: string }>();
   const [choice, setChoice] = useState<Choice | null>(null);
   const [selectedProfile, setSelectedProfile] =
     useState<Partial<StartingPointProfile> | null>(null);
 
   useEffect(() => {
     let active = true;
+    if (params.restart === "1") {
+      void clearOnboardingDraft(user?.id);
+      setChoice(null);
+      setSelectedProfile(null);
+      return () => { active = false; };
+    }
     getOnboardingDraft(user?.id).then((draft) => {
       if (!active || !draft?.choice) return;
       if (ALLOWED_CHOICES.has(draft.choice as Choice)) {
@@ -107,7 +115,7 @@ export default function AccountTypeGate() {
     return () => {
       active = false;
     };
-  }, [user?.id]);
+  }, [params.restart, user?.id]);
 
   const choose = (next: Choice) => {
     const persona = PERSONAS.find((p) => p.type === next);

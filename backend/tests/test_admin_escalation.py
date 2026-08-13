@@ -234,3 +234,81 @@ class TestAccessCodeRecordsTheGrant:
         )
         assert r.json()["success"] is False
         assert "try again" in r.json()["message"].lower()
+
+
+class TestAdminOrganisationAddressGate:
+    def _selected_school_service(self):
+        svc = MagicMock()
+        (
+            svc.table.return_value.select.return_value.eq.return_value
+            .eq.return_value.limit.return_value.execute.return_value
+        ) = MagicMock(
+            data=[
+                {
+                    "id": "school-1",
+                    "name": "Test University",
+                    "institution_type": "university",
+                    "address": None,
+                    "school_code": "TEST-001",
+                }
+            ]
+        )
+        return svc
+
+    def test_production_requires_address_even_for_selected_registry_row(
+        self, monkeypatch
+    ):
+        import routes.institutions_routes as ir
+        from config import settings
+        from fastapi import HTTPException
+
+        monkeypatch.setattr(ir, "_svc", self._selected_school_service)
+        monkeypatch.setattr(settings, "DEVELOPER_ACCESS_ENABLED", False, raising=False)
+        monkeypatch.setattr(settings, "EDUCATOR_ACCESS_CODES", [], raising=False)
+
+        with pytest.raises(HTTPException) as exc:
+            ir._find_or_create_school(
+                ir.VerificationClaim(
+                    organization_type="university",
+                    organization_name="Test University",
+                    organization_id="school-1",
+                    access_code="LEVELUP-EDU-DEV",
+                )
+            )
+        assert exc.value.status_code == 400
+        assert "address" in str(exc.value.detail).lower()
+
+    def test_developer_code_can_exercise_selected_row_without_address(
+        self, monkeypatch
+    ):
+        import routes.institutions_routes as ir
+        from config import settings
+
+        monkeypatch.setattr(ir, "_svc", self._selected_school_service)
+        monkeypatch.setattr(settings, "DEVELOPER_ACCESS_ENABLED", True, raising=False)
+        monkeypatch.setattr(
+            settings,
+            "EDUCATOR_ACCESS_CODES",
+            ["LEVELUP-EDU-DEV"],
+            raising=False,
+        )
+        monkeypatch.setattr(
+            ir,
+            "_org_from_school",
+            lambda school_id: ir.Organization(
+                id=school_id,
+                type="university",
+                name="Test University",
+            ),
+        )
+
+        org = ir._find_or_create_school(
+            ir.VerificationClaim(
+                organization_type="university",
+                organization_name="Test University",
+                organization_id="school-1",
+                access_code="LEVELUP-EDU-DEV",
+            )
+        )
+        assert org is not None
+        assert org.id == "school-1"

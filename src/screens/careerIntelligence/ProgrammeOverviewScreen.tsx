@@ -264,32 +264,15 @@ function ProgrammeBody({
   const exploreNav = useExploreNav();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
-  if (tab === "entrepreneurship") {
-    return <TrackBEntrepreneurship colors={colors} router={router} />;
-  }
-
-  if (tab === "admission") {
-    return (
-      <TrackCAdmission
-        programmeId={programmeId}
-        colors={colors}
-        admissionState={admissionState}
-        router={router}
-      />
-    );
-  }
-
-  // ── Section positions for nav scrolling ──────────────────────
+  // Keep hook order stable when the user changes tabs.
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
   const scrollRef = useRef<ScrollView>(null);
-
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
       sectionY.current[key] = CHROME_OFFSET + y;
     }
   }, []);
-
   const scrollTo = useCallback((key: string) => {
     const y = sectionY.current[key];
     if (y !== undefined) {
@@ -297,14 +280,8 @@ function ProgrammeBody({
     }
     setActiveSection(key);
   }, []);
-
-  // ── Employment (Track A) content ──────────────────────────────
   const grouped = useMemo(() => groupDomains(data.domains ?? []), [data.domains]);
   const ibassVerified = isIbassVerified(data, status, meta);
-
-  // Programme-level requirements (programme_subject_requirements via
-  // GET /jamb-programmes/{id}). Each field is guarded so garbled or missing
-  // brochure text renders guidance instead of blanks.
   const requirementCards = useMemo(
     () => [
       {
@@ -335,6 +312,26 @@ function ProgrammeBody({
     [jambRequirements, colors],
   );
 
+  if (tab === "entrepreneurship") {
+    return <TrackBEntrepreneurship colors={colors} router={router} />;
+  }
+
+  if (tab === "admission") {
+    return (
+      <TrackCAdmission
+        programmeId={programmeId}
+        colors={colors}
+        admissionState={admissionState}
+        router={router}
+      />
+    );
+  }
+
+  // ── Section positions for nav scrolling ──────────────────────
+  // ── Employment (Track A) content ──────────────────────────────
+  // Programme-level requirements (programme_subject_requirements via
+  // GET /jamb-programmes/{id}). Each field is guarded so garbled or missing
+  // brochure text renders guidance instead of blanks.
   const content = (
     <>
       {/* ── Overview: programme metadata ──────────────────── */}
@@ -598,7 +595,7 @@ function TrackCAdmission({
               {admissionState.data.programmeCount} programme admission row(s) in the dataset
             </Text>
             <Text style={[styles.admissionNote, { color: colors.textRole.muted }]}>
-              Use this with the published JAMB cycle and the university's current admission notice.
+              Use this with the published JAMB cycle and the university&apos;s current admission notice.
             </Text>
           </>
         ) : admissionState.status === "fallback" ? (

@@ -4,7 +4,11 @@ import { useRouter } from "expo-router";
 
 import { useAuth } from "@/hooks/useAuth";
 import { adminHomeForProfile } from "@/lib/adminAudience";
-import { isAdminAccount, useEffectiveAccountType } from "@/lib/accountType";
+import {
+  isAdminAccount,
+  needsLegacyTypeSelection,
+  useEffectiveAccountType,
+} from "@/lib/accountType";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import type { EducatorProfile } from "@/types/institution";
 
@@ -27,11 +31,21 @@ export function LegacyRouteRedirect() {
 
     let active = true;
     setProfileReady(false);
-    getEducatorProfile(user.id).then((next) => {
-      if (!active) return;
-      setProfile(next);
-      setProfileReady(true);
-    });
+    getEducatorProfile(user.id).then(
+      (next) => {
+        if (!active) return;
+        setProfile(next);
+        setProfileReady(true);
+      },
+      () => {
+        // A stale legacy URL must never remain on its loading screen because
+        // the optional profile lookup failed. The lower-privilege school route
+        // is the correct fallback until the profile can be loaded again.
+        if (!active) return;
+        setProfile(null);
+        setProfileReady(true);
+      },
+    );
     return () => {
       active = false;
     };
@@ -41,6 +55,7 @@ export function LegacyRouteRedirect() {
     if (loading || (user && (!hydrated || !profileReady))) return null;
     if (!user) return "/(auth)/sign-in";
     if (user.auth_provider === "guest") return "/(tabs)/explore";
+    if (needsLegacyTypeSelection(user)) return "/(auth)/onboarding?restart=1";
     if (!user.onboarding_completed || accountType === "pending") {
       return "/(auth)/onboarding";
     }

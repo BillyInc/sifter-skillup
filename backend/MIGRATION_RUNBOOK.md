@@ -32,6 +32,13 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 | 10a | `backend/migration_ss3_secondary_starting_point_patch.sql` | Existing-project patch that allows the split `ss3_secondary` starting-point type. | #10 |
 | 11 | `backend/migration_institution_team_access.sql` | Extends `institution_members` with scoped seats, creates `institution_member_invites`, and supports multiple officials per school/university/tutorial centre. | #5 and #9 |
 | 12 | `backend/migration_user_feedback.sql` | Phase 12 `user_feedback` table (admin inbox + ReviewModal). | #0 |
+| 13 | `backend/migration_school_identity.sql` | Adds address fields and unique readable school affiliation codes for same-name disambiguation. | #9 |
+| 14 | `backend/migration_goal_apply_now.sql` | Consolidated additive patch for auth compatibility, legacy account routing support, school identity, affiliation, provisioning, claim codes and account deletion. | base `users` + `schools` tables |
+
+The consolidated patch adds `users.account_type_selected_at`. This is required
+to distinguish an old completed account that inherited the historical `student`
+default from a student who explicitly selected that persona. Apply it before
+testing login or finishing onboarding with the updated backend.
 
 > **Do NOT run `migration_career_intelligence.sql`.** It is superseded and mixed
 > obsolete taxonomy tables with the base `schools`/`programmes` registry. Use
@@ -41,9 +48,9 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 
 | # | File | Rows | Depends on |
 |---|------|------|------------|
-| 13 | `backend/seed_career_pilot.sql` | programmes, schools, `jamb_programmes`, `programme_mapping`, `school_programmes`, `programme_subject_requirements` | migrations #4 |
-| 14 | `backend/seed_career_v2.sql` | 168 domains · 278 sub-groups · 4,092 roles · 7,393 tools · 508 certs · 2,528 programme→domain · 70,560 readiness · 5,573 JAMB→domain · 4,112 overlap. **Gitignored (~39 MB)** — regenerate with `python data/career-mapping/_gen_career_seed.py`. | #13 |
-| 15 | `backend/seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | #13 and #14 |
+| 14 | `backend/seed_career_pilot.sql` | programmes, schools, `jamb_programmes`, `programme_mapping`, `school_programmes`, `programme_subject_requirements` | migrations #4 |
+| 15 | `backend/seed_career_v2.sql` | 168 domains · 278 sub-groups · 4,092 roles · 7,393 tools · 508 certs · 2,528 programme→domain · 70,560 readiness · 5,573 JAMB→domain · 4,112 overlap. **Gitignored (~39 MB)** — regenerate with `python data/career-mapping/_gen_career_seed.py`. | #14 |
+| 16 | `backend/seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | #14 and #15 |
 
 ## Smoke test (after A + B)
 

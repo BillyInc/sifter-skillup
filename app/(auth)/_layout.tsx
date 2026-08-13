@@ -5,7 +5,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useAuth } from "../../src/hooks/useAuth";
 import { Colors } from "../../src/theme";
 import { consumePendingPostAuthRedirect } from "../../src/lib/postAuthRedirect";
-import { useEffectiveAccountType, isAdminAccount } from "../../src/lib/accountType";
+import { useEffectiveAccountType, isAdminAccount, needsLegacyTypeSelection } from "../../src/lib/accountType";
 import { getEducatorProfile } from "../../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../../src/lib/adminAudience";
 import { resolvePostAuthHref } from "../../src/lib/resumeNavigation";
@@ -86,9 +86,7 @@ export default function AuthLayout() {
   // Public auth screens must not wait for the saved-session/profile lookup.
   // A stale backend connection used to leave forgot-password spinning forever,
   // even though password reset does not need an existing app session.
-  const publicAuthRouteReady = !user && isExplicitAuthRoute && (
-    !isForgotRoute || params.intent === "reset"
-  );
+  const publicAuthRouteReady = !user && isExplicitAuthRoute;
 
   const pendingRedirect =
     authReady && user && user.onboarding_completed
@@ -96,21 +94,21 @@ export default function AuthLayout() {
       : null;
 
   let redirectHref: string | null = null;
-  if (!loading && !user && isForgotRoute && params.intent !== "reset") {
-    redirectHref = "/(auth)/sign-in";
-  } else if (
+  if (
     authReady &&
     !user &&
     explicitLogout &&
     !isSignInRoute &&
     !isSignupRoute &&
-    !(isForgotRoute && params.intent === "reset")
+    !isForgotRoute
   ) {
     redirectHref = "/(auth)/sign-in";
   } else if (authReady && !user && isOnboardingRoute) {
     redirectHref = "/(auth)/sign-in";
   } else if (authReady && user && user.auth_provider === "guest" && !isExplicitAuthRoute) {
     redirectHref = "/(tabs)/explore";
+  } else if (authReady && user && needsLegacyTypeSelection(user) && !isOnboardingRoute) {
+    redirectHref = "/(auth)/onboarding?restart=1";
   } else if (
     authReady &&
     user &&

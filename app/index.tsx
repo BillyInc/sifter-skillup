@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Redirect, useRouter } from "expo-router";
 import { useAuth } from "../src/hooks/useAuth";
-import { isAdminAccount, useEffectiveAccountType } from "../src/lib/accountType";
+import { isAdminAccount, needsLegacyTypeSelection, useEffectiveAccountType } from "../src/lib/accountType";
 import { getEducatorProfile } from "../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../src/lib/adminAudience";
 import { resolvePostAuthHref } from "../src/lib/resumeNavigation";
@@ -60,6 +60,7 @@ export default function LandingPage() {
   const signedInHref = useMemo(() => {
     if (!user) return null;
     if (user.auth_provider === "guest") return "/(tabs)/explore";
+    if (needsLegacyTypeSelection(user)) return "/(auth)/onboarding?restart=1";
     if (!user.onboarding_completed) return "/(auth)/onboarding";
     if (isAdminAccount(accountType)) return adminHomeForProfile(educatorProfile);
     return resolvePostAuthHref(user);

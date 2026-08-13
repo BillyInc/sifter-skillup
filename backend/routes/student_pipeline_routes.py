@@ -110,6 +110,13 @@ def _canonical_subject_name(value: str) -> str:
     return aliases.get(lower, value.strip())
 
 
+def _normalise_stream(value: Optional[str]) -> Optional[str]:
+    stream = (value or "").strip().lower()
+    if stream == "arts":
+        return "art"
+    return stream if stream in {"science", "commercial", "art"} else None
+
+
 def _resolve_subject_catalog(subjects: list[str]) -> dict[str, dict]:
     """Map normalized chosen subject names to subject_catalog rows when seeded."""
     if not subjects:
@@ -443,10 +450,10 @@ async def list_subjects(
         )
         if q:
             query = query.ilike("name", f"%{q.strip()}%")
-        if stream:
-            # Containment filters can vary by PostgREST version. If unsupported,
-            # the catch path falls back to a general subject list.
-            query = query.contains("stream_tags", [stream.strip().lower()])
+        normalized_stream = _normalise_stream(stream)
+        # Stream is a relevance/order hint, not an eligibility filter. The
+        # picker must still expose every valid JAMB/O-level subject for the
+        # selected stream, including subjects outside its usual cluster.
         if exam_type:
             query = query.contains("exam_types", [exam_type.strip().lower()])
         res = query.order("name").limit(80).execute()
@@ -461,6 +468,11 @@ async def list_subjects(
             }
             for r in (res.data or [])
         ]
+        if normalized_stream and items:
+            items.sort(key=lambda item: (
+                0 if normalized_stream in (item.get("streamTags") or []) else 1,
+                item.get("name") or "",
+            ))
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
@@ -486,24 +498,36 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
         cached = get_json(cache_key)
         if isinstance(cached, list):
             return ResponseModel(data=_real(cached[: min(limit, 80)]))
-        if q and q.strip():
-            like = f"%{q.strip()}%"
-            res = (
-                svc.table("v_jamb_programme_details")
-                .select("*")
-                .or_(f"jamb_name.ilike.{like},canonical_programme_name.ilike.{like}")
-                .order("jamb_name")
-                .limit(min(limit, 80))
-                .execute()
+        try:
+            if q and q.strip():
+                like = f"%{q.strip()}%"
+                res = (
+                    svc.table("v_jamb_programme_details")
+                    .select("*")
+                    .or_(f"jamb_name.ilike.{like},canonical_programme_name.ilike.{like}")
+                    .order("jamb_name")
+                    .limit(min(limit, 80))
+                    .execute()
+                )
+            else:
+                res = (
+                    svc.table("v_jamb_programme_details")
+                    .select("*")
+                    .order("jamb_name")
+                    .limit(min(limit, 80))
+                    .execute()
+                )
+        except Exception as exc:
+            # Keep JAMB onboarding searchable when the optional detail view is
+            # absent or stale. The direct registry still contains the official
+            # JAMB programme names; school-specific requirements load later.
+            log.warning("student jamb programme detail view skipped", error=str(exc))
+            direct = svc.table("jamb_programmes").select(
+                "id, jamb_name, jamb_faculty, degree_type, is_blend"
             )
-        else:
-            res = (
-                svc.table("v_jamb_programme_details")
-                .select("*")
-                .order("jamb_name")
-                .limit(min(limit, 80))
-                .execute()
-            )
+            if q and q.strip():
+                direct = direct.ilike("jamb_name", f"%{q.strip()}%")
+            res = direct.order("jamb_name").limit(min(limit, 80)).execute()
         items = [_jamb_detail_out(r) for r in (res.data or [])]
         # Keep the JAMB programme identity separate from school-specific
         # offerings, but expose enough context in typeahead to explain why a
@@ -685,7 +709,10 @@ async def register_school(
     """
     name = _clean_text(payload.name)
     institution_type = _clean_text(payload.institutionType)
-    allowed = {"secondary_school", "tutorial_centre", "university", "polytechnic"}
+    # The current product scope is universities, secondary schools and the
+    # two JAMB provider types. Do not let hidden higher-institution options
+    # re-enter the registry through this free-text registration endpoint.
+    allowed = {"secondary_school", "tutorial_centre", "university", "jamb_cafe"}
     if len(name) < 2 or institution_type not in allowed:
         return ResponseModel(
             success=False,

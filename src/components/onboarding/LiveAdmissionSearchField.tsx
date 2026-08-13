@@ -17,6 +17,10 @@ export type AdmissionSuggestion = {
   schoolNames?: string[];
   schoolCount?: number;
   institutionType?: string;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
 };
 
 export function LiveAdmissionSearchField({
@@ -30,6 +34,7 @@ export function LiveAdmissionSearchField({
   schoolId,
   selectedId,
   allowRegister = false,
+  programmeSource = "jamb",
 }: {
   label: string;
   value: string;
@@ -41,6 +46,7 @@ export function LiveAdmissionSearchField({
   schoolId?: string;
   selectedId?: string;
   allowRegister?: boolean;
+  programmeSource?: "jamb" | "admission";
 }) {
   const { colors } = useTheme();
   const [query, setQuery] = React.useState(value);
@@ -48,6 +54,7 @@ export function LiveAdmissionSearchField({
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [searchStatus, setSearchStatus] = React.useState<"real" | "unavailable" | null>(null);
+  const [searchNotice, setSearchNotice] = React.useState<string | null>(null);
   const [registering, setRegistering] = React.useState(false);
   const [registerError, setRegisterError] = React.useState<string | null>(null);
   const selected = Boolean(selectedId && value.trim());
@@ -64,10 +71,14 @@ export function LiveAdmissionSearchField({
       setOpen(false);
       return;
     }
-    if (q.length < 2) {
+    // Start querying as soon as the user begins typing. The picker is a
+    // typeahead, so making users complete a long school name before showing
+    // selectable results defeats the purpose of the field.
+    if (q.length < 1) {
       setResults([]);
       setLoading(false);
       setSearchStatus(null);
+      setSearchNotice(null);
       return;
     }
     let active = true;
@@ -77,11 +88,14 @@ export function LiveAdmissionSearchField({
         kind === "programme"
           ? schoolId
             ? await careerData.getSchoolProgrammes(schoolId, q)
-            : await careerData.searchJambProgrammes(q)
+            : programmeSource === "admission"
+              ? await careerData.searchAdmissionProgrammes(q)
+              : await careerData.searchJambProgrammes(q)
           : await careerData.searchAdmissionSchools(q, institutionType);
       if (!active) return;
       setLoading(false);
       setSearchStatus(state.status === "real" ? "real" : "unavailable");
+      setSearchNotice(state.meta?.notice ?? null);
       setResults(
         state.status === "real" && Array.isArray(state.data)
           ? state.data.map((r: any) => ({
@@ -90,6 +104,10 @@ export function LiveAdmissionSearchField({
               institutionType: r.institutionType,
               schoolNames: Array.isArray(r.schoolNames) ? r.schoolNames : [],
               schoolCount: Number(r.schoolCount || 0),
+              address: r.address ?? null,
+              city: r.city ?? null,
+              state: r.state ?? null,
+              country: r.country ?? null,
             }))
           : [],
       );
@@ -98,7 +116,7 @@ export function LiveAdmissionSearchField({
       active = false;
       clearTimeout(t);
     };
-  }, [query, kind, institutionType, schoolId, selected]);
+  }, [query, kind, institutionType, schoolId, selected, programmeSource]);
 
   const registerTypedInstitution = async () => {
     const name = query.trim();
@@ -185,6 +203,11 @@ export function LiveAdmissionSearchField({
                     : `Offered by ${r.schoolCount} universities`}
                 </Text>
               ) : null}
+              {kind === "school" ? (
+                <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
+                  {[r.address, r.city, r.state, r.country].filter(Boolean).join(", ") || "Address not listed"}
+                </Text>
+              ) : null}
             </TouchableOpacity>
           ))}
         </View>
@@ -193,7 +216,9 @@ export function LiveAdmissionSearchField({
         <View
           style={[styles.empty, { borderColor: colors.border, backgroundColor: colors.card }]}
         >
-          <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>We could not check this right now. Please try again.</Text>
+          <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
+            {searchNotice ?? "We could not check this right now. Please try again."}
+          </Text>
         </View>
       ) : null}
       {open && !loading && query.trim().length >= 2 && results.length === 0 && searchStatus === "real" ? (

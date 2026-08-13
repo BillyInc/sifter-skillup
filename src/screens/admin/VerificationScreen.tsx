@@ -52,19 +52,14 @@ const STATUS_META: Record<
 
 const TIERS = [
   {
-    tier: "T0",
-    title: "National aggregate",
-    body: "Self-declared, unverified. You can browse national market intelligence and public school/programme guidance only.",
-  },
-  {
-    tier: "T1",
+    tier: "Claim",
     title: "Claimed institution",
-    body: "You've claimed an institution, school or tutorial centre and entered a registry anchor. A manual review can issue/confirm your school or session code.",
+    body: "Your organisation workspace is linked. This does not mean proof has been submitted or approved.",
   },
   {
-    tier: "T2",
+    tier: "Verified",
     title: "Verified institution dashboard",
-    body: "Verified university staff see their own programme mix. Secondary schools and tutorial centres get guidance/session tools; individual student data still requires consent.",
+    body: "After proof is submitted and reviewed, role-scoped institution tools unlock. Individual student data still requires consent.",
   },
 ];
 
@@ -95,7 +90,14 @@ export function VerificationScreen() {
     };
   }, [user?.id]);
 
-  const status: VerificationStatus = profile?.verificationStatus ?? "unverified";
+  // Older local drafts could say pending with document_upload even though no
+  // document was ever submitted. Treat that as a claim until a proof anchor
+  // exists, so the UI never reports a review that did not happen.
+  const hasProofAnchor = Boolean(profile?.workEmail || profile?.registryCode);
+  const status: VerificationStatus =
+    profile?.verificationStatus === "pending" && !hasProofAnchor
+      ? "claimed"
+      : profile?.verificationStatus ?? "unverified";
   const meta = STATUS_META[status];
   const tintColor =
     meta.tint === "green"
@@ -166,7 +168,7 @@ export function VerificationScreen() {
                 value={
                   profile?.verificationMethod
                     ? profile.verificationMethod.replace(/_/g, " ")
-                    : "—"
+                    : "Not submitted"
                 }
                 colors={colors}
               />

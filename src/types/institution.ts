@@ -67,6 +67,12 @@ export interface Organization {
   moeApprovalNo?: string; // state Ministry of Education approval (sec. schools)
   cacNo?: string; // CAC business registration (centres/cafes)
   state?: string;
+  /** Full physical/postal address used to disambiguate institutions. */
+  address?: string;
+  city?: string;
+  country?: string;
+  /** Stable public affiliation/referral code scoped to this school record. */
+  schoolCode?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
   /** True for tutorial_centre/jamb_cafe: provider/session only, never a roster. */
@@ -110,6 +116,10 @@ export interface EducatorProfile {
   accountType: Exclude<AccountType, "pending" | "student">;
   organizationType: OrganizationType;
   organizationName?: string;
+  organizationAddress: string;
+  organizationCity?: string;
+  organizationState?: string;
+  organizationCountry?: string;
   /** Set once an org record exists; before that the claim is free-text. */
   organizationId?: string;
   role: OrgRole;
@@ -120,6 +130,8 @@ export interface EducatorProfile {
   providerSessionOnly?: boolean;
   /** Owner-issued code gate state. This is admin access, not proof/verification. */
   adminAccessStatus?: "owner_code";
+  /** Sent only during the development access flow; never displayed as proof. */
+  accessCode?: string;
   adminAccessGrantedAt?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
@@ -185,6 +197,7 @@ export interface GeneratedStudent {
   studentType?: ProvisioningStudentType | null;
   claimCode: string;
   claimExpiresAt?: string | null;
+  guidanceComplete?: boolean;
 }
 
 /** One individually-visible row in the consent-aware roster. */
@@ -197,6 +210,7 @@ export interface RosterStudent {
   claimState?: "unclaimed" | "claimed" | null;
   visible: boolean;
   hasConsent: boolean;
+  guidanceComplete?: boolean;
 }
 
 /** The roster payload: visible rows + the counts that make the aggregate-only

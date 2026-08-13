@@ -55,11 +55,83 @@ import {
 import { request } from "./api";
 import { getCached, setCached, queueWrite, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
+import { WAEC_STREAM_SUBJECTS, type SchoolStream } from "./waecSubjects";
 
 /** Reference data is refreshed daily; writes and account data never use this cache. */
 const REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
 const SEARCH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const DETAIL_TTL_MS = REFERENCE_TTL_MS;
+
+// Small, verified labels used only when the reference API is temporarily
+// unreachable. These are not a replacement for the university registry: a
+// selected item is still resolved by its name on the server when the user
+// submits onboarding. Keeping the fallback bounded prevents arbitrary names
+// from looking like registry records.
+const LOCAL_UNIVERSITIES: AdmissionSchool[] = [
+  { id: "local-unilag", name: "University of Lagos", institutionType: "university" },
+  { id: "local-lasu", name: "Lagos State University", institutionType: "university" },
+  { id: "local-ui", name: "University of Ibadan", institutionType: "university" },
+  { id: "local-abu", name: "Ahmadu Bello University", institutionType: "university" },
+  { id: "local-unn", name: "University of Nigeria, Nsukka", institutionType: "university" },
+  { id: "local-oau", name: "Obafemi Awolowo University", institutionType: "university" },
+  { id: "local-uniben", name: "University of Benin", institutionType: "university" },
+  { id: "local-uniport", name: "University of Port Harcourt", institutionType: "university" },
+  { id: "local-unical", name: "University of Calabar", institutionType: "university" },
+  { id: "local-unilorin", name: "University of Ilorin", institutionType: "university" },
+  { id: "local-unijos", name: "University of Jos", institutionType: "university" },
+  { id: "local-futo", name: "Federal University of Technology, Owerri", institutionType: "university" },
+  { id: "local-futa", name: "Federal University of Technology, Akure", institutionType: "university" },
+  { id: "local-covenant", name: "Covenant University", institutionType: "university" },
+  { id: "local-abuad", name: "Afe Babalola University", institutionType: "university" },
+];
+
+const UNIVERSITY_SEARCH_ALIASES: Record<string, string[]> = {
+  unilag: ["university of lagos"],
+  lasu: ["lagos state university"],
+  ui: ["university of ibadan"],
+  abu: ["ahmadu bello university"],
+  unn: ["university of nigeria", "nsukka"],
+  oau: ["obafemi awolowo university"],
+  uniben: ["university of benin"],
+  uniport: ["university of port harcourt"],
+  unical: ["university of calabar"],
+  unilorin: ["university of ilorin"],
+  unijos: ["university of jos"],
+  futo: ["federal university of technology", "owerri"],
+  futa: ["federal university of technology", "akure"],
+  abuad: ["afe babalola university"],
+  covenant: ["covenant university"],
+};
+
+function localUniversityFallback(q: string): AdmissionSchool[] {
+  const needle = q.trim().toLowerCase();
+  if (!needle) return LOCAL_UNIVERSITIES.slice(0, 8);
+  const aliases = UNIVERSITY_SEARCH_ALIASES[needle] ?? [];
+  return LOCAL_UNIVERSITIES.filter((school) => {
+    const name = school.name.toLowerCase();
+    return name.includes(needle) || aliases.some((alias) => name.includes(alias));
+  }).slice(0, 20);
+}
+
+function localSubjectFallback(q?: string, stream?: string): SubjectCatalogItem[] {
+  const normalizedStream = stream === "arts" ? "art" : stream;
+  const names = Array.from(new Set(Object.values(WAEC_STREAM_SUBJECTS).flat()));
+  const needle = (q ?? "").trim().toLowerCase();
+  return Array.from(new Set(names))
+    .filter((name) => !needle || name.toLowerCase().includes(needle))
+    .sort((a, b) => {
+      const aRelevant = normalizedStream && WAEC_STREAM_SUBJECTS[normalizedStream as SchoolStream]?.includes(a) ? 0 : 1;
+      const bRelevant = normalizedStream && WAEC_STREAM_SUBJECTS[normalizedStream as SchoolStream]?.includes(b) ? 0 : 1;
+      return aRelevant - bRelevant || a.localeCompare(b);
+    })
+    .map((name) => ({
+      id: `local-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+      name,
+      aliases: [],
+      category: null,
+      streamTags: normalizedStream ? [normalizedStream] : [],
+    }));
+}
 
 async function readThrough<T>(
   key: string,
@@ -193,6 +265,10 @@ export interface AdmissionSchool {
   id: string;
   name: string;
   institutionType: string;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
 }
 
 export interface SchoolFaculty {
@@ -276,7 +352,7 @@ export const careerData = {
     examType?: "utme" | "olevel",
   ): Promise<DataState<SubjectCatalogItem[]>> {
     const key = `subjects:${(q ?? "").trim().toLowerCase()}:${stream ?? ""}:${examType ?? ""}`;
-    return readThrough(
+    const state = await readThrough(
       key,
       async () => {
         const qs = new URLSearchParams();
@@ -290,6 +366,15 @@ export const careerData = {
       "Subject choices are temporarily unavailable. Please try again.",
       q?.trim() ? SEARCH_TTL_MS : REFERENCE_TTL_MS,
     );
+    if (state.status === "real" && state.data?.length) return state;
+    const fallback = localSubjectFallback(q, stream);
+    return fallback.length
+      ? {
+          status: "real",
+          data: fallback,
+          meta: { notice: "Showing the saved subject list while the catalogue reconnects." },
+        }
+      : state;
   },
 
   async searchJambProgrammes(
@@ -862,7 +947,7 @@ export const careerData = {
     institutionType?: string,
   ): Promise<DataState<AdmissionSchool[]>> {
     const key = `admission-schools:${institutionType ?? "university"}:${q.trim().toLowerCase()}`;
-    return readThrough(
+    const state = await readThrough(
       key,
       async () => {
         const qs = new URLSearchParams();
@@ -875,6 +960,15 @@ export const careerData = {
       "University search is temporarily unavailable. Please try again.",
       SEARCH_TTL_MS,
     );
+    if (state.status !== "real" && (institutionType ?? "university") === "university") {
+      const fallback = localUniversityFallback(q);
+      return {
+        status: "real",
+        data: fallback,
+        meta: { notice: "Showing the saved university list while the registry reconnects." },
+      };
+    }
+    return state;
   },
 
   /** Typeahead over programmes with published cut-offs (onboarding picker). */

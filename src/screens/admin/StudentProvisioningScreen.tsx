@@ -27,6 +27,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Clipboard from "expo-clipboard";
+import { useRouter } from "expo-router";
 import {
   useTheme,
   Spacing,
@@ -46,6 +47,7 @@ import type {
   GeneratedStudent,
   ProvisioningMergeCandidate,
   ProvisioningStream,
+  ProvisioningStudentType,
   RosterSummary,
 } from "../../types/institution";
 
@@ -59,20 +61,57 @@ const STREAMS: { value: ProvisioningStream; label: string }[] = [
   { value: "commercial", label: "Commercial" },
 ];
 
+const SECONDARY_STAGES: { value: ProvisioningStudentType; label: string }[] = [
+  { value: "ss1", label: "SS1" },
+  { value: "ss2", label: "SS2" },
+  { value: "ss3", label: "SS3" },
+];
+
+const JAMB_STAGES: { value: ProvisioningStudentType; label: string }[] = [
+  { value: "jamb", label: "JAMB" },
+];
+
 function streamLabel(stream?: ProvisioningStream | null) {
   return STREAMS.find((s) => s.value === stream)?.label ?? "";
 }
 
-export function StudentProvisioningScreen() {
+function isLocalDraftId(id: string) {
+  return id.startsWith("local-draft-");
+}
+
+function makeLocalDraft(
+  stream: ProvisioningStream,
+  studentType: ProvisioningStudentType,
+): ProvisionDraft {
+  return {
+    id: `local-draft-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    fullName: "",
+    studentClass: null,
+    stream,
+    studentType,
+    needsReview: true,
+    guardianConsent: false,
+    guardianName: null,
+    status: "draft",
+  };
+}
+
+export function StudentProvisioningScreen({
+  initialMode = "school",
+  initialTab = "add",
+}: {
+  initialMode?: "school" | "jamb";
+  initialTab?: Tab;
+}) {
   const { colors } = useTheme();
-  const [tab, setTab] = useState<Tab>("roster");
+  const [tab, setTab] = useState<Tab>(initialTab);
 
   return (
-    <AdminShell title="Students" eyebrow="Roster & provisioning">
+    <AdminShell title={initialMode === "jamb" ? "JAMB accounts" : "Learners"} eyebrow={initialMode === "jamb" ? "Provider guidance" : "Roster & provisioning"}>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         {/* Tab switch */}
         <View style={[styles.tabBar, { borderBottomColor: colors.border }]}>
-          {(["roster", "add"] as Tab[]).map((t) => (
+          {(["add", "roster"] as Tab[]).map((t) => (
             <TouchableOpacity
               key={t}
               onPress={() => setTab(t)}
@@ -93,7 +132,7 @@ export function StudentProvisioningScreen() {
             </TouchableOpacity>
           ))}
         </View>
-        {tab === "roster" ? <RosterTab /> : <AddStudentsTab />}
+        {tab === "roster" ? <RosterTab /> : <AddStudentsTab initialMode={initialMode} />}
       </View>
     </AdminShell>
   );
@@ -270,12 +309,22 @@ function RosterTab() {
                     ? "Shared by student"
                     : "Claimed"}
               </Text>
-              <TouchableOpacity
-                onPress={() => provisioningData.openReportHtml(s.userId)}
-                style={[styles.miniBtn, { borderColor: colors.border }]}
-              >
-                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
-              </TouchableOpacity>
+              {s.guidanceComplete ? (
+                <TouchableOpacity
+                  onPress={() => provisioningData.openReportHtml(s.userId)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
+                </TouchableOpacity>
+              ) : null}
+              {s.provenance === "provisioned" && s.claimState === "unclaimed" ? (
+                <TouchableOpacity
+                  onPress={() => provisioningData.openLoginCard(s.userId)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Claim card</Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           ))}
         </View>
@@ -406,15 +455,18 @@ function MergeCandidatesPanel({
 // Add students tab — import → review/select → done
 // ─────────────────────────────────────────────────────────────
 
-function AddStudentsTab() {
+function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "jamb" }) {
   const { colors } = useTheme();
   const [stage, setStage] = useState<AddStage>("import");
   const [batchStream, setBatchStream] = useState<ProvisioningStream>("science");
   const [busy, setBusy] = useState(false);
+  const [uploadMenuOpen, setUploadMenuOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<ProvisionDraft[]>([]);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [generated, setGenerated] = useState<GeneratedStudent[]>([]);
+  const defaultStudentType: ProvisioningStudentType = initialMode === "jamb" ? "jamb" : "ss1";
+  const stageOptions = initialMode === "jamb" ? JAMB_STAGES : SECONDARY_STAGES;
 
   // Load any existing (previously staged) drafts on entry.
   useEffect(() => {
@@ -423,12 +475,15 @@ function AddStudentsTab() {
       .then((d) => {
         if (d.length) {
           setBatchStream(d.find((draft) => draft.stream)?.stream ?? "science");
-          setDrafts(d);
+          setDrafts(d.map((draft) => ({
+            ...draft,
+            studentType: draft.studentType ?? defaultStudentType,
+          })));
           setStage("review");
         }
       })
       .catch(() => {});
-  }, []);
+  }, [defaultStudentType]);
 
   const pickAndExtract = useCallback(async () => {
     setError(null);
@@ -455,33 +510,74 @@ function AddStudentsTab() {
       return;
     }
     setBusy(true);
+    setUploadMenuOpen(false);
     try {
       const staged = await provisioningData.createDrafts({ images, stream: batchStream });
-      setDrafts((prev) => [...prev, ...staged]);
+      const normalized: ProvisionDraft[] = staged.map((draft) => ({
+        ...draft,
+        studentType: draft.studentType ?? defaultStudentType,
+      }));
+      setDrafts((prev) => [...normalized, ...prev]);
       setStage("review");
     } catch (e) {
       setError((e as Error)?.message ?? "Extraction failed. Add students manually.");
     } finally {
       setBusy(false);
     }
-  }, [batchStream]);
+  }, [batchStream, defaultStudentType]);
 
-  const addManualRow = useCallback(async () => {
+  const pickDocumentAndExtract = useCallback(async () => {
+    if (Platform.OS !== "web" || typeof document === "undefined") {
+      setError("Document upload is available in the web dashboard. On mobile, upload a clear photo instead.");
+      return;
+    }
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/pdf,image/*";
+    input.multiple = true;
+    const files = await new Promise<File[]>((resolve) => {
+      input.onchange = () => resolve(Array.from(input.files ?? []));
+      input.click();
+    });
+    if (!files.length) return;
+
     setBusy(true);
     setError(null);
+    setUploadMenuOpen(false);
     try {
-      const staged = await provisioningData.createDrafts({
-        manualRows: [{ fullName: "", stream: batchStream }],
-        stream: batchStream,
-      });
-      setDrafts((prev) => [...prev, ...staged]);
+      const images: DraftImage[] = await Promise.all(files.slice(0, 15).map((file) => new Promise<DraftImage>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const encoded = String(reader.result ?? "");
+          const comma = encoded.indexOf(",");
+          resolve({
+            mediaType: file.type || "application/octet-stream",
+            data: comma >= 0 ? encoded.slice(comma + 1) : encoded,
+          });
+        };
+        reader.onerror = () => reject(new Error("The selected document could not be read."));
+        reader.readAsDataURL(file);
+      })));
+      const staged = await provisioningData.createDrafts({ images, stream: batchStream });
+      setDrafts((prev) => prev.concat(staged.map((draft) => ({
+        ...draft,
+        studentType: draft.studentType ?? defaultStudentType,
+      }))));
       setStage("review");
     } catch (e) {
-      setError((e as Error)?.message ?? "Could not add a row.");
+      setError((e as Error)?.message ?? "The document could not be read. Add students manually.");
     } finally {
       setBusy(false);
     }
-  }, [batchStream]);
+  }, [batchStream, defaultStudentType]);
+
+  const addManualRow = useCallback(() => {
+    setError(null);
+    // Keep manual entry local until the administrator confirms account creation.
+    // This prevents an empty row from triggering the slow document-staging path.
+    setDrafts((prev) => prev.concat(makeLocalDraft(batchStream, defaultStudentType)));
+    setStage("review");
+  }, [batchStream, defaultStudentType]);
 
   const patchDraft = useCallback(
     (id: string, patch: Partial<ProvisionDraft>) => {
@@ -494,11 +590,13 @@ function AddStudentsTab() {
 
   const commitDraft = useCallback(
     async (d: ProvisionDraft) => {
+      if (isLocalDraftId(d.id)) return;
       try {
         const updated = await provisioningData.updateDraft(d.id, {
           fullName: d.fullName ?? "",
           studentClass: d.studentClass ?? undefined,
           stream: d.stream ?? batchStream,
+          studentType: d.studentType ?? defaultStudentType,
           guardianConsent: d.guardianConsent,
           guardianName: d.guardianName ?? undefined,
         });
@@ -507,34 +605,71 @@ function AddStudentsTab() {
         /* keep local edit; will retry on generate */
       }
     },
-    [batchStream, patchDraft],
+    [batchStream, defaultStudentType, patchDraft],
   );
 
-  const applyBatchStream = useCallback((stream: ProvisioningStream) => {
-    setBatchStream(stream);
-    setDrafts((prev) => prev.map((d) => ({ ...d, stream })));
-  }, []);
-
   const generate = useCallback(async () => {
-    const items = drafts
-      .filter((d) => selected[d.id] && (d.fullName ?? "").trim())
-      .map((d) => ({ draftId: d.id, stream: d.stream ?? batchStream }));
-    if (!items.length) {
+    const selectedOriginalIds = new Set(
+      drafts.filter((d) => selected[d.id]).map((d) => d.id),
+    );
+
+    if (!selectedOriginalIds.size) {
       setError("Select at least one named student to create accounts.");
       return;
     }
     setBusy(true);
     setError(null);
     try {
+      let workingDrafts = drafts;
+      let selectedIds = new Set(selectedOriginalIds);
+      const localSelected = drafts.filter(
+        (d) => selectedOriginalIds.has(d.id) && isLocalDraftId(d.id),
+      );
+      if (localSelected.length) {
+        const staged = await provisioningData.createDrafts({
+          manualRows: localSelected.map((d) => ({
+            fullName: d.fullName ?? "",
+            studentClass: d.studentClass ?? undefined,
+            stream: d.stream ?? batchStream,
+            studentType: d.studentType ?? defaultStudentType,
+            guardianConsent: d.guardianConsent,
+            guardianName: d.guardianName ?? undefined,
+          })),
+          stream: batchStream,
+        });
+        if (staged.length !== localSelected.length) {
+          throw new Error("Could not stage the manually entered students. Please try again.");
+        }
+        const normalized = staged.map((draft) => ({
+          ...draft,
+          studentType: draft.studentType ?? defaultStudentType,
+        }));
+        const replacement = new Map(localSelected.map((d, index) => [d.id, normalized[index]]));
+        workingDrafts = drafts.map((d) => replacement.get(d.id) ?? d);
+        selectedIds = new Set(
+          Array.from(selectedOriginalIds).map((id) => replacement.get(id)?.id ?? id),
+        );
+        setDrafts(workingDrafts);
+      }
+      const items = workingDrafts
+        .filter((d) => selectedIds.has(d.id) && (d.fullName ?? "").trim())
+        .map((d) => ({
+          draftId: d.id,
+          stream: d.stream ?? batchStream,
+          studentType: d.studentType ?? defaultStudentType,
+        }));
+      if (!items.length) {
+        throw new Error("Select at least one named student to create accounts.");
+      }
       // Persist any in-grid edits first, then mint.
       await Promise.all(
-        drafts
-          .filter((d) => selected[d.id])
+        workingDrafts
+          .filter((d) => selectedIds.has(d.id))
           .map((d) => commitDraft(d)),
       );
       const result = await provisioningData.generate(items);
       setGenerated(result);
-      setDrafts((prev) => prev.filter((d) => !selected[d.id]));
+      setDrafts((prev) => prev.filter((d) => !selectedIds.has(d.id)));
       setSelected({});
       setStage("done");
     } catch (e) {
@@ -542,7 +677,7 @@ function AddStudentsTab() {
     } finally {
       setBusy(false);
     }
-  }, [batchStream, drafts, selected, commitDraft]);
+  }, [batchStream, defaultStudentType, drafts, selected, commitDraft]);
 
   const selectedCount = Object.values(selected).filter(Boolean).length;
 
@@ -565,8 +700,18 @@ function AddStudentsTab() {
             We read the names into a grid you can correct — nothing is created
             until you review and confirm. The document itself is never stored.
           </Text>
-          <StreamPicker label="Batch stream" value={batchStream} onChange={setBatchStream} />
-          <PrimaryButton label="Upload class list / results" onPress={pickAndExtract} busy={busy} />
+          <PrimaryButton
+            label={uploadMenuOpen ? "Close upload options" : "Upload a class list or result"}
+            onPress={() => setUploadMenuOpen((open) => !open)}
+            busy={busy}
+          />
+          {uploadMenuOpen ? (
+            <View style={{ gap: Spacing.sm }}>
+              <SecondaryButton label="Choose photo or image" onPress={pickAndExtract} />
+              <SecondaryButton label="Choose PDF or document" onPress={pickDocumentAndExtract} />
+              <Text style={[styles.cardHint, { color: colors.textMuted }]}>You can return here before selecting a file.</Text>
+            </View>
+          ) : null}
           <SecondaryButton label="Add students manually instead" onPress={addManualRow} />
         </View>
       )}
@@ -580,7 +725,7 @@ function AddStudentsTab() {
             Correct any unclear names, tick the students you want to create
             accounts for, then create. Ticked rows with a name become accounts.
           </Text>
-          <StreamPicker label="Batch stream" value={batchStream} onChange={applyBatchStream} />
+          <Text style={[styles.cardHint, { color: colors.textMuted }]}>Choose the class and stream separately for each learner below.</Text>
 
           {drafts.map((d) => (
             <View
@@ -628,6 +773,16 @@ function AddStudentsTab() {
                     { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg },
                   ]}
                 />
+                <StagePicker
+                  label="Learner stage"
+                  value={d.studentType ?? defaultStudentType}
+                  options={stageOptions}
+                  onChange={(studentType) => {
+                    const updated = { ...d, studentType };
+                    patchDraft(d.id, { studentType });
+                    commitDraft(updated);
+                  }}
+                />
                 <StreamPicker
                   compact
                   value={d.stream ?? batchStream}
@@ -648,8 +803,17 @@ function AddStudentsTab() {
 
           <View style={{ flexDirection: "row", gap: Spacing.sm, flexWrap: "wrap" }}>
             <SecondaryButton label="+ Add another" onPress={addManualRow} />
-            <SecondaryButton label="Upload more" onPress={pickAndExtract} />
+            <SecondaryButton
+              label={uploadMenuOpen ? "Close upload options" : "Upload more"}
+              onPress={() => setUploadMenuOpen((open) => !open)}
+            />
           </View>
+          {uploadMenuOpen ? (
+            <View style={{ gap: Spacing.sm }}>
+              <SecondaryButton label="Choose photo or image" onPress={pickAndExtract} />
+              <SecondaryButton label="Choose PDF or document" onPress={pickDocumentAndExtract} />
+            </View>
+          ) : null}
 
           <PrimaryButton
             label={
@@ -688,6 +852,7 @@ function GeneratedCards({
   onDone: () => void;
 }) {
   const { colors } = useTheme();
+  const router = useRouter();
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyAll = useCallback(async () => {
@@ -743,30 +908,63 @@ function GeneratedCards({
           <Text style={[styles.cardHint, { color: colors.textMuted }]}>
             {copied === g.userId ? "Copied!" : "Tap the code to copy"}
           </Text>
+           {!g.guidanceComplete ? (
+             <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this learner before printing a report.</Text>
+           ) : null}
           <View style={styles.cardActions}>
             <TouchableOpacity
               onPress={() => provisioningData.openLoginCard(g.userId)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
               <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Print card</Text>
-            </TouchableOpacity>
+             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
-                provisioningData.downloadReportDocx(
-                  g.userId,
-                  `career_report_${g.fullName.replace(/\s+/g, "_")}.docx`,
-                )
-              }
+              onPress={() => provisioningData.shareLoginCard(g.userId, g.fullName, g.claimCode)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (Word)</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share card</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => provisioningData.openReportHtml(g.userId)}
-              style={[styles.miniBtn, { borderColor: colors.border }]}
-            >
-              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (PDF)</Text>
-            </TouchableOpacity>
+            {!g.guidanceComplete ? (
+              <TouchableOpacity
+                onPress={() => router.push(`/(admin)/students/${encodeURIComponent(g.userId)}/guidance` as never)}
+                style={[styles.miniBtn, { borderColor: colors.border }]}
+              >
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide learner</Text>
+              </TouchableOpacity>
+            ) : null}
+            {g.guidanceComplete ? (
+              <>
+                <TouchableOpacity
+                  onPress={() =>
+                    provisioningData.downloadReportDocx(
+                      g.userId,
+                      `career_report_${g.fullName.replace(/\s+/g, "_")}.docx`,
+                    )
+                  }
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (Word)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => provisioningData.shareReportDocx(g.userId, g.fullName)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share Word</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => provisioningData.openReportHtml(g.userId)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (PDF)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => provisioningData.shareReportHtml(g.userId, g.fullName)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share PDF</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
           </View>
         </View>
       ))}
@@ -783,6 +981,57 @@ function GeneratedCards({
 // ─────────────────────────────────────────────────────────────
 // Small button primitives (match admin chrome tokens)
 // ─────────────────────────────────────────────────────────────
+
+function StagePicker({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label?: string;
+  value: ProvisioningStudentType;
+  options: { value: ProvisioningStudentType; label: string }[];
+  onChange: (value: ProvisioningStudentType) => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.streamPicker}>
+      {label ? (
+        <Text style={[styles.streamPickerLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
+          {label}
+        </Text>
+      ) : null}
+      <View style={styles.streamPills}>
+        {options.map((option) => {
+          const active = option.value === value;
+          return (
+            <TouchableOpacity
+              key={option.value}
+              onPress={() => onChange(option.value)}
+              style={[
+                styles.streamPill,
+                {
+                  borderColor: active ? colors.text : colors.border,
+                  backgroundColor: active ? colors.text : colors.bg,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.streamPillText,
+                  CompassFonts.bodyBold,
+                  { color: active ? colors.bg : colors.text },
+                ]}
+              >
+                {option.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
 
 function StreamPicker({
   label,
@@ -1022,6 +1271,7 @@ const styles = StyleSheet.create({
   cardCodeLabel: { fontSize: FontSize.xs, letterSpacing: 1.2, marginTop: Spacing.sm },
   cardCode: { fontSize: FontSize.hero, letterSpacing: 4 },
   cardHint: { fontSize: FontSize.xs },
+  guidancePending: { fontSize: FontSize.xs, textAlign: "center" },
   streamPicker: { gap: Spacing.xs },
   streamPickerCompact: { flex: 1, minWidth: 180 },
   streamPickerLabel: {
