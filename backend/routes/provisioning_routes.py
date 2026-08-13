@@ -122,6 +122,36 @@ def _clean_stream(value: Optional[str]) -> Optional[str]:
     return normalize_stream(value)
 
 
+_PROVISIONING_TYPES = {"ss1", "ss2", "ss3", "jamb"}
+
+
+def _clean_student_type(value: Optional[str]) -> Optional[str]:
+    value = (value or "").strip().lower()
+    return value if value in _PROVISIONING_TYPES else None
+
+
+def _provisioning_context(current_user: dict) -> tuple[str, str]:
+    school_id = _resolve_school_id(current_user)
+    if not school_id:
+        raise HTTPException(status_code=409, detail="Your account is not linked to an organisation yet.")
+    row = (_svc().table("schools").select("institution_type").eq("id", school_id).limit(1).execute().data or [None])[0]
+    org_type = (row or {}).get("institution_type") or "secondary_school"
+    if org_type == "university":
+        raise HTTPException(status_code=403, detail="University admins do not create learner accounts here.")
+    return school_id, org_type
+
+
+def _validate_provisioning_type(value: Optional[str], org_type: str) -> str:
+    student_type = _clean_student_type(value)
+    if not student_type:
+        raise HTTPException(status_code=400, detail="Choose the learner stage before creating an account.")
+    if org_type in {"tutorial_centre", "jamb_cafe"} and student_type != "jamb":
+        raise HTTPException(status_code=403, detail="This organisation can create JAMB learner accounts only.")
+    if org_type == "secondary_school" and student_type == "jamb":
+        raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 learner accounts only.")
+    return student_type
+
+
 # ─────────────────────────────────────────────────────────────
 # Pydantic request/response models (snake_case, mirror the TS contract)
 # ─────────────────────────────────────────────────────────────
@@ -130,6 +160,7 @@ class DraftInput(BaseModel):
     full_name: Optional[str] = None
     student_class: Optional[str] = None
     stream: Optional[str] = None
+    student_type: Optional[str] = None
     guardian_consent: bool = False
     guardian_name: Optional[str] = None
 
@@ -140,6 +171,7 @@ class DraftImportRequest(BaseModel):
     images: List[ImageInput] = Field(default_factory=list)
     manual_rows: List[DraftInput] = Field(default_factory=list)
     stream: Optional[str] = None
+    student_type: Optional[str] = None
 
 
 class DraftRow(BaseModel):
@@ -147,6 +179,7 @@ class DraftRow(BaseModel):
     full_name: Optional[str] = None
     student_class: Optional[str] = None
     stream: Optional[str] = None
+    student_type: Optional[str] = None
     needs_review: bool = True
     guardian_consent: bool = False
     guardian_name: Optional[str] = None
@@ -166,6 +199,7 @@ class GenerateItem(BaseModel):
     # Transient: subjects seed the mapping inline at generate time, never stored.
     subjects: List[str] = Field(default_factory=list)
     chosen_direction: Optional[DirectionInput] = None
+    student_type: Optional[str] = None
 
 
 class GenerateRequest(BaseModel):
@@ -177,6 +211,7 @@ class GeneratedStudent(BaseModel):
     full_name: str
     student_class: Optional[str] = None
     stream: Optional[str] = None
+    student_type: Optional[str] = None
     claim_code: str
     claim_expires_at: Optional[str] = None
 
@@ -249,7 +284,7 @@ async def create_drafts(
     """Stage draft rows for the review grid. Vision pre-fill from uploaded pages
     (transient — images discarded here) plus any manual rows. Nothing is minted;
     the educator corrects and confirms before /generate."""
-    school_id = _require_school(current_user)
+    school_id, org_type = _provisioning_context(current_user)
 
     rows: List[dict] = []
     batch_stream = _clean_stream(payload.stream)
@@ -260,6 +295,7 @@ async def create_drafts(
             "full_name": r.full_name,
             "student_class": r.student_class,
             "stream": batch_stream,
+            "student_type": _clean_student_type(payload.student_type),
             "needs_review": True,
         })
     # Manual rows are confirmed-by-typing → needs_review reflects completeness.
@@ -268,6 +304,7 @@ async def create_drafts(
             "full_name": m.full_name,
             "student_class": m.student_class,
             "stream": _clean_stream(m.stream) or batch_stream,
+            "student_type": _clean_student_type(m.student_type) or _clean_student_type(payload.student_type),
             "needs_review": not bool(m.full_name),
             "guardian_consent": m.guardian_consent,
             "guardian_name": m.guardian_name,
@@ -286,6 +323,7 @@ async def create_drafts(
         "full_name": r.get("full_name"),
         "student_class": r.get("student_class"),
         "stream": r.get("stream"),
+        "student_type": r.get("student_type"),
         "needs_review": r.get("needs_review", True),
         "guardian_consent": r.get("guardian_consent", False),
         "guardian_name": r.get("guardian_name"),
@@ -310,7 +348,7 @@ async def list_drafts(current_user: dict = Depends(Auth.require_admin)):
     school_id = _require_school(current_user)
     try:
         res = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, student_type, needs_review, guardian_consent, guardian_name, status"
         ).eq("school_id", school_id).eq("status", "draft").order(
             "created_at", desc=False
         ).limit(2000).execute()
@@ -327,11 +365,13 @@ async def update_draft(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Correct/confirm a draft in the review grid (the assisted-correction step)."""
-    school_id = _require_school(current_user)
+    school_id, org_type = _provisioning_context(current_user)
+    student_type = _validate_provisioning_type(payload.student_type, org_type)
     updates = {
         "full_name": payload.full_name,
         "student_class": payload.student_class,
         "stream": _clean_stream(payload.stream),
+        "student_type": student_type,
         "guardian_consent": payload.guardian_consent,
         "guardian_name": payload.guardian_name,
         "needs_review": not bool(payload.full_name),
@@ -366,14 +406,14 @@ async def generate_accounts(
     'provisioned', claim_state 'unclaimed'. Subjects arriving in the payload seed
     the chosen direction inline and are then discarded — never written.
     """
-    school_id = _require_school(current_user)
+    school_id, org_type = _provisioning_context(current_user)
     if not payload.items:
         raise HTTPException(status_code=400, detail="No drafts selected.")
 
     draft_ids = [i.draft_id for i in payload.items]
     try:
         dres = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, stream, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, student_type, guardian_consent, guardian_name, status"
         ).in_("id", draft_ids).eq("school_id", school_id).execute()
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: draft fetch for generate failed", error=str(exc))
@@ -390,6 +430,10 @@ async def generate_accounts(
         if not name:
             continue  # never mint an unnamed account
         item = items_by_draft.get(draft_id)
+        student_type = _validate_provisioning_type(
+            (item.student_type if item else None) or draft.get("student_type"),
+            org_type,
+        )
         direction = None
         if item and item.chosen_direction:
             direction = item.chosen_direction.model_dump(exclude_none=True) or None
@@ -407,6 +451,7 @@ async def generate_accounts(
             "claim_state": "unclaimed",
             "student_class": draft.get("student_class"),
             "stream": _clean_stream(draft.get("stream")),
+            "provisioned_user_type": student_type,
             "chosen_direction": direction,
             "guardian_consent_at": guardian_at,
             "points": 0,
@@ -447,6 +492,7 @@ async def generate_accounts(
                 user_id=user_id, full_name=name,
                 student_class=draft.get("student_class"),
                 stream=_clean_stream(draft.get("stream")),
+                student_type=student_type,
                 claim_code=code, claim_expires_at=expires,
             ))
         except Exception as exc:  # noqa: BLE001

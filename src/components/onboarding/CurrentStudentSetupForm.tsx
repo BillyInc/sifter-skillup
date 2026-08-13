@@ -1,112 +1,85 @@
-/**
- * CurrentStudentSetupForm — Step-2 body for the `student` front door.
- *
- * Captures where a currently-enrolled student is: institution type, school,
- * discipline, programme and year of study. School/discipline/programme depend
- * on CCMAS/NCE/IBASS data that isn't imported yet, so those selectors render an
- * honest "Live soon" state via the primitives' `comingSoon` flag rather than a
- * fake list. Controlled entirely from `value`; patches via `onChange`.
- */
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
-import {
-  ChoiceChips,
-  SelectField,
-  type ChoiceOption,
-} from "./primitives";
+import { SelectField } from "./primitives";
+import { careerData } from "../../lib/careerData";
 import type { SetupFormProps } from "../../types/onboarding";
 
-const INSTITUTION_TYPES: ChoiceOption[] = [
-  { label: "University (degree)", value: "university" },
-  { label: "College of Education (NCE)", value: "college_of_education" },
-  { label: "Polytechnic (ND/HND)", value: "polytechnic" },
-  { label: "Monotechnic (ND — specialist)", value: "monotechnic" },
-  { label: "College of Health Sciences", value: "college_of_health" },
-  { label: "Technical College", value: "technical_college" },
-];
-
-const YEARS: ChoiceOption[] = [
-  { label: "Year 1", value: "year_1" },
-  { label: "Year 2", value: "year_2" },
-  { label: "Year 3", value: "year_3" },
-  { label: "Year 4", value: "year_4" },
-  { label: "Year 5", value: "year_5" },
-  { label: "Year 6", value: "year_6" },
-  { label: "Final year", value: "final_year" },
-];
-
-export function CurrentStudentSetupForm({
-  value,
-  onChange,
-  onContinue,
-}: SetupFormProps) {
+/** University-only setup for the current undergraduate user type. */
+export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const { colors } = useTheme();
+  const [faculties, setFaculties] = React.useState<{ label: string; value: string }[]>([]);
+  const schoolId = value.preferredSchoolId;
+
+  React.useEffect(() => {
+    let active = true;
+    setFaculties([]);
+    if (!schoolId) return () => { active = false; };
+    careerData.getSchoolFaculties(schoolId).then((state) => {
+      if (!active || state.status !== "real") return;
+      setFaculties((state.data ?? []).map((item) => ({ label: item.name, value: item.value })));
+    });
+    return () => { active = false; };
+  }, [schoolId]);
 
   return (
     <View style={styles.form}>
       <View style={styles.heading}>
-        <Text style={[styles.title, { color: colors.text }]}>
-          Your current programme
-        </Text>
-        <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Tell us where you are so we can map your programme to domains, roles
-          and jobs.
-        </Text>
+        <Text style={[styles.title, { color: colors.text }]}>Tell us what you study</Text>
+        <Text style={[styles.sub, { color: colors.textSoft }]}>Choose your university first. Then we will show only the faculties and programme names recorded for that university.</Text>
       </View>
 
-      <ChoiceChips
-        label="What kind of institution?"
-        options={INSTITUTION_TYPES}
-        value={value.institutionType}
-        onChange={(v) => onChange({ institutionType: v })}
-      />
+      <Text style={[styles.note, { color: colors.textMuted }]}>This path is for a student currently studying at a university.</Text>
 
       <LiveAdmissionSearchField
-        label="Your school"
+        label="Your university"
         value={value.schoolName ?? ""}
+        selectedId={value.preferredSchoolId}
         onSelect={(item) => onChange({
+          institutionType: "university",
           schoolName: item.name,
           preferredSchoolId: item.id || undefined,
+          discipline: undefined,
+          programmeName: undefined,
+          intendedProgramme: undefined,
+          intendedJambProgrammeId: undefined,
         })}
-        placeholder="Search or type your institution"
+        placeholder="Search your university"
         kind="school"
-        institutionType={typeof value.institutionType === "string" ? value.institutionType : undefined}
-        helperText="If your institution is not listed, type the name and continue."
+        institutionType="university"
+        helperText="Choose your university from the list. You cannot add a new university from this step yet."
       />
 
-      <SelectField
-        label="Discipline / faculty"
-        value={value.discipline}
-        placeholder="Select your discipline…"
-        comingSoon
-      />
+      {schoolId && faculties.length ? (
+        <SelectField
+          label="Faculty (if listed)"
+          value={value.discipline}
+          placeholder="Select your faculty"
+          options={faculties}
+          onSelect={(v) => onChange({ discipline: v, programmeName: undefined, intendedProgramme: undefined, intendedJambProgrammeId: undefined })}
+        />
+      ) : null}
 
-      <LiveAdmissionSearchField
-        label="Programme"
-        value={value.programmeName ?? ""}
-        onSelect={(item) => onChange({
-          programmeName: item.name,
-          intendedProgramme: item.name,
-          intendedJambProgrammeId: item.id || undefined,
-        })}
-        placeholder="Search or type your programme"
-        kind="programme"
-      />
+      {schoolId ? (
+        <LiveAdmissionSearchField
+          label="Your programme"
+          value={value.programmeName ?? ""}
+          selectedId={value.intendedJambProgrammeId}
+          onSelect={(item) => onChange({
+            programmeName: item.name,
+            intendedProgramme: item.name,
+            intendedJambProgrammeId: item.id || undefined,
+          })}
+          placeholder="Search this university's programmes"
+          kind="programme"
+          schoolId={schoolId}
+          helperText="Choose the programme name your university uses. This keeps your university and programme details connected."
+        />
+      ) : null}
 
-      <ChoiceChips
-        label="Year of study"
-        options={YEARS}
-        value={value.yearOfStudy}
-        onChange={(v) => onChange({ yearOfStudy: v })}
-      />
-
-      <Text style={[styles.note, { color: colors.textMuted }]}>
-        We’ll show your school’s exact programme names once your institution’s
-        data is added.
-      </Text>
+      <Text style={[styles.note, { color: colors.textMuted }]}>If faculty information is available for your university, you can use it to narrow the programme list. Your final choice remains tied to that university.</Text>
 
       <SifterButton
         label="Continue"
@@ -115,6 +88,7 @@ export function CurrentStudentSetupForm({
         color={Brand.primary}
         size="lg"
         fullWidth
+        disabled={!schoolId || !value.intendedJambProgrammeId}
       />
     </View>
   );
@@ -123,11 +97,7 @@ export function CurrentStudentSetupForm({
 const styles = StyleSheet.create({
   form: { gap: Spacing.xl },
   heading: { gap: Spacing.xs },
-  title: {
-    fontSize: FontSize.xxl,
-    fontWeight: "900",
-    lineHeight: FontSize.xxl * 1.2,
-  },
+  title: { fontSize: FontSize.xxl, fontWeight: "900", lineHeight: FontSize.xxl * 1.2 },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   note: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
 });

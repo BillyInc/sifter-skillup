@@ -81,7 +81,7 @@ const PERSONAS: {
     type: "educator",
     icon: "home",
     title: "Educator / Institution",
-    subtitle: "School, university, tutorial centre - career intelligence dashboard",
+    subtitle: "Guide students from a school, university or tutorial centre",
   },
 ];
 
@@ -164,7 +164,8 @@ export default function AccountTypeGate() {
         <Text
           style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}
         >
-          This sets up the right experience for you. Pick the one that fits.
+          This decides which questions and guidance you will see next. Choose the
+          option that describes you today.
         </Text>
 
         <View style={[styles.cardGrid, isGrid && styles.cardGridDesktop]}>
