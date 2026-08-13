@@ -311,7 +311,7 @@ export default function CareerHomeScreen() {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cardLink}
-              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
+              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")}
             >
               <Text style={[styles.cardLinkText, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
                 {isGuest ? "Create account" : "Update"}
@@ -322,7 +322,7 @@ export default function CareerHomeScreen() {
       ) : (
         <TouchableOpacity
           activeOpacity={0.85}
-          onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
+          onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")}
           style={[
             styles.card,
             { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },

@@ -96,7 +96,7 @@ export default function OnboardingFlow({
     getOnboardingDraft(user?.id).then((draft) => {
       if (!active) return;
       if (draft?.mode === "student") {
-        if (draft.step) setStep(1);
+        if (draft.step) setStep(draft.step);
         if (draft.studentProfile) {
           const savedProfile = draft.studentProfile;
           const draftUserType = savedProfile.userType ?? initialPersona;
@@ -127,10 +127,10 @@ export default function OnboardingFlow({
     patchOnboardingDraft(user?.id, {
       mode: "student",
       choice: (profile.userType ?? initialPersona) as UserType,
-      step: 1,
+      step,
       studentProfile: profile,
     }).catch(() => {});
-  }, [initialPersona, profile, user?.id]);
+  }, [initialPersona, profile, step, user?.id]);
 
   const patch = (p: Partial<StartingPointProfile>) =>
     setProfile((prev) => ({ ...prev, ...p }));

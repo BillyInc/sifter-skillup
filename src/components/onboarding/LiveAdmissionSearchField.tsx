@@ -48,6 +48,7 @@ export function LiveAdmissionSearchField({
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [searchStatus, setSearchStatus] = React.useState<"real" | "unavailable" | null>(null);
+  const [searchNotice, setSearchNotice] = React.useState<string | null>(null);
   const [registering, setRegistering] = React.useState(false);
   const [registerError, setRegisterError] = React.useState<string | null>(null);
   const selected = Boolean(selectedId && value.trim());
@@ -64,10 +65,14 @@ export function LiveAdmissionSearchField({
       setOpen(false);
       return;
     }
-    if (q.length < 2) {
+    // Start querying as soon as the user begins typing. The picker is a
+    // typeahead, so making users complete a long school name before showing
+    // selectable results defeats the purpose of the field.
+    if (q.length < 1) {
       setResults([]);
       setLoading(false);
       setSearchStatus(null);
+      setSearchNotice(null);
       return;
     }
     let active = true;
@@ -82,6 +87,7 @@ export function LiveAdmissionSearchField({
       if (!active) return;
       setLoading(false);
       setSearchStatus(state.status === "real" ? "real" : "unavailable");
+      setSearchNotice(state.meta?.notice ?? null);
       setResults(
         state.status === "real" && Array.isArray(state.data)
           ? state.data.map((r: any) => ({
@@ -193,7 +199,9 @@ export function LiveAdmissionSearchField({
         <View
           style={[styles.empty, { borderColor: colors.border, backgroundColor: colors.card }]}
         >
-          <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>We could not check this right now. Please try again.</Text>
+          <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
+            {searchNotice ?? "We could not check this right now. Please try again."}
+          </Text>
         </View>
       ) : null}
       {open && !loading && query.trim().length >= 2 && results.length === 0 && searchStatus === "real" ? (

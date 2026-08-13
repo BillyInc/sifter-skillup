@@ -22,6 +22,13 @@ const hyperlaneAliases = new Map([
 ]);
 
 config.resolver = config.resolver || {};
+// Metro only bundles the Expo app. Scanning the Python backend makes the
+// bundler walk pytest caches and other server-only files, which can fail on
+// Windows with EPERM and adds no runtime value to the web or native bundle.
+config.resolver.blockList = [
+  /[/\\]backend[/\\]/,
+  /[/\\]\.pytest_cache[/\\]/,
+];
 const previousResolveRequest = config.resolver.resolveRequest;
 
 config.resolver.resolveRequest = (context, moduleName, platform) => {

@@ -83,8 +83,13 @@ export const adminData = {
         method: "POST",
         body: JSON.stringify(payload),
       }));
-    } catch {
-      return comingSoon<Organization>("Verification submission is temporarily unavailable.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Could not create the admin workspace.";
+      return comingSoon<Organization>(
+        message === "Failed to fetch" || message === "Network request failed"
+          ? "The admin service is not reachable right now. Start the backend and try again."
+          : message,
+      );
     }
   },
 

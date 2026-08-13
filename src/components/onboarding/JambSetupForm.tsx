@@ -211,6 +211,21 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         />
       ) : null}
 
+      {value.stream && door ? (
+        <LiveSubjectMultiSelect
+          label="Your UTME/JAMB subjects"
+          stream={value.stream}
+          examType="utme"
+          value={value.jambSubjects}
+          onChange={(v) => onChange({ jambSubjects: v as string[] })}
+          minSelected={4}
+          maxSelected={4}
+          showSearch={false}
+          fixedSubjects={["English Language"]}
+          helperText="Use of English is fixed. Choose 3 other UTME subjects. The stream only orders relevant choices; all valid UTME subjects remain available."
+        />
+      ) : null}
+
       {door === "know_where" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveAdmissionSearchField
@@ -270,18 +285,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
 
       {door === "unsure" ? (
         <View style={{ gap: Spacing.lg }}>
-          <LiveSubjectMultiSelect
-            label="Your UTME/JAMB subjects"
-            examType="utme"
-            value={value.jambSubjects}
-            onChange={(v) => onChange({ jambSubjects: v as string[] })}
-            minSelected={4}
-            maxSelected={4}
-            showSearch={false}
-            fixedSubjects={["English Language"]}
-            helperText="Use of English is fixed. Choose 3 other UTME subjects. We will compare the combination with official JAMB programme requirements, then check O-level subjects too."
-          />
-          <Text style={[styles.caption, { color: colors.textMuted }]}>
+          <Text style={[styles.caption, { color: colors.textMuted }]}> 
             We will show programmes that accept this combination, explain any
             missing O-level requirement, and then show the universities offering
             the programme.

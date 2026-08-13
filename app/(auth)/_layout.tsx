@@ -86,9 +86,7 @@ export default function AuthLayout() {
   // Public auth screens must not wait for the saved-session/profile lookup.
   // A stale backend connection used to leave forgot-password spinning forever,
   // even though password reset does not need an existing app session.
-  const publicAuthRouteReady = !user && isExplicitAuthRoute && (
-    !isForgotRoute || params.intent === "reset"
-  );
+  const publicAuthRouteReady = !user && isExplicitAuthRoute;
 
   const pendingRedirect =
     authReady && user && user.onboarding_completed
@@ -96,15 +94,13 @@ export default function AuthLayout() {
       : null;
 
   let redirectHref: string | null = null;
-  if (!loading && !user && isForgotRoute && params.intent !== "reset") {
-    redirectHref = "/(auth)/sign-in";
-  } else if (
+  if (
     authReady &&
     !user &&
     explicitLogout &&
     !isSignInRoute &&
     !isSignupRoute &&
-    !(isForgotRoute && params.intent === "reset")
+    !isForgotRoute
   ) {
     redirectHref = "/(auth)/sign-in";
   } else if (authReady && !user && isOnboardingRoute) {

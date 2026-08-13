@@ -110,6 +110,13 @@ def _canonical_subject_name(value: str) -> str:
     return aliases.get(lower, value.strip())
 
 
+def _normalise_stream(value: Optional[str]) -> Optional[str]:
+    stream = (value or "").strip().lower()
+    if stream == "arts":
+        return "art"
+    return stream if stream in {"science", "commercial", "art"} else None
+
+
 def _resolve_subject_catalog(subjects: list[str]) -> dict[str, dict]:
     """Map normalized chosen subject names to subject_catalog rows when seeded."""
     if not subjects:
@@ -443,10 +450,11 @@ async def list_subjects(
         )
         if q:
             query = query.ilike("name", f"%{q.strip()}%")
-        if stream:
+        normalized_stream = _normalise_stream(stream)
+        if normalized_stream:
             # Containment filters can vary by PostgREST version. If unsupported,
             # the catch path falls back to a general subject list.
-            query = query.contains("stream_tags", [stream.strip().lower()])
+            query = query.contains("stream_tags", [normalized_stream])
         if exam_type:
             query = query.contains("exam_types", [exam_type.strip().lower()])
         res = query.order("name").limit(80).execute()
@@ -461,6 +469,28 @@ async def list_subjects(
             }
             for r in (res.data or [])
         ]
+        if normalized_stream and not items:
+            broad = (
+                _svc()
+                .table("subject_catalog")
+                .select("id, code, name, aliases, category, stream_tags")
+                .eq("active", True)
+                .order("name")
+                .limit(300)
+                .execute()
+            )
+            items = [
+                {
+                    "id": r["id"],
+                    "code": r.get("code"),
+                    "name": r.get("name"),
+                    "aliases": r.get("aliases") or [],
+                    "category": r.get("category"),
+                    "streamTags": r.get("stream_tags") or [],
+                }
+                for r in (broad.data or [])
+                if not r.get("category") or r.get("category") in {normalized_stream, "general", "language"}
+            ]
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
@@ -486,24 +516,36 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
         cached = get_json(cache_key)
         if isinstance(cached, list):
             return ResponseModel(data=_real(cached[: min(limit, 80)]))
-        if q and q.strip():
-            like = f"%{q.strip()}%"
-            res = (
-                svc.table("v_jamb_programme_details")
-                .select("*")
-                .or_(f"jamb_name.ilike.{like},canonical_programme_name.ilike.{like}")
-                .order("jamb_name")
-                .limit(min(limit, 80))
-                .execute()
+        try:
+            if q and q.strip():
+                like = f"%{q.strip()}%"
+                res = (
+                    svc.table("v_jamb_programme_details")
+                    .select("*")
+                    .or_(f"jamb_name.ilike.{like},canonical_programme_name.ilike.{like}")
+                    .order("jamb_name")
+                    .limit(min(limit, 80))
+                    .execute()
+                )
+            else:
+                res = (
+                    svc.table("v_jamb_programme_details")
+                    .select("*")
+                    .order("jamb_name")
+                    .limit(min(limit, 80))
+                    .execute()
+                )
+        except Exception as exc:
+            # Keep JAMB onboarding searchable when the optional detail view is
+            # absent or stale. The direct registry still contains the official
+            # JAMB programme names; school-specific requirements load later.
+            log.warning("student jamb programme detail view skipped", error=str(exc))
+            direct = svc.table("jamb_programmes").select(
+                "id, jamb_name, jamb_faculty, degree_type, is_blend"
             )
-        else:
-            res = (
-                svc.table("v_jamb_programme_details")
-                .select("*")
-                .order("jamb_name")
-                .limit(min(limit, 80))
-                .execute()
-            )
+            if q and q.strip():
+                direct = direct.ilike("jamb_name", f"%{q.strip()}%")
+            res = direct.order("jamb_name").limit(min(limit, 80)).execute()
         items = [_jamb_detail_out(r) for r in (res.data or [])]
         # Keep the JAMB programme identity separate from school-specific
         # offerings, but expose enough context in typeahead to explain why a

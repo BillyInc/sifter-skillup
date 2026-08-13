@@ -214,6 +214,7 @@ class GeneratedStudent(BaseModel):
     student_type: Optional[str] = None
     claim_code: str
     claim_expires_at: Optional[str] = None
+    guidance_complete: bool = False
 
 
 class RosterStudent(BaseModel):
@@ -422,6 +423,7 @@ async def generate_accounts(
     drafts_by_id = {d["id"]: d for d in (dres.data or [])}
     items_by_draft = {i.draft_id: i for i in payload.items}
     generated: List[GeneratedStudent] = []
+    failed_count = 0
 
     for draft_id, draft in drafts_by_id.items():
         if draft.get("status") != "draft":
@@ -494,14 +496,29 @@ async def generate_accounts(
                 stream=_clean_stream(draft.get("stream")),
                 student_type=student_type,
                 claim_code=code, claim_expires_at=expires,
+                guidance_complete=bool(direction),
             ))
         except Exception as exc:  # noqa: BLE001
+            failed_count += 1
             log.error("provisioning: account generate failed", draft_id=draft_id, error=str(exc))
             continue
 
+    if not generated and failed_count:
+        return ResponseModel(
+            success=False,
+            data=None,
+            message=(
+                "No learner accounts were created. Apply the provisioning schema "
+                "patch, then try again."
+            ),
+        )
+
     return ResponseModel(
         data=[g.model_dump() for g in generated],
-        message=f"{len(generated)} account(s) created. Print or share the login cards.",
+        message=(
+            f"{len(generated)} account(s) created. Print or share the login cards."
+            + (f" {failed_count} row(s) could not be created." if failed_count else "")
+        ),
     )
 
 

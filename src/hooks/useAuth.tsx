@@ -8,12 +8,13 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { API, API_BASE } from '../lib/api';
-import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
+import { getOrCreateDeviceId, onLoginSync, switchLocalUser } from '../lib/offlineStorage';
 import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
 import { clearExplicitLogout, markExplicitLogout } from '../lib/logoutState';
 import { clearLocalUserState } from '../lib/localUserState';
+import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
   StarknetWalletBridgeProvider,
@@ -157,17 +158,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   async function _tryLoadSavedSession() {
+    const token = await API.getToken();
+    if (!token) {
+      setLoading(false);
+      return;
+    }
     try {
       const profile = await API.getMe() as UserProfile;
-      setUser(_normalise(profile));
+      const normalized = _normalise(profile);
+      await saveSessionProfile(normalized);
+      setUser(normalized);
       API.checkStreak().catch(() => {});
-      const token = await API.getToken();
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
     } catch (e) {
       const message = (e as Error)?.message ?? "";
       if (message === "device_mismatch" || message === "device_required") {
         await API.clearToken();
         await markExplicitLogout();
+      } else if (e instanceof TypeError || /failed to fetch|network request failed|network error|request took too long|timed out/i.test(message)) {
+        // Keep the current route and local onboarding draft available during a
+        // temporary API outage. A real 401 still falls through to sign-in.
+        const cached = await getSavedSessionProfile<UserProfile>();
+        if (cached?.id) {
+          setUser(_normalise(cached));
+          onLoginSync(cached.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
+        }
       }
       // No saved session, expired token, or device session was transferred.
     } finally {
@@ -180,6 +195,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await clearLocalUserState();
     await clearExplicitLogout();
     const profile = _normalise(data.user);
+    await saveSessionProfile(profile);
+    await switchLocalUser(profile.id);
     setPendingPostAuthRedirect(
       profile.onboarding_completed ? resolvePostAuthHref(profile) : null,
       profile.id,
@@ -302,10 +319,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signOut(options: { preserveLocalUserState?: boolean } = {}) {
     await API.clearToken();
+    await clearSessionProfile();
     await markExplicitLogout();
     if (!options.preserveLocalUserState) {
       await clearLocalUserState(user?.id);
     }
+    await switchLocalUser('__signed_out__');
     setUser(null);
   }
 
@@ -314,6 +333,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await API.deleteMe();
     } finally {
       await API.clearToken();
+      await clearSessionProfile();
       await markExplicitLogout();
       await clearLocalUserState(user?.id);
       setUser(null);
@@ -323,7 +343,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function refreshUser() {
     try {
       const profile = await API.getMe() as UserProfile;
-      setUser(_normalise(profile));
+      const normalized = _normalise(profile);
+      await saveSessionProfile(normalized);
+      setUser(normalized);
     } catch {
       // Ignore transient refresh failures.
     }

@@ -120,6 +120,8 @@ export interface EducatorProfile {
   providerSessionOnly?: boolean;
   /** Owner-issued code gate state. This is admin access, not proof/verification. */
   adminAccessStatus?: "owner_code";
+  /** Sent only during the development access flow; never displayed as proof. */
+  accessCode?: string;
   adminAccessGrantedAt?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
@@ -185,6 +187,7 @@ export interface GeneratedStudent {
   studentType?: ProvisioningStudentType | null;
   claimCode: string;
   claimExpiresAt?: string | null;
+  guidanceComplete?: boolean;
 }
 
 /** One individually-visible row in the consent-aware roster. */
