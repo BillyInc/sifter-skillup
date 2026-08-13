@@ -115,12 +115,15 @@ function localUniversityFallback(q: string): AdmissionSchool[] {
 
 function localSubjectFallback(q?: string, stream?: string): SubjectCatalogItem[] {
   const normalizedStream = stream === "arts" ? "art" : stream;
-  const names = normalizedStream && normalizedStream in WAEC_STREAM_SUBJECTS
-    ? WAEC_STREAM_SUBJECTS[normalizedStream as SchoolStream]
-    : Object.values(WAEC_STREAM_SUBJECTS).flat();
+  const names = Array.from(new Set(Object.values(WAEC_STREAM_SUBJECTS).flat()));
   const needle = (q ?? "").trim().toLowerCase();
   return Array.from(new Set(names))
     .filter((name) => !needle || name.toLowerCase().includes(needle))
+    .sort((a, b) => {
+      const aRelevant = normalizedStream && WAEC_STREAM_SUBJECTS[normalizedStream as SchoolStream]?.includes(a) ? 0 : 1;
+      const bRelevant = normalizedStream && WAEC_STREAM_SUBJECTS[normalizedStream as SchoolStream]?.includes(b) ? 0 : 1;
+      return aRelevant - bRelevant || a.localeCompare(b);
+    })
     .map((name) => ({
       id: `local-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
       name,
@@ -262,6 +265,10 @@ export interface AdmissionSchool {
   id: string;
   name: string;
   institutionType: string;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
 }
 
 export interface SchoolFaculty {

@@ -8,6 +8,16 @@ import Constants from 'expo-constants';
 
 const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://localhost:8000';
 
+function deployedWebApiUrl(): string | null {
+  if (typeof window === 'undefined') return null;
+  const host = window.location.hostname.toLowerCase();
+  if (host === 'dev.levelup.com.ng') return 'https://api.dev.levelup.com.ng';
+  if (host === 'levelup.com.ng' || host === 'www.levelup.com.ng') {
+    return 'https://api.levelup.com.ng';
+  }
+  return null;
+}
+
 /**
  * A native app cannot reach the host machine through its own localhost. Expo
  * exposes the Metro host while developing, so use that host when the default
@@ -16,7 +26,15 @@ const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://loca
  */
 function resolveApiBase(): string {
   const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(?:\/|$)/i.test(configuredApiUrl);
-  if (Platform.OS === 'web' || !isLocalhost) return configuredApiUrl.replace(/\/$/, '');
+  // A static web build may retain the local development default when it is
+  // deployed without the CI environment variable. In that case, localhost
+  // means the visitor's computer, which produces the misleading "failed to
+  // fetch" error on admin onboarding. Use the documented API host for the
+  // current LevelUp domain, while preserving localhost for local web testing.
+  if (Platform.OS === 'web') {
+    return (deployedWebApiUrl() ?? configuredApiUrl).replace(/\/$/, '');
+  }
+  if (!isLocalhost) return configuredApiUrl.replace(/\/$/, '');
 
   const hostUri =
     Constants.expoConfig?.hostUri ??

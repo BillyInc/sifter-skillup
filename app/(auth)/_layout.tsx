@@ -5,7 +5,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useAuth } from "../../src/hooks/useAuth";
 import { Colors } from "../../src/theme";
 import { consumePendingPostAuthRedirect } from "../../src/lib/postAuthRedirect";
-import { useEffectiveAccountType, isAdminAccount } from "../../src/lib/accountType";
+import { useEffectiveAccountType, isAdminAccount, needsLegacyTypeSelection } from "../../src/lib/accountType";
 import { getEducatorProfile } from "../../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../../src/lib/adminAudience";
 import { resolvePostAuthHref } from "../../src/lib/resumeNavigation";
@@ -107,6 +107,8 @@ export default function AuthLayout() {
     redirectHref = "/(auth)/sign-in";
   } else if (authReady && user && user.auth_provider === "guest" && !isExplicitAuthRoute) {
     redirectHref = "/(tabs)/explore";
+  } else if (authReady && user && needsLegacyTypeSelection(user) && !isOnboardingRoute) {
+    redirectHref = "/(auth)/onboarding?restart=1";
   } else if (
     authReady &&
     user &&

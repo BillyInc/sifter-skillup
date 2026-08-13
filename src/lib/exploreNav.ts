@@ -87,12 +87,11 @@ export function makeExploreNav(base: string) {
     // ─── Phase 8: admission intelligence ─────────────────────────
     /** The admission hub, optionally in a given picker mode. */
     admissionHub(router: Nav, mode?: "programme" | "subjects") {
-      router.push(
-        `${base}/admission?${[
+      const query = [
           mode ? `mode=${mode}` : "",
           base === ADMIN_EXPLORE_BASE ? "admin=1" : "",
-        ].filter(Boolean).join("&")}` as never,
-      );
+        ].filter(Boolean).join("&");
+      router.push(`${base}/admission${query ? `?${query}` : ""}` as never);
     },
     /** Full admission-insight screen for a JAMB name or programme. */
     admission(router: Nav, jambNameOrProgrammeId: string) {

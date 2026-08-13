@@ -12,6 +12,7 @@ BEGIN;
 
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS email_verified_at TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS account_type_selected_at TIMESTAMPTZ,
     ADD COLUMN IF NOT EXISTS onboarding_checkpoint TEXT,
     ADD COLUMN IF NOT EXISTS onboarding_updated_at TIMESTAMPTZ,
     ADD COLUMN IF NOT EXISTS last_post_auth_path TEXT,

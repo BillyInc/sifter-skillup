@@ -359,20 +359,20 @@ async def search_schools(
         svc = db.get_service_client().schema(_SCHEMA)
         selected_type = institution_type or "university"
         query_text = (q or "").strip().lower()
-        result_key = f"admission:schools:v3:{selected_type}:{query_text}:{min(limit, 50)}"
+        result_key = f"admission:schools:v4:{selected_type}:{query_text}:{min(limit, 50)}"
         cached_items = get_json(result_key)
         if isinstance(cached_items, list) and cached_items:
             return ResponseModel(data=_real(cached_items))
-        query = svc.table("schools").select("id, name, institution_type").eq("institution_type", selected_type)
+        query = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq("institution_type", selected_type)
         if selected_type == "university" and q:
             # Use the indexed name search first. Loading the entire university
             # registry for every keystroke made typeahead time out on populated
             # projects. The bounded registry is only needed for abbreviations.
             rows = query.ilike("name", f"%{q}%").order("name").limit(min(limit, 50)).execute().data or []
-            registry_key = "admission:university-registry:v3"
+            registry_key = "admission:university-registry:v4"
             registry = get_json(registry_key)
             if not isinstance(registry, list):
-                registry = svc.table("schools").select("id, name, institution_type").eq(
+                registry = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq(
                     "institution_type", selected_type
                 ).order("name").limit(1200).execute().data or []
                 set_json(registry_key, registry, REFERENCE_TTL_SECONDS)
@@ -403,6 +403,10 @@ async def search_schools(
                 "id": r["id"],
                 "name": _university_display_name(r["name"]) if selected_type == "university" else r["name"],
                 "institutionType": r.get("institution_type") or "university",
+                "address": r.get("address"),
+                "city": r.get("city"),
+                "state": r.get("state"),
+                "country": r.get("country"),
             }
             for r in rows[: min(limit, 50)]
         ]

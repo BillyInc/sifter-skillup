@@ -21,8 +21,9 @@ CREATE TABLE IF NOT EXISTS skillup_dev.users (
     date_of_birth             DATE,
     avatar_url                TEXT,
     auth_provider             TEXT NOT NULL DEFAULT 'guest',
-    account_type              TEXT NOT NULL DEFAULT 'student'
-                              CHECK (account_type IN ('student', 'educator', 'institution_admin')),
+    account_type              TEXT NOT NULL DEFAULT 'pending'
+                              CHECK (account_type IN ('pending', 'student', 'educator', 'institution_admin')),
+    account_type_selected_at  TIMESTAMPTZ,
     onboarding_completed      BOOLEAN NOT NULL DEFAULT false,
     points                    INTEGER NOT NULL DEFAULT 1000,
     streak                    INTEGER NOT NULL DEFAULT 1,
@@ -178,10 +179,12 @@ ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS github_avatar    TEXT;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS email            TEXT UNIQUE;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS password_hash    TEXT;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false;
-ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS account_type     TEXT NOT NULL DEFAULT 'student';
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS account_type     TEXT NOT NULL DEFAULT 'pending';
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS account_type_selected_at TIMESTAMPTZ;
 ALTER TABLE skillup_dev.users DROP CONSTRAINT IF EXISTS users_account_type_check;
 ALTER TABLE skillup_dev.users ADD CONSTRAINT users_account_type_check
-    CHECK (account_type IN ('student', 'educator', 'institution_admin'));
+    CHECK (account_type IN ('pending', 'student', 'educator', 'institution_admin'));
+ALTER TABLE skillup_dev.users ALTER COLUMN account_type SET DEFAULT 'pending';
 
 -- Keep legacy app notifications and newer community notifications compatible.
 ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS recipient_id UUID REFERENCES skillup_dev.users(id) ON DELETE CASCADE;

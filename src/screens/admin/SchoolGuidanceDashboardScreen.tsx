@@ -186,7 +186,7 @@ export function SchoolGuidanceDashboardScreen() {
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             Who your learners are, in aggregate. Programme and university
             lookup lives in Explore. Aggregate only — you never see an
-            individual learner's choices unless they explicitly link their
+            individual learner&apos;s choices unless they explicitly link their
             account.
           </Text>
         </View>
@@ -329,7 +329,7 @@ export function SchoolGuidanceDashboardScreen() {
             >
               <Text style={[styles.panelNote, { color: colors.textMuted }]}>
                 Programme and role demand across all JAMB programmes — no
-                "your programmes" filter, because a school has no programme
+                &quot;your programmes&quot; filter, because a school has no programme
                 list of its own.
               </Text>
               <ComingSoonPanel

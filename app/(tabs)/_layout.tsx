@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
 import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
 import { useAuth } from "../../src/hooks/useAuth";
-import { useEffectiveAccountType } from "../../src/lib/accountType";
+import { useEffectiveAccountType, needsLegacyTypeSelection } from "../../src/lib/accountType";
 
 export const unstable_settings = {
   initialRouteName: "explore",
@@ -20,8 +20,10 @@ export default function TabsLayout() {
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
   const redirectHref = loading || (user && !hydrated)
     ? null
-    : !user
+      : !user
       ? "/(auth)/sign-in"
+      : needsLegacyTypeSelection(user)
+        ? "/(auth)/onboarding?restart=1"
       : user.auth_provider !== "guest" && (!user.onboarding_completed || accountType === "pending")
         ? "/(auth)/onboarding"
         : null;

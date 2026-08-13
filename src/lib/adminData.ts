@@ -81,13 +81,19 @@ export const adminData = {
     try {
       return fromApi(await request<Organization | DataState<Organization>>(`/api/institutions/verify`, {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          address: payload.organizationAddress,
+          city: payload.organizationCity,
+          state: payload.organizationState,
+          country: payload.organizationCountry,
+        }),
       }));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Could not create the admin workspace.";
       return comingSoon<Organization>(
-        message === "Failed to fetch" || message === "Network request failed"
-          ? "The admin service is not reachable right now. Start the backend and try again."
+        /failed to fetch|fetch failed|network request failed|network error|timed out|request took too long|abort/i.test(message)
+          ? "The admin service could not be reached. Check that the backend is running, then try again."
           : message,
       );
     }
@@ -99,17 +105,25 @@ export const adminData = {
     organizationType?: string;
     organizationName?: string;
   }): Promise<{ accepted: boolean; accessTier: "owner_code"; notice?: string }> {
-    return request<{ accepted: boolean; accessTier: "owner_code"; notice?: string }>(
-      `/api/institutions/access-code/validate`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          code: payload.code,
-          organization_type: payload.organizationType,
-          organization_name: payload.organizationName,
-        }),
-      },
-    );
+    try {
+      return await request<{ accepted: boolean; accessTier: "owner_code"; notice?: string }>(
+        `/api/institutions/access-code/validate`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            code: payload.code,
+            organization_type: payload.organizationType,
+            organization_name: payload.organizationName,
+          }),
+        },
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "";
+      if (/failed to fetch|fetch failed|network request failed|network error|timed out|request took too long|abort/i.test(message)) {
+        throw new Error("The admin service could not be reached. Check that the backend is running, then try again.");
+      }
+      throw error;
+    }
   },
 
   /** Organisation profile + staff seats for the current admin context. */

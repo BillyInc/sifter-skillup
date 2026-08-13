@@ -10,6 +10,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, TextInput,
 import { useFocusEffect, useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
+import { studentAccountApi } from "@/lib/provisioningData";
 import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
 import { SifterButton } from "@/components/ui";
 import {
@@ -132,6 +133,7 @@ export default function SignUpScreen() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [schoolCode, setSchoolCode] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailCode, setEmailCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -152,6 +154,7 @@ export default function SignUpScreen() {
         setDateOfBirth("");
         setEmail("");
         setPassword("");
+        setSchoolCode("");
         setConfirmPassword("");
         setEmailCode("");
         setCodeSent(false);
@@ -241,6 +244,9 @@ export default function SignUpScreen() {
         date_of_birth: isoDob,
         email_code: emailCode.trim(),
       });
+      if (schoolCode.trim()) {
+        try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* can be linked later from onboarding */ }
+      }
       router.replace("/(auth)/onboarding");
     } catch (e: any) {
       setError(friendlySignupError(e, "We could not create your account. Please try again."));
@@ -360,6 +366,13 @@ export default function SignUpScreen() {
         secure
         placeholder="********"
         autoComplete="new-password"
+      />
+      <AuthField
+        label="School code (optional)"
+        value={schoolCode}
+         onChangeText={(value) => setSchoolCode(value.toUpperCase())}
+         placeholder="SCHOOL-XXXXXXXX"
+         hint="You can also add this during onboarding."
       />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>

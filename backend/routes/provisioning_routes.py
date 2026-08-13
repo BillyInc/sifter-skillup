@@ -206,6 +206,12 @@ class GenerateRequest(BaseModel):
     items: List[GenerateItem]
 
 
+class GuidanceUpdate(BaseModel):
+    """The direction an administrator selected with a learner."""
+
+    chosen_direction: DirectionInput
+
+
 class GeneratedStudent(BaseModel):
     user_id: str
     full_name: str
@@ -226,6 +232,7 @@ class RosterStudent(BaseModel):
     claim_state: Optional[str] = None  # 'unclaimed' | 'claimed' | None (self)
     visible: bool = True       # individually visible under the rule
     has_consent: bool = False
+    guidance_complete: bool = False
 
 
 class RosterResponse(BaseModel):
@@ -501,6 +508,23 @@ async def generate_accounts(
         except Exception as exc:  # noqa: BLE001
             failed_count += 1
             log.error("provisioning: account generate failed", draft_id=draft_id, error=str(exc))
+            # The account, affiliation, claim code and draft status are created
+            # through separate Supabase requests. If a later request fails, do
+            # not leave a half-created learner that never appears in the admin
+            # result. This UUID was generated in this loop, so cleanup cannot
+            # affect an existing account.
+            try:
+                _svc().table("claim_codes").delete().eq("student_id", user_id).execute()
+                _svc().table("student_affiliations").delete().eq("student_id", user_id).eq(
+                    "school_id", school_id
+                ).execute()
+                _users().delete().eq("id", user_id).execute()
+            except Exception as cleanup_exc:  # noqa: BLE001
+                log.error(
+                    "provisioning: failed to clean up partial account",
+                    user_id=user_id,
+                    error=str(cleanup_exc),
+                )
             continue
 
     if not generated and failed_count:
@@ -595,7 +619,7 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
         for i in range(0, len(student_ids), 500):
             chunk = student_ids[i:i + 500]
             ures = _users().select(
-                "id, username, student_class, stream, provenance, claim_state"
+                "id, username, student_class, stream, provenance, claim_state, chosen_direction"
             ).in_("id", chunk).execute().data or []
             for u in ures:
                 users_by_id[u["id"]] = u
@@ -621,6 +645,7 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
                 claim_state=u.get("claim_state"),
                 visible=True,
                 has_consent=has_consent,
+                guidance_complete=bool(u.get("chosen_direction")),
             ))
 
         return ResponseModel(data=RosterResponse(
@@ -842,7 +867,7 @@ async def affiliate(
     if not code:
         raise HTTPException(status_code=400, detail="School code is required.")
     try:
-        sres = _svc().table("schools").select("id, name").eq(
+        sres = _svc().table("schools").select("id, name, address, city, state, country").eq(
             "school_code", code
         ).limit(1).execute()
         school = (sres.data or [None])[0]
@@ -859,6 +884,7 @@ async def affiliate(
             data={
                 "school_id": school["id"],
                 "school_name": school.get("name"),
+                "school_address": school.get("address"),
                 "consent_required": True,
             },
             message=f"You're linked to {school.get('name')}. "
@@ -1003,12 +1029,62 @@ def _load_school_student(user_id: str, school_id: str) -> dict:
     return u
 
 
+def _require_guided_student(user: dict) -> dict:
+    if not user.get("chosen_direction"):
+        raise HTTPException(
+            status_code=409,
+            detail="Complete learner guidance before printing a report.",
+        )
+    return user
+
+
 def _school_name(school_id: str) -> Optional[str]:
     try:
         s = _svc().table("schools").select("name").eq("id", school_id).limit(1).execute()
         return (s.data or [{}])[0].get("name")
     except Exception:  # noqa: BLE001
         return None
+
+
+@router.patch("/students/{user_id}/guidance", response_model=ResponseModel)
+async def save_student_guidance(
+    user_id: str,
+    payload: GuidanceUpdate = Body(...),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Save the learner's selected direction before a report can be printed.
+
+    The administrator may guide a provisioned learner before the learner claims
+    the account. Only the direction is persisted; subjects and grades remain
+    transient inputs and are never copied into the account.
+    """
+    school_id = _require_school(current_user)
+    direction = payload.chosen_direction.model_dump(exclude_none=True)
+    if not direction:
+        raise HTTPException(status_code=400, detail="Choose a programme or career direction first.")
+    _load_school_student(user_id, school_id)
+    try:
+        result = (
+            _users()
+            .update({"chosen_direction": direction})
+            .eq("id", user_id)
+            .select("id, chosen_direction")
+            .execute()
+        )
+        if not result.data:
+            raise RuntimeError("learner guidance update matched no account")
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: learner guidance save failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not save learner guidance.")
+    return ResponseModel(
+        data={
+            "user_id": user_id,
+            "chosen_direction": direction,
+            "guidance_complete": True,
+        },
+    )
 
 
 @router.get("/students/{user_id}/report.docx")
@@ -1018,7 +1094,7 @@ async def get_report_docx(
 ):
     """Editable .docx career report — shareable to email/WhatsApp."""
     school_id = _require_school(current_user)
-    u = _load_school_student(user_id, school_id)
+    u = _require_guided_student(_load_school_student(user_id, school_id))
     ctx = _resolve_report_context(u, _school_name(school_id), _now()[:10])
     data = build_report_docx(ctx)
     safe = (ctx.student_name or "student").replace(" ", "_")[:40]
@@ -1036,7 +1112,7 @@ async def get_report_html(
 ):
     """HTML career report — print-to-PDF in any browser."""
     school_id = _require_school(current_user)
-    u = _load_school_student(user_id, school_id)
+    u = _require_guided_student(_load_school_student(user_id, school_id))
     ctx = _resolve_report_context(u, _school_name(school_id), _now()[:10])
     return Response(content=build_report_html(ctx), media_type="text/html")
 

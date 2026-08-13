@@ -207,7 +207,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           maxSelected={12}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch={false}
-          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme's O-level requirements fit your plan."
+          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme&apos;s O-level requirements fit your plan."
         />
       ) : null}
 
@@ -277,7 +277,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
             Universities may use different official names for a similar
-            programme. We will show each university's name and requirements so
+            programme. We will show each university&apos;s name and requirements so
             you can tell the options apart.
           </Text>
         </View>

@@ -451,10 +451,9 @@ async def list_subjects(
         if q:
             query = query.ilike("name", f"%{q.strip()}%")
         normalized_stream = _normalise_stream(stream)
-        if normalized_stream:
-            # Containment filters can vary by PostgREST version. If unsupported,
-            # the catch path falls back to a general subject list.
-            query = query.contains("stream_tags", [normalized_stream])
+        # Stream is a relevance/order hint, not an eligibility filter. The
+        # picker must still expose every valid JAMB/O-level subject for the
+        # selected stream, including subjects outside its usual cluster.
         if exam_type:
             query = query.contains("exam_types", [exam_type.strip().lower()])
         res = query.order("name").limit(80).execute()
@@ -469,28 +468,11 @@ async def list_subjects(
             }
             for r in (res.data or [])
         ]
-        if normalized_stream and not items:
-            broad = (
-                _svc()
-                .table("subject_catalog")
-                .select("id, code, name, aliases, category, stream_tags")
-                .eq("active", True)
-                .order("name")
-                .limit(300)
-                .execute()
-            )
-            items = [
-                {
-                    "id": r["id"],
-                    "code": r.get("code"),
-                    "name": r.get("name"),
-                    "aliases": r.get("aliases") or [],
-                    "category": r.get("category"),
-                    "streamTags": r.get("stream_tags") or [],
-                }
-                for r in (broad.data or [])
-                if not r.get("category") or r.get("category") in {normalized_stream, "general", "language"}
-            ]
+        if normalized_stream and items:
+            items.sort(key=lambda item: (
+                0 if normalized_stream in (item.get("streamTags") or []) else 1,
+                item.get("name") or "",
+            ))
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
@@ -727,7 +709,10 @@ async def register_school(
     """
     name = _clean_text(payload.name)
     institution_type = _clean_text(payload.institutionType)
-    allowed = {"secondary_school", "tutorial_centre", "university", "polytechnic"}
+    # The current product scope is universities, secondary schools and the
+    # two JAMB provider types. Do not let hidden higher-institution options
+    # re-enter the registry through this free-text registration endpoint.
+    allowed = {"secondary_school", "tutorial_centre", "university", "jamb_cafe"}
     if len(name) < 2 or institution_type not in allowed:
         return ResponseModel(
             success=False,

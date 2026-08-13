@@ -69,6 +69,16 @@ def _normalise_email(value: str) -> str:
     return (value or "").strip().lower()
 
 
+def _hydrate_account_type_selection(user: dict) -> dict:
+    """Read the selection marker from the compatibility settings fallback."""
+    if user.get("account_type_selected_at"):
+        return user
+    settings_value = user.get("settings")
+    if isinstance(settings_value, dict) and settings_value.get("account_type_selected_at"):
+        user["account_type_selected_at"] = settings_value["account_type_selected_at"]
+    return user
+
+
 def _is_dev_account_email(email: str) -> bool:
     return settings.DEBUG and email.startswith("levelup.dev+") and email.endswith(
         ("@student.test", "@educator.test")
@@ -359,6 +369,7 @@ async def auth_login(body: dict, request: Request):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
     token = Auth.create_jwt(user["id"])
+    _hydrate_account_type_selection(user)
     user.pop("password_hash", None)
     await _post_auth_device_register(user["id"], body, request)
     return ResponseModel(data={"token": token, "user": user})
@@ -377,14 +388,33 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
             updates["account_type"] = requested_account_type
         else:
             raise HTTPException(status_code=400, detail="Choose a valid account type.")
+        updates["account_type_selected_at"] = datetime.now().isoformat()
     elif current_user.get("account_type") == "pending":
-        updates["account_type"] = "student"
+        # Do not silently turn an unselected legacy account into a student.
+        # It must return to the account-type gate on the next route decision.
+        pass
     if body.get("active_track"):
         updates["active_track"] = body["active_track"]
         updates["current_track_id"] = body["active_track"]
     if body.get("active_field_id"):
         updates["active_field_id"] = body["active_field_id"]
-    result = db.get_service_client().table("users").update(updates).eq("id", current_user["id"]).execute()
+    svc = db.get_service_client()
+    try:
+        result = svc.table("users").update(updates).eq("id", current_user["id"]).execute()
+    except Exception as exc:
+        # Older live projects may have the settings column but not the newer
+        # selection marker yet. Persist the same fact in settings so the
+        # account does not return to the gate after the user chooses a type.
+        if "account_type_selected_at" not in str(exc):
+            raise
+        compatibility_settings = dict(current_user.get("settings") or {})
+        compatibility_settings["account_type_selected_at"] = updates["account_type_selected_at"]
+        fallback_updates = dict(updates)
+        fallback_updates.pop("account_type_selected_at", None)
+        fallback_updates["settings"] = compatibility_settings
+        result = svc.table("users").update(fallback_updates).eq("id", current_user["id"]).execute()
+    if result.data and updates.get("account_type_selected_at"):
+        result.data[0]["account_type_selected_at"] = updates["account_type_selected_at"]
     return ResponseModel(data=result.data[0])
 
 
@@ -447,7 +477,10 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     rank_result = db.get_client().rpc("get_user_rank", {"user_id": current_user["id"]}).execute()
     current_user["rank"] = rank_result.data if rank_result.data else None
     current_user.pop("password_hash", None)
-    current_user.setdefault("account_type", "student")
+    # Legacy accounts may have completed the old flow without a persona.
+    # Keep them pending so the client routes them to user-type selection.
+    current_user.setdefault("account_type", "pending")
+    _hydrate_account_type_selection(current_user)
     return ResponseModel(data=current_user)
 
 

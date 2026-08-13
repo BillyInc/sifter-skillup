@@ -28,9 +28,10 @@ export interface UserProfile {
   username: string;
   avatar_url: string | null;
   auth_provider: string;
-  /** Discriminates the student app from the institutional/admin side. Defaults
-   *  to 'student' (backend may omit it until the institutional slice lands). */
+  /** Discriminates the student app from the institutional/admin side. Legacy
+   *  completed accounts may omit it until they choose a persona. */
   account_type?: 'pending' | 'student' | 'educator' | 'institution_admin';
+  account_type_selected_at?: string | null;
   email: string;
   points: number;
   streak: number;
@@ -450,6 +451,7 @@ function _normalise(raw: any): UserProfile {
     avatar_url: raw.avatar_url ?? null,
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,
+    account_type_selected_at: raw.account_type_selected_at ?? null,
     email: raw.email ?? '',
     points: raw.points ?? 0,
     streak: raw.streak ?? 0,

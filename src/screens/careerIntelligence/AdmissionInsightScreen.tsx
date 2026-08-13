@@ -455,7 +455,7 @@ function FormulaExplainCard({
           {formula.olevelWeight > 0 && (
             <View style={[styles.weightPill, { backgroundColor: colors.successSoft }]}>
               <Text style={[styles.weightPillLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                O'Level
+                O&apos;Level
               </Text>
               <Text style={[styles.weightPillValue, CompassFonts.data, { color: colors.success }]}>
                 {olevelPct}%

@@ -30,7 +30,8 @@ ALTER TABLE skillup_dev.users
   ADD COLUMN IF NOT EXISTS merch_credits        INTEGER NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS referral_code        TEXT UNIQUE DEFAULT gen_random_uuid()::TEXT,
   ADD COLUMN IF NOT EXISTS last_position        JSONB,
-  ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false;
+  ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS account_type_selected_at TIMESTAMPTZ;
 
 CREATE INDEX IF NOT EXISTS idx_users_starknet ON skillup_dev.users(starknet_address);
 CREATE INDEX IF NOT EXISTS idx_users_starknet_wallet_id ON skillup_dev.users(starknet_wallet_id);

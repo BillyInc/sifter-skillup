@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 
-import { Brand, FontSize, Spacing, useTheme } from "@/theme";
+import { Brand, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
@@ -18,6 +18,7 @@ import { SeniorSecondaryExploreSetupForm } from "@/components/onboarding/SeniorS
 import { JambSetupForm } from "@/components/onboarding/JambSetupForm";
 import { CurrentStudentSetupForm } from "@/components/onboarding/CurrentStudentSetupForm";
 import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
+import { studentAccountApi } from "@/lib/provisioningData";
 
 function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
@@ -89,6 +90,9 @@ export default function OnboardingFlow({
     ...(initialProfile ?? {}),
   });
   const [finishing, setFinishing] = useState(false);
+  const [schoolCode, setSchoolCode] = useState("");
+  const [schoolCodeBusy, setSchoolCodeBusy] = useState(false);
+  const [schoolCodeMessage, setSchoolCodeMessage] = useState<string | null>(null);
   const draftLoaded = useRef(false);
 
   useEffect(() => {
@@ -101,6 +105,7 @@ export default function OnboardingFlow({
           const savedProfile = draft.studentProfile;
           const draftUserType = savedProfile.userType ?? initialPersona;
           if (!initialPersona || draftUserType === initialPersona) {
+            setSchoolCode(savedProfile.schoolCode ?? "");
             setProfile((prev) => ({
               ...prev,
               ...(initialProfile ?? {}),
@@ -159,6 +164,21 @@ export default function OnboardingFlow({
     }
   };
 
+  const linkSchool = async () => {
+    const code = schoolCode.trim();
+    if (!code || schoolCodeBusy) return;
+    setSchoolCodeBusy(true);
+    setSchoolCodeMessage(null);
+    try {
+      const result = await studentAccountApi.affiliate(code);
+      setSchoolCodeMessage(`Linked to ${result.schoolName ?? "your school"}.`);
+    } catch (e) {
+      setSchoolCodeMessage((e as Error)?.message ?? "That school code could not be linked yet.");
+    } finally {
+      setSchoolCodeBusy(false);
+    }
+  };
+
   const setupProps = {
     value: profile,
     onChange: patch,
@@ -187,6 +207,25 @@ export default function OnboardingFlow({
         </TouchableOpacity>
       ) : null}
       <Stepper step={step} total={1} />
+
+      <View style={[styles.schoolCodeCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <Text style={[styles.schoolCodeTitle, { color: colors.textRole.primary }]}>Have a school code?</Text>
+        <Text style={[styles.schoolCodeHint, { color: colors.textRole.muted }]}>Enter it now or leave this for later. It only links your account to the school; it does not expose your progress.</Text>
+        <View style={styles.schoolCodeRow}>
+          <TextInput
+            value={schoolCode}
+            onChangeText={(value) => { const next = value.toUpperCase(); setSchoolCode(next); patch({ schoolCode: next }); setSchoolCodeMessage(null); }}
+            autoCapitalize="characters"
+            placeholder="SCHOOL-XXXXXXXX"
+            placeholderTextColor={colors.textRole.muted}
+            style={[styles.schoolCodeInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
+          />
+          <TouchableOpacity onPress={linkSchool} disabled={schoolCodeBusy} style={[styles.schoolCodeButton, { backgroundColor: colors.textRole.primary, opacity: schoolCodeBusy ? 0.6 : 1 }]}>
+            {schoolCodeBusy ? <ActivityIndicator color={colors.surface.inverse} /> : <Text style={{ color: colors.surface.inverse, fontWeight: "800" }}>Link</Text>}
+          </TouchableOpacity>
+        </View>
+        {schoolCodeMessage ? <Text style={[styles.schoolCodeHint, { color: colors.accentRole.success }]}>{schoolCodeMessage}</Text> : null}
+      </View>
 
       <View>
         {profile.userType === "senior_secondary" ? (
@@ -220,4 +259,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontWeight: "800",
   },
+  schoolCodeCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  schoolCodeTitle: { fontSize: FontSize.md, fontWeight: "800" },
+  schoolCodeHint: { fontSize: FontSize.xs, lineHeight: 17 },
+  schoolCodeRow: { flexDirection: "row", gap: Spacing.sm, alignItems: "center" },
+  schoolCodeInput: { flex: 1, minHeight: 46, borderWidth: 1, borderRadius: Radius.sm, paddingHorizontal: Spacing.md },
+  schoolCodeButton: { minHeight: 46, minWidth: 72, borderRadius: Radius.sm, alignItems: "center", justifyContent: "center" },
 });

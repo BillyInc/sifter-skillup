@@ -20,8 +20,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
-  Alert,
   Platform,
+  Modal,
   useWindowDimensions,
 } from "react-native";
 import { useRouter, usePathname } from "expo-router";
@@ -105,6 +105,8 @@ export function AdminShell({
   const pathname = usePathname();
   const { user, signOut, deleteAccount } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
+  const [accountAction, setAccountAction] = useState<"sign-out" | "delete" | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -174,37 +176,18 @@ export function AdminShell({
     }
   };
 
-  const confirmAccountAction = (
-    action: "sign-out" | "delete",
-  ) => {
-    const isDelete = action === "delete";
-    const title = isDelete ? "Delete this account?" : "Sign out?";
-    const message = isDelete
-      ? "Your account will be marked for deletion and the recovery cooldown will apply."
-      : "You will need to sign in again to continue.";
-    const run = async () => {
-      try {
-        if (isDelete) await completeDelete();
-        else await completeSignOut();
-      } catch (error) {
-        const text = error instanceof Error ? error.message : "This action could not be completed.";
-        if (Platform.OS === "web") globalThis.alert?.(text);
-        else Alert.alert("Could not complete this action", text);
-      }
-    };
+  const confirmAccountAction = (action: "sign-out" | "delete") => setAccountAction(action);
 
-    if (Platform.OS === "web") {
-      if (globalThis.confirm?.(`${title}\n\n${message}`)) void run();
-      return;
+  const runAccountAction = async () => {
+    if (!accountAction || actionBusy) return;
+    setActionBusy(true);
+    try {
+      if (accountAction === "delete") await completeDelete();
+      else await completeSignOut();
+      setAccountAction(null);
+    } finally {
+      setActionBusy(false);
     }
-    Alert.alert(title, message, [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: isDelete ? "Delete account" : "Sign out",
-        style: "destructive",
-        onPress: () => void run(),
-      },
-    ]);
   };
 
   const Nav = (
@@ -294,6 +277,28 @@ export function AdminShell({
       {!wide && drawerOpen ? (
         <Drawer onClose={() => setDrawerOpen(false)}>{Nav}</Drawer>
       ) : null}
+      <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.modalTitle, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+              {accountAction === "delete" ? "Delete this account?" : "Sign out?"}
+            </Text>
+            <Text style={[styles.modalBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
+              {accountAction === "delete"
+                ? "Your account will be marked for deletion and the recovery policy will apply."
+                : "You will need to sign in again to continue."}
+            </Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}>
+                <Text style={[styles.modalButtonText, { color: "#fff" }]}>{accountAction === "delete" ? "Delete account" : "Sign out"}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -587,4 +592,11 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRightWidth: StyleSheet.hairlineWidth,
   },
+  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.45)", alignItems: "center", justifyContent: "center", padding: Spacing.xl },
+  modalCard: { width: "100%", maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  modalTitle: { fontSize: FontSize.xl },
+  modalBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  modalActions: { flexDirection: "row", gap: Spacing.sm },
+  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: "center", justifyContent: "center", paddingHorizontal: Spacing.sm },
+  modalButtonText: { fontSize: FontSize.sm, fontWeight: "800" },
 });

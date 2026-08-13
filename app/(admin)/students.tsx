@@ -5,6 +5,11 @@ import { useLocalSearchParams } from "expo-router";
 // server-side rule (provisioned-unclaimed OR active consent) — this screen only
 // renders what the roster endpoint returns, and hosts the provisioning funnel.
 export default function StudentsRoute() {
-  const params = useLocalSearchParams<{ mode?: string }>();
-  return <StudentProvisioningScreen initialMode={params.mode === "jamb" ? "jamb" : "school"} />;
+  const params = useLocalSearchParams<{ mode?: string; tab?: string }>();
+  return (
+    <StudentProvisioningScreen
+      initialMode={params.mode === "jamb" ? "jamb" : "school"}
+      initialTab={params.tab === "roster" ? "roster" : "add"}
+    />
+  );
 }
