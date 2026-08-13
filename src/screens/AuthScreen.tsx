@@ -96,7 +96,9 @@ export default function AuthScreen() {
     setError("");
     resetLoginFields();
     setShowSignupGuard(false);
-    router.push("/(auth)/signup" as any);
+    // Replace the auth state so an old reset URL cannot remain in the browser
+    // history when the user switches to account creation.
+    router.replace("/(auth)/signup" as any);
   };
 
   const requestSignup = () => {

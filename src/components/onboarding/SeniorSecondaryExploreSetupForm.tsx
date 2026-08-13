@@ -18,8 +18,8 @@ import {
 import type { SetupFormProps } from "../../types/onboarding";
 
 const INTENTS: ChoiceOption[] = [
-  { label: "Help me choose the right subject mix", value: "choose_subjects" },
-  { label: "Check a course I already have in mind", value: "have_programme" },
+  { label: "Help me choose subjects for future programmes", value: "choose_subjects" },
+  { label: "I already have a programme in mind", value: "have_programme" },
 ];
 
 export function SeniorSecondaryExploreSetupForm({
@@ -30,23 +30,23 @@ export function SeniorSecondaryExploreSetupForm({
   const { colors } = useTheme();
   const ssClass = value.ssClass;
   const stream = value.stream as SchoolStream | undefined;
-  const hasSchool = Boolean(value.secondarySchoolName);
+  const hasSchool = Boolean(value.secondarySchoolId);
   const selectedIntent = Array.isArray(value.exploreIntent)
     ? value.exploreIntent[0]
     : value.exploreIntent;
   const selectedSubjects = value.olevelSubjects ?? [];
   const classLabel =
-    ssClass === "ss2" ? "SS2 Student" : ssClass === "ss1" ? "SS1 Student" : "Secondary student";
+    ssClass === "ss2" ? "SS2" : ssClass === "ss1" ? "SS1" : "Secondary student";
 
   return (
     <View style={{ gap: Spacing.xl }}>
       <View style={{ gap: Spacing.xs }}>
         <Text style={[styles.heading, { color: colors.text }]}>
-          Pre-JAMB secondary setup
+          {classLabel} subject and programme plan
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Start with where you are. The next questions adjust to your class,
-          stream and goal.
+          We will use your class, school, stream and choices to guide you toward
+          suitable programmes and the requirements to prepare for.
         </Text>
       </View>
 
@@ -56,7 +56,7 @@ export function SeniorSecondaryExploreSetupForm({
           { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
         ]}
       >
-        <Text style={[styles.lockedLabel, { color: colors.textMuted }]}>Selected path</Text>
+        <Text style={[styles.lockedLabel, { color: colors.textMuted }]}>Your current class</Text>
         <Text style={[styles.lockedText, { color: colors.text }]}>{classLabel}</Text>
       </View>
 
@@ -65,6 +65,7 @@ export function SeniorSecondaryExploreSetupForm({
           <LiveAdmissionSearchField
             label="Your secondary school"
             value={value.secondarySchoolName ?? ""}
+            selectedId={value.secondarySchoolId}
             onSelect={(item) => onChange({
               secondarySchoolName: item.name,
               secondarySchoolId: item.id || undefined,
@@ -72,7 +73,8 @@ export function SeniorSecondaryExploreSetupForm({
             placeholder="Search or type your school name"
             kind="school"
             institutionType="secondary_school"
-            helperText="Your school is required. If it is not listed, type the name and continue."
+            allowRegister
+            helperText="Add your school so your guidance can be connected to the right students and programmes. If it is listed, select it; otherwise add its name."
           />
         </>
       ) : null}
@@ -96,8 +98,8 @@ export function SeniorSecondaryExploreSetupForm({
             }
           />
           <Text style={[styles.caption, { color: colors.textMuted }]}>
-            Stream helps us show the right O-level planning subjects first.
-            Each programme still has its own UTME and O-level requirements.
+            Your stream helps us show relevant WAEC subjects first. The programme
+            results will still explain the exact O-level and UTME requirements.
           </Text>
         </>
       ) : null}
@@ -107,7 +109,7 @@ export function SeniorSecondaryExploreSetupForm({
           label="What should LevelUp help you do first?"
           options={INTENTS}
           value={selectedIntent}
-          placeholder="Choose the first thing you want help with"
+          placeholder="Choose what you want to explore first"
           onSelect={(v) =>
             onChange({
               exploreIntent: [v],
@@ -123,24 +125,26 @@ export function SeniorSecondaryExploreSetupForm({
       {selectedIntent === "have_programme" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveAdmissionSearchField
-            label="Course or programme you have in mind"
+            label="Programme you are considering"
             value={value.intendedProgramme ?? ""}
+            selectedId={value.intendedJambProgrammeId}
             onSelect={(item) => onChange({
               intendedProgramme: item.name,
               intendedJambProgrammeId: item.id || undefined,
             })}
-            placeholder="e.g. Medicine, Law, Computer Science"
+            placeholder="e.g. Nursing, Law, Computer Science"
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            We will show programme name variants, universities that offer it, and
-            the UTME and O-level requirements before career mapping starts.
+            Search by the name you know. We will show the official names used by
+            universities, where each one is offered, and the requirements you
+            need to check before exploring related careers.
           </Text>
         </View>
       ) : selectedIntent === "choose_subjects" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveSubjectMultiSelect
-            label="O-level subjects you are taking or considering"
+            label="WAEC/NECO subjects you take or are considering"
             stream={stream}
             examType="olevel"
             value={value.olevelSubjects}
@@ -149,18 +153,18 @@ export function SeniorSecondaryExploreSetupForm({
             maxSelected={12}
             minSelected={5}
             showSearch={false}
-            helperText="English Language and Mathematics are shown first. Choose at least 3 more O-level subjects for early guidance; each programme still shows its exact O-level and UTME requirements."
+            helperText="English Language and Mathematics are shown first. Choose at least 3 more subjects. These choices help us suggest programmes, but each programme will still show its own exact requirements."
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            We will start with programmes your subject plan can support, then
-            show the UTME combination and school-specific requirements before
-            career mapping starts.
+            We will compare your subjects with programme requirements, then show
+            the UTME combination and university-specific checks before career
+            guidance.
           </Text>
         </View>
       ) : null}
 
       <SifterButton
-        label="Continue ->"
+        label="Show my guidance"
         onPress={onContinue}
         disabled={
           !ssClass ||

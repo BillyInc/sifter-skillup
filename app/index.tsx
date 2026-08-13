@@ -115,13 +115,13 @@ export default function LandingPage() {
 
       <View style={styles.actions}>
         <TouchableOpacity
-          onPress={() => router.push("/(auth)/sign-in" as any)}
+          onPress={() => router.replace("/(auth)/sign-in" as any)}
           style={[styles.primaryBtn, { backgroundColor: Brand.primary }]}
         >
           <Text style={styles.primaryText}>Sign in</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => router.push("/(auth)/signup" as any)}
+          onPress={() => router.replace("/(auth)/signup" as any)}
           style={[styles.secondaryBtn, { borderColor: colors.border }]}
         >
           <Text style={[styles.secondaryText, { color: colors.text }]}>

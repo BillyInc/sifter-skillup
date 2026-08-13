@@ -37,10 +37,10 @@ export const adminNav = {
     router.replace("/(admin)/dashboard" as never);
   },
   programmeDashboard(router: Nav) {
-    router.push("/(admin)/dashboard" as never);
+    router.replace("/(admin)/dashboard" as never);
   },
   guidanceDashboard(router: Nav) {
-    router.push("/(admin)/guidance" as never);
+    router.replace("/(admin)/guidance" as never);
   },
   /** Audience-correct home. Universities summarise; advisers look things up. */
   home(router: Nav, audience: AdminAudience) {

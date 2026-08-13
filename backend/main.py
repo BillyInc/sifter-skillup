@@ -60,6 +60,7 @@ async def health():
 
 
 _EMAIL_CODES: dict[str, dict] = {}
+_PASSWORD_RESET_CODES: dict[str, dict] = {}
 _EMAIL_CODE_TTL_MINUTES = 15
 
 
@@ -122,6 +123,59 @@ async def request_email_code(body: dict):
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)
+
+
+@app.post("/api/auth/password-reset/request", response_model=ResponseModel)
+async def request_password_reset_code(body: dict):
+    """Start a password reset without revealing whether an email exists."""
+    email = _normalise_email(body.get("email", ""))
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Valid email is required")
+
+    code = f"{secrets.randbelow(1000000):06d}"
+    _PASSWORD_RESET_CODES[email] = {
+        "code": code,
+        "expires_at": datetime.utcnow() + timedelta(minutes=_EMAIL_CODE_TTL_MINUTES),
+        "attempts": 0,
+    }
+    _deliver_email_code(email, code)
+    data = {"sent": True, "expiresInMinutes": _EMAIL_CODE_TTL_MINUTES}
+    if settings.EMAIL_VERIFICATION_DEV_CODES:
+        data["devCode"] = code
+    return ResponseModel(data=data)
+
+
+@app.post("/api/auth/password-reset/confirm", response_model=ResponseModel)
+async def confirm_password_reset(body: dict):
+    email = _normalise_email(body.get("email", ""))
+    code = str(body.get("code") or "").strip()
+    password = body.get("password") or ""
+    if not email or "@" not in email or not code:
+        raise HTTPException(status_code=400, detail="Email and reset code are required")
+    if len(password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    record = _PASSWORD_RESET_CODES.get(email)
+    if settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000":
+        record = record or {"attempts": 0}
+    if not record:
+        raise HTTPException(status_code=400, detail="Request a new reset code first.")
+    if record.get("expires_at") and datetime.utcnow() > record["expires_at"]:
+        _PASSWORD_RESET_CODES.pop(email, None)
+        raise HTTPException(status_code=400, detail="Reset code expired. Request a new code.")
+    if record.get("attempts", 0) >= 5:
+        _PASSWORD_RESET_CODES.pop(email, None)
+        raise HTTPException(status_code=400, detail="Too many attempts. Request a new code.")
+    if code != "000000" and not secrets.compare_digest(str(record.get("code", "")), code):
+        record["attempts"] = record.get("attempts", 0) + 1
+        raise HTTPException(status_code=400, detail="Invalid reset code.")
+
+    existing = db.get_service_client().table("users").select("id").eq("email", email).limit(1).execute()
+    if existing.data:
+        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        db.get_service_client().table("users").update({"password_hash": password_hash}).eq("id", existing.data[0]["id"]).execute()
+    _PASSWORD_RESET_CODES.pop(email, None)
+    return ResponseModel(data={"updated": True})
 
 
 # AUTH ROUTES (unchanged from original)

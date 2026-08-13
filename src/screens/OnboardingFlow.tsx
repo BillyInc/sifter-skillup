@@ -145,9 +145,12 @@ export default function OnboardingFlow({
     };
     try {
       await saveStartingPoint(full, user?.id);
+      // Initial guidance setup is complete once this form is saved. The
+      // programme/university decision may continue in Discovery and must not
+      // keep the account trapped behind the onboarding guard.
+      await API.completeOnboarding({ account_type: "student" });
+      await refreshUser();
       if (!needsAdmissionResolution(full)) {
-        await API.completeOnboarding({ account_type: "student" });
-        await refreshUser();
         await clearOnboardingDraft(user?.id);
       }
     } finally {

@@ -161,6 +161,19 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         return None
     org_type = _normal_org_type(claim.organization_type)
     svc = _svc()
+    if claim.organization_id:
+        selected = (
+            svc.table("schools")
+            .select("*")
+            .eq("id", claim.organization_id)
+            .eq("institution_type", org_type)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        if selected:
+            return _org_from_school(selected[0].get("id"))
     existing = (
         svc.table("schools")
         .select("*")
