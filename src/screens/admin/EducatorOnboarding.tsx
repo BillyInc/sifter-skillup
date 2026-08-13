@@ -11,7 +11,7 @@
  * correct admin workspace. Access code is not proof; verification stays pending.
  */
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
 import { SifterButton } from "@/components/ui";
@@ -36,6 +36,9 @@ import {
   ChoiceChips,
   SearchField,
 } from "@/components/onboarding/primitives";
+import { LiveAdmissionSearchField } from "@/components/onboarding/LiveAdmissionSearchField";
+
+const ADMIN_ACCESS_REQUEST_EMAIL = "learn@sifter.app";
 
 // Organisation types.
 const ORGS: {
@@ -46,22 +49,22 @@ const ORGS: {
 }[] = [
   {
     type: "secondary_school",
-    icon: "🏫",
+    icon: "S",
     title: "Secondary school",
-    subtitle: "SS1–SS3 guidance & counselling — your students' programme paths",
+    subtitle: "Guide SS1 to SS3 students through subjects and programme choices",
   },
   {
     type: "university",
-    icon: "🎓",
-    title: "University / polytechnic",
-    subtitle: "Faculty, department or institution-wide programme intelligence",
+    icon: "U",
+    title: "University",
+    subtitle: "Guide students using your university's programmes and requirements",
   },
   {
     type: "tutorial_centre",
-    icon: "📚",
+    icon: "T",
     title: "Tutorial centre / JAMB lesson provider",
     subtitle:
-      "Provider/session guidance for students preparing applications",
+      "Support students preparing for JAMB and university applications",
   },
 ];
 
@@ -116,17 +119,11 @@ function accountTypeFor(
   return "educator";
 }
 
-interface EducatorOnboardingProps {
-  /**
-   * Return to the persona picker. Optional so the screen still works when
-   * routed to directly, where there are no choices to go back to.
-   */
-  onBackToChoices?: () => void;
-}
-
 export default function EducatorOnboarding({
   onBackToChoices,
-}: EducatorOnboardingProps = {}) {
+}: {
+  onBackToChoices?: () => void;
+}) {
   const router = useRouter();
   const { colors } = useTheme();
   const { refreshUser, user } = useAuth();
@@ -134,6 +131,7 @@ export default function EducatorOnboarding({
   const [step, setStep] = useState(1);
   const [orgType, setOrgType] = useState<OrganizationType | undefined>();
   const [orgName, setOrgName] = useState("");
+  const [orgId, setOrgId] = useState<string | undefined>();
   const [role, setRole] = useState<OrgRole | undefined>();
   const [workEmail, setWorkEmail] = useState("");
   const [registryCode, setRegistryCode] = useState("");
@@ -155,6 +153,7 @@ export default function EducatorOnboarding({
         if (saved) {
           setOrgType(saved.organizationType);
           setOrgName(saved.organizationName ?? "");
+          setOrgId(saved.organizationId);
           setRole(saved.role);
           setWorkEmail(saved.workEmail ?? "");
           setRegistryCode(saved.registryCode ?? "");
@@ -190,16 +189,41 @@ export default function EducatorOnboarding({
   const back = () => setStep((s) => Math.max(1, s - 1));
 
   const pickOrg = (t: OrganizationType) => {
+    if (orgType !== t) {
+        setOrgName("");
+       setOrgId(undefined);
+      setRole(undefined);
+      setWorkEmail("");
+      setRegistryCode("");
+      setAccessCode("");
+      setAccessGranted(false);
+      setAccessError(null);
+      setFinishError(null);
+    }
     setOrgType(t);
-    // Reset a role that no longer applies to the newly chosen type.
-    setRole((prev) =>
-      prev && ROLES_FOR[t].some((r) => r.value === prev) ? prev : undefined,
-    );
-    setAccessGranted(false);
-    setAccessError(null);
   };
 
-  const step1Ready = !!orgType && orgName.trim().length > 0 && !!role;
+  const organisationLabel = orgType === "university"
+    ? "University"
+    : orgType === "secondary_school"
+      ? "Secondary school"
+      : "Tutorial centre";
+
+  const requestAccessCode = () => {
+    const subject = encodeURIComponent("Sifter LevelUp admin access request");
+    const body = encodeURIComponent(
+      `Organisation type: ${organisationLabel}\n` +
+      `Organisation name: ${orgName.trim() || "Not entered"}\n` +
+      `Role: ${role || "Not selected"}\n` +
+      `Work email: ${workEmail.trim() || "Not entered"}\n\n` +
+      "Please issue or confirm the appropriate admin access code.",
+    );
+    Linking.openURL(`mailto:${ADMIN_ACCESS_REQUEST_EMAIL}?subject=${subject}&body=${body}`).catch(() => {
+      setAccessError(`Email could not be opened. Contact ${ADMIN_ACCESS_REQUEST_EMAIL} for an access code.`);
+    });
+  };
+
+  const step1Ready = !!orgType && orgName.trim().length > 0 && !!role && (orgType !== "university" || !!orgId);
 
   const validateAccessCode = async () => {
     const code = accessCode.trim().toUpperCase();
@@ -245,6 +269,7 @@ export default function EducatorOnboarding({
       accountType,
       organizationType: orgType,
       organizationName: orgName.trim(),
+      organizationId: orgId,
       role,
       workEmail: hasEmail ? workEmail.trim() : undefined,
       registryCode: registryCode.trim() || undefined,
@@ -288,12 +313,6 @@ export default function EducatorOnboarding({
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      {/*
-        On step 1 there is no earlier step, so `back` is undefined and the
-        Stepper rendered no control at all -- an educator who picked this
-        persona had no way back to the picker short of a browser reload.
-        Falling through to onBackToChoices gives step 1 a real destination.
-      */}
       <Stepper step={step} total={4} onBack={step > 1 ? back : onBackToChoices} />
 
       {/* Step 1: Your organisation */}
@@ -303,15 +322,14 @@ export default function EducatorOnboarding({
             Your organisation
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
-            Tell us where you guide students from. Universities look inward at
-            their programmes; secondary schools and tutorial centres look
-            outward across universities, domains and roles.
+            Choose the organisation where you guide students. We will tailor the
+            workspace to your institution and the students you support.
           </Text>
 
           {ORGS.map((o) => (
             <OptionCard
               key={o.type}
-              icon={o.icon}
+              icon={o.title.slice(0, 1)}
               title={o.title}
               subtitle={o.subtitle}
               selected={orgType === o.type}
@@ -321,11 +339,21 @@ export default function EducatorOnboarding({
 
           {orgType ? (
             <View style={{ gap: Spacing.lg, marginTop: Spacing.sm }}>
-              <SearchField
-                label="Organisation name"
+              <LiveAdmissionSearchField
+                label={organisationLabel}
                 value={orgName}
-                onChangeText={setOrgName}
-                placeholder="e.g. Federal Government College, Lagos"
+                selectedId={orgId}
+                 onSelect={(item) => {
+                   setOrgName(item.name);
+                   setOrgId(item.id || undefined);
+                 }}
+                placeholder={orgType === "university" ? "Search your university" : "Search your organisation"}
+                 kind="school"
+                 institutionType={orgType}
+                 allowRegister={orgType !== "university"}
+                 helperText={orgType === "university"
+                   ? "Choose your university from the list so its programme records stay connected."
+                   : "Select your organisation if it is listed, or add its name so other educators can find it."}
               />
               <ChoiceChips
                 label="Your role"
@@ -355,20 +383,21 @@ export default function EducatorOnboarding({
             Enter admin access code
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
-            Institution and tutorial-centre dashboards are currently invite-only.
-            Request this code from the Sifter owner. This unlocks admin mode only;
-            it does not prove ownership or replace verification.
+            Owners request an access code from the Sifter team. Staff and
+            counsellors ask their organisation owner to invite them or issue a
+            code. The code opens the admin setup; it does not replace identity
+            or institution verification.
           </Text>
 
           <SearchField
-            label="Owner-issued admin access code"
+            label="Admin access code"
             value={accessCode}
             onChangeText={(value) => {
               setAccessCode(value.toUpperCase());
               setAccessError(null);
               setAccessGranted(false);
             }}
-            placeholder="EDU-XXXX-XXXX-XXXX-XXXX"
+            placeholder="Enter the code you received"
           />
 
           {accessError ? (
@@ -378,9 +407,21 @@ export default function EducatorOnboarding({
           ) : null}
 
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            This is separate from student claim codes and school affiliation
-            codes. Students never use this code.
+            This code is only for educators and institution administrators. A
+            student account does not need it.
           </Text>
+
+          {typeof __DEV__ !== "undefined" && __DEV__ ? (
+            <Text style={[styles.devHint, { color: colors.accentRole.action }]}>Development test code: LEVELUP-EDU-DEV</Text>
+          ) : null}
+
+          <TouchableOpacity
+            onPress={requestAccessCode}
+            style={[styles.requestCode, { borderColor: colors.borderRole.subtle }]}
+          >
+            <Text style={[styles.requestCodeText, { color: colors.textRole.primary }]}>Request an access code</Text>
+            <Text style={[styles.note, { color: colors.textMuted }]}>Owners contact Sifter. Staff contact the owner of their organisation.</Text>
+          </TouchableOpacity>
 
           <SifterButton
             label="Unlock admin setup →"
@@ -401,11 +442,9 @@ export default function EducatorOnboarding({
             Verify your institution
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
-            You can explore national aggregate intelligence right away. Verifying
-            unlocks your institution&apos;s own dashboard — the programmes, domains
-            and demand specific to you. We&apos;ll capture your claim now; review
-            happens during the institutional rollout, so verification stays
-            pending until then.
+            Add your work details so the workspace can be connected to your
+            organisation. Verification may be completed later; you can still
+            finish setting up your guidance workspace now.
           </Text>
 
           <SearchField
@@ -423,9 +462,8 @@ export default function EducatorOnboarding({
           />
 
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            📄 No document needed right now. You&apos;ll be able to upload proof of
-            affiliation later — your dashboard stays in the national-aggregate
-            tier until verification completes.
+            You do not need to upload a document now. We can request proof of
+            affiliation later if the organisation needs verification.
           </Text>
 
           <SifterButton
@@ -447,7 +485,8 @@ export default function EducatorOnboarding({
               Confirm your details
             </Text>
             <Text style={[styles.sub, { color: colors.textSoft }]}>
-              You can refine any of this from your dashboard later.
+              Check these details before you open the workspace. You can update
+              them later from settings.
             </Text>
           </View>
 
@@ -460,7 +499,7 @@ export default function EducatorOnboarding({
             <SummaryRow
               label="Organisation"
               value={
-                ORGS.find((o) => o.type === orgType)?.title ?? "—"
+                ORGS.find((o) => o.type === orgType)?.title ?? "Not selected"
               }
             />
             <SummaryRow label="Name" value={orgName.trim() || "—"} />
@@ -480,13 +519,13 @@ export default function EducatorOnboarding({
                 value={registryCode.trim() || "Not provided"}
               />
             ) : null}
-            <SummaryRow label="Access tier" value="National aggregate (pending verification)" />
+            <SummaryRow label="Workspace access" value="Ready after code approval" />
             <SummaryRow
               label="Admin gate"
               value={accessGranted ? "Owner code accepted" : "Code required"}
             />
             {orgType && isProviderSession(orgType) ? (
-              <SummaryRow label="Mode" value="Provider / session — no roster" />
+              <SummaryRow label="Mode" value="Guidance sessions; no student roster" />
             ) : null}
           </View>
 
@@ -497,7 +536,7 @@ export default function EducatorOnboarding({
           ) : null}
 
           <SifterButton
-            label="Enter dashboard →"
+            label="Open my workspace"
             onPress={finish}
             loading={finishing}
             disabled={!accessGranted}
@@ -543,6 +582,20 @@ const styles = StyleSheet.create({
   error: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.4,
+  },
+  requestCode: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  requestCodeText: {
+    fontSize: FontSize.sm,
+    fontWeight: "700",
+  },
+  devHint: {
+    fontSize: FontSize.xs,
+    fontWeight: "700",
   },
   summary: {
     borderWidth: 1,

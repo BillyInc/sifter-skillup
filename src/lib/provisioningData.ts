@@ -18,6 +18,7 @@ import { Platform } from "react-native";
 import type {
   ProvisionDraft,
   ProvisioningStream,
+  ProvisioningStudentType,
   ChosenDirection,
   GeneratedStudent,
   ProvisioningMergeCandidate,
@@ -76,6 +77,7 @@ interface WireDraft {
   full_name?: string | null;
   student_class?: string | null;
   stream?: ProvisioningStream | null;
+  student_type?: ProvisioningStudentType | null;
   needs_review: boolean;
   guardian_consent: boolean;
   guardian_name?: string | null;
@@ -86,6 +88,7 @@ interface WireGenerated {
   full_name: string;
   student_class?: string | null;
   stream?: ProvisioningStream | null;
+  student_type?: ProvisioningStudentType | null;
   claim_code: string;
   claim_expires_at?: string | null;
 }
@@ -125,6 +128,7 @@ const toDraft = (w: WireDraft): ProvisionDraft => ({
   fullName: w.full_name,
   studentClass: w.student_class,
   stream: w.stream,
+  studentType: w.student_type,
   needsReview: w.needs_review,
   guardianConsent: w.guardian_consent,
   guardianName: w.guardian_name,
@@ -135,6 +139,7 @@ const toGenerated = (w: WireGenerated): GeneratedStudent => ({
   fullName: w.full_name,
   studentClass: w.student_class,
   stream: w.stream,
+  studentType: w.student_type,
   claimCode: w.claim_code,
   claimExpiresAt: w.claim_expires_at,
 });
@@ -173,6 +178,7 @@ export interface ManualDraft {
   fullName?: string;
   studentClass?: string;
   stream?: ProvisioningStream;
+  studentType?: ProvisioningStudentType;
   guardianConsent?: boolean;
   guardianName?: string;
 }
@@ -180,6 +186,7 @@ export interface ManualDraft {
 export interface GenerateItem {
   draftId: string;
   stream?: ProvisioningStream;
+  studentType?: ProvisioningStudentType;
   subjects?: string[];
   chosenDirection?: ChosenDirection;
 }
@@ -200,6 +207,7 @@ export const provisioningData = {
           full_name: m.fullName ?? null,
           student_class: m.studentClass ?? null,
           stream: m.stream ?? input.stream ?? null,
+          student_type: m.studentType ?? null,
           guardian_consent: m.guardianConsent ?? false,
           guardian_name: m.guardianName ?? null,
         })),
@@ -225,6 +233,7 @@ export const provisioningData = {
         full_name: patch.fullName ?? null,
         student_class: patch.studentClass ?? null,
         stream: patch.stream ?? null,
+        student_type: patch.studentType ?? null,
         guardian_consent: patch.guardianConsent ?? false,
         guardian_name: patch.guardianName ?? null,
       }),
@@ -240,6 +249,7 @@ export const provisioningData = {
         items: items.map((i) => ({
           draft_id: i.draftId,
           stream: i.stream ?? null,
+          student_type: i.studentType ?? null,
           subjects: i.subjects ?? [],
           chosen_direction: i.chosenDirection
             ? {

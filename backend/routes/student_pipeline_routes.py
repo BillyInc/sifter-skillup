@@ -21,12 +21,11 @@ from auth import Auth
 from database import db
 from logger import log
 from models import ResponseModel
+from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, clear_prefix, get_json, set_json
 
 router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 
 _SCHEMA = "skillup_dev"
-
-
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -153,7 +152,6 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
         "ssClass": row.get("ss_class"),
         "stream": row.get("stream"),
         "exploreIntent": row.get("explore_intent") or [],
-        "jambScoreBand": row.get("jamb_score_band"),
         "preferredInstitutionType": row.get("preferred_institution_type"),
         "preferredSchoolId": row.get("preferred_school_id"),
         "preferredSchool": row.get("preferred_school_name"),
@@ -203,7 +201,6 @@ class StartingPointIn(BaseModel):
     exploreIntent: list[str] = Field(default_factory=list)
     jambSubjects: list[str] = Field(default_factory=list)
     olevelSubjects: list[str] = Field(default_factory=list)
-    jambScoreBand: Optional[str] = None
     preferredInstitutionType: Optional[str] = None
     preferredSchoolId: Optional[str] = None
     preferredSchool: Optional[str] = None
@@ -214,6 +211,11 @@ class StartingPointIn(BaseModel):
     regions: list[str] = Field(default_factory=list)
     workTypes: list[str] = Field(default_factory=list)
     notifications: dict[str, Any] = Field(default_factory=dict)
+
+
+class InstitutionRegisterIn(BaseModel):
+    name: str
+    institutionType: str
 
 
 def _admission_resolution_complete(payload: StartingPointIn) -> bool:
@@ -318,6 +320,11 @@ async def save_starting_point(
     try:
         svc = _svc()
         now = _now()
+        preferred_type = _clean_text(payload.preferredInstitutionType or payload.institutionType)
+        if payload.userType in {"jamb", "ss3_secondary"}:
+            preferred_type = "university" if (
+                _clean_text(payload.preferredSchoolId) or _clean_text(payload.preferredSchool)
+            ) else None
         profile_payload = {
             "user_id": user_id,
             "user_type": payload.userType,
@@ -325,8 +332,11 @@ async def save_starting_point(
             "ss_class": _clean_text(payload.ssClass),
             "stream": _clean_text(payload.stream),
             "explore_intent": _clean_list(payload.exploreIntent),
-            "jamb_score_band": _clean_text(payload.jambScoreBand),
-            "preferred_institution_type": _clean_text(payload.preferredInstitutionType or payload.institutionType),
+            # Score bands are not school-specific admission requirements. Keep
+            # the nullable column for compatibility, but do not collect or
+            # persist a guessed band from onboarding.
+            "jamb_score_band": None,
+            "preferred_institution_type": preferred_type,
             "preferred_school_id": _clean_text(payload.preferredSchoolId),
             "preferred_school_name": _clean_text(payload.preferredSchool or payload.schoolName),
             "intended_jamb_programme_id": _clean_text(payload.intendedJambProgrammeId),
@@ -337,7 +347,10 @@ async def save_starting_point(
             "work_types": _clean_list(payload.workTypes),
             "notification_prefs": payload.notifications or {},
             "raw_profile": payload.model_dump(),
-            "completed_at": now if _admission_resolution_complete(payload) else None,
+            # Starting-point setup is onboarding. Programme/university
+            # resolution continues in Discovery and must not keep the account
+            # behind the auth/onboarding route guard.
+            "completed_at": now,
             "updated_at": now,
         }
         existing = (
@@ -399,7 +412,7 @@ async def save_starting_point(
         admission_complete = _admission_resolution_complete(payload)
         if admission_complete:
             _record_admission_pathway_choice(svc, user_id, starting_id, payload)
-        _users().update({"onboarding_completed": admission_complete}).eq("id", user_id).execute()
+        _users().update({"onboarding_completed": True}).eq("id", user_id).execute()
         row = (res.data or [{}])[0]
         return ResponseModel(data=_real(_profile_out(row, subject_rows)))
     except Exception as exc:  # noqa: BLE001
@@ -414,6 +427,14 @@ async def list_subjects(
     exam_type: Optional[str] = Query(None),
 ):
     try:
+        cache_key = "student:subjects:" + ":".join([
+            (q or "").strip().lower(),
+            (stream or "").strip().lower(),
+            (exam_type or "").strip().lower(),
+        ])
+        cached = get_json(cache_key)
+        if isinstance(cached, list):
+            return ResponseModel(data=_real(cached))
         query = (
             _svc()
             .table("subject_catalog")
@@ -440,6 +461,7 @@ async def list_subjects(
             }
             for r in (res.data or [])
         ]
+        set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
         log.warning("student subjects: list failed", error=str(exc))
@@ -459,6 +481,11 @@ async def list_subjects(
 async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Query(30)):
     try:
         svc = _svc()
+        cache_key = (q or "").strip().lower()
+        cache_key = f"student:jamb-programmes:{cache_key}:{min(limit, 80)}"
+        cached = get_json(cache_key)
+        if isinstance(cached, list):
+            return ResponseModel(data=_real(cached[: min(limit, 80)]))
         if q and q.strip():
             like = f"%{q.strip()}%"
             res = (
@@ -478,7 +505,32 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 .execute()
             )
         items = [_jamb_detail_out(r) for r in (res.data or [])]
-        return ResponseModel(data=_real(items))
+        # Keep the JAMB programme identity separate from school-specific
+        # offerings, but expose enough context in typeahead to explain why a
+        # search such as "Nursing" can lead to different names by university.
+        try:
+            jamb_ids = [item["jambProgrammeId"] for item in items if item.get("jambProgrammeId")]
+            offering_rows = (
+                svc.table("v_school_jamb_programmes")
+                .select("jamb_programme_id, school_name")
+                .in_("jamb_programme_id", jamb_ids)
+                .limit(2000)
+                .execute()
+            ).data or []
+            schools_by_jamb: dict[str, list[str]] = {}
+            for row in offering_rows:
+                jid = row.get("jamb_programme_id")
+                school = (row.get("school_name") or "").strip()
+                if jid and school and school not in schools_by_jamb.setdefault(jid, []):
+                    schools_by_jamb[jid].append(school)
+            for item in items:
+                names = schools_by_jamb.get(item.get("jambProgrammeId"), [])
+                item["schoolNames"] = names[:3]
+                item["schoolCount"] = len(names)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("student programme school context skipped", error=str(exc))
+        set_json(cache_key, items, SEARCH_TTL_SECONDS)
+        return ResponseModel(data=_real(items[: min(limit, 80)]))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb-programme search failed", error=str(exc))
         return ResponseModel(data=_coming_soon("JAMB programme search is temporarily unavailable."))
@@ -620,6 +672,100 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
         return ResponseModel(data=_coming_soon("Domain paths are temporarily unavailable."))
 
 
+@router.post("/schools/register", response_model=ResponseModel)
+async def register_school(
+    payload: InstitutionRegisterIn = Body(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Add a user-reported institution when the registry has no match.
+
+    The row is intentionally unverified. It gives the next student a stable
+    record to select, while admin verification and school affiliation remain
+    separate workflows.
+    """
+    name = _clean_text(payload.name)
+    institution_type = _clean_text(payload.institutionType)
+    allowed = {"secondary_school", "tutorial_centre", "university", "polytechnic"}
+    if len(name) < 2 or institution_type not in allowed:
+        return ResponseModel(
+            success=False,
+            message="Enter a valid institution name and type.",
+            data=None,
+        )
+    try:
+        svc = _svc()
+        existing = (
+            svc.table("schools")
+            .select("id, name, institution_type")
+            .ilike("name", name)
+            .eq("institution_type", institution_type)
+            .limit(1)
+            .execute()
+        ).data or []
+        row = existing[0] if existing else None
+        created = False
+        if not row:
+            row = (
+                svc.table("schools")
+                .insert({"name": name, "institution_type": institution_type, "ibass_verified": False})
+                .execute()
+            ).data[0]
+            created = True
+            clear_prefix("admission:")
+            clear_prefix("student:")
+        return ResponseModel(
+            data=_real({
+                "id": row.get("id"),
+                "name": row.get("name") or name,
+                "institutionType": row.get("institution_type") or institution_type,
+                "created": created,
+            }),
+            message="Institution added to the registry." if created else "Existing institution found.",
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("student institution registration failed", user_id=current_user["id"], error=str(exc))
+        return ResponseModel(
+            success=False,
+            message="We could not add that institution right now. Please try again.",
+            data=None,
+        )
+
+
+@router.get("/schools/{school_id}/faculties", response_model=ResponseModel)
+async def get_school_faculties(school_id: str):
+    """Return faculty names present in the university's JAMB offerings."""
+    try:
+        cache_key = f"student:school-faculties:{school_id}"
+        cached = get_json(cache_key)
+        if isinstance(cached, list):
+            return ResponseModel(data=_real(cached))
+        svc = _svc()
+        school_rows = (
+            svc.table("school_programmes")
+            .select("jamb_programme_id")
+            .eq("school_id", school_id)
+            .limit(1000)
+            .execute()
+        ).data or []
+        jamb_ids = list({r.get("jamb_programme_id") for r in school_rows if r.get("jamb_programme_id")})
+        if not jamb_ids:
+            return ResponseModel(data=_real([]))
+        rows = (
+            svc.table("jamb_programmes")
+            .select("jamb_faculty")
+            .in_("id", jamb_ids)
+            .limit(1000)
+            .execute()
+        ).data or []
+        names = sorted({str(r.get("jamb_faculty")).strip() for r in rows if r.get("jamb_faculty") and str(r.get("jamb_faculty")).strip()})
+        items = [{"name": name, "value": name} for name in names]
+        set_json(cache_key, items, REFERENCE_TTL_SECONDS)
+        return ResponseModel(data=_real(items))
+    except Exception as exc:  # noqa: BLE001
+        log.warning("student school faculties lookup failed", school_id=school_id, error=str(exc))
+        return ResponseModel(data=_coming_soon("Faculty data is not available for this university."))
+
+
 @router.get("/schools/{school_id}/programmes", response_model=ResponseModel)
 async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
     """The courses a given university actually offers, by JAMB name.
@@ -634,6 +780,11 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
     the point of the row.
     """
     try:
+        query_text = (q or "").strip().lower()
+        cache_key = f"student:school-programmes:{school_id}:{query_text}"
+        cached = get_json(cache_key)
+        if isinstance(cached, list):
+            return ResponseModel(data=_real(cached))
         svc = _svc()
         query = (
             svc.table("v_school_jamb_programmes")
@@ -683,6 +834,7 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
                     **_skills_out(sk, full=False),
                 }
             )
+        set_json(cache_key, items, SEARCH_TTL_SECONDS if query_text else REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
         log.error("student school programmes failed", error=str(exc))

@@ -48,7 +48,6 @@ export interface StartingPointProfile {
   jambSubjects?: string[];
   /** O-level/WAEC/NECO subjects used for programme eligibility checks. */
   olevelSubjects?: string[];
-  jambScoreBand?: string; // "180-219" etc.
   preferredInstitutionType?: InstitutionType;
   preferredSchoolId?: string;
   preferredSchool?: string;
