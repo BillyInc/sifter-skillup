@@ -28,11 +28,17 @@ describe('API.pushPortfolioArtifact', () => {
 
   beforeEach(() => {
     fetchMock.mockReset();
+    // api.ts reads res.text() and parses it itself, so that a non-JSON error
+    // body (stopped backend, proxy HTML) surfaces the real transport failure
+    // instead of a JSON parser exception. A mock offering only json() makes
+    // every request throw "res.text is not a function".
+    const body = { success: true, data: [{ ok: true }] };
     fetchMock.mockResolvedValue({
       ok: true,
       status: 200,
       statusText: 'OK',
-      json: async () => ({ success: true, data: [{ ok: true }] }),
+      text: async () => JSON.stringify(body),
+      json: async () => body,
     });
     (global as any).fetch = fetchMock;
   });
