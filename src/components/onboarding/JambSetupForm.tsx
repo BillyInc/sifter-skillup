@@ -2,7 +2,7 @@
  * Step-2 setup for SS3 / UTME candidates.
  *
  * Mirrors the admission mechanism with three doors:
- * know_where -> programme + institution type + school
+ * know_where -> programme + university
  * know_what -> programme only
  * unsure -> strongest subjects -> eligible programmes once data is live
  */
@@ -25,7 +25,6 @@ import {
 import type {
   SetupFormProps,
   SsDoor,
-  InstitutionType,
 } from "../../types/onboarding";
 
 const DOORS: {
@@ -37,39 +36,22 @@ const DOORS: {
   {
     value: "know_where",
     icon: "A",
-    title: "I know what I want to study and where",
-    subtitle: "Programme + preferred school",
+    title: "I know the programme and university",
+    subtitle: "Check the programme at a specific university",
   },
   {
     value: "know_what",
     icon: "B",
-    title: "I know what to study, not where",
-    subtitle: "We'll show universities, variants, and requirements",
+    title: "I know the programme, but not the university",
+    subtitle: "See universities, official programme names and requirements",
   },
   {
     value: "unsure",
     icon: "C",
-    title: "I don't know yet",
-    subtitle: "Pick your strongest subjects and explore",
+    title: "I want help finding a programme",
+    subtitle: "Use your O-level and UTME subjects to narrow the options",
   },
 ];
-
-const INSTITUTION_TYPES: ChoiceOption[] = [
-  { label: "University", value: "university" },
-  { label: "College of Education", value: "college_of_education" },
-  { label: "Polytechnic", value: "polytechnic" },
-  { label: "Monotechnic", value: "monotechnic" },
-  { label: "College of Health", value: "college_of_health" },
-  { label: "Technical College", value: "technical_college" },
-];
-
-const SCORE_BANDS: ChoiceOption[] = [
-  "Below 180",
-  "180-219",
-  "220-249",
-  "250-279",
-  "280+",
-].map((band) => ({ label: band, value: band }));
 
 const JAMB_PREP_MODES: ChoiceOption[] = [
   { label: "I attend a tutorial centre", value: "tutorial_centre" },
@@ -84,8 +66,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const isSs3Student = value.userType === "ss3_secondary";
   const isJambCandidate = value.userType === "jamb";
   const hasBaseInstitution = isSs3Student
-    ? Boolean(value.secondarySchoolName)
-    : value.jambPrepMode === "self_taught" || Boolean(value.tutorialCentreName);
+    ? Boolean(value.secondarySchoolId)
+    : value.jambPrepMode === "self_taught" || Boolean(value.tutorialCentreId);
   const hasOlevelSubjects = selectedOlevelSubjects.length >= 5;
   const hasDoorFields =
     door === "unsure"
@@ -100,11 +82,12 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
     <View style={{ gap: Spacing.xl }}>
       <View style={{ gap: Spacing.xs }}>
         <Text style={[styles.heading, { color: colors.text }]}>
-          {isSs3Student ? "SS3 admission setup" : "JAMB candidate setup"}
+          {isSs3Student ? "Build your SS3 admission plan" : "Build your JAMB admission plan"}
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Start with your learning base, then choose what you want LevelUp to
-          help you resolve first.
+          Tell us where you are preparing from, then choose the question you want
+          answered first. We will use both O-level and UTME requirements when we
+          compare programmes.
         </Text>
       </View>
 
@@ -112,6 +95,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         <LiveAdmissionSearchField
           label="Your secondary school"
           value={value.secondarySchoolName ?? ""}
+          selectedId={value.secondarySchoolId}
           onSelect={(item) =>
             onChange({
               secondarySchoolName: item.name,
@@ -121,7 +105,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           placeholder="Search or type your school name"
           kind="school"
           institutionType="secondary_school"
-          helperText="Your school is required so guidance can be connected to school cohorts later."
+          allowRegister
+           helperText="Your school is required. Select it if it is listed, or add its name so it can be connected to your guidance record."
         />
       ) : null}
 
@@ -143,6 +128,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             <LiveAdmissionSearchField
               label="Your tutorial centre"
               value={value.tutorialCentreName ?? ""}
+              selectedId={value.tutorialCentreId}
               onSelect={(item) =>
                 onChange({
                   tutorialCentreName: item.name,
@@ -152,7 +138,8 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
               placeholder="Search or type your tutorial centre"
               kind="school"
               institutionType="tutorial_centre"
-              helperText="If your centre is not listed, type the name and continue."
+                allowRegister
+                helperText="Choose your tutorial centre if it is listed, or add its name. You can also choose self-taught."
             />
           ) : null}
         </View>
@@ -161,6 +148,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
       {hasBaseInstitution ? (
         <>
       <View style={{ gap: Spacing.md }}>
+        <Text style={[styles.sectionLabel, { color: colors.text }]}>What would you like to find out first?</Text>
         {DOORS.map((d) => (
           <OptionCard
             key={d.value}
@@ -182,27 +170,35 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         ))}
       </View>
 
-      <SelectField
-        label="Your school stream (guidance hint)"
-        options={STREAM_OPTIONS}
-        value={value.stream}
-        placeholder="Choose your stream"
-        onSelect={(v) =>
-          onChange({
-            stream: v as SchoolStream,
-            jambSubjects: [],
-            olevelSubjects: [],
-          })
-        }
-      />
-      <Text style={[styles.caption, { color: colors.textMuted }]}>
-        Stream helps sort guidance and O-level subject choices. UTME and O-level
-        requirements are both checked before a path should be treated as eligible.
-      </Text>
+      {door ? (
+        <SelectField
+          label="Your school stream"
+          options={STREAM_OPTIONS}
+          value={value.stream}
+          placeholder="Choose your stream"
+          onSelect={(v) =>
+            onChange({
+              stream: v as SchoolStream,
+              jambSubjects: [],
+              olevelSubjects: [],
+              intendedProgramme: undefined,
+              intendedJambProgrammeId: undefined,
+              preferredSchool: undefined,
+              preferredSchoolId: undefined,
+            })
+          }
+        />
+      ) : null}
+      {door && value.stream ? (
+        <Text style={[styles.caption, { color: colors.textMuted }]}>
+          Your stream helps us organise subject guidance. We will not call a
+          programme a match until its UTME and O-level requirements are checked.
+        </Text>
+      ) : null}
 
-      {value.stream ? (
+      {value.stream && door ? (
         <LiveSubjectMultiSelect
-          label="Your O-level subjects"
+          label="Your WAEC/NECO subjects"
           stream={value.stream}
           examType="olevel"
           value={value.olevelSubjects}
@@ -211,15 +207,31 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           maxSelected={12}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch={false}
-          helperText="English Language and Mathematics are shown first. Choose at least 3 more O-level subjects; these qualify the actual programme requirement after the UTME gate."
+          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme&apos;s O-level requirements fit your plan."
+        />
+      ) : null}
+
+      {value.stream && door ? (
+        <LiveSubjectMultiSelect
+          label="Your UTME/JAMB subjects"
+          stream={value.stream}
+          examType="utme"
+          value={value.jambSubjects}
+          onChange={(v) => onChange({ jambSubjects: v as string[] })}
+          minSelected={4}
+          maxSelected={4}
+          showSearch={false}
+          fixedSubjects={["English Language"]}
+          helperText="Use of English is fixed. Choose 3 other UTME subjects. The stream only orders relevant choices; all valid UTME subjects remain available."
         />
       ) : null}
 
       {door === "know_where" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveAdmissionSearchField
-            label="Intended programme"
+            label="Programme you want to study"
             value={value.intendedProgramme ?? ""}
+            selectedId={value.intendedJambProgrammeId}
             onSelect={(item) =>
               onChange({
                 intendedProgramme: item.name,
@@ -229,28 +241,21 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             placeholder="e.g. Mechanical Engineering"
             kind="programme"
           />
-          <SelectField
-            label="Preferred institution type"
-            options={INSTITUTION_TYPES}
-            value={value.preferredInstitutionType}
-            placeholder="Choose institution type"
-            onSelect={(v) =>
-              onChange({ preferredInstitutionType: v as InstitutionType })
-            }
-          />
           <LiveAdmissionSearchField
-            label="Preferred school"
+            label="Preferred university"
             value={value.preferredSchool ?? ""}
+            selectedId={value.preferredSchoolId}
             onSelect={(item) =>
               onChange({
                 preferredSchool: item.name,
                 preferredSchoolId: item.id || undefined,
+                preferredInstitutionType: "university",
               })
             }
             placeholder="Search universities"
             kind="school"
-            institutionType={value.preferredInstitutionType ?? "university"}
-            helperText="If your preferred school is not listed, type the name and continue."
+            institutionType="university"
+            helperText="Choose a university from the list. We will check the programme and university requirements together."
           />
         </View>
       ) : null}
@@ -258,8 +263,9 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
       {door === "know_what" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveAdmissionSearchField
-            label="Intended programme"
+            label="Programme you want to study"
             value={value.intendedProgramme ?? ""}
+            selectedId={value.intendedJambProgrammeId}
             onSelect={(item) =>
               onChange({
                 intendedProgramme: item.name,
@@ -270,36 +276,20 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            We'll show the universities offering this programme, its naming
-            variants, and cycle-labelled requirements where they are published.
+            Universities may use different official names for a similar
+            programme. We will show each university&apos;s name and requirements so
+            you can tell the options apart.
           </Text>
         </View>
       ) : null}
 
       {door === "unsure" ? (
         <View style={{ gap: Spacing.lg }}>
-          <LiveSubjectMultiSelect
-            label="Your UTME subjects"
-            examType="utme"
-            value={value.jambSubjects}
-            onChange={(v) => onChange({ jambSubjects: v as string[] })}
-            minSelected={4}
-            maxSelected={4}
-            showSearch={false}
-            fixedSubjects={["English Language"]}
-            helperText="Use of English is fixed. Choose 3 other UTME subjects; programme suggestions use official UTME combinations first, then show O-level requirements on the programme detail."
-          />
-          <Text style={[styles.caption, { color: colors.textMuted }]}>
-            We'll match these to programme options first, then help you choose a
-            university before career mapping starts.
+          <Text style={[styles.caption, { color: colors.textMuted }]}> 
+            We will show programmes that accept this combination, explain any
+            missing O-level requirement, and then show the universities offering
+            the programme.
           </Text>
-          <SelectField
-            label="Your JAMB score band (optional)"
-            options={SCORE_BANDS}
-            value={value.jambScoreBand}
-            placeholder="Choose score band"
-            onSelect={(v) => onChange({ jambScoreBand: v })}
-          />
         </View>
       ) : null}
         </>
@@ -327,6 +317,7 @@ const styles = StyleSheet.create({
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   note: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   caption: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
+  sectionLabel: { fontSize: FontSize.sm, fontWeight: "800" },
 });
 
 export default JambSetupForm;

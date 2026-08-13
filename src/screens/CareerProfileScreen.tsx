@@ -20,6 +20,7 @@ import {
   TouchableOpacity,
   Switch,
   Platform,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useRouter } from "expo-router";
@@ -87,7 +88,9 @@ const UNCATEGORISED = "Uncategorised";
 export default function CareerProfileScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { user, signOut } = useAuth();
+  const { user, signOut, deleteAccount } = useAuth();
+  const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
   const isGuest = user?.auth_provider === "guest";
 
   const [profile, setProfile] = useState<StartingPointProfile | null>(null);
@@ -139,13 +142,18 @@ export default function CareerProfileScreen() {
     });
   };
 
-  const handleSignOut = useCallback(async () => {
+  const runAccountAction = useCallback(async () => {
+    if (!accountAction || actionBusy) return;
+    setActionBusy(true);
     try {
-      await signOut();
-    } finally {
+      if (accountAction === 'delete') await deleteAccount();
+      else await signOut();
+      setAccountAction(null);
       router.replace("/(auth)/sign-in");
+    } finally {
+      setActionBusy(false);
     }
-  }, [signOut, router]);
+  }, [accountAction, actionBusy, deleteAccount, router, signOut]);
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
@@ -205,7 +213,7 @@ export default function CareerProfileScreen() {
             )}
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
+              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")}
               style={styles.linkBtn}
             >
               <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
@@ -375,7 +383,7 @@ export default function CareerProfileScreen() {
               icon="OUT"
               label="Sign out"
               danger
-              onPress={handleSignOut}
+              onPress={() => setAccountAction('sign-out')}
             />
           </View>
         </Section>
@@ -401,6 +409,26 @@ export default function CareerProfileScreen() {
 
         <View style={{ height: Spacing.xxxl }} />
       </ScrollView>
+      <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+              {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
+            </Text>
+            <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              {accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}
+            </Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}>
+                <Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -685,4 +713,11 @@ const styles = StyleSheet.create({
   accountLabel: { fontSize: FontSize.md },
   accountSub: { fontSize: FontSize.xs, marginTop: 2 },
   accountArrow: { fontSize: FontSize.lg },
+  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
+  modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  modalTitle: { fontSize: FontSize.xl },
+  modalBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  modalActions: { flexDirection: 'row', gap: Spacing.sm },
+  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.sm },
+  modalButtonText: { fontSize: FontSize.sm, fontWeight: '800' },
 });

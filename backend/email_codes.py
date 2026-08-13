@@ -26,6 +26,12 @@ from config import settings
 
 KEY_PREFIX = "levelup:email_code:"
 
+# Signup verification and password reset must never share a record: a code
+# issued for one would otherwise satisfy the other, letting a signup code reset
+# an existing account's password.
+PURPOSE_SIGNUP = "signup"
+PURPOSE_PASSWORD_RESET = "password_reset"
+
 # Grace beyond the code's own lifetime, so the record still exists to be
 # reported as expired rather than vanishing into "never requested".
 _TTL_GRACE_SECONDS = 300
@@ -54,15 +60,20 @@ def reset_client() -> None:
     _client = None
 
 
-def _key(email: str) -> str:
-    return f"{KEY_PREFIX}{email}"
+def _key(email: str, purpose: str) -> str:
+    return f"{KEY_PREFIX}{purpose}:{email}"
 
 
-async def store_code(email: str, code: str, ttl_minutes: Optional[int] = None) -> None:
+async def store_code(
+    email: str,
+    code: str,
+    purpose: str = PURPOSE_SIGNUP,
+    ttl_minutes: Optional[int] = None,
+) -> None:
     ttl = ttl_minutes if ttl_minutes is not None else settings.EMAIL_CODE_TTL_MINUTES
     expires_at = time.time() + ttl * 60
     client = get_client()
-    key = _key(email)
+    key = _key(email, purpose)
     # Overwrites any previous code for this address: requesting a new code
     # must invalidate the old one and reset the attempt counter.
     await client.delete(key)
@@ -70,11 +81,13 @@ async def store_code(email: str, code: str, ttl_minutes: Optional[int] = None) -
     await client.expire(key, int(ttl * 60) + _TTL_GRACE_SECONDS)
 
 
-async def verify_code(email: str, submitted: str) -> str:
+async def verify_code(
+    email: str, submitted: str, purpose: str = PURPOSE_SIGNUP
+) -> str:
     """Check a submitted code, consuming it on success. Returns one of the
     module-level outcome constants."""
     client = get_client()
-    key = _key(email)
+    key = _key(email, purpose)
     record = await client.hgetall(key)
 
     if not record:

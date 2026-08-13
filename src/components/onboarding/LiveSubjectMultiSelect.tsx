@@ -89,7 +89,7 @@ export function LiveSubjectMultiSelect({
       setLoading(false);
       setSubjects(state.data ?? []);
       setNotice(state.meta?.notice ?? null);
-    }, 220);
+    }, 120);
     return () => {
       active = false;
       clearTimeout(timer);
@@ -162,7 +162,7 @@ export function LiveSubjectMultiSelect({
                 ]}
               >
                 {subject}
-                {fixedSet.has(subject.toLowerCase()) ? " (fixed)" : " x"}
+                {fixedSet.has(subject.toLowerCase()) ? " (core)" : " x"}
               </Text>
             </TouchableOpacity>
           ))}
@@ -202,7 +202,7 @@ export function LiveSubjectMultiSelect({
         })}
         {!loading && showSearch && query.trim().length >= 2 && subjects.length === 0 ? (
           <Text style={[styles.helper, { color: colors.textMuted }]}>
-            No approved subject matched that search.
+            We could not find that subject. Try another name.
           </Text>
         ) : null}
       </View>

@@ -78,6 +78,54 @@ async def _post(payload: dict) -> None:
         )
 
 
+def _reset_html(code: str, ttl_minutes: int) -> str:
+    return f"""\
+<!doctype html>
+<html>
+  <body style="margin:0;padding:24px;background:#f6f7f9;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+    <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;padding:32px;">
+      <h1 style="margin:0 0 8px;font-size:20px;color:#111827;">Reset your password</h1>
+      <p style="margin:0 0 24px;font-size:14px;line-height:20px;color:#4b5563;">
+        Enter this code in LevelUp to choose a new password.
+      </p>
+      <div style="font-size:32px;font-weight:700;letter-spacing:8px;color:#111827;
+                  background:#f3f4f6;border-radius:8px;padding:16px;text-align:center;">
+        {code}
+      </div>
+      <p style="margin:24px 0 0;font-size:13px;line-height:19px;color:#6b7280;">
+        This code expires in {ttl_minutes} minutes. If you did not ask to reset
+        your password, ignore this email -- your password will not change.
+      </p>
+    </div>
+  </body>
+</html>"""
+
+
+def _reset_text(code: str, ttl_minutes: int) -> str:
+    return (
+        f"Reset your password\n\n"
+        f"Your LevelUp password reset code is: {code}\n\n"
+        f"It expires in {ttl_minutes} minutes. If you did not ask to reset your "
+        f"password, ignore this email -- your password will not change.\n"
+    )
+
+
+async def send_password_reset_code(
+    email: str,
+    code: str,
+    ttl_minutes: Optional[int] = None,
+) -> None:
+    """Email a password reset code. Raises EmailDeliveryError on failure."""
+    ttl = ttl_minutes if ttl_minutes is not None else settings.EMAIL_CODE_TTL_MINUTES
+    await _send(
+        email,
+        code,
+        subject="Reset your LevelUp password",
+        html=_reset_html(code, ttl),
+        text=_reset_text(code, ttl),
+    )
+
+
 async def send_verification_code(
     email: str,
     code: str,
@@ -85,7 +133,16 @@ async def send_verification_code(
 ) -> None:
     """Email a signup verification code. Raises EmailDeliveryError on failure."""
     ttl = ttl_minutes if ttl_minutes is not None else settings.EMAIL_CODE_TTL_MINUTES
+    await _send(
+        email,
+        code,
+        subject="Your LevelUp verification code",
+        html=_verification_html(code, ttl),
+        text=_verification_text(code, ttl),
+    )
 
+
+async def _send(email: str, code: str, *, subject: str, html: str, text: str) -> None:
     if not settings.RESEND_API_KEY:
         # Local development without a key stays workable, but only where the
         # dev-code path is also active so the code is actually reachable.
@@ -105,9 +162,9 @@ async def send_verification_code(
         {
             "from": settings.EMAIL_FROM,
             "to": [email],
-            "subject": "Your LevelUp verification code",
-            "html": _verification_html(code, ttl),
-            "text": _verification_text(code, ttl),
+            "subject": subject,
+            "html": html,
+            "text": text,
         }
     )
-    log.info("Verification email sent", email=email)
+    log.info("Transactional email sent", email=email, subject=subject)

@@ -485,6 +485,11 @@ function AirdropFarmEnhancedSim({ onComplete, onSkip, islandId = 10 }: SimProps 
   const score = [...selected].reduce((acc, id) => acc + (tasks.find(t => t.id === id)?.points || 0), 0);
   const pickedSybil = selected.has('multiWallet');
   const passed = score >= 50 && !pickedSybil;
+  const resultMessage = passed
+    ? score + " pts from " + wallet.shortAddress + " - Legitimate farming. Real activity over time is the sustainable approach."
+    : pickedSybil
+      ? "BANNED! Graph analysis detected multi-wallet farming. All wallets linked to " + wallet.shortAddress + " score zero."
+      : score + " pts - Need more genuine activity. Bridge + swap + LP is the core stack.";
   return (
     <SimShell icon="🪂" title="Build an Airdrop Strategy" subtitle="Choose farming activities from your Arbitrum Sepolia wallet. One genuine wallet beats ten farming wallets.">
       <WalletBanner islandId={islandId} />
@@ -503,10 +508,14 @@ function AirdropFarmEnhancedSim({ onComplete, onSkip, islandId = 10 }: SimProps 
           </TouchableOpacity>
         );
       })}
-      {!submitted
-        ? <PrimaryBtn label={`Submit Strategy (${score} pts) →`} onPress={() => setSubmitted(true)} disabled={selected.size === 0} />
-        : <><ResultBox correct={passed} message={passed ? `${score} pts from ${wallet.shortAddress} — Legitimate farming. Real activity over time is the sustainable approach.` : pickedSybil ? `BANNED! Graph analysis detected multi-wallet farming. All wallets linked to ${wallet.shortAddress} score zero.` : `${score} pts — Need more genuine activity. Bridge + swap + LP is the core stack.`} />
-            {passed ? <PrimaryBtn label="Continue →" onPress={onComplete} /> : <PrimaryBtn label="Try Again" onPress={() => { setSelected(new Set()); setSubmitted(false); }} /></>}
+      {!submitted ? (
+        <PrimaryBtn label={`Submit Strategy (${score} pts) →`} onPress={() => setSubmitted(true)} disabled={selected.size === 0} />
+      ) : (
+        <>
+          <ResultBox correct={passed} message={resultMessage} />
+          {passed ? <PrimaryBtn label="Continue →" onPress={onComplete} /> : <PrimaryBtn label="Try Again" onPress={() => { setSelected(new Set()); setSubmitted(false); }} />}
+        </>
+      )}
       <GhostBtn label="Skip simulator" onPress={onSkip} />
     </SimShell>
   );

@@ -20,6 +20,9 @@ import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { AdminDataTable } from "@/components/admin/AdminDataTable";
 import type { ColumnDef } from "@/components/admin/AdminDataTable";
+import { getEducatorProfile } from "@/lib/educatorProfile";
+import { adminAudienceForProfile } from "@/lib/adminAudience";
+import { useAuth } from "@/hooks/useAuth";
 
 const COLUMNS: ColumnDef[] = [
   { key: "programmeName", label: "Programme", width: undefined },
@@ -47,6 +50,8 @@ const COLUMNS: ColumnDef[] = [
 
 export function SkillsGapScreen() {
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const [isUniversity, setIsUniversity] = useState(false);
   const [gaps, setGaps] = useState<DataState<SkillGapRow[]>>({
     status: "pending",
     data: null,
@@ -54,13 +59,16 @@ export function SkillsGapScreen() {
 
   useEffect(() => {
     let active = true;
+    getEducatorProfile(user?.id).then((profile) => {
+      if (active) setIsUniversity(adminAudienceForProfile(profile) === "university");
+    });
     adminData.getSkillsGapReport().then((d) => {
       if (active) setGaps(d);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [user?.id]);
 
   return (
     <AdminShell title="Skills Gap" eyebrow="Aggregate intelligence">
@@ -71,22 +79,32 @@ export function SkillsGapScreen() {
       >
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
-            Cross-programme skills gap
+            Programme skill coverage
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            Skills employers demand that the standard curriculum does not yet
-            cover — surfaced per programme and domain.
+            Review skill coverage for each university programme. This surface
+            stays unavailable until both curriculum evidence and demand data
+            exist; it does not infer a gap from a generic domain skill list.
           </Text>
-          <ComingSoonPanel
-            state={gaps}
-            empty={(rows) => rows.length === 0}
-            emptyTitle="No gaps yet"
-            emptyBody="The skills-gap report appears here once populated."
-          >
-            {(rows) => (
-              <AdminDataTable columns={COLUMNS} data={rows} />
-            )}
-          </ComingSoonPanel>
+          {!isUniversity ? (
+            <ComingSoonPanel
+              state={{ status: "coming_soon", data: null, meta: { notice: "Programme skill coverage is for university curriculum teams." } }}
+              empty={() => true}
+              emptyTitle="Not part of this workspace"
+              emptyBody="School and tutorial teams should use learner guidance and teaching workflows instead."
+            >
+              {() => null}
+            </ComingSoonPanel>
+          ) : (
+            <ComingSoonPanel
+              state={gaps}
+              empty={(rows) => rows.length === 0}
+              emptyTitle="No programme coverage data yet"
+              emptyBody="Coverage appears after programme curriculum and market-demand data are loaded."
+            >
+              {(rows) => <AdminDataTable columns={COLUMNS} data={rows} />}
+            </ComingSoonPanel>
+          )}
         </View>
       </ScrollView>
     </AdminShell>

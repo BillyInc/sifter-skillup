@@ -14,14 +14,12 @@ import {
   BackHandler,
   Platform,
 } from "react-native";
-import { useRouter } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme, Spacing, Radius, FontSize, Brand } from "../../theme";
 import { useAuth } from "../../hooks/useAuth";
 import { SifterButton } from "../ui";
 
 export function OnboardingBackGuard() {
-  const router = useRouter();
   const navigation = useNavigation();
   const { signOut, deleteAccount, user } = useAuth();
   const { colors } = useTheme();
@@ -30,8 +28,7 @@ export function OnboardingBackGuard() {
 
   const canGuard =
     !!user &&
-    user.auth_provider !== "guest" &&
-    user.onboarding_completed !== true;
+    user.auth_provider !== "guest";
 
   // Android hardware back.
   useEffect(() => {
@@ -45,7 +42,26 @@ export function OnboardingBackGuard() {
     return () => handler.remove();
   }, [canGuard]);
 
-  // React Navigation pop intercept. This also covers browser back on web.
+  // Browser Back/Forward must pause onboarding and ask what to do next.
+  useEffect(() => {
+    if (!canGuard || Platform.OS !== "web" || typeof window === "undefined") return;
+    const currentUrl = window.location.href;
+    let restoring = false;
+    window.history.pushState({ ...(window.history.state ?? {}), onboardingGuard: true }, "", currentUrl);
+    const onPopState = () => {
+      if (restoring) {
+        restoring = false;
+        return;
+      }
+      restoring = true;
+      window.history.go(1);
+      setShowModal(true);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [canGuard]);
+
+  // React Navigation pop intercept for native stacks and router actions.
   useEffect(() => {
     if (!canGuard) return;
 

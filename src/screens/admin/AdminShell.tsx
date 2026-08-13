@@ -21,6 +21,7 @@ import {
   ScrollView,
   Animated,
   Platform,
+  Modal,
   useWindowDimensions,
 } from "react-native";
 import { useRouter, usePathname } from "expo-router";
@@ -102,8 +103,10 @@ export function AdminShell({
   const { width } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, signOut, deleteAccount } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
+  const [accountAction, setAccountAction] = useState<"sign-out" | "delete" | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -160,6 +163,33 @@ export function AdminShell({
     item.go(router as Nav);
   };
 
+  const completeSignOut = async () => {
+    await signOut();
+    router.replace("/(auth)/sign-in" as never);
+  };
+
+  const completeDelete = async () => {
+    try {
+      await deleteAccount();
+    } finally {
+      router.replace("/(auth)/sign-in" as never);
+    }
+  };
+
+  const confirmAccountAction = (action: "sign-out" | "delete") => setAccountAction(action);
+
+  const runAccountAction = async () => {
+    if (!accountAction || actionBusy) return;
+    setActionBusy(true);
+    try {
+      if (accountAction === "delete") await completeDelete();
+      else await completeSignOut();
+      setAccountAction(null);
+    } finally {
+      setActionBusy(false);
+    }
+  };
+
   const Nav = (
     <NavList
       activeKey={activeKey}
@@ -168,6 +198,8 @@ export function AdminShell({
       onNavigate={navigate}
       onClose={() => setDrawerOpen(false)}
       showClose={!wide}
+      onSignOut={() => confirmAccountAction("sign-out")}
+      onDeleteAccount={() => confirmAccountAction("delete")}
     />
   );
 
@@ -245,6 +277,28 @@ export function AdminShell({
       {!wide && drawerOpen ? (
         <Drawer onClose={() => setDrawerOpen(false)}>{Nav}</Drawer>
       ) : null}
+      <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.modalTitle, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+              {accountAction === "delete" ? "Delete this account?" : "Sign out?"}
+            </Text>
+            <Text style={[styles.modalBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
+              {accountAction === "delete"
+                ? "Your account will be marked for deletion and the recovery policy will apply."
+                : "You will need to sign in again to continue."}
+            </Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
+                <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}>
+                <Text style={[styles.modalButtonText, { color: "#fff" }]}>{accountAction === "delete" ? "Delete account" : "Sign out"}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -257,6 +311,8 @@ function NavList({
   onNavigate,
   onClose,
   showClose,
+  onSignOut,
+  onDeleteAccount,
 }: {
   activeKey: string;
   audience: AdminAudience;
@@ -264,6 +320,8 @@ function NavList({
   onNavigate: (item: AdminNavItem) => void;
   onClose: () => void;
   showClose: boolean;
+  onSignOut: () => void;
+  onDeleteAccount: () => void;
 }) {
   const { colors } = useTheme();
   return (
@@ -342,6 +400,16 @@ function NavList({
             consent.
           </Text>
         ) : null}
+
+        <View style={styles.accountActions}>
+          <Text style={[styles.groupTitle, CompassFonts.bodySemibold, { color: colors.textMuted }]}>ACCOUNT</Text>
+          <TouchableOpacity onPress={onSignOut} style={styles.accountRow}>
+            <Text style={[styles.accountText, { color: colors.textRole.secondary }]}>Sign out</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDeleteAccount} style={styles.accountRow}>
+            <Text style={[styles.accountText, { color: colors.accentRole.danger }]}>Delete account</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -495,6 +563,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
   },
+  accountActions: {
+    marginTop: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingBottom: Spacing.lg,
+    gap: 2,
+  },
+  accountRow: {
+    minHeight: 38,
+    justifyContent: "center",
+    paddingHorizontal: Spacing.md,
+    borderRadius: Radius.md,
+  },
+  accountText: {
+    fontSize: FontSize.sm,
+    fontWeight: "700",
+  },
 
   // Drawer
   drawerOverlay: { ...StyleSheet.absoluteFillObject, flexDirection: "row" },
@@ -508,4 +592,11 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRightWidth: StyleSheet.hairlineWidth,
   },
+  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.45)", alignItems: "center", justifyContent: "center", padding: Spacing.xl },
+  modalCard: { width: "100%", maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  modalTitle: { fontSize: FontSize.xl },
+  modalBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  modalActions: { flexDirection: "row", gap: Spacing.sm },
+  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: "center", justifyContent: "center", paddingHorizontal: Spacing.sm },
+  modalButtonText: { fontSize: FontSize.sm, fontWeight: "800" },
 });

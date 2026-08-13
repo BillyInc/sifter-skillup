@@ -437,8 +437,6 @@ export function GeneralDashboardScreen() {
         {/* ── Student intelligence (aggregate, §5.5) ── */}
         <Panel
           title="Student intelligence"
-          linkLabel="Open Students"
-          onPress={() => adminNav.students(router as Nav)}
         >
           <Text style={[styles.panelNote, { color: colors.textMuted }]}>
             Aggregate and k-anonymised — no individual record is shown here.
@@ -584,7 +582,7 @@ function Section({
   );
 }
 
-/** A bordered summary panel with a "view all" hand-off to the real screen. */
+/** A bordered summary panel with an optional hand-off to the real screen. */
 function Panel({
   title,
   linkLabel,
@@ -592,8 +590,8 @@ function Panel({
   children,
 }: {
   title: string;
-  linkLabel: string;
-  onPress: () => void;
+  linkLabel?: string;
+  onPress?: () => void;
   children: React.ReactNode;
 }) {
   const { colors } = useTheme();
@@ -614,7 +612,7 @@ function Panel({
         {title}
       </Text>
       {children}
-      <TouchableOpacity
+      {linkLabel && onPress ? <TouchableOpacity
         onPress={onPress}
         activeOpacity={0.75}
         accessibilityRole="button"
@@ -630,7 +628,7 @@ function Panel({
         >
           {linkLabel} →
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> : null}
     </View>
   );
 }

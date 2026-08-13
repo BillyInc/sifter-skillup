@@ -96,7 +96,7 @@ class TestCodeLifecycle:
         async def scenario():
             await email_codes.store_code("b@example.com", "111111")
             first = await email_codes.verify_code("b@example.com", "999999")
-            record = await redis.hgetall(email_codes._key("b@example.com"))
+            record = await redis.hgetall(email_codes._key("b@example.com", email_codes.PURPOSE_SIGNUP))
             return first, record["attempts"]
 
         outcome, attempts = run(scenario())
@@ -119,7 +119,7 @@ class TestCodeLifecycle:
 
         async def scenario():
             await email_codes.store_code("d@example.com", "111111")
-            key = email_codes._key("d@example.com")
+            key = email_codes._key("d@example.com", email_codes.PURPOSE_SIGNUP)
             await redis.hset(key, mapping={"expires_at": str(time.time() - 1)})
             return await email_codes.verify_code("d@example.com", "111111")
 
@@ -148,6 +148,76 @@ class TestCodeLifecycle:
         old, fresh = run(scenario())
         assert old == email_codes.INVALID
         assert fresh == email_codes.OK
+
+
+class TestPurposeIsolation:
+    """A signup code must not be usable as a password reset code.
+
+    The password-reset flow added in #93/#94 kept its codes in a second
+    module-level dict. Sharing one Redis namespace instead would be worse than
+    either: a code mailed to prove ownership of a NEW address would also
+    satisfy a reset for an EXISTING account.
+    """
+
+    def test_signup_code_does_not_satisfy_a_password_reset(self, redis):
+        async def scenario():
+            await email_codes.store_code(
+                "h@example.com", "123456", purpose=email_codes.PURPOSE_SIGNUP
+            )
+            return await email_codes.verify_code(
+                "h@example.com", "123456", purpose=email_codes.PURPOSE_PASSWORD_RESET
+            )
+
+        assert run(scenario()) == email_codes.MISSING
+
+    def test_reset_code_does_not_satisfy_a_signup(self, redis):
+        async def scenario():
+            await email_codes.store_code(
+                "i@example.com", "123456", purpose=email_codes.PURPOSE_PASSWORD_RESET
+            )
+            return await email_codes.verify_code(
+                "i@example.com", "123456", purpose=email_codes.PURPOSE_SIGNUP
+            )
+
+        assert run(scenario()) == email_codes.MISSING
+
+    def test_both_purposes_can_be_outstanding_at_once(self, redis):
+        async def scenario():
+            await email_codes.store_code(
+                "j@example.com", "111111", purpose=email_codes.PURPOSE_SIGNUP
+            )
+            await email_codes.store_code(
+                "j@example.com", "222222", purpose=email_codes.PURPOSE_PASSWORD_RESET
+            )
+            signup = await email_codes.verify_code(
+                "j@example.com", "111111", purpose=email_codes.PURPOSE_SIGNUP
+            )
+            reset = await email_codes.verify_code(
+                "j@example.com", "222222", purpose=email_codes.PURPOSE_PASSWORD_RESET
+            )
+            return signup, reset
+
+        assert run(scenario()) == (email_codes.OK, email_codes.OK)
+
+
+class TestPasswordResetRequiresARealCode:
+    """Without dev codes, a reset must not proceed on a never-requested code.
+
+    The previous implementation did `record = record or {"attempts": 0}` when
+    the submitted code was "000000", so with the flag on, ANY account's
+    password could be reset without a code ever being issued. The flag is now
+    DEBUG-only, but the reset path must still refuse an unknown code outright.
+    """
+
+    def test_unknown_reset_code_is_refused(self, redis):
+        assert (
+            run(
+                email_codes.verify_code(
+                    "k@example.com", "000000", purpose=email_codes.PURPOSE_PASSWORD_RESET
+                )
+            )
+            == email_codes.MISSING
+        )
 
 
 class TestDelivery:

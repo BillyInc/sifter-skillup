@@ -4,7 +4,7 @@
  * Account creation lives only at /(auth)/signup so every signup path uses the
  * full profile, date-of-birth, legal, and email-code flow.
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -19,6 +19,7 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Brand,
@@ -29,6 +30,7 @@ import {
   useTheme,
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
+import { studentAccountApi } from "@/lib/provisioningData";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
@@ -59,6 +61,7 @@ export default function AuthScreen() {
   const [mode, setMode] = useState<Mode>("welcome");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [schoolCode, setSchoolCode] = useState("");
   const [error, setError] = useState("");
   const [emailLoading, setEmailLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
@@ -90,13 +93,24 @@ export default function AuthScreen() {
   const resetLoginFields = () => {
     setEmail("");
     setPassword("");
+    setSchoolCode("");
   };
+
+  // Login credentials are intentionally ephemeral. This also handles browser
+  // back/forward and native navigation where the route may remain mounted.
+  useFocusEffect(
+    useCallback(() => {
+      return () => resetLoginFields();
+    }, []),
+  );
 
   const goToSignup = () => {
     setError("");
     resetLoginFields();
     setShowSignupGuard(false);
-    router.push("/(auth)/signup" as any);
+    // Replace the auth state so an old reset URL cannot remain in the browser
+    // history when the user switches to account creation.
+    router.replace("/(auth)/signup" as any);
   };
 
   const requestSignup = () => {
@@ -119,6 +133,7 @@ export default function AuthScreen() {
     setGuestLoading(true);
     try {
       await signInGuest();
+      router.replace("/(tabs)/settings/my-school?from=guest" as any);
     } catch (e) {
       setError(friendlyAuthError(e, "Could not continue as guest."));
     } finally {
@@ -135,6 +150,9 @@ export default function AuthScreen() {
     setEmailLoading(true);
     try {
       await signInEmail(email.trim(), password);
+      if (schoolCode.trim()) {
+        try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* login remains successful; code can be linked later */ }
+      }
       router.replace("/(tabs)/home");
     } catch (e) {
       setError(friendlyAuthError(e, "Could not sign you in."));
@@ -409,6 +427,7 @@ export default function AuthScreen() {
                 keyboardType="email-address"
                 placeholder="you@example.com"
                 autoFocus
+                autoComplete="username"
               />
 
               <AuthField
@@ -417,6 +436,14 @@ export default function AuthScreen() {
                 onChangeText={setPassword}
                 secure
                 placeholder="Password"
+                autoComplete="current-password"
+              />
+              <AuthField
+                label="School code (optional)"
+                value={schoolCode}
+                onChangeText={(value) => setSchoolCode(value.toUpperCase())}
+                placeholder="SCHOOL-XXXXXXXX"
+                hint="Link your account to your school after signing in."
               />
 
               <TouchableOpacity

@@ -5,11 +5,12 @@
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, TextInput, Pressable } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
+import { studentAccountApi } from "@/lib/provisioningData";
 import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
 import { SifterButton } from "@/components/ui";
 import {
@@ -132,6 +133,7 @@ export default function SignUpScreen() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [schoolCode, setSchoolCode] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailCode, setEmailCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -140,6 +142,27 @@ export default function SignUpScreen() {
   const [error, setError] = useState("");
   const [showTerms, setShowTerms] = useState(false);
   const passwordMismatch = Boolean(confirmPassword && password !== confirmPassword);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        // Never retain signup data when this route loses focus. In particular,
+        // do not let browser/native credential autofill look like app state.
+        setFirstName("");
+        setLastName("");
+        setMiddleName("");
+        setDateOfBirth("");
+        setEmail("");
+        setPassword("");
+        setSchoolCode("");
+        setConfirmPassword("");
+        setEmailCode("");
+        setCodeSent(false);
+        setDevCode("");
+        setError("");
+      };
+    }, []),
+  );
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -221,6 +244,9 @@ export default function SignUpScreen() {
         date_of_birth: isoDob,
         email_code: emailCode.trim(),
       });
+      if (schoolCode.trim()) {
+        try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* can be linked later from onboarding */ }
+      }
       router.replace("/(auth)/onboarding");
     } catch (e: any) {
       setError(friendlySignupError(e, "We could not create your account. Please try again."));
@@ -233,7 +259,7 @@ export default function SignUpScreen() {
     <AuthScaffold>
       <TouchableOpacity
         style={styles.back}
-        onPress={() => router.back()}
+        onPress={() => router.replace("/(auth)/sign-in")}
         hitSlop={8}
       >
         <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
@@ -322,6 +348,7 @@ export default function SignUpScreen() {
         onChangeText={handleEmailChange}
         keyboardType="email-address"
         placeholder="you@example.com"
+        autoComplete="off"
       />
       <AuthField
         label="Password"
@@ -330,6 +357,7 @@ export default function SignUpScreen() {
         secure
         placeholder="********"
         hint="At least 8 characters"
+        autoComplete="new-password"
       />
       <AuthField
         label="Confirm password"
@@ -337,6 +365,14 @@ export default function SignUpScreen() {
         onChangeText={setConfirmPassword}
         secure
         placeholder="********"
+        autoComplete="new-password"
+      />
+      <AuthField
+        label="School code (optional)"
+        value={schoolCode}
+         onChangeText={(value) => setSchoolCode(value.toUpperCase())}
+         placeholder="SCHOOL-XXXXXXXX"
+         hint="You can also add this during onboarding."
       />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>

@@ -1,11 +1,11 @@
-import { Stack, Redirect, useLocalSearchParams, usePathname } from "expo-router";
+import { Stack, useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
 import { useAuth } from "../../src/hooks/useAuth";
 import { Colors } from "../../src/theme";
 import { consumePendingPostAuthRedirect } from "../../src/lib/postAuthRedirect";
-import { useEffectiveAccountType, isAdminAccount } from "../../src/lib/accountType";
+import { useEffectiveAccountType, isAdminAccount, needsLegacyTypeSelection } from "../../src/lib/accountType";
 import { getEducatorProfile } from "../../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../../src/lib/adminAudience";
 import { resolvePostAuthHref } from "../../src/lib/resumeNavigation";
@@ -18,6 +18,7 @@ export const unstable_settings = {
 
 export default function AuthLayout() {
   const { user, loading } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
   const params = useLocalSearchParams<{ intent?: string }>();
   const { accountType, hydrated } = useEffectiveAccountType(
@@ -31,8 +32,15 @@ export default function AuthLayout() {
   const [explicitLogout, setExplicitLogout] = useState(false);
 
   useEffect(() => {
+    if (!user?.id) {
+      setEducatorProfile(null);
+      setProfileHydrated(true);
+      return;
+    }
+
     let active = true;
-    getEducatorProfile(user?.id).then((profile) => {
+    setProfileHydrated(false);
+    getEducatorProfile(user.id).then((profile) => {
       if (!active) return;
       setEducatorProfile(profile);
       setProfileHydrated(true);
@@ -60,17 +68,11 @@ export default function AuthLayout() {
     };
   }, []);
 
-  if (
+  const authReady = !(
     loading ||
     (!user && !explicitLogoutHydrated) ||
     (user && (!hydrated || !profileHydrated))
-  ) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator color={Colors.accent} size="large" />
-      </View>
-    );
-  }
+  );
 
   const isSignInRoute =
     pathname === "/sign-in" || pathname?.endsWith("/sign-in");
@@ -81,46 +83,61 @@ export default function AuthLayout() {
     pathname === "/onboarding" || pathname?.endsWith("/onboarding");
   const isExplicitAuthRoute = isSignInRoute || isSignupRoute || isForgotRoute;
 
-  if (!user && explicitLogout && !isSignInRoute && !isSignupRoute) {
-    return <Redirect href="/(auth)/sign-in" />;
-  }
+  // Public auth screens must not wait for the saved-session/profile lookup.
+  // A stale backend connection used to leave forgot-password spinning forever,
+  // even though password reset does not need an existing app session.
+  const publicAuthRouteReady = !user && isExplicitAuthRoute;
 
-  if (!user && isForgotRoute && params.intent !== "reset") {
-    return <Redirect href="/(auth)/sign-in" />;
-  }
+  const pendingRedirect =
+    authReady && user && user.onboarding_completed
+      ? consumePendingPostAuthRedirect(user.id)
+      : null;
 
-  if (!user && isOnboardingRoute) {
-    return <Redirect href="/(auth)/sign-in" />;
-  }
-
-  if (user && user.auth_provider === "guest" && !isExplicitAuthRoute) {
-    return <Redirect href="/(tabs)/explore" />;
-  }
-
+  let redirectHref: string | null = null;
   if (
+    authReady &&
+    !user &&
+    explicitLogout &&
+    !isSignInRoute &&
+    !isSignupRoute &&
+    !isForgotRoute
+  ) {
+    redirectHref = "/(auth)/sign-in";
+  } else if (authReady && !user && isOnboardingRoute) {
+    redirectHref = "/(auth)/sign-in";
+  } else if (authReady && user && user.auth_provider === "guest" && !isExplicitAuthRoute) {
+    redirectHref = "/(tabs)/explore";
+  } else if (authReady && user && needsLegacyTypeSelection(user) && !isOnboardingRoute) {
+    redirectHref = "/(auth)/onboarding?restart=1";
+  } else if (
+    authReady &&
     user &&
     (!user.onboarding_completed || accountType === "pending") &&
     !isOnboardingRoute
   ) {
-    return <Redirect href="/(auth)/onboarding" />;
-  }
-
-  const pendingRedirect =
-    user && user.onboarding_completed
-      ? consumePendingPostAuthRedirect(user.id)
-      : null;
-
-  if (
+    redirectHref = "/(auth)/onboarding";
+  } else if (
+    authReady &&
     user &&
     user.onboarding_completed &&
     accountType !== "pending" &&
     isAdminAccount(accountType)
   ) {
-    return <Redirect href={adminHomeForProfile(educatorProfile) as any} />;
+    redirectHref = adminHomeForProfile(educatorProfile);
+  } else if (authReady && user && user.onboarding_completed && accountType !== "pending") {
+    redirectHref = pendingRedirect ?? resolvePostAuthHref(user);
   }
 
-  if (user && user.onboarding_completed && accountType !== "pending") {
-    return <Redirect href={(pendingRedirect ?? resolvePostAuthHref(user)) as any} />;
+  useEffect(() => {
+    if (redirectHref) router.replace(redirectHref as never);
+  }, [redirectHref, router]);
+
+  if ((!authReady && !publicAuthRouteReady) || redirectHref) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator color={Colors.accent} size="large" />
+      </View>
+    );
   }
 
   return (

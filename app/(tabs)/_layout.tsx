@@ -1,8 +1,9 @@
-import { Redirect, Tabs, useRouter } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
+import { useEffect } from "react";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
 import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
 import { useAuth } from "../../src/hooks/useAuth";
-import { useEffectiveAccountType } from "../../src/lib/accountType";
+import { useEffectiveAccountType, needsLegacyTypeSelection } from "../../src/lib/accountType";
 
 export const unstable_settings = {
   initialRouteName: "explore",
@@ -17,17 +18,23 @@ export default function TabsLayout() {
   const router = useRouter();
   const { user, loading } = useAuth();
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
+  const redirectHref = loading || (user && !hydrated)
+    ? null
+      : !user
+      ? "/(auth)/sign-in"
+      : needsLegacyTypeSelection(user)
+        ? "/(auth)/onboarding?restart=1"
+      : user.auth_provider !== "guest" && (!user.onboarding_completed || accountType === "pending")
+        ? "/(auth)/onboarding"
+        : null;
 
-  if (loading || (user && !hydrated)) {
+  useEffect(() => {
+    if (!redirectHref) return;
+    router.replace(redirectHref as never);
+  }, [redirectHref, router]);
+
+  if (loading || (user && !hydrated) || redirectHref) {
     return null;
-  }
-
-  if (!user) {
-    return <Redirect href="/(auth)/sign-in" />;
-  }
-
-  if (user.auth_provider !== "guest" && (!user.onboarding_completed || accountType === "pending")) {
-    return <Redirect href="/(auth)/onboarding" />;
   }
 
   return (

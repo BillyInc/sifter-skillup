@@ -3,15 +3,82 @@
 # Read-only public endpoints for SS → University admission data
 # ============================================================
 
+import re
 from typing import Any, List, Optional, Literal
 from fastapi import APIRouter, Query
 
 from database import db
 from logger import log
 from models import ResponseModel, JambFloorOut, ProgrammeSchoolCutoffOut, SchoolAggregateFormulaOut, CourseCompetitivenessOut, AdmissionSnapshotVersionOut, AdmissionInsightOut
+from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, get_json, set_json
 
 _SCHEMA = "skillup_dev"
 router = APIRouter(prefix="/api/admission", tags=["admission"])
+
+UNIVERSITY_DISPLAY_NAMES = {
+    "unilag": "University of Lagos",
+    "lagos": "University of Lagos",
+    "lasu": "Lagos State University",
+    "ui": "University of Ibadan",
+    "abu": "Ahmadu Bello University",
+    "unn": "University of Nigeria, Nsukka",
+    "oau": "Obafemi Awolowo University",
+    "uniben": "University of Benin",
+    "uniport": "University of Port Harcourt",
+    "unical": "University of Calabar",
+    "unilorin": "University of Ilorin",
+    "unijos": "University of Jos",
+    "futo": "Federal University of Technology, Owerri",
+    "futa": "Federal University of Technology, Akure",
+    "abuad": "Afe Babalola University",
+    "covenant": "Covenant University",
+}
+
+
+def _university_display_name(value: str) -> str:
+    raw = (value or "").strip()
+    return UNIVERSITY_DISPLAY_NAMES.get(raw.lower(), raw)
+def _search_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", (value or "").lower())
+
+
+def _is_university_search_match(query: str, name: str) -> tuple[bool, int]:
+    """Match full names, abbreviations, and shortened university searches.
+
+    A subsequence match handles common Nigerian shorthand without maintaining a
+    brittle alias table: `unilag` matches University of Lagos and `lasu`
+    matches Lagos State University. Full name/location matches rank first.
+    """
+    q = _search_key(query)
+    n = _search_key(name)
+    if not q:
+        return True, 0
+    if q in n:
+        return True, 0 if n.startswith(q) else 1
+    aliases = {
+        "unilag": "universityoflagos",
+        "lasu": "lagosstateuniversity",
+        "ui": "universityofibadan",
+        "abu": "ahmadu bellouniversity",
+        "unn": "universityofnigeria",
+        "oau": "obafemiawolowo university",
+        "uniben": "universityofbenin",
+    }
+    alias_target = aliases.get(q)
+    if alias_target and alias_target.replace(" ", "") in n:
+        return True, 1
+    # A long non-alias query should match the name or a location token, not an
+    # arbitrary character subsequence. That was making `lagos` match unrelated
+    # records such as religious subjects.
+    if len(q) > 4:
+        return False, 99
+    pos = 0
+    for char in q:
+        pos = n.find(char, pos)
+        if pos < 0:
+            return False, 99
+        pos += 1
+    return True, 2
 
 
 def _coming_soon(notice: Optional[str] = None) -> dict:
@@ -290,22 +357,60 @@ async def search_schools(
     """
     try:
         svc = db.get_service_client().schema(_SCHEMA)
-        query = (
-            svc.table("schools")
-            .select("id, name, institution_type")
-        )
-        query = query.eq("institution_type", institution_type or "university")
-        if q:
-            query = query.ilike("name", f"%{q}%")
-        res = query.order("name").limit(min(limit, 50)).execute()
+        selected_type = institution_type or "university"
+        query_text = (q or "").strip().lower()
+        result_key = f"admission:schools:v4:{selected_type}:{query_text}:{min(limit, 50)}"
+        cached_items = get_json(result_key)
+        if isinstance(cached_items, list) and cached_items:
+            return ResponseModel(data=_real(cached_items))
+        query = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq("institution_type", selected_type)
+        if selected_type == "university" and q:
+            # Use the indexed name search first. Loading the entire university
+            # registry for every keystroke made typeahead time out on populated
+            # projects. The bounded registry is only needed for abbreviations.
+            rows = query.ilike("name", f"%{q}%").order("name").limit(min(limit, 50)).execute().data or []
+            registry_key = "admission:university-registry:v4"
+            registry = get_json(registry_key)
+            if not isinstance(registry, list):
+                registry = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq(
+                    "institution_type", selected_type
+                ).order("name").limit(1200).execute().data or []
+                set_json(registry_key, registry, REFERENCE_TTL_SECONDS)
+            # Merge the fast SQL matches with the bounded registry so a place
+            # query such as `lagos` can return LASU and UNILAG, while an alias
+            # query such as `unilag` can resolve to the official display name.
+            rows = list({str(row.get("id")): row for row in [*rows, *registry]}.values())
+            # Search both the stored code and its user-facing official name.
+            ranked = [
+                (rank, row)
+                for row in rows
+                for matched, rank in [
+                    _is_university_search_match(q, row.get("name") or ""),
+                    _is_university_search_match(q, _university_display_name(row.get("name") or "")),
+                ]
+                if matched
+            ]
+            rows = [row for _, row in sorted(
+                {id(row): (rank, row) for rank, row in ranked}.values(),
+                key=lambda item: (item[0], _university_display_name(item[1].get("name") or "").lower()),
+            )]
+        else:
+            if q:
+                query = query.ilike("name", f"%{q}%")
+            rows = query.order("name").limit(min(limit, 50)).execute().data or []
         items = [
             {
                 "id": r["id"],
-                "name": r["name"],
+                "name": _university_display_name(r["name"]) if selected_type == "university" else r["name"],
                 "institutionType": r.get("institution_type") or "university",
+                "address": r.get("address"),
+                "city": r.get("city"),
+                "state": r.get("state"),
+                "country": r.get("country"),
             }
-            for r in (res.data or [])
+            for r in rows[: min(limit, 50)]
         ]
+        set_json(result_key, items, SEARCH_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:
         log.error("admission search_schools failed", error=str(exc))
@@ -321,20 +426,9 @@ async def search_admission_programmes(q: Optional[str] = Query(None), limit: int
     """
     try:
         svc = db.get_service_client().schema(_SCHEMA)
-        target_year = _active_snapshot_year(svc)
-        prog_ids: Optional[list] = None
-        if target_year:
-            cut_res = (
-                svc.table("programme_school_cutoff")
-                .select("programme_id")
-                .eq("year", target_year)
-                .execute()
-            )
-            prog_ids = list({r["programme_id"] for r in (cut_res.data or [])})
-
+        # Typeahead is a registry lookup. Admission snapshot/cut-off data is a
+        # detail concern and must never make programme names unsearchable.
         query = svc.table("programmes").select("id, name, discipline, institution_type")
-        if prog_ids is not None and prog_ids:
-            query = query.in_("id", prog_ids)
         if q:
             query = query.ilike("name", f"%{q}%")
         res = query.order("name").limit(min(limit, 50)).execute()
@@ -346,6 +440,7 @@ async def search_admission_programmes(q: Optional[str] = Query(None), limit: int
                 "institutionType": r.get("institution_type") or "university",
             }
             for r in (res.data or [])
+            if (r.get("institution_type") or "university") == "university"
         ]
         return ResponseModel(data=_real(items))
     except Exception as exc:

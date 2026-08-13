@@ -36,6 +36,11 @@ export interface StartingPointProfile {
   //  Student / graduate 
   institutionType?: InstitutionType;
   schoolName?: string;
+  schoolAddress?: string;
+  schoolCity?: string;
+  schoolState?: string;
+  /** Optional school affiliation code entered during auth or onboarding. */
+  schoolCode?: string;
   discipline?: string;
   programmeName?: string;
   /** Degree classification / grade (e.g. "First Class", "2:1", "Upper Credit"). */
@@ -48,7 +53,6 @@ export interface StartingPointProfile {
   jambSubjects?: string[];
   /** O-level/WAEC/NECO subjects used for programme eligibility checks. */
   olevelSubjects?: string[];
-  jambScoreBand?: string; // "180-219" etc.
   preferredInstitutionType?: InstitutionType;
   preferredSchoolId?: string;
   preferredSchool?: string;

@@ -108,9 +108,13 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     hasAuthorization: !!token,
   });
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       ...options,
+      signal: options.signal ?? controller.signal,
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -119,13 +123,25 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
       },
     });
     const duration = Date.now() - startTime;
-    const json = await res.json();
+    // Error responses are not guaranteed to be JSON (a stopped backend or a
+    // proxy can return HTML/plain text). Parse defensively so the caller gets
+    // the real transport/status failure instead of a JSON parser exception.
+    const responseText = await res.text();
+    let json: any = null;
+    try {
+      json = responseText ? JSON.parse(responseText) : null;
+    } catch {
+      json = null;
+    }
 
-    if (!res.ok || !json.success) {
-      const detail = typeof json.detail === "string" ? json.detail : undefined;
-      const error = typeof json.error === "string" ? json.error : undefined;
-      const message = typeof json.message === "string" ? json.message : undefined;
-      throw new Error(error ?? detail ?? message ?? res.statusText);
+    if (!res.ok || !json?.success) {
+      const detail = typeof json?.detail === "string" ? json.detail : undefined;
+      const error = typeof json?.error === "string" ? json.error : undefined;
+      const message = typeof json?.message === "string" ? json.message : undefined;
+      throw new Error(
+        error ?? detail ?? message ??
+        (responseText.trim() ? responseText.trim().slice(0, 240) : `Request failed (${res.status})`),
+      );
     }
 
     logger.info('API request completed', {
@@ -138,6 +154,9 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
 
     return json.data;
   } catch (error) {
+    if ((error as Error)?.name === "AbortError") {
+      throw new Error("The request took too long. Please try again.");
+    }
     const duration = Date.now() - startTime;
     logger.error('API request failed', error as Error);
     logger.info('API request completed with error', {
@@ -148,6 +167,8 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -188,6 +209,16 @@ export const API = {
   requestEmailVerificationCode: (email: string) =>
     request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/email-code/request', {
       method: 'POST', body: JSON.stringify({ email }),
+    }),
+
+  requestPasswordResetCode: (email: string) =>
+    request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/password-reset/request', {
+      method: 'POST', body: JSON.stringify({ email }),
+    }),
+
+  confirmPasswordReset: (email: string, code: string, password: string) =>
+    request<{ updated: boolean }>('/api/auth/password-reset/confirm', {
+      method: 'POST', body: JSON.stringify({ email, code, password }),
     }),
 
   authLogin: (email: string, password: string) =>
