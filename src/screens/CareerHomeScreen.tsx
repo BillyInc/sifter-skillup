@@ -79,6 +79,7 @@ const QUICK = [
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary explorer",
+  ss3_secondary: "SS3 student (final year)",
   jamb: "JAMB / UTME candidate",
   student: "Student",
   skilled_worker: "Skilled worker",

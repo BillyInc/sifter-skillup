@@ -51,6 +51,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary (SS1/SS2)",
+  ss3_secondary: "Senior secondary (SS3)",
   jamb: "JAMB / UTME candidate",
   student: "In a programme",
   skilled_worker: "Skilled worker / artisan",
