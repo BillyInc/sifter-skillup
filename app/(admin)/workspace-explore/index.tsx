@@ -49,10 +49,11 @@ export default function AdminExploreRoute() {
   return (
     <ExploreScreen
       initialQuery={readParam(params.q)}
+      adminAudience={audience}
       heading={
         audience === "university"
-          ? "Search the national\nprogramme map"
-          : "Look up a programme,\nfield or role"
+          ? "Review programmes,\ndomains and peers"
+          : "Guide a learner through\nsubjects and programmes"
       }
       intro={
         <AdminExploreIntro

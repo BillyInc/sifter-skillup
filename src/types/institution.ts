@@ -152,6 +152,7 @@ export interface StudentConsent {
 
 //  Provisioning: drafts -> review grid -> generate -> roster 
 export type ProvisioningStream = "science" | "art" | "commercial";
+export type ProvisioningStudentType = "ss1" | "ss2" | "ss3" | "jamb";
 
 /** A staged student row in the assisted-import review grid, before any account
  *  is minted. Extracted (vision) or manually entered; the educator corrects it. */
@@ -160,6 +161,7 @@ export interface ProvisionDraft {
   fullName?: string | null;
   studentClass?: string | null;
   stream?: ProvisioningStream | null;
+  studentType?: ProvisioningStudentType | null;
   needsReview: boolean;
   guardianConsent: boolean;
   guardianName?: string | null;
@@ -180,6 +182,7 @@ export interface GeneratedStudent {
   fullName: string;
   studentClass?: string | null;
   stream?: ProvisioningStream | null;
+  studentType?: ProvisioningStudentType | null;
   claimCode: string;
   claimExpiresAt?: string | null;
 }

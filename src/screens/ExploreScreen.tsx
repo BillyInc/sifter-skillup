@@ -97,12 +97,15 @@ export interface ExploreScreenProps {
   intro?: React.ReactNode;
   /** Overrides the student-facing headline for other audiences. */
   heading?: string;
+  /** Uses an audience-specific admin landing instead of student entry cards. */
+  adminAudience?: "school" | "university";
 }
 
 export default function ExploreScreen({
   initialQuery = "",
   intro,
   heading,
+  adminAudience,
 }: ExploreScreenProps = {}) {
   const { colors } = useTheme();
   const { user, signInGuest } = useAuth();
@@ -277,6 +280,7 @@ export default function ExploreScreen({
             searchRef.current?.focus();
           }}
           onFocusSearch={() => searchRef.current?.focus()}
+          adminAudience={adminAudience}
         />
       ) : !hasSession ? (
         // Gate on "no session at all", NOT on isGuest. A guest IS a session:
@@ -439,6 +443,7 @@ function ExploreIdle({
   nav,
   onPick,
   onFocusSearch,
+  adminAudience,
 }: {
   recents: string[];
   isGuest: boolean;
@@ -447,6 +452,7 @@ function ExploreIdle({
   nav: ExploreNav;
   onPick: (term: string) => void;
   onFocusSearch: () => void;
+  adminAudience?: "school" | "university";
 }) {
   const { colors } = useTheme();
   const { isMobile, columns } = useResponsive();
@@ -522,8 +528,12 @@ function ExploreIdle({
         </TouchableOpacity>
       </View>
 
+      {adminAudience ? (
+        <AdminExploreActions audience={adminAudience} router={router} nav={nav} />
+      ) : null}
+
       {/* ── Pathways strip ────────────────────────────────────── */}
-      <View style={styles.section}>
+      {!adminAudience ? <View style={styles.section}>
         <SectionLabel>Pathways</SectionLabel>
         <ScrollView
           horizontal
@@ -552,10 +562,10 @@ function ExploreIdle({
             </StaggerReveal>
           ))}
         </ScrollView>
-      </View>
+      </View> : null}
 
       {/* ── Admission intelligence card ────────────────────────── */}
-      <TouchableOpacity
+      {!adminAudience ? <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => nav.admissionHub(router, "programme")}
         style={[
@@ -582,10 +592,10 @@ function ExploreIdle({
             cycle data
           </Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> : null}
 
       {/* ── Elite pathways gold strip ─────────────────────────── */}
-      <TouchableOpacity
+      {!adminAudience ? <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => nav.elitePathways(router)}
         style={[styles.eliteStrip, { backgroundColor: "#B8860B10", borderColor: "#B8860B30" }]}
@@ -600,10 +610,10 @@ function ExploreIdle({
           </Text>
         </View>
         <Feather name="chevron-right" size={16} color="#B8860B" />
-      </TouchableOpacity>
+      </TouchableOpacity> : null}
 
       {/* ── Suggested searches ─────────────────────────────────── */}
-      <View style={styles.section}>
+      {!adminAudience ? <View style={styles.section}>
         <SectionLabel>Suggested searches</SectionLabel>
         <View style={styles.filterRow}>
           {["Nursing", "Software engineer", "Accounting", "Civil engineering"].map(
@@ -612,7 +622,7 @@ function ExploreIdle({
             ),
           )}
         </View>
-      </View>
+      </View> : null}
 
       {/* ── Recents ────────────────────────────────────────────── */}
       {recents.length ? (
@@ -633,47 +643,86 @@ function ExploreIdle({
       ) : null}
 
       {/* ── Starting points (3 doors) ─────────────────────────── */}
-      <View style={styles.section}>
-        <SectionLabel>Starting points</SectionLabel>
-        {DOORS.map((d, i) => (
-          <StaggerReveal key={d.key} index={i}>
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={
-                d.key === "know"
-                  ? onFocusSearch
-                  : d.key === "what"
-                    ? () => nav.admissionHub(router, "programme")
-                    : () => nav.admissionHub(router, "subjects")
-              }
-              style={[
-                styles.card,
-                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-              ]}
-            >
-              <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
-                <Text style={styles.cardIcon}>{d.icon}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <View style={styles.cardHeadRow}>
-                  <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
-                    {d.title}
-                  </Text>
-                  {d.live ? null : <LockedPill />}
+      {!adminAudience ? (
+        <View style={styles.section}>
+          <SectionLabel>Starting points</SectionLabel>
+          {DOORS.map((d, i) => (
+            <StaggerReveal key={d.key} index={i}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={
+                  d.key === "know"
+                    ? onFocusSearch
+                    : d.key === "what"
+                      ? () => nav.admissionHub(router, "programme")
+                      : () => nav.admissionHub(router, "subjects")
+                }
+                style={[
+                  styles.card,
+                  { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+                ]}
+              >
+                <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
+                  <Text style={styles.cardIcon}>{d.icon}</Text>
                 </View>
-                <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
-                  {d.body}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </StaggerReveal>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.cardHeadRow}>
+                    <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
+                      {d.title}
+                    </Text>
+                    {d.live ? null : <LockedPill />}
+                  </View>
+                  <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
+                    {d.body}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </StaggerReveal>
+          ))}
+        </View>
+      ) : null}
+
+      {!adminAudience ? <Text style={[styles.note, { color: colors.textRole.muted }]}>
+        University and College of Education programmes come online first.
+      </Text> : null}
+    </View>
+  );
+}
+
+function AdminExploreActions({
+  audience,
+  router,
+  nav,
+}: {
+  audience: "school" | "university";
+  router: ReturnType<typeof useRouter>;
+  nav: ExploreNav;
+}) {
+  const { colors } = useTheme();
+  const items = audience === "university"
+    ? [
+        { title: "Review your programme mix", body: "Review programmes and connected domains in the institution dashboard.", onPress: () => router.push("/(admin)/dashboard" as never), icon: "bar-chart-2" as const },
+        { title: "Compare peer universities", body: "Compare your programme and domain coverage with other universities.", onPress: () => router.push("/(admin)/peers" as never), icon: "users" as const },
+        { title: "Audit domain reach", body: "Review direct, functional and adjacent domain connections.", onPress: () => router.push("/(admin)/domain-reach" as never), icon: "map" as const },
+      ]
+    : [
+        { title: "Compare university options", body: "Review the universities that offer a learner's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme"), icon: "users" as const },
+        { title: "Guide from a learner's choice", body: "Start with subjects or a programme idea and explain the available routes.", onPress: () => nav.admissionHub(router, "subjects"), icon: "compass" as const },
+        { title: "Review your learners", body: "Open the cohort view for accounts, sessions and shared guidance signals.", onPress: () => router.push("/(admin)/guidance" as never), icon: "book-open" as const },
+      ];
+
+  return (
+    <View style={styles.section}>
+      <SectionLabel>{audience === "university" ? "Institution planning" : "Guidance tools"}</SectionLabel>
+      <View style={styles.adminActionGrid}>
+        {items.map((item) => (
+          <TouchableOpacity key={item.title} activeOpacity={0.82} onPress={item.onPress} style={[styles.adminAction, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Feather name={item.icon} size={18} color={colors.accentRole.action} />
+            <Text style={[styles.adminActionTitle, { color: colors.textRole.primary }]}>{item.title}</Text>
+            <Text style={[styles.adminActionBody, { color: colors.textRole.secondary }]}>{item.body}</Text>
+          </TouchableOpacity>
         ))}
       </View>
-
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>
-        University and College of Education programmes come online first. Other
-        institution types, opportunities and elite pathways are being populated.
-      </Text>
     </View>
   );
 }
@@ -827,6 +876,27 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: Spacing.sm,
+  },
+  adminActionGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  adminAction: {
+    flex: 1,
+    minWidth: 220,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
+  },
+  adminActionTitle: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
+  },
+  adminActionBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
   },
 
   // Cluster carousel

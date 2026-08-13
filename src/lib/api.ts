@@ -108,9 +108,13 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     hasAuthorization: !!token,
   });
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       ...options,
+      signal: options.signal ?? controller.signal,
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -148,6 +152,8 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -188,6 +194,16 @@ export const API = {
   requestEmailVerificationCode: (email: string) =>
     request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/email-code/request', {
       method: 'POST', body: JSON.stringify({ email }),
+    }),
+
+  requestPasswordResetCode: (email: string) =>
+    request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/password-reset/request', {
+      method: 'POST', body: JSON.stringify({ email }),
+    }),
+
+  confirmPasswordReset: (email: string, code: string, password: string) =>
+    request<{ updated: boolean }>('/api/auth/password-reset/confirm', {
+      method: 'POST', body: JSON.stringify({ email, code, password }),
     }),
 
   authLogin: (email: string, password: string) =>

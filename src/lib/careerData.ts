@@ -56,8 +56,32 @@ import { request } from "./api";
 import { getCached, setCached, queueWrite, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
 
-/** TTL for cached domain/role detail payloads (15 min). */
-const DETAIL_TTL_MS = 15 * 60 * 1000;
+/** Reference data is refreshed daily; writes and account data never use this cache. */
+const REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
+const SEARCH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const DETAIL_TTL_MS = REFERENCE_TTL_MS;
+
+async function readThrough<T>(
+  key: string,
+  fetcher: () => Promise<DataState<T>>,
+  unavailableMessage: string,
+  ttlMs: number = REFERENCE_TTL_MS,
+): Promise<DataState<T>> {
+  const cached = await getCached<DataState<T>>(key);
+  if (cached?.status === "real") return cached;
+  try {
+    const result = await fetcher();
+    if (result.status === "real") {
+      await setCached(key, result, ttlMs);
+      return result;
+    }
+    // Keep a previously verified reference result usable during a transient
+    // backend/Supabase outage; never replace it with a developer-facing stub.
+    return cached ?? result;
+  } catch {
+    return cached ?? comingSoon<T>(unavailableMessage);
+  }
+}
 
 /** A cluster of domains for the context-free Domain Explorer (no programme). */
 export interface DomainClusterGroup {
@@ -95,6 +119,8 @@ export interface JambProgrammeSuggestion {
   isBlend?: boolean;
   programmeId?: string | null;
   institutionType?: string | null;
+  schoolNames?: string[];
+  schoolCount?: number;
   /**
    * What this degree teaches — derived from the CCMAS course learning
    * outcomes. `skillsTechnical` is the differentiating set ("explain the
@@ -167,6 +193,11 @@ export interface AdmissionSchool {
   id: string;
   name: string;
   institutionType: string;
+}
+
+export interface SchoolFaculty {
+  name: string;
+  value: string;
 }
 
 /**
@@ -244,31 +275,35 @@ export const careerData = {
     stream?: string,
     examType?: "utme" | "olevel",
   ): Promise<DataState<SubjectCatalogItem[]>> {
-    try {
-      const qs = new URLSearchParams();
-      if (q) qs.set("q", q);
-      if (stream) qs.set("stream", stream);
-      if (examType) qs.set("exam_type", examType);
-      return await request<DataState<SubjectCatalogItem[]>>(
-        `/api/student/subjects${qs.toString() ? `?${qs.toString()}` : ""}`,
-      );
-    } catch {
-      return comingSoon<SubjectCatalogItem[]>("Subject catalog is unavailable.");
-    }
+    const key = `subjects:${(q ?? "").trim().toLowerCase()}:${stream ?? ""}:${examType ?? ""}`;
+    return readThrough(
+      key,
+      async () => {
+        const qs = new URLSearchParams();
+        if (q) qs.set("q", q);
+        if (stream) qs.set("stream", stream);
+        if (examType) qs.set("exam_type", examType);
+        return request<DataState<SubjectCatalogItem[]>>(
+          `/api/student/subjects${qs.toString() ? `?${qs.toString()}` : ""}`,
+        );
+      },
+      "Subject choices are temporarily unavailable. Please try again.",
+      q?.trim() ? SEARCH_TTL_MS : REFERENCE_TTL_MS,
+    );
   },
 
   async searchJambProgrammes(
     q: string,
   ): Promise<DataState<JambProgrammeSuggestion[]>> {
-    try {
-      return await request<DataState<JambProgrammeSuggestion[]>>(
+    const key = `jamb-programmes:${q.trim().toLowerCase()}`;
+    return readThrough(
+      key,
+      () => request<DataState<JambProgrammeSuggestion[]>>(
         `/api/student/jamb-programmes?q=${encodeURIComponent(q)}`,
-      );
-    } catch {
-      return comingSoon<JambProgrammeSuggestion[]>(
-        "JAMB programme search is unavailable.",
-      );
-    }
+      ),
+      "Programme search is temporarily unavailable. Please try again.",
+      SEARCH_TTL_MS,
+    );
   },
 
   async getProgrammesBySubjects(
@@ -279,22 +314,29 @@ export const careerData = {
       olevelSubjects?: string[];
     },
   ): Promise<DataState<SubjectProgrammeMatch[]>> {
-    try {
-      const qs = new URLSearchParams();
-      qs.set("subjects", subjects.join(","));
-      if (stream) qs.set("stream", stream);
-      if (options?.examType) qs.set("exam_type", options.examType);
-      if (options?.olevelSubjects?.length) {
-        qs.set("olevel_subjects", options.olevelSubjects.join(","));
-      }
-      return await request<DataState<SubjectProgrammeMatch[]>>(
-        `/api/student/programmes/by-subjects?${qs.toString()}`,
-      );
-    } catch {
-      return comingSoon<SubjectProgrammeMatch[]>(
-        "Subject-to-programme matching is unavailable.",
-      );
-    }
+    const key = [
+      "programme-matches",
+      [...subjects].sort().join(",").toLowerCase(),
+      stream ?? "",
+      options?.examType ?? "",
+      [...(options?.olevelSubjects ?? [])].sort().join(",").toLowerCase(),
+    ].join(":");
+    return readThrough(
+      key,
+      async () => {
+        const qs = new URLSearchParams();
+        qs.set("subjects", subjects.join(","));
+        if (stream) qs.set("stream", stream);
+        if (options?.examType) qs.set("exam_type", options.examType);
+        if (options?.olevelSubjects?.length) {
+          qs.set("olevel_subjects", options.olevelSubjects.join(","));
+        }
+        return request<DataState<SubjectProgrammeMatch[]>>(
+          `/api/student/programmes/by-subjects?${qs.toString()}`,
+        );
+      },
+      "Subject-to-programme matching is temporarily unavailable. Please try again.",
+    );
   },
 
   async getJambProgramme(
@@ -330,16 +372,45 @@ export const careerData = {
     schoolId: string,
     q?: string,
   ): Promise<DataState<SchoolProgrammeOffering[]>> {
+    const key = `school-programmes:${schoolId}:${(q ?? "").trim().toLowerCase()}`;
+    return readThrough(
+      key,
+      () => {
+        const qs = q && q.trim() ? `?q=${encodeURIComponent(q.trim())}` : "";
+        return request<DataState<SchoolProgrammeOffering[]>>(
+          `/api/student/schools/${encodeURIComponent(schoolId)}/programmes${qs}`,
+        );
+      },
+      "This university's programme list is temporarily unavailable. Please try again.",
+      q?.trim() ? SEARCH_TTL_MS : REFERENCE_TTL_MS,
+    );
+  },
+
+  async registerAdmissionSchool(
+    name: string,
+    institutionType: string,
+  ): Promise<DataState<AdmissionSchool & { created?: boolean }>> {
     try {
-      const qs = q && q.trim() ? `?q=${encodeURIComponent(q.trim())}` : "";
-      return await request<DataState<SchoolProgrammeOffering[]>>(
-        `/api/student/schools/${encodeURIComponent(schoolId)}/programmes${qs}`,
+      return await request<DataState<AdmissionSchool & { created?: boolean }>>(
+        "/api/student/schools/register",
+        {
+          method: "POST",
+          body: JSON.stringify({ name, institutionType }),
+        },
       );
     } catch {
-      return comingSoon<SchoolProgrammeOffering[]>(
-        "That institution's course list is unavailable.",
-      );
+      return comingSoon("We could not add that institution right now.");
     }
+  },
+
+  async getSchoolFaculties(schoolId: string): Promise<DataState<SchoolFaculty[]>> {
+    return readThrough(
+      `school-faculties:${schoolId}`,
+      () => request<DataState<SchoolFaculty[]>>(
+        `/api/student/schools/${encodeURIComponent(schoolId)}/faculties`,
+      ),
+      "Faculty information is temporarily unavailable. You can still choose your programme.",
+    );
   },
 
   async getJambProgrammeDomains(
@@ -790,16 +861,20 @@ export const careerData = {
     q: string,
     institutionType?: string,
   ): Promise<DataState<AdmissionSchool[]>> {
-    try {
-      const qs = new URLSearchParams();
-      qs.set("q", q);
-      if (institutionType) qs.set("institution_type", institutionType);
-      return await request<DataState<AdmissionSchool[]>>(
-        `/api/admission/schools?${qs.toString()}`,
-      );
-    } catch {
-      return comingSoon("School search is temporarily unavailable.");
-    }
+    const key = `admission-schools:${institutionType ?? "university"}:${q.trim().toLowerCase()}`;
+    return readThrough(
+      key,
+      async () => {
+        const qs = new URLSearchParams();
+        qs.set("q", q);
+        if (institutionType) qs.set("institution_type", institutionType);
+        return request<DataState<AdmissionSchool[]>>(
+          `/api/admission/schools?${qs.toString()}`,
+        );
+      },
+      "University search is temporarily unavailable. Please try again.",
+      SEARCH_TTL_MS,
+    );
   },
 
   /** Typeahead over programmes with published cut-offs (onboarding picker). */
