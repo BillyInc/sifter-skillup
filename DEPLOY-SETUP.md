@@ -76,13 +76,28 @@ CELERY_BROKER_URL=redis://localhost:6379/12  # prod: /13
 CELERY_RESULT_BACKEND=redis://localhost:6379/12  # prod: /13
 PRIVY_APP_ID=...  PRIVY_APP_SECRET=...  PRIVY_VERIFICATION_KEY=...
 RESEND_API_KEY=re_...       # signup verification email; without it signup 502s
-EMAIL_FROM=LevelUp <noreply@levelup.com.ng>   # sending domain must be verified in Resend
+EMAIL_FROM=LevelUp <onboarding@resend.dev>    # see "Resend sender" below
 ALLOWED_ORIGINS=https://dev.levelup.com.ng   # prod: https://levelup.com.ng
 API_BASE_URL=https://api.dev.levelup.com.ng  # prod: https://api.levelup.com.ng
 WEB_DASHBOARD_URL=https://dev.levelup.com.ng # prod: https://levelup.com.ng
 ```
+
 Optional integrations as needed: `ANTHROPIC_API_KEY`, `FCM_SERVER_KEY`, `AIRTABLE_*`,
 `GITHUB_CLIENT_ID/SECRET`, `TELEGRAM_BOT_TOKEN`, OAuth `*_CLIENT_ID/SECRET`.
+
+### Resend sender
+
+No custom domain is verified in Resend yet. Until one is, the account can only
+send from the shared `onboarding@resend.dev` sender, and **only to the Resend
+account owner's own address** -- mail to any other recipient is rejected. That
+is fine for development, but real users cannot receive a signup code.
+
+To send to real users, add `levelup.com.ng` under Resend > Domains, publish the
+DKIM/SPF records it generates, and once it shows Verified switch `EMAIL_FROM`
+to `LevelUp <noreply@levelup.com.ng>`.
+
+`EMAIL_FROM` is not a secret and is set directly in each `.env`.
+`RESEND_API_KEY` is; it is never committed.
 
 ### 6. Server prerequisites (already true for KYS, verify)
 `ubuntu` has passwordless `sudo` (systemctl/nginx/certbot); `nginx`, `certbot` (+`python3-certbot-nginx`),
