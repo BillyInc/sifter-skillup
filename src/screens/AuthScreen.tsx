@@ -30,6 +30,7 @@ import {
   useTheme,
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
+import { studentAccountApi } from "@/lib/provisioningData";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
@@ -60,6 +61,7 @@ export default function AuthScreen() {
   const [mode, setMode] = useState<Mode>("welcome");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [schoolCode, setSchoolCode] = useState("");
   const [error, setError] = useState("");
   const [emailLoading, setEmailLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
@@ -91,6 +93,7 @@ export default function AuthScreen() {
   const resetLoginFields = () => {
     setEmail("");
     setPassword("");
+    setSchoolCode("");
   };
 
   // Login credentials are intentionally ephemeral. This also handles browser
@@ -130,6 +133,7 @@ export default function AuthScreen() {
     setGuestLoading(true);
     try {
       await signInGuest();
+      router.replace("/(tabs)/settings/my-school?from=guest" as any);
     } catch (e) {
       setError(friendlyAuthError(e, "Could not continue as guest."));
     } finally {
@@ -146,6 +150,9 @@ export default function AuthScreen() {
     setEmailLoading(true);
     try {
       await signInEmail(email.trim(), password);
+      if (schoolCode.trim()) {
+        try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* login remains successful; code can be linked later */ }
+      }
       router.replace("/(tabs)/home");
     } catch (e) {
       setError(friendlyAuthError(e, "Could not sign you in."));
@@ -430,6 +437,13 @@ export default function AuthScreen() {
                 secure
                 placeholder="Password"
                 autoComplete="current-password"
+              />
+              <AuthField
+                label="School code (optional)"
+                value={schoolCode}
+                onChangeText={(value) => setSchoolCode(value.toUpperCase())}
+                placeholder="SCHOOL-XXXXXXXX"
+                hint="Link your account to your school after signing in."
               />
 
               <TouchableOpacity

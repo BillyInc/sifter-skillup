@@ -36,6 +36,11 @@ export interface StartingPointProfile {
   //  Student / graduate 
   institutionType?: InstitutionType;
   schoolName?: string;
+  schoolAddress?: string;
+  schoolCity?: string;
+  schoolState?: string;
+  /** Optional school affiliation code entered during auth or onboarding. */
+  schoolCode?: string;
   discipline?: string;
   programmeName?: string;
   /** Degree classification / grade (e.g. "First Class", "2:1", "Upper Credit"). */

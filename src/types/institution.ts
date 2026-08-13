@@ -67,6 +67,12 @@ export interface Organization {
   moeApprovalNo?: string; // state Ministry of Education approval (sec. schools)
   cacNo?: string; // CAC business registration (centres/cafes)
   state?: string;
+  /** Full physical/postal address used to disambiguate institutions. */
+  address?: string;
+  city?: string;
+  country?: string;
+  /** Stable public affiliation/referral code scoped to this school record. */
+  schoolCode?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
   /** True for tutorial_centre/jamb_cafe: provider/session only, never a roster. */
@@ -110,6 +116,10 @@ export interface EducatorProfile {
   accountType: Exclude<AccountType, "pending" | "student">;
   organizationType: OrganizationType;
   organizationName?: string;
+  organizationAddress: string;
+  organizationCity?: string;
+  organizationState?: string;
+  organizationCountry?: string;
   /** Set once an org record exists; before that the claim is free-text. */
   organizationId?: string;
   role: OrgRole;
@@ -200,6 +210,7 @@ export interface RosterStudent {
   claimState?: "unclaimed" | "claimed" | null;
   visible: boolean;
   hasConsent: boolean;
+  guidanceComplete?: boolean;
 }
 
 /** The roster payload: visible rows + the counts that make the aggregate-only

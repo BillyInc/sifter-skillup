@@ -8,7 +8,8 @@ BEGIN;
 
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS account_type TEXT NOT NULL DEFAULT 'pending',
-    ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false;
+    ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN IF NOT EXISTS account_type_selected_at TIMESTAMPTZ;
 
 ALTER TABLE skillup_dev.users DROP CONSTRAINT IF EXISTS users_account_type_check;
 ALTER TABLE skillup_dev.users
@@ -18,11 +19,8 @@ ALTER TABLE skillup_dev.users
 ALTER TABLE skillup_dev.users
     ALTER COLUMN account_type SET DEFAULT 'pending';
 
--- Existing completed legacy users without a meaningful account type stay student.
-UPDATE skillup_dev.users
-SET account_type = 'student'
-WHERE onboarding_completed = true
-  AND (account_type IS NULL OR account_type = 'pending');
+-- Completed legacy users without a meaningful persona remain pending. Do not
+-- convert them to student: the app uses this state to reopen Who's joining?.
 
 -- Existing incomplete email accounts go back to the account-type gate.
 UPDATE skillup_dev.users

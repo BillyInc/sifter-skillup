@@ -11,9 +11,9 @@
  * correct admin workspace. Access code is not proof; verification stays pending.
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "@/theme";
+import { useTheme, Spacing, FontSize, webContainer } from "@/theme";
 import { SifterButton } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
@@ -38,8 +38,17 @@ import {
 } from "@/components/onboarding/primitives";
 import { LiveAdmissionSearchField } from "@/components/onboarding/LiveAdmissionSearchField";
 
-const ADMIN_ACCESS_REQUEST_EMAIL = "learn@sifter.app";
+const ADMIN_ACCESS_REQUEST_EMAIL =
+  process.env.EXPO_PUBLIC_ADMIN_ACCESS_EMAIL?.trim() || "learn@sifter.app";
 const DEV_ADMIN_ACCESS_CODE = "LEVELUP-EDU-DEV";
+const isStagingOrLocalHost = () => {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname.toLowerCase();
+  return host === "localhost" || host === "127.0.0.1" || host.startsWith("dev.");
+};
+const SHOW_DEVELOPER_ACCESS =
+  (typeof __DEV__ !== "undefined" && __DEV__) ||
+  isStagingOrLocalHost();
 
 // Organisation types.
 const ORGS: {
@@ -80,7 +89,6 @@ const ROLES_FOR: Record<OrganizationType, { label: string; value: OrgRole }[]> =
       { label: "Course advisor", value: "course_advisor" },
       { label: "HOD", value: "hod" },
       { label: "Dean", value: "dean" },
-      { label: "Owner / Administrator", value: "owner" },
     ],
     tutorial_centre: [
       { label: "Owner / Operator", value: "owner" },
@@ -132,6 +140,7 @@ export default function EducatorOnboarding({
   const [step, setStep] = useState(1);
   const [orgType, setOrgType] = useState<OrganizationType | undefined>();
   const [orgName, setOrgName] = useState("");
+  const [orgAddress, setOrgAddress] = useState("");
   const [orgId, setOrgId] = useState<string | undefined>();
   const [role, setRole] = useState<OrgRole | undefined>();
   const [workEmail, setWorkEmail] = useState("");
@@ -154,6 +163,7 @@ export default function EducatorOnboarding({
         if (saved) {
           setOrgType(saved.organizationType);
           setOrgName(saved.organizationName ?? "");
+          setOrgAddress(saved.organizationAddress ?? "");
           setOrgId(saved.organizationId);
           setRole(saved.role);
           setWorkEmail(saved.workEmail ?? "");
@@ -178,6 +188,8 @@ export default function EducatorOnboarding({
       educatorProfile: {
         organizationType: orgType,
         organizationName: orgName,
+        organizationAddress: orgAddress,
+        organizationId: orgId,
         role,
         workEmail,
         registryCode,
@@ -185,13 +197,14 @@ export default function EducatorOnboarding({
         accessGranted,
       },
     }).catch(() => {});
-  }, [accessCode, accessGranted, orgName, orgType, registryCode, role, step, user?.id, workEmail]);
+  }, [accessCode, accessGranted, orgAddress, orgId, orgName, orgType, registryCode, role, step, user?.id, workEmail]);
 
   const back = () => setStep((s) => Math.max(1, s - 1));
 
   const pickOrg = (t: OrganizationType) => {
     if (orgType !== t) {
-        setOrgName("");
+       setOrgName("");
+       setOrgAddress("");
        setOrgId(undefined);
       setRole(undefined);
       setWorkEmail("");
@@ -224,7 +237,16 @@ export default function EducatorOnboarding({
     });
   };
 
-  const step1Ready = !!orgType && orgName.trim().length > 0 && !!role && (orgType !== "university" || !!orgId);
+  // The real flow requires a complete organisation identity, including address.
+  // The explicit developer workspace is the only route allowed to exercise the
+  // flow without a registry row or production address.
+  const canUseDeveloperWorkspace = SHOW_DEVELOPER_ACCESS && orgName.trim().length > 0;
+  const addressRequired = !canUseDeveloperWorkspace;
+  const step1Ready =
+    !!orgType &&
+    !!role &&
+    (!!orgId || canUseDeveloperWorkspace) &&
+    (!addressRequired || orgAddress.trim().length >= 8);
 
   const validateAccessCode = async () => {
     const code = accessCode.trim().toUpperCase();
@@ -275,6 +297,9 @@ export default function EducatorOnboarding({
       accountType,
       organizationType: orgType,
       organizationName: orgName.trim(),
+      // The backend enforces this in production as well. The explicit developer
+      // workspace may submit an empty value for local flow testing.
+      organizationAddress: orgAddress.trim(),
       organizationId: orgId,
       role,
       workEmail: hasEmail ? workEmail.trim() : undefined,
@@ -353,6 +378,7 @@ export default function EducatorOnboarding({
                  onSelect={(item) => {
                    setOrgName(item.name);
                    setOrgId(item.id || undefined);
+                   setOrgAddress([item.address, item.city, item.state, item.country].filter(Boolean).join(", "));
                  }}
                 placeholder={orgType === "university" ? "Search your university" : "Search your organisation"}
                  kind="school"
@@ -362,6 +388,26 @@ export default function EducatorOnboarding({
                    ? "Choose your university from the list so its programme records stay connected."
                    : "Select your organisation if it is listed, or add its name so other educators can find it."}
               />
+              <View style={{ gap: Spacing.xs }}>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>
+                   {addressRequired
+                     ? "Organisation address (required)"
+                     : "Organisation address (optional for developer testing)"}
+                </Text>
+                <TextInput
+                  value={orgAddress}
+                  onChangeText={setOrgAddress}
+                  placeholder="Street, area, city, state"
+                  placeholderTextColor={colors.textSoft}
+                  multiline
+                  style={[styles.addressInput, { color: colors.text, borderColor: colors.border, backgroundColor: colors.card }]}
+                />
+                  <Text style={[styles.sub, { color: colors.textSoft }]}>
+                    {addressRequired
+                      ? "Use the full address so people can distinguish organisations with similar names."
+                      : "Developer testing may continue without an address. Production users must provide one."}
+                  </Text>
+              </View>
               <ChoiceChips
                 label="Your role"
                 options={roleOptions}
@@ -395,6 +441,10 @@ export default function EducatorOnboarding({
             code. The code opens the admin setup; it does not replace identity
             or institution verification.
           </Text>
+          <Text style={[styles.note, { color: colors.textMuted }]}>
+            Owner requests are sent to {ADMIN_ACCESS_REQUEST_EMAIL}. Staff should
+            receive their code directly from the organisation owner.
+          </Text>
 
           <SearchField
             label="Admin access code"
@@ -418,7 +468,7 @@ export default function EducatorOnboarding({
             student account does not need it.
           </Text>
 
-          {typeof __DEV__ !== "undefined" && __DEV__ ? (
+          {SHOW_DEVELOPER_ACCESS ? (
             <View style={styles.devTools}>
               <Text style={[styles.devHint, { color: colors.accentRole.action }]}>Development test code: {DEV_ADMIN_ACCESS_CODE}</Text>
               <TouchableOpacity
@@ -643,5 +693,15 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     flexShrink: 1,
     textAlign: "right",
+  },
+  fieldLabel: { fontSize: FontSize.sm, fontWeight: "700" },
+  addressInput: {
+    minHeight: 78,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    textAlignVertical: "top",
+    fontSize: FontSize.sm,
   },
 });

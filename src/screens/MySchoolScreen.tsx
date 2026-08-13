@@ -21,7 +21,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   useTheme,
   CompassFonts,
@@ -40,10 +40,15 @@ type AffiliateResult = { schoolId: string; schoolName?: string } | null;
 export default function MySchoolScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const params = useLocalSearchParams<{ claim?: string | string[]; from?: string | string[] }>();
   const { refreshUser } = useAuth();
+  const fromGuest = (Array.isArray(params.from) ? params.from[0] : params.from) === "guest";
 
   // Claim
-  const [claimCode, setClaimCode] = useState("");
+  const [claimCode, setClaimCode] = useState(() => {
+    const value = params.claim;
+    return (Array.isArray(value) ? value[0] : value) ?? "";
+  });
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [claimBusy, setClaimBusy] = useState(false);
@@ -135,6 +140,15 @@ export default function MySchoolScreen() {
         </TouchableOpacity>
 
         <Text style={[styles.h1, { color: colors.textRole.primary }, CompassFonts.displayBold]}>My school</Text>
+        {fromGuest ? (
+          <View style={[styles.card, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.cardBody, { color: colors.textRole.primary }, CompassFonts.body]}>You are browsing as a guest. Link a school code now, or create/log in to keep your school connection.</Text>
+            <View style={{ flexDirection: "row", gap: Spacing.sm }}>
+              <TouchableOpacity onPress={() => router.replace("/(auth)/signup" as any)} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Create account</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => router.replace("/(auth)/sign-in" as any)} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Log in</Text></TouchableOpacity>
+            </View>
+          </View>
+        ) : null}
 
         {/* Claim card */}
         <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>

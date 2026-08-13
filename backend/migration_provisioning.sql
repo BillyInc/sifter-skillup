@@ -88,9 +88,10 @@ ALTER TABLE skillup_dev.users
 -- account_type gates admin surfaces (Auth.require_admin reads it) and is already
 -- assumed by institutions_routes.py; it was never added by an earlier migration.
 -- Add it here so provisioning's admin routes resolve. 'student' | 'educator' |
--- 'institution_admin'; legacy rows default to 'student'.
+-- 'institution_admin'; legacy rows remain 'pending' until a persona is chosen.
 ALTER TABLE skillup_dev.users
-    ADD COLUMN IF NOT EXISTS account_type           TEXT NOT NULL DEFAULT 'student';
+    ADD COLUMN IF NOT EXISTS account_type           TEXT NOT NULL DEFAULT 'pending',
+    ADD COLUMN IF NOT EXISTS account_type_selected_at TIMESTAMPTZ;
 CREATE INDEX IF NOT EXISTS idx_users_provisioning_school
     ON skillup_dev.users(provisioning_school_id) WHERE provisioning_school_id IS NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS uq_users_phone

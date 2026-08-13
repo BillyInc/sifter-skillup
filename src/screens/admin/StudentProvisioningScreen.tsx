@@ -27,6 +27,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Clipboard from "expo-clipboard";
+import { useRouter } from "expo-router";
 import {
   useTheme,
   Spacing,
@@ -95,16 +96,22 @@ function makeLocalDraft(
   };
 }
 
-export function StudentProvisioningScreen({ initialMode = "school" }: { initialMode?: "school" | "jamb" }) {
+export function StudentProvisioningScreen({
+  initialMode = "school",
+  initialTab = "add",
+}: {
+  initialMode?: "school" | "jamb";
+  initialTab?: Tab;
+}) {
   const { colors } = useTheme();
-  const [tab, setTab] = useState<Tab>("add");
+  const [tab, setTab] = useState<Tab>(initialTab);
 
   return (
     <AdminShell title={initialMode === "jamb" ? "JAMB accounts" : "Learners"} eyebrow={initialMode === "jamb" ? "Provider guidance" : "Roster & provisioning"}>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         {/* Tab switch */}
         <View style={[styles.tabBar, { borderBottomColor: colors.border }]}>
-          {(["roster", "add"] as Tab[]).map((t) => (
+          {(["add", "roster"] as Tab[]).map((t) => (
             <TouchableOpacity
               key={t}
               onPress={() => setTab(t)}
@@ -302,12 +309,22 @@ function RosterTab() {
                     ? "Shared by student"
                     : "Claimed"}
               </Text>
-              <TouchableOpacity
-                onPress={() => provisioningData.openReportHtml(s.userId)}
-                style={[styles.miniBtn, { borderColor: colors.border }]}
-              >
-                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
-              </TouchableOpacity>
+              {s.guidanceComplete ? (
+                <TouchableOpacity
+                  onPress={() => provisioningData.openReportHtml(s.userId)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
+                </TouchableOpacity>
+              ) : null}
+              {s.provenance === "provisioned" && s.claimState === "unclaimed" ? (
+                <TouchableOpacity
+                  onPress={() => provisioningData.openLoginCard(s.userId)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Claim card</Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           ))}
         </View>
@@ -835,6 +852,7 @@ function GeneratedCards({
   onDone: () => void;
 }) {
   const { colors } = useTheme();
+  const router = useRouter();
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyAll = useCallback(async () => {
@@ -890,16 +908,30 @@ function GeneratedCards({
           <Text style={[styles.cardHint, { color: colors.textMuted }]}>
             {copied === g.userId ? "Copied!" : "Tap the code to copy"}
           </Text>
-          {!g.guidanceComplete ? (
-            <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Complete learner guidance before printing a report.</Text>
-          ) : null}
+           {!g.guidanceComplete ? (
+             <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this learner before printing a report.</Text>
+           ) : null}
           <View style={styles.cardActions}>
             <TouchableOpacity
               onPress={() => provisioningData.openLoginCard(g.userId)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
               <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Print card</Text>
+             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => provisioningData.shareLoginCard(g.userId, g.fullName, g.claimCode)}
+              style={[styles.miniBtn, { borderColor: colors.border }]}
+            >
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share card</Text>
             </TouchableOpacity>
+            {!g.guidanceComplete ? (
+              <TouchableOpacity
+                onPress={() => router.push(`/(admin)/students/${encodeURIComponent(g.userId)}/guidance` as never)}
+                style={[styles.miniBtn, { borderColor: colors.border }]}
+              >
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide learner</Text>
+              </TouchableOpacity>
+            ) : null}
             {g.guidanceComplete ? (
               <>
                 <TouchableOpacity
@@ -914,10 +946,22 @@ function GeneratedCards({
                   <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (Word)</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  onPress={() => provisioningData.shareReportDocx(g.userId, g.fullName)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share Word</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   onPress={() => provisioningData.openReportHtml(g.userId)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
                   <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (PDF)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => provisioningData.shareReportHtml(g.userId, g.fullName)}
+                  style={[styles.miniBtn, { borderColor: colors.border }]}
+                >
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share PDF</Text>
                 </TouchableOpacity>
               </>
             ) : null}

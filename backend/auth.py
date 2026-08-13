@@ -103,8 +103,10 @@ class Auth:
             user = result.data
             if user.get("is_deleted") is True:
                 raise HTTPException(status_code=401, detail="User not found")
-            # Backward-compatible: legacy rows predate account_type — default to student.
-            user.setdefault("account_type", "student")
+            # Legacy rows can be onboarding-complete without ever selecting a
+            # persona. Keep that state pending so the client can send only
+            # those accounts back through the account-type gate.
+            user.setdefault("account_type", "pending")
             return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")

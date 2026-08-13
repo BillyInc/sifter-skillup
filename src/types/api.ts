@@ -85,6 +85,7 @@ export interface UserProfile {
   avatar_url?: string | null;
   auth_provider: AuthProvider;
   account_type?: 'pending' | 'student' | 'educator' | 'institution_admin';
+  account_type_selected_at?: ISODateString | null;
   points: number;
   streak: number;
   current_level: number;

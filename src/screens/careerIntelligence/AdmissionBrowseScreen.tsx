@@ -87,6 +87,7 @@ export default function AdmissionBrowseScreen() {
     olevel_subjects?: string | string[];
     exam_type?: string | string[];
     stream?: string | string[];
+    class_name?: string | string[];
     admin?: string | string[];
   }>();
   const router = useRouter();
@@ -111,7 +112,7 @@ export default function AdmissionBrowseScreen() {
     rawExamType === "olevel" ? "olevel" : "combined",
   );
   const isAdminExplore = readParam(params.admin) === "1";
-  const [contextClass, setContextClass] = useState("");
+  const [contextClass, setContextClass] = useState(readParam(params.class_name));
   const [stream, setStream] = useState(readParam(params.stream));
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -137,6 +138,16 @@ export default function AdmissionBrowseScreen() {
     [olevelSubjectText],
   );
 
+  useEffect(() => {
+    if (initialMode === "subjects" && (subjects.length || olevelSubjects.length)) {
+      void runSubjectMatch();
+    } else if (initialMode === "programme" && query.trim().length >= 2) {
+      void runProgrammeSearch(query);
+    }
+    // Initial route hydration only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (isAdminExplore && (!contextClass || !stream)) {
     return (
       <ScrollView
@@ -145,7 +156,7 @@ export default function AdmissionBrowseScreen() {
       >
         <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>GUIDANCE CONTEXT</Text>
         <Text style={[styles.title, { color: colors.text }]}>Who are you guiding?</Text>
-        <Text style={[styles.hint, { color: colors.textMuted }]}>Choose the learner's class and stream before we show admission subjects or programme guidance.</Text>
+        <Text style={[styles.hint, { color: colors.textMuted }]}>Choose the learner&apos;s class and stream before we show admission subjects or programme guidance.</Text>
         <Text style={[styles.label, { color: colors.textSoft }]}>Class</Text>
         <View style={styles.modeRow}>
           {["SS1", "SS2", "SS3", "JAMB"].map((value) => (
@@ -170,11 +181,7 @@ export default function AdmissionBrowseScreen() {
             </TouchableOpacity>
           ))}
         </View>
-        {contextClass && stream ? (
-          <TouchableOpacity onPress={() => {}} style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}>
-            <Text style={styles.actionText}>Continue</Text>
-          </TouchableOpacity>
-        ) : null}
+        <Text style={[styles.hint, { color: colors.textMuted }]}>Your choices will determine the admission guidance shown next.</Text>
       </ScrollView>
     );
   }
@@ -336,16 +343,6 @@ export default function AdmissionBrowseScreen() {
       // Do not block browsing if profile finalization is temporarily unavailable.
     }
   };
-
-  useEffect(() => {
-    if (initialMode === "subjects" && (subjects.length || olevelSubjects.length)) {
-      void runSubjectMatch();
-    } else if (initialMode === "programme" && query.trim().length >= 2) {
-      void runProgrammeSearch(query);
-    }
-    // Initial route hydration only.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <ScrollView

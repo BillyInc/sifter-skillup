@@ -193,13 +193,20 @@ class Settings:
     # ── Institution/admin access gate ─────────────────────────
     # Comma-separated owner-issued codes that allow educators, tutorial centres,
     # and institutions to enter admin mode before the full verification pipeline.
+    WEB_DASHBOARD_URL: str = os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000")
+    # The development deployment is intentionally testable with the built-in
+    # developer code. Production has a different hostname and remains closed
+    # unless an explicit owner-issued code is configured.
+    DEVELOPER_ACCESS_ENABLED: bool = DEBUG or WEB_DASHBOARD_URL.lower().startswith(
+        "https://dev."
+    )
     _ENV_EDUCATOR_ACCESS_CODES = [
         code.strip().upper()
         for code in os.getenv("EDUCATOR_ACCESS_CODES", "").split(",")
         if code.strip()
     ]
     EDUCATOR_ACCESS_CODES: list = _ENV_EDUCATOR_ACCESS_CODES or (
-        ["LEVELUP-EDU-DEV"] if DEBUG else []
+        ["LEVELUP-EDU-DEV"] if DEVELOPER_ACCESS_ENABLED else []
     )
 
 settings = Settings()

@@ -14,7 +14,7 @@
 import { request } from "./api";
 import { API_BASE } from "./config";
 import * as SecureStore from "expo-secure-store";
-import { Platform } from "react-native";
+import { Platform, Share } from "react-native";
 import type {
   ProvisionDraft,
   ProvisioningStream,
@@ -93,6 +93,35 @@ interface WireGenerated {
   claim_expires_at?: string | null;
   guidance_complete?: boolean;
 }
+
+/** Share an authenticated report/card through the device or browser share sheet.
+ * The sheet is what exposes installed targets such as email, WhatsApp,
+ * WhatsApp Business, Drive and Dropbox without hard-coding app-specific URLs.
+ * When a browser has no file-share support, it falls back to a download. */
+export async function shareStudentDocument(
+  path: string,
+  fileName: string,
+  message = "Sifter LevelUp document",
+): Promise<boolean> {
+  const token = await authToken();
+  const res = await fetch(`${API_BASE}${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  if (!res.ok) return false;
+  const blob = await res.blob();
+  if (Platform.OS === "web" && typeof navigator !== "undefined") {
+    const file = new File([blob], fileName, { type: blob.type || "application/octet-stream" });
+    if (typeof navigator.share === "function" && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+      await navigator.share({ title: fileName, text: message, files: [file] });
+      return true;
+    }
+    return openStudentDocument(path, { download: fileName });
+  }
+  try {
+    await Share.share({ message: `${message}\n${fileName}` });
+    return true;
+  } catch {
+    return false;
+  }
+}
 interface WireRosterStudent {
   user_id: string;
   full_name?: string | null;
@@ -102,6 +131,7 @@ interface WireRosterStudent {
   claim_state?: "unclaimed" | "claimed" | null;
   visible: boolean;
   has_consent: boolean;
+  guidance_complete?: boolean;
 }
 interface WireRoster {
   students: WireRosterStudent[];
@@ -154,6 +184,7 @@ const toRosterStudent = (w: WireRosterStudent): RosterStudent => ({
   claimState: w.claim_state,
   visible: w.visible,
   hasConsent: w.has_consent,
+  guidanceComplete: Boolean(w.guidance_complete),
 });
 const toMergeCandidate = (w: WireMergeCandidate): ProvisioningMergeCandidate => ({
   id: w.id,
@@ -281,6 +312,20 @@ export const provisioningData = {
     };
   },
 
+  /** Save the direction selected during an administrator-led guidance session. */
+  async saveGuidance(userId: string, chosenDirection: ChosenDirection): Promise<void> {
+    await request(`/api/provisioning/students/${encodeURIComponent(userId)}/guidance`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        chosen_direction: {
+          domain_key: chosenDirection.domainKey ?? null,
+          role_key: chosenDirection.roleKey ?? null,
+          programme_id: chosenDirection.programmeId ?? null,
+        },
+      }),
+    });
+  },
+
   /** The consent-aware roster (visibility rule applied server-side). */
   async getRoster(): Promise<RosterSummary> {
     const w = await request<WireRoster>(`/api/provisioning/roster`);
@@ -327,6 +372,30 @@ export const provisioningData = {
   /** Open the printable login card carrying the live claim code. */
   openLoginCard(userId: string) {
     return openStudentDocument(`/api/provisioning/students/${userId}/login-card.html`);
+  },
+
+  shareLoginCard(userId: string, fullName: string, claimCode: string) {
+    return shareStudentDocument(
+      `/api/provisioning/students/${userId}/login-card.html`,
+      `login_card_${fullName.replace(/\s+/g, "_")}.html`,
+      `Login card for ${fullName}. Claim code: ${claimCode}`,
+    );
+  },
+
+  shareReportDocx(userId: string, fullName: string) {
+    return shareStudentDocument(
+      `/api/provisioning/students/${userId}/report.docx`,
+      `career_report_${fullName.replace(/\s+/g, "_")}.docx`,
+      `Career pathway report for ${fullName}`,
+    );
+  },
+
+  shareReportHtml(userId: string, fullName: string) {
+    return shareStudentDocument(
+      `/api/provisioning/students/${userId}/report.html`,
+      `career_report_${fullName.replace(/\s+/g, "_")}.html`,
+      `Career pathway report for ${fullName}`,
+    );
   },
 };
 

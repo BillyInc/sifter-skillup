@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Alert, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { CompassFonts, FontSize, FontWeight, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -44,30 +44,26 @@ function Row({
 export default function SettingsScreen() {
   const router = useRouter();
   const { colors, isDark, toggle } = useTheme();
-  const { user, signOut, refreshUser } = useAuth();
+  const { user, signOut, deleteAccount, refreshUser } = useAuth();
+  const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
   const isAdmin = isAdminAccount(user?.account_type);
   const admin2FA = useMemo(
     () => (user?.settings?.admin2fa ?? {}) as { setupRequestedAt?: string; deferredAt?: string },
     [user?.settings],
   );
 
-  const handleSignOut = async () => {
-    const confirm = async () => {
-      await signOut();
+  const handleAccountAction = async () => {
+    if (!accountAction || actionBusy) return;
+    setActionBusy(true);
+    try {
+      if (accountAction === 'sign-out') await signOut();
+      else await deleteAccount();
+      setAccountAction(null);
       router.replace('/(auth)/sign-in');
-    };
-
-    if (Platform.OS === 'web') {
-      if (globalThis.confirm?.('Sign out of this account?')) {
-        await confirm();
-      }
-      return;
+    } finally {
+      setActionBusy(false);
     }
-
-    Alert.alert('Sign out?', 'You will need to log in again to continue.', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Sign out', style: 'destructive', onPress: () => void confirm() },
-    ]);
   };
 
   const updateAdmin2FA = async (patch: Record<string, unknown>) => {
@@ -187,12 +183,41 @@ export default function SettingsScreen() {
 
         <TouchableOpacity
           activeOpacity={0.85}
-          onPress={handleSignOut}
+          onPress={() => setAccountAction('sign-out')}
           style={[styles.signOutBtn, { backgroundColor: colors.accentRole.danger }]}
         >
           <Text style={[styles.signOutBtnText, CompassFonts.bodyBold]}>Sign Out</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => setAccountAction('delete')}
+          style={[styles.deleteAccountBtn, { borderColor: colors.accentRole.danger }]}
+        >
+          <Text style={[styles.deleteAccountBtnText, { color: colors.accentRole.danger }, CompassFonts.bodyBold]}>Delete account</Text>
+        </TouchableOpacity>
       </ScrollView>
+      <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+              {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
+            </Text>
+            <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              {accountAction === 'delete'
+                ? 'Your account will be marked for deletion according to the recovery policy.'
+                : 'You will need to log in again to continue.'}
+            </Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.linkBtn, { borderColor: colors.borderRole.subtle, flex: 1 }]}>
+                <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleAccountAction} disabled={actionBusy} style={[styles.linkBtn, { borderColor: colors.accentRole.danger, backgroundColor: colors.accentRole.danger, flex: 1, opacity: actionBusy ? 0.6 : 1 }]}>
+                <Text style={[styles.linkBtnText, { color: '#fff' }, CompassFonts.bodyBold]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -289,4 +314,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontWeight: '900',
   },
+  deleteAccountBtn: { borderRadius: Radius.xl, borderWidth: 1, paddingVertical: Spacing.md, alignItems: 'center' },
+  deleteAccountBtnText: { fontSize: FontSize.sm, fontWeight: '900' },
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
+  modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  modalTitle: { fontSize: FontSize.xl },
+  modalActions: { flexDirection: 'row', gap: Spacing.sm },
 });

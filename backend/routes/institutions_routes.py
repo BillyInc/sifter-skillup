@@ -38,6 +38,7 @@
 # ============================================================
 from datetime import datetime, timedelta, timezone
 import hmac
+import re
 from typing import List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
@@ -132,6 +133,9 @@ def _org_from_school(school_id: str) -> Optional["Organization"]:
             name=row.get("name") or "",
             jamb_code=row.get("jamb_code"),
             state=row.get("state"),
+            address=row.get("address"),
+            city=row.get("city"),
+            country=row.get("country"),
             school_code=row.get("school_code"),
             verification_status=row.get("verification_status") or "unverified",
             provider_session_only=bool(row.get("provider_session_only") or org_type in {"tutorial_centre", "jamb_cafe"}),
@@ -155,11 +159,44 @@ def _normal_account_type(raw: Optional[str], role: Optional[str]) -> str:
     return "educator"
 
 
+def _code_slug(value: str) -> str:
+    words = re.findall(r"[a-z0-9]+", (value or "").lower())
+    compact = "".join(words)
+    return (compact[:12] or "school").upper()
+
+
+def _school_affiliation_code(svc, name: str, address: str, school_id: str) -> str:
+    """Create a readable but record-scoped code.
+
+    The UUID-derived suffix prevents same-name/same-initial schools from ever
+    sharing a live code. The name prefix remains useful in referral links and
+    printed cards; the address is part of the school identity, not the code.
+    """
+    prefix = _code_slug(name)
+    suffix = re.sub(r"[^A-F0-9]", "", school_id.replace("-", "").upper())[:8]
+    return f"{prefix}-{suffix}"
+
+
+def _is_developer_admin_route(claim: "VerificationClaim") -> bool:
+    """Allow only the explicit dev code to bypass required address metadata."""
+    submitted = (claim.access_code or "").strip().upper()
+    return bool(
+        settings.DEVELOPER_ACCESS_ENABLED
+        and submitted == "LEVELUP-EDU-DEV"
+        and any(
+            hmac.compare_digest(submitted, configured)
+            for configured in settings.EDUCATOR_ACCESS_CODES
+        )
+    )
+
+
 def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization"]:
     name = (claim.organization_name or "").strip()
     if not name:
         return None
     org_type = _normal_org_type(claim.organization_type)
+    address = (claim.address or "").strip()
+    developer_route = _is_developer_admin_route(claim)
     svc = _svc()
     if claim.organization_id:
         selected = (
@@ -173,7 +210,40 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             or []
         )
         if selected:
-            return _org_from_school(selected[0].get("id"))
+            selected_row = selected[0]
+            existing_address = (selected_row.get("address") or "").strip()
+            effective_address = address or existing_address
+            if not developer_route and len(effective_address) < 8:
+                raise HTTPException(
+                    status_code=400,
+                    detail="A full organisation address is required for admin access.",
+                )
+            if address and existing_address and existing_address.casefold() != address.casefold():
+                raise HTTPException(status_code=409, detail="That school name is registered at a different address. Select the matching school or use its exact address.")
+            school_id = selected_row.get("id")
+            updates = {}
+            if address and not existing_address:
+                updates["address"] = address
+            for key, value in (("city", claim.city), ("state", claim.state), ("country", claim.country)):
+                if (value or "").strip():
+                    updates[key] = value.strip()
+            if updates:
+                try:
+                    svc.table("schools").update(updates).eq("id", school_id).execute()
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("institutions: selected school metadata update skipped", error=str(exc))
+            if not selected_row.get("school_code"):
+                code = _school_affiliation_code(
+                    svc,
+                    selected_row.get("name") or name,
+                    effective_address,
+                    school_id,
+                )
+                try:
+                    svc.table("schools").update({"school_code": code}).eq("id", school_id).execute()
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("institutions: selected school code update skipped", error=str(exc))
+            return _org_from_school(school_id)
     existing = (
         svc.table("schools")
         .select("*")
@@ -185,6 +255,17 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         or []
     )
     row = existing[0] if existing else None
+    existing_address = (row.get("address") or "").strip() if row else ""
+    if row and address and existing_address and existing_address.casefold() != address.casefold():
+        raise HTTPException(
+            status_code=409,
+            detail="That organisation name is registered at a different address. Select the matching organisation or use its exact address.",
+        )
+    if not developer_route and (not row or len((row.get("address") or address).strip()) < 8):
+        raise HTTPException(
+            status_code=400,
+            detail="A full organisation address is required for admin access.",
+        )
     if not row:
         row = (
             svc.table("schools")
@@ -192,6 +273,10 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
                 {
                     "name": name,
                     "institution_type": org_type,
+                    "address": address or None,
+                    "city": (claim.city or "").strip() or None,
+                    "state": (claim.state or "").strip() or None,
+                    "country": (claim.country or "Nigeria").strip() or "Nigeria",
                     "ibass_verified": False,
                 }
             )
@@ -199,9 +284,27 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             .data
             or [None]
         )[0]
+    elif address and not existing_address:
+        try:
+            svc.table("schools").update({
+                "address": address,
+                "city": (claim.city or "").strip() or None,
+                "state": (claim.state or "").strip() or None,
+                "country": (claim.country or "Nigeria").strip() or "Nigeria",
+            }).eq("id", row.get("id")).execute()
+            row["address"] = address
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: organisation metadata update skipped", error=str(exc))
     if not row:
         return None
     school_id = row.get("id")
+    if not row.get("school_code"):
+        try:
+            code = _school_affiliation_code(svc, row.get("name") or name, row.get("address") or address, school_id)
+            svc.table("schools").update({"school_code": code}).eq("id", school_id).execute()
+            row["school_code"] = code
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: school code generation skipped", error=str(exc))
     if claim.provider_session_only:
         try:
             svc.table("schools").update({"provider_session_only": True}).eq(
@@ -618,6 +721,9 @@ class Organization(_InstitutionBase):
     moe_approval_no: Optional[str] = None
     cac_no: Optional[str] = None
     state: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
     school_code: Optional[str] = None
     verification_status: str = "unverified"  # unverified|claimed|pending|verified|rejected
     verification_method: Optional[str] = None
@@ -671,6 +777,10 @@ class VerificationClaim(_InstitutionBase):
     role: Optional[str] = None
     work_email: Optional[str] = None
     registry_code: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    country: Optional[str] = None
     provider_session_only: bool = False
     verification_method: Optional[str] = None
     access_code: Optional[str] = None
@@ -1096,7 +1206,7 @@ async def validate_admin_access_code(
         # A local developer can continue before the optional grant migration is
         # applied. Production still fails closed because the persisted grant is
         # required for every later verification request.
-        if settings.DEBUG and submitted == "LEVELUP-EDU-DEV":
+        if settings.DEVELOPER_ACCESS_ENABLED and submitted == "LEVELUP-EDU-DEV":
             log.warning(
                 "institutions: admin access grant persistence skipped in debug",
                 user_id=current_user["id"],
@@ -1160,7 +1270,7 @@ async def submit_verification(
     # POST /access-code/validate; it simply was not remembered.
     has_persisted_grant = bool(current_user.get("admin_access_granted_at"))
     debug_code_valid = bool(
-        settings.DEBUG
+        settings.DEVELOPER_ACCESS_ENABLED
         and claim.access_code
         and claim.access_code.strip().upper() == "LEVELUP-EDU-DEV"
         and any(
@@ -1195,6 +1305,7 @@ async def submit_verification(
             _svc().table("users").update(
                 {
                     "account_type": account_type,
+                    "account_type_selected_at": datetime.now(timezone.utc).isoformat(),
                     "onboarding_completed": True,
                 }
             ).eq("id", current_user["id"]).execute()
@@ -1601,14 +1712,32 @@ async def get_affiliation_stats(
     No individual student data is exposed here or anywhere in this module.
     """
     org_id = _assert_own_institution(institution_id, current_user)
-    # TODO(institutions): COUNT self-reported affiliations, suppress below k
+    school_row = (
+        _svc()
+        .table("schools")
+        .select("school_code")
+        .eq("id", org_id or institution_id)
+        .limit(1)
+        .execute()
+        .data
+        or [None]
+    )[0]
+    # Keep the aggregate endpoint honest when an older/mocked registry client
+    # returns an unexpected value instead of a school row.
+    school = school_row if isinstance(school_row, dict) else {}
+    count = 0
+    try:
+        result = _svc().table("student_affiliations").select("student_id", count="exact", head=True).eq("school_id", org_id or institution_id).execute()
+        count = int(result.count or 0)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: affiliation count unavailable", error=str(exc))
     stats = AffiliationStats(
         # The caller's resolved org, not the raw path value — echoing back
         # whatever was in the URL is how "me" ended up as an institution code.
         organization_id=org_id or institution_id,
-        affiliated_students=None,
-        below_threshold=True,
-        school_code="",
+        affiliated_students=count if count >= 5 else None,
+        below_threshold=count < 5,
+        school_code=school.get("school_code") or "",
     )
     return ResponseModel(data=stats.model_dump(by_alias=True))
 
