@@ -12,6 +12,8 @@ from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request, H
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+import email_codes
+import email_delivery
 from config import settings
 from database import db
 from models import *
@@ -60,11 +62,6 @@ async def health():
     return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
 
 
-_EMAIL_CODES: dict[str, dict] = {}
-_PASSWORD_RESET_CODES: dict[str, dict] = {}
-_EMAIL_CODE_TTL_MINUTES = 15
-
-
 def _normalise_email(value: str) -> str:
     return (value or "").strip().lower()
 
@@ -85,38 +82,62 @@ def _is_dev_account_email(email: str) -> bool:
     )
 
 
-def _deliver_email_code(email: str, code: str):
-    """
-    Email delivery hook.
+_CODE_FAILURE_DETAIL = {
+    email_codes.MISSING: "Request a verification code first.",
+    email_codes.EXPIRED: "Verification code expired. Request a new code.",
+    email_codes.TOO_MANY_ATTEMPTS: "Too many attempts. Request a new code.",
+    email_codes.INVALID: "Invalid verification code.",
+}
 
-    Development logs the code. Production should connect this to the transactional
-    email provider before public launch.
-    """
-    log.info("Email verification code generated", email=email, code=code if settings.DEBUG else "***")
+_RESET_FAILURE_DETAIL = {
+    email_codes.MISSING: "Request a new reset code first.",
+    email_codes.EXPIRED: "Reset code expired. Request a new code.",
+    email_codes.TOO_MANY_ATTEMPTS: "Too many attempts. Request a new code.",
+    email_codes.INVALID: "Invalid reset code.",
+}
 
 
-def _require_valid_email_code(email: str, code: str):
+async def _issue_email_code(email: str, purpose: str) -> str:
+    """Generate, store and send a code. Raises HTTPException if delivery fails."""
+    code = f"{secrets.randbelow(1000000):06d}"
+
+    # Stored BEFORE sending. The reverse order can deliver a code that was
+    # never recorded and therefore can never be verified; a stored code that
+    # was never delivered merely expires unused.
+    await email_codes.store_code(email, code, purpose=purpose)
+
+    send = (
+        email_delivery.send_password_reset_code
+        if purpose == email_codes.PURPOSE_PASSWORD_RESET
+        else email_delivery.send_verification_code
+    )
+    try:
+        await send(email, code)
+    except email_delivery.EmailDeliveryError as exc:
+        # Never answer sent:true for mail that was not accepted -- that was the
+        # original defect and is indistinguishable from success in the UI.
+        log.error("Email code delivery failed", email=email, purpose=purpose, error=str(exc))
+        raise HTTPException(
+            status_code=502,
+            detail="Could not send the email. Please try again shortly.",
+        )
+    return code
+
+
+async def _require_valid_email_code(email: str, code: str):
     submitted = str(code or "").strip()
     if settings.EMAIL_VERIFICATION_DEV_CODES and submitted == "000000":
         return
 
-    record = _EMAIL_CODES.get(email)
-    if not record:
-        raise HTTPException(status_code=400, detail="Request a verification code first.")
+    outcome = await email_codes.verify_code(
+        email, submitted, purpose=email_codes.PURPOSE_SIGNUP
+    )
+    if outcome == email_codes.OK:
+        # verify_code consumes the record, so the code cannot be replayed and
+        # callers have nothing left to clean up.
+        return
 
-    if datetime.utcnow() > record["expires_at"]:
-        _EMAIL_CODES.pop(email, None)
-        raise HTTPException(status_code=400, detail="Verification code expired. Request a new code.")
-
-    if record.get("attempts", 0) >= 5:
-        _EMAIL_CODES.pop(email, None)
-        raise HTTPException(status_code=400, detail="Too many attempts. Request a new code.")
-
-    if not secrets.compare_digest(str(record["code"]), submitted):
-        record["attempts"] = record.get("attempts", 0) + 1
-        raise HTTPException(status_code=400, detail="Invalid verification code.")
-
-    return
+    raise HTTPException(status_code=400, detail=_CODE_FAILURE_DETAIL[outcome])
 
 
 @app.post("/api/auth/email-code/request", response_model=ResponseModel)
@@ -129,14 +150,8 @@ async def request_email_code(body: dict):
     if existing.data and existing.data[0].get("password_hash"):
         raise HTTPException(status_code=409, detail="Email already registered. Try Log in instead.")
 
-    code = f"{secrets.randbelow(1000000):06d}"
-    _EMAIL_CODES[email] = {
-        "code": code,
-        "expires_at": datetime.utcnow() + timedelta(minutes=_EMAIL_CODE_TTL_MINUTES),
-        "attempts": 0,
-    }
-    _deliver_email_code(email, code)
-    data = {"sent": True, "expiresInMinutes": _EMAIL_CODE_TTL_MINUTES}
+    code = await _issue_email_code(email, email_codes.PURPOSE_SIGNUP)
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)
@@ -149,14 +164,8 @@ async def request_password_reset_code(body: dict):
     if not email or "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
 
-    code = f"{secrets.randbelow(1000000):06d}"
-    _PASSWORD_RESET_CODES[email] = {
-        "code": code,
-        "expires_at": datetime.utcnow() + timedelta(minutes=_EMAIL_CODE_TTL_MINUTES),
-        "attempts": 0,
-    }
-    _deliver_email_code(email, code)
-    data = {"sent": True, "expiresInMinutes": _EMAIL_CODE_TTL_MINUTES}
+    code = await _issue_email_code(email, email_codes.PURPOSE_PASSWORD_RESET)
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
     return ResponseModel(data=data)
@@ -172,26 +181,17 @@ async def confirm_password_reset(body: dict):
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
 
-    record = _PASSWORD_RESET_CODES.get(email)
-    if settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000":
-        record = record or {"attempts": 0}
-    if not record:
-        raise HTTPException(status_code=400, detail="Request a new reset code first.")
-    if record.get("expires_at") and datetime.utcnow() > record["expires_at"]:
-        _PASSWORD_RESET_CODES.pop(email, None)
-        raise HTTPException(status_code=400, detail="Reset code expired. Request a new code.")
-    if record.get("attempts", 0) >= 5:
-        _PASSWORD_RESET_CODES.pop(email, None)
-        raise HTTPException(status_code=400, detail="Too many attempts. Request a new code.")
-    if code != "000000" and not secrets.compare_digest(str(record.get("code", "")), code):
-        record["attempts"] = record.get("attempts", 0) + 1
-        raise HTTPException(status_code=400, detail="Invalid reset code.")
+    if not (settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000"):
+        outcome = await email_codes.verify_code(
+            email, code, purpose=email_codes.PURPOSE_PASSWORD_RESET
+        )
+        if outcome != email_codes.OK:
+            raise HTTPException(status_code=400, detail=_RESET_FAILURE_DETAIL[outcome])
 
     existing = db.get_service_client().table("users").select("id").eq("email", email).limit(1).execute()
     if existing.data:
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         db.get_service_client().table("users").update({"password_hash": password_hash}).eq("id", existing.data[0]["id"]).execute()
-    _PASSWORD_RESET_CODES.pop(email, None)
     return ResponseModel(data={"updated": True})
 
 
@@ -268,7 +268,7 @@ async def auth_signup(body: dict, request: Request):
         raise HTTPException(status_code=400, detail="Valid email is required")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
-    _require_valid_email_code(email, email_code)
+    await _require_valid_email_code(email, email_code)
     if device_id:
         try:
             cooldown = (
@@ -323,7 +323,6 @@ async def auth_signup(body: dict, request: Request):
                 }).eq("id", existing_user["id"]).execute()
                 user = result.data[0]
                 user["onboarding_completed"] = False
-                _EMAIL_CODES.pop(email, None)
                 token = Auth.create_jwt(user["id"])
                 await _post_auth_device_register(user["id"], body, request)
                 return ResponseModel(data={"token": token, "user": user})
@@ -333,7 +332,6 @@ async def auth_signup(body: dict, request: Request):
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
                             date_of_birth=date_of_birth)
         user["onboarding_completed"] = False
-        _EMAIL_CODES.pop(email, None)
         token = Auth.create_jwt(user["id"])
         await _post_auth_device_register(user["id"], body, request)
         return ResponseModel(data={"token": token, "user": user})
