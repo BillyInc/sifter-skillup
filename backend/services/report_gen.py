@@ -19,6 +19,7 @@ taxonomy it resolves to — never grades or source documents.
 import html
 import io
 import zipfile
+from urllib.parse import quote
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
@@ -64,9 +65,12 @@ def build_report_html(ctx: ReportContext) -> str:
     cls = f" · {e(meta)}" if meta else ""
 
     return f"""<!doctype html>
-<html><head><meta charset="utf-8"><title>Career Report — {e(ctx.student_name)}</title>
+<html><head><meta charset="utf-8"><title>Career pathway — {e(ctx.student_name)}</title>
 <style>
   @media print {{ @page {{ margin: 18mm; }} }}
+  .toolbar {{ position: sticky; top: 12px; display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; }}
+  .toolbar button {{ border: 1px solid #bbb; border-radius: 6px; background: #fff; padding: 8px 12px; cursor: pointer; }}
+  @media print {{ .toolbar {{ display: none; }} }}
   body {{ font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a; max-width: 720px;
          margin: 0 auto; padding: 32px; line-height: 1.55; }}
   .watermark {{ position: fixed; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-28deg);
@@ -88,12 +92,13 @@ def build_report_html(ctx: ReportContext) -> str:
            font-size: 11px; color: #888; }}
 </style></head>
 <body>
+  <div class="toolbar"><button onclick="window.print()">Print / save PDF</button></div>
   <div class="watermark">{e(watermark)}</div>
   <div class="content">
   <div class="head">
     {school}
     <h1>{e(ctx.student_name)}</h1>
-    <div class="sub">Career pathway report{cls}</div>
+    <div class="sub">Career pathway{cls}</div>
   </div>
 
   <h2>Your direction</h2>
@@ -110,7 +115,7 @@ def build_report_html(ctx: ReportContext) -> str:
   {admission}
 
   <div class="foot">
-    Generated {e(ctx.generated_on)} by Sifter LevelUp. This report maps your chosen
+    Generated {e(ctx.generated_on)} by Sifter LevelUp. This pathway maps your chosen
     direction to the skills and roles it unlocks. Labour-market demand figures are
     added as they are published.
   </div>
@@ -133,6 +138,8 @@ def build_login_card_html(
     school = f"<div class='school'>{e(school_name)}</div>" if school_name else ""
     meta = " · ".join(part for part in [student_class, stream] if part)
     cls = f" · {e(meta)}" if meta else ""
+    claim_url = f"https://levelup.com.ng/settings/my-school?claim={quote(claim_code)}"
+    qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + quote(claim_url, safe="")
     return f"""<!doctype html>
 <html><head><meta charset="utf-8"><title>Login card — {e(student_name)}</title>
 <style>
@@ -146,6 +153,7 @@ def build_login_card_html(
   .code {{ font-family: 'Courier New', monospace; font-size: 34px; font-weight: bold;
            letter-spacing: 6px; margin: 6px 0 14px; }}
   .how {{ font-size: 12px; color: #555; line-height: 1.5; }}
+  .qr {{ width: 180px; height: 180px; margin: 14px auto; display: block; }}
 </style></head>
 <body>
   <div class="card">
@@ -154,9 +162,10 @@ def build_login_card_html(
     <div class="sub">Sifter LevelUp{cls}</div>
     <div class="label">Your claim code</div>
     <div class="code">{e(claim_code)}</div>
+    <img class="qr" src="{e(qr_url)}" alt="Scan to open the claim page" />
     <div class="how">
-      Open Sifter LevelUp → Settings → My School → “Have a claim code?” and enter
-      this code to make your account yours. Keep this card private.
+      Scan the code or open Sifter LevelUp → Settings → My School → “Have a claim
+      code?” and enter this code to make your account yours. Keep this card private.
     </div>
   </div>
 </body></html>"""

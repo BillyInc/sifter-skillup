@@ -207,7 +207,22 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           maxSelected={12}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch={false}
-          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme's O-level requirements fit your plan."
+          helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme&apos;s O-level requirements fit your plan."
+        />
+      ) : null}
+
+      {value.stream && door ? (
+        <LiveSubjectMultiSelect
+          label="Your UTME/JAMB subjects"
+          stream={value.stream}
+          examType="utme"
+          value={value.jambSubjects}
+          onChange={(v) => onChange({ jambSubjects: v as string[] })}
+          minSelected={4}
+          maxSelected={4}
+          showSearch={false}
+          fixedSubjects={["English Language"]}
+          helperText="Use of English is fixed. Choose 3 other UTME subjects. The stream only orders relevant choices; all valid UTME subjects remain available."
         />
       ) : null}
 
@@ -262,7 +277,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
             Universities may use different official names for a similar
-            programme. We will show each university's name and requirements so
+            programme. We will show each university&apos;s name and requirements so
             you can tell the options apart.
           </Text>
         </View>
@@ -270,18 +285,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
 
       {door === "unsure" ? (
         <View style={{ gap: Spacing.lg }}>
-          <LiveSubjectMultiSelect
-            label="Your UTME/JAMB subjects"
-            examType="utme"
-            value={value.jambSubjects}
-            onChange={(v) => onChange({ jambSubjects: v as string[] })}
-            minSelected={4}
-            maxSelected={4}
-            showSearch={false}
-            fixedSubjects={["English Language"]}
-            helperText="Use of English is fixed. Choose 3 other UTME subjects. We will compare the combination with official JAMB programme requirements, then check O-level subjects too."
-          />
-          <Text style={[styles.caption, { color: colors.textMuted }]}>
+          <Text style={[styles.caption, { color: colors.textMuted }]}> 
             We will show programmes that accept this combination, explain any
             missing O-level requirement, and then show the universities offering
             the programme.

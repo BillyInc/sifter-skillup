@@ -13,6 +13,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type AccountType = "pending" | "student" | "educator" | "institution_admin";
 
+type RoutedUser = {
+  auth_provider?: string | null;
+  onboarding_completed?: boolean | null;
+  account_type?: string | null;
+  account_type_selected_at?: string | null;
+};
+
+/**
+ * Only completed non-guest accounts that never selected a persona are sent
+ * back to the account-type gate. Older databases defaulted these rows to
+ * `student`, so the selection timestamp is also part of the legacy signal.
+ */
+export function needsLegacyTypeSelection(user?: RoutedUser | null): boolean {
+  if (!user || user.auth_provider === "guest") return false;
+  if (user.onboarding_completed !== true) return false;
+  if (user.account_type === "educator" || user.account_type === "institution_admin") {
+    return false;
+  }
+  if (user.account_type === "student") {
+    return !user.account_type_selected_at;
+  }
+  return true;
+}
+
 const KEY = "@levelup_account_type_v1";
 
 function keyFor(userId?: string | null): string {

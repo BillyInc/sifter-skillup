@@ -94,12 +94,19 @@ class Auth:
             user_id = payload.get("sub")
             if not user_id:
                 raise HTTPException(status_code=401, detail="Invalid token")
+            # Older development databases may not have the lifecycle column
+            # yet. Read the user first and apply the optional soft-delete flag
+            # in Python; the lifecycle migration still enforces it once run.
             result = db.get_service_client().table("users").select("*").eq("id", user_id).single().execute()
             if not result.data:
                 raise HTTPException(status_code=401, detail="User not found")
             user = result.data
-            # Backward-compatible: legacy rows predate account_type — default to student.
-            user.setdefault("account_type", "student")
+            if user.get("is_deleted") is True:
+                raise HTTPException(status_code=401, detail="User not found")
+            # Legacy rows can be onboarding-complete without ever selecting a
+            # persona. Keep that state pending so the client can send only
+            # those accounts back through the account-type gate.
+            user.setdefault("account_type", "pending")
             return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")

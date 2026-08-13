@@ -6,6 +6,7 @@
 from pydantic import AliasGenerator, BaseModel, ConfigDict, Field, field_validator
 from pydantic.alias_generators import to_snake
 from typing import Optional, List, Dict, Any, Literal
+from datetime import datetime
 from enum import Enum
 
 
@@ -66,6 +67,7 @@ class UserProfile(BaseModel):
     username:     Optional[str] = None
     avatar_url:   Optional[str] = None
     account_type: str           = "pending"
+    account_type_selected_at: Optional[datetime] = None
 
 
 #  Level / Progress 

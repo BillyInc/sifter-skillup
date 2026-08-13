@@ -94,6 +94,9 @@ export const adminNav = {
   students(router: Nav) {
     router.push("/(admin)/students" as never);
   },
+  jambAccounts(router: Nav) {
+    router.push("/(admin)/students?mode=jamb" as never);
+  },
   session(router: Nav) {
     router.push("/(admin)/session" as never);
   },
@@ -211,22 +214,28 @@ export function getAdminNavGroups(
       : audience === "provider"
         ? "Provider workspace"
         : "School workspace";
-  const learnerItem: AdminNavItem =
+  const learnerItems: AdminNavItem[] | AdminNavItem | null =
     audience === "provider"
-      ? {
+      ? [{
           key: "session",
           label: "Learner sessions",
           icon: "🎯",
           match: "session",
           go: (n) => adminNav.session(n),
-        }
-      : {
-          key: "students",
-          label: audience === "university" ? "Student access" : "Learners",
+        }, {
+          key: "jamb-accounts",
+          label: "JAMB accounts",
+          icon: "USER",
+          match: "students",
+          go: (n) => adminNav.jambAccounts(n),
+        }]
+      : audience === "school" ? {
+           key: "students",
+           label: "Learners",
           icon: "👥",
           match: "students",
           go: (n) => adminNav.students(n),
-        };
+        } : null;
 
   // §5.0 sidebar, in the spec's order for universities:
   //   General Dashboard · Domain Reach Audit · Market Intelligence ·
@@ -270,17 +279,19 @@ export function getAdminNavGroups(
       match: "market-intelligence",
       go: (n) => adminNav.marketIntelligence(n),
     },
-    {
-      key: "skills-gap",
-      label: audience === "university" ? "Skills gaps" : "Learning gaps",
-      icon: "🧩",
-      match: "skills-gap",
-      go: (n) => adminNav.skillsGap(n),
-    },
+    ...(audience === "university"
+      ? [{
+          key: "skills-gap",
+          label: "Programme skill coverage",
+          icon: "🧩",
+          match: "skills-gap",
+          go: (n: Nav) => adminNav.skillsGap(n),
+        }]
+      : []),
     // Universities meet Explore here, in the middle of the intelligence group;
     // advisory audiences already have it pinned at the top.
     ...(audience === "university" ? [EXPLORE_ITEM] : []),
-    learnerItem,
+    ...(learnerItems ? (Array.isArray(learnerItems) ? learnerItems : [learnerItems]) : []),
     {
       // §5.6/§6A.1 — SUBMIT only. This is not an inbox: feedback is outbound to
       // the Sifter team and no admin can read anyone else's.
