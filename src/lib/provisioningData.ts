@@ -91,6 +91,7 @@ interface WireGenerated {
   student_type?: ProvisioningStudentType | null;
   claim_code: string;
   claim_expires_at?: string | null;
+  guidance_complete?: boolean;
 }
 interface WireRosterStudent {
   user_id: string;
@@ -142,6 +143,7 @@ const toGenerated = (w: WireGenerated): GeneratedStudent => ({
   studentType: w.student_type,
   claimCode: w.claim_code,
   claimExpiresAt: w.claim_expires_at,
+  guidanceComplete: Boolean(w.guidance_complete),
 });
 const toRosterStudent = (w: WireRosterStudent): RosterStudent => ({
   userId: w.user_id,

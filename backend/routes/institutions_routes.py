@@ -673,6 +673,7 @@ class VerificationClaim(_InstitutionBase):
     registry_code: Optional[str] = None
     provider_session_only: bool = False
     verification_method: Optional[str] = None
+    access_code: Optional[str] = None
 
 
 class AdminAccessCodeRequest(_InstitutionBase):
@@ -1092,6 +1093,22 @@ async def validate_admin_access_code(
         if not res.data:
             raise RuntimeError("admin access grant matched no user row")
     except Exception as exc:  # noqa: BLE001
+        # A local developer can continue before the optional grant migration is
+        # applied. Production still fails closed because the persisted grant is
+        # required for every later verification request.
+        if settings.DEBUG and submitted == "LEVELUP-EDU-DEV":
+            log.warning(
+                "institutions: admin access grant persistence skipped in debug",
+                user_id=current_user["id"],
+                error=str(exc),
+            )
+            return ResponseModel(
+                data={
+                    "accepted": True,
+                    "accessTier": "owner_code",
+                    "notice": "Development access accepted; apply the admin access migration before production use.",
+                },
+            )
         # Fail CLOSED: if we cannot record the grant we must not report success,
         # or the user is told they are unlocked while /verify will refuse them.
         log.error(
@@ -1141,7 +1158,17 @@ async def submit_verification(
     # institution endpoint — including the eight gated in this same change.
     # The code itself has always been validated by
     # POST /access-code/validate; it simply was not remembered.
-    if not current_user.get("admin_access_granted_at"):
+    has_persisted_grant = bool(current_user.get("admin_access_granted_at"))
+    debug_code_valid = bool(
+        settings.DEBUG
+        and claim.access_code
+        and claim.access_code.strip().upper() == "LEVELUP-EDU-DEV"
+        and any(
+            hmac.compare_digest(claim.access_code.strip().upper(), configured)
+            for configured in settings.EDUCATOR_ACCESS_CODES
+        )
+    )
+    if not has_persisted_grant and not debug_code_valid:
         log.warning(
             "institutions: verify claim refused, no owner-code grant",
             user_id=current_user["id"],
@@ -1374,58 +1401,16 @@ async def get_skills_gap(
     institution_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """list[SkillGapRow] — the top foundation skills of each programme's direct/
-    functional domains. in_curriculum stays False (the programmes table carries
-    no skills column to verify coverage against); demand_pct None until ingest."""
-    _assert_own_institution(institution_id, current_user)
-    try:
-        programmes = _school_programmes(current_user, cap=60)
-        prog_ids = [p["id"] for p in programmes]
-        pd_rows = [
-            r for r in _programme_domain_rows(prog_ids)
-            if r.get("match_type") in ("direct", "functional")
-        ]
-        prog_by_id = {p["id"]: p for p in programmes}
-        domain_ids = list({r["domain_id"] for r in pd_rows})
-        # Fetch foundation_skills for the involved domains.
-        dfound: dict = {}
-        if domain_ids:
-            dres = (
-                _svc()
-                .table("domains")
-                .select("id, name, foundation_skills")
-                .in_("id", domain_ids)
-                .execute()
-            )
-            dfound = {d["id"]: d for d in (dres.data or [])}
+    """Return programme skill coverage only when the required evidence exists.
 
-        rows: List[SkillGapRow] = []
-        for r in pd_rows:
-            if len(rows) >= 100:
-                break
-            prog = prog_by_id.get(r["programme_id"])
-            dom = dfound.get(r["domain_id"])
-            if not prog or not dom:
-                continue
-            for s in (dom.get("foundation_skills") or [])[:5]:
-                skill_name = s.get("skill") if isinstance(s, dict) else str(s)
-                if not skill_name:
-                    continue
-                rows.append(
-                    SkillGapRow(
-                        programme_name=prog.get("name") or "",
-                        domain_name=dom.get("name") or "",
-                        skill=skill_name,
-                        demand_pct=None,
-                        in_curriculum=False,
-                    )
-                )
-                if len(rows) >= 100:
-                    break
-        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
-    except Exception as exc:  # noqa: BLE001
-        log.error("institutions skills_gap failed", error=str(exc))
-        return ResponseModel(data=[])
+    A domain's generic foundation skills are not proof that a programme has a
+    curriculum gap, so this route must not label them as gaps. Until curriculum
+    coverage and demand ingestion are available, return an honest empty state.
+    """
+    _assert_own_institution(institution_id, current_user)
+    # The current schema has neither programme curriculum skill coverage nor
+    # demand percentages. Do not manufacture rows from domain taxonomy data.
+    return ResponseModel(data=[])
 
 
 @router.get("/{institution_id}/role-demand", response_model=ResponseModel)

@@ -21,6 +21,7 @@ import {
   SafeAreaView,
   Modal,
   type KeyboardTypeOptions,
+  type TextInputProps,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -145,6 +146,7 @@ export function AuthField({
   keyboardType,
   autoFocus,
   hint,
+  autoComplete,
 }: {
   label: string;
   value: string;
@@ -154,6 +156,8 @@ export function AuthField({
   keyboardType?: KeyboardTypeOptions;
   autoFocus?: boolean;
   hint?: string;
+  /** Explicit browser/native autofill policy for each auth form. */
+  autoComplete?: TextInputProps["autoComplete"];
 }) {
   const { colors } = useTheme();
   const [hidden, setHidden] = useState(!!secure);
@@ -191,8 +195,9 @@ export function AuthField({
           secureTextEntry={hidden}
           keyboardType={keyboardType}
           autoCapitalize="none"
-          autoCorrect={false}
-          autoFocus={autoFocus}
+           autoCorrect={false}
+           autoFocus={autoFocus}
+           autoComplete={autoComplete}
         />
         {secure ? (
           <TouchableOpacity

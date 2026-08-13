@@ -87,6 +87,7 @@ export default function AdmissionBrowseScreen() {
     olevel_subjects?: string | string[];
     exam_type?: string | string[];
     stream?: string | string[];
+    admin?: string | string[];
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -101,13 +102,17 @@ export default function AdmissionBrowseScreen() {
     decodeURIComponent(readParam(params.subjects)).replace(/,/g, ", "),
   );
   const [olevelSubjectText, setOlevelSubjectText] = useState(
-    decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
+    initialMode === "subjects"
+      ? decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", ")
+      : "",
   );
   const rawExamType = readParam(params.exam_type);
   const [subjectExamType] = useState<"olevel" | "combined">(
     rawExamType === "olevel" ? "olevel" : "combined",
   );
-  const [stream] = useState(readParam(params.stream));
+  const isAdminExplore = readParam(params.admin) === "1";
+  const [contextClass, setContextClass] = useState("");
+  const [stream, setStream] = useState(readParam(params.stream));
   const [loading, setLoading] = useState(false);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [selected, setSelected] = useState<Candidate | null>(null);
@@ -131,6 +136,48 @@ export default function AdmissionBrowseScreen() {
     () => olevelSubjectText.split(",").map((s) => s.trim()).filter(Boolean),
     [olevelSubjectText],
   );
+
+  if (isAdminExplore && (!contextClass || !stream)) {
+    return (
+      <ScrollView
+        style={{ flex: 1, backgroundColor: colors.bg }}
+        contentContainerStyle={[styles.scroll, webContainer as object]}
+      >
+        <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>GUIDANCE CONTEXT</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Who are you guiding?</Text>
+        <Text style={[styles.hint, { color: colors.textMuted }]}>Choose the learner's class and stream before we show admission subjects or programme guidance.</Text>
+        <Text style={[styles.label, { color: colors.textSoft }]}>Class</Text>
+        <View style={styles.modeRow}>
+          {["SS1", "SS2", "SS3", "JAMB"].map((value) => (
+            <TouchableOpacity
+              key={value}
+              onPress={() => setContextClass(value)}
+              style={[styles.modeBtn, { backgroundColor: contextClass === value ? Brand.primary : colors.card, borderColor: colors.border }]}
+            >
+              <Text style={{ color: contextClass === value ? colors.textInverse : colors.text }}>{value}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <Text style={[styles.label, { color: colors.textSoft }]}>Stream</Text>
+        <View style={styles.modeRow}>
+          {["science", "commercial", "art"].map((value) => (
+            <TouchableOpacity
+              key={value}
+              onPress={() => setStream(value)}
+              style={[styles.modeBtn, { backgroundColor: stream === value ? Brand.primary : colors.card, borderColor: colors.border }]}
+            >
+              <Text style={{ color: stream === value ? colors.textInverse : colors.text }}>{value[0].toUpperCase() + value.slice(1)}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        {contextClass && stream ? (
+          <TouchableOpacity onPress={() => {}} style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}>
+            <Text style={styles.actionText}>Continue</Text>
+          </TouchableOpacity>
+        ) : null}
+      </ScrollView>
+    );
+  }
 
   const runProgrammeSearch = async (term = query) => {
     const q = term.trim();
@@ -463,17 +510,11 @@ export default function AdmissionBrowseScreen() {
               <Text style={styles.actionText}>Search</Text>
             </TouchableOpacity>
           </View>
-          <LiveSubjectMultiSelect
-            label="O-level subjects for requirement check"
-            stream={stream || undefined}
-            examType="olevel"
-            value={olevelSubjects}
-            onChange={(next) => setOlevelSubjectText(next.join(", "))}
-            minSelected={5}
-            maxSelected={9}
-            showSearch={false}
-            helperText="Optional for programme search, but needed before treating a programme and school as a strong fit."
-          />
+          <Text style={[styles.hint, { color: colors.textMuted }]}>
+            Programme search is based on the programme name. Open a result to
+            review its UTME and O-level requirements, or use Subjects when you
+            want subject-based matching.
+          </Text>
         </View>
       ) : (
         <View style={styles.panel}>
@@ -481,6 +522,7 @@ export default function AdmissionBrowseScreen() {
             <LiveSubjectMultiSelect
               label="Your UTME subjects"
               examType="utme"
+              stream={stream || undefined}
               value={subjects}
               onChange={(next) => setSubjectText(next.join(", "))}
               minSelected={4}

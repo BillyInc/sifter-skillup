@@ -4,7 +4,7 @@
  * Account creation lives only at /(auth)/signup so every signup path uses the
  * full profile, date-of-birth, legal, and email-code flow.
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -19,6 +19,7 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Brand,
@@ -91,6 +92,14 @@ export default function AuthScreen() {
     setEmail("");
     setPassword("");
   };
+
+  // Login credentials are intentionally ephemeral. This also handles browser
+  // back/forward and native navigation where the route may remain mounted.
+  useFocusEffect(
+    useCallback(() => {
+      return () => resetLoginFields();
+    }, []),
+  );
 
   const goToSignup = () => {
     setError("");
@@ -411,6 +420,7 @@ export default function AuthScreen() {
                 keyboardType="email-address"
                 placeholder="you@example.com"
                 autoFocus
+                autoComplete="username"
               />
 
               <AuthField
@@ -419,6 +429,7 @@ export default function AuthScreen() {
                 onChangeText={setPassword}
                 secure
                 placeholder="Password"
+                autoComplete="current-password"
               />
 
               <TouchableOpacity

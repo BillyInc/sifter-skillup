@@ -200,6 +200,16 @@ async def list_programmes(
         if institution_type:
             query = query.eq("institution_type", institution_type)
         res = query.order("name").limit(safe_limit).execute()
+        if not res.data and institution_type == "university":
+            # Some earlier programme imports did not set institution_type.
+            # Keep the student surface useful for those rows while still
+            # excluding records explicitly marked as non-university.
+            fallback = db.get_service_client().schema(_SCHEMA).table(
+                "programmes"
+            ).select("id, name, display_name, institution_type, discipline").or_(
+                f"name.ilike.{like},display_name.ilike.{like}"
+            ).is_("institution_type", "null").order("name").limit(safe_limit).execute()
+            res = fallback
         items = [
             {
                 "id": r["id"],

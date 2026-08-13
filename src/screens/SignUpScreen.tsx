@@ -5,9 +5,9 @@
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, TextInput, Pressable } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "@/theme";
@@ -140,6 +140,26 @@ export default function SignUpScreen() {
   const [error, setError] = useState("");
   const [showTerms, setShowTerms] = useState(false);
   const passwordMismatch = Boolean(confirmPassword && password !== confirmPassword);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        // Never retain signup data when this route loses focus. In particular,
+        // do not let browser/native credential autofill look like app state.
+        setFirstName("");
+        setLastName("");
+        setMiddleName("");
+        setDateOfBirth("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setEmailCode("");
+        setCodeSent(false);
+        setDevCode("");
+        setError("");
+      };
+    }, []),
+  );
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -322,6 +342,7 @@ export default function SignUpScreen() {
         onChangeText={handleEmailChange}
         keyboardType="email-address"
         placeholder="you@example.com"
+        autoComplete="off"
       />
       <AuthField
         label="Password"
@@ -330,6 +351,7 @@ export default function SignUpScreen() {
         secure
         placeholder="********"
         hint="At least 8 characters"
+        autoComplete="new-password"
       />
       <AuthField
         label="Confirm password"
@@ -337,6 +359,7 @@ export default function SignUpScreen() {
         onChangeText={setConfirmPassword}
         secure
         placeholder="********"
+        autoComplete="new-password"
       />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>

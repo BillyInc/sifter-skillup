@@ -88,7 +88,10 @@ export function makeExploreNav(base: string) {
     /** The admission hub, optionally in a given picker mode. */
     admissionHub(router: Nav, mode?: "programme" | "subjects") {
       router.push(
-        `${base}/admission${mode ? `?mode=${mode}` : ""}` as never,
+        `${base}/admission?${[
+          mode ? `mode=${mode}` : "",
+          base === ADMIN_EXPLORE_BASE ? "admin=1" : "",
+        ].filter(Boolean).join("&")}` as never,
       );
     },
     /** Full admission-insight screen for a JAMB name or programme. */

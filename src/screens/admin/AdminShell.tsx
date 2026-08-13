@@ -20,6 +20,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  Alert,
   Platform,
   useWindowDimensions,
 } from "react-native";
@@ -102,7 +103,7 @@ export function AdminShell({
   const { width } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, signOut, deleteAccount } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
@@ -160,6 +161,52 @@ export function AdminShell({
     item.go(router as Nav);
   };
 
+  const completeSignOut = async () => {
+    await signOut();
+    router.replace("/(auth)/sign-in" as never);
+  };
+
+  const completeDelete = async () => {
+    try {
+      await deleteAccount();
+    } finally {
+      router.replace("/(auth)/sign-in" as never);
+    }
+  };
+
+  const confirmAccountAction = (
+    action: "sign-out" | "delete",
+  ) => {
+    const isDelete = action === "delete";
+    const title = isDelete ? "Delete this account?" : "Sign out?";
+    const message = isDelete
+      ? "Your account will be marked for deletion and the recovery cooldown will apply."
+      : "You will need to sign in again to continue.";
+    const run = async () => {
+      try {
+        if (isDelete) await completeDelete();
+        else await completeSignOut();
+      } catch (error) {
+        const text = error instanceof Error ? error.message : "This action could not be completed.";
+        if (Platform.OS === "web") globalThis.alert?.(text);
+        else Alert.alert("Could not complete this action", text);
+      }
+    };
+
+    if (Platform.OS === "web") {
+      if (globalThis.confirm?.(`${title}\n\n${message}`)) void run();
+      return;
+    }
+    Alert.alert(title, message, [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: isDelete ? "Delete account" : "Sign out",
+        style: "destructive",
+        onPress: () => void run(),
+      },
+    ]);
+  };
+
   const Nav = (
     <NavList
       activeKey={activeKey}
@@ -168,6 +215,8 @@ export function AdminShell({
       onNavigate={navigate}
       onClose={() => setDrawerOpen(false)}
       showClose={!wide}
+      onSignOut={() => confirmAccountAction("sign-out")}
+      onDeleteAccount={() => confirmAccountAction("delete")}
     />
   );
 
@@ -257,6 +306,8 @@ function NavList({
   onNavigate,
   onClose,
   showClose,
+  onSignOut,
+  onDeleteAccount,
 }: {
   activeKey: string;
   audience: AdminAudience;
@@ -264,6 +315,8 @@ function NavList({
   onNavigate: (item: AdminNavItem) => void;
   onClose: () => void;
   showClose: boolean;
+  onSignOut: () => void;
+  onDeleteAccount: () => void;
 }) {
   const { colors } = useTheme();
   return (
@@ -342,6 +395,16 @@ function NavList({
             consent.
           </Text>
         ) : null}
+
+        <View style={styles.accountActions}>
+          <Text style={[styles.groupTitle, CompassFonts.bodySemibold, { color: colors.textMuted }]}>ACCOUNT</Text>
+          <TouchableOpacity onPress={onSignOut} style={styles.accountRow}>
+            <Text style={[styles.accountText, { color: colors.textRole.secondary }]}>Sign out</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDeleteAccount} style={styles.accountRow}>
+            <Text style={[styles.accountText, { color: colors.accentRole.danger }]}>Delete account</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -494,6 +557,22 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xs * 1.6,
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
+  },
+  accountActions: {
+    marginTop: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingBottom: Spacing.lg,
+    gap: 2,
+  },
+  accountRow: {
+    minHeight: 38,
+    justifyContent: "center",
+    paddingHorizontal: Spacing.md,
+    borderRadius: Radius.md,
+  },
+  accountText: {
+    fontSize: FontSize.sm,
+    fontWeight: "700",
   },
 
   // Drawer

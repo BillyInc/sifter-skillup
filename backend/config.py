@@ -162,7 +162,13 @@ class Settings:
     # How many minutes of inactivity before a device session expires
     DEVICE_SESSION_TTL_MINUTES: int = int(os.getenv("DEVICE_SESSION_TTL_MINUTES", "43200"))  # 30 days
     # Whether to enforce single-device (set False for dev)
-    SINGLE_DEVICE_ENFORCEMENT: bool = os.getenv("SINGLE_DEVICE_ENFORCEMENT", "true").lower() == "true"
+    # Local development databases may not have the active_sessions migration
+    # applied yet. Do not let that infrastructure concern block the built-in
+    # dev signup accounts; production (DEBUG=false) keeps enforcement on.
+    SINGLE_DEVICE_ENFORCEMENT: bool = (
+        os.getenv("SINGLE_DEVICE_ENFORCEMENT", "true").lower() == "true"
+        and not DEBUG
+    )
 
     # ── Points System ────────────────────────────────────────
     WELCOME_BONUS: int         = 1000

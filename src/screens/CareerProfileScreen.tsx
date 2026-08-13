@@ -205,7 +205,7 @@ export default function CareerProfileScreen() {
             )}
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding")}
+              onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")}
               style={styles.linkBtn}
             >
               <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>

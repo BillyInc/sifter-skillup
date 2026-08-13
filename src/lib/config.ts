@@ -4,8 +4,29 @@
  */
 
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 
-export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
+const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://localhost:8000';
+
+/**
+ * A native app cannot reach the host machine through its own localhost. Expo
+ * exposes the Metro host while developing, so use that host when the default
+ * local API URL is configured. Web keeps localhost because the browser and
+ * backend normally run on the same machine in local development.
+ */
+function resolveApiBase(): string {
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(?:\/|$)/i.test(configuredApiUrl);
+  if (Platform.OS === 'web' || !isLocalhost) return configuredApiUrl.replace(/\/$/, '');
+
+  const hostUri =
+    Constants.expoConfig?.hostUri ??
+    (Constants.manifest2 as { extra?: { expoGo?: { debuggerHost?: string } } } | null)?.extra?.expoGo?.debuggerHost ??
+    (Constants.manifest as { debuggerHost?: string } | null)?.debuggerHost;
+  const host = hostUri?.split(':')[0];
+  return host ? `http://${host}:8000` : configuredApiUrl.replace(/\/$/, '');
+}
+
+export const API_BASE = resolveApiBase();
 
 export const PRIVY_APP_ID = process.env.EXPO_PUBLIC_PRIVY_APP_ID || '';
 export const PRIVY_CLIENT_ID = process.env.EXPO_PUBLIC_PRIVY_CLIENT_ID || '';

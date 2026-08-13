@@ -39,6 +39,7 @@ import {
 import { LiveAdmissionSearchField } from "@/components/onboarding/LiveAdmissionSearchField";
 
 const ADMIN_ACCESS_REQUEST_EMAIL = "learn@sifter.app";
+const DEV_ADMIN_ACCESS_CODE = "LEVELUP-EDU-DEV";
 
 // Organisation types.
 const ORGS: {
@@ -250,6 +251,12 @@ export default function EducatorOnboarding({
     }
   };
 
+  const useDevelopmentAccessCode = () => {
+    setAccessCode(DEV_ADMIN_ACCESS_CODE);
+    setAccessError(null);
+    setAccessGranted(false);
+  };
+
   const finish = async () => {
     if (!orgType || !role) return;
     setFinishing(true);
@@ -257,13 +264,12 @@ export default function EducatorOnboarding({
 
     const accountType = accountTypeFor(orgType, role);
     const hasEmail = workEmail.trim().length > 0;
-    // A work email is a claim awaiting domain proof; no email = a softer claim.
-    const verificationStatus: VerificationStatus = hasEmail
-      ? "claimed"
-      : "pending";
-    const verificationMethod: VerificationMethod = hasEmail
+    // Creating the workspace records a claim. It is not a proof submission:
+    // do not label an account "under review" merely because setup was done.
+    const verificationStatus: VerificationStatus = "claimed";
+    const verificationMethod: VerificationMethod | undefined = hasEmail
       ? "email_domain"
-      : "document_upload";
+      : undefined;
 
     const profile: EducatorProfile = {
       accountType,
@@ -274,8 +280,9 @@ export default function EducatorOnboarding({
       workEmail: hasEmail ? workEmail.trim() : undefined,
       registryCode: registryCode.trim() || undefined,
       verificationStatus,
-      verificationMethod,
+      ...(verificationMethod ? { verificationMethod } : {}),
       adminAccessStatus: "owner_code",
+      accessCode: accessCode.trim().toUpperCase(),
       adminAccessGrantedAt: new Date().toISOString(),
       completedAt: new Date().toISOString(),
       // Centres/cafes are provider/session only; downstream screens use this for gating.
@@ -365,7 +372,7 @@ export default function EducatorOnboarding({
           ) : null}
 
           <SifterButton
-            label="Continue →"
+            label="Continue ->"
             onPress={() => setStep(2)}
             disabled={!step1Ready}
             variant="track"
@@ -412,7 +419,15 @@ export default function EducatorOnboarding({
           </Text>
 
           {typeof __DEV__ !== "undefined" && __DEV__ ? (
-            <Text style={[styles.devHint, { color: colors.accentRole.action }]}>Development test code: LEVELUP-EDU-DEV</Text>
+            <View style={styles.devTools}>
+              <Text style={[styles.devHint, { color: colors.accentRole.action }]}>Development test code: {DEV_ADMIN_ACCESS_CODE}</Text>
+              <TouchableOpacity
+                onPress={useDevelopmentAccessCode}
+                style={[styles.devAction, { borderColor: colors.accentRole.action }]}
+              >
+                <Text style={[styles.devActionText, { color: colors.accentRole.action }]}>Use development code</Text>
+              </TouchableOpacity>
+            </View>
           ) : null}
 
           <TouchableOpacity
@@ -424,7 +439,7 @@ export default function EducatorOnboarding({
           </TouchableOpacity>
 
           <SifterButton
-            label="Unlock admin setup →"
+            label="Unlock admin setup ->"
             onPress={validateAccessCode}
             loading={checkingAccess}
             variant="track"
@@ -467,7 +482,7 @@ export default function EducatorOnboarding({
           </Text>
 
           <SifterButton
-            label="Continue →"
+            label="Continue ->"
             onPress={() => setStep(4)}
             variant="track"
             color={colors.accentRole.action}
@@ -506,7 +521,7 @@ export default function EducatorOnboarding({
             <SummaryRow
               label="Role"
               value={
-                roleOptions.find((r) => r.value === role)?.label ?? "—"
+                roleOptions.find((r) => r.value === role)?.label ?? "-"
               }
             />
             <SummaryRow
@@ -595,6 +610,20 @@ const styles = StyleSheet.create({
   },
   devHint: {
     fontSize: FontSize.xs,
+    fontWeight: "700",
+  },
+  devTools: {
+    gap: Spacing.xs,
+  },
+  devAction: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
+  devActionText: {
+    fontSize: FontSize.sm,
     fontWeight: "700",
   },
   summary: {
