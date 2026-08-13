@@ -643,42 +643,44 @@ function ExploreIdle({
       ) : null}
 
       {/* ── Starting points (3 doors) ─────────────────────────── */}
-      <View style={styles.section}>
-        <SectionLabel>Starting points</SectionLabel>
-        {DOORS.map((d, i) => (
-          <StaggerReveal key={d.key} index={i}>
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={
-                d.key === "know"
-                  ? onFocusSearch
-                  : d.key === "what"
-                    ? () => nav.admissionHub(router, "programme")
-                    : () => nav.admissionHub(router, "subjects")
-              }
-              style={[
-                styles.card,
-                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-              ]}
-            >
-              <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
-                <Text style={styles.cardIcon}>{d.icon}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <View style={styles.cardHeadRow}>
-                  <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
-                    {d.title}
-                  </Text>
-                  {d.live ? null : <LockedPill />}
+      {!adminAudience ? (
+        <View style={styles.section}>
+          <SectionLabel>Starting points</SectionLabel>
+          {DOORS.map((d, i) => (
+            <StaggerReveal key={d.key} index={i}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={
+                  d.key === "know"
+                    ? onFocusSearch
+                    : d.key === "what"
+                      ? () => nav.admissionHub(router, "programme")
+                      : () => nav.admissionHub(router, "subjects")
+                }
+                style={[
+                  styles.card,
+                  { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+                ]}
+              >
+                <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
+                  <Text style={styles.cardIcon}>{d.icon}</Text>
                 </View>
-                <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
-                  {d.body}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </StaggerReveal>
-        ))}
-      </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.cardHeadRow}>
+                    <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
+                      {d.title}
+                    </Text>
+                    {d.live ? null : <LockedPill />}
+                  </View>
+                  <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
+                    {d.body}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </StaggerReveal>
+          ))}
+        </View>
+      ) : null}
 
       {!adminAudience ? <Text style={[styles.note, { color: colors.textRole.muted }]}>
         University and College of Education programmes come online first.
