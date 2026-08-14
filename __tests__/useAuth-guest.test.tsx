@@ -34,6 +34,35 @@ jest.mock('../src/lib/api', () => ({
 jest.mock('../src/lib/offlineStorage', () => ({
   getOrCreateDeviceId: jest.fn().mockResolvedValue('web_test_device'),
   onLoginSync: jest.fn().mockResolvedValue(undefined),
+  switchLocalUser: jest.fn().mockResolvedValue(undefined),
+}));
+
+// _handleAuthResponse grew these post-token steps. They must be mocked, not
+// left undefined: authGuest wraps the whole call in try/catch, so an
+// unmocked import throws AFTER the token is saved and the test lands in the
+// offline-guest branch -- which looks exactly like the network failure this
+// suite is meant to distinguish from success.
+jest.mock('../src/lib/postAuthRedirect', () => ({
+  setPendingPostAuthRedirect: jest.fn(),
+}));
+
+jest.mock('../src/lib/resumeNavigation', () => ({
+  resolvePostAuthHref: jest.fn().mockReturnValue('/'),
+}));
+
+jest.mock('../src/lib/logoutState', () => ({
+  clearExplicitLogout: jest.fn().mockResolvedValue(undefined),
+  markExplicitLogout: jest.fn().mockResolvedValue(undefined),
+}));
+
+jest.mock('../src/lib/localUserState', () => ({
+  clearLocalUserState: jest.fn().mockResolvedValue(undefined),
+}));
+
+jest.mock('../src/lib/sessionProfile', () => ({
+  clearSessionProfile: jest.fn().mockResolvedValue(undefined),
+  getSavedSessionProfile: jest.fn().mockResolvedValue(null),
+  saveSessionProfile: jest.fn().mockResolvedValue(undefined),
 }));
 
 jest.mock('../src/components/auth/StarknetWalletBridge', () => ({

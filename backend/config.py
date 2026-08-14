@@ -12,9 +12,21 @@ class Settings:
     APP_NAME: str = "Sifter LevelUp API"
     APP_VERSION: str = "2.0.0"
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
-    EMAIL_VERIFICATION_DEV_CODES: bool = (
-        os.getenv("EMAIL_VERIFICATION_DEV_CODES", os.getenv("DEBUG", "false")).lower() == "true"
+
+    # Dev codes return the verification code in the API response and accept
+    # "000000" for any address. That is a full authentication bypass, so the
+    # flag is ANDed with DEBUG: setting EMAIL_VERIFICATION_DEV_CODES=true on a
+    # production box does nothing. Previously the env var alone decided it.
+    EMAIL_VERIFICATION_DEV_CODES: bool = DEBUG and (
+        os.getenv("EMAIL_VERIFICATION_DEV_CODES", "true").lower() == "true"
     )
+
+    # ── Email delivery (Resend) ──────────────────────────────
+    RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
+    # Must be a domain verified in Resend, or the API rejects every send.
+    EMAIL_FROM: str = os.getenv("EMAIL_FROM", "LevelUp <noreply@levelup.com.ng>")
+    EMAIL_CODE_TTL_MINUTES: int = int(os.getenv("EMAIL_CODE_TTL_MINUTES", "15"))
+    EMAIL_CODE_MAX_ATTEMPTS: int = int(os.getenv("EMAIL_CODE_MAX_ATTEMPTS", "5"))
 
     # ── Supabase ─────────────────────────────────────────────
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")

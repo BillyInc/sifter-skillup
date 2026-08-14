@@ -19,7 +19,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '@/lib/trackContext';
 import { SearchOverlay, SearchBar } from '@/components/careerIntelligence';
 import { Spring, useReducedMotion } from '@/theme/motion';
-import type { SearchResult, SearchScope } from '@/types/career';
+import { careerData } from '@/lib/careerData';
+import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
+import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
+import type { CareerSearchResult, SearchScope } from '@/types/career';
 
 type NavId =
   | 'home'
@@ -43,6 +46,15 @@ const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'myworld',       label: 'My World',      icon: 'book-open', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
+
+/**
+ * Editorial starting points for an empty search box, rendered under a
+ * "Suggested" heading. Unlike "Recent", that label makes no claim about the
+ * user, so a curated list is honest here. Each term was checked against
+ * /api/career/search and returns real domains, roles and programmes -- a
+ * suggestion that dead-ends is worse than none.
+ */
+const SEARCH_SUGGESTIONS = ['Law', 'Engineering', 'Accounting', 'Nursing'];
 
 const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMap; href: string }[] = [
   { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
@@ -161,8 +173,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [overlayScope, setOverlayScope] = useState<SearchScope>("all");
-  const [overlayResults] = useState<{ label: string; items: SearchResult[] }[]>([]);
-  const [overlayLoading] = useState(false);
+  // These two were previously destructured WITHOUT setters, so results were
+  // permanently [] and the overlay could never return anything.
+  const [searchPayload, setSearchPayload] = useState<CareerSearchResult | null>(null);
+  const [overlayLoading, setOverlayLoading] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const routeTrackId = readParam(params.trackId);
   const routeTrackName = readParam(params.trackName);
   const trackContext = useMemo(() => resolveTrackContext(user, {
@@ -177,6 +192,57 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const reduced = useReducedMotion();
   const isWide = Platform.OS === 'web' && width >= 1100;
+
+  // Load the user's real search history when the overlay opens. Empty until
+  // they have actually searched -- the overlay hides the section in that case.
+  useEffect(() => {
+    if (!overlayVisible) return;
+    let alive = true;
+    getRecentSearches().then((terms) => {
+      if (alive) setRecentSearches(terms);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [overlayVisible]);
+
+  // Debounced query against /api/career/search. `generation` discards responses
+  // from superseded keystrokes, so a slow early request cannot overwrite the
+  // results of a later, faster one.
+  const searchGeneration = useRef(0);
+  useEffect(() => {
+    const term = searchQuery.trim();
+    if (!overlayVisible || term.length < 2) {
+      setSearchPayload(null);
+      setOverlayLoading(false);
+      return;
+    }
+
+    const generation = ++searchGeneration.current;
+    setOverlayLoading(true);
+    const timer = setTimeout(() => {
+      careerData
+        .searchCareer(term)
+        .then((res) => {
+          if (generation !== searchGeneration.current) return;
+          setSearchPayload(res.status === 'real' ? res.data ?? null : null);
+        })
+        .catch(() => {
+          if (generation !== searchGeneration.current) return;
+          setSearchPayload(null);
+        })
+        .finally(() => {
+          if (generation === searchGeneration.current) setOverlayLoading(false);
+        });
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, overlayVisible]);
+
+  const overlayResults = useMemo(
+    () => toSearchGroups(searchPayload, overlayScope),
+    [searchPayload, overlayScope],
+  );
 
   const tabDotX = useSharedValue(0);
   const tabW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
@@ -434,14 +500,19 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         loading={overlayLoading}
         results={overlayResults}
         onResultPress={(result) => {
+          const href = resolveSearchHref(result);
+          // A row with no destination must not navigate. Previously every
+          // result pushed /explore, so picking a specific role or programme
+          // silently landed the user somewhere unrelated.
+          if (!href) return;
+          void addRecentSearch(searchQuery);
           setOverlayVisible(false);
           setSearchQuery("");
-          // Navigate based on result type — actual routing wired by screens
-          router.push(`/(tabs)/explore` as any);
+          router.push(href as any);
         }}
-        recentSearches={["Medicine & Surgery", "UNILAG", "Computer Science"]}
+        recentSearches={recentSearches}
         onRecentPress={(term) => setSearchQuery(term)}
-        suggestions={["Law", "Engineering", "Accounting", "Nursing"]}
+        suggestions={SEARCH_SUGGESTIONS}
         onSuggestionPress={(term) => setSearchQuery(term)}
         isGuest={!user}
         onSignIn={() => {
