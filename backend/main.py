@@ -149,10 +149,6 @@ def _attach_legal_acceptance(service, user: dict, acceptance: dict) -> dict:
         return user
 
 
-def _require_valid_email_code(email: str, code: str):
-    submitted = str(code or "").strip()
-    if settings.EMAIL_VERIFICATION_DEV_CODES and submitted == "000000":
-        return
 async def _issue_email_code(email: str, purpose: str) -> str:
     """Generate, store and send a code. Raises HTTPException if delivery fails."""
     code = f"{secrets.randbelow(1000000):06d}"
