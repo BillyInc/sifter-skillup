@@ -97,6 +97,7 @@ export { SaveButton } from "./SaveButton";
 export { SubscribeButton } from "./SubscribeButton";
 export { NotesWidget } from "./NotesWidget";
 export { PdfExportButton } from "./PdfExportButton";
+export { GuidanceReportButton, invalidateGuidancePathCache } from "./GuidanceReportButton";
 export { MappingFeedbackButton } from "./MappingFeedbackButton";
 export type { MappingFeedbackButtonProps } from "./MappingFeedbackButton";
 

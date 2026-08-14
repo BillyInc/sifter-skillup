@@ -10,7 +10,7 @@
  *      default; you then explicitly CHOOSE whether to share your individual
  *      progress. Sharing is per-school and can be turned off anytime.
  */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  type TextInputProps,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -28,20 +29,45 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
   Shadow,
   webContainer,
 } from "@/theme";
 import { studentAccountApi } from "@/lib/provisioningData";
 import { useAuth } from "@/hooks/useAuth";
+import type { StudentConsentRequest } from "@/types/institution";
 
 type AffiliateResult = { schoolId: string; schoolName?: string } | null;
+
+function ClearableInput({ value, onChangeText, ...props }: TextInputProps) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.inputWrap}>
+      <TextInput
+        {...props}
+        value={value}
+        onChangeText={onChangeText}
+        style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }, props.style]}
+      />
+      {value ? (
+        <TouchableOpacity
+          onPress={() => onChangeText?.("")}
+          accessibilityRole="button"
+          accessibilityLabel="Clear input"
+          style={styles.clearInput}
+          hitSlop={8}
+        >
+          <Text style={{ color: colors.textRole.muted, fontSize: FontSize.md }}>×</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
+}
 
 export default function MySchoolScreen() {
   const { colors } = useTheme();
   const router = useRouter();
   const params = useLocalSearchParams<{ claim?: string | string[]; from?: string | string[] }>();
-  const { refreshUser } = useAuth();
+  const { refreshUser, user } = useAuth();
   const fromGuest = (Array.isArray(params.from) ? params.from[0] : params.from) === "guest";
 
   // Claim
@@ -62,6 +88,23 @@ export default function MySchoolScreen() {
   const [affiliated, setAffiliated] = useState<AffiliateResult>(null);
   const [consentBusy, setConsentBusy] = useState(false);
   const [consentState, setConsentState] = useState<"none" | "shared">("none");
+  const [consentRequests, setConsentRequests] = useState<StudentConsentRequest[]>([]);
+  const [requestBusy, setRequestBusy] = useState<string | null>(null);
+  const [requestErr, setRequestErr] = useState<string | null>(null);
+
+  const loadConsentRequests = useCallback(async () => {
+    try {
+      setConsentRequests(await studentAccountApi.listConsentRequests());
+    } catch {
+      // The privacy migration may not be deployed yet; other school actions
+      // remain available while the invitation list is empty.
+      setConsentRequests([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadConsentRequests();
+  }, [loadConsentRequests]);
 
   const doClaim = useCallback(async () => {
     setClaimErr(null);
@@ -69,6 +112,10 @@ export default function MySchoolScreen() {
     const code = claimCode.trim();
     if (!code) {
       setClaimErr("Enter the claim code from your card.");
+      return;
+    }
+    if (user?.auth_provider === "guest") {
+      router.replace(`/(auth)/signup?claim=${encodeURIComponent(code)}` as any);
       return;
     }
     setClaimBusy(true);
@@ -79,6 +126,7 @@ export default function MySchoolScreen() {
         email: email.trim() || undefined,
       });
       await refreshUser?.();
+      await loadConsentRequests();
       setClaimMsg("Your account is now yours. You're all set.");
       setClaimCode("");
     } catch (e) {
@@ -86,7 +134,7 @@ export default function MySchoolScreen() {
     } finally {
       setClaimBusy(false);
     }
-  }, [claimCode, phone, email, refreshUser]);
+  }, [claimCode, phone, email, refreshUser, loadConsentRequests, router, user?.auth_provider]);
 
   const doAffiliate = useCallback(async () => {
     setAffErr(null);
@@ -128,6 +176,24 @@ export default function MySchoolScreen() {
     [affiliated],
   );
 
+  const respondToRequest = useCallback(async (item: StudentConsentRequest, decision: "grant" | "decline") => {
+    if (requestBusy) return;
+    setRequestBusy(item.id);
+    setRequestErr(null);
+    try {
+      await studentAccountApi.respondToConsentRequest(item.id, decision);
+      await loadConsentRequests();
+      if (decision === "grant") {
+        setAffiliated({ schoolId: item.schoolId, schoolName: item.schoolName ?? undefined });
+        setConsentState("shared");
+      }
+    } catch (e) {
+      setRequestErr((e as Error)?.message ?? "Could not update that consent request.");
+    } finally {
+      setRequestBusy(null);
+    }
+  }, [loadConsentRequests, requestBusy]);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface.base }} edges={["top"]}>
       <ScrollView
@@ -150,6 +216,34 @@ export default function MySchoolScreen() {
           </View>
         ) : null}
 
+        {consentRequests.length ? (
+          <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>School permission requests</Text>
+            <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
+              A school can ask to follow your progress, but it cannot see your individual account until you choose. Your account stays available even when you keep it private.
+            </Text>
+            {consentRequests.map((item) => (
+              <View key={item.id} style={[styles.consentBox, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+                <Text style={[styles.consentTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{item.schoolName ?? "Your school"}</Text>
+                {item.schoolAddress ? <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{item.schoolAddress}</Text> : null}
+                <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
+                  Requested access: {item.scope === "progress" ? "career progress" : item.scope === "full" ? "progress and contact" : "contact"}.
+                </Text>
+                {item.message ? <Text style={[styles.cardBody, { color: colors.textRole.primary }, CompassFonts.body]}>{item.message}</Text> : null}
+                <View style={{ flexDirection: "row", gap: Spacing.sm }}>
+                  <TouchableOpacity onPress={() => void respondToRequest(item, "grant")} disabled={requestBusy === item.id} style={[styles.choice, { borderColor: colors.borderRole.subtle, backgroundColor: colors.textRole.primary, opacity: requestBusy === item.id ? 0.6 : 1 }]}>
+                    <Text style={[styles.choiceText, { color: colors.surface.inverse }, CompassFonts.bodyBold]}>Share</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => void respondToRequest(item, "decline")} disabled={requestBusy === item.id} style={[styles.choice, { borderColor: colors.borderRole.subtle, opacity: requestBusy === item.id ? 0.6 : 1 }]}>
+                    <Text style={[styles.choiceText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Keep private</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+            {requestErr ? <Text style={[styles.err, { color: colors.accentRole.danger }]}>{requestErr}</Text> : null}
+          </View>
+        ) : null}
+
         {/* Claim card */}
         <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
           <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
@@ -160,30 +254,27 @@ export default function MySchoolScreen() {
             card to make it yours. Add a phone number (or email) so you can log in
             again later.
           </Text>
-          <TextInput
+          <ClearableInput
             value={claimCode}
             onChangeText={setClaimCode}
             autoCapitalize="characters"
             placeholder="Claim code"
             placeholderTextColor={colors.textRole.muted}
-            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
-          <TextInput
+          <ClearableInput
             value={phone}
             onChangeText={setPhone}
             keyboardType="phone-pad"
             placeholder="Phone number"
             placeholderTextColor={colors.textRole.muted}
-            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
-          <TextInput
+          <ClearableInput
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
             placeholder="Email (optional)"
             placeholderTextColor={colors.textRole.muted}
-            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
           {claimErr && <Text style={[styles.err, { color: colors.accentRole.danger }]}>{claimErr}</Text>}
           {claimMsg && <Text style={[styles.ok, { color: colors.accentRole.success }]}>{claimMsg}</Text>}
@@ -213,13 +304,12 @@ export default function MySchoolScreen() {
 
           {!affiliated ? (
             <>
-              <TextInput
+              <ClearableInput
                 value={schoolCode}
                 onChangeText={setSchoolCode}
                 autoCapitalize="characters"
                 placeholder="School code"
                 placeholderTextColor={colors.textRole.muted}
-                style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
               />
               {affErr && <Text style={[styles.err, { color: colors.accentRole.danger }]}>{affErr}</Text>}
               <TouchableOpacity
@@ -284,6 +374,9 @@ export default function MySchoolScreen() {
                     ? "Sharing is on — your school can see your progress."
                     : "Private — your school only sees anonymous totals."}
                 </Text>
+                <Text style={[styles.consentStatus, { color: colors.textRole.muted }, CompassFonts.body]}>
+                  If you are under 18, discuss this choice with a parent or guardian. School staff must follow the safeguarding and data-protection rules applicable to your location in Nigeria.
+                </Text>
               </View>
             </View>
           )}
@@ -319,6 +412,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.md,
     marginTop: Spacing.xs,
   },
+  inputWrap: { position: "relative" },
+  clearInput: { position: "absolute", right: Spacing.md, top: Spacing.sm + 1, zIndex: 1 },
   err: { fontSize: FontSize.sm, fontWeight: '700' },
   ok: { fontSize: FontSize.sm, fontWeight: '700' },
   btnPrimary: {

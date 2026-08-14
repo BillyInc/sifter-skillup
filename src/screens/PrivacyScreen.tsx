@@ -5,8 +5,13 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
 import { useResponsive } from '@/hooks/useResponsive';
+import { LEGAL_OPERATOR_ADDRESS, LEGAL_OPERATOR_NAME, PRIVACY_VERSION } from '@/lib/legal';
 
 const SECTIONS = [
+  {
+    title: 'Who controls the data',
+    body: `${LEGAL_OPERATOR_NAME} is the service operator. ${LEGAL_OPERATOR_ADDRESS ? `Service address: ${LEGAL_OPERATOR_ADDRESS}. ` : 'The registered operating entity and Nigerian service address must be supplied in the production environment before launch. '}For privacy questions, access, correction, deletion, portability or complaints, contact privacy@sifter.app. Do not send identity documents by ordinary email unless requested through a verified support process.`,
+  },
   {
     title: 'What data we collect',
     body: 'Account details, user type, starting point, subjects you choose to enter, saved programmes, schools, domains, subgroups, roles, notes, preferences, device/session data and security logs.',
@@ -14,6 +19,14 @@ const SECTIONS = [
   {
     title: 'Sensitive student data',
     body: 'We do not need grades, transcripts, exam documents or guardian documents for the core exploration flow. Institution roster visibility is consent-gated and should be limited to what is necessary.',
+  },
+  {
+    title: 'Why we process it',
+    body: 'We process account and service data to provide the features you request, use consent for optional analytics and consent-gated student sharing, comply with legal or security duties where applicable, and use limited service-improvement interests where permitted. These purposes are separate: optional analytics is not required to create an account.',
+  },
+  {
+    title: 'Who receives it and where',
+    body: 'Data may be handled by hosting, authentication, email, storage, support and optional analytics providers acting for the service. Schools receive only the roster or guidance information their role and the applicable consent state allow. Some providers may process data outside Nigeria; we use applicable contractual, security and transfer safeguards and will provide further information on request.',
   },
   {
     title: 'How we use data',
@@ -25,11 +38,11 @@ const SECTIONS = [
   },
   {
     title: 'Nigeria-first privacy basis',
-    body: 'We design around Nigeria privacy obligations including the NDPA 2023 and NDPR principles: lawful basis, purpose limitation, data minimisation, security, retention limits and data-subject rights.',
+    body: 'We design around the Nigeria Data Protection Act 2023 and applicable NDPC guidance: fair and transparent processing, purpose limitation, minimisation, accuracy, security, retention limits, affirmative consent and data-subject rights. Where Nigerian requirements differ by role, age, state or processing context, the applicable safeguard controls the feature.',
   },
   {
     title: 'Minors and guardians',
-    body: 'Senior-secondary users may be minors. Where a feature requires guardian or school consent, we will gate that feature and avoid unnecessary exposure of individual student details.',
+    body: 'Senior-secondary users may be minors. We minimise grades and identity data, explain roster visibility, and require the appropriate guardian, student or school consent before consent-gated sharing. Child-rights protections can vary by Nigerian state, so schools must follow the law and safeguarding rules applicable to their learners and location.',
   },
   {
     title: 'International users',
@@ -42,6 +55,10 @@ const SECTIONS = [
   {
     title: 'Security',
     body: 'We use access controls, authentication, role boundaries and server-side checks to reduce unauthorised access. No web service can guarantee perfect security, so sensitive details should be collected sparingly.',
+  },
+  {
+    title: 'Automated matching and your challenge rights',
+    body: 'Programme, subject and career matching is guidance and is not used as the sole basis for an admission, employment or other high-impact decision. You may ask for access, correction, human review or an explanation of a material personal-data issue through privacy@sifter.app.',
   },
   {
     title: 'Your rights and choices',
@@ -95,7 +112,7 @@ export default function PrivacyScreen({ onClose }: Props) {
     <>
       <View style={[styles.note, { backgroundColor: `${colors.accentRole.success}14`, borderLeftColor: colors.accentRole.success }]}>
         <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
-          Short version: we do not sell personal data, we minimise sensitive
+          Version {PRIVACY_VERSION}. Short version: we do not sell personal data, we minimise sensitive
           student data, and you can ask to access, correct, export or delete
           your account data.
         </Text>

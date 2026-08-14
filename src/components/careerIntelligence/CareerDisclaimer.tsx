@@ -15,7 +15,7 @@ export interface CareerDisclaimerProps {
 }
 
 const DISCLAIMER_TEXT =
-  "Career guidance is indicative, based on public data and mappings — not a guarantee of admission or employment.";
+  "Career guidance is indicative, based on public data and mappings — not a guarantee of admission, employment, salary, immigration, legal or professional outcome. Check official Nigerian institution and regulator sources before acting.";
 
 export function CareerDisclaimer({ variant = "footer" }: CareerDisclaimerProps) {
   const { colors } = useTheme();

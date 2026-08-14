@@ -6,6 +6,7 @@ import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
 import { SelectField } from "./primitives";
 import { careerData } from "../../lib/careerData";
 import type { SetupFormProps } from "../../types/onboarding";
+import LocalLegalNotice from "../LocalLegalNotice";
 
 /** University-only setup for the current undergraduate user type. */
 export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFormProps) {
@@ -30,6 +31,7 @@ export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFo
         <Text style={[styles.title, { color: colors.text }]}>Tell us what you study</Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>Choose your university first. Then we will show only the faculties and programme names recorded for that university.</Text>
       </View>
+      <LocalLegalNotice audience="student" />
 
       <Text style={[styles.note, { color: colors.textMuted }]}>This path is for a student currently studying at a university.</Text>
 

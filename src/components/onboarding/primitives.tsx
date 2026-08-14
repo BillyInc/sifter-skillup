@@ -479,9 +479,19 @@ export function SearchField({
           placeholder={placeholder}
           placeholderTextColor={colors.textRole.placeholder}
           editable={!comingSoon}
-          autoCorrect={false}
-        />
-        {comingSoon ? <LockedPill label="Live soon" /> : null}
+           autoCorrect={false}
+         />
+         {value ? (
+           <TouchableOpacity
+             accessibilityRole="button"
+             accessibilityLabel={`Clear ${label?.toLowerCase() ?? "search"}`}
+             onPress={() => onChangeText("")}
+             style={styles.clearInputButton}
+           >
+             <Text style={[styles.clearInputText, { color: colors.textRole.muted }]}>Clear</Text>
+           </TouchableOpacity>
+         ) : null}
+         {comingSoon ? <LockedPill label="Live soon" /> : null}
       </View>
     </View>
   );
@@ -638,6 +648,8 @@ const styles = StyleSheet.create({
   },
   searchIcon: { fontSize: FontSize.xs },
   searchInput: { flex: 1, fontSize: FontSize.md },
+  clearInputButton: { paddingHorizontal: Spacing.xs, paddingVertical: 8 },
+  clearInputText: { fontSize: FontSize.xs, fontWeight: "700" },
   toggleRow: {
     flexDirection: "row",
     alignItems: "center",

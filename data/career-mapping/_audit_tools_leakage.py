@@ -1,142 +1,169 @@
 #!/usr/bin/env python3
-"""Audit cross-domain SOC leakage in domain/subgroup tools (L1T/L2T).
+"""Audit source-backed domain and subgroup tool leakage.
 
-Problem: domain tools were aggregated from O*NET Technology Skills via role→SOC
-title matches; a bad title match pulls a foreign occupation's tools into the
-domain (canonical example: Epic/MEDITECH EHR software surfacing in Accounting).
-
-Mechanical rule (no curation): a DISTINCTIVE tool is "leaked" from a domain if
-  - the domain has >=5 roles with verified SOC matches (role_tools.json), and
-  - the tool appears in O*NET only under SOCs that NONE of the domain's
-    matched roles map to.
-Common-group tools are exempt (they are generic by definition). A domain is
-never stripped below 3 distinctive tools (weakest-evidence flags are kept and
-marked instead). Subgroup tools use the same rule per subgroup (>=3 matched
-roles).
-
-Outputs:
-  _audit/tools_leakage_report.md  — human-readable audit
-  _audit/tools_leakage_drop.json  — consumed by _gen_career_seed.py (rows skipped)
-
-Run AFTER _build_role_tools.py (needs role_tools.json).
+The audit compares full detailed O*NET-SOC codes. It also applies the explicit
+health-context rule for medical software: O*NET lists those products for many
+generic management and accounting occupations because of workplace context,
+so they must not become tools of unrelated Sifter domains.
 """
+
 import csv
 import json
 import os
 import re
-import sys
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TECH_SKILLS_CANDIDATES = [
-    os.path.join(HERE, "_tax_src", "onet", "Technology Skills.txt"),
-    os.path.join(HERE, "_source_extracts", "onet_30_3", "Technology Skills.txt"),
-]
+HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
+MEDICAL_TOOLS = {"epic systems", "meditech software"}
 MIN_DOMAIN_ROLES = 5
 MIN_SUBGROUP_ROLES = 3
 FLOOR_DISTINCTIVE = 3
+ONET_SKILLS = os.path.join(HERE, "_source_extracts", "onet_30_3", "Software Skills.txt")
 
 
-def norm(t):
-    return re.sub(r"\s+", " ", (t or "").strip().lower())
+def text(value):
+    return "" if value is None else str(value).strip()
+
+
+def norm(value):
+    return re.sub(r"\s+", " ", text(value).lower()).strip()
+
+
+def soc(value):
+    value = text(value).replace(" ", "")
+    match = re.fullmatch(r"(\d{2}-\d{4})(?:\.(\d{2}))?", value)
+    return f"{match.group(1)}.{match.group(2) or '00'}" if match else ""
+
+
+def health_adjacent(meta):
+    value = f"{text(meta.get('domain_name'))} {text(meta.get('cluster'))}".lower()
+    return any(word in value for word in (
+        "health", "medical", "medicine", "nursing", "pharmacy", "biomedical",
+        "radiation", "radiography", "neuroscience", "therapy", "psychology",
+        "paramedical", "wellness", "clinical",
+    ))
 
 
 def main():
-    rt_path = os.path.join(HERE, "role_tools.json")
-    if not os.path.exists(rt_path):
-        sys.exit("FATAL: role_tools.json missing — run _build_role_tools.py first.")
-    role_tools = json.load(open(rt_path, encoding="utf-8"))
-    tools = json.load(open(os.path.join(HERE, "domain_tools.json"), encoding="utf-8"))
-    roles = json.load(open(os.path.join(HERE, "role_library_v3.json"), encoding="utf-8"))
+    role_tools = json.load(open(os.path.join(HERE, "role_tools.json"), encoding="utf-8"))
+    domain_tools = json.load(open(os.path.join(HERE, "domain_tools.json"), encoding="utf-8"))
+    roles = json.load(open(os.path.join(HERE, "role_library_v3_cleaned.json"), encoding="utf-8"))
+    meta = json.load(open(os.path.join(HERE, "domain_meta.json"), encoding="utf-8"))
 
-    tech_path = next((p for p in TECH_SKILLS_CANDIDATES if os.path.exists(p)), None)
-    if not tech_path:
-        sys.exit("FATAL: O*NET Technology Skills file not found.")
-
-    # tool name -> set of SOC bases it appears under in O*NET
     tool_socs = defaultdict(set)
-    with open(tech_path, encoding="utf-8-sig", newline="") as f:
-        rdr = csv.reader(f, delimiter="\t")
-        header = [c.strip().lower() for c in next(rdr)]
-        c_soc = next(j for j, c in enumerate(header) if "soc" in c)
-        c_ex = next(j for j, c in enumerate(header) if "example" in c or "title" in c)
-        for row in rdr:
-            if len(row) > max(c_soc, c_ex):
-                tool_socs[norm(row[c_ex])].add(row[c_soc].strip().split(".")[0])
+    with open(ONET_SKILLS, encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        for row in reader:
+            name = norm(row.get("Workplace Example"))
+            code = soc(row.get("O*NET-SOC Code"))
+            if name and code:
+                tool_socs[name].add(code)
 
-    # domain / (domain, submajor) -> verified SOC set + matched-role counts
-    dom_socs, dom_n = defaultdict(set), defaultdict(int)
-    sg_socs, sg_n = defaultdict(set), defaultdict(int)
-    role_sm = {}
-    for r in roles:
-        role_sm[f'{r["domain_id"]}|{r["role_name"]}'] = str(r.get("isco_group", ""))[:2]
-    for rk, ent in role_tools.items():
-        dk = rk.split("|", 1)[0]
-        socs = set(ent.get("socs", []))
-        dom_socs[dk] |= socs
-        dom_n[dk] += 1
-        sm = role_sm.get(rk)
-        if sm:
-            sg_socs[(dk, sm)] |= socs
-            sg_n[(dk, sm)] += 1
+    role_submajor = {}
+    for role in roles:
+        key = f"{role.get('domain_id')}|{role.get('role_name')}"
+        role_submajor[key] = text(role.get("isco_group"))[:2]
 
-    drops, kept_low, report = [], [], []
+    domain_socs = defaultdict(set)
+    domain_count = defaultdict(int)
+    subgroup_socs = defaultdict(set)
+    subgroup_count = defaultdict(int)
+    for role_key, entry in role_tools.items():
+        if role_key == "_meta":
+            continue
+        domain_id = role_key.split("|", 1)[0]
+        if domain_id in HIDDEN:
+            continue
+        codes = {soc(code) for code in entry.get("socs", []) if soc(code)}
+        if not codes:
+            continue
+        domain_socs[domain_id].update(codes)
+        domain_count[domain_id] += 1
+        subgroup = role_submajor.get(role_key)
+        if subgroup:
+            subgroup_socs[(domain_id, subgroup)].update(codes)
+            subgroup_count[(domain_id, subgroup)] += 1
 
-    def audit_group(dk, sm, entries, ref_socs, n_matched, min_roles):
-        """entries: list of tool dicts in the distinctive group (mutating audit)."""
-        scope = f"{dk}" + (f" sub {sm}" if sm else "")
-        if n_matched < min_roles:
+    drops = []
+    evaluated_domains = 0
+    evaluated_subgroups = 0
+    flagged_scopes = 0
+    report_rows = []
+
+    def audit_scope(domain_id, subgroup, entries, reference_socs, matched_roles, minimum):
+        nonlocal evaluated_domains, evaluated_subgroups, flagged_scopes
+        if matched_roles < minimum:
             return
+        if subgroup is None:
+            evaluated_domains += 1
+        else:
+            evaluated_subgroups += 1
+        scope_name = f"{domain_id}" if subgroup is None else f"{domain_id} subgroup {subgroup}"
         flagged = []
-        for t in entries:
-            socs = tool_socs.get(norm(t["tool"]))
-            if socs and not (socs & ref_socs):
-                flagged.append(t["tool"])
+        for tool in entries:
+            name = norm(tool.get("tool"))
+            if not name:
+                continue
+            reason = None
+            if name in MEDICAL_TOOLS and not health_adjacent(meta.get(domain_id, {})):
+                reason = "health_context_only"
+            elif tool_socs.get(name) and not (tool_socs[name] & reference_socs):
+                reason = "no_exact_detailed_soc_overlap"
+            if reason:
+                flagged.append((tool.get("tool"), reason))
         if not flagged:
             return
-        keep_budget = max(0, len(entries) - FLOOR_DISTINCTIVE)
-        to_drop = flagged[:keep_budget] if keep_budget < len(flagged) else flagged
-        floored = flagged[len(to_drop):]
-        for name in to_drop:
-            drops.append({"domain": dk, "isco_submajor": sm, "scope": "subgroup" if sm else "domain", "tool": name})
-        for name in floored:
-            kept_low.append((scope, name))
-        report.append((scope, n_matched, to_drop, floored))
+        flagged_scopes += 1
+        distinctive_count = len(entries)
+        for name, reason in flagged:
+            # Context-only medical tools are always removed. Other leakage is
+            # floored so a thin domain is never reduced below three tools.
+            if reason == "health_context_only" or distinctive_count - sum(1 for item in drops if item["domain"] == domain_id and item.get("isco_submajor") == subgroup) > FLOOR_DISTINCTIVE:
+                drops.append({"domain": domain_id, "isco_submajor": subgroup, "scope": "subgroup" if subgroup else "domain", "tool": name, "reason": reason})
+        report_rows.append({"scope": scope_name, "matched_roles": matched_roles, "flagged": flagged})
 
-    for dk, tv in tools.items():
-        if dk == "_meta":
+    for domain_id, value in domain_tools.items():
+        if domain_id == "_meta" or domain_id in HIDDEN:
             continue
-        audit_group(dk, None, tv.get("distinctive_tools", []), dom_socs.get(dk, set()),
-                    dom_n.get(dk, 0), MIN_DOMAIN_ROLES)
-        for sm, sgt in (tv.get("subgroup_tools") or {}).items():
-            audit_group(dk, str(sm), sgt.get("distinctive", []), sg_socs.get((dk, str(sm)), set()),
-                        sg_n.get((dk, str(sm)), 0), MIN_SUBGROUP_ROLES)
+        audit_scope(domain_id, None, value.get("distinctive_tools", []), domain_socs.get(domain_id, set()), domain_count.get(domain_id, 0), MIN_DOMAIN_ROLES)
+        for subgroup, subgroup_tools in (value.get("subgroup_tools") or {}).items():
+            subgroup = str(subgroup)
+            audit_scope(domain_id, subgroup, subgroup_tools.get("distinctive", []), subgroup_socs.get((domain_id, subgroup), set()), subgroup_count.get((domain_id, subgroup), 0), MIN_SUBGROUP_ROLES)
+
+    upstream_report_path = os.path.join(HERE, "_audit", "source_backed_layer_report.json")
+    upstream_removed = 0
+    if os.path.exists(upstream_report_path):
+        upstream_removed = int(json.load(open(upstream_report_path, encoding="utf-8")).get("medical_tool_rows_removed", 0))
 
     os.makedirs(os.path.join(HERE, "_audit"), exist_ok=True)
-    json.dump(drops, open(os.path.join(HERE, "_audit", "tools_leakage_drop.json"), "w",
-                          encoding="utf-8"), ensure_ascii=False, indent=1)
+    with open(os.path.join(HERE, "_audit", "tools_leakage_drop.json"), "w", encoding="utf-8") as handle:
+        json.dump(drops, handle, ensure_ascii=False, indent=1)
+        handle.write("\n")
 
-    lines = ["# Tools Leakage Audit", "",
-             f"Rule: distinctive tool whose O*NET SOCs share nothing with the domain's/",
-             f"subgroup's verified role SOCs (>= {MIN_DOMAIN_ROLES}/{MIN_SUBGROUP_ROLES} matched roles). "
-             f"Floor: never below {FLOOR_DISTINCTIVE} distinctive tools.", "",
-             f"**Dropped: {len(drops)} tools across {len({(d['domain'], d['isco_submajor']) for d in drops})} scopes; "
-             f"kept-by-floor: {len(kept_low)}.**", ""]
-    for scope, n, dropped, floored in sorted(report):
-        lines.append(f"## {scope}  ({n} SOC-matched roles)")
-        for t in dropped:
-            lines.append(f"- DROP  {t}")
-        for t in floored:
-            lines.append(f"- KEEP (floor) {t}")
+    lines = [
+        "# Tools Leakage Audit",
+        "",
+        "O*NET comparisons use the full detailed O*NET-SOC code. Medical software is additionally restricted to health-adjacent domains because its O*NET rows include workplace-context matches for otherwise generic occupations.",
+        "",
+        f"**Evaluated domain scopes:** {evaluated_domains}",
+        f"**Evaluated subgroup scopes:** {evaluated_subgroups}",
+        f"**Flagged scopes:** {flagged_scopes}",
+        f"**Dropped after this audit:** {len(drops)}",
+        f"**Removed by the source-layer health-context guard before this audit:** {upstream_removed}",
+        "",
+        f"Hidden domains excluded: {', '.join(sorted(HIDDEN))}.",
+        "",
+    ]
+    for row in sorted(report_rows, key=lambda item: item["scope"]):
+        lines.append(f"## {row['scope']} ({row['matched_roles']} exact-SOC roles)")
+        for name, reason in row["flagged"]:
+            action = "DROP" if any(item["domain"] == row["scope"].split()[0] and item["tool"] == name for item in drops) else "KEEP (floor)"
+            lines.append(f"- {action} {name} [{reason}]")
         lines.append("")
-    open(os.path.join(HERE, "_audit", "tools_leakage_report.md"), "w",
-         encoding="utf-8").write("\n".join(lines))
-
-    print(f"leaked tools dropped: {len(drops)}  | kept by floor: {len(kept_low)}")
-    print(f"-> _audit/tools_leakage_drop.json + tools_leakage_report.md")
-    for scope, n, dropped, _ in sorted(report)[:12]:
-        if dropped:
-            print(f"  {scope}: {', '.join(dropped[:4])}{'…' if len(dropped) > 4 else ''}")
+    with open(os.path.join(HERE, "_audit", "tools_leakage_report.md"), "w", encoding="utf-8") as handle:
+        handle.write("\n".join(lines))
+    print(f"evaluated domain scopes: {evaluated_domains} | subgroup scopes: {evaluated_subgroups} | flagged: {flagged_scopes} | dropped: {len(drops)} | upstream removed: {upstream_removed}")
 
 
 if __name__ == "__main__":

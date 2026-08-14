@@ -23,9 +23,9 @@ import {
   DataSourceBadge,
   DegreeSkills,
   NotesWidget,
-  LevelUpCTA,
   SectionLabel,
   TextTabs,
+  invalidateGuidancePathCache,
 } from "@/components/careerIntelligence";
 import {
   careerData,
@@ -95,22 +95,7 @@ function groupDomains(domains: DomainLink[]): Record<DomainMatchType, DomainLink
     adjacent: [],
   };
   for (const link of domains) by[link.matchType].push(link);
-  for (const type of Object.keys(by) as DomainMatchType[]) {
-    by[type].sort((a, b) => (b.inDemandScore ?? 0) - (a.inDemandScore ?? 0));
-  }
   return by;
-}
-
-function isIbassVerified(
-  data: Programme,
-  status: DataState<Programme>["status"],
-  meta?: DataMeta,
-): boolean {
-  return (
-    Boolean(data.displayName) &&
-    status !== "fallback" &&
-    (meta?.verification ?? "verified") === "verified"
-  );
 }
 
 export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreenProps) {
@@ -120,10 +105,10 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   const [tab, setTab] = useState<TrackTab>("employment");
 
   const [state, setState] = useState<DataState<Programme>>(() =>
-    comingSoon<Programme>("Programme intelligence is being populated."),
+    comingSoon<Programme>("Loading programme details..."),
   );
   const [admissionState, setAdmissionState] = useState<DataState<AdmissionInsight>>(
-    () => comingSoon<AdmissionInsight>("Admission data is being compiled."),
+    () => comingSoon<AdmissionInsight>("Admission requirements are not available for this programme yet."),
   );
   const [jambSuggestions, setJambSuggestions] = useState<JambProgrammeSuggestion[]>([]);
   const [jambSchools, setJambSchools] = useState<JambProgrammeSchool[]>([]);
@@ -175,7 +160,10 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   }, [state.status, state.data]);
 
   const programme = state.data;
-  const jambName = jambSuggestions[0]?.jambName ?? programme?.displayName ?? programme?.name ?? "Programme";
+  const jambName =
+    jambSuggestions[0]?.studentName ??
+    programme?.studentName ??
+    "Programme name unavailable";
 
   const header = (
     <TextTabs
@@ -201,6 +189,7 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
       title={jambName}
       save={{ entityType: "programme", entityId: programmeId }}
       pdf
+      pdfPath="/api/student/report.html"
       state={scaffoldState}
       header={header}
     >
@@ -267,6 +256,9 @@ function ProgrammeBody({
   // Keep hook order stable when the user changes tabs.
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
+  const [selectedSchoolId, setSelectedSchoolId] = useState<string | null>(null);
+  const [schoolSaving, setSchoolSaving] = useState<string | null>(null);
+  const [schoolNotice, setSchoolNotice] = useState<string | null>(null);
   const scrollRef = useRef<ScrollView>(null);
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -281,7 +273,8 @@ function ProgrammeBody({
     setActiveSection(key);
   }, []);
   const grouped = useMemo(() => groupDomains(data.domains ?? []), [data.domains]);
-  const ibassVerified = isIbassVerified(data, status, meta);
+  const studentProgrammeName =
+    jambSuggestions[0]?.studentName ?? data.studentName ?? "Programme name unavailable";
   const requirementCards = useMemo(
     () => [
       {
@@ -312,8 +305,42 @@ function ProgrammeBody({
     [jambRequirements, colors],
   );
 
+  const chooseUniversity = useCallback(async (school: JambProgrammeSchool) => {
+    if (schoolSaving) return;
+    setSchoolSaving(school.schoolId);
+    setSchoolNotice(null);
+    try {
+      const current = await careerData.getGuidancePath();
+      const existingPath = current.status === "real" && current.data ? current.data.path : {};
+      const saved = await careerData.saveGuidancePath({
+        source: "explore",
+        path: {
+          ...existingPath,
+          programme: {
+            id: programmeId,
+            name: school.studentName ?? school.jambName ?? studentProgrammeName,
+            sourceName: school.jambName ?? studentProgrammeName,
+          },
+          university: { id: school.schoolId, name: school.schoolName },
+          requirements: jambRequirements ?? {},
+        },
+      });
+      if (saved.status === "real") {
+        invalidateGuidancePathCache();
+        setSelectedSchoolId(school.schoolId);
+        setSchoolNotice("University selected for your guidance path.");
+      } else {
+        setSchoolNotice(saved.meta?.notice ?? "Create an account to save this guidance path.");
+      }
+    } catch {
+      setSchoolNotice("Create an account to save this guidance path.");
+    } finally {
+      setSchoolSaving(null);
+    }
+  }, [jambRequirements, programmeId, schoolSaving, studentProgrammeName]);
+
   if (tab === "entrepreneurship") {
-    return <TrackBEntrepreneurship colors={colors} router={router} />;
+    return <TrackBEntrepreneurship colors={colors} router={router} programmeName={studentProgrammeName} programmeId={programmeId} />;
   }
 
   if (tab === "admission") {
@@ -349,9 +376,9 @@ function ProgrammeBody({
               Qualification and duration survive as a single plain line — they
               are answers to real student questions ("is it a B.Sc?", "how many
               years?") and are not CCMAS vocabulary. */}
-          {awardLine(data.name, data.qualification, data.durationYears) ? (
+          {awardLine(studentProgrammeName, data.qualification, data.durationYears) ? (
             <Text style={[styles.awardLine, { color: colors.textRole.secondary }]}>
-              {awardLine(data.name, data.qualification, data.durationYears)}
+              {awardLine(studentProgrammeName, data.qualification, data.durationYears)}
             </Text>
           ) : null}
 
@@ -367,37 +394,24 @@ function ProgrammeBody({
           />
 
           {/* JAMB name variations */}
-          {jambSuggestions.length > 1 ? (
+          {jambSchools.length > 0 ? (
             <View style={styles.jambNames}>
               <Text style={[styles.metaLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Also called
+                University offerings
               </Text>
               <Text style={[styles.provenanceNote, { color: colors.textRole.muted }]}>
-                Different universities list this course under different names.
-                All of them lead here.
+                The university name tells you which programme name and requirements you are looking at.
               </Text>
               <View style={styles.jambChips}>
-                {jambSuggestions.slice(1, 6).map((j) => (
-                  <View key={j.jambProgrammeId} style={[styles.jambChip, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                    <Text style={[styles.jambChipText, { color: colors.textRole.secondary }]} numberOfLines={1}>{j.jambName}</Text>
+                {jambSchools.slice(0, 6).map((school) => (
+                  <View key={`${school.schoolId}-${school.jambProgrammeId ?? "offering"}`} style={[styles.jambChip, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                    <Text style={[styles.jambChipText, { color: colors.textRole.secondary }]} numberOfLines={2}>{school.schoolName}: {school.studentName ?? school.jambName}</Text>
                   </View>
                 ))}
               </View>
             </View>
           ) : null}
 
-          {/* Naming provenance */}
-          {!ibassVerified ? (
-            <View style={styles.provenance}>
-              <DataSourceBadge
-                verification="pending"
-                source="Standard national naming"
-              />
-              <Text style={[styles.provenanceNote, { color: colors.textRole.muted }]}>
-                Showing the standard programme name — your institution&apos;s exact naming is being verified.
-              </Text>
-            </View>
-          ) : null}
         </View>
       </View>
 
@@ -454,13 +468,27 @@ function ProgrammeBody({
                     </Text>
                     {s.form ? (
                       <Text style={[styles.schoolMeta, { color: colors.textRole.muted }]}>
-                        {s.form === "UTME" ? "UTME" : "Direct Entry"} · cycle details only where published
+                        {s.form === "UTME" ? "UTME" : "Direct Entry"} - cycle details only where published
+                      </Text>
+                    ) : null}
+                    {s.studentName || s.jambName ? (
+                      <Text style={[styles.schoolMeta, { color: colors.textRole.secondary }]} numberOfLines={2}>
+                        Programme name: {s.studentName ?? s.jambName}
                       </Text>
                     ) : null}
                   </View>
+                  <TouchableOpacity
+                    onPress={() => void chooseUniversity(s)}
+                    disabled={schoolSaving !== null}
+                    style={[styles.schoolAction, { borderColor: selectedSchoolId === s.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
+                    <Text style={[styles.schoolActionText, { color: selectedSchoolId === s.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>
+                      {schoolSaving === s.schoolId ? "Saving..." : selectedSchoolId === s.schoolId ? "Selected" : "Use this university"}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               ))}
             </View>
+            {schoolNotice ? <Text style={[styles.schoolsMore, { color: colors.textRole.muted }]}>{schoolNotice}</Text> : null}
             {jambSchools.length > 8 ? (
               <Text style={[styles.schoolsMore, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
                 +{jambSchools.length - 8} more schools
@@ -475,7 +503,9 @@ function ProgrammeBody({
         <View onLayout={(e) => onSectionLayout("careers", e.nativeEvent.layout.y)} />
         <View style={styles.leadRow}>
           <Text style={[styles.lead, { color: colors.textRole.secondary }]}>
-            The domains your programme unlocks, strongest matches first.
+            These are the career areas connected to this programme. Direct areas
+            are closest to the programme; functional and adjacent areas show
+            other routes supported by the mapping.
           </Text>
         </View>
 
@@ -491,7 +521,6 @@ function ProgrammeBody({
                     key={link.domainId}
                     label={link.domainName}
                     matchType={link.matchType}
-                    elite={link.eliteFlag}
                     onPress={() => exploreNav.domain(router, link.domainId)}
                   />
                 ))}
@@ -504,10 +533,6 @@ function ProgrammeBody({
           <NotesWidget entityType="programme" entityId={programmeId} />
         </View>
 
-        <LevelUpCTA
-          title="Ready to close the gap?"
-          body="Build the bridge skills these domains need — one level at a time."
-        />
       </View>
     </>
   );
@@ -545,7 +570,7 @@ function ProgrammeBody({
   return <View style={{ gap: Spacing.lg }}>{content}</View>;
 }
 
-function TrackBEntrepreneurship({ colors, router }: { colors: ColorPalette; router: Router }) {
+function TrackBEntrepreneurship({ colors, router, programmeName, programmeId }: { colors: ColorPalette; router: Router; programmeName: string; programmeId: string }) {
   const exploreNav = useExploreNav();
   return (
     <View style={[styles.business, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
@@ -560,7 +585,10 @@ function TrackBEntrepreneurship({ colors, router }: { colors: ColorPalette; rout
       </Text>
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={() => exploreNav.entrepreneurship(router)}
+        onPress={() => exploreNav.entrepreneurship(router, {
+          programmeName: studentProgrammeName,
+          domainId: programmeId,
+        })}
         style={[styles.admissionCTA, { backgroundColor: colors.accentRole.action }]}
       >
         <Text style={[styles.admissionCTAText, CompassFonts.bodySemibold]}>
@@ -720,6 +748,14 @@ const styles = StyleSheet.create({
   schoolInfo: { flex: 1, gap: 2 },
   schoolName: { fontSize: FontSize.sm },
   schoolMeta: { fontSize: FontSize.xs },
+  schoolAction: {
+    alignSelf: "flex-start",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 6,
+  },
+  schoolActionText: { fontSize: FontSize.xs, fontWeight: "700" },
   schoolsMore: { fontSize: FontSize.sm, textAlign: "center" },
 
   // ── Employment (Track A) ──────────────────────────────────

@@ -31,6 +31,13 @@ from auth import Auth
 from database import db
 from models import ResponseModel
 
+
+def _analytics_consented(user: dict) -> bool:
+    """Optional product analytics is strictly opt-in, including queued events."""
+    settings = user.get("settings")
+    acceptance = settings.get("legalAcceptance") if isinstance(settings, dict) else None
+    return bool(isinstance(acceptance, dict) and acceptance.get("analyticsConsent") is True)
+
 # ─────────────────────────────────────────────────────────────
 # Pydantic models
 # ─────────────────────────────────────────────────────────────
@@ -255,18 +262,19 @@ async def track_share_event(
     portfolio artifact earned. Used for virality coefficient tracking
     and social ROI analysis.
     """
-    db.get_service_client().table("analytics_events").insert({
-        "user_id": current_user["id"],
-        "event_type": "share",
-        "event_data": {
-            "share_type": body.type,
-            "track_id": body.trackId,
-            "level_id": body.levelId,
-            "artifact_name": body.artifactName,
-        },
-        "session_id": None,
-        "created_at": datetime.now().isoformat(),
-    }).execute()
+    if _analytics_consented(current_user):
+        db.get_service_client().table("analytics_events").insert({
+            "user_id": current_user["id"],
+            "event_type": "share",
+            "event_data": {
+                "share_type": body.type,
+                "track_id": body.trackId,
+                "level_id": body.levelId,
+                "artifact_name": body.artifactName,
+            },
+            "session_id": None,
+            "created_at": datetime.now().isoformat(),
+        }).execute()
     return ResponseModel(success=True)
 
 
@@ -320,16 +328,17 @@ async def social_blast(
                 )
                 results.append({"platformId": platform_id, "postUrl": post_url})
                 # Log the push
-                db.get_service_client().table("analytics_events").insert({
-                    "user_id": current_user["id"],
-                    "event_type": "social_blast",
-                    "event_data": {
-                        "platform": platform_id,
-                        "artifact": body.artifactName,
-                        "portfolio_url": body.portfolioUrl,
-                    },
-                    "created_at": datetime.now().isoformat(),
-                }).execute()
+                if _analytics_consented(current_user):
+                    db.get_service_client().table("analytics_events").insert({
+                        "user_id": current_user["id"],
+                        "event_type": "social_blast",
+                        "event_data": {
+                            "platform": platform_id,
+                            "artifact": body.artifactName,
+                            "portfolio_url": body.portfolioUrl,
+                        },
+                        "created_at": datetime.now().isoformat(),
+                    }).execute()
             except Exception as e:
                 errors.append({"platformId": platform_id, "error": str(e)})
 

@@ -19,6 +19,7 @@ import { queryClient } from '../src/lib/queryClient';
 import { PRIVY_ENABLED } from '../src/lib/config';
 import { AppPrivyProvider } from '../src/lib/privy';
 import { RouteIntegrityGuard } from '../src/components/RouteIntegrityGuard';
+import LegalAcceptanceGate from '../src/components/LegalAcceptanceGate';
 
 export default function RootLayout() {
   // COMPASS font gate - waits for Hanken Grotesk + Spline Sans Mono to load.
@@ -35,6 +36,7 @@ export default function RootLayout() {
                 <SharedElementProvider>
                   <QueryClientProvider client={queryClient}>
                     <AuthProvider>
+                      <LegalAcceptanceGate />
                       <RouteIntegrityGuard />
                       <OfflineBanner />
                       <Stack screenOptions={{ headerShown: false }}>

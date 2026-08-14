@@ -221,8 +221,8 @@ export function CertPlacementList({
   return (
     <View style={[styles.container, style]}>
       <CertGroup label="Required to practise" certs={g} emphasise />
-      <CertGroup label="Specialisation certs" certs={s} />
-      <CertGroup label="Useful boosters" certs={r} />
+      <CertGroup label="Credentials for some specialisations" certs={s} />
+      <CertGroup label="Additional credentials linked to this field" certs={r} />
     </View>
   );
 }
