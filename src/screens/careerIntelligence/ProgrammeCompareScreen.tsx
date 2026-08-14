@@ -44,6 +44,7 @@ import {
   useTheme,
   type ColorPalette,
 } from "@/theme";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
 const MAX_COMPARE = 4;
 const MIN_QUERY = 2;
@@ -248,6 +249,7 @@ export default function ProgrammeCompareScreen() {
           ))}
         </View>
       )}
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }

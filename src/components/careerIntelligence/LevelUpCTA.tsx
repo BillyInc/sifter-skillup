@@ -6,7 +6,7 @@
  */
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import { SifterButton } from "../ui";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 
@@ -23,8 +23,13 @@ export function LevelUpCTA({
   label = "Open My World",
   onPress,
 }: LevelUpCTAProps) {
+  const pathname = usePathname();
   const router = useRouter();
   const { colors } = useTheme();
+
+  // Defence in depth: even if a future Career Intelligence screen imports
+  // this component, the learning CTA cannot render outside My World.
+  if (!pathname?.includes("/myworld")) return null;
 
   return (
     <View

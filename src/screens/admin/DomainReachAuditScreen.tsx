@@ -4,7 +4,8 @@
  * Curriculum portfolio planning: how many of the CCMAS domain universe this
  * institution's programme mix can reach, split direct / functional / adjacent,
  * which domains it does NOT reach (grouped by discipline cluster), a
- * programme-by-programme breakdown and the national leaderboard.
+ * programme-by-programme breakdown. Peer comparison is kept on its own
+ * institution-scoped screen.
  *
  * HARD RULE (the whole point of §5.1): this is STRUCTURAL DATA ONLY — the NUC
  * CCMAS 2022–2023 programme→domain mapping. It is NOT market demand and must
@@ -15,7 +16,7 @@
  * absent audit renders a graceful locked/pending state — never a fabricated
  * number.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -38,8 +39,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { comingSoon, type DataState } from "../../types/career";
 import type {
   DomainReachAudit,
-  DomainReachLeaderboardRow,
-  InstitutionControlFilter,
   ProgrammeDomainReachRow,
   UnreachedClusterRow,
 } from "../../types/institution";
@@ -47,13 +46,6 @@ import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { AdminDataTable } from "@/components/admin/AdminDataTable";
 import type { ColumnDef } from "@/components/admin/AdminDataTable";
-
-const CONTROL_FILTERS: { value: InstitutionControlFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "federal", label: "Federal" },
-  { value: "state", label: "State" },
-  { value: "private", label: "Private" },
-];
 
 /** Domains shown per cluster before the "show all" affordance. */
 const CLUSTER_PREVIEW = 4;
@@ -87,15 +79,10 @@ export function DomainReachAuditScreen() {
   const { colors } = useTheme();
   const { user } = useAuth();
   const [institutionName, setInstitutionName] = useState<string | null>(null);
-  const [filter, setFilter] = useState<InstitutionControlFilter>("all");
   const [audit, setAudit] = useState<DataState<DomainReachAudit>>({
     status: "pending",
     data: null,
   });
-  const [board, setBoard] = useState<
-    DataState<DomainReachLeaderboardRow[]>
-  >({ status: "pending", data: null });
-
   useEffect(() => {
     let active = true;
     getEducatorProfile(user?.id)
@@ -123,75 +110,6 @@ export function DomainReachAuditScreen() {
       active = false;
     };
   }, [user?.id]);
-
-  useEffect(() => {
-    let active = true;
-    setBoard({ status: "pending", data: null });
-    adminData
-      .getDomainReachLeaderboard(filter)
-      .then((d) => {
-        if (active) setBoard(d);
-      })
-      .catch(() => {
-        if (active) {
-          setBoard(
-            comingSoon<DomainReachLeaderboardRow[]>(
-              "The national domain-reach leaderboard could not be loaded. Try again shortly.",
-            ),
-          );
-        }
-      });
-    return () => {
-      active = false;
-    };
-  }, [filter]);
-
-  const leaderboardColumns = useMemo<ColumnDef[]>(
-    () => [
-      {
-        key: "nationalRank",
-        label: "Rank",
-        width: 60,
-        render: (val: number, row: DomainReachLeaderboardRow) => (
-          <Text
-            style={[
-              styles.cell,
-              row?.isSelf ? CompassFonts.bodyBold : null,
-              { color: row?.isSelf ? colors.accentRole.action : colors.textRole.muted },
-            ]}
-          >
-            {val != null ? `#${val}` : "—"}
-          </Text>
-        ),
-      },
-      {
-        key: "institutionName",
-        label: "Institution",
-        render: (val: string, row: DomainReachLeaderboardRow) => (
-          <Text
-            style={[
-              styles.cell,
-              row?.isSelf ? CompassFonts.bodyBold : null,
-              {
-                color: row?.isSelf
-                  ? colors.accentRole.action
-                  : colors.textRole.primary,
-              },
-            ]}
-            numberOfLines={2}
-          >
-            {val ?? "—"}
-            {row?.isSelf ? "  ← your institution" : ""}
-          </Text>
-        ),
-      },
-      { key: "totalDomains", label: "Total", width: 60 },
-      { key: "directDomains", label: "Direct", width: 66 },
-      { key: "functionalDomains", label: "Func", width: 60 },
-      { key: "adjacentDomains", label: "Adj", width: 56 },
-    ],
-    [colors],
-  );
 
   return (
     <AdminShell
@@ -305,48 +223,6 @@ export function DomainReachAuditScreen() {
           </ComingSoonPanel>
         </View>
 
-        {/* ─── National leaderboard ───────────────────────── */}
-        <View style={styles.section}>
-          <SectionHeading>National leaderboard</SectionHeading>
-          <View style={[styles.filterRow, { backgroundColor: colors.bgSecondary }]}>
-            {CONTROL_FILTERS.map((f) => {
-              const active = f.value === filter;
-              return (
-                <TouchableOpacity
-                  key={f.value}
-                  onPress={() => setFilter(f.value)}
-                  activeOpacity={0.8}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected: active }}
-                  style={[
-                    styles.filterBtn,
-                    active && { backgroundColor: colors.card },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.filterLabel,
-                      { color: active ? colors.text : colors.textMuted },
-                    ]}
-                  >
-                    {f.label}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-          <ComingSoonPanel
-            state={board}
-            empty={(rows) => (rows?.length ?? 0) === 0}
-            emptyTitle="Leaderboard not available"
-            emptyBody="The national domain-reach leaderboard appears here once the registry index is built."
-          >
-            {(rows) => (
-              <AdminDataTable columns={leaderboardColumns} data={rows} />
-            )}
-          </ComingSoonPanel>
-        </View>
-
         {/* ─── Footer ─────────────────────────────────────── */}
         <View style={styles.footer}>
           <Text style={[styles.footerText, { color: colors.textMuted }]}>
@@ -419,10 +295,6 @@ function SummaryBlock({ audit }: { audit: DomainReachAudit }) {
   // Never a fabricated denominator: the ratio is shown only when the API
   // supplies the live domain universe, otherwise just the count.
   const universe = audit.domainUniverse;
-  const rank =
-    audit.nationalRank != null && audit.totalInstitutions != null
-      ? `#${audit.nationalRank} of ${audit.totalInstitutions}`
-      : "Not yet ranked";
   return (
     <View
       style={[
@@ -461,10 +333,6 @@ function SummaryBlock({ audit }: { audit: DomainReachAudit }) {
         label="Domains not reached"
         value={String(audit.unreachedDomains ?? 0)}
       />
-      <View
-        style={[styles.divider, { backgroundColor: colors.borderRole.subtle }]}
-      />
-      <SummaryRow label="National rank (domain reach)" value={rank} emphasis />
     </View>
   );
 }

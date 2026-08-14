@@ -1,5 +1,5 @@
-import QualificationUpgradesScreen from "@/screens/careerIntelligence/QualificationUpgradesScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function QualificationUpgradesRoute() {
-  return <QualificationUpgradesScreen />;
+  return <PathwaysHubScreen initialSection="qualification" />;
 }

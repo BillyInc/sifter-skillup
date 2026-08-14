@@ -29,7 +29,7 @@ export type OrganizationType =
   | "tutorial_centre" // tutorial centre / JAMB lesson provider (provider/session only)
   | "jamb_cafe";
 
-/** Role of a member within an organisation (drives scope, not built out yet). */
+/** Role of a member within an organisation; drives the admin workspace scope. */
 export type OrgRole =
   | "owner"
   | "institution_admin"
@@ -135,6 +135,8 @@ export interface EducatorProfile {
   adminAccessGrantedAt?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
+  /** Set only when proof was actually submitted for review. */
+  verificationProofSubmittedAt?: string;
   completedAt?: string;
 }
 
@@ -160,6 +162,19 @@ export interface StudentConsent {
   grantedBy: "self" | "guardian";
   grantedAt?: string;
   revokedAt?: string;
+}
+
+/** A school invitation that still needs the student's explicit decision. */
+export interface StudentConsentRequest {
+  id: string;
+  schoolId: string;
+  schoolName?: string | null;
+  schoolAddress?: string | null;
+  scope: "progress" | "contact" | "full";
+  message?: string | null;
+  status: "pending" | "accepted" | "declined" | "withdrawn";
+  createdAt?: string | null;
+  respondedAt?: string | null;
 }
 
 //  Provisioning: drafts -> review grid -> generate -> roster 

@@ -80,6 +80,7 @@ function navGroupsFor(
   return getAdminNavGroups({
     organizationType: profile?.organizationType,
     providerSessionOnly: profile?.providerSessionOnly,
+    role: profile?.role,
   }) as { title: string; items: AdminNavItem[] }[];
 }
 
@@ -126,9 +127,14 @@ export function AdminShell({
 
   useEffect(() => {
     let active = true;
-    getEducatorProfile(user?.id).then((p) => {
-      if (active) setProfile(p);
-    });
+    getEducatorProfile(user?.id).then(
+      (p) => {
+        if (active) setProfile(p);
+      },
+      () => {
+        if (active) setProfile(null);
+      },
+    );
     return () => {
       active = false;
     };

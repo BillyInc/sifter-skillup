@@ -136,10 +136,11 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
 
     if (!res.ok || !json?.success) {
       const detail = typeof json?.detail === "string" ? json.detail : undefined;
+      const detailMessage = typeof json?.detail?.message === "string" ? json.detail.message : undefined;
       const error = typeof json?.error === "string" ? json.error : undefined;
       const message = typeof json?.message === "string" ? json.message : undefined;
       throw new Error(
-        error ?? detail ?? message ??
+        error ?? detail ?? detailMessage ?? message ??
         (responseText.trim() ? responseText.trim().slice(0, 240) : `Request failed (${res.status})`),
       );
     }
@@ -200,6 +201,9 @@ export const API = {
     last_name?: string;
     date_of_birth?: string;
     email_code?: string;
+    terms_version?: string;
+    privacy_version?: string;
+    analytics_consent?: boolean;
   }) =>
     // type assertion: call sites extend UserProfile with store-local fields
     request<AuthResponse>('/api/auth/signup', {
@@ -252,6 +256,14 @@ export const API = {
       logger.warn('Failed to clear token from SecureStore', { error: e });
     }
   },
+  /** Synchronous web check used when a browser restores a cached React tree. */
+  hasStoredToken: (): boolean | null => {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      try { return Boolean(localStorage.getItem(TOKEN_KEY)); } catch { return false; }
+    }
+    // Native storage is asynchronous; callers should use getToken there.
+    return null;
+  },
   getToken,  // exported for offline sync engines
   deleteMe: (): Promise<void> =>
     request<void>('/api/users/me', { method: 'DELETE' }),
@@ -268,6 +280,18 @@ export const API = {
   getMe: (): Promise<CompatAny> => request<UserProfile>('/api/users/me'),
   updateMe: (updates: Partial<UserProfile> | Record<string, unknown>): Promise<CompatAny> =>
     request<UserProfile>('/api/users/me', { method: 'PUT', body: JSON.stringify(updates) }),
+  recordLegalAcceptance: (acceptance: {
+    termsVersion: string;
+    privacyVersion: string;
+    analyticsConsent: boolean;
+  }) => request<{ accepted: boolean; user: UserProfile }>('/api/users/legal-acceptance', {
+    method: 'POST',
+    body: JSON.stringify({
+      terms_version: acceptance.termsVersion,
+      privacy_version: acceptance.privacyVersion,
+      analytics_consent: acceptance.analyticsConsent,
+    }),
+  }),
   checkStreak: (): Promise<CompatAny> => request<UserProfile>('/api/users/streak', { method: 'POST' }),
 
   // Game

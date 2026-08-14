@@ -5,9 +5,8 @@
  *
  * Consumes the v2 contract via careerData.getDomainV2(domainKey) → DataState<DomainV2>.
  *
- * Phase 10 redesign: hero icon with cluster color, StatTile demand row,
- * responsive 2-column desktop layout, section nav (clickable), data-source
- * badge footer, all legacy tokens migrated to semantic equivalents.
+ * The detail view keeps domain-owned guidance together: priority skills,
+ * domain tools, domain certifications, sub-groups, and career roles.
  *
  * Sticky section nav with auto-scroll-tracking deferred (needs DetailScaffold
  * refactor for scroll-event passthrough on web).
@@ -43,18 +42,14 @@ import {
   RoleClusterSection,
   RoleCard,
   NotesWidget,
-  LevelUpCTA,
   RouteLine,
-  SkillsBridge,
   MappingFeedbackButton,
   SectionLabel,
-  StatTile,
-  DataSourceBadge,
+  GuidanceReportButton,
 } from "@/components/careerIntelligence";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
-  { key: "demand", label: "Demand" },
   { key: "skills", label: "Skills" },
   { key: "tools", label: "Tools" },
   { key: "certs", label: "Certifications" },
@@ -70,11 +65,14 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string }>();
+  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
+  const targetStudentId = Array.isArray(params.guidance_student_id)
+    ? params.guidance_student_id[0]
+    : params.guidance_student_id;
 
   const [state, setState] = useState<DataState<DomainV2>>(() =>
-    comingSoon<DomainV2>("Domain detail is being populated."),
+    comingSoon<DomainV2>("Loading domain details..."),
   );
 
   useEffect(() => {
@@ -92,10 +90,13 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       eyebrow="DOMAIN"
       title={state.data?.name ?? "Domain"}
       save={{ entityType: "domain", entityId: domainKey }}
+      reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
+      targetStudentId={targetStudentId}
       pdf
+      pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       state={state}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} />}
     </DetailScaffold>
   );
 }
@@ -110,9 +111,11 @@ function isElite(status?: string): boolean {
 function DomainBody({
   domain,
   domainKey,
+  targetStudentId,
 }: {
   domain: DomainV2;
   domainKey: string;
+  targetStudentId?: string;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -122,7 +125,6 @@ function DomainBody({
   const cluster = domain.cluster ?? domain.clusters?.[0];
   const roles = domain.roles ?? [];
   const subgroups = domain.subgroups ?? [];
-  const metrics = domain.demandMetrics?.ng_local;
   const clusterColor = getClusterColor(cluster ?? "");
 
   const isDesktop = resp.isDesktop && resp.isWeb;
@@ -134,14 +136,32 @@ function DomainBody({
   // the same badge. Both props are optional now, and the badge renders nothing
   // when there is nothing to say.
   const renderRoleCard = (role: DomainRoleSummary) => (
-    <RoleCard
-      key={role.key}
-      id={role.key}
-      name={role.name}
-      alsoKnownAs={role.alsoKnownAs}
-      eliteFlag={isElite(role.eliteStatus)}
-      onPress={() => exploreNav.role(router, role.key)}
-    />
+    <View key={role.key} style={styles.roleItem}>
+      <RoleCard
+        id={role.key}
+        name={role.name}
+        alsoKnownAs={role.alsoKnownAs}
+        eliteFlag={isElite(role.eliteStatus)}
+        domainId={domainKey}
+        onPress={() => exploreNav.role(router, role.key, targetStudentId)}
+      />
+      <GuidanceReportButton
+        selection={{
+          kind: "roles",
+          id: role.key,
+          name: role.name,
+          domainId: domainKey,
+          domainName: domain.name,
+          ...(role.subgroupId
+            ? {
+                subgroupId: role.subgroupId,
+                subgroupName: subgroups.find((item) => item.id === role.subgroupId)?.name,
+              }
+            : {}),
+        }}
+        targetStudentId={targetStudentId}
+      />
+    </View>
   );
 
   let otherRoles: DomainRoleSummary[] = [];
@@ -201,10 +221,6 @@ function DomainBody({
                 </Text>
               </View>
             ) : null}
-            <DataSourceBadge
-              verification={domain.demandMetrics ? "inferred" : "pending"}
-              source="WEF · O*NET · Lightcast"
-            />
           </View>
         </View>
       </View>
@@ -220,70 +236,14 @@ function DomainBody({
         edges={["solid", "dashed"]}
       />
 
-      {/* Demand metrics stat tiles */}
-      {metrics ? (
-        <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>Local demand</SectionLabel>
-          <View style={resp.isTablet || resp.isDesktop ? styles.statGrid : styles.statRow}>
-            <StatTile
-              value={metrics.postingsPerMonth}
-              label="Monthly postings"
-              stamp="Nigeria · indicative"
-            />
-            {metrics.postingsYoY !== undefined ? (
-              <StatTile
-                value={Math.abs(metrics.postingsYoY)}
-                label="Year-on-year"
-                suffix="%"
-                delta={{
-                  trend: metrics.postingsYoY >= 0 ? "up" : "down",
-                  text: `${Math.abs(metrics.postingsYoY)}% vs last year`,
-                }}
-                stamp="YoY change"
-              />
-            ) : null}
-            {metrics.remotePct !== undefined ? (
-              <StatTile
-                value={metrics.remotePct}
-                suffix="%"
-                label="Remote-friendly"
-                stamp="of postings"
-              />
-            ) : null}
-            {metrics.entrySalaryLocalNGN !== undefined ? (
-              <StatTile
-                value={metrics.entrySalaryLocalNGN}
-                prefix="₦"
-                label="Entry salary (local)"
-                stamp="per annum · indicative"
-              />
-            ) : null}
-          </View>
-        </View>
-      ) : null}
-
-      {/* Demand metrics block (falls back gracefully) */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("demand", e.nativeEvent.layout.y)} />
-      </View>
-
       {/* Foundation skills */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
-          title="Common skills in this field"
+          title="Skills to build first"
         />
       </View>
-
-      {/* Skills bridge */}
-      {(domain.foundationSkills?.length ?? 0) > 0 ? (
-        <SkillsBridge
-          domainBridgeSkills={(domain.foundationSkills ?? []).map((s) => ({
-            name: s.skill,
-          }))}
-        />
-      ) : null}
 
       {/* Tools */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
@@ -327,6 +287,9 @@ function DomainBody({
                   <RoleClusterSection
                     key={sg.id}
                     subgroup={sg}
+                    domainId={domainKey}
+                    domainName={domain.name}
+                    targetStudentId={targetStudentId}
                     defaultOpen={i === 0}
                   >
                     <View style={styles.roleList}>
@@ -355,16 +318,9 @@ function DomainBody({
         ) : null}
       </View>
 
-      {/* Notes + level-up CTA */}
+      {/* Notes stay in Career Intelligence; learning actions belong in My World. */}
       <NotesWidget entityType="domain" entityId={domainKey} />
-      <LevelUpCTA />
 
-      {/* Data source provenance footer */}
-      <DataSourceBadge
-        verification="inferred"
-        source="WEF Future of Jobs 2025 · O*NET · Lightcast"
-        date="2025"
-      />
     </>
   );
 
@@ -507,6 +463,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.lg,
   },
   roleList: { gap: Spacing.sm },
+  roleItem: { gap: Spacing.xs },
   otherLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.5,

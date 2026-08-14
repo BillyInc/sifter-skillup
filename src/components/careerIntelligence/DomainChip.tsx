@@ -1,9 +1,8 @@
 /**
  * DomainChip — a programme→domain link rendered with its match type.
  *
- * Per CCMAS v3.0: domains are Direct / Functional / Adjacent. There is no
- * Primary/Secondary — relative importance is conveyed by ORDER (the in-demand
- * signal), which callers handle when sorting, not by this chip.
+ * Per CCMAS v3.0: domains are Direct / Functional / Adjacent. The chip keeps
+ * that relationship visible without adding unsupported ranking signals.
  */
 import React from "react";
 import {
@@ -22,12 +21,6 @@ import {
 } from "../../theme";
 import type { DomainMatchType } from "../../types/career";
 
-export interface DemandIndicator {
-  postingsPerMonth: number;
-  growthRate?: number | null;
-  label: string;
-}
-
 export interface DomainChipProps {
   label: string;
   matchType: DomainMatchType;
@@ -36,8 +29,6 @@ export interface DomainChipProps {
   /** Show the match-type word (Direct/Functional/Adjacent) after the label. */
   showType?: boolean;
   elite?: boolean;
-  /** Demand indicator from domain_demand_metrics */
-  demandIndicator?: DemandIndicator;
   onPress?: () => void;
   style?: ViewStyle;
 }
@@ -48,11 +39,10 @@ export function DomainChip({
   glyph,
   showType = true,
   elite,
-  demandIndicator,
   onPress,
   style,
 }: DomainChipProps) {
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
   const badge = getDomainBadge(matchType, isDark);
 
   const Container: any = onPress ? TouchableOpacity : View;
@@ -76,11 +66,6 @@ export function DomainChip({
             {badge.label}
           </Text>
         </View>
-      ) : null}
-      {demandIndicator ? (
-        <Text style={[styles.demandChip, { color: colors.green }]}>
-          📈 {demandIndicator.label}
-        </Text>
       ) : null}
     </Container>
   );
@@ -112,11 +97,5 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     letterSpacing: 0.4,
     textTransform: "uppercase",
-  },
-  demandChip: {
-    fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 0.3,
-    marginLeft: 2,
   },
 });

@@ -182,6 +182,7 @@ export function CommentSheet({
 
           {/* Input area */}
           <View style={[styles.inputArea, { borderTopColor: colors.border, backgroundColor: colors.card }]}>
+            <Text style={[styles.privacyNotice, { color: colors.textMuted }]}>Comments and images may be visible to other users. Do not post student IDs, grades, guardian information, health details, or other sensitive personal data.</Text>
             {/* Reply indicator */}
             {replyTo && (
               <View style={[styles.replyIndicator, { backgroundColor: colors.accentSoft }]}>
@@ -271,6 +272,7 @@ const styles = StyleSheet.create({
   commentActionText:{ fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 
   inputArea:       { borderTopWidth: 1, padding: Spacing.sm, gap: Spacing.sm },
+  privacyNotice:   { fontSize: FontSize.xs, lineHeight: 16 },
   replyIndicator:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.sm, borderRadius: Radius.lg },
   replyIndicatorText:{ fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   replyDismiss:    { fontSize: 16, fontWeight: FontWeight.bold, padding: 4 },

@@ -100,7 +100,12 @@ export function LiveAdmissionSearchField({
         state.status === "real" && Array.isArray(state.data)
           ? state.data.map((r: any) => ({
               id: r.id || r.jambProgrammeId || r.schoolId || "",
-              name: typeof r.jambName === "string" ? r.jambName : r.name,
+              name:
+                typeof r.studentName === "string"
+                  ? r.studentName
+                  : typeof r.jambName === "string"
+                    ? r.jambName
+                    : r.name,
               institutionType: r.institutionType,
               schoolNames: Array.isArray(r.schoolNames) ? r.schoolNames : [],
               schoolCount: Number(r.schoolCount || 0),

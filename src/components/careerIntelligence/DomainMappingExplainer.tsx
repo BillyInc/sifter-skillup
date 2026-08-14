@@ -51,7 +51,7 @@ const ROLE_ROWS: { dot: string; title: string; body: string }[] = [
   {
     dot: "➕",
     title: "Adjacent",
-    body: "A partial fit — reachable once you close a focused set of bridge skills.",
+    body: "A partial fit; the mapping shows the additional skills to review.",
   },
 ];
 

@@ -57,6 +57,13 @@ class UserUpdate(BaseModel):
     # strips privileged columns before writing (main.py).
 
 
+class LegalAcceptanceInput(BaseModel):
+    """Versioned legal acceptance recorded against the authenticated user."""
+    terms_version: str = Field(min_length=1, max_length=80)
+    privacy_version: str = Field(min_length=1, max_length=80)
+    analytics_consent: bool = False
+
+
 class UserProfile(BaseModel):
     """Serialised user/profile shape returned to the client.
 

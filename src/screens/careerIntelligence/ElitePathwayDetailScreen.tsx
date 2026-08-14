@@ -14,7 +14,6 @@ import { View, Text, StyleSheet } from "react-native";
 import {
   DetailScaffold,
   BridgeView,
-  LevelUpCTA,
 } from "@/components/careerIntelligence";
 import { SectionHeader } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
@@ -122,10 +121,6 @@ export function ElitePathwayDetailScreen({
             <ReadinessPanel colors={colors} />
           </View>
 
-          <LevelUpCTA
-            title="Build toward this pathway"
-            body="The elite path is a climb — start closing the gap in your world."
-          />
         </View>
       )}
     </DetailScaffold>

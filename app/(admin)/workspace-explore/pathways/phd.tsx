@@ -1,5 +1,5 @@
-import PhdPathwayScreen from "@/screens/careerIntelligence/PhdPathwayScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function AdminPhdPathwayRoute() {
-  return <PhdPathwayScreen />;
+  return <PathwaysHubScreen initialSection="research" />;
 }

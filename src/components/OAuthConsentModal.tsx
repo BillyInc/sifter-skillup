@@ -70,7 +70,8 @@ export default function OAuthConsentModal({
             <Text style={styles.agentText}>
               By tapping &quot;Connect&quot;, you authorise Sifter LevelUp to act as your limited agent
               for the specific actions listed above on {platform}, as described in our{' '}
-              <Text style={styles.agentLink}>Terms of Service</Text>.
+              <Text style={styles.agentLink}>Terms of Service</Text> and Privacy Policy. {platform}&apos;s own terms and privacy policy also apply.
+              Review the permissions above and do not connect an account containing sensitive student information.
             </Text>
           </View>
 

@@ -45,6 +45,8 @@ import { locked, type DataState, type CareerSearchResult } from "@/types/career"
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
+import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscoveryPanel";
+import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -99,6 +101,8 @@ export interface ExploreScreenProps {
   heading?: string;
   /** Uses an audience-specific admin landing instead of student entry cards. */
   adminAudience?: "school" | "university";
+  /** Exact organisation type for the skill-discovery lens. */
+  adminType?: string | null;
 }
 
 export default function ExploreScreen({
@@ -106,6 +110,7 @@ export default function ExploreScreen({
   intro,
   heading,
   adminAudience,
+  adminType,
 }: ExploreScreenProps = {}) {
   const { colors } = useTheme();
   const { user, signInGuest } = useAuth();
@@ -234,6 +239,8 @@ export default function ExploreScreen({
       ) : null}
 
       {intro}
+
+      <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
 
       {/* ── Search ────────────────────────────────────────────── */}
       <CoachMark
@@ -430,6 +437,7 @@ export default function ExploreScreen({
       ) : (
         <DataLimitedState />
       )}
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }
@@ -529,7 +537,7 @@ function ExploreIdle({
       </View>
 
       {adminAudience ? (
-        <AdminExploreActions audience={adminAudience} router={router} nav={nav} />
+        <AdminExploreActions audience={adminAudience} adminType={adminType} router={router} nav={nav} />
       ) : null}
 
       {/* ── Pathways strip ────────────────────────────────────── */}
@@ -691,10 +699,12 @@ function ExploreIdle({
 
 function AdminExploreActions({
   audience,
+  adminType,
   router,
   nav,
 }: {
   audience: "school" | "university";
+  adminType?: string | null;
   router: ReturnType<typeof useRouter>;
   nav: ExploreNav;
 }) {
@@ -706,8 +716,8 @@ function AdminExploreActions({
         { title: "Audit domain reach", body: "Review direct, functional and adjacent domain connections.", onPress: () => router.push("/(admin)/domain-reach" as never), icon: "map" as const },
       ]
     : [
-        { title: "Compare university options", body: "Review the universities that offer a learner's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme"), icon: "users" as const },
-        { title: "Guide from a learner's choice", body: "Start with subjects or a programme idea and explain the available routes.", onPress: () => nav.admissionHub(router, "subjects"), icon: "compass" as const },
+        { title: "Compare university options", body: "Review the universities that offer a learner's programme and explain the differences.", onPress: () => nav.admissionHub(router, "programme", adminType), icon: "users" as const },
+        { title: "Guide from a learner's choice", body: "Start with subjects or a programme idea and explain the available routes.", onPress: () => nav.admissionHub(router, "subjects", adminType), icon: "compass" as const },
         { title: "Review your learners", body: "Open the cohort view for accounts, sessions and shared guidance signals.", onPress: () => router.push("/(admin)/guidance" as never), icon: "book-open" as const },
       ];
 

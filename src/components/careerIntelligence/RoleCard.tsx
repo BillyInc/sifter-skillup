@@ -31,7 +31,6 @@ export interface RoleCardProps {
   coverageRatio?: number;
   readiness?: Readiness;
   tier?: TierType;
-  inDemandScore?: number;
   eliteFlag?: boolean;
   salaryNgnMin?: number;
   salaryNgnMax?: number;
@@ -69,7 +68,6 @@ export function RoleCard({
   coverageRatio,
   readiness,
   tier,
-  inDemandScore,
   eliteFlag,
   salaryNgnMin,
   salaryNgnMax,
@@ -121,7 +119,7 @@ export function RoleCard({
         </View>
       ) : null}
 
-      {(inDemandScore != null || eliteFlag) ? (
+      {eliteFlag ? (
         <View style={styles.chipRow}>
           {eliteFlag ? (
             <View
@@ -131,18 +129,6 @@ export function RoleCard({
               ]}
             >
               <Text style={[styles.chipText, { color: colors.accentRole.warning }, CompassFonts.data]}>Elite</Text>
-            </View>
-          ) : null}
-          {inDemandScore != null && inDemandScore > 0 ? (
-            <View
-              style={[
-                styles.chip,
-                { backgroundColor: colors.accentRole.status + "14", borderColor: colors.accentRole.status },
-              ]}
-            >
-              <Text style={[styles.chipText, { color: colors.accentRole.status }, CompassFonts.data]}>
-                {inDemandScore >= 80 ? "High demand" : inDemandScore >= 50 ? "In demand" : "Growing"}
-              </Text>
             </View>
           ) : null}
         </View>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Platform,
   RefreshControl,
@@ -21,17 +21,11 @@ import {
   useTheme,
 } from '@/theme';
 import { Badge, SifterButton, SifterCard } from '@/components/ui';
-import { StaggerReveal } from '@/components/animations/StaggerReveal';
-import { TheBolt } from '@/components/CharacterSystem';
-import { fieldColor } from '@/components/artwork/FieldArtwork';
 import TrackScene from '@/components/artwork/TrackIsometricScene';
 import IslandGlobe, { DEFAULT_ISLAND_PINS } from '@/components/artwork/IslandGlobe';
-import { useAuth } from '@/hooks/useAuth';
-import { useResume } from '@/hooks/useResume';
 import { useResponsive } from '@/hooks/useResponsive';
 import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
-import { findTrackById, getTrackHref, resolveTrackContext } from '@/lib/trackContext';
-import { getResumeSummary, normaliseResumePosition } from '@/lib/resumeNavigation';
+import { resolveTrackContext } from '@/lib/trackContext';
 import {
   GRID_GAP,
   WebCard,
@@ -117,7 +111,7 @@ function XPProgressBar({
   useEffect(() => {
     fillAnim.value = withTiming(progress, { duration: 650 });
     dailyFillAnim.value = withTiming(Math.min(1, dailyXp / Math.max(1, dailyGoalTarget)), { duration: 650 });
-  }, [dailyGoalTarget, dailyXp, progress]);
+  }, [dailyFillAnim, dailyGoalTarget, dailyXp, fillAnim, progress]);
 
   const fillWidthStyle = useAnimatedStyle(() => ({
     width: `${fillAnim.value * 100}%`,
@@ -172,50 +166,6 @@ function ReferenceBadge({ label, color }: { label: string; color: string }) {
     <View style={styles.referenceBadgeWrap}>
       <Badge label={label} variant="track" color={color} size="sm" />
     </View>
-  );
-}
-
-function OverviewTrackCard({
-  iconLabel,
-  name,
-  accentColor,
-  summary,
-  points,
-  onPress,
-}: {
-  iconLabel: string;
-  name: string;
-  accentColor: string;
-  summary: string;
-  points: string[];
-  onPress: () => void;
-}) {
-  const { colors } = useTheme();
-  return (
-    <WebCard accentBar accentColor={accentColor} onPress={onPress} style={styles.overviewTrackCard}>
-      <View style={styles.webTrackHeader}>
-        <View style={[styles.trackIconBadge, { backgroundColor: `${accentColor}14`, borderColor: `${accentColor}26` }]}>
-          <Text style={[styles.trackIconBadgeText, { color: accentColor }, CompassFonts.data]}>{iconLabel}</Text>
-        </View>
-        <Text style={[styles.webTrackName, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{name}</Text>
-        <Text style={[styles.webTrackArrow, { color: colors.textRole.muted }, CompassFonts.data]}>{'>'}</Text>
-      </View>
-      <Text style={[styles.overviewTrackSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{summary}</Text>
-      <WebMiniChart color={accentColor} values={[12, 24, 21, 38, 44, 57, 63]} />
-      <View style={{ marginTop: 10, gap: 4 }}>
-        {points.map((point) => (
-          <Text key={point} style={[styles.webTrackKey, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>{`- ${point}`}</Text>
-        ))}
-      </View>
-      <SifterButton
-        label="View Track"
-        onPress={onPress}
-        variant="track"
-        color={accentColor}
-        size="sm"
-        style={styles.webTrackBtn}
-      />
-    </WebCard>
   );
 }
 
@@ -298,32 +248,6 @@ function TrackHeroCard({
   );
 }
 
-function StatCard({
-  iconLabel,
-  label,
-  value,
-  sub,
-  color,
-}: {
-  iconLabel: string;
-  label: string;
-  value: string;
-  sub?: string;
-  color: string;
-}) {
-  const { colors } = useTheme();
-  return (
-    <SifterCard style={[styles.statCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
-      <View style={[styles.statBadge, { backgroundColor: `${color}14`, borderColor: `${color}22` }]}>
-        <Text style={[styles.statBadgeText, { color }, CompassFonts.data]}>{iconLabel}</Text>
-      </View>
-      <Text style={[styles.statValue, { color }, CompassFonts.data]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: colors.textRole.secondary }, CompassFonts.data]}>{label}</Text>
-      {sub ? <Text style={[styles.statSub, { color: colors.textRole.muted }, CompassFonts.data]}>{sub}</Text> : null}
-    </SifterCard>
-  );
-}
-
 function QuickAction({
   iconLabel,
   label,
@@ -355,19 +279,10 @@ function QuickAction({
 export default function HomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { user, updateActiveField } = useAuth();
-  const { lastPosition } = useResume();
   const resp = useResponsive();
   const go = useCallback((href: string) => router.push(href as any), [router]);
-  const resumePosition = useMemo(
-    () => lastPosition ?? normaliseResumePosition(user?.last_position),
-    [lastPosition, user?.last_position],
-  );
-  const trackContext = useMemo(() => resolveTrackContext(user, {
-    trackId: resumePosition?.trackId,
-    trackName: resumePosition?.trackName,
-  }), [resumePosition?.trackId, resumePosition?.trackName, user]);
-  const resumeSummary = useMemo(() => getResumeSummary(resumePosition), [resumePosition]);
+  const trackContext = useMemo(() => resolveTrackContext(null), []);
+  const resumeSummary = null;
 
   const [xp, setXp] = useState<XPSnapshot | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -395,7 +310,7 @@ export default function HomeScreen() {
     contentAnim.value = 0;
     headerAnim.value = withTiming(1, { duration: 420 });
     contentAnim.value = withDelay(420, withTiming(1, { duration: 320 }));
-  }, [loadData]));
+  }, [contentAnim, headerAnim, loadData]));
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -415,57 +330,14 @@ export default function HomeScreen() {
   const continueHref = '/(tabs)/explore';
   const continueLabel = trackContext.mode === 'track'
     ? (resumeSummary ? 'Continue where you left off' : trackContext.continueLabel)
-    : 'Explore tracks';
-  const continueSub = resumeSummary ?? (trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Resume island journey');
+    : 'Explore guidance';
   const heroSummary = trackContext.mode === 'track' && resumeSummary
     ? `${trackContext.heroSummary} ${resumeSummary}.`
     : trackContext.heroSummary;
 
-  const openTrack = useCallback(async (trackId: string) => {
-    const track = findTrackById(trackId);
-    if (!track) {
-      go('/(tabs)/fields');
-      return;
-    }
-
-    try {
-      await updateActiveField(track.fieldId, fieldColor(track.fieldId), track.id, track.name);
-    } catch {
-    }
-
-    go(getTrackHref(track));
-  }, [go, updateActiveField]);
-
   const isDesktopWeb = resp.isDesktop && resp.isWeb;
 
   if (isDesktopWeb) {
-    const overviewTracks = [
-      {
-        id: 'quant-trader',
-        iconLabel: 'QT',
-        name: 'Quant Track',
-        color: '#6366f1',
-        summary: 'Math-heavy trading, research, and execution infrastructure.',
-        points: ['Strategy labs', 'Backtests', 'Market microstructure'],
-      },
-      {
-        id: 'supply-chain-analyst',
-        iconLabel: 'SC',
-        name: 'Supply Chain Track',
-        color: '#10b981',
-        summary: 'Forecasting, inventory, logistics, and operations decision-making.',
-        points: ['Planning', 'Flow control', 'Operations analytics'],
-      },
-      {
-        id: 'supply-chain-analyst',
-        iconLabel: 'SC',
-        name: 'Supply Chain Analyst',
-        color: '#0EA5E9',
-        summary: 'Demand, inventory, logistics, and operations intelligence.',
-        points: ['Demand planning', 'Inventory signals', 'Operations decisions'],
-      },
-    ];
-
     return (
       <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
         <WebShell>
@@ -478,7 +350,6 @@ export default function HomeScreen() {
                 onPress={() => go('/(tabs)/profile')}
                 style={[styles.webBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
-                <TheBolt size={32} animate />
                 <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
               </TouchableOpacity>
             )}
@@ -550,7 +421,7 @@ export default function HomeScreen() {
 
           {trackContext.mode === 'track' ? (
             <>
-              <WebSectionLabel label={trackContext.challengeTitle} action="Switch track >" onAction={() => go('/(tabs)/fields')} />
+              <WebSectionLabel label="Continue your guidance" action="Open Explore >" onAction={() => go('/(tabs)/explore')} />
               <WebRow>
                 <WebCol weight={2}>
                   <WebCard accentBar accentColor={accentColor}>
@@ -583,34 +454,30 @@ export default function HomeScreen() {
               </WebRow>
             </>
           ) : (
-            <>
-              <WebSectionLabel label="Career Tracks" action="Explore all >" onAction={() => go('/(tabs)/fields')} />
-              <WebRow cols={2}>
-                {overviewTracks.map((track) => (
-                  <OverviewTrackCard
-                    key={track.id}
-                    iconLabel={track.iconLabel}
-                    name={track.name}
-                    accentColor={track.color}
-                    summary={track.summary}
-                    points={track.points}
-                    onPress={() => void openTrack(track.id)}
-                  />
-                ))}
-              </WebRow>
-            </>
+            <WebCard title="Continue your guidance" accentBar accentColor={colors.accentRole.action}>
+              <Text style={[styles.trackFeatureSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>
+                Explore programmes, universities, domains, roles, and admission requirements from one place.
+              </Text>
+              <SifterButton
+                label="Open Explore"
+                onPress={() => go('/(tabs)/explore')}
+                variant="track"
+                color={colors.accentRole.action}
+                size="sm"
+                style={styles.primaryActionBtn}
+              />
+            </WebCard>
           )}
 
           <WebRow>
             <WebCol weight={2}>
-              <WebCard title={trackContext.mode === 'track' ? `${trackContext.trackName} Guild` : 'Guild'} accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
-                <WebListRow icon="GUILD" title={trackContext.mode === 'track' ? `${trackContext.trackName} Circle` : 'Alpha Seekers Guild'} sub="Active - 1h ago" onPress={() => go('/(tabs)/guild')} />
+              <WebCard title="Saved guidance" accentBar accentColor={colors.accentRole.action}>
+                <WebListRow icon="WORLD" title="My World" sub="Saved programmes, domains, roles, and notes" onPress={() => go('/(tabs)/myworld')} />
                 <View style={[styles.webDiscussionCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
-                  <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }, CompassFonts.data]}>ACTIVE THREADS</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>{`Chat: ${trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine learning in alpha generation'}`}</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>{`Chat: ${trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal artifact packaging for interviews'}`}</Text>
+                  <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }, CompassFonts.data]}>NEXT GUIDANCE STEP</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>Compare programmes, universities, and admission requirements in Explore.</Text>
                 </View>
-                <WebListRow icon="TASK" title="Challenge Queue" sub="Track prompts and guild tasks" badge={3} badgeColor={colors.accentRole.status} onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="MAP" title="Explore" sub="Continue your programme and career guidance" onPress={() => go('/(tabs)/explore')} />
               </WebCard>
             </WebCol>
 
@@ -623,8 +490,8 @@ export default function HomeScreen() {
                 </Text>
               </WebCard>
               <WebCard title="Signals" accentBar accentColor={colors.accentRole.success}>
-                <WebListRow icon="LAB" title={trackContext.mode === 'track' ? `${trackContext.trackName} board` : 'Vol Arb Challenge'} sub={trackContext.mode === 'track' ? trackContext.challengeSummary : 'Trading competition'} onPress={() => go('/(tabs)/guild')} />
-                <WebListRow icon="WORLD" title="My World" sub="Saved routes, notes, learning, and community" badge="Saved" badgeColor={accentColor} onPress={() => go('/(tabs)/my-world')} />
+                <WebListRow icon="MAP" title="Explore guidance" sub="Programmes, universities, domains, and roles" onPress={() => go('/(tabs)/explore')} />
+                <WebListRow icon="WORLD" title="My World" sub="Saved programmes, domains, roles, and notes" badge="Saved" badgeColor={accentColor} onPress={() => go('/(tabs)/myworld')} />
               </WebCard>
             </WebCol>
           </WebRow>
@@ -659,15 +526,8 @@ export default function HomeScreen() {
             <WebCol weight={1}>
               <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
                 {[
-                  {
-                    emoji: 'GO',
-                    label: trackContext.mode === 'track' ? 'Resume Track' : 'Resume Learning',
-                    sub: continueSub,
-                    route: continueHref,
-                  },
                   { emoji: 'MAP', label: 'Explore Pathways', sub: 'Browse programmes, roles, and pathways', route: '/(tabs)/explore' },
                   { emoji: 'WORLD', label: 'My World', sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
-                  { emoji: 'XP', label: 'Artifacts + XP', sub: 'Tasks, artifacts, pushes', route: '/(tabs)/portfolio' },
                 ].map((item) => (
                   <WebListRow
                     key={item.label}
@@ -711,7 +571,9 @@ export default function HomeScreen() {
             activeOpacity={0.85}
             style={[styles.mobileBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
-            <TheBolt size={40} animate />
+            <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>
+              {trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}
+            </Text>
           </TouchableOpacity>
         </Animated.View>
 
@@ -774,7 +636,7 @@ export default function HomeScreen() {
           ) : null}
 
           <SifterButton
-            label={trackContext.mode === 'track' ? 'Resume track' : 'Explore tracks'}
+            label="Open Explore"
             onPress={() => go(continueHref)}
             variant="track"
             color={accentColor}
@@ -824,10 +686,9 @@ export default function HomeScreen() {
         {/* ── Quick actions ── */}
         <Animated.View style={[styles.actionsSection, contentAnimatedStyle]}>
           <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
-          <QuickAction iconLabel="GO" label={trackContext.mode === 'track' ? 'Resume Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? continueSub : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
+          <QuickAction iconLabel="MAP" label="Explore guidance" sub="Browse programmes, universities, domains, and roles" color={accentColor} onPress={() => go(continueHref)} />
           <QuickAction iconLabel="MAP" label="Explore Pathways" sub="Browse programmes, roles, and pathways" color={colors.accentRole.success} onPress={() => go('/(tabs)/explore')} />
           <QuickAction iconLabel="WORLD" label="My World" sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} />
-          <QuickAction iconLabel="XP" label="Artifacts + XP" sub="View tasks, artifacts, and pushes" color={colors.accentRole.status} onPress={() => go('/(tabs)/portfolio')} />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
