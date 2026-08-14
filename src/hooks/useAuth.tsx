@@ -161,7 +161,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !user) {
+    // Feature-detect, don't infer from `typeof window`. React Native defines a
+    // `window` global WITHOUT addEventListener, so a bare existence check
+    // passes on native and then throws
+    // "window.addEventListener is not a function" for every signed-in user.
+    // The same is true under the jest react-native environment.
+    if (
+      !user ||
+      typeof window === "undefined" ||
+      typeof window.addEventListener !== "function" ||
+      typeof document === "undefined" ||
+      typeof document.addEventListener !== "function"
+    ) {
       return;
     }
 

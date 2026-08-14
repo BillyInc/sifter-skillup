@@ -322,7 +322,10 @@ function ProgrammeBody({
             sourceName: school.jambName ?? studentProgrammeName,
           },
           university: { id: school.schoolId, name: school.schoolName },
-          requirements: jambRequirements ?? {},
+          // A closed interface has no index signature, so it is not
+          // structurally assignable to Record<string, unknown>. Widening
+          // is sound here: every field is a known, serialisable property.
+          requirements: (jambRequirements ?? {}) as Record<string, unknown>,
         },
       });
       if (saved.status === "real") {
@@ -586,7 +589,9 @@ function TrackBEntrepreneurship({ colors, router, programmeName, programmeId }: 
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => exploreNav.entrepreneurship(router, {
-          programmeName: studentProgrammeName,
+          // The prop, not ProgrammeBody's local: studentProgrammeName is out of
+          // scope here. The call site already passes the same value in.
+          programmeName,
           domainId: programmeId,
         })}
         style={[styles.admissionCTA, { backgroundColor: colors.accentRole.action }]}
