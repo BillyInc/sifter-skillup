@@ -47,14 +47,16 @@ export function makeExploreNav(base: string) {
       const ids = programmeIds.slice(0, 4).map(encodeURIComponent).join(",");
       router.push(`${base}/compare${ids ? `?ids=${ids}` : ""}` as never);
     },
-    role(router: Nav, roleId: string) {
-      router.push(`${base}/role/${roleId}` as never);
+    role(router: Nav, roleId: string, guidanceStudentId?: string) {
+      const query = guidanceStudentId ? `?guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "";
+      router.push(`${base}/role/${roleId}${query}` as never);
     },
     domains(router: Nav) {
       router.push(`${base}/domains` as never);
     },
-    domain(router: Nav, domainId: string) {
-      router.push(`${base}/domain/${domainId}` as never);
+    domain(router: Nav, domainId: string, guidanceStudentId?: string) {
+      const query = guidanceStudentId ? `?guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "";
+      router.push(`${base}/domain/${domainId}${query}` as never);
     },
 
     // ─── Phase 7: elite pathways & special flows ────────────────
@@ -80,16 +82,21 @@ export function makeExploreNav(base: string) {
     charterships(router: Nav) {
       router.push(`${base}/pathways/credentials` as never);
     },
-    entrepreneurship(router: Nav) {
-      router.push(`${base}/pathways/entrepreneurship` as never);
+    entrepreneurship(router: Nav, context?: { programmeName?: string; domainId?: string }) {
+      const query = [
+        context?.programmeName ? `programme_name=${encodeURIComponent(context.programmeName)}` : "",
+        context?.domainId ? `domain_id=${encodeURIComponent(context.domainId)}` : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/pathways/entrepreneurship${query ? `?${query}` : ""}` as never);
     },
 
     // ─── Phase 8: admission intelligence ─────────────────────────
     /** The admission hub, optionally in a given picker mode. */
-    admissionHub(router: Nav, mode?: "programme" | "subjects") {
+    admissionHub(router: Nav, mode?: "programme" | "subjects", adminType?: string | null) {
       const query = [
           mode ? `mode=${mode}` : "",
           base === ADMIN_EXPLORE_BASE ? "admin=1" : "",
+          base === ADMIN_EXPLORE_BASE && adminType ? `admin_type=${encodeURIComponent(adminType)}` : "",
         ].filter(Boolean).join("&");
       router.push(`${base}/admission${query ? `?${query}` : ""}` as never);
     },

@@ -70,7 +70,6 @@ interface LearnerDomainShareView {
   domainName?: string;
   pct?: number;
   /** Points above/below the national learner mix, when computed (§6.0). */
-  vsNationalPts?: number;
 }
 
 interface LearnerIntelligenceView {
@@ -300,8 +299,9 @@ export function SchoolGuidanceDashboardScreen() {
               { color: colors.text },
             ]}
           >
-            Guidance alerts
+            Guidance signals (optional)
           </Text>
+          <Text style={[styles.panelNote, { color: colors.textMuted }]}>These are aggregate market or curriculum signals for planning guidance work. They never describe an individual learner, and the section can remain empty when no verified signal has been ingested.</Text>
           <IntelligenceAlerts state={alerts} />
         </View>
 
@@ -407,18 +407,6 @@ export function SchoolGuidanceDashboardScreen() {
                       >
                         {d.domainName}
                       </Text>
-                      {d.vsNationalPts != null ? (
-                        <Text
-                          style={[
-                            styles.interestDelta,
-                            { color: colors.textMuted },
-                          ]}
-                          numberOfLines={1}
-                        >
-                          {d.vsNationalPts >= 0 ? "+" : ""}
-                          {Math.round(d.vsNationalPts)}pts vs national
-                        </Text>
-                      ) : null}
                       <Text
                         style={[
                           styles.interestPct,
@@ -439,7 +427,7 @@ export function SchoolGuidanceDashboardScreen() {
         <Text style={[styles.footNote, { color: colors.textMuted }]}>
           {providerOnly
             ? "Tutorial centres and JAMB cafés advise per session — there is no persistent roster to benchmark."
-            : "Secondary schools have no programme mix of their own, so there is no reach audit, peer benchmark or national leaderboard here."}
+            : "Secondary schools do not have a programme mix to audit. Use guidance and peer context to support learner decisions."}
         </Text>
       </ScrollView>
     </AdminShell>

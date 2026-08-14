@@ -41,6 +41,7 @@ from services.report_gen import (
     build_report_html,
     build_login_card_html,
 )
+from services.guidance_report import resolve_guidance_report_context
 from services.provisioning_reconcile import (
     merge_provisioned_into_student,
     normalize_stream,
@@ -55,6 +56,7 @@ _CLAIM_CODE_TTL_DAYS = 365
 # Unambiguous alphabet for printed cards (no 0/O, 1/I/L).
 _CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 _CODE_LEN = 8
+_CONSENT_SCOPES = {"progress", "contact", "full"}
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -62,6 +64,25 @@ def _svc():
 def _users():
     # users lives in the default (skillup_dev) schema — same client, no override.
     return db.get_service_client().table("users")
+
+
+def _guidance_path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
+    """Keep the same report context contract for student and admin writes."""
+    allowed_single = {
+        "academicContext", "subjects", "programme", "university", "requirements",
+        "discoveryDoor", "notes",
+    }
+    allowed_lists = {"domains", "subgroups", "roles"}
+    out: dict[str, Any] = {}
+    for key in allowed_single:
+        value = path.get(key)
+        if value is not None:
+            out[key] = value
+    for key in allowed_lists:
+        value = path.get(key)
+        if isinstance(value, list):
+            out[key] = [item for item in value if isinstance(item, dict)]
+    return out
 
 
 def _resolve_school_id(current_user: dict) -> Optional[str]:
@@ -110,8 +131,22 @@ def _require_school(current_user: dict) -> str:
     return school_id
 
 
-def _gen_claim_code() -> str:
-    return "".join(secrets.choice(_CODE_ALPHABET) for _ in range(_CODE_LEN))
+def _code_slug(value: Optional[str], fallback: str = "SCHOOL") -> str:
+    """Make a readable, bounded prefix for printed school claim codes."""
+    cleaned = "".join(ch for ch in (value or "").upper() if ch.isalnum())
+    return (cleaned[:18] or fallback).strip("-")
+
+
+def _gen_claim_code(school_name: Optional[str] = None, context: Optional[str] = None) -> str:
+    """Create a human-readable code scoped to one school and learner context.
+
+    The UUID-derived suffix keeps codes unique even when two schools share a
+    name or initials, and remains unique after old rows are archived/deleted.
+    """
+    school = _code_slug(school_name)
+    scope = _code_slug(context, "LEARNER")[:8]
+    suffix = uuid.uuid4().hex[:8].upper()
+    return f"{school}-{scope}-{suffix}"
 
 
 def _now() -> str:
@@ -128,6 +163,11 @@ _PROVISIONING_TYPES = {"ss1", "ss2", "ss3", "jamb"}
 def _clean_student_type(value: Optional[str]) -> Optional[str]:
     value = (value or "").strip().lower()
     return value if value in _PROVISIONING_TYPES else None
+
+
+def _stream_for_org(value: Optional[str], org_type: str) -> Optional[str]:
+    """Streams are a secondary-school context, never a JAMB/provider field."""
+    return _clean_stream(value) if org_type == "secondary_school" else None
 
 
 def _provisioning_context(current_user: dict) -> tuple[str, str]:
@@ -150,6 +190,23 @@ def _validate_provisioning_type(value: Optional[str], org_type: str) -> str:
     if org_type == "secondary_school" and student_type == "jamb":
         raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 learner accounts only.")
     return student_type
+
+
+def _stored_provisioned_type(user: dict) -> Optional[str]:
+    """Read the learner stage from either schema generation.
+
+    Older live databases may not yet have the additive
+    ``users.provisioned_user_type`` column.  Keep the value in settings until
+    that migration is applied so account creation remains usable during a
+    rolling deployment.
+    """
+    value = user.get("provisioned_user_type")
+    if value:
+        return _clean_student_type(value)
+    settings = user.get("settings")
+    if isinstance(settings, dict):
+        return _clean_student_type(settings.get("provisionedUserType"))
+    return None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -200,10 +257,23 @@ class GenerateItem(BaseModel):
     subjects: List[str] = Field(default_factory=list)
     chosen_direction: Optional[DirectionInput] = None
     student_type: Optional[str] = None
+    stream: Optional[str] = None
 
 
 class GenerateRequest(BaseModel):
     items: List[GenerateItem]
+
+
+class DeleteStudentsRequest(BaseModel):
+    """Explicit learner ids selected by an administrator for deletion."""
+
+    student_ids: List[str] = Field(default_factory=list)
+
+
+class ClearDraftsRequest(BaseModel):
+    """Explicit draft ids selected for removal before account generation."""
+
+    draft_ids: List[str] = Field(default_factory=list)
 
 
 class GuidanceUpdate(BaseModel):
@@ -295,7 +365,9 @@ async def create_drafts(
     school_id, org_type = _provisioning_context(current_user)
 
     rows: List[dict] = []
-    batch_stream = _clean_stream(payload.stream)
+    batch_stream = _stream_for_org(payload.stream, org_type)
+    if payload.student_type:
+        _validate_provisioning_type(payload.student_type, org_type)
     # Vision pre-fill (best-effort; empty on failure → manual entry).
     extracted = await extract_rows(payload.images)
     for r in extracted:
@@ -303,16 +375,14 @@ async def create_drafts(
             "full_name": r.full_name,
             "student_class": r.student_class,
             "stream": batch_stream,
-            "student_type": _clean_student_type(payload.student_type),
             "needs_review": True,
         })
     # Manual rows are confirmed-by-typing → needs_review reflects completeness.
     for m in payload.manual_rows:
         rows.append({
             "full_name": m.full_name,
-            "student_class": m.student_class,
-            "stream": _clean_stream(m.stream) or batch_stream,
-            "student_type": _clean_student_type(m.student_type) or _clean_student_type(payload.student_type),
+            "student_class": m.student_class if org_type == "secondary_school" else None,
+            "stream": _stream_for_org(m.stream, org_type) or batch_stream,
             "needs_review": not bool(m.full_name),
             "guardian_consent": m.guardian_consent,
             "guardian_name": m.guardian_name,
@@ -329,9 +399,8 @@ async def create_drafts(
         "school_id": school_id,
         "created_by": current_user["id"],
         "full_name": r.get("full_name"),
-        "student_class": r.get("student_class"),
-        "stream": r.get("stream"),
-        "student_type": r.get("student_type"),
+        "student_class": r.get("student_class") if org_type == "secondary_school" else None,
+        "stream": _stream_for_org(r.get("stream"), org_type),
         "needs_review": r.get("needs_review", True),
         "guardian_consent": r.get("guardian_consent", False),
         "guardian_name": r.get("guardian_name"),
@@ -340,7 +409,16 @@ async def create_drafts(
 
     try:
         res = _svc().table("student_provision_drafts").insert(to_insert).execute()
-        out = [DraftRow(**d).model_dump() for d in (res.data or [])]
+        inserted = res.data or []
+        # Some PostgREST/Supabase configurations return an empty insert body
+        # even when the rows were written. Re-read the explicit UUIDs so the
+        # client receives real draft ids and manual creation can continue to
+        # /generate instead of reporting the misleading "Could not stage".
+        if not inserted:
+            inserted = _svc().table("student_provision_drafts").select(
+                "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
+            ).in_("id", [row["id"] for row in to_insert]).execute().data or []
+        out = [DraftRow(**d).model_dump() for d in inserted]
         return ResponseModel(
             data=out,
             message=f"{len(out)} draft(s) staged. Review and correct before creating accounts.",
@@ -356,7 +434,7 @@ async def list_drafts(current_user: dict = Depends(Auth.require_admin)):
     school_id = _require_school(current_user)
     try:
         res = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, stream, student_type, needs_review, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
         ).eq("school_id", school_id).eq("status", "draft").order(
             "created_at", desc=False
         ).limit(2000).execute()
@@ -374,12 +452,11 @@ async def update_draft(
 ):
     """Correct/confirm a draft in the review grid (the assisted-correction step)."""
     school_id, org_type = _provisioning_context(current_user)
-    student_type = _validate_provisioning_type(payload.student_type, org_type)
+    _validate_provisioning_type(payload.student_type, org_type)
     updates = {
         "full_name": payload.full_name,
-        "student_class": payload.student_class,
-        "stream": _clean_stream(payload.stream),
-        "student_type": student_type,
+        "student_class": payload.student_class if org_type == "secondary_school" else None,
+        "stream": _stream_for_org(payload.stream, org_type),
         "guardian_consent": payload.guardian_consent,
         "guardian_name": payload.guardian_name,
         "needs_review": not bool(payload.full_name),
@@ -415,19 +492,24 @@ async def generate_accounts(
     the chosen direction inline and are then discarded — never written.
     """
     school_id, org_type = _provisioning_context(current_user)
+    school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
+    school_name = (school_row or {}).get("name")
     if not payload.items:
         raise HTTPException(status_code=400, detail="No drafts selected.")
 
     draft_ids = [i.draft_id for i in payload.items]
     try:
         dres = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, stream, student_type, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, guardian_consent, guardian_name, status"
         ).in_("id", draft_ids).eq("school_id", school_id).execute()
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: draft fetch for generate failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not load selected drafts.")
 
     drafts_by_id = {d["id"]: d for d in (dres.data or [])}
+    missing_drafts = [draft_id for draft_id in draft_ids if draft_id not in drafts_by_id]
+    if missing_drafts:
+        raise HTTPException(status_code=404, detail="One or more selected learner rows are no longer available.")
     items_by_draft = {i.draft_id: i for i in payload.items}
     generated: List[GeneratedStudent] = []
     failed_count = 0
@@ -439,10 +521,7 @@ async def generate_accounts(
         if not name:
             continue  # never mint an unnamed account
         item = items_by_draft.get(draft_id)
-        student_type = _validate_provisioning_type(
-            (item.student_type if item else None) or draft.get("student_type"),
-            org_type,
-        )
+        student_type = _validate_provisioning_type(item.student_type if item else None, org_type)
         direction = None
         if item and item.chosen_direction:
             direction = item.chosen_direction.model_dump(exclude_none=True) or None
@@ -458,9 +537,9 @@ async def generate_accounts(
             "provenance": "provisioned",
             "provisioning_school_id": school_id,
             "claim_state": "unclaimed",
-            "student_class": draft.get("student_class"),
-            "stream": _clean_stream(draft.get("stream")),
-            "provisioned_user_type": student_type,
+            "student_class": draft.get("student_class") if org_type == "secondary_school" else None,
+            "stream": _stream_for_org((item.stream if item else None) or draft.get("stream"), org_type),
+            "settings": {"provisionedUserType": student_type},
             "chosen_direction": direction,
             "guardian_consent_at": guardian_at,
             "points": 0,
@@ -483,7 +562,7 @@ async def generate_accounts(
                 "source": "provisioned",
                 "self_reported": False,
             }).execute()
-            code = _gen_claim_code()
+            code = _gen_claim_code(school_name, student_type)
             expires = (datetime.now(timezone.utc) + timedelta(days=_CLAIM_CODE_TTL_DAYS)).isoformat()
             _svc().table("claim_codes").insert({
                 "id": str(uuid.uuid4()),
@@ -499,8 +578,8 @@ async def generate_accounts(
             }).eq("id", draft_id).execute()
             generated.append(GeneratedStudent(
                 user_id=user_id, full_name=name,
-                student_class=draft.get("student_class"),
-                stream=_clean_stream(draft.get("stream")),
+                student_class=draft.get("student_class") if org_type == "secondary_school" else None,
+                stream=_stream_for_org((item.stream if item else None) or draft.get("stream"), org_type),
                 student_type=student_type,
                 claim_code=code, claim_expires_at=expires,
                 guidance_complete=bool(direction),
@@ -555,7 +634,7 @@ async def regenerate_code(
     Allowed only while the account is still unclaimed."""
     school_id = _require_school(current_user)
     try:
-        ures = _users().select("id, claim_state, provisioning_school_id").eq(
+        ures = _users().select("id, claim_state, provisioning_school_id, student_class, settings").eq(
             "id", user_id
         ).limit(1).execute()
         u = (ures.data or [None])[0]
@@ -567,7 +646,8 @@ async def regenerate_code(
         _svc().table("claim_codes").update({"revoked_at": _now()}).eq(
             "student_id", user_id
         ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
-        code = _gen_claim_code()
+        school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
+        code = _gen_claim_code((school_row or {}).get("name"), _stored_provisioned_type(u) or "learner")
         expires = (datetime.now(timezone.utc) + timedelta(days=_CLAIM_CODE_TTL_DAYS)).isoformat()
         _svc().table("claim_codes").insert({
             "id": str(uuid.uuid4()),
@@ -580,6 +660,129 @@ async def regenerate_code(
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: regenerate code failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not reissue code.")
+
+
+def _deletion_gate(user: dict, school_id: str) -> None:
+    """Apply the product's irreversible privacy boundary before deletion.
+
+    A school may correct and remove a provisioned shell only while it is still
+    unclaimed and unguided. Once a learner has completed guidance or claimed
+    the code, the school must never be able to erase or recover the learner's
+    account through the provisioning surface.
+    """
+
+    if not user or user.get("provisioning_school_id") != school_id:
+        raise HTTPException(status_code=404, detail="Student not found for your school.")
+    if user.get("provenance") != "provisioned":
+        raise HTTPException(status_code=409, detail="Only accounts created by this school can be removed here.")
+    if user.get("claim_state") != "unclaimed":
+        raise HTTPException(status_code=409, detail="This learner has claimed the account. The school can no longer delete it.")
+    if user.get("chosen_direction"):
+        raise HTTPException(status_code=409, detail="Guidance is complete. This learner account can no longer be deleted by the school.")
+
+
+def _delete_unclaimed_student(svc, user_id: str) -> None:
+    """Remove the school-owned shell and its still-live claim artifacts."""
+
+    # Revoke/delete the code first so an already-issued card can never redeem
+    # after the account is removed. The hard delete is safe because the gate
+    # has already established that the learner has not claimed it.
+    svc.table("claim_codes").delete().eq("student_id", user_id).execute()
+    svc.table("student_affiliations").delete().eq("student_id", user_id).eq(
+        "source", "provisioned"
+    ).execute()
+    svc.table("student_provision_drafts").delete().eq("generated_user_id", user_id).execute()
+    _users().delete().eq("id", user_id).execute()
+
+
+@router.delete("/students/{user_id}", response_model=ResponseModel)
+async def delete_student_account(
+    user_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Delete one wrong/unclaimed learner shell created by this school."""
+
+    school_id = _require_school(current_user)
+    try:
+        row = (
+            _users()
+            .select("id, provisioning_school_id, provenance, claim_state, chosen_direction")
+            .eq("id", user_id)
+            .limit(1)
+            .execute()
+            .data
+            or [None]
+        )[0]
+        _deletion_gate(row, school_id)
+        _delete_unclaimed_student(_svc(), user_id)
+        return ResponseModel(data={"deleted": True, "student_id": user_id})
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: delete student failed", student_id=user_id, error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not delete this learner account.")
+
+
+@router.delete("/students", response_model=ResponseModel)
+async def delete_student_accounts(
+    payload: DeleteStudentsRequest = Body(...),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Batch-delete explicitly selected, unclaimed and unguided shells.
+
+    The preflight is intentionally all-or-nothing: if one selected row has
+    been claimed or guided, nothing in the batch is deleted.
+    """
+
+    school_id = _require_school(current_user)
+    ids = list(dict.fromkeys(i.strip() for i in payload.student_ids if i and i.strip()))
+    if not ids:
+        raise HTTPException(status_code=400, detail="Select at least one learner account to delete.")
+    try:
+        rows = _users().select(
+            "id, provisioning_school_id, provenance, claim_state, chosen_direction"
+        ).in_("id", ids).execute().data or []
+        by_id = {r.get("id"): r for r in rows}
+        if len(by_id) != len(ids):
+            raise HTTPException(status_code=404, detail="One or more selected learners could not be found.")
+        for student_id in ids:
+            _deletion_gate(by_id[student_id], school_id)
+        svc = _svc()
+        for student_id in ids:
+            _delete_unclaimed_student(svc, student_id)
+        return ResponseModel(data={"deleted": len(ids), "student_ids": ids})
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: batch delete students failed", count=len(ids), error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not delete the selected learner accounts.")
+
+
+@router.delete("/drafts", response_model=ResponseModel)
+async def clear_drafts(
+    payload: ClearDraftsRequest = Body(...),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Clear explicitly selected review rows before accounts are generated."""
+
+    school_id = _require_school(current_user)
+    ids = list(dict.fromkeys(i.strip() for i in payload.draft_ids if i and i.strip()))
+    if not ids:
+        raise HTTPException(status_code=400, detail="Select at least one draft row to clear.")
+    try:
+        existing = _svc().table("student_provision_drafts").select("id").in_("id", ids).eq(
+            "school_id", school_id
+        ).eq("status", "draft").execute().data or []
+        existing_ids = [row.get("id") for row in existing if row.get("id")]
+        if existing_ids:
+            _svc().table("student_provision_drafts").delete().in_("id", existing_ids).eq(
+                "school_id", school_id
+            ).eq("status", "draft").execute()
+        deleted = len(existing_ids)
+        return ResponseModel(data={"deleted": deleted, "draft_ids": ids})
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: clear drafts failed", count=len(ids), error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not clear the selected draft rows.")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -608,10 +811,16 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
             ).model_dump())
 
         # Active consents for this school.
-        cons = _svc().table("student_consents").select("student_id").eq(
+        cons = _svc().table("student_consents").select("student_id, scope").eq(
             "school_id", school_id
         ).is_("revoked_at", "null").not_.is_("granted_at", "null").execute().data or []
-        consented = {c["student_id"] for c in cons}
+        # A contact-only grant must not reveal a student's progress row. The
+        # roster contains progress/class fields, so only progress/full grants
+        # unlock individual roster visibility.
+        consented = {
+            c["student_id"] for c in cons
+            if c.get("scope") in {"progress", "full"}
+        }
 
         # User rows (name/class/provenance/claim_state) for the affiliated set.
         # Chunk the IN() to stay within query limits.
@@ -902,6 +1111,25 @@ class ConsentRequest(BaseModel):
     scope: str = "progress"  # progress | contact | full
 
 
+def _validate_consent_scope(scope: Optional[str]) -> str:
+    value = (scope or "progress").strip().lower()
+    if value not in _CONSENT_SCOPES:
+        raise HTTPException(status_code=400, detail="Choose a valid consent scope.")
+    return value
+
+
+def _require_student_affiliation(student_id: str, school_id: str) -> None:
+    """Consent is only meaningful for an existing student-school link."""
+    row = _svc().table("student_affiliations").select("id").eq(
+        "student_id", student_id
+    ).eq("school_id", school_id).limit(1).execute().data or []
+    if not row:
+        raise HTTPException(
+            status_code=403,
+            detail="Link this school to your account before changing sharing.",
+        )
+
+
 @router.post("/students/consent", response_model=ResponseModel)
 async def grant_consent(
     payload: ConsentRequest = Body(...),
@@ -909,11 +1137,13 @@ async def grant_consent(
 ):
     """Grant individual visibility to a school (per-school, revocable)."""
     try:
+        scope = _validate_consent_scope(payload.scope)
+        _require_student_affiliation(current_user["id"], payload.school_id)
         _svc().table("student_consents").upsert({
             "id": str(uuid.uuid4()),
             "student_id": current_user["id"],
             "school_id": payload.school_id,
-            "scope": payload.scope,
+            "scope": scope,
             "granted_by": "self",
             "granted_at": _now(),
             "revoked_at": None,
@@ -931,13 +1161,187 @@ async def revoke_consent(
 ):
     """Revoke individual visibility — the student collapses back to aggregate-only."""
     try:
+        scope = _validate_consent_scope(payload.scope)
+        _require_student_affiliation(current_user["id"], payload.school_id)
         _svc().table("student_consents").update({"revoked_at": _now()}).eq(
             "student_id", current_user["id"]
-        ).eq("school_id", payload.school_id).eq("scope", payload.scope).execute()
+        ).eq("school_id", payload.school_id).eq("scope", scope).execute()
         return ResponseModel(data={"revoked": True}, message="Sharing turned off.")
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: consent revoke failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not revoke consent.")
+
+
+class ConsentRequestCreate(BaseModel):
+    scope: str = "progress"
+    message: Optional[str] = Field(default=None, max_length=500)
+
+
+class ConsentDecision(BaseModel):
+    decision: str
+
+
+def _consent_request_out(row: dict, school: Optional[dict] = None) -> dict:
+    return {
+        "id": row.get("id"),
+        "school_id": row.get("school_id"),
+        "school_name": (school or {}).get("name"),
+        "school_address": (school or {}).get("address"),
+        "scope": row.get("scope") or "progress",
+        "message": row.get("message"),
+        "status": row.get("status") or "pending",
+        "created_at": row.get("created_at"),
+        "responded_at": row.get("responded_at"),
+    }
+
+
+@router.post("/consent-requests", response_model=ResponseModel)
+async def request_student_consent(
+    payload: ConsentRequestCreate = Body(...),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Ask claimed affiliated students for permission without revealing them.
+
+    The response is deliberately aggregate-only. The school never receives
+    hidden student IDs or a list of recipients; each student decides from the
+    student app. This keeps a claimed account retained and anonymised at the
+    admin read boundary rather than deleting it.
+    """
+    school_id = _require_school(current_user)
+    scope = _validate_consent_scope(payload.scope)
+    message = (payload.message or "").strip() or None
+    try:
+        affiliations = _svc().table("student_affiliations").select(
+            "student_id"
+        ).eq("school_id", school_id).limit(20000).execute().data or []
+        student_ids = list(dict.fromkeys(
+            row.get("student_id") for row in affiliations if row.get("student_id")
+        ))
+        if not student_ids:
+            return ResponseModel(data={"queued": 0}, message="There are no claimed affiliated learners to contact.")
+
+        claimed_ids: list[str] = []
+        for i in range(0, len(student_ids), 500):
+            rows = _users().select("id, provenance, claim_state").in_(
+                "id", student_ids[i:i + 500]
+            ).execute().data or []
+            claimed_ids.extend(
+                row["id"] for row in rows
+                if row.get("claim_state") == "claimed"
+            )
+
+        active = _svc().table("student_consents").select(
+            "student_id"
+        ).eq("school_id", school_id).eq("scope", scope).is_(
+            "revoked_at", "null"
+        ).not_.is_("granted_at", "null").in_(
+            "student_id", claimed_ids or ["00000000-0000-0000-0000-000000000000"]
+        ).execute().data or []
+        already_shared = {row.get("student_id") for row in active}
+        targets = [sid for sid in claimed_ids if sid not in already_shared]
+
+        queued = 0
+        for student_id in targets:
+            try:
+                result = _svc().table("student_consent_requests").insert({
+                    "id": str(uuid.uuid4()),
+                    "student_id": student_id,
+                    "school_id": school_id,
+                    "scope": scope,
+                    "requested_by": current_user["id"],
+                    "message": message,
+                    "status": "pending",
+                }).execute()
+                if result.data:
+                    queued += 1
+            except Exception as exc:  # duplicate pending requests are harmless
+                log.info("provisioning: consent request skipped", student_id=student_id, error=str(exc))
+
+        return ResponseModel(
+            data={"queued": queued, "already_shared": len(already_shared)},
+            message=(
+                f"Consent request sent to {queued} claimed learner(s). "
+                "Nothing is shared until each learner chooses."
+            ),
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: consent request failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Consent requests are not available until the privacy migration is applied.")
+
+
+@router.get("/students/consent-requests", response_model=ResponseModel)
+async def list_student_consent_requests(
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Return only the current student's own pending consent invitations."""
+    try:
+        rows = _svc().table("student_consent_requests").select(
+            "id, school_id, scope, message, status, created_at, responded_at"
+        ).eq("student_id", current_user["id"]).eq("status", "pending").order(
+            "created_at", desc=True
+        ).limit(100).execute().data or []
+        school_ids = list({row.get("school_id") for row in rows if row.get("school_id")})
+        schools = {}
+        if school_ids:
+            school_rows = _svc().table("schools").select(
+                "id, name, address"
+            ).in_("id", school_ids).execute().data or []
+            schools = {row.get("id"): row for row in school_rows}
+        return ResponseModel(data=[_consent_request_out(row, schools.get(row.get("school_id"))) for row in rows])
+    except Exception as exc:  # noqa: BLE001
+        log.warning("provisioning: consent requests unavailable", error=str(exc))
+        return ResponseModel(data=[])
+
+
+@router.post("/students/consent-requests/{request_id}/respond", response_model=ResponseModel)
+async def respond_to_student_consent_request(
+    request_id: str,
+    payload: ConsentDecision = Body(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Let the student accept or decline one school invitation."""
+    decision = (payload.decision or "").strip().lower()
+    if decision not in {"grant", "decline"}:
+        raise HTTPException(status_code=400, detail="Choose grant or decline.")
+    try:
+        rows = _svc().table("student_consent_requests").select(
+            "id, school_id, scope, status"
+        ).eq("id", request_id).eq("student_id", current_user["id"]).limit(1).execute().data or []
+        request_row = rows[0] if rows else None
+        if not request_row or request_row.get("status") != "pending":
+            raise HTTPException(status_code=404, detail="Consent request is no longer pending.")
+        scope = _validate_consent_scope(request_row.get("scope"))
+        _require_student_affiliation(current_user["id"], request_row["school_id"])
+        now = _now()
+        if decision == "grant":
+            _svc().table("student_consents").upsert({
+                "id": str(uuid.uuid4()),
+                "student_id": current_user["id"],
+                "school_id": request_row["school_id"],
+                "scope": scope,
+                "granted_by": "self",
+                "granted_at": now,
+                "revoked_at": None,
+            }, on_conflict="student_id,school_id,scope").execute()
+            status = "accepted"
+            message = "Sharing enabled for this school. You can revoke it anytime."
+        else:
+            status = "declined"
+            message = "The school will continue to see aggregate totals only."
+        _svc().table("student_consent_requests").update({
+            "status": status,
+            "responded_at": now,
+        }).eq("id", request_id).eq("student_id", current_user["id"]).eq(
+            "status", "pending"
+        ).execute()
+        return ResponseModel(data={"status": status}, message=message)
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: consent request response failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Consent requests are not available until the privacy migration is applied.")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -953,6 +1357,28 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
     Reads domain (foundation_skills, description), its roles, and the chosen
     programme. Every field degrades gracefully to None/empty — never invents.
     """
+    # New guidance-path records preserve the complete selected branches. Keep
+    # the legacy direction resolver below as a compatibility fallback for
+    # existing provisioned learners created before the path migration.
+    try:
+        path_row = (_svc().table("guidance_report_paths").select("path, source, updated_at")
+                    .eq("student_id", user.get("id")).limit(1).execute().data or [None])[0]
+        if path_row:
+            full_path = resolve_guidance_report_context(_svc(), user, path_row, school_name)
+            programme = full_path.get("programme") or {}
+            academic = full_path.get("academicContext") or {}
+            return ReportContext(
+                student_name=full_path.get("studentName") or user.get("username") or "Student",
+                student_class=academic.get("class") or user.get("student_class"),
+                stream=academic.get("stream") or user.get("stream"),
+                school_name=academic.get("schoolName") or school_name,
+                programme_name=programme.get("name"),
+                full_path=full_path,
+                generated_on=generated_on,
+            )
+    except Exception as exc:  # noqa: BLE001
+        log.warning("provisioning: selected guidance path read partial", error=str(exc))
+
     direction = user.get("chosen_direction") or {}
     domain_key = direction.get("domain_key")
     role_key = direction.get("role_key")
@@ -994,6 +1420,29 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
                 "id", programme_id
             ).limit(1).execute()
             programme_name = (pres.data or [{}])[0].get("name")
+            # Administrator-led guidance normally stores a programme only.
+            # Resolve its real programme-to-domain links here so the downloaded
+            # pathway is useful even without a separate domain/role picker.
+            if not domain_name:
+                pd_rows = _svc().table("programme_domain").select(
+                    "domain_id"
+                ).eq("programme_id", programme_id).limit(20).execute().data or []
+                domain_ids = [row.get("domain_id") for row in pd_rows if row.get("domain_id")]
+                if domain_ids:
+                    drows = _svc().table("domains").select(
+                        "id, name, description, foundation_skills"
+                    ).in_("id", domain_ids).execute().data or []
+                    for drow in drows:
+                        domain_name = domain_name or drow.get("name")
+                        domain_description = domain_description or drow.get("description")
+                        for skill in (drow.get("foundation_skills") or [])[:12]:
+                            label = skill.get("skill") if isinstance(skill, dict) else str(skill)
+                            if label and label not in foundation_skills:
+                                foundation_skills.append(label)
+                    rrows = _svc().table("domain_roles").select(
+                        "role_name"
+                    ).in_("domain_id", domain_ids).limit(24).execute().data or []
+                    roles = [row.get("role_name") for row in rrows if row.get("role_name")]
     except Exception as exc:  # noqa: BLE001
         log.warning("provisioning: report taxonomy read partial", error=str(exc))
 
@@ -1036,6 +1485,25 @@ def _require_guided_student(user: dict) -> dict:
             detail="Complete learner guidance before printing a report.",
         )
     return user
+
+
+def _require_confirmed_report_path(user_id: str) -> dict:
+    """Reports require programme + university resolution, not just a direction."""
+    try:
+        row = (_svc().table("guidance_report_paths").select("path")
+               .eq("student_id", user_id).limit(1).execute().data or [None])[0]
+    except Exception as exc:  # noqa: BLE001
+        log.warning("provisioning: report path lookup failed", error=str(exc))
+        row = None
+    path = (row or {}).get("path") or {}
+    programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
+    university = path.get("university") if isinstance(path.get("university"), dict) else {}
+    if not (programme.get("id") or programme.get("name")) or not (university.get("id") or university.get("name")):
+        raise HTTPException(
+            status_code=409,
+            detail="Complete the learner's programme and university guidance before printing a report.",
+        )
+    return row
 
 
 def _school_name(school_id: str) -> Optional[str]:
@@ -1087,6 +1555,61 @@ async def save_student_guidance(
     )
 
 
+@router.put("/students/{user_id}/guidance-path", response_model=ResponseModel)
+async def save_student_guidance_path(
+    user_id: str,
+    payload: dict = Body(default_factory=dict),
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Save the full selected path for one learner under admin access."""
+    school_id = _require_school(current_user)
+    student = _load_school_student(user_id, school_id)
+    raw_path = payload.get("path") if isinstance(payload.get("path"), dict) else {}
+    path = _guidance_path_snapshot(raw_path)
+    if not path:
+        raise HTTPException(status_code=400, detail="Choose a guidance path before saving it.")
+    source = payload.get("source") if payload.get("source") in {"admin_guidance", "explore"} else "admin_guidance"
+    try:
+        now = _now()
+        _svc().table("guidance_report_paths").upsert({
+            "student_id": user_id,
+            "created_by": current_user["id"],
+            "source": source,
+            "path": path,
+            "updated_at": now,
+        }, on_conflict="student_id").execute()
+        programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
+        direction = {"programme_id": programme.get("id")} if programme.get("id") else None
+        if direction:
+            _users().update({"chosen_direction": direction}).eq("id", user_id).execute()
+        return ResponseModel(data={"student_id": user_id, "saved": True, "path": path})
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: selected guidance path save failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not save learner guidance yet.")
+
+
+@router.get("/students/{user_id}/guidance-path", response_model=ResponseModel)
+async def get_student_guidance_path(
+    user_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Return the selected guidance path for a learner this admin may guide."""
+    school_id = _require_school(current_user)
+    _load_school_student(user_id, school_id)
+    try:
+        row = (_svc().table("guidance_report_paths").select("path, source, updated_at")
+               .eq("student_id", user_id).limit(1).execute().data or [None])[0]
+        return ResponseModel(data={
+            "student_id": user_id,
+            "path": (row or {}).get("path") or {},
+            "source": (row or {}).get("source"),
+            "updated_at": (row or {}).get("updated_at"),
+        })
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: learner guidance path read failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not load this learner's guidance yet.")
+
+
 @router.get("/students/{user_id}/report.docx")
 async def get_report_docx(
     user_id: str,
@@ -1095,6 +1618,7 @@ async def get_report_docx(
     """Editable .docx career report — shareable to email/WhatsApp."""
     school_id = _require_school(current_user)
     u = _require_guided_student(_load_school_student(user_id, school_id))
+    _require_confirmed_report_path(user_id)
     ctx = _resolve_report_context(u, _school_name(school_id), _now()[:10])
     data = build_report_docx(ctx)
     safe = (ctx.student_name or "student").replace(" ", "_")[:40]
@@ -1113,6 +1637,7 @@ async def get_report_html(
     """HTML career report — print-to-PDF in any browser."""
     school_id = _require_school(current_user)
     u = _require_guided_student(_load_school_student(user_id, school_id))
+    _require_confirmed_report_path(user_id)
     ctx = _resolve_report_context(u, _school_name(school_id), _now()[:10])
     return Response(content=build_report_html(ctx), media_type="text/html")
 

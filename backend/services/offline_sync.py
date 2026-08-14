@@ -494,6 +494,10 @@ async def _handle_streak_check(body: Dict[str, Any], user: dict, ctx: Dict[str, 
 
 
 async def _handle_analytics_event(body: Dict[str, Any], user: dict, ctx: Dict[str, Any]) -> dict:
+    settings = user.get("settings")
+    acceptance = settings.get("legalAcceptance") if isinstance(settings, dict) else None
+    if not (isinstance(acceptance, dict) and acceptance.get("analyticsConsent") is True):
+        return {"tracked": False, "reason": "analytics_opt_out"}
     db.get_service_client().table("analytics_events").insert({
         "user_id":    user["id"],
         "event_type": body.get("event_type", "unknown"),

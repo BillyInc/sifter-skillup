@@ -178,7 +178,7 @@ def _school_affiliation_code(svc, name: str, address: str, school_id: str) -> st
 
 
 def _is_developer_admin_route(claim: "VerificationClaim") -> bool:
-    """Allow only the explicit dev code to bypass required address metadata."""
+    """Recognise the explicit local admin access code."""
     submitted = (claim.access_code or "").strip().upper()
     return bool(
         settings.DEVELOPER_ACCESS_ENABLED
@@ -196,7 +196,11 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         return None
     org_type = _normal_org_type(claim.organization_type)
     address = (claim.address or "").strip()
-    developer_route = _is_developer_admin_route(claim)
+    if not claim.organization_id and len(address) < 8:
+        raise HTTPException(
+            status_code=400,
+            detail="A full organisation address is required for admin access.",
+        )
     svc = _svc()
     if claim.organization_id:
         selected = (
@@ -213,7 +217,7 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             selected_row = selected[0]
             existing_address = (selected_row.get("address") or "").strip()
             effective_address = address or existing_address
-            if not developer_route and len(effective_address) < 8:
+            if len(effective_address) < 8:
                 raise HTTPException(
                     status_code=400,
                     detail="A full organisation address is required for admin access.",
@@ -244,28 +248,25 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
                 except Exception as exc:  # noqa: BLE001
                     log.warning("institutions: selected school code update skipped", error=str(exc))
             return _org_from_school(school_id)
-    existing = (
+    existing_rows = (
         svc.table("schools")
         .select("*")
         .ilike("name", name)
         .eq("institution_type", org_type)
-        .limit(1)
+        .limit(50)
         .execute()
         .data
         or []
     )
-    row = existing[0] if existing else None
+    normalized_address = address.casefold()
+    row = next(
+        (
+            candidate for candidate in existing_rows
+            if (candidate.get("address") or "").strip().casefold() == normalized_address
+        ),
+        None,
+    )
     existing_address = (row.get("address") or "").strip() if row else ""
-    if row and address and existing_address and existing_address.casefold() != address.casefold():
-        raise HTTPException(
-            status_code=409,
-            detail="That organisation name is registered at a different address. Select the matching organisation or use its exact address.",
-        )
-    if not developer_route and (not row or len((row.get("address") or address).strip()) < 8):
-        raise HTTPException(
-            status_code=400,
-            detail="A full organisation address is required for admin access.",
-        )
     if not row:
         row = (
             svc.table("schools")
@@ -1188,19 +1189,19 @@ async def validate_admin_access_code(
     # gate could be skipped entirely by calling POST /verify directly. The
     # server now remembers, and /verify refuses without it.
     try:
-        res = (
-            _svc()
-            .table("users")
-            .update({"admin_access_granted_at": datetime.now(timezone.utc).isoformat()})
-            .eq("id", current_user["id"])
-            .execute()
-        )
+        svc = _svc()
+        svc.table("users").update(
+            {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
+        ).eq("id", current_user["id"]).execute()
         # PostgREST does not raise when an UPDATE matches no row — it returns an
         # empty result. Catching only exceptions would therefore report
         # accepted=true for a write that changed nothing, and /verify would then
         # refuse the same user: exactly the contradiction this block exists to
         # prevent. An empty result is a failure.
-        if not res.data:
+        matched = svc.table("users").select("id").eq(
+            "id", current_user["id"]
+        ).limit(1).execute().data or []
+        if not matched:
             raise RuntimeError("admin access grant matched no user row")
     except Exception as exc:  # noqa: BLE001
         # A local developer can continue before the optional grant migration is

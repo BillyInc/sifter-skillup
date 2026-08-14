@@ -7,10 +7,10 @@
  *  - an OPTIONAL analytics/privacy consent toggle (defaults off) whose choice is
  *    persisted so analytics can be gated on explicit consent.
  *
- * Acceptance is stored in AsyncStorage, so returning users who already accepted
- * go straight to the form.
+ * The pre-account acceptance is stored locally until signup records it against
+ * the new account; later legal-version changes are enforced account-side.
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,7 +21,6 @@ import {
   Modal,
   TouchableOpacity,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUpScreen from "../../src/screens/SignUpScreen";
 import {
   useTheme,
@@ -34,10 +33,18 @@ import {
 import { SifterButton } from "../../src/components/ui";
 import TermsScreen from "../../src/screens/TermsScreen";
 import PrivacyScreen from "../../src/screens/PrivacyScreen";
+import {
+  clearLegalAcceptance,
+  getLegalAcceptance,
+  saveLegalAcceptance,
+  TERMS_VERSION,
+  PRIVACY_VERSION,
+} from "../../src/lib/legal";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Storage keys — analytics stays opt-IN and is read by the analytics layer.
-export const TERMS_ACCEPTED_KEY = "@sifter_terms_accepted_v1";
-export const ANALYTICS_CONSENT_KEY = "@sifter_analytics_consent_v1";
+// Acceptance is stored as versioned JSON and on the authenticated account.
+export const TERMS_ACCEPTED_KEY = "@sifter_legal_acceptance_v2";
 
 function CheckRow({
   checked,
@@ -82,12 +89,22 @@ export default function SignUpPage() {
   const [analytics, setAnalytics] = useState(false);
   const [legalPage, setLegalPage] = useState<"terms" | "privacy" | null>(null);
 
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        // Consent not yet attached to an account must not survive leaving
+        // signup and become implicit acceptance for another person.
+        void clearLegalAcceptance();
+      };
+    }, []),
+  );
+
   useEffect(() => {
     let active = true;
-    AsyncStorage.getItem(TERMS_ACCEPTED_KEY)
-      .then((v) => {
+    getLegalAcceptance()
+      .then((value) => {
         if (active) {
-          setAccepted(v === "1");
+          setAccepted(Boolean(value));
           setLoading(false);
         }
       })
@@ -98,11 +115,7 @@ export default function SignUpPage() {
 
   const onContinue = async () => {
     if (!terms) return;
-    await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, "1").catch(() => {});
-    await AsyncStorage.setItem(
-      ANALYTICS_CONSENT_KEY,
-      analytics ? "1" : "0",
-    ).catch(() => {});
+    await saveLegalAcceptance(analytics).catch(() => {});
     setAccepted(true);
   };
 
@@ -128,7 +141,8 @@ export default function SignUpPage() {
         Before you begin
       </Text>
       <Text style={[styles.lede, { color: colors.textMuted }]}>
-        A couple of quick agreements so you know how your data is used.
+        Review the current terms and privacy policy before creating an account.
+        You can change optional analytics consent later.
       </Text>
 
       <View
@@ -180,7 +194,7 @@ export default function SignUpPage() {
       />
 
       <Text style={[styles.fine, { color: colors.textMuted }]}>
-        You can change your analytics choice any time in Settings.
+        Terms {TERMS_VERSION} · Privacy {PRIVACY_VERSION}. You can change your analytics choice any time in Settings.
       </Text>
       <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
         {legalPage === "terms" ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}

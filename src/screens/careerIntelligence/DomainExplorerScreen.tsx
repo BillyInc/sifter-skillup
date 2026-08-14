@@ -26,6 +26,7 @@ import {
   DomainIcon,
   FilterChip,
   SearchBar,
+  GuidanceReportButton,
 } from "@/components/careerIntelligence";
 import { StaggerReveal } from "@/components/animations";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
@@ -40,38 +41,12 @@ import {
   hScroll,
 } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
+import { getClusterColor } from "@/data/clusterMaps";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
-type FilterKey = "all" | "in_demand" | "elite" | string;
-
-/**
- * The source's demand bands, rendered as what they say.
- *
- * The meter used to compute `score / 10 * 100` and clamp at 100%. The score is
- * `domain_demand_metrics.volume_score`, which runs 13..56 — so every one of
- * the 160 domains drew a full green bar labelled "Demand". For the 108 the
- * data itself bands as LOW, that read as a claim of high demand.
- *
- * Bands come from the source, so the UI states its categorisation rather than
- * inventing a scale. `high` is defined but currently unused: no domain reaches
- * it today, and a band that appears later should render, not fall through.
- */
-const DEMAND_BANDS: Record<string, { label: string; fill: number }> = {
-  low: { label: "Low demand", fill: 33 },
-  medium: { label: "Medium demand", fill: 66 },
-  high: { label: "High demand", fill: 100 },
-};
-
-function demandColor(
-  band: string | undefined,
-  colors: { accentRole: { success: string; warning: string }; textRole: { muted: string } },
-): string {
-  if (band === "high") return colors.accentRole.success;
-  if (band === "medium") return colors.accentRole.warning;
-  return colors.textRole.muted;
-}
+type FilterKey = "all" | "elite" | string;
 
 // ─── Cluster identity map (from shared source) ─────────────
-import { getClusterColor, getClusterIcon } from "@/data/clusterMaps";
 
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
@@ -128,32 +103,11 @@ export function DomainExplorerScreen() {
     () => (state.data ?? []).some((g) => g.domains.some((d) => d.eliteFlag)),
     [state],
   );
-  const hasDemand = useMemo(
-    () =>
-      (state.data ?? []).some((g) =>
-        g.domains.some(
-          (d) => d.demandBand === "medium" || d.demandBand === "high",
-        ),
-      ),
-    [state],
-  );
-
   const filtered = useMemo(() => {
     if (!state.data) return state;
     let data = state.data;
 
-    if (activeFilter === "in_demand") {
-      // Band, not "has a score". Every domain has a score, so the old test
-      // selected all 160 — a filter that changed nothing.
-      data = data
-        .map((g) => ({
-          ...g,
-          domains: g.domains.filter(
-            (d) => d.demandBand === "medium" || d.demandBand === "high",
-          ),
-        }))
-        .filter((g) => g.domains.length > 0);
-    } else if (activeFilter === "elite") {
+    if (activeFilter === "elite") {
       data = data
         .map((g) => ({
           ...g,
@@ -181,9 +135,7 @@ export function DomainExplorerScreen() {
     return { ...state, data };
   }, [state, filter, activeFilter]);
 
-  const clusterColWidth: DimensionValue = (resp.columns >= 2
-    ? `${(100 / resp.columns) - 1.5}%`
-    : "100%") as DimensionValue;
+  const clusterColWidth: DimensionValue = (resp.isDesktop ? "48%" : "100%") as DimensionValue;
 
   return (
     <ScrollView
@@ -239,13 +191,6 @@ export function DomainExplorerScreen() {
           active={activeFilter === "all"}
           onPress={() => setActiveFilter("all")}
         />
-        {hasDemand ? (
-          <FilterChip
-            label="In-Demand"
-            active={activeFilter === "in_demand"}
-            onPress={() => setActiveFilter("in_demand")}
-          />
-        ) : null}
         {hasElite ? (
           <FilterChip
             label="Elite"
@@ -309,8 +254,8 @@ export function DomainExplorerScreen() {
                     {/* Domain cards */}
                     <View style={styles.domainGrid}>
                       {g.domains.map((d) => (
-                        <TouchableOpacity
-                          key={d.id}
+                        <View key={d.id} style={{ gap: Spacing.xs }}>
+                          <TouchableOpacity
                           activeOpacity={0.85}
                           onPress={() => exploreNav.domain(router, d.id)}
                           style={[
@@ -347,44 +292,6 @@ export function DomainExplorerScreen() {
                                 clamped, so all 160 domains drew a full green
                                 bar labelled "Demand" — reading as high demand
                                 for the 108 the data calls low. */}
-                            {DEMAND_BANDS[d.demandBand ?? ""] ? (
-                              <View style={styles.demandRow}>
-                                <View
-                                  style={[
-                                    styles.demandBar,
-                                    {
-                                      backgroundColor:
-                                        colors.textRole.muted + "20",
-                                    },
-                                  ]}
-                                >
-                                  <View
-                                    style={[
-                                      styles.demandFill,
-                                      {
-                                        backgroundColor: demandColor(
-                                          d.demandBand,
-                                          colors,
-                                        ),
-                                        width: `${
-                                          DEMAND_BANDS[d.demandBand ?? ""].fill
-                                        }%`,
-                                      },
-                                    ]}
-                                  />
-                                </View>
-                                <Text
-                                  style={[
-                                    styles.demandLabel,
-                                    CompassFonts.bodySemibold,
-                                    { color: demandColor(d.demandBand, colors) },
-                                  ]}
-                                >
-                                  {DEMAND_BANDS[d.demandBand ?? ""].label}
-                                </Text>
-                              </View>
-                            ) : null}
-
                             {d.eliteFlag ? (
                               <View
                                 style={[
@@ -407,7 +314,11 @@ export function DomainExplorerScreen() {
                               </View>
                             ) : null}
                           </View>
-                        </TouchableOpacity>
+                          </TouchableOpacity>
+                          <GuidanceReportButton
+                            selection={{ kind: "domains", id: d.id, name: d.name }}
+                          />
+                        </View>
                       ))}
                     </View>
                   </View>
@@ -417,6 +328,7 @@ export function DomainExplorerScreen() {
           </View>
         )}
       </DataStateView>
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }
@@ -459,6 +371,9 @@ const styles = StyleSheet.create({
   },
   clusterCol: {
     gap: Spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
   },
   clusterHeader: {
     flexDirection: "row",
@@ -482,12 +397,11 @@ const styles = StyleSheet.create({
 
   // Domain cards — 2-column within each cluster
   domainGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
     gap: Spacing.sm,
   },
   domainCard: {
-    width: "48%",
+    width: "100%",
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     overflow: "hidden",
@@ -502,25 +416,6 @@ const styles = StyleSheet.create({
   domainCardName: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.3,
-  },
-  demandRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    marginTop: 4,
-  },
-  demandBar: {
-    flex: 1,
-    height: 3,
-    borderRadius: 1.5,
-    overflow: "hidden",
-  },
-  demandFill: {
-    height: "100%",
-    borderRadius: 1.5,
-  },
-  demandLabel: {
-    fontSize: 9,
   },
   eliteBadge: {
     alignSelf: "flex-start",

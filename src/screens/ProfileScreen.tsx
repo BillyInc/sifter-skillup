@@ -1,7 +1,7 @@
 /**
  * Sifter LevelUp — Profile Screen (Phase 2)
  * Worker character + XP stage ring + DeskScene.
- * Learning path, Portfolio link, Account section.
+ * Account, guidance context, admin access, and account actions.
  */
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
@@ -21,7 +21,6 @@ import {
   WebStatTile, WebDivider, useIsWebWide,
 } from '@/components/web/WebGrid';
 import { xpEngine, type XPSnapshot }      from '@/lib/XPEngine';
-import { streakEngine, type StreakStatus } from '@/lib/StreakEngine';
 import { useAuth } from '@/hooks/useAuth';
 import { resolveTrackContext } from '@/lib/trackContext';
 import { isAdminAccount } from '@/lib/accountType';
@@ -170,18 +169,13 @@ export default function ProfileScreen() {
   }, [go, user?.id]);
 
   const [xp, setXp]         = useState<XPSnapshot | null>(null);
-  const [streak, setStreak] = useState<StreakStatus | null>(null);
 
   const entranceAnim = useRef(new Animated.Value(0)).current;
 
   useFocusEffect(useCallback(() => {
     (async () => {
-      const [xpSnap, streakSnap] = await Promise.all([
-        xpEngine.snapshot(),
-        streakEngine.status(),
-      ]);
+      const xpSnap = await xpEngine.snapshot();
       setXp(xpSnap);
-      setStreak(streakSnap);
     })();
 
     entranceAnim.setValue(0);
@@ -191,11 +185,9 @@ export default function ProfileScreen() {
   const stage     = xp?.stage.stage ?? 1;
   const stageName = xp?.stage.name  ?? 'Raw Recruit';
   const progress  = xp?.progress    ?? 0;
-  const workspaceHref = trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/fields';
-  const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'Choose a workspace';
-  const workspaceBody = trackContext.mode === 'track'
-    ? trackContext.description
-    : 'Select an active track so your profile, streaks, and portfolio all stay aligned.';
+  const workspaceHref = '/(tabs)/explore';
+  const workspaceLabel = 'Career guidance';
+  const workspaceBody = 'Explore programmes, universities, domains, roles, and saved guidance.';
   const trackId = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'default';
 
   // Mock skill bars — replace with real data from user profile
@@ -247,8 +239,6 @@ export default function ProfileScreen() {
                   onPress={() => go('/merchandise')}
                 />
                 <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accentRole.action} />
-                <WebStatTile emoji="🔥" label="Streak"    value={`${streak?.streak ?? 0} days`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} color={colors.accentRole.warning} />
-                <WebStatTile emoji="🏝️" label="Levels"    value={`${(xp?.totalXp ?? 0) > 0 ? Math.floor((xp?.totalXp ?? 0) / 10) : 0}`} sub="Total lessons completed" color={colors.accentRole.success} />
               </WebCard>
             </WebCol>
 
@@ -315,22 +305,10 @@ export default function ProfileScreen() {
                   />
                 ) : null}
                 <AccountRow
-                  emoji="P"
-                  label="Portfolio"
-                  sub="Artifacts, linked platforms, and XP"
-                  onPress={() => go('/(tabs)/portfolio')}
-                />
-                <AccountRow
                   emoji="W"
-                  label="Open Workspace"
-                  sub="Continue from your active learning surface"
+                  label="Explore guidance"
+                  sub="Compare programmes, universities, domains, and roles"
                   onPress={() => go(workspaceHref)}
-                />
-                <AccountRow
-                  emoji="G"
-                  label="Guilds + Community"
-                  sub="Group progress, rankings, and chat"
-                  onPress={() => go('/(tabs)/guild')}
                 />
                 <AccountRow
                   emoji="S"
@@ -399,23 +377,6 @@ export default function ProfileScreen() {
             {xp?.stage.description ?? workspaceBody}
           </Text>
 
-          {/* XP + streak row */}
-          <View style={styles.heroStats}>
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.accentRole.action }, CompassFonts.displayBold]}>{xp?.totalXp ?? 0}</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Total XP</Text>
-            </View>
-            <View style={[styles.heroStatDivider, { backgroundColor: colors.borderRole.subtle }]} />
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.accentRole.warning }, CompassFonts.displayBold]}>{streak?.streak ?? 0}🔥</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Day Streak</Text>
-            </View>
-            <View style={[styles.heroStatDivider, { backgroundColor: colors.borderRole.subtle }]} />
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.accentRole.status }, CompassFonts.displayBold]}>{stage} / 8</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Stage</Text>
-            </View>
-          </View>
         </Animated.View>
 
         {/* ── Desk scene ── */}
@@ -465,7 +426,7 @@ export default function ProfileScreen() {
           {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
         </SectionCard>
 
-        {/* ── Portfolio + Account ── */}
+        {/* Account actions */}
         <SectionCard title="WORKSPACE + ACCOUNT">
           {isGuest ? (
             <AccountRow
@@ -484,22 +445,17 @@ export default function ProfileScreen() {
             />
           ) : null}
           <AccountRow
-            emoji="💼" label="Portfolio"
-            sub="Artifacts, linked platforms, and proof of work"
-            onPress={() => go('/(tabs)/portfolio')}
+            emoji="E" label="Explore guidance"
+            sub="Compare programmes, universities, domains, and roles"
+            onPress={() => go('/(tabs)/explore')}
           />
           <AccountRow
-            emoji="🏝️" label="Open Workspace"
-            sub={trackContext.mode === 'track' ? `Continue inside ${workspaceLabel}` : 'Choose the track you want to continue'}
-            onPress={() => go(workspaceHref)}
+            emoji="W" label="My World"
+            sub="Your gated learning space"
+            onPress={() => go('/(tabs)/myworld')}
           />
           <AccountRow
-            emoji="👥" label="Guilds + Community"
-            sub="Team progress, rankings, and guild chat"
-            onPress={() => go('/(tabs)/guild')}
-          />
-          <AccountRow
-            emoji="⚙" label="Settings"
+            emoji="S" label="Settings"
             sub="Theme, notifications, and account state"
             onPress={() => go('/(tabs)/settings')}
           />

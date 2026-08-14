@@ -1,7 +1,7 @@
 # Onboarding to Discovery Unblock Plan
 
-Status: implementation checkpoint
-Date: 2026-08-11
+Status: active controlling scope
+Date: 2026-08-14
 
 ## Product rules
 
@@ -12,6 +12,17 @@ Date: 2026-08-11
 - Browser/device back during incomplete onboarding: warn before leaving. The user can continue onboarding, continue later by signing out, or delete the newly created account.
 - Signed-in user with completed onboarding: lands on the correct product surface for their role and journey state.
 - Lesson/track resume is not the default post-auth return path. Learning routes live behind My World. Home should resume onboarding, admission selection, programme mapping, or the normal Home state.
+- SkillUp learning is a My World-only product area for now. Career Intelligence,
+  admission, onboarding, Explore, admin guidance, programme/domain/role detail,
+  and student reports must not show `Close the gap`, `Ready to learn`, lesson,
+  track, bridge-learning, or other CTAs that send users into SkillUp learning.
+  Skill/tool/certification guidance may explain what matters, but it must remain
+  informational until the user intentionally enters My World.
+- Legacy learning, community, feed, diary, portfolio, and track URLs are also
+  My World-gated. Direct, stale, or browser-restored entries redirect to My
+  World (or sign-in when there is no session). Links opened from My World carry
+  an explicit origin marker so nested learning navigation remains available
+  without making those routes globally discoverable.
 - Browser close/reopen is not logout. If the session is still valid, the app resumes from the current URL or the correct Home/resume surface. Only explicit logout sets the login redirect.
 - Single-device enforcement is required: two devices cannot actively use the same account at the same time.
 - PDFs generated for student-facing output must be watermarked with `Sifter LevelUp` and the student's school name when available from self-onboarding or admin-created/provisioned student records.
@@ -31,8 +42,9 @@ This is the controlling scope for the onboarding/discovery unblock. Do not jump 
   - SS1/SS2 secondary student;
   - SS3/JAMB candidate;
   - undergraduate/current student;
-  - graduate;
   - educator/institution.
+- Hide graduate from the normal account-type gate for now. Any later expert-review
+  path is a separate product decision, not a graduate admission path.
 - Hide artisan, skilled worker, professional, and career changer from normal onboarding for now.
 - If a professional-style path appears later, frame it as expert review, not a normal student onboarding type.
 - SS1/SS2 must capture class, school, stream, and O-level subjects for early advisory.
@@ -85,6 +97,10 @@ This is the controlling scope for the onboarding/discovery unblock. Do not jump 
 ### 4. Then cleanup/hide incomplete product surfaces
 
 - Remove `Close the gap` from student-facing surfaces until ready.
+- Hide every learning CTA outside My World, including `Ready to close the gap`,
+  `Continue Learning`, lesson/track prompts, and links to SkillUp learning
+  routes. Preserve those surfaces only inside My World and its nested learning
+  routes.
 - Remove demand and in-demand language from student-facing surfaces until data and wording are ready.
 - Remove elite/pathways from Home until consolidated according to the relevant pathway docs.
 - Remove streak from Career Intelligence and Settings; learning streak belongs behind My World.
@@ -113,6 +129,262 @@ This is the controlling scope for the onboarding/discovery unblock. Do not jump 
 - Mockups should improve visual quality, interaction design, hierarchy, density, filters, cards, typography, and responsive behavior.
 - Implementation should wait for product-owner refinement of those mockups.
 
+## Unified guidance-to-report scope
+
+This is an update to the original goal, not a separate visual project. Every
+route from onboarding through discovery, guidance, mapping, and report printing
+must be treated as one product journey. Core data and state behaviour is fixed
+first; the affected surface is then redesigned with a surface-specific mockup
+before implementation is widened to related screens.
+
+### Product operating rule
+
+The product should behave like a guidance system, not a catalogue or a debug
+panel. Every step must answer three questions for the user:
+
+1. What decision am I making now?
+2. Why does this information matter?
+3. What is the next useful action?
+
+The selected user type, class, stream, institution, programme, university, and
+choice path control what appears next. Switching a choice clears dependent
+answers and results. Returning to a saved account restores the last valid
+checkpoint, not a generic onboarding screen, legacy route, or learning screen.
+
+### Account-type gate behaviour
+
+- The account-type gate is the first product decision after authentication. It
+  must be a single guided selection, not a side-by-side grid of every persona.
+- The first screen uses one `I am joining as` selector. Opening it presents the
+  supported choices in a readable option sheet with the title, plain-language
+  purpose, and the guidance the choice unlocks.
+- Selecting an option previews the path but does not enter it until the user
+  presses `Continue`. This prevents an accidental tap from committing the wrong
+  student or admin flow.
+- After `Continue`, the selected type is locked into the flow. The following
+  screens may change dependent choices such as class, stream, subjects,
+  programme, or university, but they must not show a generic user-type switch.
+- `Back to user selection` is an explicit correction action. It clears the
+  selected path's dependent draft before the user chooses again; it is not a
+  silent type switch and it must not route to a legacy page.
+- The gate currently exposes SS1 Student, SS2 Student, SS3 Student, JAMB
+  Candidate, Undergraduate Student, and Educator / Institution. Hidden types
+  must not appear as disabled or placeholder options.
+- The selected type controls the next form, required institution, exam layer,
+  copy, and available discovery doors. The selection itself is never inferred
+  from a default student value.
+
+### Product and behaviour decisions by user type
+
+- SS1 and SS2:
+  - school is compulsory;
+  - class is selected at the account-type gate and is locked inside the flow;
+  - stream appears after school and before subject guidance;
+  - subject-help uses O-level subjects and can show future UTME requirements as
+    preparation, but does not ask for UTME subjects as an SS1/SS2 prerequisite;
+  - programme-in-mind searches the programme first, then shows school-specific
+    names, universities, and requirements.
+- SS3:
+  - school is compulsory;
+  - the student chooses the discovery door before stream and subjects;
+  - known programme/university shows requirements without forcing subject entry;
+  - subject checking is optional for known choices and required only when the
+    student asks for subject matching;
+  - subject-first matching uses both O-level and UTME gates.
+- JAMB candidate:
+  - tutorial centre or self-taught status is compulsory;
+  - the same three discovery doors apply;
+  - known programme paths show requirements first;
+  - subject-first matching requires the complete UTME combination and enough
+    O-level subjects to check the actual programme requirement.
+- Undergraduate/current university student:
+  - show universities only in the current scope;
+  - no year selector and no polytechnic or non-university institution path;
+  - select the university first, then the programme names that university uses;
+  - proceed to programme-to-domain mapping rather than admission onboarding.
+- Educator, school owner, tutorial centre, and JAMB cafe:
+  - their primary job is to guide a learner, not to use a student-shaped Home;
+  - they can create or provision one student account at a time, upload a class
+    list as a document or image, or skip provisioning to use other admin tools;
+  - guidance must accept the learner's class, stream, institution, programme,
+    university, and subject state and use the same matching rules as students;
+  - the current learner context must be visible and switching learner must clear
+    the previous learner's unsaved data.
+- University admin:
+  - use a university workspace and university peer comparison;
+  - do not show school-owner, tutorial-centre, student, national aggregate,
+    national competitiveness, or Post-UTME surfaces unless explicitly enabled
+    by a later product decision.
+
+### Surface decisions for the discovery-to-mapping journey
+
+- Domain clusters are navigation and grouping, not demand rankings. They use a
+  responsive grid of named cluster tiles; remove in-demand labels and fake
+  counts until backed by real data.
+- A domain card is a concise summary: name, plain-language purpose, actual
+  relationship type, and the next action. It is not a container for every skill,
+  role, and metadata field.
+- Domain detail has a readable overview first, followed by explicit sections for
+  sub-groups, roles, skills, tools, certifications, programmes, and mappings.
+  Sections must be independently reachable instead of forcing a long raw list.
+- A sub-group card explains the activity/category it represents and exposes its
+  own skills, tools, certifications, and career roles. It must not inherit or
+  flatten the entire parent domain payload.
+- A role card identifies the career role and its parent sub-group/domain, then
+  exposes role-specific skills, tools, certifications, and the next action.
+  `Role` means a career role, not an organisation permission or temporary task.
+- Skills, tools, and certifications are shown at the level where the data owns
+  them. Present primary items first and supplementary items separately when the
+  source data provides priority. If priority is not source-backed, say what the
+  item is used for instead of inventing a ranking.
+- Role details must include role-owned tools and certifications when those
+  records exist. Role essential/optional skills, role tools, subgroup tools,
+  and domain tools are separate data layers; one layer must never be relabelled
+  as another. Role tools use `backend/migration_role_tools.sql`; role
+  certifications use `backend/migration_role_detail_enrichment.sql`.
+- Current seed audit: role essential/optional competencies are present in
+  `domain_roles`, while the current career seed has no role-scoped tool rows or
+  role certification rows. The application must show those sections only when
+  source-backed rows exist; it must not inherit domain or subgroup data to fill
+  the gap.
+- `What the school teaches` belongs to the selected programme and must explain
+  the actual programme learning outcomes in student language. It must not be
+  presented as a promise that the university teaches a skill unless the source
+  data supports that claim.
+- Empty, locked, loading, unavailable, and error states must tell the user what
+  happened and what action is possible. Do not expose parser states, raw SQL/API
+  language, or `being populated` text.
+
+### Report and printing decision
+
+- Bookmarking and printing are separate actions. A user does not need to
+  bookmark before printing.
+- A signed-in user can print the confirmed programme/university report and an
+  individual domain, sub-group, or career-role report when that detail exists.
+- A guest can preview the discovery content but sees `Create account` before
+  saving or printing a report. Guest mode must not pretend that private details
+  or report history were saved.
+- A report contains the user's selected academic context, source-backed
+  requirements, programme-to-domain relationships, and the relevant skills,
+  tools, and certifications. It must not contain fake demand, Post-UTME, or
+  unsupported match claims.
+- Student-facing PDFs carry a visible `Sifter LevelUp` watermark and the
+  student's school name when the student supplied one or was provisioned by an
+  institution. Admin-generated reports follow the same watermark rule and must
+  respect student consent/access rules.
+- Print, bookmark, share, and return actions preserve the current route context;
+  they must not send the user to Community, Forgot Password, a legacy SkillUp
+  route, or a generic Home page.
+
+The report is a full selected-path record, not a compact replacement for the
+guidance flow. It includes the learner's selected academic context, subjects,
+programme, university, requirements, and only the domains, sub-groups, and
+roles the learner selected. Detail belonging to each selected entity remains
+available in the report; grouping and page breaks control readability rather
+than silently truncating the data. The surface contract is recorded in
+`docs/mockups/GUIDANCE_REPORT_BEHAVIOUR.md`.
+
+Selection is multi-valued at every intelligence level. A learner or educator
+may select several domains, several sub-groups, and several career roles. Each
+selected branch keeps its parent identifiers and source names. Domain,
+sub-group, and role competencies/skills, tools, and certifications remain
+separate ownership layers; selecting a role never causes the resolver to copy
+the whole parent catalogue into the report. Admin-guided selections are saved
+against the learner being guided, not against the administrator's session.
+
+### Mockup gate before surface implementation
+
+Before changing the UI of a surface, produce a small surface-specific mockup or
+wireframe showing:
+
+- current behaviour and the proposed behaviour;
+- the data hierarchy and primary action;
+- loading, empty, locked, error, and success states;
+- mobile and desktop composition;
+- the user type and route context for which it applies;
+- the exact source-backed labels and content blocks;
+- what changes when the user switches a choice or uses browser back.
+
+The mockup is a design and behaviour proposal. It must not invent entities or
+content from the reference images. The implementation follows only after the
+product decision is recorded and the current surface's data contract is known.
+
+### Unified implementation order
+
+1. Stabilise account type, checkpoint, browser navigation, logout, and session
+   isolation.
+2. Stabilise the choice-driven onboarding and admission data contracts for each
+   student type and the educator guidance context.
+3. Audit and fix one shared discovery surface at a time, beginning with the
+   admission handoff and programme detail because they affect every user type.
+4. For each surface, make the product decision, produce the mockup, implement
+   behaviour and visual hierarchy together, and verify all state transitions.
+5. Continue through clusters, domain detail, sub-groups, roles, skills/tools/
+   certifications, admin guidance, and report printing.
+6. Generate the 100-flow-per-variation manual test sets from the real data after
+   the mapping contracts are stable, then run targeted automated and manual
+   checks before broad platform polish.
+
+### Acceptance criteria for the unified goal
+
+- A user who knows the programme and university can see requirements without
+  entering subjects.
+- A user who asks for matching cannot receive a programme recommendation from
+  an incomplete or conflicting subject combination.
+- The same rules work when an educator guides a student, with the learner's
+  context visible and isolated.
+- Every discovery detail preserves the actual programme/domain/sub-group/role
+  hierarchy and explains what the user should do next.
+- Every changed surface has a reviewed mockup/specification before its visual
+  implementation.
+- A confirmed path can be printed with the required watermark and school name,
+  while guests are directed to account creation.
+- Refresh, browser back/forward, logout, account switching, and deep links
+  preserve intended context and never fall into legacy routes.
+
+### Programme search, overview, and detail-section behaviour
+
+- Admission search is a discovery surface, not a place to expose database
+  naming layers. When a user searches `Nursing`, the result should explain the
+  programme and show the university-specific names beside the universities that
+  use them. It must not present `Nursing/Nursing Science` as if it were a user
+  choice between two aliases.
+- A CCMAS canonical name is mapping infrastructure. It may resolve domains and
+  skills behind the scenes, but it must not replace the JAMB name in a student
+  heading, result card, or selected-programme context. If no student-facing JAMB
+  name can be resolved, show an honest unavailable state rather than a CCMAS
+  fallback.
+- The programme overview is the first detail state after a programme is opened.
+  It is a readable summary and a deliberate navigation point, not a second
+  search page. It answers what the programme is, what the university teaches,
+  and what the student can do next. Requirements, schools/admission, and career
+  mapping are separate destinations/sections with their own actions.
+- Opening a programme from a known programme/university choice must preserve the
+  selected university and open its requirements context directly. Opening from
+  a programme-only or subject match must first show the available university
+  offerings, then require the student to choose one before career mapping.
+- Name variants are displayed as university offerings. Each offering keeps its
+  university, exact programme name used by that university, requirements, and
+  source context. A variant is never merged into the official JAMB name or
+  displayed as a slash-delimited combined title.
+- The remaining sections beside `Overview` are first-class detail destinations,
+  not a generic cohort block. Programme detail uses `Requirements`,
+  `Universities / schools`, and `Career mapping` where the source data supports
+  them. Similar detail screens must expose their own relevant sibling sections
+  rather than dumping every field below the overview.
+- In admin guidance, learner scope is an independent concern. Educators see
+  their own affiliated/provisioned learners where consent and access rules allow;
+  universities see their own programmes and peer comparison; tutorial centres
+  see their own guidance sessions. No admin type receives a national aggregate
+  or another institution's private learner data by default.
+- Changing learner, learner scope, institution, or comparison scope clears dependent
+  filters/results and reloads the new scope. Browser back returns to the prior
+  scope instead of resetting to Community, Forgot Password, or a legacy route.
+- A cohort overview must expose the next useful action: open a learner, start a
+  guidance session, review a programme/subject pattern, or export an allowed
+  report. It must not pretend that a cohort-level insight is an individual
+  student's recommendation.
+
 ## Mockup comparison and design direction
 
 The supplied mockups are the visual-quality target, not the source of truth for product hierarchy or data.
@@ -133,8 +405,8 @@ The supplied mockups are the visual-quality target, not the source of truth for 
 - Some copy still explains implementation details instead of guiding the student.
 - The SS1/SS2 form previously asked for subjects before asking what the student wanted help with; this is now being corrected.
 - Admission Browse still feels like separate modes instead of one guided discovery surface.
-- Programme/domain/sub-group/role detail pages still present too much data as undifferentiated lists.
-- Skills, tools, and certifications are not yet presented as prioritized guidance per level.
+- Programme detail and several deferred pathway surfaces still need the full visual pass.
+- Domain, sub-group, and role detail now separate their own skills, tools, and certifications and explain the first-to-supplementary order; programme and deferred surfaces still need the same treatment.
 - `What the school teaches` is not yet surfaced as a clear student-facing explanation in programme detail.
 - Current UI still needs proper responsive composition, stronger type scale, cleaner cards, better select/search modals, and less raw metadata.
 
@@ -176,15 +448,12 @@ The user's selected type and answer path must decide what appears next.
 - Undergraduate/current student:
   - start from university/institution, then show that school's own programme names;
   - route to programme-to-domain mapping, not generic admission onboarding.
-- Graduate:
-  - avoid undergraduate admission unless the user explicitly chooses a qualification/admission route later;
-  - route to discovery/home with relevant graduate context.
 - Educator/institution:
   - show organisation onboarding and guidance/admin setup;
   - allow skipping student provisioning to reach other admin surfaces;
   - keep admin access guarded.
 
-Current implementation status: setup-form branching exists, but Home, Explore, Admission Browse, Programme Detail, and admin discovery still need to consistently respect this rule.
+Current implementation status: account-type and student setup branching exist; the current pass is making Admission Browse, programme/domain/role detail, and admin learner guidance preserve the selected context and present only source-backed choices. Broader Home and platform-wide visual cleanup remain later stages.
 
 ## Current blockers found
 
@@ -262,13 +531,15 @@ For an existing Supabase project, apply only migrations that have not already be
 1. `supabase-schema.sql` for the base `skillup_dev` schema and users table.
 2. `backend/migration_auth_profile.sql` for first name, middle name, last name, and date of birth.
 3. `backend/migration_v2.sql` for auth/session support, active device sessions, and legacy SkillUp/My World data.
-4. `backend/migration_career_base_registry.sql`, then `backend/migration_career_v2.sql`, then `backend/migration_career_intelligence.sql` for programme/domain/role discovery foundations.
+4. `backend/migration_career_base_registry.sql`, then `backend/migration_career_v2.sql`, then `backend/migration_career_intelligence.sql` for programme/domain/role discovery foundations. Apply `backend/migration_role_tools.sql` after `migration_career_v2.sql` so role-owned tools use the canonical `domain_tools.role_id` layer.
 5. `backend/migration_admission_intelligence.sql`, then `backend/migration_remove_postutme_from_cutoff_view.sql`, then `backend/migration_student_pipeline_live.sql` for Admission Intelligence and onboarding-to-discovery data.
-6. `backend/seed_subject_catalog.sql`, `backend/seed_subject_options.sql`, `backend/seed_phase8_9_enrichment.sql`, and the admission importer/seed files already used by the project.
-7. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
-8. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
-9. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
-10. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.
+6. `backend/seed_subject_catalog.sql`, `backend/seed_subject_options.sql`, `backend/seed_phase8_9_enrichment.sql`, the role-scoped tool rows in `seed_career_v2.sql`, and the admission importer/seed files already used by the project.
+7. `backend/migration_role_detail_enrichment.sql` for role-owned certifications. Role-owned tools use `backend/migration_role_tools.sql`; seed only source-backed rows after both migrations are present.
+8. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
+9. `backend/migration_guidance_report_paths.sql` for the account-scoped full selected guidance path used by students and admin-guided learners.
+10. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
+11. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
+12. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.
 
 ## Application sequence
 
@@ -279,7 +550,7 @@ For an existing Supabase project, apply only migrations that have not already be
 5. Student personas save a user-scoped onboarding draft and continue through student setup.
 6. JAMB/senior-secondary users must resolve programme plus university through Admission Intelligence before onboarding is completed.
 7. After admission resolution, the user moves into programme mapping, then domains, subgroups, roles, skills/opportunities.
-8. Student/graduate/professional/skilled-worker users who do not require admission resolution complete onboarding and land on Home/Explore discovery, not lesson tracks.
+8. Student users who do not require admission resolution complete onboarding and land on Home/Explore discovery, not lesson tracks. Graduate, professional, artisan, and career-change entry points remain hidden.
 9. Educator/institution users complete educator onboarding, then land on the correct admin dashboard/guidance surface.
 10. Guest creates a guest session and lands in Explore preview. Guest does not enter onboarding from Home, Profile, or Explore.
 11. Explicit logout routes future opens to sign-in/signup. Browser close keeps the saved session and resumes from the current URL or correct post-auth surface.

@@ -18,10 +18,13 @@ import type { SubgroupV2 } from "@/types/career";
 import { ToolGroupsBlock } from "./ToolGroupsBlock";
 import { CertPlacementList } from "./CertPlacementList";
 import { DomainIcon } from "./DomainIcon";
+import { GuidanceReportButton } from "./GuidanceReportButton";
 
 export interface RoleClusterSectionProps {
   subgroup: SubgroupV2;
   domainId?: string;
+  domainName?: string;
+  targetStudentId?: string;
   children?: React.ReactNode;
   defaultOpen?: boolean;
   style?: ViewStyle;
@@ -30,6 +33,8 @@ export interface RoleClusterSectionProps {
 export function RoleClusterSection({
   subgroup,
   domainId,
+  domainName,
+  targetStudentId,
   children,
   defaultOpen = false,
   style,
@@ -108,12 +113,22 @@ export function RoleClusterSection({
         </Animated.Text>
       </TouchableOpacity>
 
+      <View style={styles.selectionRow}>
+        <GuidanceReportButton
+          selection={{ kind: "subgroups", id: subgroup.id, name: subgroup.name, domainId, domainName }}
+          targetStudentId={targetStudentId}
+        />
+      </View>
+
       {open ? (
         <View style={styles.body}>
           {skills.length ? (
             <View style={styles.skillsBlock}>
               <Text style={[styles.subLabel, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-                Focus skills
+                Skills to build first
+              </Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.muted }, CompassFonts.body]}>
+                Start with the first skills listed, then add the others as your direction becomes clearer.
               </Text>
               <View style={styles.chipWrap}>
                 {skills.map((s, i) => (
@@ -194,7 +209,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingBottom: Spacing.md,
   },
+  selectionRow: {
+    paddingHorizontal: Spacing.md,
+    paddingBottom: Spacing.sm,
+  },
   skillsBlock: { gap: Spacing.sm },
+  guidanceNote: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.4,
+  },
   subLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.5,

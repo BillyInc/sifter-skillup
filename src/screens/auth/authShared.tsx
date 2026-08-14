@@ -35,6 +35,7 @@ import {
 } from "../../theme";
 import { LevelUpLogo } from "../../components/brand/LevelUpLogo";
 import TermsScreen from "../TermsScreen";
+import PrivacyScreen from "../PrivacyScreen";
 
 // ─── Terms Modal ────────────────────────────────────────────
 export function TermsModal({
@@ -52,6 +53,25 @@ export function TermsModal({
       onRequestClose={onClose}
     >
       <TermsScreen onClose={onClose} />
+    </Modal>
+  );
+}
+
+export function PrivacyModal({
+  visible,
+  onClose,
+}: {
+  visible: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+    >
+      <PrivacyScreen onClose={onClose} />
     </Modal>
   );
 }
@@ -199,6 +219,17 @@ export function AuthField({
            autoFocus={autoFocus}
            autoComplete={autoComplete}
         />
+        {value ? (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel={`Clear ${label.toLowerCase()}`}
+            onPress={() => onChangeText("")}
+            hitSlop={8}
+            style={styles.clearBtn}
+          >
+            <Text style={[styles.clearText, { color: colors.textRole.muted }]}>Clear</Text>
+          </TouchableOpacity>
+        ) : null}
         {secure ? (
           <TouchableOpacity
             onPress={() => setHidden((h) => !h)}
@@ -228,9 +259,13 @@ export function AuthField({
 export function LegalFooter({
   action,
   onShowTerms,
+  onShowPrivacy,
+  agreement = true,
 }: {
   action: string;
   onShowTerms?: () => void;
+  onShowPrivacy?: () => void;
+  agreement?: boolean;
 }) {
   const { colors } = useTheme();
   return (
@@ -241,7 +276,7 @@ export function LegalFooter({
         CompassFonts.body,
       ]}
     >
-      By {action}, you agree to our{" "}
+      {agreement ? `By ${action}, you agree to our ` : "Review our "}
       <Text
         style={[
           { color: colors.textRole.secondary, fontWeight: "700" },
@@ -257,7 +292,7 @@ export function LegalFooter({
           { color: colors.textRole.secondary, fontWeight: "700" },
           CompassFonts.bodyBold,
         ]}
-        onPress={onShowTerms}
+        onPress={onShowPrivacy}
       >
         Privacy Policy
       </Text>
@@ -348,6 +383,8 @@ const styles = StyleSheet.create({
   input: { flex: 1, paddingVertical: 13, fontSize: FontSize.md },
   eyeBtn: { paddingLeft: Spacing.sm, paddingVertical: 8 },
   eye: { fontSize: 18 },
+  clearBtn: { paddingHorizontal: Spacing.xs, paddingVertical: 8 },
+  clearText: { fontSize: FontSize.xs, fontWeight: "700" },
   hint: { fontSize: FontSize.xs, marginTop: 2 },
   legal: {
     fontSize: FontSize.xs,

@@ -20,17 +20,21 @@ import {
 } from "react-native";
 import { useTheme, FontSize } from "../../theme";
 import { SifterButton } from "../ui";
+import { openStudentDocument } from "../../lib/provisioningData";
 
 export interface PdfExportButtonProps {
   title?: string;
   /** Custom export handler. When provided it fully owns the export. */
   onExport?: () => void;
+  /** Authenticated document endpoint for the full guidance report. */
+  documentPath?: string;
   style?: StyleProp<ViewStyle>;
 }
 
 export function PdfExportButton({
   title = "Save as PDF",
   onExport,
+  documentPath,
   style,
 }: PdfExportButtonProps) {
   const { colors } = useTheme();
@@ -46,6 +50,12 @@ export function PdfExportButton({
   const onPress = () => {
     if (onExport) {
       onExport();
+      return;
+    }
+    if (documentPath) {
+      void openStudentDocument(documentPath).then((opened) => {
+        if (!opened) showHint("Create an account and confirm your guidance path before printing.");
+      });
       return;
     }
     if (Platform.OS === "web" && typeof window !== "undefined") {

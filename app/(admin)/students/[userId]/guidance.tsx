@@ -1,34 +1,28 @@
-import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { AdminShell } from "../../../../src/screens/admin/AdminShell";
-import { LiveAdmissionSearchField, type AdmissionSuggestion } from "../../../../src/components/onboarding/LiveAdmissionSearchField";
-import { provisioningData } from "../../../../src/lib/provisioningData";
 import { CompassFonts, FontSize, Spacing, useTheme, webContainer } from "../../../../src/theme";
 import { SifterButton } from "../../../../src/components/ui";
+import LocalLegalNotice from "../../../../src/components/LocalLegalNotice";
 
 export default function AdminStudentGuidancePage() {
   const { colors } = useTheme();
   const router = useRouter();
-  const params = useLocalSearchParams<{ userId?: string | string[] }>();
+  const params = useLocalSearchParams<{
+    userId?: string | string[];
+    student_class?: string | string[];
+    stream?: string | string[];
+  }>();
   const userId = Array.isArray(params.userId) ? params.userId[0] : params.userId;
-  const [programme, setProgramme] = useState<AdmissionSuggestion | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const studentClass = Array.isArray(params.student_class) ? params.student_class[0] : params.student_class;
+  const stream = Array.isArray(params.stream) ? params.stream[0] : params.stream;
 
-  const save = async () => {
-    if (!userId || !programme?.id || saving) return;
-    setSaving(true);
-    setError(null);
-    try {
-      await provisioningData.saveGuidance(userId, { programmeId: programme.id });
-      router.replace("/(admin)/students?tab=roster" as never);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not save this guidance yet.");
-    } finally {
-      setSaving(false);
-    }
+  const startGuidance = () => {
+    if (!userId) return;
+    router.push(
+      `/(admin)/workspace-explore/admission?mode=programme&admin=1&guidance_student_id=${encodeURIComponent(userId)}${studentClass ? `&class_name=${encodeURIComponent(studentClass)}` : ""}${stream ? `&stream=${encodeURIComponent(stream)}` : ""}` as never,
+    );
   };
 
   return (
@@ -36,30 +30,16 @@ export default function AdminStudentGuidancePage() {
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}
         contentContainerStyle={[styles.content, webContainer as object]}
-        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.intro}>
-          <Text style={[styles.title, CompassFonts.displayBold, { color: colors.text }]}>Choose the learner&apos;s direction</Text>
-          <Text style={[styles.body, { color: colors.textMuted }]}>Search the official university programme list and save the direction you agreed on with this learner. Their report becomes available after this step.</Text>
+          <Text style={[styles.title, CompassFonts.displayBold, { color: colors.text }]}>Build this learner&apos;s guidance path</Text>
+          <Text style={[styles.body, { color: colors.textMuted }]}>Start with the learner&apos;s programme and university, then select the domains, sub-groups and career roles that are relevant to the conversation. The report will include the selected branches and their own skills, tools and certifications.</Text>
         </View>
-
-        <LiveAdmissionSearchField
-          label="Programme"
-          value={programme?.name ?? ""}
-          selectedId={programme?.id}
-          onSelect={(item) => setProgramme(item.id ? item : null)}
-          placeholder="Search a university programme"
-          kind="programme"
-          programmeSource="admission"
-          helperText="Choose the programme name first. University-specific offerings and admission requirements are reviewed in the next guidance step."
-        />
-
-        {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+        <LocalLegalNotice audience="institution" />
         <SifterButton
-          label="Save learner guidance"
-          onPress={save}
-          loading={saving}
-          disabled={!programme?.id || !userId}
+          label="Start learner guidance"
+          onPress={startGuidance}
+          disabled={!userId}
           variant="track"
           color={colors.accentRole.action}
           size="lg"
@@ -75,5 +55,4 @@ const styles = StyleSheet.create({
   intro: { gap: Spacing.sm, maxWidth: 720 },
   title: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.2 },
   body: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
-  error: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
 });

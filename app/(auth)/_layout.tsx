@@ -40,11 +40,18 @@ export default function AuthLayout() {
 
     let active = true;
     setProfileHydrated(false);
-    getEducatorProfile(user.id).then((profile) => {
-      if (!active) return;
-      setEducatorProfile(profile);
-      setProfileHydrated(true);
-    });
+    getEducatorProfile(user.id).then(
+      (profile) => {
+        if (!active) return;
+        setEducatorProfile(profile);
+        setProfileHydrated(true);
+      },
+      () => {
+        if (!active) return;
+        setEducatorProfile(null);
+        setProfileHydrated(true);
+      },
+    );
     return () => {
       active = false;
     };

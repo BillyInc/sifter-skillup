@@ -6,8 +6,8 @@
  * know_what -> programme only
  * unsure -> strongest subjects -> eligible programmes once data is live
  */
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
@@ -26,6 +26,7 @@ import type {
   SetupFormProps,
   SsDoor,
 } from "../../types/onboarding";
+import LocalLegalNotice from "../LocalLegalNotice";
 
 const DOORS: {
   value: SsDoor;
@@ -65,6 +66,10 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const selectedOlevelSubjects = value.olevelSubjects ?? [];
   const isSs3Student = value.userType === "ss3_secondary";
   const isJambCandidate = value.userType === "jamb";
+  const [showSubjectCheck, setShowSubjectCheck] = useState(door === "unsure");
+  useEffect(() => {
+    setShowSubjectCheck(door === "unsure");
+  }, [door]);
   const hasBaseInstitution = isSs3Student
     ? Boolean(value.secondarySchoolId)
     : value.jambPrepMode === "self_taught" || Boolean(value.tutorialCentreId);
@@ -73,21 +78,23 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
     door === "unsure"
       ? hasOlevelSubjects && selectedSubjects.length >= 4
       : door === "know_what"
-        ? hasOlevelSubjects && Boolean(value.intendedProgramme)
+        ? Boolean(value.intendedJambProgrammeId)
         : door === "know_where"
-          ? hasOlevelSubjects && Boolean(value.intendedProgramme && value.preferredSchool)
+          ? Boolean(value.intendedJambProgrammeId && value.preferredSchoolId)
           : false;
 
   return (
     <View style={{ gap: Spacing.xl }}>
+      <LocalLegalNotice audience="student" />
       <View style={{ gap: Spacing.xs }}>
         <Text style={[styles.heading, { color: colors.text }]}>
           {isSs3Student ? "Build your SS3 admission plan" : "Build your JAMB admission plan"}
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
           Tell us where you are preparing from, then choose the question you want
-          answered first. We will use both O-level and UTME requirements when we
-          compare programmes.
+          answered first. If you already know the programme or university, we will
+          show its requirements first. Subjects are only needed when you ask us to
+          check your current combination or find options for you.
         </Text>
       </View>
 
@@ -196,7 +203,25 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         </Text>
       ) : null}
 
-      {value.stream && door ? (
+      {door && door !== "unsure" ? (
+        <View style={{ gap: Spacing.xs }}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => setShowSubjectCheck((current) => !current)}
+            style={[styles.subjectCheckButton, { borderColor: colors.borderRole.subtle }]}
+          >
+            <Text style={[styles.subjectCheckText, { color: colors.accentRole.action }]}>
+              {showSubjectCheck ? "Hide optional subject check" : "Check my subjects too (optional)"}
+            </Text>
+          </TouchableOpacity>
+          <Text style={[styles.caption, { color: colors.textMuted }]}>
+            You can continue without entering subjects. We will show the official
+            O-level and UTME requirements on the next screen.
+          </Text>
+        </View>
+      ) : null}
+
+      {value.stream && door && (door === "unsure" || showSubjectCheck) ? (
         <LiveSubjectMultiSelect
           label="Your WAEC/NECO subjects"
           stream={value.stream}
@@ -211,7 +236,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         />
       ) : null}
 
-      {value.stream && door ? (
+      {value.stream && door && (door === "unsure" || showSubjectCheck) ? (
         <LiveSubjectMultiSelect
           label="Your UTME/JAMB subjects"
           stream={value.stream}
@@ -296,7 +321,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
       ) : null}
 
       <SifterButton
-        label="Continue"
+        label={door === "unsure" ? "Find matching programmes" : "See programme requirements"}
         onPress={onContinue}
         disabled={!hasBaseInstitution || !hasDoorFields}
         variant="track"
@@ -318,6 +343,14 @@ const styles = StyleSheet.create({
   note: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   caption: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
   sectionLabel: { fontSize: FontSize.sm, fontWeight: "800" },
+  subjectCheckButton: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
+  subjectCheckText: { fontSize: FontSize.sm, fontWeight: "800" },
 });
 
 export default JambSetupForm;

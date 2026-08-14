@@ -39,6 +39,10 @@ app.add_middleware(
 )
 app.add_middleware(DeviceSessionMiddleware)
 
+# Server-owned document versions. Clients must accept these exact versions.
+CURRENT_TERMS_VERSION = "2026-08-14"
+CURRENT_PRIVACY_VERSION = "2026-08-14"
+
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):
     start_time = datetime.now()
@@ -97,6 +101,58 @@ _RESET_FAILURE_DETAIL = {
 }
 
 
+def _validated_signup_legal_acceptance(body: dict) -> dict:
+    """Require the current legal versions at the account-creation boundary.
+
+    The UI presents the review/checkbox flow, but the API must enforce the
+    same invariant because clients can call the endpoint without the UI.
+    Analytics remains an explicit opt-in and is never inferred from omission.
+    """
+    terms_version = str(body.get("terms_version") or body.get("termsVersion") or "").strip()
+    privacy_version = str(body.get("privacy_version") or body.get("privacyVersion") or "").strip()
+    if not terms_version or not privacy_version:
+        raise HTTPException(
+            status_code=400,
+            detail="Review and accept the current Terms and Privacy Policy before creating an account.",
+        )
+    if terms_version != CURRENT_TERMS_VERSION or privacy_version != CURRENT_PRIVACY_VERSION:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "The Terms and Privacy Policy have changed. Review the current versions before creating an account.",
+                "terms_version": CURRENT_TERMS_VERSION,
+                "privacy_version": CURRENT_PRIVACY_VERSION,
+            },
+        )
+    return {
+        "termsVersion": CURRENT_TERMS_VERSION,
+        "privacyVersion": CURRENT_PRIVACY_VERSION,
+        "acceptedAt": datetime.now().isoformat(),
+        "analyticsConsent": body.get("analytics_consent", body.get("analyticsConsent", False)) is True,
+    }
+
+
+def _attach_legal_acceptance(service, user: dict, acceptance: dict) -> dict:
+    """Persist signup acceptance without replacing unrelated settings."""
+    settings_value = dict(user.get("settings") or {})
+    settings_value["legalAcceptance"] = dict(acceptance)
+    try:
+        updated = _update_user_returning(service, user["id"], {"settings": settings_value})
+        updated.pop("password_hash", None)
+        return updated
+    except Exception as exc:
+        # Keep compatibility with older local schemas; the authenticated legal
+        # gate will require the record to be written before account features
+        # continue, while signup itself remains recoverable.
+        log.warning("Could not persist signup legal acceptance", error=str(exc), user_id=user.get("id"))
+        user["settings"] = settings_value
+        return user
+
+
+def _require_valid_email_code(email: str, code: str):
+    submitted = str(code or "").strip()
+    if settings.EMAIL_VERIFICATION_DEV_CODES and submitted == "000000":
+        return
 async def _issue_email_code(email: str, purpose: str) -> str:
     """Generate, store and send a code. Raises HTTPException if delivery fails."""
     code = f"{secrets.randbelow(1000000):06d}"
@@ -268,6 +324,8 @@ async def auth_signup(body: dict, request: Request):
         raise HTTPException(status_code=400, detail="Valid email is required")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    legal_acceptance = _validated_signup_legal_acceptance(body)
+    _require_valid_email_code(email, email_code)
     await _require_valid_email_code(email, email_code)
     if device_id:
         try:
@@ -296,11 +354,11 @@ async def auth_signup(body: dict, request: Request):
             # never apply this behavior to real accounts or production.
             if _is_dev_account_email(email) and existing_user.get("password_hash"):
                 password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-                result = db.get_service_client().table("users").update({
+                user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "password_hash": password_hash,
                     "last_login": datetime.now().isoformat(),
-                }).eq("id", existing_user["id"]).execute()
-                user = result.data[0]
+                })
+                user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user.pop("password_hash", None)
                 token = Auth.create_jwt(user["id"])
                 await _post_auth_device_register(user["id"], body, request)
@@ -309,7 +367,7 @@ async def auth_signup(body: dict, request: Request):
             # Complete that partial row instead of making the user retry into a 409.
             if not existing_user.get("password_hash"):
                 password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-                result = db.get_service_client().table("users").update({
+                user = _update_user_returning(db.get_service_client(), existing_user["id"], {
                     "username": username,
                     "first_name": first_name or None,
                     "middle_name": middle_name or None,
@@ -320,8 +378,8 @@ async def auth_signup(body: dict, request: Request):
                     "onboarding_completed": False,
                     "account_type": "pending",
                     "last_login": datetime.now().isoformat(),
-                }).eq("id", existing_user["id"]).execute()
-                user = result.data[0]
+                })
+                user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
                 user["onboarding_completed"] = False
                 token = Auth.create_jwt(user["id"])
                 await _post_auth_device_register(user["id"], body, request)
@@ -331,6 +389,7 @@ async def auth_signup(body: dict, request: Request):
         user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash,
                             first_name=first_name, middle_name=middle_name, last_name=last_name,
                             date_of_birth=date_of_birth)
+        user = _attach_legal_acceptance(db.get_service_client(), user, legal_acceptance)
         user["onboarding_completed"] = False
         token = Auth.create_jwt(user["id"])
         await _post_auth_device_register(user["id"], body, request)
@@ -348,7 +407,11 @@ async def auth_signup(body: dict, request: Request):
         )
         raise HTTPException(
             status_code=500,
-            detail="We could not create your account right now. Please try again.",
+            detail=(
+                f"We could not create your account right now. Please try again. ({exc})"
+                if settings.DEBUG
+                else "We could not create your account right now. Please try again."
+            ),
         )
 
 
@@ -398,7 +461,7 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
         updates["active_field_id"] = body["active_field_id"]
     svc = db.get_service_client()
     try:
-        result = svc.table("users").update(updates).eq("id", current_user["id"]).execute()
+        user = _update_user_returning(svc, current_user["id"], updates)
     except Exception as exc:
         # Older live projects may have the settings column but not the newer
         # selection marker yet. Persist the same fact in settings so the
@@ -410,10 +473,10 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
         fallback_updates = dict(updates)
         fallback_updates.pop("account_type_selected_at", None)
         fallback_updates["settings"] = compatibility_settings
-        result = svc.table("users").update(fallback_updates).eq("id", current_user["id"]).execute()
-    if result.data and updates.get("account_type_selected_at"):
-        result.data[0]["account_type_selected_at"] = updates["account_type_selected_at"]
-    return ResponseModel(data=result.data[0])
+        user = _update_user_returning(svc, current_user["id"], fallback_updates)
+    if updates.get("account_type_selected_at"):
+        user["account_type_selected_at"] = updates["account_type_selected_at"]
+    return ResponseModel(data=user)
 
 
 
@@ -468,6 +531,41 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
     raise RuntimeError("Could not create user with the available schema")
 
 
+def _soft_delete_user_compat(service, user_id: str, updates: dict) -> None:
+    """Apply deletion fields across pre- and post-lifecycle schemas.
+
+    The lifecycle migration is additive, but deletion must not become
+    impossible while an older local/deployed schema is being upgraded. When
+    PostgREST identifies a missing optional column, remove only that field and
+    retry. Email anonymisation and password clearing remain required fields.
+    """
+    pending = dict(updates)
+    required = {"email", "password_hash"}
+    for _ in range(len(pending) + 1):
+        try:
+            service.table("users").update(pending).eq("id", user_id).execute()
+            return
+        except Exception as exc:
+            match = re.search(r"(?:'([^']+)' column|column '([^']+)')", str(exc))
+            missing = next((value for value in (match.groups() if match else ()) if value), None)
+            if not missing or missing not in pending or missing in required:
+                raise
+            pending.pop(missing, None)
+    raise RuntimeError("Could not apply compatible account deletion update")
+
+
+def _update_user_returning(service, user_id: str, updates: dict) -> dict:
+    """Update a user and read it back using the deployed PostgREST API.
+
+    The installed Supabase client exposes ``execute`` on an update filter but
+    does not expose ``select`` after that filter. Read-after-write keeps the
+    response stable across local and deployed client versions.
+    """
+    service.table("users").update(dict(updates)).eq("id", user_id).execute()
+    result = service.table("users").select("*").eq("id", user_id).limit(1).execute()
+    return (result.data or [{}])[0]
+
+
 # USER ROUTES
 
 @app.get("/api/users/me", response_model=ResponseModel)
@@ -499,12 +597,44 @@ async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_c
     if not payload:
         current_user.pop("password_hash", None)
         return ResponseModel(data=current_user)
-    result = db.get_client().table("users").update(
-        payload
-    ).eq("id", current_user["id"]).execute()
-    user = result.data[0]
+    user = _update_user_returning(db.get_client(), current_user["id"], payload)
+    user.update(payload)
     user.pop("password_hash", None)
     return ResponseModel(data=user)
+
+
+@app.post("/api/users/legal-acceptance", response_model=ResponseModel)
+async def record_legal_acceptance(
+    acceptance: LegalAcceptanceInput,
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Record current terms/privacy acceptance without replacing user settings."""
+    if (
+        acceptance.terms_version != CURRENT_TERMS_VERSION
+        or acceptance.privacy_version != CURRENT_PRIVACY_VERSION
+    ):
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "This legal document version is no longer current.",
+                "terms_version": CURRENT_TERMS_VERSION,
+                "privacy_version": CURRENT_PRIVACY_VERSION,
+            },
+        )
+    recorded_at = datetime.now().isoformat()
+    next_settings = dict(current_user.get("settings") or {})
+    next_settings["legalAcceptance"] = {
+        "termsVersion": acceptance.terms_version,
+        "privacyVersion": acceptance.privacy_version,
+        "acceptedAt": recorded_at,
+        "analyticsConsent": acceptance.analytics_consent,
+        "recordedAt": recorded_at,
+    }
+    user = _update_user_returning(
+        db.get_client(), current_user["id"], {"settings": next_settings}
+    )
+    user.pop("password_hash", None)
+    return ResponseModel(data={"accepted": True, "user": user})
 
 
 @app.delete("/api/users/me", response_model=ResponseModel)
@@ -518,14 +648,20 @@ async def delete_me(
     deleted_at = datetime.now().isoformat()
     available_at = (datetime.now() + timedelta(hours=24)).isoformat()
     service = db.get_service_client()
-    service.table("account_deletion_cooldowns").insert({
-        "user_id": current_user["id"],
-        "device_id": device_id or "unknown",
-        "email": current_user.get("email"),
-        "deleted_at": deleted_at,
-        "available_at": available_at,
-    }).execute()
-    service.table("users").update({
+    try:
+        service.table("account_deletion_cooldowns").insert({
+            "user_id": current_user["id"],
+            "device_id": device_id or "unknown",
+            "email": current_user.get("email"),
+            "deleted_at": deleted_at,
+            "available_at": available_at,
+        }).execute()
+    except Exception as exc:
+        # Lifecycle migrations are additive. Account deletion must still work
+        # against an older local schema; the cooldown is an extra safeguard,
+        # not a reason to leave the account active.
+        log.warning("Account deletion cooldown table unavailable", error=str(exc))
+    deletion_updates = {
         "is_deleted": True,
         "deleted_at": deleted_at,
         "deletion_cooldown_until": available_at,
@@ -533,11 +669,24 @@ async def delete_me(
         "email": f"deleted-{current_user['id']}@deleted.invalid",
         "password_hash": None,
         "onboarding_completed": False,
-    }).eq("id", current_user["id"]).execute()
-    service.table("active_sessions").update({
-        "is_active": False,
-        "revoked_at": deleted_at,
-    }).eq("user_id", current_user["id"]).execute()
+    }
+    try:
+        _soft_delete_user_compat(service, current_user["id"], deletion_updates)
+    except Exception as exc:
+        detail = (
+            f"Account deletion could not update the account: {exc}"
+            if settings.DEBUG
+            else "Account deletion is temporarily unavailable."
+        )
+        log.error("Account deletion update failed", error=str(exc))
+        raise HTTPException(status_code=500, detail=detail) from exc
+    try:
+        service.table("active_sessions").update({
+            "is_active": False,
+            "revoked_at": deleted_at,
+        }).eq("user_id", current_user["id"]).execute()
+    except Exception as exc:
+        log.warning("Active session revocation skipped during deletion", error=str(exc))
     return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 

@@ -14,7 +14,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Optional
 
-from fastapi import APIRouter, Body, Depends, Query
+from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
 from pydantic import BaseModel, Field
 
 from auth import Auth
@@ -22,6 +22,8 @@ from database import db
 from logger import log
 from models import ResponseModel
 from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, clear_prefix, get_json, set_json
+from services.guidance_report import resolve_guidance_report_context
+from services.report_gen import ReportContext, build_report_docx, build_report_html
 
 router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 
@@ -63,6 +65,24 @@ def _clean_text(value: Any) -> Optional[str]:
         return None
     text = str(value).strip()
     return text or None
+
+
+def _student_programme_name(value: Any) -> Optional[str]:
+    """Return a readable student heading without discarding the source name.
+
+    Some imported JAMB labels combine a base name and a descriptive variant,
+    for example ``Nursing/Nursing Science``. The raw value remains the source
+    identity used for matching; the shortened value is only for headings and
+    result labels. This rule only unwraps a slash label whose second part starts
+    with the first part, so unrelated source names are not silently renamed.
+    """
+    raw = _clean_text(value)
+    if not raw:
+        return None
+    parts = [part.strip() for part in raw.split("/")]
+    if len(parts) == 2 and parts[0] and parts[1].lower().startswith(f"{parts[0].lower()} "):
+        return parts[0]
+    return raw
 
 
 def _clean_list(value: Any) -> list[str]:
@@ -218,6 +238,18 @@ class StartingPointIn(BaseModel):
     regions: list[str] = Field(default_factory=list)
     workTypes: list[str] = Field(default_factory=list)
     notifications: dict[str, Any] = Field(default_factory=dict)
+
+
+class GuidanceReportPathIn(BaseModel):
+    """The selected branches of one learner's guidance journey.
+
+    The path stores source identifiers plus display snapshots. Detailed source
+    records are resolved when a report is rendered, so the report does not
+    duplicate the catalogue or silently include unselected branches.
+    """
+
+    source: str = "explore"
+    path: dict[str, Any] = Field(default_factory=dict)
 
 
 class InstitutionRegisterIn(BaseModel):
@@ -427,6 +459,142 @@ async def save_starting_point(
         return ResponseModel(success=False, message="Could not save starting point.", data=None)
 
 
+def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
+    """Keep only report-selection context, never arbitrary client payloads."""
+    allowed_single = {
+        "academicContext", "subjects", "programme", "university", "requirements",
+        "discoveryDoor", "notes",
+    }
+    allowed_lists = {"domains", "subgroups", "roles"}
+    out: dict[str, Any] = {}
+    for key in allowed_single:
+        value = path.get(key)
+        if value is not None:
+            out[key] = value
+    for key in allowed_lists:
+        value = path.get(key)
+        if isinstance(value, list):
+            out[key] = [item for item in value if isinstance(item, dict)]
+    return out
+
+
+@router.get("/guidance-path", response_model=ResponseModel)
+async def get_guidance_path(current_user: dict = Depends(Auth.get_current_user)):
+    """Return the learner's current selected guidance branches."""
+    try:
+        res = (
+            _svc().table("guidance_report_paths").select("*")
+            .eq("student_id", current_user["id"]).limit(1).execute()
+        )
+        row = (res.data or [None])[0]
+        if not row:
+            return ResponseModel(data=_real(None))
+        return ResponseModel(data=_real({
+            "id": row.get("id"),
+            "studentId": row.get("student_id"),
+            "source": row.get("source"),
+            "path": row.get("path") or {},
+            "updatedAt": row.get("updated_at"),
+        }))
+    except Exception as exc:  # noqa: BLE001
+        log.error("student guidance path get failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Your saved guidance path is temporarily unavailable."))
+
+
+@router.put("/guidance-path", response_model=ResponseModel)
+async def save_guidance_path(
+    payload: GuidanceReportPathIn = Body(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Persist the selected branches used by the learner's eventual report."""
+    source = payload.source if payload.source in {"self", "onboarding", "explore"} else "explore"
+    snapshot = _path_snapshot(payload.path)
+    if not snapshot:
+        return ResponseModel(success=False, message="Choose a guidance path before saving.", data=None)
+    try:
+        now = _now()
+        res = _svc().table("guidance_report_paths").upsert({
+            "student_id": current_user["id"],
+            "created_by": current_user["id"],
+            "source": source,
+            "path": snapshot,
+            "updated_at": now,
+        }, on_conflict="student_id").execute()
+        row = (res.data or [{}])[0]
+        return ResponseModel(data=_real({
+            "id": row.get("id"),
+            "studentId": current_user["id"],
+            "source": source,
+            "path": snapshot,
+            "updatedAt": now,
+        }))
+    except Exception as exc:  # noqa: BLE001
+        log.error("student guidance path save failed", error=str(exc))
+        return ResponseModel(success=False, message="Could not save this guidance path yet.", data=None)
+
+
+def _current_guidance_report_context(current_user: dict) -> ReportContext:
+    user_row = (_users().select(
+        "id, username, student_class, stream, provisioning_school_id"
+    ).eq("id", current_user["id"]).limit(1).execute().data or [None])[0]
+    user = user_row or current_user
+    path_row = (_svc().table("guidance_report_paths").select("path, source, updated_at")
+                .eq("student_id", current_user["id"]).limit(1).execute().data or [None])[0]
+    full_path = resolve_guidance_report_context(_svc(), user, path_row)
+    programme = full_path.get("programme") or {}
+    university = full_path.get("university") or {}
+    if not programme.get("name") or not university.get("name"):
+        raise HTTPException(
+            status_code=409,
+            detail="Choose a programme and university before printing your report.",
+        )
+    academic = full_path.get("academicContext") or {}
+    return ReportContext(
+        student_name=full_path.get("studentName") or "Student",
+        student_class=academic.get("class"),
+        stream=academic.get("stream"),
+        school_name=academic.get("schoolName"),
+        programme_name=programme.get("name"),
+        full_path=full_path,
+        generated_on=_now()[:10],
+    )
+
+
+@router.get("/report.html")
+async def get_my_guidance_report_html(
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Authenticated learner report; print-to-PDF is handled by the browser."""
+    try:
+        ctx = _current_guidance_report_context(current_user)
+        return Response(content=build_report_html(ctx), media_type="text/html")
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("student guidance report html failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Your report is temporarily unavailable.")
+
+
+@router.get("/report.docx")
+async def get_my_guidance_report_docx(
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Authenticated learner report as an editable document."""
+    try:
+        ctx = _current_guidance_report_context(current_user)
+        safe = (ctx.student_name or "student").replace(" ", "_")[:40]
+        return Response(
+            content=build_report_docx(ctx),
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            headers={"Content-Disposition": f'attachment; filename="guidance_report_{safe}.docx"'},
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("student guidance report docx failed", error=str(exc))
+        raise HTTPException(status_code=503, detail="Your report is temporarily unavailable.")
+
+
 @router.get("/subjects", response_model=ResponseModel)
 async def list_subjects(
     q: Optional[str] = Query(None),
@@ -456,7 +624,10 @@ async def list_subjects(
         # selected stream, including subjects outside its usual cluster.
         if exam_type:
             query = query.contains("exam_types", [exam_type.strip().lower()])
-        res = query.order("name").limit(80).execute()
+        # Return the complete active catalogue for the requested exam type.
+        # Stream tags only affect ordering; they must never hide valid subjects
+        # that a learner may need to choose.
+        res = query.order("name").execute()
         items = [
             {
                 "id": r["id"],
@@ -477,16 +648,12 @@ async def list_subjects(
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
         log.warning("student subjects: list failed", error=str(exc))
-        default = [
-            "English Language", "Mathematics", "Biology", "Chemistry",
-            "Physics", "Economics", "Government", "Literature in English",
-            "Geography", "Commerce", "Accounting/Financial Accounting",
-            "Further Mathematics", "Computer Studies",
-        ]
-        return ResponseModel(data=_fallback(
-            [{"id": s, "code": None, "name": s, "aliases": [], "category": None, "streamTags": []} for s in default],
-            "Subject catalog is not seeded yet; showing the default picker list.",
-        ))
+        # Never manufacture a subject list when the catalogue is unavailable.
+        # A fabricated list makes stream-aware JAMB/O-level guidance look
+        # authoritative and can silently change eligibility decisions.
+        return ResponseModel(
+            data=_real([], "The subject catalogue is temporarily unavailable. Please try again.")
+        )
 
 
 @router.get("/jamb-programmes", response_model=ResponseModel)
@@ -536,21 +703,34 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
             jamb_ids = [item["jambProgrammeId"] for item in items if item.get("jambProgrammeId")]
             offering_rows = (
                 svc.table("v_school_jamb_programmes")
-                .select("jamb_programme_id, school_name")
+                .select("jamb_programme_id, school_name, jamb_name")
                 .in_("jamb_programme_id", jamb_ids)
                 .limit(2000)
                 .execute()
             ).data or []
             schools_by_jamb: dict[str, list[str]] = {}
+            offerings_by_jamb: dict[str, list[dict[str, str]]] = {}
             for row in offering_rows:
                 jid = row.get("jamb_programme_id")
                 school = (row.get("school_name") or "").strip()
                 if jid and school and school not in schools_by_jamb.setdefault(jid, []):
                     schools_by_jamb[jid].append(school)
+                source_name = _clean_text(row.get("jamb_name"))
+                if jid and school and source_name:
+                    offering = {
+                        "schoolName": school,
+                        "programmeName": source_name,
+                        "studentName": _student_programme_name(source_name) or source_name,
+                    }
+                    existing = offerings_by_jamb.setdefault(jid, [])
+                    if offering not in existing:
+                        existing.append(offering)
             for item in items:
-                names = schools_by_jamb.get(item.get("jambProgrammeId"), [])
+                jid = item.get("jambProgrammeId")
+                names = schools_by_jamb.get(jid, [])
                 item["schoolNames"] = names[:3]
                 item["schoolCount"] = len(names)
+                item["schoolOfferings"] = offerings_by_jamb.get(jid, [])[:12]
         except Exception as exc:  # noqa: BLE001
             log.warning("student programme school context skipped", error=str(exc))
         set_json(cache_key, items, SEARCH_TTL_SECONDS)
@@ -658,6 +838,7 @@ def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
         "id": r.get("jamb_programme_id"),
         "jambProgrammeId": r.get("jamb_programme_id"),
         "jambName": r.get("jamb_name"),
+        "studentName": _student_programme_name(r.get("jamb_name")),
         "jambFaculty": r.get("jamb_faculty"),
         "degreeType": r.get("degree_type"),
         "isBlend": bool(r.get("is_blend")),
@@ -854,6 +1035,7 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
                     # The name THIS school uses. Deliberately not the CCMAS
                     # canonical name, which the view also carries.
                     "jambName": r.get("jamb_name"),
+                    "studentName": _student_programme_name(r.get("jamb_name")),
                     "utmeSubjects": r.get("utme_subjects"),
                     "olevelRequirement": r.get("olevel_requirement"),
                     "directEntry": r.get("direct_entry"),
@@ -915,6 +1097,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                     "institutionType": r.get("institution_type"),
                     "jambProgrammeId": r.get("jamb_programme_id"),
                     "jambName": r.get("jamb_name"),
+                    "studentName": _student_programme_name(r.get("jamb_name")),
                     "programmeId": r.get("programme_id"),
                     "programmeName": r.get("canonical_programme_name"),
                     "year": target_year,
@@ -940,6 +1123,7 @@ def _cutoff_out(r: dict) -> dict:
         "institutionType": r.get("institution_type"),
         "jambProgrammeId": r.get("jamb_programme_id"),
         "jambName": r.get("jamb_name"),
+        "studentName": _student_programme_name(r.get("jamb_name")),
         "programmeId": r.get("programme_id"),
         "programmeName": r.get("canonical_programme_name"),
         "year": r.get("year"),

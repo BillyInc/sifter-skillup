@@ -50,9 +50,12 @@ export default function AdminExploreRoute() {
     <ExploreScreen
       initialQuery={readParam(params.q)}
       adminAudience={audience}
+      adminType={profile?.organizationType}
       heading={
-        audience === "university"
+        profile?.organizationType === "university"
           ? "Review programmes,\ndomains and peers"
+          : profile?.organizationType === "tutorial_centre" || profile?.organizationType === "jamb_cafe"
+            ? "Guide JAMB learners\nfrom skills to routes"
           : "Guide a learner through\nsubjects and programmes"
       }
       intro={
