@@ -2,10 +2,12 @@ import React, { useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { CompassFonts, FontSize, FontWeight, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
+import { CompassFonts, FontSize, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import { API } from '@/lib/api';
 import { isAdminAccount } from '@/lib/accountType';
+import TermsScreen from '@/screens/TermsScreen';
+import PrivacyScreen from '@/screens/PrivacyScreen';
 
 function SettingsCard({
   title,
@@ -47,6 +49,7 @@ export default function SettingsScreen() {
   const { user, signOut, deleteAccount, refreshUser } = useAuth();
   const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
   const [actionBusy, setActionBusy] = useState(false);
+  const [legalPage, setLegalPage] = useState<'terms' | 'privacy' | null>(null);
   const isAdmin = isAdminAccount(user?.account_type);
   const admin2FA = useMemo(
     () => (user?.settings?.admin2fa ?? {}) as { setupRequestedAt?: string; deferredAt?: string },
@@ -170,7 +173,7 @@ export default function SettingsScreen() {
         <SettingsCard title="LEGAL">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Privacy and terms</Text>
           <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Privacy contact: privacy@sifter.app. Legal contact: legal@sifter.app. Governing jurisdiction remains Nigeria per the app&apos;s existing legal copy.
+            Nigeria-first privacy and consumer safeguards apply. Review the current terms, privacy policy, and your rights before sharing student or school data.
           </Text>
           <TouchableOpacity
             activeOpacity={0.85}
@@ -179,6 +182,14 @@ export default function SettingsScreen() {
           >
             <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Email privacy team</Text>
           </TouchableOpacity>
+          <View style={styles.legalActions}>
+            <TouchableOpacity onPress={() => setLegalPage('terms')} style={[styles.linkBtn, { borderColor: colors.borderRole.subtle, flex: 1 }]}>
+              <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>View terms</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setLegalPage('privacy')} style={[styles.linkBtn, { borderColor: colors.borderRole.subtle, flex: 1 }]}>
+              <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>View privacy</Text>
+            </TouchableOpacity>
+          </View>
         </SettingsCard>
 
         <TouchableOpacity
@@ -217,6 +228,9 @@ export default function SettingsScreen() {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
+        {legalPage === 'terms' ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}
       </Modal>
     </SafeAreaView>
   );
@@ -320,4 +334,5 @@ const styles = StyleSheet.create({
   modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
   modalTitle: { fontSize: FontSize.xl },
   modalActions: { flexDirection: 'row', gap: Spacing.sm },
+  legalActions: { flexDirection: 'row', gap: Spacing.sm },
 });

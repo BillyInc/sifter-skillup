@@ -31,6 +31,13 @@ from auth import Auth
 from database import db
 from models import ResponseModel
 
+
+def _analytics_consented(user: dict) -> bool:
+    """Optional product analytics is strictly opt-in, including queued events."""
+    settings = user.get("settings")
+    acceptance = settings.get("legalAcceptance") if isinstance(settings, dict) else None
+    return bool(isinstance(acceptance, dict) and acceptance.get("analyticsConsent") is True)
+
 # ─────────────────────────────────────────────────────────────
 # Pydantic models
 # ─────────────────────────────────────────────────────────────

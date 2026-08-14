@@ -1,5 +1,5 @@
-import CharteredCredentialsScreen from "@/screens/careerIntelligence/CharteredCredentialsScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function AdminCredentialsRoute() {
-  return <CharteredCredentialsScreen />;
+  return <PathwaysHubScreen initialSection="credentials" />;
 }

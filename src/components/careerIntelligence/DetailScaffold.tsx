@@ -28,6 +28,7 @@ import { DataStateView } from "./DataStateView";
 import { SaveButton } from "./SaveButton";
 import { PdfExportButton } from "./PdfExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
+import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceReportButton";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
@@ -37,6 +38,12 @@ export interface DetailScaffoldProps<T> {
   /** Show the "Save as PDF" action. */
   pdf?: boolean;
   pdfTitle?: string;
+  /** Authenticated full-report endpoint. */
+  pdfPath?: string;
+  /** Explicitly add this selected branch to the learner's report path. */
+  reportSelection?: GuidanceReportSelection;
+  /** When an administrator is guiding a learner, save to that learner. */
+  targetStudentId?: string;
   /** The data envelope the body renders from. */
   state: DataState<T>;
   /** Render the populated body. */
@@ -58,6 +65,9 @@ export function DetailScaffold<T>({
   save,
   pdf,
   pdfTitle,
+  pdfPath,
+  reportSelection,
+  targetStudentId,
   state,
   children,
   header,
@@ -126,7 +136,8 @@ export function DetailScaffold<T>({
                 compact
               />
             ) : null}
-            {pdf ? <PdfExportButton title={pdfTitle ?? title} /> : null}
+            {reportSelection ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
+            {pdf ? <PdfExportButton title={pdfTitle ?? title} documentPath={pdfPath} /> : null}
           </View>
         </View>
       </View>

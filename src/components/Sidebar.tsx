@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
+  useTheme, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
 import { xpEngine }     from '../lib/XPEngine';
 import { streakEngine }  from '../lib/StreakEngine';
@@ -40,7 +40,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { routeName: 'Home',    label: 'Home',    emoji: '○',  activeEmoji: '⚡' },
-  { routeName: 'Tracks',  label: 'Tracks',  emoji: '🌐', activeEmoji: '🌐' },
   { routeName: 'Feed',   label: 'Feed',     emoji: '📰', activeEmoji: '📰' },
   { routeName: 'Profile', label: 'Profile', emoji: '👤', activeEmoji: '👤' },
 ];
@@ -181,9 +180,6 @@ export default function Sidebar() {
     >
       {/* ── Brand ── */}
       <View style={[styles.brand, { borderBottomColor: colors.border }]}>
-        <View style={styles.brandMark}>
-          <Text style={styles.brandEmoji}>⚡</Text>
-        </View>
         <View>
           <Text style={[styles.brandName, { color: colors.text }]}>Sifter</Text>
           <Text style={[styles.brandSub, { color: colors.accent }]}>LEVELUP</Text>
@@ -220,15 +216,6 @@ export default function Sidebar() {
 
       {/* ── Secondary nav ── */}
       <View style={[styles.bottomSection, { borderTopColor: colors.border }]}>
-        {/* Learning shortcut */}
-        <TouchableOpacity
-          style={[styles.learnBtn, { backgroundColor: colors.accent }]}
-          onPress={() => navigateTo('Map')}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.learnBtnText}>🏝️ Continue Learning</Text>
-        </TouchableOpacity>
-
         {/* Bottom items */}
         {BOTTOM_ITEMS.map(item => (
           <NavRow
@@ -274,15 +261,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
   },
-  brandMark: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F59E0B',
-  },
-  brandEmoji:   { fontSize: 16 },
   brandName:    { fontSize: 14, fontWeight: FontWeight.black, lineHeight: 16, letterSpacing: -0.3 },
   brandSub:     { fontSize: 9, fontWeight: FontWeight.bold, letterSpacing: 1.1 },
 

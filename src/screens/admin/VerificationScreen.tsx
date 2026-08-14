@@ -4,7 +4,7 @@
  * Reads the local educator profile (getEducatorProfile) for the current
  * verification status, claimed organisation name and registry code, and reads
  * adminData.getMyOrganization() for the (future) server-side record. Explains
- * the tiers (T0 national aggregate → T2 verified institution dashboard). The
+ * the tiers (T0 limited access → T2 verified institution dashboard). The
  * "Resubmit / update verification" CTA calls adminData.submitVerification(),
  * which returns `coming_soon` — we surface that as an inline "review coming
  * online" message. No fake "verified" badge is ever shown: the badge reflects
@@ -38,6 +38,7 @@ import type {
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
+import LocalLegalNotice from "@/components/LocalLegalNotice";
 
 const STATUS_META: Record<
   VerificationStatus,
@@ -50,18 +51,27 @@ const STATUS_META: Record<
   rejected: { label: "Rejected", icon: "✕", tint: "muted" },
 };
 
-const TIERS = [
-  {
-    tier: "Claim",
-    title: "Claimed institution",
-    body: "Your organisation workspace is linked. This does not mean proof has been submitted or approved.",
-  },
-  {
-    tier: "Verified",
-    title: "Verified institution dashboard",
-    body: "After proof is submitted and reviewed, role-scoped institution tools unlock. Individual student data still requires consent.",
-  },
-];
+function tiersFor(profile: EducatorProfile | null) {
+  const type = profile?.organizationType;
+  const role = profile?.role;
+  const roleLabel = role ? role.replace(/_/g, " ") : "organisation member";
+  if (type === "university") {
+    return [
+      { tier: "T1", title: "Claimed university", body: `The university workspace is linked for the ${roleLabel}. Proof has not yet been approved.` },
+      { tier: "T2", title: "Verified university workspace", body: "Verified university staff can use programme, curriculum and peer-intelligence tools within their role scope." },
+    ];
+  }
+  if (type === "secondary_school") {
+    return [
+      { tier: "T1", title: "Claimed secondary school", body: `The school workspace is linked for the ${roleLabel}. Proof has not yet been approved.` },
+      { tier: "T2", title: "Verified school guidance workspace", body: "Verified school owners and staff unlock school-scoped guidance and session tools. Student records still require consent." },
+    ];
+  }
+  return [
+    { tier: "T1", title: "Claimed tutorial provider", body: `The provider workspace is linked for the ${roleLabel}. Proof has not yet been approved.` },
+    { tier: "T2", title: "Verified provider guidance workspace", body: "Verified tutorial centres and JAMB cafés unlock provider guidance tools; they do not receive a school roster by default." },
+  ];
+}
 
 export function VerificationScreen() {
   const { colors } = useTheme();
@@ -90,15 +100,19 @@ export function VerificationScreen() {
     };
   }, [user?.id]);
 
-  // Older local drafts could say pending with document_upload even though no
-  // document was ever submitted. Treat that as a claim until a proof anchor
-  // exists, so the UI never reports a review that did not happen.
-  const hasProofAnchor = Boolean(profile?.workEmail || profile?.registryCode);
+  // Contact details and registry anchors do not equal proof submission. Only
+  // an explicit proof-submission timestamp may put the account under review.
   const status: VerificationStatus =
-    profile?.verificationStatus === "pending" && !hasProofAnchor
+    profile?.verificationStatus === "pending" && !profile?.verificationProofSubmittedAt
       ? "claimed"
       : profile?.verificationStatus ?? "unverified";
   const meta = STATUS_META[status];
+  const tiers = tiersFor(profile);
+  const proofGuidance = profile?.organizationType === "university"
+    ? "University proof: institutional email, JAMB/NUC anchor, or an official university document."
+    : profile?.organizationType === "secondary_school"
+      ? "Secondary-school proof: State MoE approval, school registry anchor, or an official school document."
+      : "Provider proof: CAC record, provider registration, or an official tutorial-centre document.";
   const tintColor =
     meta.tint === "green"
       ? colors.green
@@ -108,6 +122,10 @@ export function VerificationScreen() {
 
   const onResubmit = async () => {
     if (!profile || submitting) return;
+    if (!profile.verificationProofSubmittedAt) {
+      setFeedback("No verification proof has been submitted. Add the appropriate proof for this organisation before requesting review.");
+      return;
+    }
     setSubmitting(true);
     setFeedback(null);
     const res = await adminData.submitVerification(profile);
@@ -164,6 +182,11 @@ export function VerificationScreen() {
                 colors={colors}
               />
               <Row
+                label="Workspace role"
+                value={profile?.role ? profile.role.replace(/_/g, " ") : "Not selected"}
+                colors={colors}
+              />
+              <Row
                 label="Verification method"
                 value={
                   profile?.verificationMethod
@@ -172,6 +195,8 @@ export function VerificationScreen() {
                 }
                 colors={colors}
               />
+              <Text style={[styles.proofHint, { color: colors.textMuted }]}>{proofGuidance}</Text>
+              <LocalLegalNotice audience="institution" />
             </View>
 
             {/* Tiers */}
@@ -188,7 +213,7 @@ export function VerificationScreen() {
                 also requires consent.
               </Text>
               <View style={styles.tiers}>
-                {TIERS.map((t, i) => (<StaggerReveal key={t.tier} index={i}>
+                {tiers.map((t, i) => (<StaggerReveal key={t.tier} index={i}>
                   <View
                     style={[
                       styles.tierCard,
@@ -311,6 +336,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     textTransform: "capitalize",
   },
+  proofHint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },
   lede: {

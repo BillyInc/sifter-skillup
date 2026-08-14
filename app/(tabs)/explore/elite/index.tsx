@@ -1,5 +1,5 @@
-import ElitePathwaysHubScreen from "@/screens/careerIntelligence/ElitePathwaysHubScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function ElitePathwaysRoute() {
-  return <ElitePathwaysHubScreen />;
+  return <PathwaysHubScreen initialSection="elite" />;
 }

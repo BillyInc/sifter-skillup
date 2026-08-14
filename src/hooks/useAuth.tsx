@@ -7,12 +7,13 @@
  */
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync, switchLocalUser } from '../lib/offlineStorage';
 import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
-import { clearExplicitLogout, markExplicitLogout } from '../lib/logoutState';
+import { clearExplicitLogout, hasExplicitLogout, markExplicitLogout } from '../lib/logoutState';
 import { clearLocalUserState } from '../lib/localUserState';
 import { clearSessionProfile, getSavedSessionProfile, saveSessionProfile } from '../lib/sessionProfile';
 import type { StarkzapWallet } from '../lib/starkzap';
@@ -22,6 +23,7 @@ import {
 } from '../components/auth/StarknetWalletBridge';
 import { PrivyStarknetBootstrap } from '../components/auth/PrivyStarknetBootstrap';
 import { PRIVY_ENABLED } from '../lib/config';
+import { getLegalAcceptance, LEGAL_ACCEPTANCE_KEY } from '../lib/legal';
 
 export interface UserProfile {
   id: string;
@@ -158,6 +160,64 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void _tryLoadSavedSession();
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !user) {
+      return;
+    }
+
+    let active = true;
+    let reconciling = false;
+    const reconcileBrowserRestore = async () => {
+      // A Back/Forward navigation can restore an authenticated React tree
+      // from browser cache after sign-out. Re-check storage whenever that
+      // happens; the token, not the restored in-memory profile, is authoritative.
+      if (!active || reconciling) return;
+      const stored = API.hasStoredToken();
+      const token = stored === false ? null : await API.getToken();
+      if (!active || token) return;
+
+      // Offline guest mode intentionally has no token. It is only invalidated
+      // here when the user explicitly signed out; real guest sessions have a
+      // token and therefore still pass the authoritative check above.
+      if (user.auth_provider === "guest" && !(await hasExplicitLogout())) return;
+
+      reconciling = true;
+      const userId = user.id;
+      // Clear React state before awaiting storage cleanup so a restored screen
+      // cannot remain visible during the browser-history transition.
+      setUser(null);
+      try {
+        await Promise.all([
+          clearSessionProfile(),
+          markExplicitLogout(),
+          clearLocalUserState(userId),
+        ]);
+        await switchLocalUser('__signed_out__');
+      } finally {
+        reconciling = false;
+      }
+    };
+
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === "sifter_auth_token_v2") void reconcileBrowserRestore();
+    };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void reconcileBrowserRestore();
+    };
+
+    window.addEventListener("pageshow", reconcileBrowserRestore);
+    window.addEventListener("popstate", reconcileBrowserRestore);
+    window.addEventListener("storage", onStorage);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      active = false;
+      window.removeEventListener("pageshow", reconcileBrowserRestore);
+      window.removeEventListener("popstate", reconcileBrowserRestore);
+      window.removeEventListener("storage", onStorage);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [user]);
+
   async function _tryLoadSavedSession() {
     const token = await API.getToken();
     if (!token) {
@@ -269,8 +329,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     last_name?: string;
     date_of_birth?: string;
     email_code?: string;
+    terms_version?: string;
+    privacy_version?: string;
+    analytics_consent?: boolean;
   }) {
-    const data = await API.authSignup(email, password, profile);
+    const acceptance = await getLegalAcceptance();
+    if (!acceptance) {
+      throw new Error('Review and accept the current Terms and Privacy Policy before creating an account.');
+    }
+    const data = await API.authSignup(email, password, {
+      ...profile,
+      terms_version: acceptance.termsVersion,
+      privacy_version: acceptance.privacyVersion,
+      analytics_consent: acceptance.analyticsConsent,
+    });
+    // Record the acceptance before publishing the new user to React state. That
+    // prevents the authenticated legal gate from flashing over a just-created
+    // account while the server record is still being written.
+    try {
+      await API.saveToken(data.token);
+      await API.recordLegalAcceptance(acceptance);
+      data.user = {
+        ...data.user,
+        settings: {
+          ...(data.user?.settings ?? {}),
+          legalAcceptance: acceptance,
+        },
+      };
+      await AsyncStorage.removeItem(LEGAL_ACCEPTANCE_KEY);
+    } catch {
+      // Keep the versioned device record for a later retry.
+    }
     await _handleAuthResponse(data);
   }
 

@@ -51,6 +51,7 @@ import {
   locked,
 } from "@/types/career";
 import { useAuth } from "@/hooks/useAuth";
+import { withMyWorldLearningGate } from "@/lib/learningGate";
 import { featureFlags } from "@/lib/featureFlags";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
@@ -401,7 +402,7 @@ function PrimaryCard({
           <TouchableOpacity
             key={l.label}
             activeOpacity={0.7}
-            onPress={() => router.push(l.href)}
+            onPress={() => router.push(withMyWorldLearningGate(String(l.href)) as Href)}
             style={[styles.chip, { borderColor: `${accent}55` }]}
           >
             <Text style={[styles.chipText, CompassFonts.bodyBold, { color: accent }]}>{l.label}</Text>
@@ -520,7 +521,7 @@ function LiveWorldHub() {
           <TouchableOpacity
             key={m.label}
             activeOpacity={0.7}
-            onPress={() => router.push(m.href)}
+            onPress={() => router.push(withMyWorldLearningGate(String(m.href)) as Href)}
             style={[
               styles.moreTile,
               { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },

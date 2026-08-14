@@ -1,5 +1,5 @@
-import CareerChangerScreen from "@/screens/careerIntelligence/CareerChangerScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function AdminCareerChangeRoute() {
-  return <CareerChangerScreen />;
+  return <PathwaysHubScreen initialSection="career-change" />;
 }

@@ -1,24 +1,7 @@
-/**
- * FoundationSkillsBlock — a domain's COMMON skills, with honest prevalence.
- *
- * These are the skills that recur across a field's roles — common, NOT
- * universal. Each row shows the skill, a slim prevalence bar, and a right-
- * aligned "NN%" (share of the field's roles whose essentials include it). A 34%
- * skill still appears AND reads 34%, so common-but-not-universal skills aren't
- * hidden or over-claimed. When a skill has an ESCO `uri`, a small "↗" opens its
- * canonical definition. Renders nothing when there are no skills.
- */
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Linking,
-  type ViewStyle,
-} from "react-native";
+import { View, Text, StyleSheet, Linking, type ViewStyle } from "react-native";
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
 import type { FoundationSkillEnriched } from "../../types/career";
-import { ProgressBar } from "../ui";
 import { SectionLabel } from "./RedesignPrimitives";
 
 export interface FoundationSkillsBlockProps {
@@ -27,6 +10,7 @@ export interface FoundationSkillsBlockProps {
   style?: ViewStyle;
 }
 
+/** Shows source-ranked field skills as learning priorities, not raw percentages. */
 export function FoundationSkillsBlock({
   skills,
   title = "Common skills in this field",
@@ -35,49 +19,39 @@ export function FoundationSkillsBlock({
   const { colors } = useTheme();
   if (!skills?.length) return null;
 
-  // Assume already sorted, but be safe (prevalence desc).
   const rows = [...skills].sort((a, b) => b.prevalence - a.prevalence);
 
   return (
     <View style={[styles.container, style]}>
-      <SectionLabel>{title}</SectionLabel>
+      <SectionLabel>{title === "Common skills in this field" ? "What to build first" : title}</SectionLabel>
       <Text style={[styles.caption, { color: colors.textRole.muted }]}>
-        Common across roles here — not required for every one.
+        Start with the first skills, then add the others as your direction becomes clearer.
       </Text>
       <View style={styles.rows}>
-        {rows.map((s, i) => {
-          const pct = Math.round(s.prevalence * 100);
+        {rows.map((skill, index) => {
           const openUri = () => {
-            if (s.uri) Linking.openURL(s.uri).catch(() => {});
+            if (skill.uri) Linking.openURL(skill.uri).catch(() => {});
           };
           return (
-            <View key={`${s.skill}-${i}`} style={styles.row}>
-              <View style={styles.rowHead}>
+            <View key={`${skill.skill}-${index}`} style={styles.row}>
+              <Text style={[styles.rank, { color: colors.accentRole.action }, CompassFonts.data]}>
+                {index + 1}
+              </Text>
+              <Text
+                style={[styles.skill, { color: colors.textRole.secondary }]}
+                numberOfLines={2}
+              >
+                {skill.skill}
+              </Text>
+              {skill.uri ? (
                 <Text
-                  style={[styles.skill, { color: colors.textRole.secondary }]}
-                  numberOfLines={1}
+                  onPress={openUri}
+                  style={[styles.link, { color: colors.accentRole.action }]}
+                  accessibilityRole="link"
                 >
-                  {s.skill}
+                  Open
                 </Text>
-                {s.uri ? (
-                  <Text
-                    onPress={openUri}
-                    style={[styles.link, { color: colors.accentRole.action }]}
-                    accessibilityRole="link"
-                  >
-                    ↗
-                  </Text>
-                ) : null}
-                <Text style={[styles.pct, CompassFonts.data, { color: colors.textRole.muted }]}>
-                  {pct}%
-                </Text>
-              </View>
-              <ProgressBar
-                progress={s.prevalence}
-                color={colors.accentRole.action}
-                trackColor={colors.surface.subtle}
-                height={5}
-              />
+              ) : null}
             </View>
           );
         })}
@@ -93,28 +67,31 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
+    lineHeight: FontSize.sm * 1.45,
     marginTop: -Spacing.xs,
   },
-  rows: { gap: Spacing.md, marginTop: Spacing.xs },
-  row: { gap: Spacing.xs },
-  rowHead: {
+  rows: { gap: Spacing.sm, marginTop: Spacing.xs },
+  row: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     gap: Spacing.sm,
+    minHeight: 32,
+  },
+  rank: {
+    width: 22,
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+    textAlign: "center",
   },
   skill: {
     flex: 1,
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.sm * 1.35,
   },
   link: {
-    fontSize: FontSize.sm,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.semibold,
-  },
-  pct: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
-    fontVariant: ["tabular-nums"],
+    textDecorationLine: "underline",
   },
 });

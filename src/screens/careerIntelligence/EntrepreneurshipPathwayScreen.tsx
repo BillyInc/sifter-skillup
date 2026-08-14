@@ -29,37 +29,76 @@ import {
   webContainer,
   type ColorPalette,
 } from "@/theme";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
 const ENTRY_MODES: { label: string; value: EntrepreneurshipEntryMode }[] = [
   { label: "Saved context", value: "programme" },
+  { label: "Domain", value: "domain" },
   { label: "Idea", value: "idea" },
   { label: "Skill", value: "skill" },
   { label: "Market problem", value: "market_problem" },
 ];
 
-const VENTURE_MODES: { label: string; value: VentureMode }[] = [
-  { label: "Micro", value: "micro" },
-  { label: "Service", value: "service" },
-  { label: "Creator", value: "creator" },
-  { label: "Scalable", value: "scalable" },
-  { label: "Research", value: "research" },
-  { label: "Trade", value: "trade" },
+const VENTURE_MODES: { label: string; values: VentureMode[] }[] = [
+  { label: "Independent operator", values: ["micro", "service"] },
+  { label: "Firm / enterprise builder", values: ["service", "trade"] },
+  { label: "Scalable venture builder", values: ["scalable"] },
+  { label: "Product / IP creator", values: ["creator", "research"] },
 ];
 
-const LENSES: { label: string; value: OpportunityLens }[] = [
-  { label: "Replicate", value: "replicate" },
-  { label: "Adapt", value: "adapt" },
-  { label: "Digitize", value: "digitize" },
-  { label: "Productize", value: "productize" },
-  { label: "Distribute", value: "distribute" },
-  { label: "Regulated", value: "regulated" },
+const LENSES: { label: string; values: OpportunityLens[] }[] = [
+  { label: "Technology & automation", values: ["digitize"] },
+  { label: "Process & operations", values: ["replicate"] },
+  { label: "Business model & distribution", values: ["productize", "distribute"] },
+  { label: "Market & contextual adaptation", values: ["adapt"] },
+  { label: "Social & systems", values: ["adapt"] },
+  { label: "Cultural & creative", values: ["productize"] },
+  { label: "Design & accessibility", values: ["productize"] },
+  { label: "Knowledge & pedagogy", values: ["productize"] },
 ];
 
-function toggle<T>(list: T[], value: T): T[] {
-  return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
+type OpportunityView = "all" | "documented" | "emerging" | "signals";
+
+const OPPORTUNITY_VIEWS: { label: string; value: OpportunityView }[] = [
+  { label: "Show all", value: "all" },
+  { label: "Documented roles", value: "documented" },
+  { label: "Emerging roles", value: "emerging" },
+  { label: "Market signals", value: "signals" },
+];
+
+function toggleMany<T>(list: T[], values: T[]): T[] {
+  const active = values.every((value) => list.includes(value));
+  return active
+    ? list.filter((value) => !values.includes(value))
+    : Array.from(new Set([...list, ...values]));
 }
 
-export function EntrepreneurshipPathwayScreen() {
+function ventureModeLabel(mode: VentureMode): string {
+  switch (mode) {
+    case "micro":
+      return "Independent operator";
+    case "service":
+      return "Service / firm building";
+    case "creator":
+      return "Product / IP creator";
+    case "scalable":
+      return "Scalable venture";
+    case "research":
+      return "Research-led product";
+    case "trade":
+      return "Firm / trade builder";
+  }
+}
+
+export interface EntrepreneurshipPathwayScreenProps {
+  /** Render as the Build component inside the shared Pathways product. */
+  embedded?: boolean;
+  /** Context passed from a selected programme/domain before entering Build. */
+  initialProgrammeName?: string;
+  initialDomainId?: string;
+}
+
+export function EntrepreneurshipPathwayScreen({ embedded = false, initialProgrammeName, initialDomainId }: EntrepreneurshipPathwayScreenProps) {
   const { colors } = useTheme();
   const router = useRouter();
   const { user } = useAuth();
@@ -71,6 +110,7 @@ export function EntrepreneurshipPathwayScreen() {
   const [ventureModes, setVentureModes] = React.useState<VentureMode[]>([]);
   const [lenses, setLenses] = React.useState<OpportunityLens[]>([]);
   const [showAll, setShowAll] = React.useState(false);
+  const [opportunityView, setOpportunityView] = React.useState<OpportunityView>("all");
   const [selectedRole, setSelectedRole] = React.useState<EntrepreneurshipRole | null>(null);
   const [lockedMessage, setLockedMessage] = React.useState<string | null>(null);
 
@@ -81,8 +121,8 @@ export function EntrepreneurshipPathwayScreen() {
       const startingPoint = await getStartingPoint(user?.id);
       const state = await entrepreneurshipData.getOpportunityMap({
         entryMode,
-        domainId: startingPoint?.priorFieldDomainKey,
-        programmeName: startingPoint?.intendedProgramme ?? startingPoint?.programmeName,
+        domainId: initialDomainId ?? startingPoint?.priorFieldDomainKey,
+        programmeName: initialProgrammeName ?? startingPoint?.intendedProgramme ?? startingPoint?.programmeName,
       });
       if (!active) return;
       setMap(state.data);
@@ -93,17 +133,21 @@ export function EntrepreneurshipPathwayScreen() {
     return () => {
       active = false;
     };
-  }, [entryMode, user?.id]);
+  }, [entryMode, user?.id, initialDomainId, initialProgrammeName]);
 
   const roles = React.useMemo(() => {
     if (!map) return [];
-    return entrepreneurshipData.filterRoles(map, {
+    const filtered = entrepreneurshipData.filterRoles(map, {
       domainId: selectedDomainId,
       ventureModes,
       lenses,
       showAll,
     });
-  }, [map, selectedDomainId, ventureModes, lenses, showAll]);
+    if (opportunityView === "documented") return filtered.filter((role) => role.roleType === "documented");
+    if (opportunityView === "emerging") return filtered.filter((role) => role.roleType === "emerging");
+    if (opportunityView === "signals") return filtered.filter((role) => role.marketSignals.length > 0);
+    return filtered;
+  }, [map, selectedDomainId, ventureModes, lenses, showAll, opportunityView]);
 
   const locked = (action: string) => {
     setLockedMessage(
@@ -113,20 +157,16 @@ export function EntrepreneurshipPathwayScreen() {
     );
   };
 
-  return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
-      showsVerticalScrollIndicator={false}
-    >
+  const content = (
+    <>
       <TouchableOpacity
+        style={embedded ? { display: "none" } : [styles.backButton, { borderColor: colors.borderRole.subtle }]}
         accessibilityRole="button"
         accessibilityLabel="Go back"
         onPress={() => {
           if (router.canGoBack()) router.back();
           else router.replace("/(tabs)/explore/pathways" as any);
         }}
-        style={[styles.backButton, { borderColor: colors.borderRole.subtle }]}
       >
         <Text style={[styles.backText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Back</Text>
       </TouchableOpacity>
@@ -205,15 +245,29 @@ export function EntrepreneurshipPathwayScreen() {
 
           <Section title="Filter opportunity roles" colors={colors}>
             <Text style={[styles.smallLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+              Opportunity view
+            </Text>
+            <View style={styles.toolbar}>
+              {OPPORTUNITY_VIEWS.map((item) => (
+                <FilterChip
+                  key={item.value}
+                  label={item.label}
+                  active={opportunityView === item.value}
+                  onPress={() => setOpportunityView(item.value)}
+                  colors={colors}
+                />
+              ))}
+            </View>
+            <Text style={[styles.smallLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
               Venture modes
             </Text>
             <View style={styles.toolbar}>
               {VENTURE_MODES.map((item) => (
                 <FilterChip
-                  key={item.value}
+                  key={item.label}
                   label={item.label}
-                  active={ventureModes.includes(item.value)}
-                  onPress={() => setVentureModes((current) => toggle(current, item.value))}
+                  active={item.values.some((value) => ventureModes.includes(value))}
+                  onPress={() => setVentureModes((current) => toggleMany(current, item.values))}
                   colors={colors}
                 />
               ))}
@@ -224,10 +278,10 @@ export function EntrepreneurshipPathwayScreen() {
             <View style={styles.toolbar}>
               {LENSES.map((item) => (
                 <FilterChip
-                  key={item.value}
+                  key={item.label}
                   label={item.label}
-                  active={lenses.includes(item.value)}
-                  onPress={() => setLenses((current) => toggle(current, item.value))}
+                  active={item.values.some((value) => lenses.includes(value))}
+                  onPress={() => setLenses((current) => toggleMany(current, item.values))}
                   colors={colors}
                 />
               ))}
@@ -248,19 +302,27 @@ export function EntrepreneurshipPathwayScreen() {
             </View>
           ) : null}
 
-          <View style={styles.roleGrid}>
-            {roles.map((role) => (
-              <RoleCard
-                key={role.id}
-                role={role}
-                selected={selectedRole?.id === role.id}
-                onPress={() => setSelectedRole(role)}
-                onSave={() => locked("save this venture role")}
-                onCompare={() => locked("compare venture roles")}
-                colors={colors}
-              />
-            ))}
-          </View>
+          {roles.length ? (
+            <View style={styles.roleGrid}>
+              {roles.map((role) => (
+                <RoleCard
+                  key={role.id}
+                  role={role}
+                  selected={selectedRole?.id === role.id}
+                  onPress={() => setSelectedRole(role)}
+                  onSave={() => locked("save this venture role")}
+                  onCompare={() => locked("compare venture roles")}
+                  colors={colors}
+                />
+              ))}
+            </View>
+          ) : (
+            <View style={[styles.notice, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <Text style={[styles.noticeText, { color: colors.textRole.secondary }, CompassFonts.body]}>
+                No roles or market signals are published for this view yet. This is not evidence that the opportunity does not exist.
+              </Text>
+            </View>
+          )}
 
           {selectedRole ? <RoleDetail role={selectedRole} colors={colors} /> : null}
         </>
@@ -271,6 +333,21 @@ export function EntrepreneurshipPathwayScreen() {
           </Text>
         </View>
       )}
+      {!embedded ? <CareerDisclaimer variant="footer" /> : null}
+    </>
+  );
+
+  if (embedded) {
+    return <View style={[styles.embedded, { backgroundColor: colors.surface.base }]}>{content}</View>;
+  }
+
+  return (
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
+      contentContainerStyle={[styles.scroll, webContainer as object]}
+      showsVerticalScrollIndicator={false}
+    >
+      {content}
     </ScrollView>
   );
 }
@@ -367,7 +444,7 @@ function RoleCard({
       <View style={styles.inlineChips}>
         {role.ventureModes.slice(0, 3).map((mode) => (
           <Text key={mode} style={[styles.metaChip, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle }]}>
-            {mode}
+            {ventureModeLabel(mode)}
           </Text>
         ))}
       </View>
@@ -389,13 +466,21 @@ function RoleDetail({ role, colors }: { role: EntrepreneurshipRole; colors: Colo
       <Text style={[styles.roleSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>
         {role.summary}
       </Text>
+      <DetailList title="Venture modes" items={role.ventureModes.map(ventureModeLabel)} colors={colors} />
+      <DetailList title="Opportunity lenses" items={role.lenses} colors={colors} />
+      <DetailList title="Entry modes" items={role.entryModes} colors={colors} />
       <DetailList title="Capability layers" items={role.capabilityLayers} colors={colors} />
       <DetailList title="Partner requirements" items={role.partnerRequirements} colors={colors} />
       <DetailList title="Regulation" items={role.regulationNotes} colors={colors} />
+      <DetailList title="Market conditions" items={role.marketSignals.map((signal) => signal.label)} colors={colors} />
       <View style={styles.contextGrid}>
         <ContextBlock title="Nigeria context" body={role.nigeriaContext} colors={colors} />
         <ContextBlock title="Global context" body={role.globalContext} colors={colors} />
       </View>
+      <EvidenceLine evidence={role.evidence.status} colors={colors} />
+      {role.evidence.sources.length ? (
+        <Text style={[styles.evidence, { color: colors.textRole.muted }, CompassFonts.body]}>Sources: {role.evidence.sources.join(" · ")}</Text>
+      ) : null}
     </View>
   );
 }
@@ -439,6 +524,7 @@ function ActionButton({ label, onPress, colors }: { label: string; onPress: () =
 export default EntrepreneurshipPathwayScreen;
 
 const styles = StyleSheet.create({
+  embedded: { gap: Spacing.md },
   scroll: {
     paddingVertical: Spacing.xl,
     paddingHorizontal: Spacing.lg,

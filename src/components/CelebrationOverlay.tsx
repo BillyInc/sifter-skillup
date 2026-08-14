@@ -19,7 +19,6 @@ import {
   View, Text, StyleSheet, Modal, TouchableOpacity,
   Animated, Dimensions,
 } from 'react-native';
-import { TheBolt } from './CharacterSystem';
 import {
   useTheme,
   Spacing,
@@ -284,11 +283,6 @@ export default function CelebrationOverlay({
             Shadow.lg,
           ]}
         >
-          {/* The Bolt */}
-          <View style={styles.boltWrap}>
-            <TheBolt size={100} animate />
-          </View>
-
           {/* Headline */}
           <Text style={styles.emoji}>{copy.emoji}</Text>
           <Text style={[styles.headline, { color: colors.text }]}>
@@ -341,9 +335,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Spacing.sm,
     zIndex: 10,
-  },
-  boltWrap: {
-    marginBottom: Spacing.sm,
   },
   emoji: {
     fontSize: 18,

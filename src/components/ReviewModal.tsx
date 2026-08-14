@@ -100,6 +100,9 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
             <>
               <Text style={styles.title}>Tell us what to improve</Text>
               <Text style={styles.sub}>We read every message. This goes directly to our product team.</Text>
+              <Text style={styles.notice}>
+                Please do not include student IDs, grades, guardian details, health information, or other sensitive personal data.
+              </Text>
               <TextInput
                 style={styles.input}
                 value={review}
@@ -152,6 +155,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 18, marginBottom: Spacing.md },
   title: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
   sub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.lg },
+  notice: { width: '100%', fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center', lineHeight: 17, marginBottom: Spacing.md },
   stars: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
   star: { fontSize: 18, color: Colors.border },
   starFilled: { color: Colors.gold },

@@ -1,8 +1,8 @@
 /**
  * RoleDetailScreen — the deep view for a single role in the v2 taxonomy.
  *
- * Flagship redesign (Phase 10): hero with badges, stat-tile demand row,
- * "routes into this role" journey, skills bridge, and related roles rail.
+ * The detail view keeps role-owned competencies, tools, and certifications
+ * separate from its parent domain and subgroup.
  * Uses the careerIntelligence component library for all design-system tokens.
  *
  * Phase 10b: responsive 2-column desktop layout with "On this page" section nav,
@@ -15,13 +15,10 @@ import {
   DetailScaffold,
   TierBadgeView,
   NotesWidget,
-  LevelUpCTA,
   MappingFeedbackButton,
   SectionLabel,
-  StatTile,
   RouteLine,
 } from "@/components/careerIntelligence";
-import { DemandMetricsBlock } from "@/components/careerIntelligence/DemandMetricsBlock";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
 import {
@@ -36,7 +33,6 @@ import { useResponsive } from "@/hooks/useResponsive";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
-  { key: "demand", label: "Demand" },
   { key: "skills", label: "Skills" },
   { key: "routes", label: "Routes" },
   { key: "related", label: "Related" },
@@ -51,11 +47,14 @@ export interface RoleDetailScreenProps {
 }
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string }>();
+  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[] }>();
   const roleKey = props.roleId ?? String(params.id ?? "");
+  const targetStudentId = Array.isArray(params.guidance_student_id)
+    ? params.guidance_student_id[0]
+    : params.guidance_student_id;
 
   const [state, setState] = useState<DataState<DomainRoleV2>>(() =>
-    comingSoon<DomainRoleV2>("Role detail is being populated."),
+    comingSoon<DomainRoleV2>("Loading role details..."),
   );
 
   useEffect(() => {
@@ -73,15 +72,33 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
       eyebrow="ROLE"
       title={state.data?.name ?? "Role"}
       save={{ entityType: "role", entityId: roleKey }}
+      reportSelection={{
+        kind: "roles",
+        id: roleKey,
+        name: state.data?.name ?? "Role",
+        domainId: state.data?.appearsIn?.[0]?.domainId,
+        domainName: state.data?.appearsIn?.[0]?.domainName,
+        subgroupId: state.data?.subgroupId ?? undefined,
+      }}
+      targetStudentId={targetStudentId}
       pdf
+      pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       state={state}
     >
-      {(role) => <RoleBody role={role} roleKey={roleKey} />}
+      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} />}
     </DetailScaffold>
   );
 }
 
-function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
+function RoleBody({
+  role,
+  roleKey,
+  targetStudentId,
+}: {
+  role: DomainRoleV2;
+  roleKey: string;
+  targetStudentId?: string;
+}) {
   const { colors } = useTheme();
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -90,11 +107,11 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   const aka = role.alsoKnownAs?.length ? role.alsoKnownAs.join(", ") : null;
   const essential = role.essentialSkills ?? [];
   const optional = role.optionalSkills ?? [];
+  const roleTools = role.tools ?? [];
+  const roleCertifications = role.certifications ?? [];
   const appearsIn = role.appearsIn ?? [];
   const enriched = role as DomainRoleV2Enriched;
   const currency = enriched.currencyStatus;
-  const metrics = role.demandMetrics?.ng_local;
-
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   // Section positions for nav scrolling
@@ -159,26 +176,12 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         </View>
       ) : null}
 
-      {/* 2 — Demand snapshot */}
-      <View onLayout={(e) => onSectionLayout("demand", e.nativeEvent.layout.y)} />
-      <DemandMetricsBlock metrics={metrics} title="Demand snapshot" />
-
-      {/* 3 — Skills gap */}
+      {/* Skills to build for this role */}
       <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
-      {/* A <SkillsBridge> used to sit here, fed the SAME two arrays as the
-          chip clouds below: `essential` as domainBridgeSkills and `optional` as
-          roleBridgeSkills. So every role rendered its skills twice, adjacent,
-          under four headings — "Domain bridge skills" / "Role-specific skills"
-          and then "Essential" / "Optional / edge".
-
-          Two of those headings were also wrong. SkillsBridge models the bridge
-          FROM a domain INTO a role, and it takes `conceptualPrerequisites` and
-          `matchType` to do it; this call site passed neither, so it contributed
-          nothing the chip clouds do not, and mislabelled ESCO essential/
-          optional skills as bridge layers while doing it. */}
       {(essential.length || optional.length) ? (
         <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>Skills gap</SectionLabel>
+          <SectionLabel>Skills to build for this role</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Start with the essential skills, then add the supplementary ones as you progress.</Text>
           {essential.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
@@ -190,7 +193,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
           {optional.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Optional / edge
+                Supplementary
               </Text>
               <ChipCloud items={optional} colors={colors} prominent={false} />
             </View>
@@ -198,9 +201,27 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         </View>
       ) : null}
 
+      {(roleTools.length || roleCertifications.length) ? (
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>What this role needs</SectionLabel>
+          {roleTools.length ? (
+            <View style={{ gap: Spacing.xs }}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Tools used in this role</Text>
+              <ChipCloud items={roleTools.map((tool) => tool.name)} colors={colors} prominent={false} />
+            </View>
+          ) : null}
+          {roleCertifications.length ? (
+            <View style={{ gap: Spacing.xs }}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Credentials that may help</Text>
+              <ChipCloud items={roleCertifications.map((cert) => cert.name)} colors={colors} prominent={false} />
+            </View>
+          ) : null}
+        </View>
+      ) : null}
+
       {/* 4 — Routes into this role */}
       <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
-      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} />
+      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} targetStudentId={targetStudentId} />
 
       {/* 5 — Related roles from career ladder */}
       <View onLayout={(e) => onSectionLayout("related", e.nativeEvent.layout.y)} />
@@ -215,7 +236,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
                 colors={colors}
                 onPress={() => {
                   const slug = `${roleKey.split("|")[0]}|${name.toLowerCase()}`;
-                  exploreNav.role(router, slug);
+                  exploreNav.role(router, slug, targetStudentId);
                 }}
               />
             ))}
@@ -233,10 +254,6 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         compact
       />
       <NotesWidget entityType="role" entityId={roleKey} />
-      <LevelUpCTA
-        title="Build toward this role"
-        body="Close the skill gap one level at a time — your path starts in your world."
-      />
     </>
   );
 
@@ -312,11 +329,13 @@ function RouteIntoSection({
   careerLadder,
   router,
   colors,
+  targetStudentId,
 }: {
   appearsIn: DomainRoleV2["appearsIn"];
   careerLadder?: string[];
   router: ReturnType<typeof useRouter>;
   colors: ColorPalette;
+  targetStudentId?: string;
 }) {
   const exploreNav = useExploreNav();
   const hasLadder = careerLadder?.length;
@@ -340,7 +359,7 @@ function RouteIntoSection({
           {appearsIn.map((a) => (
             <TouchableOpacity
               key={a.domainId}
-              onPress={() => exploreNav.domain(router, a.domainId)}
+              onPress={() => exploreNav.domain(router, a.domainId, targetStudentId)}
               style={[
                 styles.domainChip,
                 {
@@ -577,6 +596,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
   },
 
+  guidanceNote: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.45,
+  },
   // chips
   chipLabel: {
     fontSize: FontSize.xs,

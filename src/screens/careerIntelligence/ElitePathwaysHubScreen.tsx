@@ -26,6 +26,7 @@ import {
   CompassFonts,
   webContainer,
 } from "@/theme";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
 export function ElitePathwaysHubScreen() {
   const { colors } = useTheme();
@@ -92,6 +93,7 @@ export function ElitePathwaysHubScreen() {
           </View>
         )}
       </DataStateView>
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }

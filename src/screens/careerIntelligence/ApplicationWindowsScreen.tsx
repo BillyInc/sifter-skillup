@@ -28,6 +28,7 @@ import {
   ApplicationWindowCard,
   SubscribeButton,
 } from "@/components/careerIntelligence";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
 export function ApplicationWindowsScreen() {
   const { colors } = useTheme();
@@ -108,6 +109,7 @@ export function ApplicationWindowsScreen() {
           </View>
         )}
       </DataStateView>
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }

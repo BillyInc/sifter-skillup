@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,6 +28,8 @@ import {
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 import { IntroCarousel } from "../src/components/brand/IntroCarousel";
 import { hasExplicitLogout } from "../src/lib/logoutState";
+import TermsScreen from "../src/screens/TermsScreen";
+import PrivacyScreen from "../src/screens/PrivacyScreen";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -38,6 +41,7 @@ export default function LandingPage() {
   const [guestBusy, setGuestBusy] = useState(false);
   const [guestError, setGuestError] = useState<string | null>(null);
   const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
+  const [legalPage, setLegalPage] = useState<"terms" | "privacy" | null>(null);
 
   useEffect(() => {
     hasExplicitLogout()
@@ -46,12 +50,25 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    let active = true;
-    getEducatorProfile(user?.id).then((profile) => {
-      if (!active) return;
-      setEducatorProfile(profile);
+    if (!user?.id) {
+      setEducatorProfile(null);
       setProfileHydrated(true);
-    });
+      return;
+    }
+
+    let active = true;
+    getEducatorProfile(user.id).then(
+      (profile) => {
+        if (!active) return;
+        setEducatorProfile(profile);
+        setProfileHydrated(true);
+      },
+      () => {
+        if (!active) return;
+        setEducatorProfile(null);
+        setProfileHydrated(true);
+      },
+    );
     return () => {
       active = false;
     };
@@ -165,6 +182,13 @@ export default function LandingPage() {
           {guestError}
         </Text>
       ) : null}
+      <View style={styles.legalLinks}>
+        <TouchableOpacity onPress={() => setLegalPage("terms")}><Text style={[styles.legalLink, { color: colors.textMuted }]}>Terms</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => setLegalPage("privacy")}><Text style={[styles.legalLink, { color: colors.textMuted }]}>Privacy</Text></TouchableOpacity>
+      </View>
+      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
+        {legalPage === "terms" ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}
+      </Modal>
     </ScrollView>
   );
 }
@@ -233,4 +257,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     fontWeight: FontWeight.bold,
   },
+  legalLinks: { flexDirection: "row", justifyContent: "center", gap: Spacing.lg, paddingTop: Spacing.sm },
+  legalLink: { fontSize: FontSize.xs, textDecorationLine: "underline", fontWeight: "700" },
 });

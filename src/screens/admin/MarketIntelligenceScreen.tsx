@@ -10,7 +10,6 @@
  *   Trends              → trend is now a number beside every figure
  *   Remote              → "Remote %" is now a column on the role row
  *   Salary              → "Salary" is now a column on the role row
- *   vs National         → the national benchmark block at the foot
  *
  * §5.2 collapses them into ONE screen with two entry modes over the same data:
  *   • By Programme (default) — your programmes ranked by demand, drill into
@@ -45,14 +44,12 @@ import {
   webContainer,
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
-import { request } from "@/lib/api";
 import { Badge } from "@/components/ui";
 import { AdminDataTable } from "@/components/admin/AdminDataTable";
 import type { ColumnDef } from "@/components/admin/AdminDataTable";
 import { ScopeToggle } from "@/components/admin/ScopeToggle";
 import type { ScopeOption } from "@/components/admin/ScopeToggle";
 import { SparklineBar } from "@/components/admin/SparklineBar";
-import { NationalBenchmarkPanel } from "@/components/admin/NationalBenchmarkPanel";
 import { comingSoon, type DataState } from "../../types/career";
 import type {
   DomainRankItem,
@@ -71,51 +68,6 @@ import { ComingSoonPanel } from "./ComingSoonPanel";
  * `by_alias=True`, so the wire keys are snake_case; older builds emitted
  * camelCase. Both are accepted and normalised — never guessed at.
  */
-interface NationalBenchmarkWireRow {
-  metric: string;
-  label: string;
-  myValue?: number | null;
-  my_value?: number | null;
-  nationalAvg?: number | null;
-  national_avg?: number | null;
-  unit?: string | null;
-  direction?: TrendDirection | null;
-}
-
-interface NationalBenchmarkRow {
-  metric: string;
-  label: string;
-  myValue: number | null;
-  nationalAvg: number | null;
-}
-
-function normaliseBenchmark(r: NationalBenchmarkWireRow): NationalBenchmarkRow {
-  return {
-    metric: r.metric,
-    label: r.label,
-    myValue: r.myValue ?? r.my_value ?? null,
-    nationalAvg: r.nationalAvg ?? r.national_avg ?? null,
-  };
-}
-
-async function fetchVsNational(
-  scope: RankScope,
-): Promise<DataState<NationalBenchmarkRow[]>> {
-  try {
-    const rows = await request<NationalBenchmarkWireRow[]>(
-      `/api/institutions/me/vs-national?scope=${scope}`,
-    );
-    return {
-      status: "real",
-      data: (rows ?? []).map(normaliseBenchmark),
-    };
-  } catch {
-    return comingSoon<NationalBenchmarkRow[]>(
-      "The national benchmark comparison is being compiled.",
-    );
-  }
-}
-
 // ─── Formatters (carried from Role/Salary/Remote/Trends) ─────────
 function trendGlyph(d?: TrendDirection | null): string {
   if (d === "up") return "▲";
@@ -795,11 +747,6 @@ export function MarketIntelligenceScreen() {
     status: "pending",
     data: null,
   });
-  const [benchmark, setBenchmark] = useState<DataState<NationalBenchmarkRow[]>>({
-    status: "pending",
-    data: null,
-  });
-
   // Scope-independent reads.
   useEffect(() => {
     let active = true;
@@ -854,7 +801,6 @@ export function MarketIntelligenceScreen() {
   useEffect(() => {
     let active = true;
     setDomains({ status: "pending", data: null });
-    setBenchmark({ status: "pending", data: null });
     adminData
       .getDomainRanking(scope)
       .then((d) => {
@@ -869,15 +815,15 @@ export function MarketIntelligenceScreen() {
           );
         }
       });
-    fetchVsNational(scope).then((d) => {
-      if (active) setBenchmark(d);
-    });
     return () => {
       active = false;
     };
   }, [scope]);
 
-  const domainList = domains.status === "real" ? (domains.data ?? []) : [];
+  const domainList = useMemo(
+    () => (domains.status === "real" ? (domains.data ?? []) : []),
+    [domains],
+  );
 
   const sortedProgrammes: DataState<ProgrammeDemandRow[]> = useMemo(() => {
     if (programmes.status !== "real" || !programmes.data) return programmes;
@@ -1103,38 +1049,6 @@ export function MarketIntelligenceScreen() {
             ) : null}
           </View>
         )}
-
-        {/* ─── vs national (was an unreachable standalone screen) ─── */}
-        <View style={styles.section}>
-          <SectionHeading
-            title="Your institution vs national aggregate"
-            note="Where your programme mix's demand coverage sits against the national baseline for the selected lens — anonymous and aggregate only."
-          />
-          <ComingSoonPanel
-            state={benchmark}
-            empty={(rows) =>
-              rows.length === 0 ||
-              rows.every((r) => r.myValue == null || r.nationalAvg == null)
-            }
-            emptyTitle="No benchmark yet"
-            emptyBody="National benchmark figures appear once demand data has been ingested for your programmes."
-          >
-            {(rows) => (
-              <View style={{ gap: Spacing.md }}>
-                {rows.map((r) =>
-                  r.myValue != null && r.nationalAvg != null ? (
-                    <NationalBenchmarkPanel
-                      key={r.metric}
-                      metric={r.label}
-                      myValue={r.myValue}
-                      nationalAvg={r.nationalAvg}
-                    />
-                  ) : null,
-                )}
-              </View>
-            )}
-          </ComingSoonPanel>
-        </View>
 
         <View style={styles.section}>
           <Notice>
