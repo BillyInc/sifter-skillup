@@ -288,6 +288,7 @@ export default function ExploreScreen({
           }}
           onFocusSearch={() => searchRef.current?.focus()}
           adminAudience={adminAudience}
+          adminType={adminType}
         />
       ) : !hasSession ? (
         // Gate on "no session at all", NOT on isGuest. A guest IS a session:
@@ -452,6 +453,7 @@ function ExploreIdle({
   onPick,
   onFocusSearch,
   adminAudience,
+  adminType,
 }: {
   recents: string[];
   isGuest: boolean;
@@ -461,6 +463,7 @@ function ExploreIdle({
   onPick: (term: string) => void;
   onFocusSearch: () => void;
   adminAudience?: "school" | "university";
+  adminType?: string | null;
 }) {
   const { colors } = useTheme();
   const { isMobile, columns } = useResponsive();

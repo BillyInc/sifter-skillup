@@ -7,6 +7,17 @@ import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "../../hooks/useAuth";
 
 type BranchKind = "domains" | "subgroups" | "roles";
+
+/** A saved guidance entry. Typed so callers narrow past Array.isArray:
+ *  as Record<string, any> the branch arrays produced implicitly-any
+ *  callback params and failed noImplicitAny. */
+interface GuidancePathEntry {
+  id: string;
+  name?: string;
+  [key: string]: unknown;
+}
+// The record is deliberately loose: alongside the branch arrays it also
+// carries academicContext, subjects, notes and other non-array members.
 type GuidancePathRecord = Record<string, any>;
 
 const pathCache = new Map<string, GuidancePathRecord>();
@@ -71,8 +82,8 @@ export function GuidanceReportButton({
     let active = true;
     readGuidancePath(targetStudentId, ownerId).then((path) => {
       if (!active) return;
-      const list = Array.isArray(path[selection.kind])
-        ? path[selection.kind]
+      const list: GuidancePathEntry[] = Array.isArray(path[selection.kind])
+        ? (path[selection.kind] as GuidancePathEntry[])
         : [];
       setSelected(list.some((entry) => entry.id === selection.id));
     });
@@ -87,7 +98,9 @@ export function GuidanceReportButton({
     setNotice(null);
     try {
       const path = await readGuidancePath(targetStudentId, ownerId);
-      const list = Array.isArray(path[selection.kind]) ? path[selection.kind] : [];
+      const list: GuidancePathEntry[] = Array.isArray(path[selection.kind])
+        ? (path[selection.kind] as GuidancePathEntry[])
+        : [];
       const item = {
         id: selection.id,
         name: selection.name,
