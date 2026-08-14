@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useAuth } from '@/hooks/useAuth';
 import { API } from '@/lib/api';
-import { Spacing, Radius, FontSize, FontWeight, useTheme, type ColorPalette } from '@/theme';
+import { Spacing, Radius, FontSize, useTheme, type ColorPalette } from '@/theme';
 import {
   getPlatformsForField,
   PLATFORMS,
@@ -265,6 +265,11 @@ function PlatformConnectModal({
 
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.md }}>
+            <View style={mStyle.attributionBox}>
+              <Text style={mStyle.attributionText}>
+                External platforms have their own terms and privacy policies. Sifter requests only the permissions shown; review the destination policy and do not submit sensitive student data.
+              </Text>
+            </View>
 
             {/* ── Mode picker ── */}
             {mode === 'choose' && (
@@ -507,6 +512,12 @@ function PushItemModal({
 
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.md }}>
+
+            <View style={pushSt.attributionNote}>
+              <Text style={pushSt.attributionNoteText}>
+                Posting sends this content to the selected external platform and makes it subject to that platform&apos;s terms and privacy policy. Review the caption before posting.
+              </Text>
+            </View>
 
             <View style={pushSt.itemCard}>
               <Text style={pushSt.itemTitle}>{item.title}</Text>

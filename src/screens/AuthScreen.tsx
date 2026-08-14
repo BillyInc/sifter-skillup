@@ -18,8 +18,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Brand,
@@ -39,6 +38,7 @@ import {
   ErrorNote,
   LegalFooter,
   TermsModal,
+  PrivacyModal,
 } from "@/screens/auth/authShared";
 
 type Mode = "welcome" | "login" | "connecting";
@@ -53,6 +53,7 @@ function friendlyAuthError(error: unknown, fallback: string) {
 
 export default function AuthScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ claim?: string | string[] }>();
   const { colors, isDark } = useTheme();
   const { signInEmail, signInGuest } = useAuth();
   const resp = useResponsive();
@@ -62,10 +63,15 @@ export default function AuthScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [schoolCode, setSchoolCode] = useState("");
+  const [claimCode, setClaimCode] = useState(() => {
+    const value = params.claim;
+    return (Array.isArray(value) ? value[0] : value) ?? "";
+  });
   const [error, setError] = useState("");
   const [emailLoading, setEmailLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const [showSignupGuard, setShowSignupGuard] = useState(false);
 
   const cardAnim = useRef(new Animated.Value(0)).current;
@@ -94,6 +100,7 @@ export default function AuthScreen() {
     setEmail("");
     setPassword("");
     setSchoolCode("");
+    setClaimCode("");
   };
 
   // Login credentials are intentionally ephemeral. This also handles browser
@@ -153,7 +160,16 @@ export default function AuthScreen() {
       if (schoolCode.trim()) {
         try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* login remains successful; code can be linked later */ }
       }
-      router.replace("/(tabs)/home");
+      if (claimCode.trim()) {
+        try {
+          await studentAccountApi.claim({ code: claimCode.trim() });
+          router.replace("/(tabs)/home");
+        } catch {
+          router.replace(`/(tabs)/settings/my-school?claim=${encodeURIComponent(claimCode.trim())}` as any);
+        }
+      } else {
+        router.replace("/(tabs)/home");
+      }
     } catch (e) {
       setError(friendlyAuthError(e, "Could not sign you in."));
     } finally {
@@ -350,12 +366,15 @@ export default function AuthScreen() {
 
             <LegalFooter
               action="continuing"
+              agreement={false}
               onShowTerms={() => setShowTerms(true)}
+              onShowPrivacy={() => setShowPrivacy(true)}
             />
           </ScrollView>
         </View>
 
         <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
+        <PrivacyModal visible={showPrivacy} onClose={() => setShowPrivacy(false)} />
       </View>
     );
   }
@@ -445,6 +464,13 @@ export default function AuthScreen() {
                 placeholder="SCHOOL-XXXXXXXX"
                 hint="Link your account to your school after signing in."
               />
+              <AuthField
+                label="Learner claim code (optional)"
+                value={claimCode}
+                onChangeText={(value) => setClaimCode(value.toUpperCase())}
+                placeholder="SCHOOL-SS1-XXXXXXXX"
+                hint="Use this if your school already created your learner account."
+              />
 
               <TouchableOpacity
                 style={{ alignSelf: "flex-end", paddingVertical: Spacing.xs }}
@@ -490,7 +516,7 @@ export default function AuthScreen() {
                     CompassFonts.bodyBold,
                   ]}
                 >
-                  Don't have an account? Create one
+                  Don&apos;t have an account? Create one
                 </Text>
               </TouchableOpacity>
 
@@ -522,14 +548,17 @@ export default function AuthScreen() {
             </Animated.View>
 
             <LegalFooter
-              action="continuing"
+              action="logging in"
+              agreement={false}
               onShowTerms={() => setShowTerms(true)}
+              onShowPrivacy={() => setShowPrivacy(true)}
             />
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
 
       <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
+      <PrivacyModal visible={showPrivacy} onClose={() => setShowPrivacy(false)} />
       <Modal
         visible={showSignupGuard}
         transparent

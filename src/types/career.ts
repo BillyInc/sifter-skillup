@@ -52,6 +52,15 @@ export interface DataMeta {
   notice?: string;
 }
 
+export type SourceConfidence = "high" | "medium" | "low" | "unsourced";
+export type SourceDataState = "source_backed" | "partial" | "unsourced";
+
+export interface SourceBackedFields {
+  sourceConfidence?: SourceConfidence;
+  dataState?: SourceDataState;
+  sourceProvenance?: Record<string, unknown>;
+}
+
 export interface DataState<T> {
   status: DataStatus;
   data: T | null;
@@ -108,6 +117,9 @@ export interface Programme {
   name: string;
   /** Institution-specific (IBASS) name once available; falls back to `name`. */
   displayName?: string;
+  /** Source-backed JAMB name for student-facing headings. */
+  studentName?: string | null;
+  studentNames?: string[];
   institutionType: InstitutionType;
   discipline: string;
   qualification?: string; // B.Sc, NCE, ND, HND, ...
@@ -498,7 +510,7 @@ export interface CertificationV2 {
   gateReason?: string;
 }
 
-export interface ToolV2 {
+export interface ToolV2 extends SourceBackedFields {
   tool: string;
   /** distinctive = characterises the field; common = widely-used, also expected. */
   group: "distinctive" | "common";
@@ -506,6 +518,8 @@ export interface ToolV2 {
   inDemand?: boolean;
   roleFreq?: number | null;
   source?: string; // onet | curated_creative
+  elementName?: string | null;
+  elementId?: string | null;
 }
 
 export interface ToolGroups {
@@ -513,7 +527,7 @@ export interface ToolGroups {
   common: ToolV2[];
 }
 
-export interface SubgroupV2 {
+export interface SubgroupV2 extends SourceBackedFields {
   id: string;
   iscoSubmajor?: string;
   /** Student-friendly cluster name (e.g. "Traders & Brokers"). */
@@ -521,6 +535,7 @@ export interface SubgroupV2 {
   description?: string;
   roleCount?: number;
   clusterSkills: string[];
+  skillSources?: Record<string, unknown>;
   tools: ToolGroups;
   certifications: CertificationV2[]; // specialization certs
 }
@@ -545,7 +560,7 @@ export interface FoundationSkill {
   n: number;
 }
 
-export interface DomainV2 {
+export interface DomainV2 extends SourceBackedFields {
   id: string; // domain_key e.g. "D001"
   name: string;
   cluster?: string;
@@ -555,6 +570,7 @@ export interface DomainV2 {
   eliteDomain: boolean;
   /** L1 common skills, prevalence-ranked (≥30% + adaptive floor). */
   foundationSkills: FoundationSkill[];
+  foundationSkillSources?: Record<string, unknown>;
   roleCount?: number;
   /** Domain-wide tools (distinctive + also-expected common). */
   tools: ToolGroups;
@@ -568,9 +584,10 @@ export interface DomainV2 {
   demandMetrics?: DemandMetrics;
 }
 
-export interface DomainRoleV2 {
+export interface DomainRoleV2 extends SourceBackedFields {
   key: string;
   name: string;
+  subgroupId?: string | null;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
   iscoGroup?: string;
@@ -578,6 +595,11 @@ export interface DomainRoleV2 {
   eliteStatus?: string;
   essentialSkills: string[];
   optionalSkills: string[];
+  escoOccupationUris?: string[];
+  /** Tools owned by this role, distinct from domain/subgroup tools. */
+  tools?: RoleToolV2[];
+  /** Certifications owned by this role, distinct from domain/subgroup certs. */
+  certifications?: CertificationV2[];
   /** Every domain this role is reachable from (multi-domain by design). */
   appearsIn: { domainId: string; domainName: string; roleKey: string }[];
   /** Role-level bridge skills (covered/missing split). */
@@ -608,6 +630,66 @@ export interface CareerSearchResult {
     domains: { domainId: string; domainName: string; roleKey: string }[];
   }[];
   programmes: ProgrammeSearchResult[];
+}
+
+export interface RoleToolV2 extends SourceBackedFields {
+  name: string;
+  group?: "distinctive" | "common";
+  description?: string;
+  source?: string;
+  elementName?: string | null;
+  elementId?: string | null;
+}
+
+export interface SkillDiscoveryResult {
+  terms: string[];
+  matchMode: "both" | "either";
+  userType?: string | null;
+  adminType?: string | null;
+  allowedUserTypes?: string[];
+  streamOptions?: string[];
+  streamRequired?: boolean;
+  audience: "student" | "school_guidance" | "provider_guidance" | "university_curriculum";
+  categories: string[];
+  domains: {
+    id: string;
+    name: string;
+    cluster?: string | null;
+    description?: string | null;
+    matchedSkills: string[];
+    unmatchedSkills: string[];
+    gaps: string[];
+    matchScore: number;
+    matchLabel: string;
+    matchExplanation: string;
+  }[];
+  subgroups: {
+    id: string;
+    name?: string | null;
+    domainId?: string | null;
+    domainName?: string | null;
+    matchedSkills: string[];
+    unmatchedSkills: string[];
+    gaps: string[];
+    matchScore: number;
+    matchLabel: string;
+    matchExplanation: string;
+  }[];
+  roles: {
+    key?: string | null;
+    name?: string | null;
+    domainId?: string | null;
+    domainName?: string | null;
+    tier?: string | null;
+    matchedSkills: string[];
+    unmatchedSkills: string[];
+    gaps: string[];
+    matchScore: number;
+    matchLabel: string;
+    matchExplanation: string;
+  }[];
+  tools: { name?: string | null; group?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
+  certifications: { name?: string | null; body?: string | null; level?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
 }
 
 // ─── JAMB name → domains (student entry) ──────────────────────

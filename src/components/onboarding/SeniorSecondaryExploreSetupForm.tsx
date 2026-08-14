@@ -16,6 +16,7 @@ import {
   type SchoolStream,
 } from "../../lib/waecSubjects";
 import type { SetupFormProps } from "../../types/onboarding";
+import LocalLegalNotice from "../LocalLegalNotice";
 
 const INTENTS: ChoiceOption[] = [
   { label: "Help me choose subjects for future programmes", value: "choose_subjects" },
@@ -49,6 +50,7 @@ export function SeniorSecondaryExploreSetupForm({
           suitable programmes and the requirements to prepare for.
         </Text>
       </View>
+      <LocalLegalNotice audience="student" />
 
       <View
         style={[

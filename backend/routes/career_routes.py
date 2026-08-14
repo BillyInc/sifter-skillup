@@ -23,7 +23,7 @@
 from typing import Any, Optional
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body, Depends, HTTPException, Query
 
 from auth import Auth
 from database import db
@@ -70,6 +70,19 @@ def _clean_public_query(q: Optional[str]) -> str:
     return (q or "").replace("%", "").replace("_", "").strip()
 
 
+def _student_programme_name(value: Any) -> Optional[str]:
+    """Keep source JAMB names intact while making composite labels readable."""
+    if value is None:
+        return None
+    raw = str(value).strip()
+    if not raw:
+        return None
+    parts = [part.strip() for part in raw.split("/")]
+    if len(parts) == 2 and parts[0] and parts[1].lower().startswith(f"{parts[0].lower()} "):
+        return parts[0]
+    return raw
+
+
 def _num(v: Any) -> Optional[float]:
     """Coerce a NUMERIC (which PostgREST may hand back as a string) to float."""
     if v is None:
@@ -90,6 +103,29 @@ def _date_str(v: Any) -> Optional[str]:
     if v is None:
         return None
     return str(v)
+
+
+def _skill_text(value: Any) -> list[str]:
+    """Flatten the JSON/text shapes used by imported skills data."""
+    if isinstance(value, str):
+        return [value.strip()] if value.strip() else []
+    if isinstance(value, list):
+        out: list[str] = []
+        for item in value:
+            if isinstance(item, str) and item.strip():
+                out.append(item.strip())
+            elif isinstance(item, dict):
+                for key in ("skill", "name", "label", "term"):
+                    if isinstance(item.get(key), str) and item[key].strip():
+                        out.append(item[key].strip())
+                        break
+        return out
+    return []
+
+
+def _contains_skill(values: list[str], term: str) -> bool:
+    needle = term.casefold()
+    return any(needle in value.casefold() or value.casefold() in needle for value in values)
 
 
 # ── Enrichment-aware row mappers (Phase 9) ────────────────────
@@ -124,6 +160,11 @@ def _tool(row: dict) -> dict:
         "inDemand": bool(row.get("in_demand")),
         "roleFreq": row.get("role_freq"),
         "source": row.get("source"),
+        "elementName": row.get("element_name"),
+        "elementId": row.get("element_id"),
+        "sourceConfidence": row.get("source_confidence"),
+        "dataState": row.get("data_state"),
+        "sourceProvenance": row.get("source_provenance") or {},
         # Phase 9 enrichment
         "demandScore": _num(row.get("demand_score")),
         "demandSource": row.get("demand_source"),
@@ -343,7 +384,6 @@ async def get_programme(programme_id: str):
                         "domainId": d.get("domain_key") or d["id"],
                         "domainName": d.get("name"),
                         "matchType": link.get("match_type") or "adjacent",
-                        "inDemandScore": _num(link.get("in_demand_score")),
                         "eliteFlag": bool(link.get("elite_flag")),
                     }
                 )
@@ -352,6 +392,7 @@ async def get_programme(programme_id: str):
             "id": r["id"],
             "name": r["name"],
             "displayName": r.get("display_name"),
+            "studentName": None,
             "institutionType": r.get("institution_type") or "university",
             "discipline": r.get("discipline"),
             "qualification": r.get("qualification"),
@@ -359,7 +400,35 @@ async def get_programme(programme_id: str):
             "domains": domains,
             **_programme_skills(svc, programme_id),
         }
-        notice = None if domains else "Domain links are being populated."
+        # The canonical programme row is mapping infrastructure. Resolve a
+        # student-facing JAMB name separately so the UI never uses the CCMAS
+        # name as a course heading when a source-backed JAMB name exists.
+        try:
+            mapping = (
+                svc.table("programme_mapping")
+                .select("jamb_programme_id")
+                .eq("programme_id", programme_id)
+                .execute()
+            ).data or []
+            jamb_ids = [row.get("jamb_programme_id") for row in mapping if row.get("jamb_programme_id")]
+            if jamb_ids:
+                names = (
+                    svc.table("jamb_programmes")
+                    .select("id, jamb_name")
+                    .in_("id", jamb_ids)
+                    .execute()
+                ).data or []
+                student_names = [
+                    _student_programme_name(row.get("jamb_name"))
+                    for row in names
+                    if _student_programme_name(row.get("jamb_name"))
+                ]
+                if student_names:
+                    programme["studentName"] = student_names[0]
+                    programme["studentNames"] = list(dict.fromkeys(student_names))
+        except Exception as exc:  # noqa: BLE001
+            log.warning("programme student naming lookup skipped", error=str(exc))
+        notice = None if domains else "Domain links are not available for this programme yet."
         return ResponseModel(data=_real(programme, notice=notice))
     except Exception as exc:  # noqa: BLE001
         log.error("career get_programme failed", error=str(exc))
@@ -393,33 +462,7 @@ async def list_domain_clusters():
         )
         rows = [r for r in (res.data or []) if not r.get("excluded")]
         if not rows:
-            return ResponseModel(data=_coming_soon("Domains are being populated."))
-
-        scores: dict[str, float] = {}
-        bands: dict[str, str] = {}
-        try:
-            dm = (
-                svc.table("domain_demand_metrics")
-                # demand_band is the SOURCE's own categorisation (low/medium/
-                # high). The raw volume_score is on a scale the UI cannot know
-                # — it runs 13..56 here, and a meter that assumed 0..10 drew
-                # every one of the 160 domains as a full bar, reading as "high
-                # demand" for the 108 the data calls low. Ship the band and let
-                # the UI render what the source actually says.
-                .select("domain_id, volume_score, demand_band")
-                .eq("rank_lens", "ng_local")
-                .execute()
-            )
-            for m in dm.data or []:
-                v = _num(m.get("volume_score"))
-                if v is not None:
-                    scores[m["domain_id"]] = v
-                band = (m.get("demand_band") or "").strip().lower()
-                if band:
-                    bands[m["domain_id"]] = band
-        except Exception as exc:  # noqa: BLE001
-            # Demand is an enrichment, not the point of the screen.
-            log.warning("domain demand lookup skipped", error=str(exc))
+            return ResponseModel(data=_coming_soon("No domains are available yet."))
 
         grouped: dict[str, list] = {}
         for r in rows:
@@ -429,12 +472,6 @@ async def list_domain_clusters():
                 "name": r.get("name"),
                 "eliteFlag": bool(r.get("elite_domain")),
             }
-            score = scores.get(r["id"])
-            if score is not None:
-                entry["inDemandScore"] = score
-            band = bands.get(r["id"])
-            if band:
-                entry["demandBand"] = band
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
         out = [
@@ -508,7 +545,10 @@ async def get_domain(domain_id: str):
         subgroups = []
         for sg in (sg_res.data or []):
             sg_id = sg["id"]
-            sg_tools = [t for t in tool_rows if t.get("subgroup_id") == sg_id]
+            sg_tools = [
+                t for t in tool_rows
+                if t.get("subgroup_id") == sg_id and t.get("scope") == "subgroup"
+            ]
             sg_certs = [
                 _cert(c)
                 for c in cert_rows
@@ -521,9 +561,12 @@ async def get_domain(domain_id: str):
                     "name": sg.get("label"),
                     "description": sg.get("description"),
                     "roleCount": sg.get("role_count"),
-                    "clusterSkills": sg.get("cluster_skills") or [],
-                    "clusterSkillUris": sg.get("cluster_skill_uris") or {},
-                    "tools": _tool_groups(sg_tools),
+                     "clusterSkills": sg.get("cluster_skills") or [],
+                     "clusterSkillUris": sg.get("cluster_skill_uris") or {},
+                     "sourceConfidence": sg.get("source_confidence"),
+                     "dataState": sg.get("data_state"),
+                     "skillSources": sg.get("skill_sources") or {},
+                     "tools": _tool_groups(sg_tools),
                     "certifications": sg_certs,
                 }
             )
@@ -550,6 +593,9 @@ async def get_domain(domain_id: str):
             "eliteDomain": bool(domain.get("elite_domain")),
             "foundationSkills": _foundation_skills(domain),
             "foundationSkillUris": domain.get("foundation_skill_uris") or {},
+            "sourceConfidence": domain.get("source_confidence"),
+            "dataState": domain.get("data_state"),
+            "foundationSkillSources": domain.get("foundation_skill_sources") or {},
             "roleCount": domain.get("role_count"),
             "tools": _tool_groups(domain_tools),
             "gatewayCertifications": gateway,
@@ -581,6 +627,27 @@ async def get_role(role_id: str):
         if not rres.data:
             return ResponseModel(data=_coming_soon("Role not found."))
         role = rres.data[0]
+        role_tools: list[dict] = []
+        role_certs: list[dict] = []
+        try:
+            role_tools = (
+                svc.table("domain_tools")
+                .select("tool_name, tool_group, role_freq, score, hot, in_demand, source, element_name, element_id, source_confidence, data_state, source_provenance")
+                .eq("role_id", role.get("id"))
+                .eq("scope", "role")
+                .order("tool_group")
+                .order("tool_name")
+                .execute().data or []
+            )
+            role_certs = (
+                svc.table("role_certifications").select(
+                    "name, body, region, level, gate_reason, source"
+                ).eq("role_key", role_id).order("name").execute().data or []
+            )
+        except Exception as enrichment_exc:  # noqa: BLE001
+            # The role enrichment migration is additive. Existing installations
+            # can still render role skills while the patch is being applied.
+            log.warning("career role enrichment unavailable", error=str(enrichment_exc))
 
         essential = role.get("essential_skills") or []
         optional = role.get("optional_skills") or []
@@ -626,13 +693,47 @@ async def get_role(role_id: str):
         data = {
             "key": role.get("role_key"),
             "name": role.get("role_name"),
+            "subgroupId": role.get("subgroup_id"),
             "tier": role.get("tier"),
             "alsoKnownAs": role.get("also_known_as") or [],
             "iscoGroup": role.get("isco_group"),
             "escoCode": role.get("esco_code"),
             "eliteStatus": role.get("elite_status"),
+            "escoOccupationUris": role.get("esco_occupation_uris") or [],
+            "sourceConfidence": role.get("source_confidence"),
+            "dataState": role.get("data_state"),
+            "sourceProvenance": role.get("source_provenance") or {},
             "essentialSkills": essential,
             "optionalSkills": optional,
+            "tools": [
+                {
+                    "name": t.get("tool_name"),
+                    "group": t.get("tool_group"),
+                    "description": None,
+                    "roleFreq": t.get("role_freq"),
+                    "score": t.get("score"),
+                    "hot": bool(t.get("hot")),
+                    "inDemand": bool(t.get("in_demand")),
+                    "source": t.get("source"),
+                    "elementName": t.get("element_name"),
+                    "elementId": t.get("element_id"),
+                    "sourceConfidence": t.get("source_confidence"),
+                    "dataState": t.get("data_state"),
+                    "sourceProvenance": t.get("source_provenance") or {},
+                }
+                for t in role_tools if t.get("tool_name")
+            ],
+            "certifications": [
+                {
+                    "name": c.get("name"),
+                    "body": c.get("body"),
+                    "region": c.get("region"),
+                    "level": c.get("level"),
+                    "gateReason": c.get("gate_reason"),
+                    "source": c.get("source"),
+                }
+                for c in role_certs if c.get("name")
+            ],
             "essentialSkillUris": essential_uri_list,
             "optionalSkillUris": optional_uri_list,
             "appearsIn": appears_in,
@@ -871,6 +972,273 @@ async def list_application_windows(limit: int = 60):
     except Exception as exc:  # noqa: BLE001
         log.error("career list_application_windows failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Application windows are temporarily unavailable."))
+
+
+@router.get("/skills/discover", response_model=ResponseModel)
+async def discover_by_skills(
+    skills: Optional[str] = Query(None),
+    match: str = Query("both"),
+    category: Optional[str] = Query(None),
+    user_type: Optional[str] = Query(None),
+    admin_type: Optional[str] = Query(None),
+):
+    """Map one or more known/intended skills back through the career graph.
+
+    This is deliberately computed from the imported domain/role/tool/cert
+    tables. It does not invent domain counts, demand figures, or curated
+    combinations. ``both`` is an intersection (Python + C++ means the same
+    domain must match both); ``either`` is a union for exploration.
+    """
+    learner_rules = {
+        "secondary_school": ("ss1", "ss2", "ss3"),
+        "tutorial_centre": ("jamb",),
+        "jamb_cafe": ("jamb",),
+        "university": ("undergraduate",),
+    }
+    normalized_admin_type = (admin_type or "").strip().lower() or None
+    normalized_user_type = (user_type or "").strip().lower() or None
+    allowed_user_types = learner_rules.get(normalized_admin_type, ())
+    if normalized_user_type and allowed_user_types and normalized_user_type not in allowed_user_types:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{normalized_admin_type} guidance supports: {', '.join(allowed_user_types)}.",
+        )
+
+    terms = list(dict.fromkeys(
+        item.strip() for item in (skills or "").split(",")
+        if item and item.strip()
+    ))
+    match_mode = (match or "both").strip().lower()
+    if match_mode not in {"both", "either"}:
+        return ResponseModel(success=False, message="Match must be both or either.", data=None)
+    if category:
+        category = category.strip().casefold()
+    try:
+        svc = _svc()
+        domains = svc.table("domains").select(
+            "id, domain_key, name, cluster, description, institution_type, foundation_skills"
+        ).limit(1000).execute().data or []
+        roles = svc.table("domain_roles").select(
+            "role_key, role_name, domain_id, subgroup_id, essential_skills, optional_skills, tier"
+        ).limit(10000).execute().data or []
+        subgroups = svc.table("domain_subgroups").select(
+            "id, domain_id, label, cluster_skills"
+        ).limit(5000).execute().data or []
+        tools = svc.table("domain_tools").select(
+            "domain_id, subgroup_id, tool_name, tool_group"
+        ).limit(10000).execute().data or []
+        certs = svc.table("domain_certifications").select(
+            "domain_id, subgroup_id, name, body, level"
+        ).limit(10000).execute().data or []
+
+        domain_by_id = {row.get("id"): row for row in domains if row.get("id")}
+        roles_by_domain: dict[str, list[dict]] = {}
+        for row in roles:
+            if row.get("domain_id"):
+                roles_by_domain.setdefault(row["domain_id"], []).append(row)
+        groups_by_domain: dict[str, list[dict]] = {}
+        for row in subgroups:
+            if row.get("domain_id"):
+                groups_by_domain.setdefault(row["domain_id"], []).append(row)
+        tools_by_domain: dict[str, list[dict]] = {}
+        for row in tools:
+            if row.get("domain_id"):
+                tools_by_domain.setdefault(row["domain_id"], []).append(row)
+        certs_by_domain: dict[str, list[dict]] = {}
+        for row in certs:
+            if row.get("domain_id"):
+                certs_by_domain.setdefault(row["domain_id"], []).append(row)
+
+        categories = sorted({
+            str(row.get("cluster")).strip() for row in domains
+            if row.get("cluster") and str(row.get("cluster")).strip()
+        })
+        if category:
+            domains = [row for row in domains if str(row.get("cluster") or "").casefold() == category]
+        elif not terms:
+            # The empty state is a category browser, not a bulk graph export.
+            # A category click supplies the scope for the next read.
+            domains = []
+
+        def domain_terms(domain: dict) -> list[str]:
+            values = _skill_text(domain.get("foundation_skills"))
+            for group in groups_by_domain.get(domain.get("id"), []):
+                values.extend(_skill_text(group.get("cluster_skills")))
+            for role in roles_by_domain.get(domain.get("id"), []):
+                values.extend(_skill_text(role.get("essential_skills")))
+                values.extend(_skill_text(role.get("optional_skills")))
+            values.extend(str(row.get("tool_name")) for row in tools_by_domain.get(domain.get("id"), []) if row.get("tool_name"))
+            values.extend(str(row.get("name")) for row in certs_by_domain.get(domain.get("id"), []) if row.get("name"))
+            return values
+
+        def matches(domain: dict) -> list[str]:
+            values = domain_terms(domain)
+            return [term for term in terms if _contains_skill(values, term)]
+
+        def unique(values: list[str]) -> list[str]:
+            seen: set[str] = set()
+            result: list[str] = []
+            for value in values:
+                clean = value.strip()
+                key = clean.casefold()
+                if clean and key not in seen:
+                    seen.add(key)
+                    result.append(clean)
+            return result
+
+        def match_label(score: float, direct: bool = False) -> str:
+            if score >= 0.999 and direct:
+                return "Direct match"
+            if score >= 0.75:
+                return "Strong match"
+            if score > 0:
+                return "Partial match"
+            return "Related addition"
+
+        def score_for(found: list[str]) -> float:
+            return round(len(found) / len(terms), 3) if terms else 0.0
+
+        matched_domains = []
+        for domain in domains:
+            matched = matches(domain)
+            if terms and ((match_mode == "both" and len(matched) != len(terms)) or (match_mode == "either" and not matched)):
+                continue
+            matched_domains.append((domain, matched))
+        matched_ids = {domain.get("id") for domain, _ in matched_domains}
+
+        role_out = []
+        tool_out = []
+        cert_out = []
+        subgroup_out = []
+        domain_out = []
+        for domain, matched in matched_domains:
+            domain_id = domain.get("id")
+            domain_key = domain.get("domain_key")
+            foundation = _skill_text(domain.get("foundation_skills"))
+            subgroup_skills = [
+                skill
+                for group in groups_by_domain.get(domain_id, [])
+                for skill in _skill_text(group.get("cluster_skills"))
+            ]
+            required_domain_skills = unique(foundation + subgroup_skills + [
+                skill
+                for role in roles_by_domain.get(domain_id, [])
+                for skill in _skill_text(role.get("essential_skills"))
+            ])
+            domain_direct = [term for term in terms if _contains_skill(foundation + subgroup_skills, term)]
+            domain_gaps = [skill for skill in required_domain_skills if not any(_contains_skill([term], skill) for term in terms)]
+            domain_score = round((0.7 * score_for(matched)) + (0.3 * score_for(domain_direct)), 3) if terms else 0.0
+            domain_out.append({
+                "id": domain.get("domain_key"),
+                "name": domain.get("name"),
+                "cluster": domain.get("cluster"),
+                "description": domain.get("description"),
+                "matchedSkills": matched,
+                "unmatchedSkills": [term for term in terms if term not in matched],
+                "gaps": domain_gaps,
+                "matchScore": domain_score,
+                "matchLabel": match_label(domain_score, len(matched) == len(terms) and bool(domain_direct)),
+                "matchExplanation": (
+                    "Matches every selected skill." if len(matched) == len(terms) and terms
+                    else f"Matches {len(matched)} of {len(terms)} selected skills; review the gaps below."
+                ) if terms else "Shown while browsing the graph.",
+            })
+            for group in groups_by_domain.get(domain_id, []):
+                group_values = _skill_text(group.get("cluster_skills"))
+                group_matches = [term for term in terms if _contains_skill(group_values, term)]
+                if not terms or group_matches or domain_id in matched_ids:
+                    subgroup_out.append({
+                        "id": group.get("id"),
+                        "name": group.get("label"),
+                        "domainId": domain_key,
+                        "domainName": domain.get("name"),
+                        "matchedSkills": group_matches,
+                        "unmatchedSkills": [term for term in terms if term not in group_matches],
+                        "gaps": [skill for skill in group_values if not any(_contains_skill([term], skill) for term in terms)],
+                        "matchScore": score_for(group_matches),
+                        "matchLabel": match_label(score_for(group_matches), len(group_matches) == len(terms) and bool(group_matches)),
+                        "matchExplanation": (
+                            "Matches every selected skill." if match_mode == "both"
+                            else f"Matches {len(group_matches)} of {len(terms)} selected skills."
+                        ) if terms else "Shown while browsing the graph.",
+                    })
+            for role in roles_by_domain.get(domain_id, []):
+                role_values = _skill_text(role.get("essential_skills")) + _skill_text(role.get("optional_skills"))
+                role_matches = [term for term in terms if _contains_skill(role_values, term)]
+                if not terms or match_mode == "either" or not role_matches or len(role_matches) == len(terms):
+                    role_required = _skill_text(role.get("essential_skills"))
+                    role_gaps = [skill for skill in role_required if not any(_contains_skill([term], skill) for term in terms)]
+                    role_out.append({
+                        "key": role.get("role_key"),
+                        "name": role.get("role_name"),
+                        "domainId": domain_key,
+                        "domainName": domain.get("name"),
+                        "tier": role.get("tier"),
+                        "matchedSkills": role_matches,
+                        "unmatchedSkills": [term for term in terms if term not in role_matches],
+                        "gaps": role_gaps,
+                        "matchScore": score_for(role_matches),
+                        "matchLabel": match_label(score_for(role_matches), len(role_matches) == len(terms) and bool(role_matches)),
+                        "matchExplanation": (
+                            "Matches every selected skill in this role." if len(role_matches) == len(terms) and terms
+                            else f"Matches {len(role_matches)} of {len(terms)} selected skills; review the gaps below."
+                        ) if terms else "Shown while browsing the graph.",
+                    })
+            for tool in tools_by_domain.get(domain_id, []):
+                tool_matches = [term for term in terms if _contains_skill([str(tool.get("tool_name") or "")], term)]
+                if not terms or tool_matches or domain_id in matched_ids:
+                    tool_out.append({"name": tool.get("tool_name"), "group": tool.get("tool_group"), "domainId": domain_key, "domainName": domain.get("name"), "matchedSkills": tool_matches, "matchScore": score_for(tool_matches), "matchLabel": match_label(score_for(tool_matches), bool(tool_matches))})
+            for cert in certs_by_domain.get(domain_id, []):
+                cert_matches = [term for term in terms if _contains_skill([str(cert.get("name") or "")], term)]
+                if not terms or cert_matches or domain_id in matched_ids:
+                    cert_out.append({"name": cert.get("name"), "body": cert.get("body"), "level": cert.get("level"), "domainId": domain_key, "domainName": domain.get("name"), "matchedSkills": cert_matches, "matchScore": score_for(cert_matches), "matchLabel": match_label(score_for(cert_matches), bool(cert_matches))})
+
+        domain_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
+        subgroup_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
+        role_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
+        tool_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
+        cert_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
+
+        audience = "student"
+        if normalized_admin_type == "university":
+            audience = "university_curriculum"
+        elif normalized_admin_type in {"tutorial_centre", "jamb_cafe"}:
+            audience = "provider_guidance"
+        elif normalized_admin_type == "secondary_school":
+            audience = "school_guidance"
+        return ResponseModel(data=_real({
+            "terms": terms,
+            "matchMode": match_mode,
+            "userType": normalized_user_type,
+            "adminType": normalized_admin_type,
+            "allowedUserTypes": list(allowed_user_types),
+            "streamOptions": ["science", "commercial", "art"] if normalized_admin_type == "secondary_school" else [],
+            "streamRequired": normalized_admin_type == "secondary_school",
+            "audience": audience,
+            "categories": categories,
+            "domains": domain_out,
+            "subgroups": subgroup_out,
+            "roles": role_out,
+            "tools": tool_out,
+            "certifications": cert_out,
+        }, "No matching graph evidence is available for those skills yet." if terms and not matched_domains else None))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career skill discovery failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Skill discovery is temporarily unavailable."))
+
+
+@router.post("/skills/discover", response_model=ResponseModel)
+async def discover_by_skills_post(payload: dict = Body(...)):
+    """JSON transport for large skill sets; the graph logic is shared with GET."""
+    raw_skills = payload.get("skills") if isinstance(payload, dict) else []
+    skills = raw_skills if isinstance(raw_skills, list) else str(raw_skills or "").split(",")
+    return await discover_by_skills(
+        skills=",".join(str(item) for item in skills if str(item).strip()),
+        match=str(payload.get("match") or "both"),
+        category=payload.get("category"),
+        user_type=payload.get("userType") or payload.get("user_type"),
+        admin_type=payload.get("adminType") or payload.get("admin_type"),
+    )
 
 
 @router.get("/search", response_model=ResponseModel)

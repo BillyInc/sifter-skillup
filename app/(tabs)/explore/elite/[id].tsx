@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
-import ElitePathwayDetailScreen from "@/screens/careerIntelligence/ElitePathwayDetailScreen";
+import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function ElitePathwayRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  return <ElitePathwayDetailScreen pathwayId={String(id)} />;
+  return <PathwaysHubScreen initialSection="elite" pathwayId={String(id)} />;
 }

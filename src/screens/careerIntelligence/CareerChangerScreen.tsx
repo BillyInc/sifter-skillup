@@ -52,6 +52,7 @@ import {
   CompassFonts,
   type ColorPalette,
 } from "@/theme";
+import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 
 const SEARCH_DEBOUNCE_MS = 250;
 /** Below this overlap the top move is an honest stretch, not a neighbour. */
@@ -553,6 +554,7 @@ export function CareerChangerScreen() {
           ) : null}
         </>
       )}
+      <CareerDisclaimer variant="footer" />
     </ScrollView>
   );
 }

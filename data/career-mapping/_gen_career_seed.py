@@ -49,7 +49,34 @@ def resolve_programme(disc, name):
 meta   = load("domain_meta.json")
 struct = load("domain_structure.json")
 tools  = load("domain_tools.json")
-roles  = load("role_library_v3.json")
+# The cleaned library is the canonical 4,698-key role source. The older v3
+# file omitted source-backed O*NET/ESCO roles and is no longer used for seed
+# ownership.
+roles  = load("role_library_v3_cleaned.json")
+role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
+layer_provenance = load("domain_skill_provenance.json") if os.path.exists(os.path.join(HERE, "domain_skill_provenance.json")) else {}
+roles_by_key = {}
+for _role in roles:
+    roles_by_key[f'{_role.get("domain_id")}|{_role.get("role_name")}'] = _role
+roles = list(roles_by_key.values())
+role_count_by_domain = Counter(str(role.get("domain_id")) for role in roles)
+role_count_by_subgroup = Counter(
+    (str(role.get("domain_id")), str(role.get("isco_group"))[:2])
+    for role in roles
+    if role.get("domain_id") and role.get("isco_group") is not None
+)
+
+def skill_values(value):
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    return [part.strip() for part in str(value or "").split("|") if part.strip()]
+
+def alias_values(value):
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip() and str(item).lower() != "nan"]
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return []
+    return [part.strip() for part in re.split(r"[;|·•]", str(value)) if part.strip() and part.strip().lower() != "nan"]
 prog_dom = load("programme_domain_final.json")
 jamb_dom = load("jamb_domain_map.json")
 scores = load("programme_role_scores.json")
@@ -79,22 +106,30 @@ R = defaultdict(list)  # table -> list[list[str sql-literals]]
 for dk, m in meta.items():
     if dk in HIDDEN: continue
     st = struct.get(dk, {})
+    provenance = layer_provenance.get(dk, {})
     R["domains"].append([
         q(dom_uid(dk)), q(dk), q(m.get("domain_name")), q(m.get("cluster")),
         arr(m.get("clusters", [])), q(m.get("description")),
         arr(m.get("institution_type", [])), boolsql(m.get("elite_domain")),
-        boolsql(m.get("excluded")), str(st.get("role_count", 0)),
-        jsonb(st.get("foundation_skills", []))])
+        boolsql(m.get("excluded")), str(role_count_by_domain.get(dk, 0)),
+        jsonb(st.get("foundation_skills", [])),
+        q(provenance.get("source_confidence") or "unsourced"),
+        q(provenance.get("data_state") or "partial"),
+        jsonb(provenance.get("foundation_skills", {}))])
 
 # ── 2. domain_subgroups ─────────────────────────────────────────
 for dk, st in struct.items():
     if dk in HIDDEN: continue
     for sg in st.get("subgroups", []):
+        subgroup_provenance = (layer_provenance.get(dk, {}).get("subgroups") or {}).get(str(sg["isco_submajor"]), {})
         R["domain_subgroups"].append([
             q(sg_uid(dk, sg["isco_submajor"])), q(dom_uid(dk)),
             q(str(sg["isco_submajor"])), q(sg.get("label")), q(sg.get("description")),
-            q(sg.get("raw_isco_label")), str(sg.get("role_count", 0)),
-            jsonb(sg.get("cluster_skills", []))])
+            q(sg.get("raw_isco_label")), str(role_count_by_subgroup.get((dk, str(sg["isco_submajor"])), 0)),
+            jsonb(sg.get("cluster_skills", [])),
+            q(subgroup_provenance.get("source_confidence") or "unsourced"),
+            q(subgroup_provenance.get("data_state") or "partial"),
+            jsonb(subgroup_provenance.get("skills", {}))])
 
 # ── 3. domain_roles (role rows; role_key = domain_key|role_name) ─
 # map (domain, isco_submajor) -> subgroup uuid for FK
@@ -108,13 +143,23 @@ for r in roles:
     rk = f'{dk}|{r["role_name"]}'
     sm = str(r.get("isco_group", ""))[:2]
     sgid = sg_by.get((dk, sm))
-    aka = [x.strip() for x in (r.get("also_known_as") or "").split(";") if x.strip()] if isinstance(r.get("also_known_as"), str) else (r.get("also_known_as") or [])
+    aka = alias_values(r.get("also_known_as"))
+    source_entry = role_tools.get(rk, {})
+    esco_entry = source_entry.get("esco") or {}
+    role_source_confidence = source_entry.get("source_confidence") or "unsourced"
+    role_data_state = source_entry.get("data_state") or "unsourced"
     R["domain_roles"].append([
         q(uid("role", rk)), q(dom_uid(dk)), (q(sgid) if sgid else "NULL"),
         q(rk), q(r["role_name"]), arr(aka), q(r.get("tier")),
         q(str(r.get("isco_group") or "")), q(r.get("esco_code")),
         q(r.get("elite_status") or "deferred"),
-        jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", []))])
+        jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", [])),
+        arr(esco_entry.get("occupation_uris", [])), q(role_source_confidence),
+        q(role_data_state), jsonb({
+            "socs": source_entry.get("socs", []),
+            "esco_occupation_uris": esco_entry.get("occupation_uris", []),
+            "sources": [source for source in ("esco" if esco_entry.get("occupation_uris") else None, "onet" if source_entry.get("tools") else None) if source],
+        })])
 
 # ── 4. domain_tools (domain + subgroup scope, distinctive+common) ─
 def tool_rows(dk, entry, scope, sgid):
@@ -140,7 +185,9 @@ for dk, tv in tools.items():
                 q("domain"), q(t["tool"]), q(grp_name),
                 numornull(t.get("role_freq")), numornull(t.get("score")),
                 boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet"),
-                "NULL"])
+                "NULL", q(t.get("element_name")), q(t.get("element_id")),
+                q(t.get("source_confidence") or "unsourced"), q(t.get("data_state") or "unsourced"),
+                jsonb(t.get("provenance") or {})])
     for sm, sgt in (tv.get("subgroup_tools") or {}).items():
         sgid = sg_by.get((dk, str(sm)))
         if not sgid: continue
@@ -153,7 +200,9 @@ for dk, tv in tools.items():
                     q("subgroup"), q(t["tool"]), q(grp_name),
                     numornull(t.get("role_freq")), numornull(t.get("score")),
                     boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet"),
-                    "NULL"])
+                    "NULL", q(t.get("element_name")), q(t.get("element_id")),
+                    q(t.get("source_confidence") or "unsourced"), q(t.get("data_state") or "unsourced"),
+                    jsonb(t.get("provenance") or {})])
 
 # ── 4b. role-level tools (L3T) from role_tools.json, if built ────
 # Emitted as scope='role' rows (requires migration_role_tools.sql).
@@ -162,6 +211,8 @@ role_tools_n = 0
 if os.path.exists(rt_path):
     role_tools = json.load(open(rt_path, encoding="utf-8"))
     for rk, ent in role_tools.items():
+        if rk == "_meta":
+            continue
         dk = rk.split("|", 1)[0]
         if dk not in meta or dk in HIDDEN: continue
         rid = uid("role", rk)
@@ -172,8 +223,10 @@ if os.path.exists(rt_path):
                 q(uid("tool", dk, "r", rk, t["tool"])), q(dom_uid(dk)), "NULL",
                 q("role"), q(t["tool"]), q(grp),
                 "NULL", "NULL",
-                boolsql(t.get("hot")), boolsql(t.get("in_demand")), q("onet"),
-                q(rid)])
+                boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet"),
+                q(rid), q(t.get("element_name")), q(t.get("element_id")),
+                q(t.get("source_confidence") or "unsourced"), q(t.get("data_state") or "unsourced"),
+                jsonb({"soc_codes": ent.get("socs", []), "source": t.get("source") or "onet"})])
 else:
     print("note: role_tools.json not found — L3T rows skipped (run _build_role_tools.py first)")
 
@@ -250,7 +303,7 @@ dom_skills = defaultdict(set)
 for r in roles:
     dk = r["domain_id"]
     if dk in HIDDEN or dk not in meta: continue
-    for s in r.get("essential_skills", []):
+    for s in skill_values(r.get("essential_skills", [])):
         dom_skills[dk].add(s.strip().lower())
 # down-weight ubiquitous skills (in >40% of domains) so overlap reflects DISTINCTIVE transfer
 ND = len(dom_skills) or 1
@@ -333,10 +386,10 @@ def emit(table, cols, vals, conflict="id"):
         out.append(f"ON CONFLICT ({conflict}) DO UPDATE SET {upd};")
     out.append("")
 
-emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills"], R["domains"])
-emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills"], R["domain_subgroups"])
-emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills"], R["domain_roles"])
-emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source","role_id"], R["domain_tools"])
+emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills","source_confidence","data_state","foundation_skill_sources"], R["domains"])
+emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills","source_confidence","data_state","skill_sources"], R["domain_subgroups"])
+emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills","esco_occupation_uris","source_confidence","data_state","source_provenance"], R["domain_roles"])
+emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source","role_id","element_name","element_id","source_confidence","data_state","source_provenance"], R["domain_tools"])
 emit("domain_certifications", ["id","domain_id","subgroup_id","placement","name","body","region","level","gate_reason"], R["domain_certifications"])
 emit("programme_domain", ["id","programme_id","domain_id","match_type"], R["programme_domain"])
 emit("programme_role_score", ["id","programme_id","domain_id","role_key","role_name","label","coverage","tier","subgroup_label","bridge_skills"], R["programme_role_score"])

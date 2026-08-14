@@ -24,13 +24,17 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
   const olevelSubjects = (profile.olevelSubjects ?? []).filter(Boolean).join(",");
   const programme =
-    profile.intendedJambProgrammeId ||
-    profile.intendedProgrammeId ||
-    profile.intendedProgramme;
+    profile.intendedProgramme ||
+    profile.programmeName ||
+    "";
+  const subjectContext =
+    `subjects=${encodeURIComponent(subjects)}` +
+    `&olevel_subjects=${encodeURIComponent(olevelSubjects)}` +
+    `&stream=${encodeURIComponent(profile.stream ?? "")}`;
 
   if (profile.userType === "senior_secondary") {
     if (profile.exploreIntent?.includes("have_programme") && programme) {
-      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`;
+      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}`;
     }
     if (olevelSubjects) {
       return `/(tabs)/explore/admission?mode=subjects&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`;
@@ -41,11 +45,15 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   if (profile.userType === "jamb" || profile.userType === "ss3_secondary") {
     if (profile.ssDoor === "unsure") {
       return subjects
-        ? `/(tabs)/explore/admission?mode=subjects&subjects=${encodeURIComponent(subjects)}&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`
+        ? `/(tabs)/explore/admission?mode=subjects&${subjectContext}`
         : "/(tabs)/explore/admission?mode=subjects";
     }
     if (programme) {
-      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`;
+      const schoolContext =
+        profile.ssDoor === "know_where" && profile.preferredSchoolId
+          ? `&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? "")}`
+          : "";
+      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}${schoolContext}`;
     }
     return "/(tabs)/explore/admission?mode=programme";
   }

@@ -1,5 +1,5 @@
 /**
- * SkillsGapScreen — cross-programme skills-gap report (curriculum vs employer
+ * SkillsGapScreen — per-programme skills-gap report (curriculum vs employer
  * demand). Reads adminData.getSkillsGapReport and renders an AdminDataTable
  * with columns: programme, domain, skill, demand %, in curriculum.
  */
@@ -79,7 +79,7 @@ export function SkillsGapScreen() {
       >
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
-            Programme skill coverage
+            Per-programme skill coverage
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             Review skill coverage for each university programme. This surface

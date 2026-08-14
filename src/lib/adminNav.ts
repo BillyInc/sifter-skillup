@@ -3,7 +3,7 @@
  * Centralises route strings so admin screens don't hand-build hrefs.
  */
 import type { Router } from "expo-router";
-import type { OrganizationType } from "../types/institution";
+import type { OrgRole, OrganizationType } from "../types/institution";
 import { adminAudienceForOrg } from "./adminAudience";
 import { ADMIN_EXPLORE_SEGMENT } from "./exploreNav";
 
@@ -28,6 +28,7 @@ export interface AdminNavGroup {
 export interface AdminNavContext {
   organizationType?: OrganizationType;
   providerSessionOnly?: boolean;
+  role?: OrgRole;
 }
 
 type AdminAudience = "university" | "school" | "provider";
@@ -209,7 +210,11 @@ export function getAdminNavGroups(
   const dashboardLabel =
     audience === "university" ? "Programme dashboard" : "Cohort";
   const setupTitle =
-    audience === "university"
+    ctx?.role === "data_viewer"
+      ? "Read-only workspace"
+      : ctx?.role && !["owner", "admin", "institution_admin"].includes(ctx.role)
+        ? `${ctx.role.replace(/_/g, " ")} workspace`
+        : audience === "university"
       ? "Institution workspace"
       : audience === "provider"
         ? "Provider workspace"
@@ -315,14 +320,27 @@ export function getAdminNavGroups(
     });
   }
 
+  const role = ctx?.role;
+  const managementRole = !role || ["owner", "admin", "institution_admin", "dean"].includes(role);
+  const guidanceRole = !role || ["owner", "admin", "institution_admin", "dean", "hod", "counsellor", "course_advisor", "admissions_officer", "provisioning_manager"].includes(role);
+  const learnerRole = !role || ["owner", "admin", "institution_admin", "dean", "hod", "counsellor", "provisioning_manager"].includes(role);
+  const scopedIntelligence = guidanceRole
+    ? intelligenceItems.filter((item) => learnerRole || !["students", "session", "jamb-accounts"].includes(item.key))
+    : intelligenceItems.filter((item) => ["dashboard", "market-intelligence", "domain-reach", "skills-gap", "explore", "peers"].includes(item.key));
+  const setupItems = managementRole
+    ? [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM]
+    : role === "data_viewer"
+      ? [PROFILE_ITEM]
+      : [PROFILE_ITEM];
+
   return [
     {
       title: audience === "university" ? "Intelligence" : "Guidance",
-      items: intelligenceItems,
+      items: scopedIntelligence,
     },
     {
       title: setupTitle,
-      items: [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM],
+      items: setupItems,
     },
   ];
 }

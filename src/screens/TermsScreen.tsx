@@ -5,6 +5,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
 import { useResponsive } from "@/hooks/useResponsive";
+import { TERMS_VERSION } from "@/lib/legal";
 
 const SECTIONS = [
   ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
@@ -17,6 +18,10 @@ const SECTIONS = [
   ['Guest use', 'Guests may browse limited Explore surfaces. Saving, notes, alerts, student management and institution-specific features require an account and, where relevant, acceptance of these terms.'],
   ['Acceptable use', 'Do not abuse the service, attack the platform, scrape restricted data, impersonate a school or educator, upload unlawful content, or use the platform to mislead students.'],
   ['Your content', 'You keep ownership of notes, saved paths, feedback and any learning artifacts you create. You give us permission to store, process and display them only to operate the service.'],
+  ['Privacy, consent and Nigerian safeguards', 'We apply the Nigeria Data Protection Act 2023 and applicable NDPC guidance to personal-data handling. Consent must be a clear affirmative choice; silence is not consent, and you can withdraw consent where processing is based on consent. Optional analytics is off unless you opt in. We do not sell personal data.'],
+  ['Children, students and school roles', 'Under-18 users should use the service with a parent, guardian, school or counsellor where appropriate. Student records, grades, guardian information and school rosters are role-limited and consent-gated where required. School owners and staff must only upload or view information they are authorised to handle under applicable Nigerian and state child-protection rules.'],
+  ['Consumer fairness and complaints', 'Nothing here removes a non-waivable right under applicable consumer-protection law. We will not intentionally present guidance as a guarantee or hide material limitations. Report a concern to legal@sifter.app; privacy complaints may also be directed to the Nigeria Data Protection Commission and consumer complaints to the Federal Competition and Consumer Protection Commission where applicable.'],
+  ['Automated guidance and challenge', 'Search ranking, programme matching and career guidance are decision-support features, not admission or employment decisions. They may be incomplete or wrong. You can ask us to explain, correct or review material personal-data issues through privacy@sifter.app.'],
   ['Third-party services', 'Some sources, schools, job boards, professional bodies, APIs and linked services have their own terms. Their data, availability and rules may change without notice.'],
   ['Changes and suspension', 'We may change features, correct data, remove misleading content, suspend abusive accounts or restrict access where needed for security, compliance or platform integrity.'],
   ['Governing law', 'These terms are governed by the laws of the Federal Republic of Nigeria, except where mandatory consumer protections in another jurisdiction apply.'],
@@ -51,7 +56,7 @@ export default function TermsScreen({ onClose }: Props) {
     <>
       <View style={[styles.note, { backgroundColor: `${colors.accentRole.status}14`, borderLeftColor: colors.accentRole.status }]}>
         <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
-          This is plain-language product copy, not legal advice. Account
+          Version {TERMS_VERSION}. This is plain-language product copy, not legal advice. Account
           creation requires accepting the current version of these terms and
           the Privacy Policy.
         </Text>

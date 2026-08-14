@@ -12,13 +12,13 @@
  *
  * Sections, in spec order:
  *   - Header: institution name, admin role, Export affordance (AdminShell)
- *   - Stat row: programmes · domains/168 + national rank · demand score + YoY ·
+ *   - Stat row: programmes · domains reached · demand score + YoY ·
  *     skills gaps · remote-eligible %, plus the "data as of" line
  *   - Intelligence alerts
  *   - Two panels side by side (stacking on narrow): Programme → Domain →
  *     Demand, and Market Intelligence, each with [View all →]
  *   - Domain Reach Audit preview: direct/functional/adjacent/unreached +
- *     national rank, with [Open full audit →]
+ *     [Open full audit →]
  *   - Student Intelligence: affiliated / self-signed-up / provisioned counts
  *     and top domains, with [Open Students →]
  */
@@ -244,12 +244,6 @@ export function GeneralDashboardScreen() {
                 ? `${fmtInt(d.domainsAccessible)}/${fmtInt(reachView.domainUniverse)}`
                 : fmtInt(d.domainsAccessible)
             }
-            selectDelta={() =>
-              reachView.nationalRank != null
-                ? `#${reachView.nationalRank} nationally`
-                : undefined
-            }
-            deltaPositive={() => true}
           />
           <StatCard
             icon="📊"
@@ -414,20 +408,6 @@ export function GeneralDashboardScreen() {
                       value={fmtInt(r.unreachedDomains)}
                     />
                   </View>
-                  {r.nationalRank != null ? (
-                    <Text
-                      style={[
-                        styles.panelNote,
-                        CompassFonts.bodySemibold,
-                        { color: colors.text },
-                      ]}
-                    >
-                      National rank #{r.nationalRank}
-                      {r.totalInstitutions != null
-                        ? ` of ${fmtInt(r.totalInstitutions)}`
-                        : ""}
-                    </Text>
-                  ) : null}
                 </View>
               );
             }}

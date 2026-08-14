@@ -7,7 +7,7 @@
  */
 import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, TextInput, Pressable } from "react-native";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 import { studentAccountApi } from "@/lib/provisioningData";
@@ -19,6 +19,7 @@ import {
   LegalFooter,
   ErrorNote,
   TermsModal,
+  PrivacyModal,
 } from "./auth/authShared";
 
 function toIsoDate(value: string): string | null {
@@ -123,8 +124,9 @@ const DEV_EMAIL_CODE = "000000";
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ claim?: string | string[] }>();
   const { colors } = useTheme();
-  const { signUpEmail } = useAuth();
+  const { signInEmail, signUpEmail } = useAuth();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -134,6 +136,10 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [schoolCode, setSchoolCode] = useState("");
+  const [claimCode, setClaimCode] = useState(() => {
+    const value = params.claim;
+    return (Array.isArray(value) ? value[0] : value) ?? "";
+  });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailCode, setEmailCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -141,7 +147,11 @@ export default function SignUpScreen() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const passwordMismatch = Boolean(confirmPassword && password !== confirmPassword);
+  const isDevAccount = DEV_SIGNUP_PRESETS.some(
+    (preset) => preset.email === email.trim().toLowerCase(),
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -155,6 +165,7 @@ export default function SignUpScreen() {
         setEmail("");
         setPassword("");
         setSchoolCode("");
+        setClaimCode("");
         setConfirmPassword("");
         setEmailCode("");
         setCodeSent(false);
@@ -237,15 +248,34 @@ export default function SignUpScreen() {
         setError("Enter date of birth as DD/MM/YYYY.");
         return;
       }
-      await signUpEmail(email.trim(), password, {
-        first_name: firstName,
-        middle_name: middleName || undefined,
-        last_name: lastName,
-        date_of_birth: isoDob,
-        email_code: emailCode.trim(),
-      });
+      const profile = {
+          first_name: firstName,
+          middle_name: middleName || undefined,
+          last_name: lastName,
+          date_of_birth: isoDob,
+          email_code: emailCode.trim(),
+      };
+      if (isDevAccount) {
+        // Dev presets normally authenticate seeded accounts. If a fixture is
+        // absent from a fresh database, fall back to creating that fixture.
+        try {
+          await signInEmail(email.trim(), password);
+        } catch {
+          await signUpEmail(email.trim(), password, profile);
+        }
+      } else {
+        await signUpEmail(email.trim(), password, profile);
+      }
       if (schoolCode.trim()) {
         try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* can be linked later from onboarding */ }
+      }
+      if (claimCode.trim()) {
+        try {
+          await studentAccountApi.claim({ code: claimCode.trim() });
+        } catch {
+          // The account is already created. The learner can retry the same
+          // code from My school without losing the new account.
+        }
       }
       router.replace("/(auth)/onboarding");
     } catch (e: any) {
@@ -292,7 +322,7 @@ export default function SignUpScreen() {
             ))}
           </View>
           <Text style={[styles.devHint, { color: colors.textRole.muted }, CompassFonts.body]}>
-            Password: {DEV_PASSWORD} / code: {DEV_EMAIL_CODE}
+            Presets sign in to existing dev accounts. Password: {DEV_PASSWORD} / code: {DEV_EMAIL_CODE}
           </Text>
         </View>
       ) : null}
@@ -324,14 +354,26 @@ export default function SignUpScreen() {
       <View style={styles.fieldGroup}>
         <Text style={[styles.label, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Date of birth</Text>
         <View style={styles.dateRow}>
-          <TextInput
-            value={dateOfBirth}
-            onChangeText={setDateOfBirth}
-            placeholder="DD/MM/YYYY"
-            placeholderTextColor={colors.textRole.placeholder}
-            keyboardType="numbers-and-punctuation"
-            style={[styles.dateInput, { color: colors.textRole.primary, backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }, CompassFonts.body]}
-          />
+          <View style={styles.dateInputWrap}>
+            <TextInput
+              value={dateOfBirth}
+              onChangeText={setDateOfBirth}
+              placeholder="DD/MM/YYYY"
+              placeholderTextColor={colors.textRole.placeholder}
+              keyboardType="numbers-and-punctuation"
+              style={[styles.dateInput, { color: colors.textRole.primary, backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }, CompassFonts.body]}
+            />
+            {dateOfBirth ? (
+              <TouchableOpacity
+                onPress={() => setDateOfBirth("")}
+                style={styles.dateClearButton}
+                accessibilityRole="button"
+                accessibilityLabel="Clear date of birth"
+              >
+                <Text style={[styles.dateClearText, { color: colors.textRole.muted }]}>Clear</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
           <TouchableOpacity
             onPress={() => setDatePickerOpen(true)}
             style={[styles.dateButton, { borderColor: colors.borderRole.subtle }]}
@@ -374,6 +416,13 @@ export default function SignUpScreen() {
          placeholder="SCHOOL-XXXXXXXX"
          hint="You can also add this during onboarding."
       />
+      <AuthField
+        label="Learner claim code (optional)"
+        value={claimCode}
+        onChangeText={(value) => setClaimCode(value.toUpperCase())}
+        placeholder="SCHOOL-SS1-XXXXXXXX"
+        hint="Use this if your school already created your learner account."
+      />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>
           Passwords do not match.
@@ -392,7 +441,7 @@ export default function SignUpScreen() {
       ) : null}
 
       <SifterButton
-        label={codeSent ? "Verify & create account ->" : "Send email code ->"}
+        label={codeSent ? (isDevAccount ? "Use dev account ->" : "Verify & create account ->") : "Send email code ->"}
         onPress={codeSent ? handleCreate : handleSendCode}
         loading={busy}
         variant="track"
@@ -413,9 +462,14 @@ export default function SignUpScreen() {
         </TouchableOpacity>
       </View>
 
-      <LegalFooter action="creating an account" onShowTerms={() => setShowTerms(true)} />
+      <LegalFooter
+        action="creating an account"
+        onShowTerms={() => setShowTerms(true)}
+        onShowPrivacy={() => setShowPrivacy(true)}
+      />
 
       <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
+      <PrivacyModal visible={showPrivacy} onClose={() => setShowPrivacy(false)} />
       <DatePickerModal
         visible={datePickerOpen}
         value={dateOfBirth}
@@ -471,7 +525,10 @@ const styles = StyleSheet.create({
   label: { fontSize: FontSize.sm },
   hint: { fontSize: FontSize.xs, lineHeight: 17 },
   dateRow: { flexDirection: "row", gap: Spacing.sm, alignItems: "center" },
-  dateInput: { flex: 1, minHeight: 48, borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, fontSize: FontSize.md },
+  dateInputWrap: { flex: 1, position: "relative" },
+  dateInput: { width: "100%", minHeight: 48, borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingRight: 58, fontSize: FontSize.md },
+  dateClearButton: { position: "absolute", right: 8, top: 7, minHeight: 34, justifyContent: "center", paddingHorizontal: 4 },
+  dateClearText: { fontSize: FontSize.xs, fontWeight: "700" },
   dateButton: { minHeight: 48, borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, justifyContent: "center" },
   modalBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.35)" },
   modalCard: { borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: Spacing.lg, gap: Spacing.sm },

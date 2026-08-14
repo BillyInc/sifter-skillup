@@ -1,1 +1,3761 @@
-[]
+[
+ {
+  "domain": "D003",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Informatica software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "WordPress",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ESRI ArcGIS ArcPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ESRI ArcGIS Survey 123",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "WordPress",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D004",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "SKM Systems Analysis Power Tools",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "JUnit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Siemens Teamcenter",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Subversion SVN",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Windows Server",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "SKM Systems Analysis Power Tools",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D140",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "JUnit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D010",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D010",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D010",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D010",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D010",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D011",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Alteryx software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D011",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Workday software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D011",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D011",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Marketo Marketing Automation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Alteryx software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Workday software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Marketo Marketing Automation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Teradata Database",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft Visual Basic for Applications VBA",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D013",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Oracle Primavera Enterprise Project Portfolio Management",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D014",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Informatica software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D015",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Marketo Marketing Automation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D060",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Microsoft Power BI",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Alteryx software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Workday software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Marketo Marketing Automation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Teradata Database",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft Visual Basic for Applications VBA",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D062",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Oracle Primavera Enterprise Project Portfolio Management",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D018",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D019",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D019",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D019",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ANSYS simulation software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D019",
+  "isco_submajor": "74",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Edge",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Warehouse management system WMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zoom",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple Safari",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Dassault Systemes SolidWorks",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Microsoft Edge",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Warehouse management system WMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Apple Safari",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Mozilla Firefox",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Cubic Synchro Studio",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PTV Vissim",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Clinical trial management software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D020",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Zoom",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D021",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Cubic Synchro Studio",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D021",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "OpenRoads Designer",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D021",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "PTV Vissim",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D021",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "HEC-RAS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D021",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ConstructConnect PlanSwift",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple Safari",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Siemens Teamcenter",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D022",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Apple Safari",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D069",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web server software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Kali Linux",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Metasploit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Nmap",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Portswigger BurP Suite",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D072",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zoom",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D074",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Zoom",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web server software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Kali Linux",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Metasploit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Nmap",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Portswigger BurP Suite",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Qualys Cloud Platform",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Tenable Nessus",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Single sign-on SSO",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Low-level virtual machine LLVM compilers",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Rust programming language",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D156",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Web server software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D023",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Ansible software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D023",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Ansible software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Snowflake",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Informatica software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D024",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Platform software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "IBM Terraform",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Automate",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Red Hat OpenShift",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Bentley MicroStation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Amazon Web Services AWS CloudFormation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "22",
+  "scope": "subgroup",
+  "tool": "Kubernetes",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D026",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Bentley MicroStation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D027",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Oracle PL/SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D064",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Henry Schein Dentrix",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D064",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Oracle PL/SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Docker",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Scala",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "JavaScript Object Notation JSON",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "GitHub",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D066",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "jQuery",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D028",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D029",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D029",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D031",
+  "isco_submajor": "52",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D031",
+  "isco_submajor": "52",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D031",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Warehouse management system WMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Content management systems CMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Firewall software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "MITRE ATT&CK software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D032",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Directory",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D033",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D034",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D035",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Warehouse management system WMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D036",
+  "isco_submajor": "24",
+  "scope": "subgroup",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "MathWorks Simulink",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Windows Server",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Go",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Bash",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D076",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "MathWorks Simulink",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D079",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PostgreSQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "MySQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "PostgreSQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D037",
+  "isco_submajor": "34",
+  "scope": "subgroup",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Content management systems CMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "Firewall software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D038",
+  "isco_submajor": "12",
+  "scope": "subgroup",
+  "tool": "MITRE ATT&CK software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D157",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Marketo Marketing Automation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Transact-SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple iOS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D041",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Oracle PL/SQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D044",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Adobe XD",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D065",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Transportation management system TMS software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D065",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Geographic information system GIS systems",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D065",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Microsoft Power BI",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D065",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D045",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Teradata Database",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Autodesk Revit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Oracle Primavera Enterprise Project Portfolio Management",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Hadoop",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "Yardi software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "Shopify software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "Autodesk Revit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "Teradata Database",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "54",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D077",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D128",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D128",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D128",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ESRI ArcGIS ArcPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ESRI ArcGIS Survey 123",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS)",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "25",
+  "scope": "subgroup",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D143",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PostgreSQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apple Safari",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Enterprise application integration EAI software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Reporting software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "PostgreSQL",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Microsoft SQL Server Reporting Services SSRS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D149",
+  "isco_submajor": "11",
+  "scope": "subgroup",
+  "tool": "Google Workspace software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Splunk Enterprise",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Teradata Database",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Azure software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Oracle PeopleSoft",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "IBM WebSphere MQ",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Hive",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Django",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D151",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Microsoft PowerShell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Adobe After Effects",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D047",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Oracle PeopleSoft",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D049",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Platform software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D049",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D050",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D050",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D050",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Selenium",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D050",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D050",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D051",
+  "isco_submajor": "33",
+  "scope": "subgroup",
+  "tool": "Google Android",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D052",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Cubic Synchro Studio",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Shell script",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Amazon Elastic Compute Cloud EC2",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Windows Server",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Go",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "GitHub",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft .NET Framework",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Ansible software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Bash",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Atlassian Confluence",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Splunk Enterprise",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Trimble SketchUp Pro",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Azure software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Microsoft Edge",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ANSYS simulation software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "SKM Systems Analysis Power Tools",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D055",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Go",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "MathWorks Simulink",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Node.js",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Jenkins CI",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Selenium",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Subversion SVN",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "JavaScript Object Notation JSON",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Go",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft .NET Framework",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "MathWorks Simulink",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Siemens Teamcenter",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D148",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Platform software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D056",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Internet Information Services (IIS) Manager",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D056",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Web application framework software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Snowflake",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Informatica software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PyTorch",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Airflow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Oracle Cloud software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Oracle SQL Developer",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Power Automate",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Alteryx software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "TensorFlow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "NumPy",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "pandas",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D057",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Scikit-learn",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D097",
+  "isco_submajor": "72",
+  "scope": "subgroup",
+  "tool": "Microsoft Edge",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "UNIX Shell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "AJAX",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Amazon Elastic Compute Cloud EC2",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Cascading style sheets CSS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Windows Server",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "GitHub",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "jQuery",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Ansible software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": "75",
+  "scope": "subgroup",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": "75",
+  "scope": "subgroup",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D098",
+  "isco_submajor": "75",
+  "scope": "subgroup",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D099",
+  "isco_submajor": "71",
+  "scope": "subgroup",
+  "tool": "Dassault Systemes SolidWorks",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "UNIX Shell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Geographic information system GIS systems",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "AJAX",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Amazon Elastic Compute Cloud EC2",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Geographic information system GIS systems",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "UNIX Shell",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "AJAX",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Amazon Elastic Compute Cloud EC2",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Platform software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "IBM Terraform",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Power Automate",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Red Hat OpenShift",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Amazon Web Services AWS CloudFormation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D107",
+  "isco_submajor": "13",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D111",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Adobe After Effects",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D111",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D111",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Adobe After Effects",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D111",
+  "isco_submajor": "31",
+  "scope": "subgroup",
+  "tool": "Apache Kafka",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D114",
+  "isco_submajor": "82",
+  "scope": "subgroup",
+  "tool": "Bentley MicroStation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D118",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "QGIS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D118",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "React",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D118",
+  "isco_submajor": "61",
+  "scope": "subgroup",
+  "tool": "ServiceNow",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D122",
+  "isco_submajor": "32",
+  "scope": "subgroup",
+  "tool": "Ansible software",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D134",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D134",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D134",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "SKM Systems Analysis Power Tools",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "JUnit",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Apache Subversion SVN",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Go",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Bash",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Shell script",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "ETAP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D138",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "SKM Systems Analysis Power Tools",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "HEC-HMS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "HEC-RAS",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Geographic information system GIS systems",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Business software applications",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Bentley MicroStation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": "21",
+  "scope": "subgroup",
+  "tool": "Microsoft Active Server Pages ASP",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D145",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Henry Schein Dentrix",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D145",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Apache Spark",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D145",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Kronos Workforce Timekeeper",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D145",
+  "isco_submajor": "26",
+  "scope": "subgroup",
+  "tool": "Epic Systems",
+  "reason": "no_exact_detailed_soc_overlap"
+ }
+]

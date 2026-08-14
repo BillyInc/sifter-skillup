@@ -27,7 +27,6 @@ import type {
   OrganizationType,
   OrgRole,
   VerificationStatus,
-  VerificationMethod,
   EducatorProfile,
 } from "../../types/institution";
 import {
@@ -37,6 +36,7 @@ import {
   SearchField,
 } from "@/components/onboarding/primitives";
 import { LiveAdmissionSearchField } from "@/components/onboarding/LiveAdmissionSearchField";
+import LocalLegalNotice from "@/components/LocalLegalNotice";
 
 const ADMIN_ACCESS_REQUEST_EMAIL =
   process.env.EXPO_PUBLIC_ADMIN_ACCESS_EMAIL?.trim() || "learn@sifter.app";
@@ -237,16 +237,14 @@ export default function EducatorOnboarding({
     });
   };
 
-  // The real flow requires a complete organisation identity, including address.
-  // The explicit developer workspace is the only route allowed to exercise the
-  // flow without a registry row or production address.
+  // Every administrator must provide a physical address. Developer access only
+  // changes the access-code gate; it never weakens organisation identity.
   const canUseDeveloperWorkspace = SHOW_DEVELOPER_ACCESS && orgName.trim().length > 0;
-  const addressRequired = !canUseDeveloperWorkspace;
   const step1Ready =
     !!orgType &&
     !!role &&
     (!!orgId || canUseDeveloperWorkspace) &&
-    (!addressRequired || orgAddress.trim().length >= 8);
+    orgAddress.trim().length >= 8;
 
   const validateAccessCode = async () => {
     const code = accessCode.trim().toUpperCase();
@@ -285,27 +283,20 @@ export default function EducatorOnboarding({
     setFinishError(null);
 
     const accountType = accountTypeFor(orgType, role);
-    const hasEmail = workEmail.trim().length > 0;
-    // Creating the workspace records a claim. It is not a proof submission:
-    // do not label an account "under review" merely because setup was done.
+    // Creating the workspace records a claim. Work email and registry fields
+    // are identity anchors, not proof submission by themselves.
     const verificationStatus: VerificationStatus = "claimed";
-    const verificationMethod: VerificationMethod | undefined = hasEmail
-      ? "email_domain"
-      : undefined;
 
     const profile: EducatorProfile = {
       accountType,
       organizationType: orgType,
       organizationName: orgName.trim(),
-      // The backend enforces this in production as well. The explicit developer
-      // workspace may submit an empty value for local flow testing.
       organizationAddress: orgAddress.trim(),
       organizationId: orgId,
       role,
-      workEmail: hasEmail ? workEmail.trim() : undefined,
+      workEmail: workEmail.trim() || undefined,
       registryCode: registryCode.trim() || undefined,
       verificationStatus,
-      ...(verificationMethod ? { verificationMethod } : {}),
       adminAccessStatus: "owner_code",
       accessCode: accessCode.trim().toUpperCase(),
       adminAccessGrantedAt: new Date().toISOString(),
@@ -389,10 +380,8 @@ export default function EducatorOnboarding({
                    : "Select your organisation if it is listed, or add its name so other educators can find it."}
               />
               <View style={{ gap: Spacing.xs }}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>
-                   {addressRequired
-                     ? "Organisation address (required)"
-                     : "Organisation address (optional for developer testing)"}
+                 <Text style={[styles.fieldLabel, { color: colors.text }]}>
+                    Organisation address (required)
                 </Text>
                 <TextInput
                   value={orgAddress}
@@ -402,11 +391,12 @@ export default function EducatorOnboarding({
                   multiline
                   style={[styles.addressInput, { color: colors.text, borderColor: colors.border, backgroundColor: colors.card }]}
                 />
-                  <Text style={[styles.sub, { color: colors.textSoft }]}>
-                    {addressRequired
-                      ? "Use the full address so people can distinguish organisations with similar names."
-                      : "Developer testing may continue without an address. Production users must provide one."}
-                  </Text>
+                   {orgAddress ? (
+                     <TouchableOpacity onPress={() => setOrgAddress("")} accessibilityRole="button">
+                       <Text style={[styles.sub, { color: colors.accentRole.action }]}>Clear address</Text>
+                     </TouchableOpacity>
+                   ) : null}
+                   <Text style={[styles.sub, { color: colors.textSoft }]}>Use the full address so people can distinguish organisations with similar names.</Text>
               </View>
               <ChoiceChips
                 label="Your role"
@@ -503,6 +493,7 @@ export default function EducatorOnboarding({
       {/* Step 3: Verify your institution */}
       {step === 3 ? (
         <View style={{ gap: Spacing.lg }}>
+          <LocalLegalNotice audience="institution" />
           <Text style={[styles.title, { color: colors.text }]}>
             Verify your institution
           </Text>
