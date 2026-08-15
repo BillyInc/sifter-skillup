@@ -9,9 +9,10 @@
  */
 
 import React, { useState } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
-  SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
+  SafeAreaView, Platform, Linking, Modal,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -30,8 +31,8 @@ const CATEGORIES = [
 export default function MerchandiseScreen({ navigation }: any) {
   const { colors } = useTheme();
   const { user }   = useAuth();
-  const { width }  = useWindowDimensions();
-  const isWebWide  = Platform.OS === 'web' && width >= 768;
+  const { width, isWeb, isMobile }  = useResponsive();
+  const isWebWide = isWeb && !isMobile;
   const [category,    setCategory]    = useState('all');
   const [selected,    setSelected]    = useState<MerchandiseItem | null>(null);
   const [showDetail,  setShowDetail]  = useState(false);

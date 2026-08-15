@@ -9,9 +9,10 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, FlatList, TouchableOpacity,
-  Platform, useWindowDimensions, ActivityIndicator, ScrollView,
+  ActivityIndicator, ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
@@ -34,8 +35,8 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   const { colors } = useTheme();
   const { user }   = useAuth();
   const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
-  const { width }  = useWindowDimensions();
-  const isWebWide  = Platform.OS === 'web' && width >= 768;
+  const { width, isWeb, isMobile }  = useResponsive();
+  const isWebWide = isWeb && !isMobile;
 
   const [scope,   setScope]   = useState<LeaderboardScope>('global');
   const [board,   setBoard]   = useState<Leaderboard | null>(null);
