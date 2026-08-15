@@ -39,9 +39,10 @@
 from datetime import datetime, timedelta, timezone
 import hmac
 import re
+from uuid import uuid4
 from typing import List, Literal, Optional
 
-from fastapi import APIRouter, Body, Depends, HTTPException, Query
+from fastapi import APIRouter, Body, Depends, File, Form, HTTPException, Query, UploadFile
 from pydantic import BaseModel, ConfigDict, Field
 
 from auth import Auth
@@ -55,6 +56,19 @@ router = APIRouter(prefix="/api/institutions", tags=["institutions"])
 _SCHEMA = "skillup_dev"
 _K_ANON_THRESHOLD = 5
 _SPARKLINE_BUCKETS = 6
+_VERIFICATION_BUCKET = "verification-proofs"
+_MAX_VERIFICATION_PROOF_BYTES = 10 * 1024 * 1024
+_ALLOWED_VERIFICATION_TYPES = {
+    "application/pdf",
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+}
+
+# The live rows are taxonomy-derived baselines, not source-backed labour-market
+# ingestion. Keep demand-only institution views unavailable until that pipeline
+# is explicitly approved and enabled.
+_DEMAND_INGESTION_READY = False
 
 
 # ─────────────────────────────────────────────────────────────
@@ -139,6 +153,7 @@ def _org_from_school(school_id: str) -> Optional["Organization"]:
             school_code=row.get("school_code"),
             verification_status=row.get("verification_status") or "unverified",
             provider_session_only=bool(row.get("provider_session_only") or org_type in {"tutorial_centre", "jamb_cafe"}),
+            verification_proof_submitted_at=row.get("verification_proof_submitted_at"),
         )
     except Exception as exc:
         log.warning("institutions: school profile read skipped", error=str(exc))
@@ -177,6 +192,29 @@ def _school_affiliation_code(svc, name: str, address: str, school_id: str) -> st
     return f"{prefix}-{suffix}"
 
 
+def _require_school_identity_schema(svc) -> None:
+    """Fail clearly when the address/code migration is not applied.
+
+    Admin identity must never be accepted while the database silently drops the
+    address or school-code fields. The migration is intentionally checked before
+    any school lookup or insert so a stale environment returns an actionable
+    setup error instead of a misleading generic signup failure.
+    """
+    try:
+        (
+            svc.table("schools")
+            .select("id, name, institution_type, address, city, state, country, school_code")
+            .limit(1)
+            .execute()
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions: school identity migration is unavailable", error=str(exc))
+        raise HTTPException(
+            status_code=503,
+            detail="School identity setup is unavailable. Apply the school identity migration before creating admin access.",
+        ) from exc
+
+
 def _is_developer_admin_route(claim: "VerificationClaim") -> bool:
     """Recognise the explicit local admin access code."""
     submitted = (claim.access_code or "").strip().upper()
@@ -202,6 +240,7 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             detail="A full organisation address is required for admin access.",
         )
     svc = _svc()
+    _require_school_identity_schema(svc)
     if claim.organization_id:
         selected = (
             svc.table("schools")
@@ -414,7 +453,7 @@ def _latest_demand(domain_id: str, rank_lens: str) -> dict:
             "postings_count, postings_yoy, remote_pct, "
             "entry_salary_local_ngn, entry_salary_remote_usd, "
             "top_employers, top_certs, plain_label, month, "
-            "value_band, demand_band, quadrant, interpretation, source_confidence"
+            "value_band, quadrant, interpretation, source_confidence"
         ).eq("domain_id", domain_id).eq("rank_lens", rank_lens).order(
             "month", desc=True
         ).limit(1).execute()
@@ -429,7 +468,7 @@ def _latest_role_demand(role_key: str, rank_lens: str) -> dict:
     try:
         res = _svc().table("role_demand_metrics").select(
             "postings_count, postings_yoy, remote_pct, salary_min, salary_max, "
-            "top_employers, top_certs, trend_pct, value_band, demand_band, "
+            "top_employers, top_certs, trend_pct, value_band, "
             "quadrant, interpretation, source_confidence, month"
         ).eq("role_id", role_key).eq("rank_lens", rank_lens).order(
             "month", desc=True
@@ -539,7 +578,7 @@ def _programme_domain_rows(programme_ids: list, cap: int = 4000) -> list:
         return (
             _svc()
             .table("programme_domain")
-            .select("programme_id, domain_id, match_type, in_demand_score, elite_flag")
+            .select("programme_id, domain_id, match_type, elite_flag")
             .in_("programme_id", programme_ids)
             .limit(cap)
             .execute()
@@ -728,6 +767,7 @@ class Organization(_InstitutionBase):
     school_code: Optional[str] = None
     verification_status: str = "unverified"  # unverified|claimed|pending|verified|rejected
     verification_method: Optional[str] = None
+    verification_proof_submitted_at: Optional[str] = None
     # True for tutorial_centre/jamb_cafe: provider/session only, never a roster.
     provider_session_only: bool = False
 
@@ -864,7 +904,6 @@ class DomainRankItem(_InstitutionBase):
     trend_pct: Optional[float] = None
     trend_direction: Optional[str] = None
     value_band: Optional[str] = None
-    demand_band: Optional[str] = None
     quadrant: Optional[str] = None
     interpretation: Optional[str] = None
 
@@ -896,7 +935,6 @@ class RoleDemandRow(_InstitutionBase):
     trend_pct: Optional[float] = None
     rank_lens: Optional[str] = None
     value_band: Optional[str] = None
-    demand_band: Optional[str] = None
     quadrant: Optional[str] = None
     interpretation: Optional[str] = None
     top_employers: List[str] = Field(default_factory=list)
@@ -907,11 +945,8 @@ class PeerInstitutionRow(_InstitutionBase):
     institution_name: str
     domains_accessible: int = 0
     unique_domains: Optional[List[str]] = None
-    # Peer comparison axes (Phase 6.8): coverage on domains + roles, weighted by
-    # demand. roles_accessible + demand_weight stay structural (role count /
-    # in_demand_score sum) until the Phase 7 demand cron populates postings.
+    # Peer comparison axes (Phase 6.8): structural coverage on domains + roles.
     roles_accessible: int = 0
-    demand_weight: Optional[float] = None
     is_self: bool = False
 
 
@@ -1190,17 +1225,15 @@ async def validate_admin_access_code(
     # server now remembers, and /verify refuses without it.
     try:
         svc = _svc()
-        svc.table("users").update(
+        grant_result = svc.table("users").update(
             {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
-        ).eq("id", current_user["id"]).execute()
+        ).eq("id", current_user["id"]).select("id").execute()
         # PostgREST does not raise when an UPDATE matches no row — it returns an
         # empty result. Catching only exceptions would therefore report
         # accepted=true for a write that changed nothing, and /verify would then
         # refuse the same user: exactly the contradiction this block exists to
         # prevent. An empty result is a failure.
-        matched = svc.table("users").select("id").eq(
-            "id", current_user["id"]
-        ).limit(1).execute().data or []
+        matched = grant_result.data or []
         if not matched:
             raise RuntimeError("admin access grant matched no user row")
     except Exception as exc:  # noqa: BLE001
@@ -1244,8 +1277,8 @@ async def validate_admin_access_code(
             "accepted": True,
             "accessTier": "owner_code",
             "notice": (
-                "Admin access unlocked by owner code. Organisation verification "
-                "is still pending until proof is reviewed."
+                "Admin access unlocked by owner code. Organisation is claimed; "
+                "submit proof when you are ready to request review."
             ),
         }
     )
@@ -1260,7 +1293,8 @@ async def submit_verification(
 
     Owner-code access and proof review stay separate: this creates/reuses the
     organisation shell and links the current user so admin/provisioning routes
-    can scope correctly, while verification itself remains pending.
+    can scope correctly. Selecting a method alone does not start review; the
+    organisation remains claimed until a proof file is submitted.
     """
     # ── The owner-code gate, enforced server-side ──────────────
     # Without this, /verify is a one-request privilege escalation: any
@@ -1292,7 +1326,10 @@ async def submit_verification(
             ),
         )
 
-    status = "pending" if claim.verification_method else "claimed"
+    # Selecting a verification method is not submitting proof. Keep the
+    # organisation claimed until the proof-upload endpoint records a file;
+    # only that endpoint is allowed to move the school to pending review.
+    status = "claimed"
     account_type = _normal_account_type(claim.account_type, claim.role)
     try:
         org = _find_or_create_school(claim)
@@ -1324,7 +1361,7 @@ async def submit_verification(
         )
         return ResponseModel(
             data=org.model_dump(by_alias=True),
-            message="Admin workspace linked. Verification remains pending until proof is reviewed.",
+            message="Admin workspace linked. Submit verification proof to request review.",
         )
     except Exception as exc:  # noqa: BLE001
         log.error("Institution verify claim failed", user_id=current_user["id"], error=str(exc))
@@ -1333,6 +1370,141 @@ async def submit_verification(
             message="Could not create the institution workspace.",
             data=None,
         )
+
+
+def _proof_org_for_user(current_user: dict) -> tuple[dict, Optional[dict]]:
+    """Resolve the caller's own school before accepting a proof file."""
+    member = _membership_for_user(current_user)
+    school_id = (member or {}).get("school_id")
+    if not school_id:
+        raise HTTPException(status_code=409, detail="Link your organisation before submitting verification proof.")
+    org = _org_from_school(school_id)
+    if not org:
+        raise HTTPException(status_code=404, detail="Your organisation could not be found.")
+    return {"id": school_id, "type": org.type, "name": org.name}, member
+
+
+def _proof_filename(filename: Optional[str], content_type: str) -> str:
+    raw = (filename or "proof").replace("\\", "/").split("/")[-1]
+    safe = re.sub(r"[^A-Za-z0-9._-]+", "_", raw).strip("._")[:120]
+    if safe and "." in safe:
+        return safe
+    extension = {"application/pdf": ".pdf", "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp"}.get(content_type, ".bin")
+    return f"{safe or 'proof'}{extension}"
+
+
+@router.get("/verification-proof", response_model=ResponseModel)
+async def get_verification_proof(current_user: dict = Depends(Auth.get_current_user)):
+    """Return metadata for the caller's latest private proof submission."""
+    org, _member = _proof_org_for_user(current_user)
+    try:
+        row = (
+            _svc()
+            .table("institution_verification_submissions")
+            .select("id, file_name, content_type, file_size, verification_method, status, submitted_at, reviewed_at, review_note")
+            .eq("school_id", org["id"])
+            .order("submitted_at", desc=True)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        return ResponseModel(data=row[0] if row else None)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: verification proof metadata unavailable", error=str(exc))
+        raise HTTPException(status_code=503, detail="Verification proof storage is not ready. Apply the institution verification migration first.")
+
+
+@router.post("/verification-proof", response_model=ResponseModel)
+async def submit_verification_proof(
+    proof: UploadFile = File(...),
+    verification_method: str = Form("document_upload"),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Store one private proof file and atomically move the organisation to review."""
+    org, member = _proof_org_for_user(current_user)
+    if (member or {}).get("role") not in {"owner", "institution_admin", "admin"}:
+        raise HTTPException(status_code=403, detail="Only an organisation owner or administrator can submit verification proof.")
+
+    content_type = (proof.content_type or "").lower().strip()
+    if content_type not in _ALLOWED_VERIFICATION_TYPES:
+        raise HTTPException(status_code=415, detail="Upload a PDF, JPG, PNG, or WEBP proof document.")
+    method = (verification_method or "document_upload").strip().lower()
+    if method not in {"document_upload", "email_domain", "cac_registration", "registry_match", "manual"}:
+        raise HTTPException(status_code=422, detail="Unsupported verification method.")
+
+    content = await proof.read(_MAX_VERIFICATION_PROOF_BYTES + 1)
+    if not content:
+        raise HTTPException(status_code=422, detail="The proof file is empty.")
+    if len(content) > _MAX_VERIFICATION_PROOF_BYTES:
+        raise HTTPException(status_code=413, detail="Verification proof must be 10 MB or smaller.")
+
+    filename = _proof_filename(proof.filename, content_type)
+    storage_path = f"{org['id']}/{current_user['id']}/{uuid4().hex}_{filename}"
+    storage = db.get_service_client().storage.from_(_VERIFICATION_BUCKET)
+    try:
+        storage.upload(storage_path, content, {"content-type": content_type, "upsert": "false"})
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions: verification proof upload failed", error=str(exc), school_id=org["id"])
+        raise HTTPException(status_code=503, detail="Verification proof storage is unavailable. Try again after the backend migration is applied.")
+
+    submitted_at = datetime.now(timezone.utc).isoformat()
+    try:
+        inserted = (
+            _svc()
+            .table("institution_verification_submissions")
+            .insert({
+                "school_id": org["id"],
+                "submitted_by": current_user["id"],
+                "storage_path": storage_path,
+                "file_name": filename,
+                "content_type": content_type,
+                "file_size": len(content),
+                "verification_method": method,
+                "status": "pending",
+                "submitted_at": submitted_at,
+            })
+            .execute()
+            .data
+            or []
+        )
+        if not inserted:
+            raise RuntimeError("verification proof insert returned no row")
+        updated = (
+            _svc()
+            .table("schools")
+            .update({
+                "verification_status": "pending",
+                "verification_method": method,
+                "verification_proof_submitted_at": submitted_at,
+            })
+            .eq("id", org["id"])
+            .select("id")
+            .execute()
+        )
+        if not updated.data:
+            raise RuntimeError("school verification status update returned no row")
+    except Exception as exc:  # noqa: BLE001
+        try:
+            storage.remove([storage_path])
+        except Exception:
+            pass
+        log.error("institutions: verification proof record failed", error=str(exc), school_id=org["id"])
+        raise HTTPException(status_code=503, detail="The proof could not be recorded. No review was started; please try again.")
+
+    row = inserted[0]
+    return ResponseModel(
+        data={
+            "id": row.get("id"),
+            "file_name": filename,
+            "content_type": content_type,
+            "file_size": len(content),
+            "verification_method": method,
+            "status": "pending",
+            "submitted_at": submitted_at,
+        },
+        message="Proof submitted. Your organisation is now under review.",
+    )
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1386,6 +1558,8 @@ async def get_programme_demand(
     """list[ProgrammeDemandRow] — real programme→domain structure; demand fields
     stay 0/None until ingestion (no fabricated numbers)."""
     _assert_own_institution(institution_id, current_user)
+    if not _DEMAND_INGESTION_READY:
+        return ResponseModel(data=[])
     try:
         programmes = _school_programmes(current_user, cap=100)
         if discipline:
@@ -1438,30 +1612,25 @@ async def get_domain_ranking(
     school's programmes feed each domain), since posting volume isn't ingested.
     postings_per_month stays 0; bar_ratio comes from the feeder count."""
     _assert_own_institution(institution_id, current_user)
+    if not _DEMAND_INGESTION_READY:
+        return ResponseModel(data=[])
     try:
         programmes = _school_programmes(current_user, cap=1000)
         rank_lens = _RANK_LENS[scope]
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
-        # Feeder count + best in_demand_score per domain.
+        # Structural feeder count per domain. This is not a demand ranking.
         feeders: dict = {}
-        demand: dict = {}
         for r in pd_rows:
             did = r["domain_id"]
             feeders[did] = feeders.get(did, 0) + 1
-            score = r.get("in_demand_score")
-            if score is not None:
-                try:
-                    demand[did] = max(demand.get(did, 0.0), float(score))
-                except (TypeError, ValueError):
-                    pass
         if not feeders:
             return ResponseModel(data=[])
         dmap = _domain_map(list(feeders.keys()))
         max_feeders = max(feeders.values())
         ranked = sorted(
             feeders.items(),
-            key=lambda kv: (kv[1], demand.get(kv[0], 0.0)),
+            key=lambda kv: kv[1],
             reverse=True,
         )[:50]
         rows = []
@@ -1485,7 +1654,6 @@ async def get_domain_ranking(
                         else "flat"
                     ) if latest else None,
                     value_band=latest.get("value_band"),
-                    demand_band=latest.get("demand_band"),
                     quadrant=latest.get("quadrant"),
                     interpretation=latest.get("interpretation") or latest.get("plain_label"),
                 )
@@ -1533,6 +1701,8 @@ async def get_role_demand(
     """list[RoleDemandRow] — roles reachable from the school's domains. Demand
     and salary fields stay None until ingestion (no fabricated numbers)."""
     _assert_own_institution(institution_id, current_user)
+    if not _DEMAND_INGESTION_READY:
+        return ResponseModel(data=[])
     try:
         programmes = _school_programmes(current_user, cap=1000)
         prog_ids = [p["id"] for p in programmes]
@@ -1569,7 +1739,6 @@ async def get_role_demand(
                     trend_pct=primary.get("trend_pct") or primary.get("postings_yoy"),
                     rank_lens="nigerian" if local else "remote" if remote else "global" if global_row else None,
                     value_band=primary.get("value_band"),
-                    demand_band=primary.get("demand_band"),
                     quadrant=primary.get("quadrant"),
                     interpretation=primary.get("interpretation"),
                     top_employers=primary.get("top_employers") or [],
@@ -1589,13 +1758,11 @@ async def get_peers(
 ):
     """Peer-institution comparison (ADMIN-ONLY, Phase 6.8).
 
-    Compares schools on DOMAIN coverage + ROLE coverage + a DEMAND WEIGHT. Each
+    Compares schools on DOMAIN coverage + ROLE coverage. Each
     school resolves to its reachable-domain set via school → school_programmes →
     programme_mapping → CCMAS programme → programme_domain → domains. Role
-    coverage = distinct roles in those domains; demand weight = sum of the
-    domains' in_demand_score (a structural proxy until the Phase 7 demand cron
-    lands real posting volume). `unique_domains` = domains the current school
-    covers that a peer does not.
+    coverage = distinct roles in those domains. `unique_domains` = domains the
+    current school covers that a peer does not.
     """
     _assert_own_institution(institution_id, current_user)
     try:
@@ -1634,7 +1801,7 @@ async def get_peers(
             coverage[s["id"]] = dset
             all_domain_ids |= dset
 
-        # Domain attributes: name, in_demand_score (demand weight), role count.
+        # Domain attributes: name only; this is a structural comparison.
         dmeta = _domain_map(list(all_domain_ids))
         # Role counts per domain (bounded single query over the involved domains).
         role_counts: dict = {}
@@ -1649,25 +1816,6 @@ async def get_peers(
             for r in (rc.data or []):
                 did = r.get("domain_id")
                 role_counts[did] = role_counts.get(did, 0) + 1
-        # Demand weight per domain from the best in_demand_score on any link.
-        demand_by_domain: dict = {}
-        if all_domain_ids:
-            dl = (
-                svc.table("programme_domain")
-                .select("domain_id, in_demand_score")
-                .in_("domain_id", list(all_domain_ids))
-                .limit(8000)
-                .execute()
-            )
-            for r in (dl.data or []):
-                did = r.get("domain_id")
-                score = r.get("in_demand_score")
-                if score is not None:
-                    try:
-                        demand_by_domain[did] = max(demand_by_domain.get(did, 0.0), float(score))
-                    except (TypeError, ValueError):
-                        pass
-
         my_domains = coverage.get(self_school_id, set()) if self_school_id else set()
         rows: List[PeerInstitutionRow] = []
         for s in peer_schools:
@@ -1683,7 +1831,6 @@ async def get_peers(
                     institution_name=s.get("name") or "",
                     domains_accessible=len(dset),
                     roles_accessible=sum(role_counts.get(d, 0) for d in dset),
-                    demand_weight=round(sum(demand_by_domain.get(d, 0.0) for d in dset), 2) or None,
                     unique_domains=unique,
                     is_self=is_self,
                 )
@@ -2075,6 +2222,11 @@ async def get_vs_national(
     the given scope. Returns empty rows with a notice when no demand data
     has been ingested — never fabricated.
     """
+    if not _DEMAND_INGESTION_READY:
+        return ResponseModel(
+            data=[],
+            message="National market benchmarks are unavailable until source-backed labour-market ingestion is added.",
+        )
     try:
         org_id = _resolve_org(current_user)
         rank_lens = _RANK_LENS[scope]

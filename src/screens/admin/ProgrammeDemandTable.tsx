@@ -23,7 +23,8 @@ import {
 import { Badge } from "@/components/ui";
 import { SparklineBar } from "@/components/admin/SparklineBar";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import type { DataState } from "../../types/career";
+import { comingSoon, type DataState } from "../../types/career";
+import { MARKET_DEMAND_AVAILABLE } from "@/lib/adminData";
 import type {
   ProgrammeDemandRow,
   TrendDirection,
@@ -192,10 +193,16 @@ export function ProgrammeDemandTable({
 }) {
   return (
     <ComingSoonPanel
-      state={state}
+      state={
+        MARKET_DEMAND_AVAILABLE
+          ? state
+          : comingSoon<ProgrammeDemandRow[]>(
+              "Programme demand is unavailable until source-backed labour-market ingestion is added.",
+            )
+      }
       empty={(rows) => rows.length === 0}
       emptyTitle="No programmes mapped yet"
-      emptyBody="Add or verify your programme mix to see its domain demand."
+       emptyBody="Programme demand is unavailable until source-backed labour-market ingestion is added."
     >
       {(rows) => (
         <View style={styles.table}>

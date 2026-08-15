@@ -310,14 +310,8 @@ class FoundationSkill(_CareerBase):
 class ToolOut(_CareerBase):
     tool:     Optional[str]  = None
     group:    Optional[str]  = None
-    hot:      Optional[bool] = None
-    inDemand: Optional[bool] = None
     roleFreq: Optional[int]  = None
     source:   Optional[str]  = None
-    # Phase 9 enrichment fields
-    demandScore:   Optional[float] = None
-    demandSource:  Optional[Literal["adzuna", "stackoverflow", "github_innovation", "onet_hot"]] = None
-    demandAsOf:    Optional[str] = None
     toolUrl:       Optional[str] = None
 
 
@@ -396,7 +390,6 @@ class RoleDetail(_CareerBase):
     essentialSkills: List[str]           = []
     optionalSkills: List[str]            = []
     appearsIn:      List[RoleAppearance]  = []
-    demandMetrics:  Optional[Dict[str, Any]] = None
     # Phase 9 enrichment fields
     currencyStatus:      Optional[Literal["current", "legacy", "emerging"]] = None
     currencyVerifiedAt:  Optional[str] = None
@@ -408,7 +401,6 @@ class DomainLinkOut(_CareerBase):
     domainName:    Optional[str]         = None
     matchType:     Optional[str]         = None
     eliteFlag:     bool                  = False
-    demandInsight: Optional[Dict[str, Any]] = None
 
 
 class ProgrammeDetail(_CareerBase):
@@ -625,13 +617,6 @@ class CertificationEnrichment(BaseModel):
 class SkillUriMap(BaseModel):
     """Parallel URI map for skills (keyed by skill name)."""
     uris: Dict[str, str] = {}
-
-
-class ToolDemandEnrichment(BaseModel):
-    demandScore: Optional[float] = None
-    demandSource: Optional[Literal["adzuna", "stackoverflow", "github_innovation", "onet_hot"]] = None
-    demandAsOf: Optional[str] = None
-    toolUrl: Optional[str] = None
 
 
 class RoleCurrencyStatus(BaseModel):

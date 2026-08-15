@@ -17,6 +17,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Platform } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { offlineWrite } from '../lib/offlineQueue';
+import { API_BASE } from '../lib/config';
 
 let Haptics: any = null;
 if (Platform.OS !== 'web') {
@@ -169,7 +170,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
       };
       const qs = new URLSearchParams(params).toString();
       // Backend returns posts sorted newest-first, with next_cursor for pagination
-      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/community/feed?${qs}`, {
+      const res = await fetch(`${API_BASE}/api/community/feed?${qs}`, {
         headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` },
       });
       if (!res.ok) throw new Error('Feed load failed');
@@ -204,7 +205,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/community/trending`);
+      const res = await fetch(`${API_BASE}/api/community/trending`);
         if (res.ok) { const d = await res.json(); setTrending(d.topics ?? []); }
       } catch {}
     };
@@ -379,7 +380,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
     setSearchLoading(true);
     try {
       const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/community/search?q=${encodeURIComponent(q)}&userId=${currentUserId}`,
+        `${API_BASE}/api/community/search?q=${encodeURIComponent(q)}&userId=${currentUserId}`,
         { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
       );
       if (res.ok) { const d = await res.json(); setSearchResults(d.posts ?? []); }
@@ -391,7 +392,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
     const load = async () => {
       try {
         const res = await fetch(
-          `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/notifications?userId=${currentUserId}`,
+        `${API_BASE}/api/notifications?userId=${currentUserId}`,
           { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
         );
         if (res.ok) {
@@ -451,7 +452,7 @@ export function useDMs(currentUserId: string) {
     setLoading(true);
     try {
       const res = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/dms/threads`,
+        `${API_BASE}/api/dms/threads`,
         { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
       );
       if (res.ok) { const d = await res.json(); setThreads(d.threads ?? []); }

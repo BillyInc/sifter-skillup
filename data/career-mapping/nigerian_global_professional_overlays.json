@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "local_evidence": "Only Nigerian professional, regulatory, education or sector sources may populate local_enrichment.",
+    "global_evidence": "Global professional frameworks may enrich global_enrichment, but are never labelled Nigerian evidence.",
+    "no_counterpart": "A missing local role match is reported as a gap. It is not filled with an invented Nigerian title.",
+    "deduplication": "Names are deduplicated by normalized name, kind and region during generation."
+  },
+  "sources": [
+    {
+      "id": "ng_cpn_syllabus_2021",
+      "region": "nigeria",
+      "name": "Computer Professionals Registration Council of Nigeria, 2021 Examination Syllabus",
+      "kind": "professional_body",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies docs/2021_CPN_Examination_Syllabus(Reviewed).pdf"],
+      "urls": ["https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf"]
+    },
+    {
+      "id": "ng_ican_syllabus_2019",
+      "region": "nigeria",
+      "name": "Institute of Chartered Accountants of Nigeria, 2019 Professional Examination Syllabus",
+      "kind": "professional_body",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies 2/2019-ICAN-SYLLABUS.pdf"],
+      "urls": ["https://icanig.org/ican/assets/docs/Professional_Syllabus_2025.pdf"]
+    },
+    {
+      "id": "ng_coren_competency",
+      "region": "nigeria",
+      "name": "Council for the Regulation of Engineering in Nigeria competency and registration guidance",
+      "kind": "professional_regulator",
+      "urls": ["https://coren.gov.ng/ppdc-unit/", "https://coren.gov.ng/guidelines-for-registration-of-engineers/", "https://coren.gov.ng/service/engineer/", "https://coren.gov.ng/certification-and-training/"]
+    },
+    {
+      "id": "ng_nmcn_registers",
+      "region": "nigeria",
+      "name": "Nursing and Midwifery Council of Nigeria registration and approved schools",
+      "kind": "professional_regulator",
+      "urls": ["https://nmcn.gov.ng/", "https://nmcn.gov.ng/membreg.html", "https://nmcn.gov.ng/apschool.html", "https://educator.elearn.nmcn.gov.ng/"]
+    },
+    {
+      "id": "ng_ndpc_dpo",
+      "region": "nigeria",
+      "name": "Nigeria Data Protection Commission data protection and DPO certification guidance",
+      "kind": "professional_regulator",
+      "urls": ["https://ndpc.gov.ng/", "https://www.ndpc.gov.ng/ndpc-kicks-off-2nd-edition-of-dpo-certification-to-position-nigeria-as-a-global-privacy-hub/", "https://www.ndpc.gov.ng/Files/NDP-GAID-DRAFT.pdf"]
+    },
+    {
+      "id": "ng_national_ai_strategy_2025",
+      "region": "nigeria",
+      "name": "Nigeria National Artificial Intelligence Strategy and NCAIR",
+      "kind": "national_strategy",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies docs/National-Artificial-Intelligence-Strategy-19092025 (1).pdf"],
+      "urls": ["https://ncair.nitda.gov.ng/", "https://ncair.nitda.gov.ng/wp-content/uploads/2025/09/National-Artificial-Intelligence-Strategy-19092025.pdf"]
+    },
+    {
+      "id": "ng_ncc_type_approval",
+      "region": "nigeria",
+      "name": "Nigerian Communications Commission type approval and licensing guidance",
+      "kind": "sector_regulator",
+      "urls": ["https://ncc.gov.ng/sites/default/files/2024-11/Documents/service-delivery-timelines/NCC_Service_Delivery_Timelines.pdf", "https://fr.ncc.gov.ng/industrie/licence/processus-de-demande-de-licence"]
+    },
+    {
+      "id": "ng_nuc_elearning_2023",
+      "region": "nigeria",
+      "name": "National Universities Commission guidelines for e-learning in Nigerian universities",
+      "kind": "education_standard",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies docs/Guidelines-for-e-Learning-in-Nigerian-Universities-April-2023-Revised-FINAL.pdf"],
+      "urls": ["https://www.nuc.edu.ng/"]
+    },
+    {
+      "id": "global_cfa_curriculum_2026",
+      "region": "global",
+      "name": "CFA Institute curriculum and practical skills modules",
+      "kind": "professional_body",
+      "urls": ["https://www.cfainstitute.org/programs/cfa-program/curriculum", "https://www.cfainstitute.org/programs/cfa-program/careers", "https://www.cfainstitute.org/programs/cfa-program/charter"]
+    },
+    {
+      "id": "global_garp_frm_2026",
+      "region": "global",
+      "name": "GARP Financial Risk Manager learning objectives",
+      "kind": "professional_body",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies 2/frm-learning-objective-26.pdf"],
+      "urls": ["https://www.garp.org/landing/frm-learning-objectives"]
+    },
+    {
+      "id": "global_rics_competencies_2026",
+      "region": "global",
+      "name": "RICS Requirements and Competencies Guide",
+      "kind": "professional_body",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies docs/Requirements-and-Competencies-Guide_December-2025-amended-March-2026.pdf"],
+      "urls": ["https://www.rics.org/content/dam/ricsglobal/documents/join-rics/Land-and-resources_December-2025.pdf"]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ng_cpn_computing",
+      "region": "nigeria",
+      "source_ids": ["ng_cpn_syllabus_2021"],
+      "domain_ids": ["D001", "D002", "D003", "D004", "D005", "D006", "D007", "D008", "D009", "D010", "D012", "D056", "D057", "D058", "D139", "D140", "D143", "D147"],
+      "role_patterns": ["software", "developer", "programmer", "database", "systems analyst", "network", "cyber", "security", "telecom", "cloud", "devops", "artificial intelligence", "machine learning", "robotics", "user interface", "user experience", "web", "multimedia", "game", "blockchain", "quality assurance", "tester", "ict", "information technology"],
+      "local_role_names": ["Computer Professional", "Software Engineer", "Software Developer", "Systems Analyst", "Database Engineer", "Network Security Specialist", "Telecommunications Engineer", "Web Developer", "ICT Practitioner", "Multimedia Technology Specialist"],
+      "skills": [
+        {"name": "Computer systems and programming", "priority": "core", "evidence": "CPN CLE 111 and CFE/CPE syllabus"},
+        {"name": "Computer software packages", "priority": "core", "evidence": "CPN CLE 112 syllabus"},
+        {"name": "Multimedia document production and graphics design", "priority": "core", "evidence": "CPN CLE 113 syllabus"},
+        {"name": "Business data handling and processing", "priority": "core", "evidence": "CPN CLE 114 syllabus"},
+        {"name": "Network and computer security", "priority": "core", "evidence": "CPN CLE 115 and CPE syllabus"},
+        {"name": "Web design technologies", "priority": "core", "evidence": "CPN CLE 116 syllabus"},
+        {"name": "Database design and management", "priority": "core", "evidence": "CPN CFE/CPE syllabus"},
+        {"name": "Software quality assurance, testing and documentation", "priority": "core", "evidence": "CPN CPE syllabus"},
+        {"name": "Data protection, backup and recovery", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Artificial intelligence and robotics foundations", "priority": "supplementary", "evidence": "CPN CPE syllabus"}
+      ],
+      "tools": [
+        {"name": "Unix/Linux", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Microsoft Excel", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Microsoft Access", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "OpenOffice Calc", "priority": "supplementary", "evidence": "CPN syllabus"},
+        {"name": "MySQL", "priority": "core", "evidence": "CPN CFE/CPE syllabus"},
+        {"name": "PHP", "priority": "supplementary", "evidence": "CPN CFE/CPE syllabus"},
+        {"name": "ASP.NET", "priority": "supplementary", "evidence": "CPN CFE/CPE syllabus"},
+        {"name": "SQL", "priority": "core", "evidence": "CPN database syllabus"},
+        {"name": "Virtual private networks and intrusion detection systems", "priority": "core", "evidence": "CPN network security syllabus"},
+        {"name": "Role-based access control, encryption and digital certificates", "priority": "core", "evidence": "CPN network security syllabus"}
+      ],
+      "competencies": [
+        {"name": "Design a relational database schema and write SQL queries", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Develop, test and document software", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Configure and secure a computer network", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Apply data protection and backup controls", "priority": "core", "evidence": "CPN syllabus"},
+        {"name": "Produce technical and user documentation", "priority": "supplementary", "evidence": "CPN syllabus"}
+      ],
+      "certifications": [
+        {"name": "CPN Computer Literacy Examination (CLE)", "issuer": "Computer Professionals Registration Council of Nigeria", "level": "foundation", "evidence": "CPN 2021 syllabus"},
+        {"name": "CPN Computer Foundation Examination (CFE)", "issuer": "Computer Professionals Registration Council of Nigeria", "level": "foundation", "evidence": "CPN 2021 syllabus"},
+        {"name": "CPN Computer Professional Examination (CPE)", "issuer": "Computer Professionals Registration Council of Nigeria", "level": "professional", "evidence": "CPN 2021 syllabus"}
+      ],
+      "subgroups": [
+        {"patterns": ["software", "systems"], "skills": [{"name": "Software development, testing and documentation", "priority": "core", "evidence": "CPN syllabus"}], "tools": [{"name": "SQL", "priority": "core", "evidence": "CPN syllabus"}, {"name": "PHP", "priority": "supplementary", "evidence": "CPN syllabus"}]},
+        {"patterns": ["database", "data"], "skills": [{"name": "Database design and business data processing", "priority": "core", "evidence": "CPN syllabus"}], "tools": [{"name": "MySQL", "priority": "core", "evidence": "CPN syllabus"}, {"name": "Microsoft Access", "priority": "supplementary", "evidence": "CPN syllabus"}]},
+        {"patterns": ["security", "network", "telecom"], "skills": [{"name": "Network security and secure communications", "priority": "core", "evidence": "CPN syllabus"}], "tools": [{"name": "VPN", "priority": "core", "evidence": "CPN syllabus"}, {"name": "Intrusion detection systems", "priority": "core", "evidence": "CPN syllabus"}]},
+        {"patterns": ["machine", "robot", "computational"], "skills": [{"name": "Artificial intelligence and robotics foundations", "priority": "core", "evidence": "CPN syllabus"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_ican_accountancy",
+      "region": "nigeria",
+      "source_ids": ["ng_ican_syllabus_2019"],
+      "domain_ids": ["D010", "D011", "D013", "D015", "D028", "D038", "D060", "D061", "D062", "D157", "D158", "D159"],
+      "role_patterns": ["account", "audit", "assurance", "tax", "financial", "finance", "credit", "investment", "bank", "risk", "treasury", "payroll", "bookkeep", "compliance"],
+      "local_role_names": ["Chartered Accountant (ACA)", "Audit and Assurance Professional", "Tax Professional", "Financial Reporting Professional", "Management Accountant"],
+      "skills": [
+        {"name": "Accounting and business reporting", "priority": "core", "evidence": "ICAN practical experience areas"},
+        {"name": "Audit, assurance and forensic accounting", "priority": "core", "evidence": "ICAN practical experience areas"},
+        {"name": "Financial management", "priority": "core", "evidence": "ICAN practical experience areas"},
+        {"name": "Taxation and public finance", "priority": "core", "evidence": "ICAN practical experience areas"},
+        {"name": "Professional ethics and values", "priority": "core", "evidence": "ICAN syllabus"},
+        {"name": "Risk, governance and internal control", "priority": "core", "evidence": "ICAN syllabus"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Communicate financial information clearly", "priority": "core", "evidence": "ICAN syllabus"},
+        {"name": "Apply professional judgement and ethical standards", "priority": "core", "evidence": "ICAN syllabus"},
+        {"name": "Analyse financial information and solve business problems", "priority": "core", "evidence": "ICAN syllabus"},
+        {"name": "Work effectively with clients and teams", "priority": "core", "evidence": "ICAN syllabus"},
+        {"name": "Plan and manage professional work", "priority": "supplementary", "evidence": "ICAN syllabus"}
+      ],
+      "certifications": [{"name": "ACA qualification", "issuer": "Institute of Chartered Accountants of Nigeria", "level": "professional", "evidence": "ICAN syllabus"}],
+      "subgroups": [
+        {"patterns": ["account", "bookkeep", "payroll"], "skills": [{"name": "Financial reporting and accounting controls", "priority": "core", "evidence": "ICAN syllabus"}], "tools": []},
+        {"patterns": ["audit", "assurance", "forensic"], "skills": [{"name": "Audit, assurance and forensic review", "priority": "core", "evidence": "ICAN syllabus"}], "tools": []},
+        {"patterns": ["finance", "credit", "investment", "risk"], "skills": [{"name": "Financial management, risk and investment analysis", "priority": "core", "evidence": "ICAN syllabus"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_coren_engineering",
+      "region": "nigeria",
+      "source_ids": ["ng_coren_competency"],
+      "domain_ids": ["D016", "D017", "D018", "D019", "D020", "D022", "D049", "D050", "D054", "D055", "D069", "D072", "D074", "D140", "D146", "D147", "D148", "D156", "D164"],
+      "role_patterns": ["engineer", "engineering", "technician", "technologist", "energy auditor", "energy manager", "solar", "hydropower", "survey", "automation", "plant operator", "maintenance", "commissioning"],
+      "local_role_names": ["Registered Engineer (Engr.)", "Engineering Technologist", "Engineering Technician", "Engineering Craftsman", "Solar PV Engineer", "Energy Auditor", "Mini-grid Engineer", "Rural Hydropower Engineer"],
+      "skills": [
+        {"name": "Engineering design and technical problem solving", "priority": "core", "evidence": "COREN engineer registration and interview guidance"},
+        {"name": "Planning, production, construction, installation and commissioning", "priority": "core", "evidence": "COREN engineer service guidance"},
+        {"name": "Testing, maintenance and operations", "priority": "core", "evidence": "COREN engineer service guidance"},
+        {"name": "Health, safety and environmental practice", "priority": "core", "evidence": "COREN engineer service guidance"},
+        {"name": "Standards, codes, specifications and technical documentation", "priority": "core", "evidence": "COREN engineer service guidance"},
+        {"name": "Professional communication and technical terminology", "priority": "core", "evidence": "COREN engineer service guidance"},
+        {"name": "Energy management and renewable energy systems", "priority": "supplementary", "evidence": "COREN certification and training"}
+      ],
+      "tools": [
+        {"name": "MATLAB", "priority": "supplementary", "evidence": "COREN education and training guidance"},
+        {"name": "Polymath", "priority": "supplementary", "evidence": "COREN education and training guidance"},
+        {"name": "Electronic test and measurement equipment", "priority": "core", "evidence": "COREN education and training guidance"}
+      ],
+      "competencies": [
+        {"name": "Prepare and review engineering designs", "priority": "core", "evidence": "COREN guidance"},
+        {"name": "Test, commission and maintain engineering systems", "priority": "core", "evidence": "COREN guidance"},
+        {"name": "Apply HSE controls and engineering standards", "priority": "core", "evidence": "COREN guidance"},
+        {"name": "Lead technical work and communicate with stakeholders", "priority": "core", "evidence": "COREN guidance"}
+      ],
+      "certifications": [
+        {"name": "COREN Registered Engineer (Engr.)", "issuer": "Council for the Regulation of Engineering in Nigeria", "level": "professional registration", "evidence": "COREN registration guidance"},
+        {"name": "COREN Solar PV certification and training", "issuer": "Council for the Regulation of Engineering in Nigeria", "level": "specialist", "evidence": "COREN certification and training"},
+        {"name": "COREN Energy Management and Energy Audit certification and training", "issuer": "Council for the Regulation of Engineering in Nigeria", "level": "specialist", "evidence": "COREN certification and training"}
+      ],
+      "regulatory_requirements": [{"name": "COREN registration pathway", "details": "Accredited qualification, relevant experience, competency evidence, CPD and the applicable professional examination or interview are separate from the skills shown here.", "evidence": "COREN registration guidance"}],
+      "subgroups": [
+        {"patterns": ["electrical", "electronics", "automation", "robot", "power"], "skills": [{"name": "Electrical systems, control and commissioning", "priority": "core", "evidence": "COREN guidance"}], "tools": [{"name": "Electronic test and measurement equipment", "priority": "core", "evidence": "COREN guidance"}]},
+        {"patterns": ["civil", "site", "building", "draft", "survey", "geospatial", "mobility", "urban"], "skills": [{"name": "Site, infrastructure and engineering documentation", "priority": "core", "evidence": "COREN guidance"}], "tools": []},
+        {"patterns": ["mechanical", "vehicle", "energy", "plant", "petroleum", "subsea", "chemical", "process"], "skills": [{"name": "Plant, equipment and maintenance engineering", "priority": "core", "evidence": "COREN guidance"}], "tools": [{"name": "MATLAB", "priority": "supplementary", "evidence": "COREN training guidance"}]}
+      ]
+    },
+    {
+      "id": "ng_nmcn_nursing",
+      "region": "nigeria",
+      "source_ids": ["ng_nmcn_registers"],
+      "domain_ids": ["D023", "D024", "D025", "D026", "D027", "D057", "D064", "D068"],
+      "role_patterns": ["nurse", "midwife", "nursing", "clinical", "public health", "mental health", "orthopaedic", "anaesthet", "perioperative", "ophthalmic", "accident and emergency", "paediatric", "cardio-thoracic", "burns", "occupational health", "intensive care", "healthcare assistant"],
+      "local_role_names": ["General Nurse", "Midwife", "Mental Health Nurse", "Public Health Nurse", "Nurse Educator", "Nurse Administrator", "Orthopaedic Nurse", "Nurse Anaesthetist", "Perioperative Nurse", "Paediatric Nurse", "Intensive Care Nurse"],
+      "skills": [
+        {"name": "Safe and effective nursing and midwifery care", "priority": "core", "evidence": "NMCN registration framework"},
+        {"name": "Clinical assessment, care planning and patient education", "priority": "core", "evidence": "NMCN professional practice context"},
+        {"name": "Professional ethics, standards and accountability", "priority": "core", "evidence": "NMCN registration framework"},
+        {"name": "Continuing professional development", "priority": "core", "evidence": "NMCN digital learning and registration context"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Deliver care within the registered scope of practice", "priority": "core", "evidence": "NMCN registration context"},
+        {"name": "Communicate with patients, families and care teams", "priority": "core", "evidence": "NMCN professional practice context"},
+        {"name": "Maintain accurate clinical records", "priority": "core", "evidence": "NMCN professional practice context"}
+      ],
+      "certifications": [
+        {"name": "NMCN Basic Registration", "issuer": "Nursing and Midwifery Council of Nigeria", "level": "registration", "evidence": "NMCN registration and approved schools"},
+        {"name": "NMCN Post-Basic Nursing Specialty Registration", "issuer": "Nursing and Midwifery Council of Nigeria", "level": "specialist registration", "evidence": "NMCN register categories"}
+      ],
+      "regulatory_requirements": [{"name": "NMCN registration", "details": "Training institution approval and the applicable registration route are separate from the guidance content.", "evidence": "NMCN registration and approved schools"}],
+      "subgroups": [
+        {"patterns": ["nurse", "midwi", "clinical", "therapy", "diagnostic", "healthcare"], "skills": [{"name": "Patient-centred care and clinical teamwork", "priority": "core", "evidence": "NMCN registration context"}], "tools": []},
+        {"patterns": ["informatics", "records", "data", "epidemiology"], "skills": [{"name": "Accurate health information and clinical records practice", "priority": "core", "evidence": "NMCN professional practice context"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_ndpc_privacy",
+      "region": "nigeria",
+      "source_ids": ["ng_ndpc_dpo"],
+      "domain_ids": ["D004", "D009", "D010", "D015", "D038", "D057", "D157", "D163"],
+      "role_patterns": ["data protection", "privacy", "compliance", "data governance", "information governance", "security officer", "risk"],
+      "local_role_names": ["Data Protection Officer", "Privacy and Compliance Analyst", "Data Governance Specialist", "Privacy Counsel"],
+      "skills": [
+        {"name": "Data protection principles and data subject rights", "priority": "core", "evidence": "NDPC guidance"},
+        {"name": "Privacy notices, records of processing and data inventories", "priority": "core", "evidence": "NDPC guidance"},
+        {"name": "Data protection impact assessment and breach response", "priority": "core", "evidence": "NDPC guidance"},
+        {"name": "Privacy by design, awareness and compliance monitoring", "priority": "core", "evidence": "NDPC guidance"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Explain privacy obligations to an organisation", "priority": "core", "evidence": "NDPC guidance"},
+        {"name": "Assess and document privacy risks", "priority": "core", "evidence": "NDPC guidance"},
+        {"name": "Coordinate data-subject requests and incident response", "priority": "core", "evidence": "NDPC guidance"}
+      ],
+      "certifications": [{"name": "NDPC DPO Training and Certification", "issuer": "Nigeria Data Protection Commission", "level": "specialist", "evidence": "NDPC DPO certification announcement"}],
+      "regulatory_requirements": [{"name": "Nigeria Data Protection Act compliance", "details": "Organisational compliance duties and DPO requirements depend on the organisation and processing activity; this is not a personal licence claim.", "evidence": "NDPC guidance"}],
+      "subgroups": [
+        {"patterns": ["security", "cyber", "governance", "compliance"], "skills": [{"name": "Privacy risk, governance and compliance monitoring", "priority": "core", "evidence": "NDPC guidance"}], "tools": []},
+        {"patterns": ["data", "informatics", "records"], "skills": [{"name": "Data inventories, privacy impact assessment and data rights", "priority": "core", "evidence": "NDPC guidance"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_national_ai",
+      "region": "nigeria",
+      "source_ids": ["ng_national_ai_strategy_2025"],
+      "domain_ids": ["D003", "D009", "D140", "D142", "D145", "D167", "D168"],
+      "role_patterns": ["artificial intelligence", "machine learning", "ai ", "robot", "data scientist", "research", "innovation", "product"],
+      "local_role_names": ["AI Engineer", "Machine Learning Engineer", "AI Researcher", "AI Product and Innovation Specialist", "Robotics Engineer", "Data Scientist"],
+      "skills": [
+        {"name": "Artificial intelligence and machine learning", "priority": "core", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Responsible AI and legal awareness", "priority": "core", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Interaction design and human-centred systems", "priority": "supplementary", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Change management, communication and innovation management", "priority": "core", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Entrepreneurship and AI business models", "priority": "supplementary", "evidence": "Nigeria National AI Strategy"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Translate an AI problem into a responsible solution", "priority": "core", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Communicate technical and social implications of AI", "priority": "core", "evidence": "Nigeria National AI Strategy"},
+        {"name": "Work across technical, legal and business teams", "priority": "core", "evidence": "Nigeria National AI Strategy"}
+      ],
+      "certifications": [],
+      "subgroups": [
+        {"patterns": ["machine", "robot", "computational"], "skills": [{"name": "AI, automation and responsible innovation", "priority": "core", "evidence": "Nigeria National AI Strategy"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_ncc_telecom",
+      "region": "nigeria",
+      "source_ids": ["ng_ncc_type_approval"],
+      "domain_ids": ["D005", "D006", "D008", "D012"],
+      "role_patterns": ["telecom", "radio", "network", "broadband", "rf ", "wireless", "type approval", "spectrum"],
+      "local_role_names": ["Telecommunications Engineer", "Network Operations Engineer", "RF Engineer", "Broadband Engineer", "Type Approval and Regulatory Specialist"],
+      "skills": [
+        {"name": "Telecommunications and network operations", "priority": "core", "evidence": "NCC licensing and type approval guidance"},
+        {"name": "Technical specifications, test reports and conformity evidence", "priority": "core", "evidence": "NCC type approval guidance"},
+        {"name": "Regulatory licensing and service compliance", "priority": "core", "evidence": "NCC licensing guidance"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Prepare technical files and equipment documentation", "priority": "core", "evidence": "NCC type approval guidance"},
+        {"name": "Review test results and declarations of conformity", "priority": "core", "evidence": "NCC type approval guidance"},
+        {"name": "Operate within Nigerian telecommunications licensing requirements", "priority": "core", "evidence": "NCC licensing guidance"}
+      ],
+      "certifications": [],
+      "regulatory_requirements": [{"name": "NCC type approval and licensing", "details": "These are equipment or organisation regulatory requirements, not a personal professional certification.", "evidence": "NCC type approval and licensing guidance"}],
+      "subgroups": [
+        {"patterns": ["radio", "network", "telecom", "support"], "skills": [{"name": "Network operations, technical documentation and regulatory compliance", "priority": "core", "evidence": "NCC guidance"}], "tools": []}
+      ]
+    },
+    {
+      "id": "ng_nuc_elearning",
+      "region": "nigeria",
+      "source_ids": ["ng_nuc_elearning_2023"],
+      "domain_ids": ["D039", "D040", "D041", "D058"],
+      "role_patterns": ["instructional", "e-learning", "elearning", "lms", "learning techn", "online learning", "lecturer", "teacher", "education"],
+      "local_role_names": ["Instructional Designer", "LMS Administrator", "E-learning Coordinator", "Online Learning Facilitator", "Lecturer"],
+      "skills": [
+        {"name": "Digital learning pedagogy and course design", "priority": "core", "evidence": "NUC e-learning guidelines"},
+        {"name": "Synchronous and asynchronous learning delivery", "priority": "core", "evidence": "NUC e-learning guidelines"},
+        {"name": "Learning management and virtual learning environments", "priority": "core", "evidence": "NUC e-learning guidelines"},
+        {"name": "Open educational resources, MOOCs and digital assessment", "priority": "supplementary", "evidence": "NUC e-learning guidelines"}
+      ],
+      "tools": [{"name": "Learning management system", "priority": "core", "evidence": "NUC e-learning guidelines"}, {"name": "Virtual learning environment", "priority": "core", "evidence": "NUC e-learning guidelines"}],
+      "competencies": [
+        {"name": "Design an accessible online learning experience", "priority": "core", "evidence": "NUC e-learning guidelines"},
+        {"name": "Facilitate and assess synchronous and asynchronous learning", "priority": "core", "evidence": "NUC e-learning guidelines"},
+        {"name": "Apply quality assurance to digital learning content", "priority": "core", "evidence": "NUC e-learning guidelines"}
+      ],
+      "certifications": [],
+      "subgroups": [
+        {"patterns": ["lecturer", "teacher", "school", "education"], "skills": [{"name": "Teaching, assessment and learner support", "priority": "core", "evidence": "NUC e-learning guidelines"}], "tools": [{"name": "Learning management system", "priority": "core", "evidence": "NUC e-learning guidelines"}]}
+      ]
+    },
+    {
+      "id": "global_cfa_finance",
+      "region": "global",
+      "source_ids": ["global_cfa_curriculum_2026"],
+      "domain_ids": ["D011", "D013", "D060", "D061", "D062", "D010", "D015", "D158", "D159"],
+      "role_patterns": ["investment", "portfolio", "financial analyst", "equity", "fixed income", "risk", "trader", "valuation", "corporate finance", "credit"],
+      "skills": [
+        {"name": "Ethical and professional standards", "priority": "core", "evidence": "CFA curriculum"},
+        {"name": "Financial statement analysis and corporate finance", "priority": "core", "evidence": "CFA curriculum"},
+        {"name": "Equity, fixed income, derivatives and alternative investments", "priority": "core", "evidence": "CFA curriculum"},
+        {"name": "Portfolio management and valuation", "priority": "core", "evidence": "CFA curriculum"},
+        {"name": "Quantitative methods, forecasting and risk analysis", "priority": "core", "evidence": "CFA career skills"}
+      ],
+      "tools": [{"name": "Python", "priority": "supplementary", "evidence": "CFA practical skills modules"}, {"name": "Jupyter", "priority": "supplementary", "evidence": "CFA practical skills modules"}, {"name": "SQL", "priority": "supplementary", "evidence": "CFA career skills"}, {"name": "R", "priority": "supplementary", "evidence": "CFA career skills"}, {"name": "Financial modelling and data visualisation", "priority": "core", "evidence": "CFA career skills"}],
+      "competencies": [{"name": "Value investments and communicate an investment view", "priority": "core", "evidence": "CFA curriculum"}, {"name": "Analyse risk and construct portfolios", "priority": "core", "evidence": "CFA curriculum"}],
+      "certifications": [{"name": "CFA Program", "issuer": "CFA Institute", "level": "global professional programme", "evidence": "CFA charter and curriculum"}],
+      "subgroups": [
+        {"patterns": ["quantitative", "investment", "traders", "financial analysis", "credit", "lending", "accounting"], "skills": [{"name": "Financial analysis, valuation and portfolio decision-making", "priority": "core", "evidence": "CFA curriculum"}], "tools": [{"name": "Financial modelling and data visualisation", "priority": "core", "evidence": "CFA career skills"}]}
+      ]
+    },
+    {
+      "id": "global_garp_risk",
+      "region": "global",
+      "source_ids": ["global_garp_frm_2026"],
+      "domain_ids": ["D011", "D013", "D014", "D038", "D060", "D061", "D159"],
+      "role_patterns": ["risk", "credit", "market", "treasury", "liquidity", "operational", "quantitative", "investment"],
+      "skills": [{"name": "Foundations of risk management", "priority": "core", "evidence": "GARP FRM learning objectives"}, {"name": "Quantitative analysis and risk models", "priority": "core", "evidence": "GARP FRM learning objectives"}, {"name": "Market, credit, operational and liquidity risk", "priority": "core", "evidence": "GARP FRM learning objectives"}, {"name": "Scenario analysis, hedging and risk reporting", "priority": "core", "evidence": "GARP FRM learning objectives"}],
+      "tools": [],
+      "competencies": [{"name": "Measure and communicate financial risk", "priority": "core", "evidence": "GARP FRM learning objectives"}, {"name": "Apply governance, risk aggregation and scenario analysis", "priority": "core", "evidence": "GARP FRM learning objectives"}],
+      "certifications": [{"name": "Financial Risk Manager (FRM)", "issuer": "Global Association of Risk Professionals", "level": "global professional certification", "evidence": "GARP FRM learning objectives"}],
+      "subgroups": [
+        {"patterns": ["quantitative", "risk", "investment", "credit", "market", "lending", "traders", "financial analysis"], "skills": [{"name": "Risk measurement, scenario analysis and risk reporting", "priority": "core", "evidence": "GARP FRM learning objectives"}], "tools": []}
+      ]
+    },
+    {
+      "id": "global_rics_built_environment",
+      "region": "global",
+      "source_ids": ["global_rics_competencies_2026"],
+      "domain_ids": ["D018", "D020", "D021", "D051", "D052", "D072", "D156", "D164"],
+      "role_patterns": ["surveyor", "surveying", "valuation", "quantity", "construction", "building", "property", "planning", "facilities", "land", "geospatial", "project manager", "urban"],
+      "skills": [{"name": "Ethics, professionalism and client care", "priority": "core", "evidence": "RICS competencies guide"}, {"name": "Communication, negotiation and conflict resolution", "priority": "core", "evidence": "RICS competencies guide"}, {"name": "Health, safety, sustainability and inclusive practice", "priority": "core", "evidence": "RICS competencies guide"}, {"name": "Land, geospatial, valuation, planning and construction practice", "priority": "core", "evidence": "RICS pathways and competencies guide"}],
+      "tools": [],
+      "competencies": [{"name": "Manage professional data and records", "priority": "core", "evidence": "RICS competencies guide"}, {"name": "Apply pathway-specific technical competence", "priority": "core", "evidence": "RICS competencies guide"}],
+      "certifications": [{"name": "RICS Associate or Chartered pathway", "issuer": "Royal Institution of Chartered Surveyors", "level": "global professional pathway", "evidence": "RICS competencies guide"}],
+      "subgroups": [
+        {"patterns": ["survey", "construction", "building", "land", "geospatial", "planning", "urban", "mobility", "site", "draft"], "skills": [{"name": "Pathway-specific built-environment competence", "priority": "core", "evidence": "RICS competencies guide"}], "tools": []}
+      ]
+    }
+  ]
+}

@@ -13,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 import email_codes
+import db_email_codes
 import email_delivery
 from config import settings
 from database import db
@@ -149,10 +150,6 @@ def _attach_legal_acceptance(service, user: dict, acceptance: dict) -> dict:
         return user
 
 
-def _require_valid_email_code(email: str, code: str):
-    submitted = str(code or "").strip()
-    if settings.EMAIL_VERIFICATION_DEV_CODES and submitted == "000000":
-        return
 async def _issue_email_code(email: str, purpose: str) -> str:
     """Generate, store and send a code. Raises HTTPException if delivery fails."""
     code = f"{secrets.randbelow(1000000):06d}"
@@ -160,13 +157,20 @@ async def _issue_email_code(email: str, purpose: str) -> str:
     # Stored BEFORE sending. The reverse order can deliver a code that was
     # never recorded and therefore can never be verified; a stored code that
     # was never delivered merely expires unused.
-    await email_codes.store_code(email, code, purpose=purpose)
+    if settings.EMAIL_CODE_STORAGE == "database" and purpose in (
+        email_codes.PURPOSE_SIGNUP,
+        email_codes.PURPOSE_ADMIN_MFA,
+    ):
+        await db_email_codes.store_code(email, code, purpose=purpose)
+    else:
+        await email_codes.store_code(email, code, purpose=purpose)
 
-    send = (
-        email_delivery.send_password_reset_code
-        if purpose == email_codes.PURPOSE_PASSWORD_RESET
-        else email_delivery.send_verification_code
-    )
+    if purpose == email_codes.PURPOSE_PASSWORD_RESET:
+        send = email_delivery.send_password_reset_code
+    elif purpose == email_codes.PURPOSE_ADMIN_MFA:
+        send = email_delivery.send_admin_mfa_code
+    else:
+        send = email_delivery.send_verification_code
     try:
         await send(email, code)
     except email_delivery.EmailDeliveryError as exc:
@@ -185,9 +189,14 @@ async def _require_valid_email_code(email: str, code: str):
     if settings.EMAIL_VERIFICATION_DEV_CODES and submitted == "000000":
         return
 
-    outcome = await email_codes.verify_code(
-        email, submitted, purpose=email_codes.PURPOSE_SIGNUP
-    )
+    if settings.EMAIL_CODE_STORAGE == "database":
+        outcome = await db_email_codes.verify_code(
+            email, submitted, purpose=email_codes.PURPOSE_SIGNUP
+        )
+    else:
+        outcome = await email_codes.verify_code(
+            email, submitted, purpose=email_codes.PURPOSE_SIGNUP
+        )
     if outcome == email_codes.OK:
         # verify_code consumes the record, so the code cannot be replayed and
         # callers have nothing left to clean up.
@@ -249,6 +258,196 @@ async def confirm_password_reset(body: dict):
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         db.get_service_client().table("users").update({"password_hash": password_hash}).eq("id", existing.data[0]["id"]).execute()
     return ResponseModel(data={"updated": True})
+
+
+def _admin_user(current_user: dict) -> dict:
+    if current_user.get("account_type") not in ("institution_admin", "educator"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return current_user
+
+
+@app.get("/api/auth/mfa", response_model=ResponseModel)
+async def get_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
+    _admin_user(current_user)
+    try:
+        rows = db.get_service_client().table("user_mfa_settings").select(
+            "status,method,last_verified_at,deferred_until"
+        ).eq("user_id", current_user["id"]).limit(1).execute().data or []
+    except Exception:
+        rows = []
+    return ResponseModel(data=rows[0] if rows else {
+        "status": "recommended", "method": "email_otp",
+        "last_verified_at": None, "deferred_until": None,
+    })
+
+
+@app.post("/api/auth/mfa/request", response_model=ResponseModel)
+async def request_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
+    _admin_user(current_user)
+    email = (current_user.get("email") or "").strip().lower()
+    if not email:
+        raise HTTPException(status_code=400, detail="An email address is required for admin MFA.")
+    code = await _issue_email_code(email, email_codes.PURPOSE_ADMIN_MFA)
+    try:
+        db.get_service_client().table("user_mfa_settings").upsert({
+            "user_id": current_user["id"], "status": "pending_setup",
+            "method": "email_otp", "updated_at": datetime.now().isoformat(),
+        }, on_conflict="user_id").execute()
+    except Exception as exc:
+        log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
+    data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
+    if settings.EMAIL_VERIFICATION_DEV_CODES:
+        data["devCode"] = code
+    return ResponseModel(data=data)
+
+
+@app.post("/api/auth/mfa/verify", response_model=ResponseModel)
+async def verify_admin_mfa(body: dict, current_user: dict = Depends(Auth.get_current_user)):
+    _admin_user(current_user)
+    code = str(body.get("code") or "").strip()
+    if not code:
+        raise HTTPException(status_code=400, detail="Admin MFA code is required.")
+    if settings.EMAIL_VERIFICATION_DEV_CODES and code == "000000":
+        outcome = email_codes.OK
+    elif settings.EMAIL_CODE_STORAGE == "database":
+        outcome = await db_email_codes.verify_code(
+            (current_user.get("email") or "").strip().lower(), code,
+            purpose=email_codes.PURPOSE_ADMIN_MFA,
+        )
+    else:
+        outcome = await email_codes.verify_code(
+            (current_user.get("email") or "").strip().lower(), code,
+            purpose=email_codes.PURPOSE_ADMIN_MFA,
+        )
+    if outcome != email_codes.OK:
+        raise HTTPException(status_code=400, detail="Invalid or expired admin MFA code.")
+    try:
+        db.get_service_client().table("user_mfa_settings").upsert({
+            "user_id": current_user["id"], "status": "enabled", "method": "email_otp",
+            "last_verified_at": datetime.now().isoformat(),
+            "updated_at": datetime.now().isoformat(),
+        }, on_conflict="user_id").execute()
+    except Exception:
+        raise HTTPException(status_code=503, detail="Admin MFA storage is not ready. Apply the security migration first.")
+    token = Auth.create_jwt(current_user["id"], mfa_verified=True)
+    return ResponseModel(data={"token": token, "status": "enabled"})
+
+
+@app.post("/api/auth/mfa/defer", response_model=ResponseModel)
+async def defer_admin_mfa(current_user: dict = Depends(Auth.get_current_user)):
+    _admin_user(current_user)
+    deferred_until = datetime.now() + timedelta(days=30)
+    try:
+        db.get_service_client().table("user_mfa_settings").upsert({
+            "user_id": current_user["id"], "status": "deferred", "method": "email_otp",
+            "deferred_until": deferred_until.isoformat(), "updated_at": datetime.now().isoformat(),
+        }, on_conflict="user_id").execute()
+    except Exception:
+        raise HTTPException(status_code=503, detail="Admin MFA storage is not ready. Apply the security migration first.")
+    return ResponseModel(data={"status": "deferred", "deferredUntil": deferred_until.isoformat()})
+
+
+def _onboarding_draft_out(row: dict) -> dict:
+    """Convert the server draft columns to the client-owned draft shape."""
+    return {
+        "userId": row.get("user_id"),
+        "mode": row.get("mode"),
+        "choice": row.get("choice"),
+        "step": row.get("step") or 0,
+        "checkpoint": row.get("checkpoint"),
+        "studentProfile": row.get("student_profile") or {},
+        "educatorProfile": row.get("educator_profile") or {},
+        "admissionContext": row.get("admission_context") or {},
+        "updatedAt": row.get("updated_at"),
+    }
+
+
+def _draft_object(value, field: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise HTTPException(status_code=400, detail=f"{field} must be an object.")
+    # Drafts are UI state, not an arbitrary persistence endpoint. Keep nested
+    # JSON values but reject an accidentally huge payload before it reaches DB.
+    if len(str(value)) > 200_000:
+        raise HTTPException(status_code=413, detail="Onboarding draft is too large.")
+    return value
+
+
+@app.get("/api/users/onboarding-draft", response_model=ResponseModel)
+async def get_onboarding_draft(current_user: dict = Depends(Auth.get_current_user)):
+    try:
+        result = (
+            db.get_service_client()
+            .table("onboarding_drafts")
+            .select("user_id,mode,choice,step,checkpoint,student_profile,educator_profile,admission_context,updated_at")
+            .eq("user_id", current_user["id"])
+            .limit(1)
+            .execute()
+        )
+        row = (result.data or [None])[0]
+        return ResponseModel(data=_onboarding_draft_out(row) if row else None)
+    except Exception as exc:
+        log.warning("Onboarding draft read unavailable", error=str(exc), user_id=current_user.get("id"))
+        raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
+
+
+@app.put("/api/users/onboarding-draft", response_model=ResponseModel)
+async def save_onboarding_draft(
+    body: dict,
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    mode = body.get("mode")
+    if mode not in (None, "student", "educator"):
+        raise HTTPException(status_code=400, detail="Onboarding draft mode is invalid.")
+    try:
+        step = int(body.get("step") or 0)
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=400, detail="Onboarding draft step is invalid.")
+    if step < 0 or step > 100:
+        raise HTTPException(status_code=400, detail="Onboarding draft step is invalid.")
+    choice = body.get("choice")
+    if choice is not None and (not isinstance(choice, str) or len(choice) > 80):
+        raise HTTPException(status_code=400, detail="Onboarding draft choice is invalid.")
+    checkpoint = body.get("checkpoint")
+    if checkpoint is not None and (not isinstance(checkpoint, str) or len(checkpoint) > 120):
+        raise HTTPException(status_code=400, detail="Onboarding draft checkpoint is invalid.")
+
+    payload = {
+        "user_id": current_user["id"],
+        "mode": mode,
+        "choice": choice,
+        "step": step,
+        "checkpoint": checkpoint,
+        "student_profile": _draft_object(body.get("studentProfile", body.get("student_profile")), "studentProfile"),
+        "educator_profile": _draft_object(body.get("educatorProfile", body.get("educator_profile")), "educatorProfile"),
+        "admission_context": _draft_object(body.get("admissionContext", body.get("admission_context")), "admissionContext"),
+        "updated_at": datetime.now().isoformat(),
+    }
+    try:
+        result = (
+            db.get_service_client()
+            .table("onboarding_drafts")
+            .upsert(payload, on_conflict="user_id")
+            .execute()
+        )
+        row = (result.data or [payload])[0]
+        return ResponseModel(data=_onboarding_draft_out(row))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        log.warning("Onboarding draft write unavailable", error=str(exc), user_id=current_user.get("id"))
+        raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
+
+
+@app.delete("/api/users/onboarding-draft", response_model=ResponseModel)
+async def delete_onboarding_draft(current_user: dict = Depends(Auth.get_current_user)):
+    try:
+        db.get_service_client().table("onboarding_drafts").delete().eq("user_id", current_user["id"]).execute()
+        return ResponseModel(data={"deleted": True})
+    except Exception as exc:
+        log.warning("Onboarding draft delete unavailable", error=str(exc), user_id=current_user.get("id"))
+        raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
 
 
 # AUTH ROUTES (unchanged from original)
@@ -325,7 +524,6 @@ async def auth_signup(body: dict, request: Request):
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
     legal_acceptance = _validated_signup_legal_acceptance(body)
-    _require_valid_email_code(email, email_code)
     await _require_valid_email_code(email, email_code)
     if device_id:
         try:

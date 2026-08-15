@@ -77,6 +77,8 @@ export { FoundationSkillsBlock } from "./FoundationSkillsBlock";
 export type { FoundationSkillsBlockProps } from "./FoundationSkillsBlock";
 export { ToolGroupsBlock } from "./ToolGroupsBlock";
 export type { ToolGroupsBlockProps } from "./ToolGroupsBlock";
+export { MethodEvidenceBlock } from "./MethodEvidenceBlock";
+export type { MethodEvidenceBlockProps } from "./MethodEvidenceBlock";
 export { CertPlacementList } from "./CertPlacementList";
 export type { CertPlacementListProps } from "./CertPlacementList";
 
@@ -97,6 +99,7 @@ export { SaveButton } from "./SaveButton";
 export { SubscribeButton } from "./SubscribeButton";
 export { NotesWidget } from "./NotesWidget";
 export { PdfExportButton } from "./PdfExportButton";
+export { ShareExportButton } from "./ShareExportButton";
 export { GuidanceReportButton, invalidateGuidancePathCache } from "./GuidanceReportButton";
 export { MappingFeedbackButton } from "./MappingFeedbackButton";
 export type { MappingFeedbackButtonProps } from "./MappingFeedbackButton";

@@ -56,6 +56,24 @@ def _call(domains=DOMAINS, metrics=METRICS) -> dict:
 
 
 class TestDomainClusters:
+    def test_tool_mapping_does_not_expose_unverified_demand_fields(self):
+        mapped = cr._tool({
+            "tool_name": "Example tool",
+            "tool_group": "common",
+            "hot": True,
+            "in_demand": True,
+            "demand_score": 0.9,
+            "demand_source": "taxonomy_derived_baseline_v1",
+            "demand_as_of": "2026-07-01",
+            "role_freq": 4,
+            "source": "onet",
+        })
+        assert mapped["tool"] == "Example tool"
+        assert all(
+            key not in mapped
+            for key in ("hot", "inDemand", "demandScore", "demandSource", "demandAsOf")
+        )
+
     def test_groups_by_cluster(self):
         out = _call()
         assert out["status"] == "real"
@@ -73,22 +91,22 @@ class TestDomainClusters:
         ids = {d["id"] for g in out["data"] for d in g["domains"]}
         assert ids == {"D001", "D002", "D004"}
 
-    def test_demand_score_is_attached_by_uuid(self):
+    def test_demand_score_is_not_presented_before_source_backed_ingestion(self):
         out = _call()
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
-        assert by_name["Zebra Studies"]["inDemandScore"] == 71.5
+        assert "inDemandScore" not in by_name["Zebra Studies"]
         # Absent rather than 0 — a domain with no metric has no score, and 0
         # would read as "measured, and it is zero".
         assert "inDemandScore" not in by_name["Alpha Systems"]
 
-    def test_demand_band_is_normalised(self):
+    def test_demand_band_is_not_presented_before_source_backed_ingestion(self):
         # The band drives the meter. volume_score is on the source's own scale
         # (13..56 in production) and is NOT a percentage — a UI that treated it
         # as one drew every domain as full demand.
         out = _call()
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
-        assert by_name["Zebra Studies"]["demandBand"] == "medium"
-        assert by_name["Nursing"]["demandBand"] == "low"  # "LOW " normalised
+        assert "demandBand" not in by_name["Zebra Studies"]
+        assert "demandBand" not in by_name["Nursing"]
         assert "demandBand" not in by_name["Alpha Systems"]
 
     def test_elite_flag_survives(self):

@@ -160,16 +160,21 @@ export default function AdmissionBrowseScreen() {
 
   // The organisation type owns the learner context. Providers are JAMB-only,
   // universities are undergraduate-only, and only secondary schools have
-  // streams; stale URL values must not widen that contract.
+  // streams; stale URL values must not widen that contract. Do not silently
+  // choose the first class or stream: an admin must make that choice before
+  // guidance is shown.
   useEffect(() => {
     if (!isAdminExplore || !learnerAudience) return;
-    const firstType = learnerAudience.learnerTypes[0];
     const normalizedClass = contextClass.trim().toLowerCase();
     if (!learnerAudience.learnerTypes.includes(normalizedClass as never)) {
-      setContextClass(firstType);
+      if (contextClass) setContextClass("");
     }
-    if (!learnerAudience.streams.includes(stream as never)) {
-      setStream(learnerAudience.streams[0] ?? "");
+    if (learnerAudience.streams.length > 0) {
+      if (!learnerAudience.streams.includes(stream as never) && stream) {
+        setStream("");
+      }
+    } else if (stream) {
+      setStream("");
     }
   }, [adminType, isAdminExplore, learnerAudience, contextClass, stream]);
 
@@ -243,7 +248,9 @@ export default function AdmissionBrowseScreen() {
 
   const runSchoolSearch = async () => {
     const q = schoolQuery.trim();
-    if (q.length < 2) {
+    // Start the school typeahead on the first character so a user can choose
+    // from the registry immediately instead of completing the full name.
+    if (q.length < 1) {
       setSchoolMatches([]);
       setNotice(null);
       return;
@@ -267,7 +274,7 @@ export default function AdmissionBrowseScreen() {
   useEffect(() => {
     if (mode !== "programme" && mode !== "school") return;
     const term = mode === "programme" ? query.trim() : schoolQuery.trim();
-    if (term.length < 2) {
+    if (mode === "school" ? term.length < 1 : term.length < 2) {
       if (mode === "programme") setCandidates([]);
       else setSchoolMatches([]);
       return;
@@ -302,7 +309,7 @@ export default function AdmissionBrowseScreen() {
   );
   const streamSelected = Boolean(learnerAudience?.streams.includes(stream as never));
 
-  if (isAdminExplore && learnerAudience && !guidanceStudentId && (!learnerTypeSelected || (learnerAudience.streamRequired && !streamSelected))) {
+  if (isAdminExplore && learnerAudience && !guidanceStudentId && (!learnerTypeSelected || (learnerAudience.streamRequired && learnerAudience.streams.length > 0 && !streamSelected))) {
     return (
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}

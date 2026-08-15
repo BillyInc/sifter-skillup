@@ -402,6 +402,26 @@
       "Data base user interface and query software"
      ]
     }
+   },
+   {
+    "tool": "Git",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "File versioning software"
+     ]
+    },
+    "element_name": "File versioning software",
+    "element_id": "2.E.5.c"
    }
   ],
   "common_tools": [
@@ -851,6 +871,26 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
      }
     ],
     "common": [
@@ -1383,6 +1423,46 @@
       "Enterprise application integration software"
      ]
     }
+   },
+   {
+    "tool": "Apache Hadoop",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Data base management system software"
+     ]
+    },
+    "element_name": "Data base management system software",
+    "element_id": "2.E.6.d"
+   },
+   {
+    "tool": "Apache Kafka",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Development environment software"
+     ]
+    },
+    "element_name": "Development environment software",
+    "element_id": "2.E.7.b"
    }
   ],
   "common_tools": [
@@ -1830,6 +1910,87 @@
         "Application server software"
        ]
       }
+     },
+     {
+      "tool": "Apache Spark",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Apache Hadoop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base management system software"
+       ]
+      },
+      "element_name": "Data base management system software",
+      "element_id": "2.E.6.d"
+     },
+     {
+      "tool": "Apache Kafka",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -2361,6 +2522,26 @@
       "Development environment software"
      ]
     }
+   },
+   {
+    "tool": "Python",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Object or component oriented development software"
+     ]
+    },
+    "element_name": "Object or component oriented development software",
+    "element_id": "2.E.7.e"
    }
   ],
   "common_tools": [
@@ -2812,6 +2993,26 @@
         "Object or component oriented development software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -3921,6 +4122,10 @@
       }
      }
     ]
+   },
+   "12": {
+    "distinctive": [],
+    "common": []
    }
   }
  },
@@ -4322,6 +4527,26 @@
       "Data base management system software"
      ]
     }
+   },
+   {
+    "tool": "Kubernetes",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_sfia",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Application server software"
+     ]
+    },
+    "element_name": "Application server software",
+    "element_id": "2.E.10.a"
    }
   ],
   "common_tools": [
@@ -4762,6 +4987,47 @@
       "source_confidence": "unsourced",
       "data_state": "unsourced",
       "provenance": {}
+     },
+     {
+      "tool": "Apache Spark",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Kubernetes",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
      }
     ],
     "common": [
@@ -4886,6 +5152,51 @@
       }
      }
     ]
+   },
+   "35": {
+    "distinctive": [
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     }
+    ],
+    "common": []
    }
   }
  },
@@ -5286,6 +5597,46 @@
     "source_confidence": "unsourced",
     "data_state": "unsourced",
     "provenance": {}
+   },
+   {
+    "tool": "Linux",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_sfia",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "element_name": "Operating system software",
+    "element_id": "2.E.13.c"
+   },
+   {
+    "tool": "Git",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_sfia",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "File versioning software"
+     ]
+    },
+    "element_name": "File versioning software",
+    "element_id": "2.E.5.c"
    }
   ],
   "common_tools": [
@@ -5736,6 +6087,46 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
      }
     ],
     "common": [
@@ -5860,6 +6251,31 @@
       }
      }
     ]
+   },
+   "21": {
+    "distinctive": [
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     }
+    ],
+    "common": []
    }
   }
  },
@@ -6715,6 +7131,208 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "GitHub",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "JavaScript",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Jenkins CI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise application integration software"
+       ]
+      },
+      "element_name": "Enterprise application integration software",
+      "element_id": "2.E.7.c"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
      }
     ],
     "common": [
@@ -7043,6 +7661,86 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "Cascading style sheets CSS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Canva",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Hypertext markup language HTML",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
      }
     ],
     "common": [
@@ -8017,6 +8715,168 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Apple macOS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Autodesk Revit",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Microsoft Active Directory",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Internet directory services software"
+       ]
+      },
+      "element_name": "Internet directory services software",
+      "element_id": "2.E.10.d"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Microsoft Visio",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Process mapping and design software",
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Process mapping and design software",
+      "element_id": "2.E.1.p"
      }
     ],
     "common": [
@@ -8348,6 +9208,146 @@
         "Object oriented data base management software"
        ]
       }
+     },
+     {
+      "tool": "Ansible software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Expert system software"
+       ]
+      },
+      "element_name": "Expert system software",
+      "element_id": "2.E.1.i"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Microsoft PowerShell",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Oracle Java",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -8672,6 +9672,86 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Apache Cassandra",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base management system software"
+       ]
+      },
+      "element_name": "Data base management system software",
+      "element_id": "2.E.6.d"
+     },
+     {
+      "tool": "Apache Hadoop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base management system software"
+       ]
+      },
+      "element_name": "Data base management system software",
+      "element_id": "2.E.6.d"
      }
     ],
     "common": [
@@ -9001,6 +10081,149 @@
         "Operating system software"
        ]
       }
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Apache Hadoop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base management system software"
+       ]
+      },
+      "element_name": "Data base management system software",
+      "element_id": "2.E.6.d"
+     },
+     {
+      "tool": "Apple macOS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "C",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
      }
     ],
     "common": [
@@ -9983,6 +11206,86 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "Canva",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Cascading style sheets CSS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Hypertext markup language HTML",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
      }
     ],
     "common": [
@@ -10314,6 +11617,46 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
      }
     ],
     "common": [
@@ -10640,6 +11983,188 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "Jenkins CI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise application integration software"
+       ]
+      },
+      "element_name": "Enterprise application integration software",
+      "element_id": "2.E.7.c"
+     },
+     {
+      "tool": "GitHub",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "JavaScript",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Cascading style sheets CSS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
      }
     ],
     "common": [
@@ -11175,6 +12700,57 @@
       "Operating system software"
      ]
     }
+   },
+   {
+    "tool": "robot simulation software",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "skills_england_robotics",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "skills_england_robotics"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "CAD and engineering design tools",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "skills_england_robotics",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "skills_england_robotics"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "industrial robot controllers",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "skills_england_robotics",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "skills_england_robotics"
+    },
+    "element_name": null,
+    "element_id": null
    }
   ],
   "common_tools": [
@@ -11629,6 +13205,57 @@
         "Program testing software"
        ]
       }
+     },
+     {
+      "tool": "robot simulation software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "skills_england_robotics",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "skills_england_robotics"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "CAD and engineering design tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "skills_england_robotics",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "skills_england_robotics"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "industrial robot controllers",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "skills_england_robotics",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "skills_england_robotics"
+      },
+      "element_name": null,
+      "element_id": null
      }
     ],
     "common": [
@@ -11757,6 +13384,45 @@
       }
      }
     ]
+   },
+   "31": {
+    "distinctive": [
+     {
+      "tool": "robot maintenance systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "arm_robotics_career",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "arm_robotics_career"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "industrial robot controllers",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "arm_robotics_career",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "arm_robotics_career"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
    }
   }
  },
@@ -12164,6 +13830,66 @@
       "Development environment software"
      ]
     }
+   },
+   {
+    "tool": "R",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Object or component oriented development software"
+     ]
+    },
+    "element_name": "Object or component oriented development software",
+    "element_id": "2.E.7.e"
+   },
+   {
+    "tool": "SAS",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Analytical or scientific software"
+     ]
+    },
+    "element_name": "Analytical or scientific software",
+    "element_id": "2.E.9.d"
+   },
+   {
+    "tool": "Python",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Object or component oriented development software"
+     ]
+    },
+    "element_name": "Object or component oriented development software",
+    "element_id": "2.E.7.e"
    }
   ],
   "common_tools": [
@@ -12614,6 +14340,187 @@
         "Object oriented data base management software"
        ]
       }
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "GitHub",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Microsoft Power BI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -12946,6 +14853,66 @@
         "Data base user interface and query software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -13276,6 +15243,126 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Tableau",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [
@@ -13810,6 +15897,26 @@
       "Data base management system software"
      ]
     }
+   },
+   {
+    "tool": "Python",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Object or component oriented development software"
+     ]
+    },
+    "element_name": "Object or component oriented development software",
+    "element_id": "2.E.7.e"
    }
   ],
   "common_tools": [
@@ -14258,6 +16365,148 @@
         "Object oriented data base management software"
        ]
       }
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "GitHub",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Docker",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
      }
     ],
     "common": [
@@ -14585,6 +16834,207 @@
         "Cloud-based management software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Salesforce software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "element_name": "Customer relationship management CRM software",
+      "element_id": "2.E.6.c"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Microsoft Power BI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "SAP software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise resource planning ERP software"
+       ]
+      },
+      "element_name": "Enterprise resource planning ERP software",
+      "element_id": "2.E.2.b"
+     },
+     {
+      "tool": "Microsoft Project",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Project management software"
+       ]
+      },
+      "element_name": "Project management software",
+      "element_id": "2.E.1.e"
      }
     ],
     "common": [
@@ -14913,6 +17363,86 @@
         "Data mining software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [
@@ -15244,6 +17774,126 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Tableau",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [
@@ -15774,6 +18424,26 @@
       "Data base user interface and query software"
      ]
     }
+   },
+   {
+    "tool": "IBM SPSS Statistics",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Analytical or scientific software"
+     ]
+    },
+    "element_name": "Analytical or scientific software",
+    "element_id": "2.E.9.d"
    }
   ],
   "common_tools": [
@@ -16216,6 +18886,107 @@
         "Sales and marketing software"
        ]
       }
+     },
+     {
+      "tool": "C++",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Microsoft SharePoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "Microsoft Visual Basic",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Microsoft Windows",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
      }
     ],
     "common": [
@@ -16546,6 +19317,107 @@
         "Data base management system software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Tableau",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "SAP software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise resource planning ERP software"
+       ]
+      },
+      "element_name": "Enterprise resource planning ERP software",
+      "element_id": "2.E.2.b"
      }
     ],
     "common": [
@@ -16872,6 +19744,66 @@
         "Data mining software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
      }
     ],
     "common": [
@@ -17400,6 +20332,27 @@
     "source_confidence": "unsourced",
     "data_state": "unsourced",
     "provenance": {}
+   },
+   {
+    "tool": "Microsoft SQL Server",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_sfia",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Data base user interface and query software",
+      "Data base management system software"
+     ]
+    },
+    "element_name": "Data base user interface and query software",
+    "element_id": "2.E.6.f"
    }
   ],
   "common_tools": [
@@ -17853,6 +20806,26 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
      }
     ],
     "common": [
@@ -17978,6 +20951,31 @@
       }
      }
     ]
+   },
+   "33": {
+    "distinctive": [
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     }
+    ],
+    "common": []
    }
   }
  },
@@ -20127,6 +23125,86 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Windows",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -20454,6 +23532,46 @@
         "Data base user interface and query software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -20622,6 +23740,106 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Tableau",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
      }
     ],
     "common": [
@@ -41812,6 +45030,89 @@
         "Transaction server software"
        ]
       }
+     },
+     {
+      "tool": "ESRI ArcGIS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Geographic information system",
+        "Map creation software",
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Geographic information system",
+      "element_id": "2.E.8.h"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Adobe Acrobat",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -44396,6 +47697,149 @@
         "Program testing software"
        ]
       }
+     },
+     {
+      "tool": "C",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Dassault Systemes SolidWorks",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software",
+        "Computer aided manufacturing CAM software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "The MathWorks MATLAB",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
      }
     ],
     "common": [
@@ -45376,6 +48820,87 @@
         "Analytical or scientific software"
        ]
       }
+     },
+     {
+      "tool": "Bentley MicroStation",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Adobe Illustrator",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Adobe Photoshop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
      }
     ],
     "common": [
@@ -46340,6 +49865,67 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Autodesk Revit",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
      }
     ],
     "common": [
@@ -51421,6 +55007,166 @@
         "Medical software"
        ]
       }
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Microsoft Power BI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "PyTorch",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Snowflake",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data mining software"
+       ]
+      },
+      "element_name": "Data mining software",
+      "element_id": "2.E.6.g"
      }
     ],
     "common": [
@@ -52939,6 +56685,149 @@
         "Medical software"
        ]
       }
+     },
+     {
+      "tool": "ESRI ArcGIS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Geographic information system",
+        "Map creation software",
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Geographic information system",
+      "element_id": "2.E.8.h"
+     },
+     {
+      "tool": "Autodesk AutoCAD",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Adobe Photoshop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Adobe Acrobat",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "Microsoft Access",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Adobe Illustrator",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
      }
     ],
     "common": [
@@ -85789,6 +89678,191 @@
         "Operating system software"
        ]
       }
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Autodesk AutoCAD",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Adobe Acrobat",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "C++",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "C",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "ESRI ArcGIS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Geographic information system",
+        "Map creation software",
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Geographic information system",
+      "element_id": "2.E.8.h"
+     },
+     {
+      "tool": "Adobe Photoshop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
      }
     ],
     "common": [
@@ -86096,6 +90170,68 @@
         "Enterprise application integration software"
        ]
       }
+     },
+     {
+      "tool": "Adobe Acrobat",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "Adobe Photoshop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "ESRI ArcGIS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Geographic information system",
+        "Map creation software",
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Geographic information system",
+      "element_id": "2.E.8.h"
      }
     ],
     "common": [
@@ -86628,6 +90764,26 @@
       "Web platform development software"
      ]
     }
+   },
+   {
+    "tool": "Python",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Object or component oriented development software"
+     ]
+    },
+    "element_name": "Object or component oriented development software",
+    "element_id": "2.E.7.e"
    }
   ],
   "common_tools": [
@@ -87077,6 +91233,106 @@
         "Project management software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [
@@ -87408,6 +91664,169 @@
         "Enterprise application integration software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "C",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "C#",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Eclipse IDE",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
      }
     ],
     "common": [
@@ -101033,6 +105452,86 @@
         "Development environment software"
        ]
       }
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
      }
     ],
     "common": [
@@ -101340,6 +105839,126 @@
         "Internet browser software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Structured query language SQL",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Tableau",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
      }
     ],
     "common": [
@@ -105444,6 +110063,146 @@
         "Transaction server software"
        ]
       }
+     },
+     {
+      "tool": "Amazon Web Services AWS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Microsoft Azure software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Microsoft PowerShell",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "IBM Terraform",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Configuration management software"
+       ]
+      },
+      "element_name": "Configuration management software",
+      "element_id": "2.E.7.a"
      }
     ],
     "common": [
@@ -115773,6 +120532,106 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Autodesk Revit",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
+     },
+     {
+      "tool": "Adobe Illustrator",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Autodesk AutoCAD Civil 3D",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
      }
     ],
     "common": [
@@ -126836,6 +131695,46 @@
         "Configuration management software"
        ]
       }
+     },
+     {
+      "tool": "Git",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "File versioning software"
+       ]
+      },
+      "element_name": "File versioning software",
+      "element_id": "2.E.5.c"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_sfia",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
      }
     ],
     "common": [
@@ -128149,6 +133048,107 @@
         "Data mining software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft Outlook",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Electronic mail software",
+        "Word processing software"
+       ]
+      },
+      "element_name": "Electronic mail software",
+      "element_id": "2.E.16.a"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Apache Hadoop",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base management system software"
+       ]
+      },
+      "element_name": "Data base management system software",
+      "element_id": "2.E.6.d"
+     },
+     {
+      "tool": "Autodesk Revit",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Computer aided design CAD software"
+       ]
+      },
+      "element_name": "Computer aided design CAD software",
+      "element_id": "2.E.9.c"
      }
     ],
     "common": [
@@ -128273,6 +133273,10 @@
       }
      }
     ]
+   },
+   "25": {
+    "distinctive": [],
+    "common": []
    }
   }
  },
@@ -168087,6 +173091,207 @@
         "Data mining software"
        ]
       }
+     },
+     {
+      "tool": "Atlassian JIRA",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Content workflow software",
+        "Project management software"
+       ]
+      },
+      "element_name": "Content workflow software",
+      "element_id": "2.E.5.a"
+     },
+     {
+      "tool": "IBM Terraform",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Configuration management software"
+       ]
+      },
+      "element_name": "Configuration management software",
+      "element_id": "2.E.7.a"
+     },
+     {
+      "tool": "Jenkins CI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise application integration software"
+       ]
+      },
+      "element_name": "Enterprise application integration software",
+      "element_id": "2.E.7.c"
+     },
+     {
+      "tool": "Kubernetes",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Application server software"
+       ]
+      },
+      "element_name": "Application server software",
+      "element_id": "2.E.10.a"
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft Power BI",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Business intelligence and data analysis software"
+       ]
+      },
+      "element_name": "Business intelligence and data analysis software",
+      "element_id": "2.E.6.m"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Microsoft SharePoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Document management software"
+       ]
+      },
+      "element_name": "Document management software",
+      "element_id": "2.E.5.b"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
      }
     ],
     "common": [
@@ -172277,6 +177482,46 @@
         "Medical software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Access",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
+     },
+     {
+      "tool": "Microsoft Project",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Project management software"
+       ]
+      },
+      "element_name": "Project management software",
+      "element_id": "2.E.1.e"
      }
     ],
     "common": [
@@ -172606,6 +177851,126 @@
         "Analytical or scientific software"
        ]
       }
+     },
+     {
+      "tool": "Microsoft Excel",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Spreadsheet software"
+       ]
+      },
+      "element_name": "Spreadsheet software",
+      "element_id": "2.E.4.i"
+     },
+     {
+      "tool": "Microsoft Office software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Office suite software"
+       ]
+      },
+      "element_name": "Office suite software",
+      "element_id": "2.E.1.k"
+     },
+     {
+      "tool": "Microsoft PowerPoint",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Presentation software"
+       ]
+      },
+      "element_name": "Presentation software",
+      "element_id": "2.E.4.f"
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "Adobe Illustrator",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Graphics or photo imaging software"
+       ]
+      },
+      "element_name": "Graphics or photo imaging software",
+      "element_id": "2.E.4.b"
      }
     ],
     "common": [
@@ -172754,6 +178119,66 @@
         "Inventory management software"
        ]
       }
+     },
+     {
+      "tool": "SAP software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise resource planning ERP software"
+       ]
+      },
+      "element_name": "Enterprise resource planning ERP software",
+      "element_id": "2.E.2.b"
+     },
+     {
+      "tool": "Computerized maintenance management system CMMS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Facilities management software"
+       ]
+      },
+      "element_name": "Facilities management software",
+      "element_id": "2.E.9.b"
+     },
+     {
+      "tool": "FaceTime",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Video conferencing software"
+       ]
+      },
+      "element_name": "Video conferencing software",
+      "element_id": "2.E.16.b"
      }
     ],
     "common": [
@@ -173735,6 +179160,66 @@
         "Web platform development software"
        ]
       }
+     },
+     {
+      "tool": "SAS",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "IBM SPSS Statistics",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Analytical or scientific software",
+      "element_id": "2.E.9.d"
+     },
+     {
+      "tool": "Linux",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "element_name": "Operating system software",
+      "element_id": "2.E.13.c"
      }
     ],
     "common": [
@@ -173944,6 +179429,28 @@
       "Web platform development software"
      ]
     }
+   },
+   {
+    "tool": "ESRI ArcGIS software",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "global_esco",
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_30_3_software_skills",
+     "element_names": [
+      "Geographic information system",
+      "Map creation software",
+      "Analytical or scientific software"
+     ]
+    },
+    "element_name": "Geographic information system",
+    "element_id": "2.E.8.h"
    }
   ],
   "common_tools": [
@@ -174393,6 +179900,68 @@
         "Data base management system software"
        ]
       }
+     },
+     {
+      "tool": "Python",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "R",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Object or component oriented development software",
+      "element_id": "2.E.7.e"
+     },
+     {
+      "tool": "ESRI ArcGIS software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Geographic information system",
+        "Map creation software",
+        "Analytical or scientific software"
+       ]
+      },
+      "element_name": "Geographic information system",
+      "element_id": "2.E.8.h"
      }
     ],
     "common": [
@@ -175782,6 +181351,87 @@
         "Computer aided design CAD software"
        ]
       }
+     },
+     {
+      "tool": "C++",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Development environment software",
+        "Object or component oriented development software"
+       ]
+      },
+      "element_name": "Development environment software",
+      "element_id": "2.E.7.b"
+     },
+     {
+      "tool": "Extensible markup language XML",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Enterprise application integration software"
+       ]
+      },
+      "element_name": "Enterprise application integration software",
+      "element_id": "2.E.7.c"
+     },
+     {
+      "tool": "Hypertext markup language HTML",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Web platform development software"
+       ]
+      },
+      "element_name": "Web platform development software",
+      "element_id": "2.E.7.h"
+     },
+     {
+      "tool": "Microsoft Access",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [
@@ -175907,6 +181557,10 @@
       }
      }
     ]
+   },
+   "31": {
+    "distinctive": [],
+    "common": []
    }
   }
  },
@@ -176318,6 +181972,74 @@
       "Video creation and editing software"
      ]
     }
+   },
+   {
+    "tool": "stage management systems",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "nac_arts_technical_theatre",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "nac_arts_technical_theatre"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "lighting control consoles",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "nac_arts_technical_theatre",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "nac_arts_technical_theatre"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "sound recording and mixing systems",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "nac_arts_technical_theatre",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "nac_arts_technical_theatre"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "production control consoles",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "nac_arts_technical_theatre",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "nac_arts_technical_theatre"
+    },
+    "element_name": null,
+    "element_id": null
    }
   ],
   "common_tools": [
@@ -176767,6 +182489,40 @@
         "Video creation and editing software"
        ]
       }
+     },
+     {
+      "tool": "rehearsal scheduling tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "mqa_performing_arts",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "mqa_performing_arts"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "performance production planning tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "mqa_performing_arts",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "mqa_performing_arts"
+      },
+      "element_name": null,
+      "element_id": null
      }
     ],
     "common": [
@@ -177098,6 +182854,74 @@
         "Network conferencing software"
        ]
       }
+     },
+     {
+      "tool": "stage management systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "nac_arts_technical_theatre",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "nac_arts_technical_theatre"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "lighting control consoles",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "nac_arts_technical_theatre",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "nac_arts_technical_theatre"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "sound recording and mixing systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "nac_arts_technical_theatre",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "nac_arts_technical_theatre"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "production control consoles",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "nac_arts_technical_theatre",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "nac_arts_technical_theatre"
+      },
+      "element_name": null,
+      "element_id": null
      }
     ],
     "common": [
@@ -177387,9 +183211,218 @@
     "provenance": {
      "source": "curated_creative"
     }
+   },
+   {
+    "tool": "XR hardware",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "jff_xr",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "jff_xr"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "XR software development kits",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "jff_xr",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "jff_xr"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "3D and immersive content tools",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "jff_xr",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "jff_xr"
+    },
+    "element_name": null,
+    "element_id": null
    }
   ],
-  "common_tools": []
+  "common_tools": [],
+  "subgroup_tools": {
+   "21": {
+    "distinctive": [
+     {
+      "tool": "3D and immersive content tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "XR hardware",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "24": {
+    "distinctive": [
+     {
+      "tool": "immersive experience planning tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "XR system design tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "25": {
+    "distinctive": [
+     {
+      "tool": "XR software development kits",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "real-time development environments",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "35": {
+    "distinctive": [
+     {
+      "tool": "XR support and diagnostic tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "device setup tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "jff_xr",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "jff_xr"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   }
+  }
  },
  "D168": {
   "distinctive_tools": [
@@ -177517,9 +183550,291 @@
     "provenance": {
      "source": "curated_creative"
     }
+   },
+   {
+    "tool": "match analysis tools",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "british_esports",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "british_esports"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "stream production software",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "british_esports",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "british_esports"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "content editing tools",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "british_esports",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "british_esports"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "community and social media tools",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "british_esports",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "british_esports"
+    },
+    "element_name": null,
+    "element_id": null
    }
   ],
-  "common_tools": []
+  "common_tools": [],
+  "subgroup_tools": {
+   "12": {
+    "distinctive": [
+     {
+      "tool": "event management systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "tournament administration systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "24": {
+    "distinctive": [
+     {
+      "tool": "community and social media tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "social publishing tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "26": {
+    "distinctive": [
+     {
+      "tool": "stream production software",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "content editing tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "live broadcast production tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "33": {
+    "distinctive": [
+     {
+      "tool": "team operations systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "player management systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "british_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "british_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "34": {
+    "distinctive": [
+     {
+      "tool": "game performance analytics tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "pearson_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "pearson_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "match analysis tools",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "pearson_esports",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "pearson_esports"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   }
+  }
  },
  "D141": {
   "distinctive_tools": [
@@ -177627,9 +183942,303 @@
       "Development environment software"
      ]
     }
+   },
+   {
+    "tool": "quantum programming tools and software stack",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "quantum simulators",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "quantum state control technologies",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "cryogenic, vacuum and cleanroom technologies",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "quantum sensors and imaging systems",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
+   },
+   {
+    "tool": "quantum communication networks",
+    "role_freq": null,
+    "score": null,
+    "hot": false,
+    "in_demand": false,
+    "domain_spread": null,
+    "group": "distinctive",
+    "source": "qt_cfqt",
+    "source_confidence": "medium",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "qt_cfqt"
+    },
+    "element_name": null,
+    "element_id": null
    }
   ],
-  "common_tools": []
+  "common_tools": [],
+  "subgroup_tools": {
+   "21": {
+    "distinctive": [
+     {
+      "tool": "cryogenic, vacuum and cleanroom technologies",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "quantum state control technologies",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "quantum sensors and imaging systems",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "25": {
+    "distinctive": [
+     {
+      "tool": "quantum programming tools and software stack",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "quantum simulators",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "quantum computing subroutines",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "24": {
+    "distinctive": [
+     {
+      "tool": "quantum computing and simulation applications",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "quantum communication networks",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   },
+   "31": {
+    "distinctive": [
+     {
+      "tool": "cryogenic, vacuum and cleanroom technologies",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     },
+     {
+      "tool": "control technologies",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "qt_cfqt",
+      "source_confidence": "medium",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "qt_cfqt"
+      },
+      "element_name": null,
+      "element_id": null
+     }
+    ],
+    "common": []
+   }
+  }
  },
  "_meta": {
   "structure": "distinctive_tools + common_tools per domain/subgroup, domain-scoped"

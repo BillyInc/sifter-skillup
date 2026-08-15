@@ -90,8 +90,11 @@ function getDeviceIdCached(): Promise<string | null> {
   return deviceIdPromise;
 }
 
-export async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+type RequestOptions = RequestInit & { timeoutMs?: number };
+
+export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const startTime = Date.now();
+  const { timeoutMs = 30000, ...fetchOptions } = options;
   const token = await getToken();
   // Sent on EVERY request, not just authenticated ones. The auth endpoints
   // are where the session is created: _post_auth_device_register reads
@@ -101,6 +104,8 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
   // validate_device_header with "no active session" — trading a
   // `device_required` 401 for a `device_mismatch` 401.
   const deviceId = await getDeviceIdCached();
+  const isFormDataBody =
+    typeof FormData !== "undefined" && fetchOptions.body instanceof FormData;
 
   logger.debug('API request started', {
     endpoint: path,
@@ -109,14 +114,14 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
   });
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30000);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const res = await fetch(`${API_BASE}${path}`, {
-      ...options,
-      signal: options.signal ?? controller.signal,
+      ...fetchOptions,
+      signal: fetchOptions.signal ?? controller.signal,
       headers: {
-        'Content-Type': 'application/json',
+        ...(isFormDataBody ? {} : { 'Content-Type': 'application/json' }),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(deviceId ? { 'X-Device-Id': deviceId } : {}),
         ...options.headers,
@@ -218,6 +223,23 @@ export const API = {
   requestPasswordResetCode: (email: string) =>
     request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/password-reset/request', {
       method: 'POST', body: JSON.stringify({ email }),
+    }),
+
+  getAdminMfa: () => request<{ status: string; method: string; last_verified_at?: string | null; deferred_until?: string | null }>('/api/auth/mfa'),
+
+  requestAdminMfa: () =>
+    request<{ sent: boolean; expiresInMinutes: number; devCode?: string }>('/api/auth/mfa/request', {
+      method: 'POST', body: JSON.stringify({}),
+    }),
+
+  verifyAdminMfa: (code: string) =>
+    request<{ token: string; status: string }>('/api/auth/mfa/verify', {
+      method: 'POST', body: JSON.stringify({ code }),
+    }),
+
+  deferAdminMfa: () =>
+    request<{ status: string }>('/api/auth/mfa/defer', {
+      method: 'POST', body: JSON.stringify({}),
     }),
 
   confirmPasswordReset: (email: string, code: string, password: string) =>

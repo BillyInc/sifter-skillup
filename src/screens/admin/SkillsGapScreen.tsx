@@ -32,7 +32,7 @@ const COLUMNS: ColumnDef[] = [
     key: "demandPct",
     label: "Demand %",
     width: 80,
-    render: (val: number) => (val != null ? `${Math.round(val)}%` : "—"),
+    render: (val: number) => (val != null ? `${Math.round(val)}%` : "Not available"),
   },
   {
     key: "inCurriculum",
