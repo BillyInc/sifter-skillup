@@ -199,11 +199,11 @@ def build_report_html(ctx: ReportContext) -> str:
     )
     school = f"<div class='school'>{e(ctx.school_name)}</div>" if ctx.school_name else ""
     watermark = "Sifter LevelUp" + (f" - {ctx.school_name}" if ctx.school_name else "")
-    meta = " · ".join(part for part in [ctx.student_class, ctx.stream] if part)
-    cls = f" · {e(meta)}" if meta else ""
+    meta = " / ".join(part for part in [ctx.student_class, ctx.stream] if part)
+    cls = f" / {e(meta)}" if meta else ""
 
     return f"""<!doctype html>
-<html><head><meta charset="utf-8"><title>Career pathway — {e(ctx.student_name)}</title>
+<html><head><meta charset="utf-8"><title>Career pathway plan - {e(ctx.student_name)}</title>
 <style>
   @media print {{ @page {{ margin: 18mm; }} }}
   .toolbar {{ position: sticky; top: 12px; display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; }}
@@ -224,6 +224,7 @@ def build_report_html(ctx: ReportContext) -> str:
   .direction {{ font-size: 20px; font-weight: bold; margin: 4px 0; }}
   .desc {{ color: #444; }}
   ul {{ margin: 8px 0; padding-left: 22px; }}
+  ol {{ margin: 8px 0; padding-left: 22px; }}
   li {{ margin: 3px 0; }}
   .block {{ margin-top: 8px; }}
   .foot {{ margin-top: 34px; padding-top: 12px; border-top: 1px solid #ddd;
@@ -236,24 +237,31 @@ def build_report_html(ctx: ReportContext) -> str:
   <div class="head">
     {school}
     <h1>{e(ctx.student_name)}</h1>
-    <div class="sub">Career pathway{cls}</div>
+    <div class="sub">Career pathway plan{cls}</div>
   </div>
 
-  <h2>Your direction</h2>
+  <h2>Direction</h2>
   <div class="direction">{direction}</div>
   {desc}
 
-  <h2>Foundation skills to build</h2>
+  <h2>Build next</h2>
   <ul>{skills}</ul>
 
-  <h2>Where this leads — roles</h2>
+  <h2>Possible role directions</h2>
   <ul>{roles}</ul>
 
   {programme}
   {admission}
 
+  <h2>How to use this plan</h2>
+  <ol>
+    <li>Use the direction and programme sections to confirm the next academic decision.</li>
+    <li>Build the listed skills through lessons, projects, or supervised practice.</li>
+    <li>Recheck current institution requirements before submitting an application.</li>
+  </ol>
+
   <div class="foot">
-    Generated {e(ctx.generated_on)} by Sifter LevelUp. This is guidance based on
+    Prepared {e(ctx.generated_on)} by Sifter LevelUp. This plan is based on
     the selected programme and mapped taxonomy; it is not an admission offer or
     legal, financial, immigration or professional advice. Verify current
     requirements with the relevant Nigerian institution or regulator.
@@ -352,16 +360,16 @@ def build_report_docx(ctx: ReportContext) -> bytes:
     if ctx.school_name:
         body_parts.append(_p(ctx.school_name, size=18))
     body_parts.append(_p(ctx.student_name, bold=True, size=36))
-    meta = " · ".join(part for part in [ctx.student_class, ctx.stream] if part)
-    sub = "Career pathway" + (f" · {meta}" if meta else "")
+    meta = " / ".join(part for part in [ctx.student_class, ctx.stream] if part)
+    sub = "Career pathway plan" + (f" / {meta}" if meta else "")
     body_parts.append(_p(sub, size=22))
 
-    body_parts.append(_p("Your direction", bold=True, size=26, heading=True))
+    body_parts.append(_p("Direction", bold=True, size=26, heading=True))
     body_parts.append(_p(ctx.domain_name or "Career direction to be chosen", bold=True, size=28))
     if ctx.domain_description:
         body_parts.append(_p(ctx.domain_description))
 
-    body_parts.append(_p("Foundation skills to build", bold=True, size=26, heading=True))
+    body_parts.append(_p("Build next", bold=True, size=26, heading=True))
     if ctx.foundation_skills:
         body_parts += [_bullet(s) for s in ctx.foundation_skills[:12]]
     else:

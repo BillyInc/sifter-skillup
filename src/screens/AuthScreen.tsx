@@ -53,7 +53,7 @@ function friendlyAuthError(error: unknown, fallback: string) {
 
 export default function AuthScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ claim?: string | string[] }>();
+  const params = useLocalSearchParams<{ claim?: string | string[]; school_code?: string | string[] }>();
   const { colors, isDark } = useTheme();
   const { signInEmail, signInGuest } = useAuth();
   const resp = useResponsive();
@@ -62,7 +62,10 @@ export default function AuthScreen() {
   const [mode, setMode] = useState<Mode>("welcome");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [schoolCode, setSchoolCode] = useState("");
+  const [schoolCode, setSchoolCode] = useState(() => {
+    const value = params.school_code;
+    return (Array.isArray(value) ? value[0] : value) ?? "";
+  });
   const [claimCode, setClaimCode] = useState(() => {
     const value = params.claim;
     return (Array.isArray(value) ? value[0] : value) ?? "";

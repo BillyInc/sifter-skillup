@@ -142,6 +142,22 @@ async def send_verification_code(
     )
 
 
+async def send_admin_mfa_code(
+    email: str,
+    code: str,
+    ttl_minutes: Optional[int] = None,
+) -> None:
+    """Email a one-time admin challenge code."""
+    ttl = ttl_minutes if ttl_minutes is not None else settings.EMAIL_CODE_TTL_MINUTES
+    await _send(
+        email,
+        code,
+        subject="Your LevelUp admin security code",
+        html=_verification_html(code, ttl).replace("Confirm your email", "Confirm admin access"),
+        text=_verification_text(code, ttl).replace("Confirm your email", "Confirm admin access"),
+    )
+
+
 async def _send(email: str, code: str, *, subject: str, html: str, text: str) -> None:
     if not settings.RESEND_API_KEY:
         # Local development without a key stays workable, but only where the

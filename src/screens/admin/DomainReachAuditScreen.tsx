@@ -161,8 +161,8 @@ export function DomainReachAuditScreen() {
             <Text style={[styles.calloutBody, { color: colors.textSoft }]}>
               This view counts what your programme mix can reach under the CCMAS
               mapping. It says nothing about employer demand, salaries or
-              hiring. For demand signals use Market Intelligence — never read
-              these numbers as market data.
+              hiring. Market Intelligence is currently unavailable until
+              source-backed labour-market ingestion is live.
             </Text>
           </View>
         </View>

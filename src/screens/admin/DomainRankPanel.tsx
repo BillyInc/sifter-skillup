@@ -1,6 +1,6 @@
 /**
- * DomainRankPanel — domains the institution's programmes route into, ranked by
- * posting volume, with an NG local / Global / NG remote scope toggle.
+ * DomainRankPanel — the demand-ranked domain panel. It is kept data-gated until
+ * source-backed labour-market ingestion is available.
  *
  * The scope is lifted to the caller (the dashboard owns the active scope and
  * re-fetches adminData.getDomainRanking(scope)); this component only renders.
@@ -15,10 +15,10 @@ import {
   Radius,
   FontSize,
   CompassFonts,
-  Brand,
 } from "@/theme";
+import { MARKET_DEMAND_AVAILABLE } from "@/lib/adminData";
 import { ComingSoonPanel } from "./ComingSoonPanel";
-import type { DataState } from "../../types/career";
+import { comingSoon, type DataState } from "../../types/career";
 import type { DomainRankItem, RankScope } from "../../types/institution";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
 
@@ -72,10 +72,16 @@ export function DomainRankPanel({
       </View>
 
       <ComingSoonPanel
-        state={state}
+        state={
+          MARKET_DEMAND_AVAILABLE
+            ? state
+            : comingSoon<DomainRankItem[]>(
+                "Domain demand rankings are unavailable until source-backed labour-market ingestion is added.",
+              )
+        }
         empty={(items) => items.length === 0}
         emptyTitle="No ranked domains yet"
-        emptyBody="Domain demand rankings appear once your programme mix is mapped."
+        emptyBody="Domain demand rankings are unavailable until source-backed labour-market ingestion is added."
       >
         {(items) => {
           const max = Math.max(

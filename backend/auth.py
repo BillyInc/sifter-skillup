@@ -66,10 +66,10 @@ class Auth:
 
     # ── JWT ─────────────────────────────────────────────────────
     @staticmethod
-    def create_jwt(user_id: str) -> str:
+    def create_jwt(user_id: str, mfa_verified: bool = False) -> str:
         expire = datetime.now(timezone.utc) + timedelta(hours=settings.JWT_EXPIRE_HOURS)
         return jwt.encode(
-            {"sub": user_id, "exp": expire},
+            {"sub": user_id, "exp": expire, "mfa_verified": bool(mfa_verified)},
             settings.JWT_SECRET,
             algorithm=settings.JWT_ALGORITHM,
         )
@@ -107,6 +107,7 @@ class Auth:
             # persona. Keep that state pending so the client can send only
             # those accounts back through the account-type gate.
             user.setdefault("account_type", "pending")
+            user["_mfa_verified"] = bool(payload.get("mfa_verified"))
             return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")
@@ -127,6 +128,16 @@ class Auth:
         """
         if current_user.get("account_type") not in ("institution_admin", "educator"):
             raise HTTPException(status_code=403, detail="Admin access required")
+        try:
+            mfa = db.get_service_client().table("user_mfa_settings").select(
+                "status"
+            ).eq("user_id", current_user["id"]).limit(1).execute().data or []
+        except Exception:
+            # Older installations can continue using admin access until the
+            # security migration has been applied.
+            mfa = []
+        if mfa and mfa[0].get("status") == "enabled" and not current_user.get("_mfa_verified"):
+            raise HTTPException(status_code=428, detail="Admin MFA verification required.")
         return current_user
 
     @staticmethod

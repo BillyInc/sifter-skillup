@@ -24,6 +24,17 @@ class Logger:
         # Remove default handler
         logger.remove()
 
+        # Windows development consoles often use cp1252. Structured log
+        # records include level icons, so replace unsupported characters
+        # instead of raising a secondary logging error during a request.
+        for stream in (sys.stdout, sys.stderr):
+            reconfigure = getattr(stream, "reconfigure", None)
+            if reconfigure:
+                try:
+                    reconfigure(errors="backslashreplace")
+                except (OSError, ValueError):
+                    pass
+
         # Console output with JSON format
         # Note: serialize=True auto-formats as JSON; custom format= conflicts with it
         logger.add(

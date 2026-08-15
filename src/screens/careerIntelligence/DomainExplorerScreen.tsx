@@ -1,11 +1,11 @@
 /**
  * DomainExplorerScreen — the context-free map of every domain, across every
  * cluster. Masonry/editorial grid: cluster colour accent bar at top, Feather
- * icon, domain name, count, demand band, elite badge. Whole card is the tap
+ * icon, domain name, structural cluster and elite badge. Whole card is the tap
  * target.
  *
- * Filter chips: "All", plus "In-Demand"/"Elite" when anything actually
- * qualifies, plus one per cluster, plus text search.
+ * Filter chips: "All", plus "Elite" when anything actually qualifies, plus one
+ * per cluster and text search. Market-demand filters are intentionally absent.
  *
  * Counts and cluster names come from GET /api/career/domains. Nothing on this
  * screen is a literal: the header used to claim "168 domains across 37
@@ -285,13 +285,6 @@ export function DomainExplorerScreen() {
                               {d.name}
                             </Text>
 
-                            {/* Demand meter.
-                                Driven by the source's own band, not by the raw
-                                score. The score is on an unknown scale (13..56
-                                in practice); the old meter assumed 0..10 and
-                                clamped, so all 160 domains drew a full green
-                                bar labelled "Demand" — reading as high demand
-                                for the 108 the data calls low. */}
                             {d.eliteFlag ? (
                               <View
                                 style={[

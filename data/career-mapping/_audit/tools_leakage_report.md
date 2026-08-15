@@ -2,10 +2,10 @@
 
 O*NET comparisons use the full detailed O*NET-SOC code. Medical software is additionally restricted to health-adjacent domains because its O*NET rows include workplace-context matches for otherwise generic occupations.
 
-**Evaluated domain scopes:** 135
-**Evaluated subgroup scopes:** 270
+**Evaluated domain scopes:** 137
+**Evaluated subgroup scopes:** 272
 **Flagged scopes:** 132
-**Dropped after this audit:** 537
+**Dropped after this audit:** 546
 **Removed by the source-layer health-context guard before this audit:** 0
 
 Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
@@ -13,7 +13,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 ## D003 subgroup 25 (4 exact-SOC roles)
 - DROP Informatica software [no_exact_detailed_soc_overlap]
 
-## D004 (9 exact-SOC roles)
+## D004 (11 exact-SOC roles)
 - DROP WordPress [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) Manager [no_exact_detailed_soc_overlap]
@@ -21,12 +21,12 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP ESRI ArcGIS ArcPy [no_exact_detailed_soc_overlap]
 - DROP ESRI ArcGIS Survey 123 [no_exact_detailed_soc_overlap]
 
-## D004 subgroup 25 (8 exact-SOC roles)
+## D004 subgroup 25 (10 exact-SOC roles)
 - DROP WordPress [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) Manager [no_exact_detailed_soc_overlap]
 
-## D010 subgroup 24 (3 exact-SOC roles)
+## D010 subgroup 24 (9 exact-SOC roles)
 - DROP NumPy [no_exact_detailed_soc_overlap]
 - DROP pandas [no_exact_detailed_soc_overlap]
 - DROP Scikit-learn [no_exact_detailed_soc_overlap]
@@ -48,7 +48,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP Microsoft Visual Basic for Applications VBA [no_exact_detailed_soc_overlap]
 - DROP Oracle Primavera Enterprise Project Portfolio Management [no_exact_detailed_soc_overlap]
 
-## D014 (13 exact-SOC roles)
+## D014 (15 exact-SOC roles)
 - DROP Informatica software [no_exact_detailed_soc_overlap]
 
 ## D015 (18 exact-SOC roles)
@@ -101,7 +101,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP Google Workspace software [no_exact_detailed_soc_overlap]
 - KEEP (floor) Bentley MicroStation [no_exact_detailed_soc_overlap]
 
-## D021 subgroup 21 (13 exact-SOC roles)
+## D021 subgroup 21 (16 exact-SOC roles)
 - DROP ConstructConnect PlanSwift [no_exact_detailed_soc_overlap]
 
 ## D021 subgroup 31 (3 exact-SOC roles)
@@ -110,7 +110,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP PTV Vissim [no_exact_detailed_soc_overlap]
 - DROP HEC-RAS [no_exact_detailed_soc_overlap]
 
-## D022 (44 exact-SOC roles)
+## D022 (56 exact-SOC roles)
 - DROP Enterprise application integration EAI software [no_exact_detailed_soc_overlap]
 - DROP Reporting software [no_exact_detailed_soc_overlap]
 - DROP Microsoft SQL Server Reporting Services SSRS [no_exact_detailed_soc_overlap]
@@ -131,13 +131,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 ## D022 subgroup 21 (22 exact-SOC roles)
 - DROP Siemens Teamcenter [no_exact_detailed_soc_overlap]
 
-## D023 (10 exact-SOC roles)
-- DROP Ansible software [no_exact_detailed_soc_overlap]
-
-## D023 subgroup 32 (6 exact-SOC roles)
-- DROP Ansible software [no_exact_detailed_soc_overlap]
-
-## D024 subgroup 32 (12 exact-SOC roles)
+## D024 subgroup 32 (14 exact-SOC roles)
 - DROP NumPy [no_exact_detailed_soc_overlap]
 - DROP pandas [no_exact_detailed_soc_overlap]
 - DROP Scikit-learn [no_exact_detailed_soc_overlap]
@@ -323,28 +317,28 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 ## D038 subgroup 33 (19 exact-SOC roles)
 - DROP TensorFlow [no_exact_detailed_soc_overlap]
 
-## D041 (36 exact-SOC roles)
+## D041 (40 exact-SOC roles)
 - DROP Google Android [no_exact_detailed_soc_overlap]
 - DROP Yardi software [no_exact_detailed_soc_overlap]
 - DROP Microsoft SQL Server Reporting Services SSRS [no_exact_detailed_soc_overlap]
 - DROP Transact-SQL [no_exact_detailed_soc_overlap]
 - DROP Apple iOS [no_exact_detailed_soc_overlap]
 
-## D041 subgroup 21 (25 exact-SOC roles)
+## D041 subgroup 21 (29 exact-SOC roles)
 - DROP Google Android [no_exact_detailed_soc_overlap]
 
 ## D041 subgroup 31 (11 exact-SOC roles)
 - DROP Oracle PL/SQL [no_exact_detailed_soc_overlap]
 
-## D044 (32 exact-SOC roles)
+## D044 (33 exact-SOC roles)
 - DROP Adobe XD [no_exact_detailed_soc_overlap]
 
-## D045 (56 exact-SOC roles)
+## D045 (59 exact-SOC roles)
 - DROP Enterprise application integration EAI software [no_exact_detailed_soc_overlap]
 - DROP Reporting software [no_exact_detailed_soc_overlap]
 - DROP Business software applications [no_exact_detailed_soc_overlap]
 
-## D045 subgroup 11 (14 exact-SOC roles)
+## D045 subgroup 11 (15 exact-SOC roles)
 - DROP Enterprise application integration EAI software [no_exact_detailed_soc_overlap]
 - DROP Reporting software [no_exact_detailed_soc_overlap]
 - DROP Business software applications [no_exact_detailed_soc_overlap]
@@ -352,7 +346,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP Microsoft SQL Server Reporting Services SSRS [no_exact_detailed_soc_overlap]
 - DROP Google Workspace software [no_exact_detailed_soc_overlap]
 
-## D045 subgroup 33 (19 exact-SOC roles)
+## D045 subgroup 33 (21 exact-SOC roles)
 - DROP TensorFlow [no_exact_detailed_soc_overlap]
 
 ## D047 subgroup 31 (5 exact-SOC roles)
@@ -478,6 +472,16 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 ## D069 subgroup 31 (16 exact-SOC roles)
 - DROP Google Android [no_exact_detailed_soc_overlap]
 
+## D070 (8 exact-SOC roles)
+- DROP Asana [no_exact_detailed_soc_overlap]
+- DROP Canva [no_exact_detailed_soc_overlap]
+- DROP Slack [no_exact_detailed_soc_overlap]
+- DROP Microsoft Teams [no_exact_detailed_soc_overlap]
+- DROP UNIX Shell [no_exact_detailed_soc_overlap]
+- DROP Swift [no_exact_detailed_soc_overlap]
+- DROP Google Analytics [no_exact_detailed_soc_overlap]
+- DROP DaVinci Resolve [no_exact_detailed_soc_overlap]
+
 ## D072 (17 exact-SOC roles)
 - DROP Microsoft Internet Information Services (IIS) [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) Manager [no_exact_detailed_soc_overlap]
@@ -602,7 +606,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 ## D099 subgroup 71 (14 exact-SOC roles)
 - DROP Dassault Systemes SolidWorks [no_exact_detailed_soc_overlap]
 
-## D103 subgroup 73 (10 exact-SOC roles)
+## D103 subgroup 73 (13 exact-SOC roles)
 - KEEP (floor) Dassault Systemes SolidWorks [no_exact_detailed_soc_overlap]
 
 ## D107 (63 exact-SOC roles)
@@ -648,15 +652,18 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - KEEP (floor) Oracle PeopleSoft [no_exact_detailed_soc_overlap]
 - KEEP (floor) Microsoft Active Server Pages ASP [no_exact_detailed_soc_overlap]
 
-## D114 subgroup 82 (28 exact-SOC roles)
+## D114 subgroup 82 (34 exact-SOC roles)
 - DROP Bentley MicroStation [no_exact_detailed_soc_overlap]
 
-## D118 subgroup 61 (16 exact-SOC roles)
+## D118 subgroup 61 (18 exact-SOC roles)
 - DROP QGIS [no_exact_detailed_soc_overlap]
 - DROP React [no_exact_detailed_soc_overlap]
 - DROP ServiceNow [no_exact_detailed_soc_overlap]
 
-## D122 subgroup 32 (4 exact-SOC roles)
+## D122 (6 exact-SOC roles)
+- DROP Ansible software [no_exact_detailed_soc_overlap]
+
+## D122 subgroup 32 (6 exact-SOC roles)
 - DROP Ansible software [no_exact_detailed_soc_overlap]
 
 ## D128 subgroup 13 (5 exact-SOC roles)
@@ -691,7 +698,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP ETAP [no_exact_detailed_soc_overlap]
 - DROP SKM Systems Analysis Power Tools [no_exact_detailed_soc_overlap]
 
-## D140 (5 exact-SOC roles)
+## D140 (7 exact-SOC roles)
 - DROP Aurora HelioScope [no_exact_detailed_soc_overlap]
 - DROP PVsyst [no_exact_detailed_soc_overlap]
 - DROP ETAP [no_exact_detailed_soc_overlap]
@@ -708,7 +715,7 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP SKM Systems Analysis Power Tools [no_exact_detailed_soc_overlap]
 - DROP JUnit [no_exact_detailed_soc_overlap]
 
-## D143 (22 exact-SOC roles)
+## D143 (25 exact-SOC roles)
 - DROP IBM WebSphere MQ [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) [no_exact_detailed_soc_overlap]
 - DROP Microsoft Internet Information Services (IIS) Manager [no_exact_detailed_soc_overlap]
@@ -740,9 +747,10 @@ Hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113.
 - DROP Autodesk AutoCAD Civil 3D [no_exact_detailed_soc_overlap]
 - DROP Bentley MicroStation [no_exact_detailed_soc_overlap]
 - DROP Microsoft Active Server Pages ASP [no_exact_detailed_soc_overlap]
-- KEEP (floor) NoSQL [no_exact_detailed_soc_overlap]
-- KEEP (floor) Splunk Enterprise [no_exact_detailed_soc_overlap]
-- KEEP (floor) Apache Hadoop [no_exact_detailed_soc_overlap]
+- DROP NoSQL [no_exact_detailed_soc_overlap]
+- DROP Splunk Enterprise [no_exact_detailed_soc_overlap]
+- DROP Apache Hadoop [no_exact_detailed_soc_overlap]
+- KEEP (floor) ESRI ArcGIS software [no_exact_detailed_soc_overlap]
 
 ## D145 subgroup 26 (5 exact-SOC roles)
 - DROP Henry Schein Dentrix [no_exact_detailed_soc_overlap]

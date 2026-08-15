@@ -14,6 +14,8 @@ import os
 import re
 from collections import Counter, defaultdict
 
+from _nigerian_context import resolved_nigerian_context
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
 MEDICAL_TOOLS = {"epic systems", "meditech software"}
@@ -21,8 +23,11 @@ TOOL_SOURCE = os.path.join(HERE, "_source_extracts", "onet_30_3", "Software Skil
 DOMAIN_TOOLS = os.path.join(HERE, "domain_tools.json")
 DOMAIN_META = os.path.join(HERE, "domain_meta.json")
 DOMAIN_STRUCTURE = os.path.join(HERE, "domain_structure.json")
+DOMAIN_SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
 ROLE_LIBRARY = os.path.join(HERE, "role_library_v3_cleaned.json")
+EMERGING_OVERLAY = os.path.join(HERE, "emerging_role_overlays.json")
 ROLE_TOOLS = os.path.join(HERE, "role_tools.json")
+GROUP_LAYERS = os.path.join(HERE, "emerging_group_layers.json")
 REPORT_JSON = os.path.join(HERE, "_audit", "source_backed_layer_report.json")
 REPORT_MD = os.path.join(HERE, "_audit", "source_backed_layer_report.md")
 SKILL_JSON = os.path.join(HERE, "domain_skill_provenance.json")
@@ -97,9 +102,17 @@ def finalize_skill_map(bucket):
 def main():
     tools = load(DOMAIN_TOOLS)
     meta = load(DOMAIN_META)
+    source_registry = load(DOMAIN_SOURCE_REGISTRY) if os.path.exists(DOMAIN_SOURCE_REGISTRY) else {}
     structure = load(DOMAIN_STRUCTURE)
     roles = load(ROLE_LIBRARY)
+    overlay = load(EMERGING_OVERLAY) if os.path.exists(EMERGING_OVERLAY) else {"roles": []}
+    roles.extend(overlay.get("roles") or [])
     role_tools = load(ROLE_TOOLS)
+    group_layers = load(GROUP_LAYERS) if os.path.exists(GROUP_LAYERS) else {"domains": {}, "subgroups": []}
+    group_layers_by_key = {
+        (text(item.get("domain_id")), text(item.get("isco_submajor"))): item
+        for item in group_layers.get("subgroups") or []
+    }
 
     # One normalized O*NET tool name can have one or more official categories;
     # retain all categories rather than guessing from the product name.
@@ -193,25 +206,63 @@ def main():
             esco = entry.get("esco") or {}
             if esco.get("occupation_uris"):
                 counts["roles_with_esco"] += 1
-            if entry.get("tools"):
+            has_onet_tools = any(text(tool.get("source")) == "onet" for tool in entry.get("tools") or [])
+            provenance = entry.get("source_provenance") or {}
+            provenance_sources = set(provenance.get("sources") or []) if isinstance(provenance, dict) else set()
+            # Exact O*NET title joins also carry provenance, but they are not
+            # specialist framework overlays. Keep those signals separate.
+            has_framework_signal = bool(provenance) and not provenance_sources.issubset({"global_esco", "global_onet"})
+            if has_onet_tools:
                 counts["roles_with_onet_tools"] += 1
-            if entry.get("tools") or esco.get("essential_skills") or esco.get("optional_skills"):
+            if has_framework_signal:
+                counts["roles_with_framework_signal"] += 1
+            onet = entry.get("onet") or {}
+            if entry.get("tools") or onet.get("essential_skills") or esco.get("essential_skills") or esco.get("optional_skills") or has_framework_signal:
                 counts["roles_with_any_source_signal"] += 1
-            role_source = "esco" if esco.get("occupation_uris") else ("onet" if entry.get("tools") else "unsourced")
+            # A framework overlay owns the displayed role skill list even when
+            # the title also happens to resolve to an ESCO occupation. Keep
+            # that provenance distinct from supplemental ESCO/O*NET signals.
+            role_source = "framework" if has_framework_signal else ("esco" if esco.get("occupation_uris") else ("onet" if onet.get("essential_skills") or has_onet_tools else "unsourced"))
             for skill in skill_values(role.get("essential_skills")):
                 add_skill_evidence(domain_skill_bucket, skill, role_source)
                 subgroup = text(role.get("isco_group"))[:2]
                 if subgroup:
                     add_skill_evidence(subgroup_buckets[subgroup], skill, role_source)
+            for competency in onet.get("essential_skills") or []:
+                skill = text(competency.get("element_name"))
+                if not skill:
+                    continue
+                add_skill_evidence(domain_skill_bucket, skill, "onet")
+                subgroup = text(role.get("isco_group"))[:2]
+                if subgroup:
+                    add_skill_evidence(subgroup_buckets[subgroup], skill, "onet")
+
+        direct_domain_layer = (group_layers.get("domains") or {}).get(domain_id) or {}
+        for skill in direct_domain_layer.get("skills") or []:
+            add_skill_evidence(domain_skill_bucket, skill, direct_domain_layer.get("source") or "framework")
+        for subgroup_id, layer in group_layers_by_key.items():
+            if subgroup_id[0] != domain_id:
+                continue
+            for skill in layer.get("skills") or []:
+                add_skill_evidence(subgroup_buckets[subgroup_id[1]], skill, layer.get("source") or "framework")
         domain_structure = structure.get(domain_id, {})
+        nigerian_context = resolved_nigerian_context(domain_id, domain_meta, source_registry)
         subgroup_rows = {}
         for subgroup in domain_structure.get("subgroups", []):
             subgroup_id = text(subgroup.get("isco_submajor"))
+            subgroup_label = subgroup.get("label")
             subgroup_rows[subgroup_id] = {
                 "label": subgroup.get("label"),
                 "skills": finalize_skill_map(subgroup_buckets.get(subgroup_id, {})),
                 "data_state": "source_backed" if subgroup_buckets.get(subgroup_id) else "partial",
                 "source_confidence": confidence({source for value in subgroup_buckets.get(subgroup_id, {}).values() for source in value["sources"]}),
+                "nigerian_context": resolved_nigerian_context(
+                    domain_id,
+                    domain_meta,
+                    source_registry,
+                    scope="subgroup_context",
+                    subgroup_label=subgroup_label,
+                ),
             }
         layer_sources = {source for value in domain_skill_bucket.values() for source in value["sources"]}
         row = {
@@ -220,10 +271,12 @@ def main():
             "role_count": len(domain_roles),
             "roles_with_esco": counts["roles_with_esco"],
             "roles_with_onet_tools": counts["roles_with_onet_tools"],
+            "roles_with_framework_signal": counts["roles_with_framework_signal"],
             "roles_with_any_source_signal": counts["roles_with_any_source_signal"],
             "source_confidence": confidence(layer_sources),
             "data_state": "source_backed" if layer_sources else "partial",
             "foundation_skills": finalize_skill_map(domain_skill_bucket),
+            "nigerian_context": nigerian_context,
             "subgroups": subgroup_rows,
         }
         skill_provenance[domain_id] = row
@@ -237,7 +290,14 @@ def main():
         "medical_tool_rows_removed": len(removed),
         "removed_medical_tool_rows": removed,
         "roles_keyed": len({f"{r.get('domain_id')}|{r.get('role_name')}" for r in roles}),
-        "roles_with_tool_or_skill_signal": sum(1 for value in role_tools.values() if isinstance(value, dict) and (value.get("tools") or (value.get("esco") or {}).get("essential_skills") or (value.get("esco") or {}).get("optional_skills"))),
+        "roles_with_tool_or_skill_signal": sum(1 for value in role_tools.values() if isinstance(value, dict) and (value.get("tools") or value.get("source_provenance") or (value.get("onet") or {}).get("essential_skills") or (value.get("esco") or {}).get("essential_skills") or (value.get("esco") or {}).get("optional_skills"))),
+        "roles_with_framework_signal": sum(
+            1
+            for value in role_tools.values()
+            if isinstance(value, dict)
+            and isinstance(value.get("source_provenance"), dict)
+            and not set(value.get("source_provenance", {}).get("sources") or []).issubset({"global_esco", "global_onet"})
+        ),
         "domains": sorted(domain_rows, key=lambda item: item["domain_id"]),
     }
     os.makedirs(os.path.dirname(REPORT_JSON), exist_ok=True)
@@ -254,17 +314,18 @@ def main():
         f"Domains evaluated: **{len(domain_rows)}** (hidden domains excluded: {', '.join(sorted(HIDDEN))})",
         f"Domain/subgroup tool rows annotated: **{annotated_count}**",
         f"Medical-context tool rows removed from non-health domains: **{len(removed)}**",
-        f"Roles with ESCO or O*NET tool/skill signal: **{report['roles_with_tool_or_skill_signal']} / {report['roles_keyed']}**",
+        f"Roles with any source signal (ESCO, O*NET or specialist framework): **{report['roles_with_tool_or_skill_signal']} / {report['roles_keyed']}**",
+        f"Roles with specialist framework provenance: **{report['roles_with_framework_signal']} / {report['roles_keyed']}**",
         "",
         "Role evidence remains role-owned. Domain and subgroup rows are only annotated with provenance and are not populated by copying role tools or certifications.",
         "",
         "## Domain coverage",
         "",
-        "| Domain | Roles | ESCO | O*NET tools | Any signal | State |",
-        "|---|---:|---:|---:|---:|---|",
+        "| Domain | Roles | ESCO | O*NET tools | Framework | Any signal | State |",
+        "|---|---:|---:|---:|---:|---:|---|",
     ]
     for row in sorted(domain_rows, key=lambda item: item["domain_id"]):
-        lines.append(f"| {row['domain_id']} {row['domain_name']} | {row['role_count']} | {row['roles_with_esco']} | {row['roles_with_onet_tools']} | {row['roles_with_any_source_signal']} | {row['data_state']} / {row['source_confidence']} |")
+        lines.append(f"| {row['domain_id']} {row['domain_name']} | {row['role_count']} | {row['roles_with_esco']} | {row['roles_with_onet_tools']} | {row['roles_with_framework_signal']} | {row['roles_with_any_source_signal']} | {row['data_state']} / {row['source_confidence']} |")
     if removed:
         lines.extend(["", "## Removed medical-context leakage", ""])
         for item in removed:
@@ -276,6 +337,7 @@ def main():
         "tool_rows_annotated": annotated_count,
         "medical_tool_rows_removed": len(removed),
         "roles_with_signal": report["roles_with_tool_or_skill_signal"],
+        "roles_with_framework_signal": report["roles_with_framework_signal"],
     }, indent=2))
 
 

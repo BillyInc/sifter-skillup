@@ -10,7 +10,9 @@
  * code or number.
  */
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Share } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import * as ExpoLinking from "expo-linking";
 import {
   useTheme,
   Spacing,
@@ -24,7 +26,6 @@ import { adminData } from "@/lib/adminData";
 import type { DataState } from "../../types/career";
 import type { AffiliationStats, Organization } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
-import { ComingSoonPanel } from "./ComingSoonPanel";
 
 const PRIVACY_POINTS = [
   {
@@ -72,11 +73,29 @@ export function AffiliationScreen() {
 
   // Only show a real code if the org read is actually populated; otherwise the
   // styled placeholder makes clear the code is not yet available.
-  const code =
-    org.status === "real" && org.data
-      ? // Organization has no schoolCode; affiliation stats carry it when live.
-        (stats.status === "real" && stats.data?.schoolCode) || null
-      : null;
+  const code = stats.status === "real" ? stats.data?.schoolCode || org.data?.schoolCode || null : null;
+  const count = stats.status === "real" ? stats.data?.affiliatedStudents : null;
+  const belowThreshold = stats.status === "real" && Boolean(stats.data?.belowThreshold);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const copyCode = async () => {
+    if (!code) return;
+    await Clipboard.setStringAsync(code);
+    setNotice("School code copied.");
+  };
+
+  const shareCode = async () => {
+    if (!code) return;
+    try {
+      const referralLink = `${ExpoLinking.createURL("/signup")}?school_code=${encodeURIComponent(code)}`;
+      await Share.share({
+        title: `${org.data?.name ?? "School"} referral code`,
+        message: `Join ${org.data?.name ?? "our school"} on Sifter LevelUp with school code: ${code}\n\nOpen the signup link: ${referralLink}`,
+      });
+    } catch {
+      setNotice("The share sheet could not be opened. Copy the code instead.");
+    }
+  };
 
   return (
     <AdminShell title="Affiliation" eyebrow="School code">
@@ -130,17 +149,21 @@ export function AffiliationScreen() {
           )}
           <View
             style={[
-              styles.copyBtnDisabled,
+              styles.actions,
               { backgroundColor: colors.bgSecondary, borderColor: colors.border },
             ]}
           >
-            <Text style={[styles.copyBtnText, CompassFonts.bodyBold, { color: colors.textMuted }]}>
-              {code ? "Copy code" : "Available after verification"}
-            </Text>
+            <TouchableOpacity disabled={!code} onPress={() => void copyCode()} style={[styles.actionBtn, { borderColor: colors.border, opacity: code ? 1 : 0.55 }]}>
+              <Text style={[styles.copyBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Copy code</Text>
+            </TouchableOpacity>
+            <TouchableOpacity disabled={!code} onPress={() => void shareCode()} style={[styles.actionBtn, { borderColor: colors.border, opacity: code ? 1 : 0.55 }]}>
+              <Text style={[styles.copyBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share code</Text>
+            </TouchableOpacity>
           </View>
+          {notice ? <Text style={[styles.codeNote, { color: colors.accentRole.success }]}>{notice}</Text> : null}
           <Text style={[styles.codeNote, { color: colors.textMuted }]}>
-            Your code becomes active once your institution is verified and the
-            school-code rollout is online.
+            The readable school prefix is paired with a record suffix so schools
+            with the same name or initials do not share a code.
           </Text>
         </View>
 
@@ -149,7 +172,13 @@ export function AffiliationScreen() {
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Affiliated students (aggregate)
           </Text>
-          <ComingSoonPanel state={stats}>{() => null}</ComingSoonPanel>
+          <Text style={[styles.lede, { color: colors.textMuted }]}>
+            {stats.status === "real"
+              ? belowThreshold
+                ? "The count is hidden until at least five affiliations are recorded, to protect learner privacy."
+                : `${count ?? 0} learners have affiliated with this school.`
+              : stats.meta?.notice ?? "Affiliation data is unavailable right now."}
+          </Text>
         </View>
 
         {/* Privacy framing */}
@@ -228,6 +257,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.sm,
     opacity: 0.7,
+  },
+  actions: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: Spacing.sm },
+  actionBtn: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
   },
   copyBtnText: { fontSize: FontSize.sm },
   codeNote: {

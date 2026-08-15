@@ -31,6 +31,7 @@ KEY_PREFIX = "levelup:email_code:"
 # an existing account's password.
 PURPOSE_SIGNUP = "signup"
 PURPOSE_PASSWORD_RESET = "password_reset"
+PURPOSE_ADMIN_MFA = "admin_mfa"
 
 # Grace beyond the code's own lifetime, so the record still exists to be
 # reported as expired rather than vanishing into "never requested".

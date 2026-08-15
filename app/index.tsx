@@ -151,7 +151,7 @@ export default function LandingPage() {
       <View style={styles.grid}>
         {[
           ["Students", "Continue career discovery, explore domains, and compare role signals."],
-          ["Universities", "See programme-to-domain demand and skills gaps."],
+          ["Universities", "Explore programme-to-domain mappings and curriculum pathways."],
           ["Schools & tutorials", "Guide SS students outward across universities and roles."],
         ].map(([title, body]) => (
           <View

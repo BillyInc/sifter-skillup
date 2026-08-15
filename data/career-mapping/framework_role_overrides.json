@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "qt_cfqt": {
+      "name": "European Competence Framework for Quantum Technologies v3.0",
+      "url": "https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf",
+      "evidence_type": "competence_framework",
+      "region": "global_proxy",
+      "version": "3.0",
+      "published": "2025-04",
+      "notes": "EU Quantum Flagship reference framework with an eight-domain content map, proficiency areas and nine qualification profiles. It is used as a specialist source for quantum role and competency ownership, not as Nigerian labour-demand evidence."
+    }
+  },
+  "roles": {
+    "D141|quantum software engineer": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum programming, software stack, error-correction and quantum computing content; aligned to the QT engineering professional and QT (HW or SW) specialist profiles.",
+        "mapping_method": "role description mapped to CFQT content map and qualification profiles"
+      },
+      "overlay_tools": [
+        {"tool": "quantum programming tools and software stack", "group": "distinctive"},
+        {"tool": "quantum simulators", "group": "distinctive"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum hardware engineer": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 enabling technologies, quantum hardware, laboratory techniques and control technologies content; aligned to the QT engineering professional and QT core innovator profiles.",
+        "mapping_method": "role description mapped to CFQT content map and qualification profiles"
+      },
+      "overlay_tools": [
+        {"tool": "cryogenic, vacuum and cleanroom technologies", "group": "distinctive"},
+        {"tool": "quantum state control technologies", "group": "distinctive"},
+        {"tool": "control technologies", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum algorithm developer": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum computing and simulation content, including quantum subroutines, programming tools and quantum algorithms.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum programming tools and software stack", "group": "distinctive"},
+        {"tool": "quantum simulators", "group": "distinctive"},
+        {"tool": "quantum computing subroutines", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum error correction specialist": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum programming tools and software stack content explicitly includes error correction.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum programming tools and software stack", "group": "distinctive"},
+        {"tool": "quantum simulators", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum cryptography engineer": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum communication and networks content, including quantum random number generators, quantum key distribution and quantum cryptography applications.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum key distribution systems", "group": "distinctive"},
+        {"tool": "quantum random number generators", "group": "distinctive"},
+        {"tool": "quantum communication networks", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum systems architect": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 hybrid quantum-classical systems and technology realisation content; aligned to the QT (HW or SW) specialist profile and its systems-architect example.",
+        "mapping_method": "role description mapped to CFQT content map and qualification profiles"
+      },
+      "overlay_tools": [
+        {"tool": "hybrid quantum-classical systems", "group": "distinctive"},
+        {"tool": "quantum programming tools and software stack", "group": "common"},
+        {"tool": "quantum state control technologies", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum sensing specialist": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum sensors and imaging systems content, including electromagnetic, inertial, gravity, imaging and atomic-clock applications.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum sensors and imaging systems", "group": "distinctive"},
+        {"tool": "quantum state control technologies", "group": "distinctive"},
+        {"tool": "atomic clocks", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum machine learning specialist": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum computing and simulation content, including quantum programming tools, subroutines and applications.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum programming tools and software stack", "group": "distinctive"},
+        {"tool": "quantum simulators", "group": "distinctive"},
+        {"tool": "quantum computing subroutines", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum simulation scientist": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum computing and simulation content, including quantum simulators, quantum subroutines and applications of quantum computing and simulation.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "overlay_tools": [
+        {"tool": "quantum simulators", "group": "distinctive"},
+        {"tool": "quantum computing subroutines", "group": "distinctive"},
+        {"tool": "quantum programming tools and software stack", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum applications engineer": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 quantum computing and simulation applications content and QT applications and strategies qualification profiles.",
+        "mapping_method": "role description mapped to CFQT content map and qualification profiles"
+      },
+      "overlay_tools": [
+        {"tool": "quantum computing and simulation applications", "group": "distinctive"},
+        {"tool": "quantum programming tools and software stack", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum technician": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 QT practitioner profile and enabling-technology content covering laboratory techniques, noise and shielding, and control technologies.",
+        "mapping_method": "role description mapped to CFQT content map and qualification profiles"
+      },
+      "overlay_tools": [
+        {"tool": "cryogenic, vacuum and cleanroom technologies", "group": "distinctive"},
+        {"tool": "control technologies", "group": "common"}
+      ],
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    },
+    "D141|quantum policy and standards specialist": {
+      "source_provenance": {
+        "sources": ["qt_cfqt"],
+        "evidence": "CFQT v3.0 valorisation content covering industry and market analysis, business strategy, impact and responsibility, and education and communication.",
+        "mapping_method": "role description mapped to CFQT content map"
+      },
+      "source_confidence": "medium",
+      "data_state": "source_backed"
+    }
+  }
+}
