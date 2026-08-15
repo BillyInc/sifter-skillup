@@ -462,6 +462,32 @@ async def list_domain_clusters():
         if not rows:
             return ResponseModel(data=_coming_soon("No domains are available yet."))
 
+        scores: dict[str, float] = {}
+        bands: dict[str, str] = {}
+        try:
+            dm = (
+                svc.table("domain_demand_metrics")
+                # demand_band is the SOURCE's own categorisation (low/medium/
+                # high). The raw volume_score is on a scale the UI cannot know
+                # -- it runs 13..56 here, and a meter that assumed 0..10 drew
+                # every one of the 160 domains as a full bar, reading as "high
+                # demand" for the 108 the data calls low. Ship the band and let
+                # the UI render what the source actually says.
+                .select("domain_id, volume_score, demand_band")
+                .eq("rank_lens", "ng_local")
+                .execute()
+            )
+            for m in dm.data or []:
+                v = _num(m.get("volume_score"))
+                if v is not None:
+                    scores[m["domain_id"]] = v
+                band = (m.get("demand_band") or "").strip().lower()
+                if band:
+                    bands[m["domain_id"]] = band
+        except Exception as exc:  # noqa: BLE001
+            # Demand is an enrichment, not the point of the screen.
+            log.warning("domain demand lookup skipped", error=str(exc))
+
         grouped: dict[str, list] = {}
         for r in rows:
             entry = {
@@ -470,6 +496,12 @@ async def list_domain_clusters():
                 "name": r.get("name"),
                 "eliteFlag": bool(r.get("elite_domain")),
             }
+            score = scores.get(r["id"])
+            if score is not None:
+                entry["inDemandScore"] = score
+            band = bands.get(r["id"])
+            if band:
+                entry["demandBand"] = band
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
         out = [
