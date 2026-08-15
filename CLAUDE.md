@@ -116,3 +116,222 @@ Load these skills at the start of relevant work sessions:
 
 ### Git & Workflow
 - `/git-workflow` — Conventional commits, branch naming, PR guidelines
+
+## Mandatory Sifter LevelUp Design & Implementation Brief
+
+This section is the startup contract for any Claude Code session that changes the
+product experience. Read it before implementing UI, navigation, onboarding,
+career intelligence, or opportunity features. The full source brief is kept at
+[`docs/SIFTER_LEVELUP_CLAUDE_DESIGN_IMPLEMENTATION_INSTRUCTIONS-1.md`](docs/SIFTER_LEVELUP_CLAUDE_DESIGN_IMPLEMENTATION_INSTRUCTIONS-1.md),
+and the supplied visual references are in
+[`design/mockups-20260814T165448Z-1-001`](design/mockups-20260814T165448Z-1-001).
+Use both, but treat the running code and real data as the product source of
+truth.
+
+### Mission and product principle
+
+Act as the lead product designer, UX architect, interaction designer, and
+senior frontend engineer for the existing Sifter LevelUp product. Improve the
+real application in place; do not create a disconnected prototype or duplicate
+route tree. The product should make complex education and career decisions
+understandable to a secondary-school student while supporting deep exploration.
+
+The guiding principle is **simple at the surface, deep underneath**. Make the
+following relationship discoverable when the actual data model supports it:
+
+`Subjects → Programmes → Domains/Sub-groups → Roles → Skills → Opportunities`
+
+The user should move from uncertainty to clarity: know where to start,
+understand the available options, understand why an option fits, and know the
+next useful action.
+
+### Non-negotiable source-of-truth rules
+
+- Audit the repository, routes, components, state, API/data layer, persistence,
+  and current UX before changing implementation.
+- Use only values present in the codebase or returned by its real data sources.
+  Never invent universities, programmes, subjects, cut-offs, JAMB facts,
+  careers, skills, opportunities, companies, locations, salaries, dates,
+  statistics, testimonials, user details, or match percentages.
+- Mockup content is visual reference material only. Examples shown in a mockup
+  must not be copied into the product as factual content.
+- If data is unavailable, hide the section, derive a transparent value from
+  existing data, or show an honest empty/locked state. Do not use fabricated
+  filler to make a screen look complete.
+- Do not silently change business rules, matching logic, filtering, or source
+  data to satisfy a visual design. Record data defects separately.
+- Prefer the existing routing, components, API client, hooks, state management,
+  utilities, and tokens. Refactor shared patterns rather than creating a
+  parallel architecture.
+
+### Required work sequence
+
+For a substantial redesign or feature, follow this order and report the result:
+
+1. **Discover:** inspect the actual entry points, routes, screens, layouts,
+   shared components, hooks, services, assets, styling/tokens, auth,
+   persistence, API/data sources, and animation conventions.
+2. **Audit:** document Critical, High, Medium, and Low UX issues. For each
+   important issue state the current behavior, user impact, recommended fix,
+   supporting reference pattern, and affected code area.
+3. **Plan:** map navigation, information architecture, data relationships, and
+   the core user journeys before writing UI code.
+4. **Specify behavior:** create screen contracts, component inventories,
+   state transitions, data flow, acceptance criteria, and edge-case handling.
+5. **Visualize:** inspect the supplied mockups and create/validate visual
+   representations of the proposed major states using actual routes and data.
+6. **Implement:** build in the existing application, with reusable components
+   and real data. Do not stop at a static screenshot match.
+7. **Refine:** verify responsive behavior, accessibility, loading, empty/error/
+   locked/success states, transitions, and long-content behavior.
+8. **Verify:** run the relevant tests/type checks/lint/build and exercise the
+   core journeys. Report what works, what is blocked, assumptions, and data
+   limitations.
+
+### Core journeys to preserve and improve
+
+Audit these where the codebase supports them, plus any additional existing
+journeys:
+
+- New user: landing → onboarding → account/guest → setup → subjects → goals →
+  exploration/recommendations.
+- Programme discovery: explore → search → programme → requirements → schools/
+  cut-offs → careers → pathways.
+- Domain/career discovery: explore → domain or role → sub-groups/skills →
+  programmes → opportunities.
+- Opportunities: search/filter → result → detail → save/apply, using only
+  supported actions and fields.
+- Saved/My World: discover → save → review saved items → continue exploring.
+- Returning user: authentication → personalized home/explore → recommendations
+  and saved items, with state preserved according to existing persistence rules.
+
+### Screen and component behavior contract
+
+Treat every screen and control as a stateful interactive system, not a static
+image. Before implementation, document for each major screen:
+
+- name, route, purpose, entry/exit points, parent/children;
+- real data required and its source;
+- initial, loading, populated, empty, error, locked, selected, saved, and
+  disabled states;
+- user actions and the exact system response/state change after each action;
+- success feedback, error recovery, retry behavior, and duplicate-submission
+  handling;
+- navigation/back behavior, deep links where applicable, and what persists
+  across leaving, returning, refresh, and session changes;
+- mobile, tablet, desktop, and large-screen behavior;
+- labels, focus order, keyboard/touch behavior, contrast, target size, and
+  reduced-motion behavior.
+
+For every important component record its props/data dependency, local/shared
+state, events, side effects, navigation effects, persistence effects, and
+possible states. Use this event shape when reasoning about behavior:
+
+`user action → system response → state/data change → UI feedback → next action`
+
+Trace important data end-to-end, for example:
+
+`input → search state → existing service/API/data source → results → selected
+entity → parent form/onboarding state → persistence → next screen`.
+
+Do not create a local UI state that contradicts the application's real state or
+duplicate an important source of truth.
+
+### Form, search, and selection requirements
+
+Every form needs a behavior contract covering allowed values, required versus
+optional fields, validation, character limits, formatting, focus/blur, keyboard
+behavior, clear/edit, submit-disabled conditions, loading, success, failure,
+retry, persistence, Back, and partial completion.
+
+Search must have a clear focus state, contextual placeholder, query/update
+behavior, loading state, real result hierarchy, no-results recovery, request
+error recovery, clear/reset, keyboard accessibility, and selection behavior.
+
+Subject selection should use search plus selectable chips/grid, selected count,
+obvious selected state, and Continue—not five independent dropdowns—unless the
+existing data model genuinely requires another interaction. The allowed
+subjects and maximum selection count must come from product logic.
+
+Goal selection should use selectable cards when multiple supported goals exist;
+show only actual goals and explain each clearly.
+
+For school or entity search, support the full lifecycle when the data model
+allows it: empty → focused → typing → searching → results → selected → saved;
+also no results → add flow → validating → adding → added, plus duplicate,
+failure, retry, edit, cancel, Back, and repeated-submission behavior. Preserve
+entered text on failure and keep a successful selection visible in parent state.
+Continue must use the actual selected/created entity without requiring a second
+search.
+
+### Visual and responsive direction
+
+Use the supplied references as the visual and interaction system, not as
+immutable screens. Favor light surfaces, dark navy/charcoal text, orange
+primary actions, green positive states, blue information, amber warnings, red
+errors, thin borders, subtle shadows, moderate radius, generous whitespace,
+clear Inter-style typography, compact chips, and strong contextual search.
+Avoid excessive gradients, shadows, badges, nested cards, clutter, and generic
+school-portal styling.
+
+Mobile should use thumb-friendly stacked layouts, bottom navigation where the
+existing app supports it, progressive disclosure, and bottom-sheet filters when
+appropriate. Desktop must not merely stretch mobile: use the existing platform
+capabilities for persistent navigation, wider content, multi-column layouts,
+comparison/context panels, and search/filter toolbars. Follow the project's
+actual responsive conventions and breakpoints rather than inventing competing
+ones.
+
+Centralize or reuse tokens for primary/semantic colors, text, muted text,
+border, background/surface, radius, spacing, typography, shadows, motion
+durations, and easing. Reuse or improve shared components such as Button,
+IconButton, Input/SearchInput, Chip, Badge, Card, domain/programme/opportunity/
+school cards, MatchScore, ProgressIndicator, Tabs, Modal/BottomSheet, Toast,
+EmptyState, LockedState, LoadingState, FilterBar, Sidebar, and navigation—only
+where the pattern is actually reused.
+
+### Interaction, motion, and accessibility
+
+Every interactive element must communicate default, hover (where relevant),
+focus, pressed, disabled, loading, success, error, empty, selected, saved, and
+locked states as applicable. Empty states explain what happened and the next
+action. Locked states explain what is locked, why, and how it unlocks.
+
+Keep motion purposeful and restrained: roughly 200–300 ms fade/slide-up page
+transitions, 150–250 ms card appearance, about 100 ms button press feedback,
+subtle input-focus transitions, short error feedback, and unobtrusive success
+toasts. Match existing animation libraries/conventions and honor
+`prefers-reduced-motion` or the platform equivalent. Audit semantic roles,
+heading hierarchy, accessible labels, visible focus, keyboard navigation,
+screen-reader context, contrast, touch targets, validation/error recovery, and
+reduced motion.
+
+### Acceptance and verification standard
+
+A screen is not complete because it resembles a mockup. It is complete only
+when hierarchy, real data, interactions, state changes, navigation, loading,
+errors, empty/locked states, persistence, responsiveness, accessibility, and
+integration with the rest of the product work together.
+
+Deliberately test relevant edge cases: no/one/many results, duplicates, long
+text, special characters, empty/invalid input, slow/failed requests, retry,
+double submission, Back/cancel, refresh, navigation away and return, existing
+saved state, partial completion, mobile keyboard, small screens, large screens,
+long programme names, and large datasets. Run the appropriate frontend/backend
+checks from the Commands section and report any pre-existing failures separately.
+
+Final implementation notes should include:
+
+1. UX audit and severity of findings.
+2. Updated navigation, information architecture, and user journeys.
+3. Screen/component behavior map: states, events, data, side effects,
+   navigation, persistence, and error recovery.
+4. Visual references/mockups used and how they were adapted to real data.
+5. Reusable components/tokens and motion/accessibility decisions.
+6. Verification performed, known limitations, assumptions, and blocked work.
+
+Do not overwrite the product with screenshots. Preserve correct functionality
+and data behavior first, then improve usability and adapt the visual system
+around reality. The full brief in `docs/` is authoritative for the complete
+design rationale and detailed examples; this section is the operational
+checklist Claude Code must follow automatically.
