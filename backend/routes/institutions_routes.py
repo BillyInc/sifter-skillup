@@ -234,6 +234,9 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
         return None
     org_type = _normal_org_type(claim.organization_type)
     address = (claim.address or "").strip()
+    # #98 dropped this, leaving _is_developer_admin_route defined but never
+    # called, so the dev code could no longer exercise an already-selected row.
+    developer_route = _is_developer_admin_route(claim)
     if not claim.organization_id and len(address) < 8:
         raise HTTPException(
             status_code=400,
@@ -256,7 +259,11 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             selected_row = selected[0]
             existing_address = (selected_row.get("address") or "").strip()
             effective_address = address or existing_address
-            if len(effective_address) < 8:
+            # Selecting an existing school creates no row, so the dev code may
+            # proceed when the stored record has no address. Creating a NEW
+            # school still requires one above -- dev convenience must not write
+            # junk institution rows.
+            if not developer_route and len(effective_address) < 8:
                 raise HTTPException(
                     status_code=400,
                     detail="A full organisation address is required for admin access.",
@@ -1225,16 +1232,20 @@ async def validate_admin_access_code(
     # server now remembers, and /verify refuses without it.
     try:
         svc = _svc()
-        grant_result = svc.table("users").update(
-            {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
-        ).eq("id", current_user["id"]).select("id").execute()
         # PostgREST does not raise when an UPDATE matches no row — it returns an
         # empty result. Catching only exceptions would therefore report
         # accepted=true for a write that changed nothing, and /verify would then
         # refuse the same user: exactly the contradiction this block exists to
         # prevent. An empty result is a failure.
-        matched = grant_result.data or []
-        if not matched:
+        #
+        # The check must read the UPDATE's own result. A follow-up SELECT for
+        # the user only proves the row exists, which it always does for an
+        # authenticated caller — so the grant appeared to succeed even when
+        # nothing was written.
+        written = svc.table("users").update(
+            {"admin_access_granted_at": datetime.now(timezone.utc).isoformat()}
+        ).eq("id", current_user["id"]).execute()
+        if not (getattr(written, "data", None) or []):
             raise RuntimeError("admin access grant matched no user row")
     except Exception as exc:  # noqa: BLE001
         # A local developer can continue before the optional grant migration is

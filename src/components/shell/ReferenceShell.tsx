@@ -130,6 +130,10 @@ function NavList({
             key={item.id}
             activeOpacity={0.85}
             onPress={() => onNavigate(item)}
+            accessibilityRole="tab"
+            accessibilityLabel={item.label}
+            // Active state is otherwise conveyed by colour alone.
+            accessibilityState={{ selected: active }}
             style={[
               styles.navItem,
               {
@@ -328,6 +332,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setDrawerOpen(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Open navigation menu"
+                accessibilityState={{ expanded: drawerOpen }}
                 style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
               >
                 <Feather name="menu" size={18} color={colors.textRole.primary} />
@@ -358,6 +365,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setOverlayVisible(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Search programmes, domains and roles"
                 style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
               >
                 <Feather name="search" size={18} color={colors.textRole.primary} />
@@ -367,6 +376,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={toggle}
+              accessibilityRole="button"
+              accessibilityLabel={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
               style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
             >
               <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.textRole.primary} />
@@ -375,6 +386,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={() => router.push('/(tabs)/profile' as any)}
+              accessibilityRole="button"
+              accessibilityLabel="Profile"
               style={[styles.avatarBtn, { backgroundColor: colors.textRole.primary }]}
             >
               <Feather name="user" size={15} color={colors.textRole.inverse} />
@@ -418,6 +431,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                     key={item.id}
                     activeOpacity={0.85}
                     onPress={() => router.push(item.href as any)}
+                    accessibilityRole="tab"
+                    accessibilityLabel={item.label}
+                    accessibilityState={{ selected: active }}
                     style={styles.mobileTab}
                   >
                     <Feather
@@ -442,9 +458,17 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
       </View>
 
       <Modal visible={drawerOpen && !isWide} animationType="fade" transparent onRequestClose={() => setDrawerOpen(false)}>
-        <Pressable style={styles.drawerOverlay} onPress={() => setDrawerOpen(false)}>
+        <Pressable
+          style={styles.drawerOverlay}
+          onPress={() => setDrawerOpen(false)}
+          accessibilityRole="button"
+          accessibilityLabel="Close navigation menu"
+        >
           <Pressable
             onPress={() => undefined}
+            // Swallows backdrop taps only; it is not a control. "no" hides just
+            // this view — descendants (the drawer's nav) stay reachable.
+            importantForAccessibility="no"
             style={[
               styles.drawerSheet,
               {
@@ -464,7 +488,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                   <Text style={[styles.brandSub, { color: colors.textRole.muted }]}>LEVELUP</Text>
                 </View>
               </View>
-              <TouchableOpacity onPress={() => setDrawerOpen(false)}>
+              <TouchableOpacity
+                onPress={() => setDrawerOpen(false)}
+                accessibilityRole="button"
+                accessibilityLabel="Close navigation menu"
+              >
                 <Feather name="x" size={18} color={colors.textRole.muted} />
               </TouchableOpacity>
             </View>

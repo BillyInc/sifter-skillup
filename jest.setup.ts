@@ -142,6 +142,23 @@ jest.mock('react-native-svg', () => {
   };
 });
 
+// netinfo: the real module throws at import time under Jest ("NativeModule
+// RNCNetInfo is null"), so anything reaching offlineStorage -> useAuth cannot
+// even be require()d. Default to connected; tests that care override it.
+jest.mock('@react-native-community/netinfo', () => ({
+  __esModule: true,
+  default: {
+    fetch: jest.fn(() =>
+      Promise.resolve({ isConnected: true, isInternetReachable: true }),
+    ),
+    addEventListener: jest.fn(() => jest.fn()),
+  },
+  fetch: jest.fn(() =>
+    Promise.resolve({ isConnected: true, isInternetReachable: true }),
+  ),
+  addEventListener: jest.fn(() => jest.fn()),
+}));
+
 // expo-router: minimal stubs
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: jest.fn(), replace: jest.fn(), back: jest.fn() }),
