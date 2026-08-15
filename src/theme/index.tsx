@@ -108,7 +108,19 @@ export interface ColorPalette {
     focus: string;
   };
   accentRole: {
+    /**
+     * The accent as TEXT, ICON or BORDER on a light surface. Must stay dark
+     * enough for AA body text, which is why it is not the brand orange:
+     * #FF8A00 on white is 2.36:1.
+     */
     action: string;
+    /**
+     * The brand primary as a FILL -- button backgrounds, active bars, selected
+     * chips. This is the design system's #FF8A00. Never use it for text.
+     */
+    fill: string;
+    /** Text and icons sitting ON `fill`. Dark by design: 7.56:1 on #FF8A00. */
+    onFill: string;
     status: string;
     warning: string;
     danger: string;
@@ -183,6 +195,8 @@ export const LightColors: ColorPalette = {
   },
   accentRole: {
     action: '#C2410C',
+    fill: '#FF8A00',
+    onFill: '#0F172A',
     status: '#2563EB',
     warning: '#A16207',
     danger: '#D92D20',
@@ -254,6 +268,11 @@ export const DarkColors: ColorPalette = {
   },
   accentRole: {
     action: '#FF8A4C',
+    // The brand orange is a fill in both themes -- it is the product's primary
+    // and should not shift hue between light and dark. Its label stays dark
+    // (#0F172A on #FF8A00 is 7.56:1) rather than inverting with the theme.
+    fill: '#FF8A00',
+    onFill: '#0F172A',
     status: '#7EA6FF',
     warning: '#F4B74A',
     danger: '#F87171',
