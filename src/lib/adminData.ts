@@ -38,6 +38,33 @@ import type {
   MappingEdgeType,
 } from "../types/institution";
 
+export interface VerificationProofMeta {
+  id: string;
+  fileName: string;
+  contentType: string;
+  fileSize: number;
+  verificationMethod: string;
+  status: "pending" | "approved" | "rejected";
+  submittedAt: string;
+  reviewedAt?: string | null;
+  reviewNote?: string | null;
+}
+
+function toVerificationProof(raw: any): VerificationProofMeta | null {
+  if (!raw) return null;
+  return {
+    id: String(raw.id ?? ""),
+    fileName: String(raw.fileName ?? raw.file_name ?? "proof"),
+    contentType: String(raw.contentType ?? raw.content_type ?? "application/octet-stream"),
+    fileSize: Number(raw.fileSize ?? raw.file_size ?? 0),
+    verificationMethod: String(raw.verificationMethod ?? raw.verification_method ?? "document_upload"),
+    status: raw.status === "approved" || raw.status === "rejected" ? raw.status : "pending",
+    submittedAt: String(raw.submittedAt ?? raw.submitted_at ?? ""),
+    reviewedAt: raw.reviewedAt ?? raw.reviewed_at ?? null,
+    reviewNote: raw.reviewNote ?? raw.review_note ?? null,
+  };
+}
+
 function fromApi<T>(value: T | DataState<T>): DataState<T> {
   if (
     value &&
@@ -51,17 +78,25 @@ function fromApi<T>(value: T | DataState<T>): DataState<T> {
 }
 
 // Flip per-area as real institutional data is wired (kept here so screens can
-// branch without importing backend details). All false in this phase.
+// branch without importing backend details). Demand-only areas remain gated.
 export const ADMIN_DATA_LIVE = {
   institutionSummary: true,
-  programmeDemand: true,
-  domainRanking: true,
+  programmeDemand: false,
+  domainRanking: false,
   intelligenceAlerts: true,
-  skillsGap: true,
-  roleDemand: true,
+  skillsGap: false,
+  roleDemand: false,
   peerComparison: true,
   affiliation: true,
 } as const;
+
+/**
+ * Labour-market ingestion is not source-backed yet. Keep every demand-only
+ * read unavailable at the client boundary as well as on the API: this avoids
+ * rendering zero-default or taxonomy-derived baseline rows if an older server
+ * process is still running.
+ */
+export const MARKET_DEMAND_AVAILABLE = false;
 
 export const adminData = {
   // ─── Institution context ─────────────────────────────────────
@@ -72,6 +107,33 @@ export const adminData = {
     } catch {
       return comingSoon<Organization>("Your institution profile is being loaded.");
     }
+  },
+
+  /** Metadata only for the current organisation's latest private proof. */
+  async getVerificationProof(): Promise<VerificationProofMeta | null> {
+    try {
+      return toVerificationProof(await request<unknown>("/api/institutions/verification-proof"));
+    } catch {
+      // A missing migration is an unavailable proof workflow, not a pending
+      // submission. The screen keeps the truthful "not submitted" state.
+      return null;
+    }
+  },
+
+  /** Upload a proof file; the server changes status only after it is stored. */
+  async uploadVerificationProof(input: {
+    file: Blob;
+    fileName: string;
+    contentType: string;
+    verificationMethod?: string;
+  }): Promise<VerificationProofMeta> {
+    const body = new FormData();
+    body.append("proof", input.file, input.fileName);
+    body.append("verification_method", input.verificationMethod ?? "document_upload");
+    return toVerificationProof(await request<unknown>("/api/institutions/verification-proof", {
+      method: "POST",
+      body,
+    })) as VerificationProofMeta;
   },
 
   /** Submit / refresh a verification claim (email domain, document, CAC…). */
@@ -168,6 +230,11 @@ export const adminData = {
   async getProgrammeDemand(
     filter: ProgrammeFilter = {},
   ): Promise<DataState<ProgrammeDemandRow[]>> {
+    if (!MARKET_DEMAND_AVAILABLE) {
+      return comingSoon<ProgrammeDemandRow[]>(
+        "Programme demand is unavailable until source-backed labour-market ingestion is added.",
+      );
+    }
     try {
       const qs = new URLSearchParams(filter as any).toString();
       return fromApi(await request<ProgrammeDemandRow[] | DataState<ProgrammeDemandRow[]>>(
@@ -184,6 +251,11 @@ export const adminData = {
   async getDomainRanking(
     scope: RankScope = "nigerian",
   ): Promise<DataState<DomainRankItem[]>> {
+    if (!MARKET_DEMAND_AVAILABLE) {
+      return comingSoon<DomainRankItem[]>(
+        "Domain demand rankings are unavailable until source-backed labour-market ingestion is added.",
+      );
+    }
     try {
       return fromApi(await request<DomainRankItem[] | DataState<DomainRankItem[]>>(
         `/api/institutions/me/domain-ranking?scope=${scope}`,
@@ -202,8 +274,13 @@ export const adminData = {
     }
   },
 
-  /** Cross-programme skills-gap report. */
+  /** Per-programme skills-gap report. */
   async getSkillsGapReport(): Promise<DataState<SkillGapRow[]>> {
+    if (!MARKET_DEMAND_AVAILABLE) {
+      return comingSoon<SkillGapRow[]>(
+        "Programme skill gaps are unavailable until curriculum and source-backed demand data exist.",
+      );
+    }
     try {
       return fromApi(await request<SkillGapRow[] | DataState<SkillGapRow[]>>(`/api/institutions/me/skills-gap`));
     } catch {
@@ -213,6 +290,11 @@ export const adminData = {
 
   /** Role-level demand plus value/selectivity signal. */
   async getRoleDemand(): Promise<DataState<RoleDemandRow[]>> {
+    if (!MARKET_DEMAND_AVAILABLE) {
+      return comingSoon<RoleDemandRow[]>(
+        "Role demand is unavailable until source-backed labour-market ingestion is added.",
+      );
+    }
     try {
       return fromApi(await request<RoleDemandRow[] | DataState<RoleDemandRow[]>>(`/api/institutions/me/role-demand`));
     } catch {

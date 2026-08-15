@@ -152,12 +152,15 @@ def _cert(row: dict) -> dict:
 
 
 def _tool(row: dict) -> dict:
-    """Map a domain_tools row → ToolV2Enriched (camelCase)."""
+    """Map a domain_tools row → ToolV2Enriched (camelCase).
+
+    Labour-market demand fields are intentionally not exposed until a
+    source-backed ingestion pipeline is available. The taxonomy seed's
+    ``hot``/``in_demand`` values are not current market evidence.
+    """
     return {
         "tool": row.get("tool_name"),
         "group": row.get("tool_group"),
-        "hot": bool(row.get("hot")),
-        "inDemand": bool(row.get("in_demand")),
         "roleFreq": row.get("role_freq"),
         "source": row.get("source"),
         "elementName": row.get("element_name"),
@@ -165,10 +168,6 @@ def _tool(row: dict) -> dict:
         "sourceConfidence": row.get("source_confidence"),
         "dataState": row.get("data_state"),
         "sourceProvenance": row.get("source_provenance") or {},
-        # Phase 9 enrichment
-        "demandScore": _num(row.get("demand_score")),
-        "demandSource": row.get("demand_source"),
-        "demandAsOf": _date_str(row.get("demand_as_of")),
         "toolUrl": row.get("tool_url"),
     }
 
@@ -338,7 +337,7 @@ def _programme_skills(svc: Any, programme_id: str) -> dict:
 async def get_programme(programme_id: str):
     """Programme detail incl. its domain links (grouped/sorted client-side).
 
-    Reads `programme_domain` (match_type, in_demand_score, elite_flag) joined to
+    Reads `programme_domain` (match_type, elite_flag) joined to
     `domains` for names, so ProgrammeOverviewScreen can render the Direct →
     Functional → Adjacent domain tiers. Degrades to `coming_soon` on miss/error.
     """
@@ -359,7 +358,7 @@ async def get_programme(programme_id: str):
         # Domain links for this programme (Phase 2 mapping).
         pd_res = (
             svc.table("programme_domain")
-            .select("domain_id, match_type, in_demand_score, elite_flag")
+            .select("domain_id, match_type, elite_flag")
             .eq("programme_id", programme_id)
             .execute()
         )
@@ -447,10 +446,9 @@ async def list_domain_clusters():
     under a header that asserted "168 domains across 37 clusters". The data was
     there the whole time (160 domains, 35 clusters); nothing read it.
 
-    `inDemandScore` is the ng_local volume score. The three lenses (ng_local,
-    ng_remote, global) are kept separate by product rule — local is the right
-    default for the Nigerian student this screen serves — so this deliberately
-    does NOT blend them.
+    Demand scores/bands are deliberately omitted until a source-backed labour
+    market ingestion is available. Taxonomy-derived baseline rows are not
+    presented as current demand.
     """
     try:
         svc = _svc()
@@ -545,11 +543,27 @@ async def get_domain(domain_id: str):
         role_res = (
             svc.table("domain_roles")
             .select(
-                "role_key, role_name, also_known_as, tier, subgroup_id, elite_status, elite_flag"
+                "id, role_key, role_name, also_known_as, tier, subgroup_id, elite_status, elite_flag"
             )
             .eq("domain_id", domain_uuid)
             .execute()
         )
+
+        role_context_by_key: dict[str, dict] = {}
+        try:
+            role_context_rows = (
+                svc.table("domain_roles")
+                .select("role_key, nigerian_context")
+                .eq("domain_id", domain_uuid)
+                .execute().data or []
+            )
+            role_context_by_key = {
+                row.get("role_key"): row.get("nigerian_context") or {}
+                for row in role_context_rows
+                if row.get("role_key")
+            }
+        except Exception as context_exc:  # noqa: BLE001
+            log.debug("career role Nigerian context unavailable", error=str(context_exc))
         tool_res = (
             svc.table("domain_tools")
             .select("*")
@@ -563,8 +577,81 @@ async def get_domain(domain_id: str):
             .execute()
         )
 
+        method_rows: list[dict] = []
+        try:
+            method_rows = (
+                svc.table("computational_method_evidence")
+                .select(
+                    "subgroup_id, method_name, classification, competence_status, esco_id, description, evidence_roles, source_provenance, data_state"
+                )
+                .eq("domain_id", domain_uuid)
+                .order("method_name")
+                .execute().data or []
+            )
+        except Exception as method_exc:  # noqa: BLE001
+            log.debug("career computational method evidence unavailable", error=str(method_exc))
+
+        methods_by_subgroup: dict[str, list[dict]] = {}
+        for method in method_rows:
+            methods_by_subgroup.setdefault(method.get("subgroup_id"), []).append({
+                "name": method.get("method_name"),
+                "classification": method.get("classification") or "unknown",
+                "competenceStatus": method.get("competence_status") or "unknown",
+                "escoId": method.get("esco_id"),
+                "description": method.get("description"),
+                "evidenceRoles": method.get("evidence_roles") or [],
+                "sourceProvenance": method.get("source_provenance") or {},
+                "dataState": method.get("data_state"),
+            })
+
+        computational_links_by_role: dict[str, list[dict]] = {}
+        try:
+            computational_links = (
+                svc.table("computational_role_subgroup_links")
+                .select("role_key, subgroup_id, relationship, evidence_skills")
+                .eq("domain_id", domain_uuid)
+                .execute().data or []
+            )
+            subgroup_names = {
+                row.get("id"): row.get("label")
+                for row in (sg_res.data or [])
+                if row.get("id")
+            }
+            for link in computational_links:
+                computational_links_by_role.setdefault(link.get("role_key"), []).append({
+                    "id": link.get("subgroup_id"),
+                    "name": subgroup_names.get(link.get("subgroup_id")),
+                    "relationship": link.get("relationship"),
+                    "evidenceSkills": link.get("evidence_skills") or [],
+                })
+        except Exception as computational_exc:  # noqa: BLE001
+            log.debug("career computational subgroup enrichment unavailable", error=str(computational_exc))
+
         tool_rows = tool_res.data or []
         cert_rows = cert_res.data or []
+
+        # Optional cross-domain role-family enrichment. The migration is
+        # additive, so older databases still render the domain without it.
+        family_by_role: dict[str, dict] = {}
+        try:
+            family_members = (
+                svc.table("career_role_family_members")
+                .select("role_key, family_id")
+                .eq("domain_id", domain_uuid)
+                .execute().data or []
+            )
+            family_ids = list({row.get("family_id") for row in family_members if row.get("family_id")})
+            if family_ids:
+                families = svc.table("career_role_families").select(
+                    "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state"
+                ).in_("id", family_ids).execute().data or []
+                family_map = {row.get("id"): row for row in families}
+                for member in family_members:
+                    family = family_map.get(member.get("family_id"))
+                    if family and member.get("role_key"):
+                        family_by_role[member["role_key"]] = family
+        except Exception as family_exc:  # noqa: BLE001
+            log.debug("career domain role-family enrichment unavailable", error=str(family_exc))
 
         # Domain-scoped tools (subgroup tools attach to their subgroup below).
         domain_tools = [t for t in tool_rows if t.get("scope") == "domain"]
@@ -597,7 +684,9 @@ async def get_domain(domain_id: str):
                      "clusterSkillUris": sg.get("cluster_skill_uris") or {},
                      "sourceConfidence": sg.get("source_confidence"),
                      "dataState": sg.get("data_state"),
+                     "nigerianContext": sg.get("nigerian_context") or {},
                      "skillSources": sg.get("skill_sources") or {},
+                     "methodEvidence": methods_by_subgroup.get(sg_id, []),
                      "tools": _tool_groups(sg_tools),
                     "certifications": sg_certs,
                 }
@@ -610,7 +699,20 @@ async def get_domain(domain_id: str):
                 "tier": r.get("tier"),
                 "alsoKnownAs": r.get("also_known_as") or [],
                 "subgroupId": r.get("subgroup_id"),
+                "nigerianContext": role_context_by_key.get(r.get("role_key"), {}),
+                "computationalSubgroups": computational_links_by_role.get(r.get("role_key"), []),
                 "eliteStatus": r.get("elite_status"),
+                "crossDomainFamily": (
+                    {
+                        "key": family_by_role[r["role_key"]].get("family_key"),
+                        "name": family_by_role[r["role_key"]].get("canonical_name"),
+                        "primaryDomainKey": family_by_role[r["role_key"]].get("primary_domain_key"),
+                        "aliases": family_by_role[r["role_key"]].get("aliases") or [],
+                        "sourceConfidence": family_by_role[r["role_key"]].get("source_confidence"),
+                        "dataState": family_by_role[r["role_key"]].get("data_state"),
+                    }
+                    if r.get("role_key") in family_by_role else None
+                ),
             }
             for r in (role_res.data or [])
         ]
@@ -627,6 +729,7 @@ async def get_domain(domain_id: str):
             "foundationSkillUris": domain.get("foundation_skill_uris") or {},
             "sourceConfidence": domain.get("source_confidence"),
             "dataState": domain.get("data_state"),
+            "nigerianContext": domain.get("nigerian_context") or {},
             "foundationSkillSources": domain.get("foundation_skill_sources") or {},
             "roleCount": domain.get("role_count"),
             "tools": _tool_groups(domain_tools),
@@ -664,7 +767,7 @@ async def get_role(role_id: str):
         try:
             role_tools = (
                 svc.table("domain_tools")
-                .select("tool_name, tool_group, role_freq, score, hot, in_demand, source, element_name, element_id, source_confidence, data_state, source_provenance")
+                .select("tool_name, tool_group, role_freq, score, source, element_name, element_id, source_confidence, data_state, source_provenance")
                 .eq("role_id", role.get("id"))
                 .eq("scope", "role")
                 .order("tool_group")
@@ -722,18 +825,120 @@ async def get_role(role_id: str):
                         }
                     )
 
+        role_families: list[dict] = []
+        try:
+            member_rows = svc.table("career_role_family_members").select(
+                "family_id"
+            ).eq("role_key", role_id).execute().data or []
+            family_ids = list({row.get("family_id") for row in member_rows if row.get("family_id")})
+            if family_ids:
+                family_rows = svc.table("career_role_families").select(
+                    "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
+                ).in_("id", family_ids).execute().data or []
+                link_rows = svc.table("career_role_family_domains").select(
+                    "family_id, domain_key, relationship"
+                ).in_("family_id", family_ids).execute().data or []
+                links_by_family: dict[str, list] = {}
+                for link in link_rows:
+                    links_by_family.setdefault(link.get("family_id"), []).append({
+                        "domainKey": link.get("domain_key"),
+                        "relationship": link.get("relationship"),
+                    })
+                for family in family_rows:
+                    role_families.append({
+                        "key": family.get("family_key"),
+                        "name": family.get("canonical_name"),
+                        "primaryDomainKey": family.get("primary_domain_key"),
+                        "aliases": family.get("aliases") or [],
+                        "domains": links_by_family.get(family.get("id"), []),
+                        "sourceConfidence": family.get("source_confidence"),
+                        "dataState": family.get("data_state"),
+                        "sourceProvenance": family.get("source_provenance") or {},
+                        "nigerianContext": family.get("nigerian_context") or {},
+                    })
+        except Exception as family_exc:  # noqa: BLE001
+            log.debug("career role-family detail unavailable", error=str(family_exc))
+
+        computational_subgroups: list[dict] = []
+        try:
+            link_rows = svc.table("computational_role_subgroup_links").select(
+                "subgroup_id, relationship, evidence_skills"
+            ).eq("role_id", role.get("id")).execute().data or []
+            subgroup_ids = list({row.get("subgroup_id") for row in link_rows if row.get("subgroup_id")})
+            subgroup_map = {}
+            if subgroup_ids:
+                subgroup_map = {
+                    row.get("id"): row
+                    for row in svc.table("domain_subgroups").select("id, label, domain_id").in_("id", subgroup_ids).execute().data or []
+                }
+            computational_subgroups = [
+                {
+                    "id": row.get("subgroup_id"),
+                    "name": (subgroup_map.get(row.get("subgroup_id")) or {}).get("label"),
+                    "relationship": row.get("relationship"),
+                    "evidenceSkills": row.get("evidence_skills") or [],
+                }
+                for row in link_rows
+            ]
+        except Exception as computational_exc:  # noqa: BLE001
+            log.debug("career role computational subgroup enrichment unavailable", error=str(computational_exc))
+
+        computational_methods: list[dict] = []
+        try:
+            method_subgroup_ids = {
+                role.get("subgroup_id"),
+                *(item.get("id") for item in computational_subgroups),
+            }
+            method_subgroup_ids.discard(None)
+            if method_subgroup_ids:
+                method_rows = svc.table("computational_method_evidence").select(
+                    "subgroup_id, method_name, classification, competence_status, esco_id, description, evidence_roles, source_provenance, data_state"
+                ).eq("domain_id", role.get("domain_id")).in_("subgroup_id", list(method_subgroup_ids)).order("method_name").execute().data or []
+                computational_methods = [
+                    {
+                        "subgroupId": row.get("subgroup_id"),
+                        "name": row.get("method_name"),
+                        "classification": row.get("classification") or "unknown",
+                        "competenceStatus": row.get("competence_status") or "unknown",
+                        "escoId": row.get("esco_id"),
+                        "description": row.get("description"),
+                        "evidenceRoles": row.get("evidence_roles") or [],
+                        "sourceProvenance": row.get("source_provenance") or {},
+                        "dataState": row.get("data_state"),
+                    }
+                    for row in method_rows
+                ]
+        except Exception as method_exc:  # noqa: BLE001
+            log.debug("career role computational method evidence unavailable", error=str(method_exc))
+
         data = {
             "key": role.get("role_key"),
             "name": role.get("role_name"),
             "subgroupId": role.get("subgroup_id"),
+            "computationalSubgroups": computational_subgroups,
+            "computationalMethods": computational_methods,
             "tier": role.get("tier"),
             "alsoKnownAs": role.get("also_known_as") or [],
             "iscoGroup": role.get("isco_group"),
             "escoCode": role.get("esco_code"),
             "eliteStatus": role.get("elite_status"),
             "escoOccupationUris": role.get("esco_occupation_uris") or [],
+            "onetOccupationCodes": role.get("onet_occupation_codes") or [],
+            "onetEssentialSkills": [
+                {
+                    "elementId": item.get("element_id"),
+                    "elementName": item.get("element_name"),
+                    "importance": item.get("importance"),
+                    "source": item.get("source"),
+                    "sourceConfidence": item.get("source_confidence"),
+                    "dataState": item.get("data_state"),
+                }
+                for item in (role.get("onet_essential_skills") or [])
+                if item.get("element_id") and item.get("element_name")
+            ],
             "sourceConfidence": role.get("source_confidence"),
             "dataState": role.get("data_state"),
+            "nigerianContext": role.get("nigerian_context") or {},
             "sourceProvenance": role.get("source_provenance") or {},
             "essentialSkills": essential,
             "optionalSkills": optional,
@@ -744,8 +949,6 @@ async def get_role(role_id: str):
                     "description": None,
                     "roleFreq": t.get("role_freq"),
                     "score": t.get("score"),
-                    "hot": bool(t.get("hot")),
-                    "inDemand": bool(t.get("in_demand")),
                     "source": t.get("source"),
                     "elementName": t.get("element_name"),
                     "elementId": t.get("element_id"),
@@ -769,6 +972,7 @@ async def get_role(role_id: str):
             "essentialSkillUris": essential_uri_list,
             "optionalSkillUris": optional_uri_list,
             "appearsIn": appears_in,
+            "roleFamilies": role_families,
             # Phase 9 currency status
             "currencyStatus": role.get("currency_status"),
             "currencyVerifiedAt": _date_str(role.get("currency_verified_at")),
@@ -1337,6 +1541,51 @@ async def search_career(q: Optional[str] = None):
                 )
         roles = list(grouped.values())
 
+        # Search canonical cross-domain families and their source-backed
+        # aliases (for example, third-party/vendor/supplier cyber risk).
+        role_families: list[dict] = []
+        try:
+            family_rows = svc.table("career_role_families").select(
+                "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
+            ).ilike("canonical_name", like).limit(_PUBLIC_SEARCH_LIMIT).execute().data or []
+            alias_rows = svc.table("career_role_family_aliases").select(
+                "family_id"
+            ).ilike("alias", like).limit(_PUBLIC_SEARCH_LIMIT * 2).execute().data or []
+            alias_family_ids = {row.get("family_id") for row in alias_rows if row.get("family_id")}
+            if alias_family_ids:
+                alias_families = svc.table("career_role_families").select(
+                    "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
+                ).in_("id", list(alias_family_ids)).execute().data or []
+                family_rows.extend(alias_families)
+            deduped_families = {row.get("id"): row for row in family_rows if row.get("id")}
+            family_ids = list(deduped_families)
+            links_by_family: dict[str, list] = {}
+            if family_ids:
+                link_rows = svc.table("career_role_family_domains").select(
+                    "family_id, domain_key, relationship"
+                ).in_("family_id", family_ids).execute().data or []
+                for link in link_rows:
+                    links_by_family.setdefault(link.get("family_id"), []).append({
+                        "domainKey": link.get("domain_key"),
+                        "relationship": link.get("relationship"),
+                    })
+            role_families = [
+                {
+                    "key": family.get("family_key"),
+                    "name": family.get("canonical_name"),
+                    "primaryDomainKey": family.get("primary_domain_key"),
+                    "aliases": family.get("aliases") or [],
+                    "domains": links_by_family.get(family.get("id"), []),
+                    "sourceConfidence": family.get("source_confidence"),
+                    "dataState": family.get("data_state"),
+                    "sourceProvenance": family.get("source_provenance") or {},
+                    "nigerianContext": family.get("nigerian_context") or {},
+                }
+                for family in deduped_families.values()
+            ]
+        except Exception as family_exc:  # noqa: BLE001
+            log.debug("career role-family search unavailable", error=str(family_exc))
+
         pres = (
             svc.table("programmes")
             .select("id, name, institution_type, discipline")
@@ -1355,7 +1604,7 @@ async def search_career(q: Optional[str] = None):
             for p in (pres.data or [])
         ]
 
-        return ResponseModel(data=_real({"domains": domains, "roles": roles, "programmes": programmes}))
+        return ResponseModel(data=_real({"domains": domains, "roles": roles, "roleFamilies": role_families, "programmes": programmes}))
     except Exception as exc:  # noqa: BLE001
         log.error("career search failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Search is temporarily unavailable."))

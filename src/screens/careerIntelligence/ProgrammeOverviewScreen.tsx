@@ -584,7 +584,7 @@ function TrackBEntrepreneurship({ colors, router, programmeName, programmeId }: 
         Build from this programme
       </Text>
       <Text style={[styles.businessBody, { color: colors.textRole.secondary }]}>
-        Employment is one path. Track B shows the ventures, creator routes, service models and scalable business archetypes a field can support.
+          Employment is one path. Build maps entrepreneurial roles, venture modes, capability requirements, and evidence for this programme.
       </Text>
       <TouchableOpacity
         activeOpacity={0.85}
@@ -597,7 +597,7 @@ function TrackBEntrepreneurship({ colors, router, programmeName, programmeId }: 
         style={[styles.admissionCTA, { backgroundColor: colors.accentRole.action }]}
       >
         <Text style={[styles.admissionCTAText, CompassFonts.bodySemibold]}>
-          Open entrepreneurship pathway
+          Open Build in Pathways
         </Text>
       </TouchableOpacity>
     </View>

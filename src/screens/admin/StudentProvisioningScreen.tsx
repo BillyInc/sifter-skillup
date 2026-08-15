@@ -128,7 +128,7 @@ export function StudentProvisioningScreen({
   const isUniversity = organizationType === "university";
 
   return (
-    <AdminShell title={effectiveMode === "jamb" ? "JAMB accounts" : "Learners"} eyebrow={effectiveMode === "jamb" ? "Provider guidance" : "Roster & provisioning"}>
+    <AdminShell title={effectiveMode === "jamb" ? "JAMB accounts" : "Learners"} eyebrow={effectiveMode === "jamb" ? "Provider guidance" : "Learners & provisioning"}>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         {isUniversity ? (
           <View style={{ padding: Spacing.xl, gap: Spacing.sm }}>
@@ -198,7 +198,7 @@ function RosterTab() {
         setData(r);
         setMergeCandidates(candidates.filter((c) => c.status !== "confirmed" && c.status !== "dismissed"));
       })
-      .catch((e) => setError(e?.message ?? "Could not load the roster."))
+      .catch((e) => setError(e?.message ?? "Could not load learners."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -649,6 +649,10 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     setUploadMenuOpen(false);
     try {
       const staged = await provisioningData.createDrafts({ images });
+      if (!staged.length) {
+        setError("No learner names could be read from that file. Try a clearer image or add students manually.");
+        return;
+      }
       const normalized: ProvisionDraft[] = staged.map((draft) => ({
         ...draft,
         studentType: draft.studentType ?? defaultStudentType,
@@ -696,6 +700,10 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
         reader.readAsDataURL(file);
       })));
       const staged = await provisioningData.createDrafts({ images });
+      if (!staged.length) {
+        setError("No learner names could be read from that document. Try another file or add students manually.");
+        return;
+      }
       setDrafts((prev) => prev.concat(staged.map((draft) => ({
         ...draft,
         studentType: draft.studentType ?? defaultStudentType,
@@ -878,6 +886,15 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
             </View>
           ) : null}
           <SecondaryButton label="Add students manually instead" onPress={addManualRow} />
+          {drafts.length ? (
+            <SecondaryButton
+              label="Resume review"
+              onPress={() => {
+                setError(null);
+                setStage("review");
+              }}
+            />
+          ) : null}
         </View>
       )}
 
@@ -891,7 +908,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
             Correct any unclear names, tick the students you want to create
             accounts for, then create. Ticked rows with a name become accounts.
           </Text>
-          <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each learner below." : "JAMB accounts use the JAMB learner type and do not have a secondary-school stream."}</Text>
+           <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each learner below." : "JAMB accounts use the JAMB learner type and do not have a secondary-school stream."}</Text>
 
           {drafts.map((d) => (
             <View
@@ -955,6 +972,15 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
           ))}
 
           <View style={{ flexDirection: "row", gap: Spacing.sm, flexWrap: "wrap" }}>
+            <SecondaryButton
+              label="Back to upload options"
+              onPress={() => {
+                setError(null);
+                setManualEntryOnly(false);
+                setUploadMenuOpen(false);
+                setStage("import");
+              }}
+            />
             <SecondaryButton label="+ Add another" onPress={addManualRow} />
             {selectedCount ? <SecondaryButton label={`Clear selected (${selectedCount})`} onPress={() => void clearSelectedRows()} /> : null}
             {!manualEntryOnly ? <SecondaryButton
@@ -962,7 +988,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
               onPress={() => setUploadMenuOpen((open) => !open)}
             /> : null}
           </View>
-          {!manualEntryOnly && uploadMenuOpen ? (
+           {!manualEntryOnly && uploadMenuOpen ? (
             <View style={{ gap: Spacing.sm }}>
               <SecondaryButton label="Choose photo or image" onPress={pickAndExtract} />
               <SecondaryButton label="Choose PDF or document" onPress={pickDocumentAndExtract} />
@@ -1030,7 +1056,7 @@ function GeneratedCards({
       <Text style={[styles.lede, { color: colors.textMuted }]}>
         Give each student their claim code — printed on a card, or shared by email
         or WhatsApp. They redeem it in the app to own their account. Codes are
-        single-use; you can reissue a lost one from the roster.
+        single-use; you can reissue a lost one from the learner list.
       </Text>
 
       {generated.map((g) => (
@@ -1071,19 +1097,19 @@ function GeneratedCards({
               onPress={() => provisioningData.openLoginCard(g.userId)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Print card</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>⎙ Print card</Text>
              </TouchableOpacity>
             <TouchableOpacity
               onPress={() => provisioningData.downloadLoginCard(g.userId, `login_card_${g.fullName.replace(/\s+/g, "_")}.html`)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Download card</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>⇩ Download card</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => provisioningData.shareLoginCard(g.userId, g.fullName, g.claimCode)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share card</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>↗ Share card</Text>
             </TouchableOpacity>
             {!g.guidanceComplete ? (
               <TouchableOpacity
@@ -1104,25 +1130,25 @@ function GeneratedCards({
                   }
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Download Word</Text>
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>⇩ Download Word plan</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => provisioningData.shareReportDocx(g.userId, g.fullName)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share Word</Text>
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>↗ Share Word plan</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => provisioningData.openReportHtml(g.userId)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Print / save PDF</Text>
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>⎙ Print / save PDF plan</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => provisioningData.shareReportHtml(g.userId, g.fullName)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Share PDF</Text>
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>↗ Share PDF plan</Text>
                 </TouchableOpacity>
               </>
             ) : null}

@@ -7,6 +7,17 @@ import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "../../hooks/useAuth";
 
 type BranchKind = "domains" | "subgroups" | "roles";
+type GuidanceListItem = { id: string };
+type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
+
+function guidanceItems(path: GuidancePathRecord, kind: BranchKind): GuidanceListItem[] {
+  const value = path[kind];
+  return Array.isArray(value)
+    ? value.filter((entry): entry is GuidanceListItem => Boolean(
+      entry && typeof entry === "object" && "id" in entry && typeof (entry as { id?: unknown }).id === "string",
+    ))
+    : [];
+}
 
 /** A saved guidance entry. Typed so callers narrow past Array.isArray:
  *  as Record<string, any> the branch arrays produced implicitly-any
@@ -82,9 +93,7 @@ export function GuidanceReportButton({
     let active = true;
     readGuidancePath(targetStudentId, ownerId).then((path) => {
       if (!active) return;
-      const list: GuidancePathEntry[] = Array.isArray(path[selection.kind])
-        ? (path[selection.kind] as GuidancePathEntry[])
-        : [];
+      const list = guidanceItems(path, selection.kind);
       setSelected(list.some((entry) => entry.id === selection.id));
     });
     return () => {
@@ -98,9 +107,7 @@ export function GuidanceReportButton({
     setNotice(null);
     try {
       const path = await readGuidancePath(targetStudentId, ownerId);
-      const list: GuidancePathEntry[] = Array.isArray(path[selection.kind])
-        ? (path[selection.kind] as GuidancePathEntry[])
-        : [];
+      const list = guidanceItems(path, selection.kind);
       const item = {
         id: selection.id,
         name: selection.name,

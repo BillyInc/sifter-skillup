@@ -6,7 +6,10 @@
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 
-const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://localhost:8000';
+// Uvicorn is started on IPv4 (0.0.0.0) in the local workflow. On Windows,
+// `localhost` can resolve to ::1 first, producing an opaque Failed to fetch
+// even while 127.0.0.1:8000 is healthy. An explicit env URL still wins.
+const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://127.0.0.1:8000';
 
 function deployedWebApiUrl(): string | null {
   if (typeof window === 'undefined') return null;

@@ -365,6 +365,11 @@ export const provisioningData = {
   async generate(items: GenerateItem[]): Promise<GeneratedStudent[]> {
     const rows = await request<WireGenerated[]>(`/api/provisioning/generate`, {
       method: "POST",
+      // Provisioning creates a real account, affiliation and claim code. The
+      // local Supabase development connection can take several round trips;
+      // give this one operation time to finish without weakening normal API
+      // timeouts elsewhere.
+      timeoutMs: 90000,
       body: JSON.stringify({
         items: items.map((i) => ({
           draft_id: i.draftId,

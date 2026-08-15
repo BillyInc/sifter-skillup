@@ -359,20 +359,24 @@ async def search_schools(
         svc = db.get_service_client().schema(_SCHEMA)
         selected_type = institution_type or "university"
         query_text = (q or "").strip().lower()
-        result_key = f"admission:schools:v4:{selected_type}:{query_text}:{min(limit, 50)}"
+        result_key = f"admission:schools:v5:{selected_type}:{query_text}:{min(limit, 50)}"
         cached_items = get_json(result_key)
         if isinstance(cached_items, list) and cached_items:
             return ResponseModel(data=_real(cached_items))
-        query = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq("institution_type", selected_type)
+        # Keep the typeahead usable during a rolling schema deployment. The
+        # original schools table predates the address columns; fetch the
+        # identity fields first and enrich locations below when those columns
+        # are available.
+        query = svc.table("schools").select("id, name, institution_type").eq("institution_type", selected_type)
         if selected_type == "university" and q:
             # Use the indexed name search first. Loading the entire university
             # registry for every keystroke made typeahead time out on populated
             # projects. The bounded registry is only needed for abbreviations.
             rows = query.ilike("name", f"%{q}%").order("name").limit(min(limit, 50)).execute().data or []
-            registry_key = "admission:university-registry:v4"
+            registry_key = "admission:university-registry:v5"
             registry = get_json(registry_key)
             if not isinstance(registry, list):
-                registry = svc.table("schools").select("id, name, institution_type, address, city, state, country").eq(
+                registry = svc.table("schools").select("id, name, institution_type").eq(
                     "institution_type", selected_type
                 ).order("name").limit(1200).execute().data or []
                 set_json(registry_key, registry, REFERENCE_TTL_SECONDS)
@@ -398,15 +402,28 @@ async def search_schools(
             if q:
                 query = query.ilike("name", f"%{q}%")
             rows = query.order("name").limit(min(limit, 50)).execute().data or []
+        # Address is useful disambiguation, but it is additive to the older
+        # registry schema. Never make a search fail merely because the
+        # address migration has not reached this instance yet.
+        metadata = {}
+        school_ids = [r.get("id") for r in rows if r.get("id")]
+        if school_ids:
+            try:
+                metadata_rows = svc.table("schools").select(
+                    "id, address, city, state, country"
+                ).in_("id", school_ids).execute().data or []
+                metadata = {str(r.get("id")): r for r in metadata_rows}
+            except Exception as exc:  # noqa: BLE001
+                log.info("admission school address enrichment unavailable", error=str(exc))
         items = [
             {
                 "id": r["id"],
                 "name": _university_display_name(r["name"]) if selected_type == "university" else r["name"],
                 "institutionType": r.get("institution_type") or "university",
-                "address": r.get("address"),
-                "city": r.get("city"),
-                "state": r.get("state"),
-                "country": r.get("country"),
+                "address": (metadata.get(str(r.get("id"))) or {}).get("address") or r.get("address"),
+                "city": (metadata.get(str(r.get("id"))) or {}).get("city") or r.get("city"),
+                "state": (metadata.get(str(r.get("id"))) or {}).get("state") or r.get("state"),
+                "country": (metadata.get(str(r.get("id"))) or {}).get("country") or r.get("country"),
             }
             for r in rows[: min(limit, 50)]
         ]

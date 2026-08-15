@@ -133,6 +133,7 @@ class TestVerifyRequiresOwnerCode:
         )
         assert r.status_code == 200, r.text
         assert r.json()["success"] is True
+        assert r.json()["data"]["verificationStatus"] == "claimed"
 
 
 class TestAccessCodeRecordsTheGrant:
@@ -204,7 +205,10 @@ class TestAccessCodeRecordsTheGrant:
         _login_as(inst_db, _user_row())
         sc = inst_db.get_service_client.return_value
         # Matched nothing: no exception, empty data.
-        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
+        (
+            sc.schema.return_value.table.return_value.update.return_value.eq.return_value
+            .select.return_value.execute.return_value
+        ) = MagicMock(data=[])
 
         r = client.post(
             "/api/institutions/access-code/validate",
@@ -225,7 +229,7 @@ class TestAccessCodeRecordsTheGrant:
         monkeypatch.setattr(settings, "EDUCATOR_ACCESS_CODES", ["LETMEIN"], raising=False)
         _login_as(inst_db, _user_row())
         sc = inst_db.get_service_client.return_value
-        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.execute.side_effect = RuntimeError("db down")
+        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.select.return_value.execute.side_effect = RuntimeError("db down")
 
         r = client.post(
             "/api/institutions/access-code/validate",
@@ -278,7 +282,7 @@ class TestAdminOrganisationAddressGate:
         assert exc.value.status_code == 400
         assert "address" in str(exc.value.detail).lower()
 
-    def test_developer_code_can_exercise_selected_row_without_address(
+    def test_developer_code_still_requires_address_for_selected_row(
         self, monkeypatch
     ):
         import routes.institutions_routes as ir
@@ -302,13 +306,14 @@ class TestAdminOrganisationAddressGate:
             ),
         )
 
-        org = ir._find_or_create_school(
-            ir.VerificationClaim(
-                organization_type="university",
-                organization_name="Test University",
-                organization_id="school-1",
-                access_code="LEVELUP-EDU-DEV",
+        with pytest.raises(ir.HTTPException) as exc:
+            ir._find_or_create_school(
+                ir.VerificationClaim(
+                    organization_type="university",
+                    organization_name="Test University",
+                    organization_id="school-1",
+                    access_code="LEVELUP-EDU-DEV",
+                )
             )
-        )
-        assert org is not None
-        assert org.id == "school-1"
+        assert exc.value.status_code == 400
+        assert "address" in str(exc.value.detail).lower()

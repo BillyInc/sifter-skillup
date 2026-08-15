@@ -92,6 +92,14 @@ export default function MySchoolScreen() {
   const [requestBusy, setRequestBusy] = useState<string | null>(null);
   const [requestErr, setRequestErr] = useState<string | null>(null);
 
+  const guestAuthPath = useCallback((route: "signup" | "sign-in") => {
+    const query = [
+      claimCode.trim() ? `claim=${encodeURIComponent(claimCode.trim())}` : "",
+      schoolCode.trim() ? `school_code=${encodeURIComponent(schoolCode.trim())}` : "",
+    ].filter(Boolean).join("&");
+    return `/(auth)/${route}${query ? `?${query}` : ""}` as any;
+  }, [claimCode, schoolCode]);
+
   const loadConsentRequests = useCallback(async () => {
     try {
       setConsentRequests(await studentAccountApi.listConsentRequests());
@@ -115,7 +123,7 @@ export default function MySchoolScreen() {
       return;
     }
     if (user?.auth_provider === "guest") {
-      router.replace(`/(auth)/signup?claim=${encodeURIComponent(code)}` as any);
+      router.replace(guestAuthPath("signup"));
       return;
     }
     setClaimBusy(true);
@@ -134,13 +142,17 @@ export default function MySchoolScreen() {
     } finally {
       setClaimBusy(false);
     }
-  }, [claimCode, phone, email, refreshUser, loadConsentRequests, router, user?.auth_provider]);
+  }, [claimCode, phone, email, refreshUser, loadConsentRequests, router, guestAuthPath, user?.auth_provider]);
 
   const doAffiliate = useCallback(async () => {
     setAffErr(null);
     const code = schoolCode.trim();
     if (!code) {
       setAffErr("Enter your school's code.");
+      return;
+    }
+    if (user?.auth_provider === "guest") {
+      router.replace(guestAuthPath("signup"));
       return;
     }
     setAffBusy(true);
@@ -153,7 +165,7 @@ export default function MySchoolScreen() {
     } finally {
       setAffBusy(false);
     }
-  }, [schoolCode]);
+  }, [guestAuthPath, router, schoolCode, user?.auth_provider]);
 
   const setConsent = useCallback(
     async (share: boolean) => {
@@ -210,8 +222,8 @@ export default function MySchoolScreen() {
           <View style={[styles.card, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.cardBody, { color: colors.textRole.primary }, CompassFonts.body]}>You are browsing as a guest. Link a school code now, or create/log in to keep your school connection.</Text>
             <View style={{ flexDirection: "row", gap: Spacing.sm }}>
-              <TouchableOpacity onPress={() => router.replace("/(auth)/signup" as any)} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Create account</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => router.replace("/(auth)/sign-in" as any)} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Log in</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => router.replace(guestAuthPath("signup"))} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Create account</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => router.replace(guestAuthPath("sign-in"))} style={[styles.choice, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Log in</Text></TouchableOpacity>
             </View>
           </View>
         ) : null}

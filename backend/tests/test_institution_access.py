@@ -39,6 +39,17 @@ ADMIN_ONLY_PATHS = [
     "/api/institutions/me/vs-national",
 ]
 
+# Demand tables currently contain only taxonomy-derived baseline rows. These
+# surfaces must remain empty until source-backed labour-market ingestion is
+# explicitly enabled.
+DEMAND_SURFACE_PATHS = [
+    "/api/institutions/me/programme-demand",
+    "/api/institutions/me/domain-ranking",
+    "/api/institutions/me/skills-gap",
+    "/api/institutions/me/role-demand",
+    "/api/institutions/me/vs-national",
+]
+
 
 def _user_row(**overrides):
     row = {
@@ -105,6 +116,19 @@ class TestAdminOnlyGate:
         _org_is(monkeypatch, "school-1")
         r = client.get(path, headers=auth_header)
         assert r.status_code == 200, f"{path} refused an educator: {r.text}"
+
+
+class TestDemandSurfacesStayUnavailable:
+    @pytest.mark.parametrize("path", DEMAND_SURFACE_PATHS)
+    def test_demand_surface_is_empty_before_source_backed_ingestion(
+        self, client, auth_header, inst_db, monkeypatch, path
+    ):
+        _login_as(inst_db, _user_row(account_type="institution_admin"))
+        _org_is(monkeypatch, "school-1")
+        response = client.get(path, headers=auth_header)
+        assert response.status_code == 200, response.text
+        body = response.json()
+        assert body.get("data") == [], f"{path} emitted unsupported demand data"
 
 
 class TestPathParameterIsHonoured:

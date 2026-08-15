@@ -252,43 +252,7 @@ export function SchoolGuidanceDashboardScreen() {
               fmtInt(view<LearnerIntelligenceView>(d).domainsRepresented)
             }
           />
-          <StatCard
-            icon="📊"
-            label="NG postings / month"
-            state={summary}
-            select={(d) => fmtInt(d.ngPostingsPerMonth)}
-            selectDelta={(d) =>
-              d.ngPostingsYoyPct != null
-                ? `${d.ngPostingsYoyPct >= 0 ? "+" : ""}${Math.round(
-                    d.ngPostingsYoyPct,
-                  )}% YoY`
-                : undefined
-            }
-            deltaPositive={(d) => (d.ngPostingsYoyPct ?? 0) >= 0}
-          />
         </View>
-
-        {summary.status === "real" && summary.data?.dataAsOf ? (
-          <Text
-            style={[
-              styles.dataNote,
-              CompassFonts.bodySemibold,
-              { color: colors.textMuted },
-            ]}
-          >
-            Data as of {summary.data.dataAsOf}.
-          </Text>
-        ) : summary.status !== "real" && summary.meta?.notice ? (
-          <Text
-            style={[
-              styles.dataNote,
-              CompassFonts.bodySemibold,
-              { color: colors.textMuted },
-            ]}
-          >
-            {summary.meta.notice}
-          </Text>
-        ) : null}
 
         {/* ── Alerts ── */}
         <View style={styles.section}>
@@ -328,32 +292,10 @@ export function SchoolGuidanceDashboardScreen() {
               onPress={() => adminNav.marketIntelligence(router as Nav)}
             >
               <Text style={[styles.panelNote, { color: colors.textMuted }]}>
-                Programme and role demand across all JAMB programmes — no
-                &quot;your programmes&quot; filter, because a school has no programme
-                list of its own.
+                Labour-market demand, remote share, salary and trend signals are
+                not available until source-backed ingestion is added. This panel
+                will not substitute taxonomy baselines for market evidence.
               </Text>
-              <ComingSoonPanel
-                state={summary}
-                emptyTitle="No market summary yet"
-                emptyBody="Nigerian demand figures appear here once the market data lands."
-              >
-                {(s) => (
-                  <View style={styles.factRow}>
-                    <Fact
-                      label="Domains accessible"
-                      value={fmtInt(s.domainsAccessible)}
-                    />
-                    <Fact
-                      label="Remote-eligible"
-                      value={fmtPct(s.remoteEligiblePct)}
-                    />
-                    <Fact
-                      label="Learning gaps flagged"
-                      value={fmtInt(s.skillsGapsFlagged)}
-                    />
-                  </View>
-                )}
-              </ComingSoonPanel>
             </Panel>
           </View>
         </View>
@@ -484,30 +426,6 @@ function Panel({
   );
 }
 
-function Fact({ label, value }: { label: string; value: string }) {
-  const { colors } = useTheme();
-  return (
-    <View style={[styles.fact, { borderColor: colors.border }]}>
-      <Text
-        style={[styles.factValue, CompassFonts.data, { color: colors.text }]}
-        numberOfLines={1}
-      >
-        {value}
-      </Text>
-      <Text
-        style={[
-          styles.factLabel,
-          CompassFonts.bodySemibold,
-          { color: colors.textMuted },
-        ]}
-        numberOfLines={2}
-      >
-        {label}
-      </Text>
-    </View>
-  );
-}
-
 export default SchoolGuidanceDashboardScreen;
 
 const styles = StyleSheet.create({
@@ -541,7 +459,6 @@ const styles = StyleSheet.create({
   },
   guidanceActionTitle: { fontSize: FontSize.sm },
   guidanceActionBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
-  dataNote: { fontSize: FontSize.xs, marginTop: -Spacing.md },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },
   grid: { gap: Spacing.lg },
@@ -563,21 +480,6 @@ const styles = StyleSheet.create({
   },
   stepIndex: { fontSize: FontSize.sm, letterSpacing: 0, minWidth: 16 },
   stepBody: { flex: 1, fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  factRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
-  fact: {
-    flex: 1,
-    minWidth: 110,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
-    gap: Spacing.xs,
-  },
-  factValue: { fontSize: FontSize.xl, letterSpacing: 0 },
-  factLabel: {
-    fontSize: FontSize.xs,
-    letterSpacing: 0.6,
-    textTransform: "uppercase",
-  },
   list: { gap: 0 },
   interestRow: {
     flexDirection: "row",

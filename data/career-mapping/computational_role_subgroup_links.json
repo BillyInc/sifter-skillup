@@ -1,0 +1,73 @@
+{
+ "schema_version": 1,
+ "links": [
+  {
+   "role_key": "D078|sociologist",
+   "domain_id": "D078",
+   "subgroup_isco_submajor": "21",
+   "relationship": "related",
+   "evidence_skills": [
+    "apply statistical analysis techniques",
+    "conduct quantitative research",
+    "social network analysis"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet"
+    ],
+    "evidence_limit": "Related method mapping only; the role keeps its primary source occupational subgroup."
+   }
+  },
+  {
+   "role_key": "D078|behavioural scientist",
+   "domain_id": "D078",
+   "subgroup_isco_submajor": "21",
+   "relationship": "related",
+   "evidence_skills": [
+    "apply statistical analysis techniques",
+    "conduct quantitative research"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet"
+    ],
+    "evidence_limit": "Related method mapping only; the role keeps its primary source occupational subgroup."
+   }
+  },
+  {
+   "role_key": "D078|social work researcher",
+   "domain_id": "D078",
+   "subgroup_isco_submajor": "21",
+   "relationship": "related",
+   "evidence_skills": [
+    "statistics",
+    "conduct quantitative research"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet"
+    ],
+    "evidence_limit": "Related method mapping only; the role keeps its primary source occupational subgroup."
+   }
+  },
+  {
+   "role_key": "D078|media scientist",
+   "domain_id": "D078",
+   "subgroup_isco_submajor": "21",
+   "relationship": "related",
+   "evidence_skills": [
+    "conduct quantitative research"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet"
+    ],
+    "evidence_limit": "Related method mapping only; the role keeps its primary source occupational subgroup."
+   }
+  }
+ ]
+}

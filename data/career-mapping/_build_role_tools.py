@@ -18,6 +18,8 @@ import re
 import sys
 from collections import defaultdict
 
+from _nigerian_context import resolved_nigerian_context
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 CROSSWALK = os.path.join(HERE, "_tax_src", "esco_onet_crosswalk.csv")
@@ -25,11 +27,16 @@ ONET_SKILLS = [
     os.path.join(HERE, "_source_extracts", "onet_30_3", "Software Skills.txt"),
     os.path.join(HERE, "_tax_src", "onet", "Technology Skills.txt"),
 ]
+ONET_ESSENTIAL_SKILLS = os.path.join(HERE, "_source_extracts", "onet_30_3", "Essential Skills.txt")
+ONET_OCCUPATION_DATA = os.path.join(HERE, "_source_extracts", "onet_30_3", "Occupation Data.txt")
 ESCO_OCCUPATIONS = os.path.join(HERE, "taxonomies", "esco_occupations.json")
 # The cleaned library is the canonical source for the current 4,698 keyed
 # roles. The older v3 file is retained for historical seed comparison only.
 ROLE_LIBRARY = os.path.join(HERE, "role_library_v3_cleaned.json")
+EMERGING_OVERLAY = os.path.join(HERE, "emerging_role_overlays.json")
+ROLE_SOURCE_OVERRIDES = os.path.join(HERE, "framework_role_overrides.json")
 DOMAIN_META = os.path.join(HERE, "domain_meta.json")
+DOMAIN_SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
 MEDICAL_TOOLS = {"epic systems", "meditech software"}
 OUTPUT = os.path.join(HERE, "role_tools.json")
 
@@ -99,6 +106,21 @@ def health_adjacent(meta):
 def main():
     onet_path = first_existing(ONET_SKILLS)
     roles = load_json(ROLE_LIBRARY)
+    overlay = load_json(EMERGING_OVERLAY) if os.path.exists(EMERGING_OVERLAY) else {"roles": []}
+    roles.extend(overlay.get("roles") or [])
+    role_overrides = load_json(ROLE_SOURCE_OVERRIDES).get("roles", {}) if os.path.exists(ROLE_SOURCE_OVERRIDES) else {}
+    source_registry = load_json(DOMAIN_SOURCE_REGISTRY) if os.path.exists(DOMAIN_SOURCE_REGISTRY) else {}
+    enriched_roles = []
+    for role in roles:
+        key = f"{text(role.get('domain_id'))}|{text(role.get('role_name'))}"
+        override = role_overrides.get(key)
+        if override:
+            role = dict(role)
+            for field in ("source_provenance", "source_confidence", "data_state", "overlay_tools"):
+                if field in override:
+                    role[field] = override[field]
+        enriched_roles.append(role)
+    roles = enriched_roles
     esco = load_json(ESCO_OCCUPATIONS)
     domain_meta = load_json(DOMAIN_META)
 
@@ -134,6 +156,20 @@ def main():
         crosswalk_uri_to_socs[uri].add(soc)
         if title:
             crosswalk_title_to_socs[title].add(soc)
+
+    # Some role-library entries are exact O*NET occupation titles but do not
+    # have an ESCO URI to pass through the crosswalk. An exact title match to
+    # O*NET's own occupation table is safe; fuzzy titles and major-group
+    # prefixes remain intentionally excluded.
+    onet_title_to_socs = defaultdict(set)
+    if os.path.exists(ONET_OCCUPATION_DATA):
+        with open(ONET_OCCUPATION_DATA, encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle, delimiter="\t")
+            for row in reader:
+                title = norm(row.get("Title"))
+                soc = normalize_soc(row.get("O*NET-SOC Code"))
+                if title and soc:
+                    onet_title_to_socs[title].add(soc)
 
     # O*NET software records retain the official category. Technology Skills is
     # a compatibility fallback for installations missing Software Skills.txt.
@@ -176,6 +212,36 @@ def main():
             if not any((norm(item["tool"]), norm(item.get("element_name"))) == key for item in soc_tools[soc]):
                 soc_tools[soc].append(entry)
 
+    # O*NET competency signals are kept separately from software tools. The
+    # importance scale is the source's own importance measure; level rows are
+    # deliberately not mixed into the competency list.
+    onet_competencies = defaultdict(dict)
+    if os.path.exists(ONET_ESSENTIAL_SKILLS):
+        with open(ONET_ESSENTIAL_SKILLS, encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle, delimiter="\t")
+            for row in reader:
+                code = normalize_soc(row.get("O*NET-SOC Code"))
+                element_id = text(row.get("Element ID"))
+                element_name = text(row.get("Element Name"))
+                scale = text(row.get("Scale ID")).upper()
+                suppressed = text(row.get("Recommend Suppress")).upper()
+                if not code or not element_id or not element_name or scale != "IM" or suppressed == "Y":
+                    continue
+                try:
+                    importance = float(text(row.get("Data Value")))
+                except ValueError:
+                    importance = None
+                current = onet_competencies[code].get(element_id)
+                if current is None or (importance is not None and (current.get("importance") is None or importance > current["importance"])):
+                    onet_competencies[code][element_id] = {
+                        "element_id": element_id,
+                        "element_name": element_name,
+                        "importance": importance,
+                        "source": "onet",
+                        "source_confidence": "high",
+                        "data_state": "source_backed",
+                    }
+
     # Exact ESCO code/URI indexes. The taxonomy's code is the same granular
     # code carried by role_library_v3 for ESCO-backed occupations.
     esco_by_code = {}
@@ -207,6 +273,7 @@ def main():
         roles_by_key[role_key] = role
 
     for role_key, role in roles_by_key.items():
+        domain_id = text(role.get("domain_id"))
         role_name = text(role.get("role_name"))
         aliases = [role_name] + split_aliases(role.get("also_known_as"))
         esco_matches = []
@@ -226,11 +293,18 @@ def main():
         esco_optional = unique(skill for _, occupation in esco_matches for skill in occupation.get("optional_skills") or [])
 
         socs = set()
+        exact_onet_title_join = False
         for uri in esco_uris:
             socs.update(crosswalk_uri_to_socs.get(uri, set()))
         if not socs:
             for title in aliases:
                 socs.update(crosswalk_title_to_socs.get(norm(title), set()))
+        if not socs:
+            for title in aliases:
+                matched = onet_title_to_socs.get(norm(title), set())
+                if matched:
+                    socs.update(matched)
+                    exact_onet_title_join = True
         tools = []
         seen_tools = set()
         for soc in sorted(socs):
@@ -248,11 +322,64 @@ def main():
                     "data_state": "source_backed",
                 })
                 tools.append(copied)
+        for raw_tool in role.get("overlay_tools") or []:
+            tool_name = text(raw_tool.get("tool"))
+            if not tool_name:
+                continue
+            key = (norm(tool_name), "")
+            if key in seen_tools:
+                continue
+            seen_tools.add(key)
+            tools.append({
+                "tool": tool_name,
+                "element_id": None,
+                "element_name": None,
+                "hot": False,
+                "in_demand": False,
+                "source": role.get("source") or "framework_overlay",
+                "source_confidence": role.get("source_confidence") or "medium",
+                "data_state": role.get("data_state") or "source_backed",
+                "group": text(raw_tool.get("group")) or "common",
+            })
         tools.sort(key=lambda item: (not item["hot"], not item["in_demand"], norm(item["tool"])))
+        competencies = sorted(
+            [item for soc_code in sorted(socs) for item in onet_competencies.get(soc_code, {}).values()],
+            key=lambda item: (-(item["importance"] if item["importance"] is not None else -1), norm(item["element_name"])),
+        )
+        deduped_competencies = []
+        seen_competencies = set()
+        for item in competencies:
+            if item["element_id"] in seen_competencies:
+                continue
+            seen_competencies.add(item["element_id"])
+            deduped_competencies.append(item)
 
+        overlay_signal = bool(role.get("overlay_tools") or role.get("source_provenance"))
+        source_provenance = dict(role.get("source_provenance") or {})
+        if exact_onet_title_join:
+            source_provenance.update({
+                "sources": sorted(set((source_provenance.get("sources") or []) + ["global_onet"])),
+                "mapping_method": "exact O*NET occupation title",
+            })
+        nigerian_context = resolved_nigerian_context(
+            domain_id,
+            domain_meta.get(domain_id, {}),
+            source_registry,
+            scope="role_context",
+            role_name=role_name,
+        )
         entry = {
             "socs": sorted(socs),
             "tools": tools[:10],
+            "source": role.get("source"),
+            "source_provenance": source_provenance,
+            "nigerian_context": nigerian_context,
+            "onet": {
+                "occupation_codes": sorted(socs),
+                "essential_skills": deduped_competencies,
+                "source_confidence": "high" if deduped_competencies else "unsourced",
+                "data_state": "source_backed" if deduped_competencies else "unsourced",
+            },
             "esco": {
                 "occupation_uris": esco_uris,
                 "essential_skills": esco_essential,
@@ -260,8 +387,8 @@ def main():
                 "source_confidence": "high" if esco_matches else "unsourced",
                 "data_state": "source_backed" if esco_matches else "unsourced",
             },
-            "source_confidence": "high" if tools or esco_matches else "unsourced",
-            "data_state": "source_backed" if tools or esco_matches else "unsourced",
+            "source_confidence": role.get("source_confidence") if overlay_signal else ("high" if tools or esco_matches or deduped_competencies else "unsourced"),
+            "data_state": role.get("data_state") if overlay_signal else ("source_backed" if tools or esco_matches or deduped_competencies else "unsourced"),
         }
         output[role_key] = entry
 
@@ -271,11 +398,15 @@ def main():
         "crosswalk_source": os.path.relpath(CROSSWALK, HERE).replace("\\", "/"),
         "esco_source": os.path.relpath(ESCO_OCCUPATIONS, HERE).replace("\\", "/"),
         "soc_join": "exact_detailed_onet_soc",
+        "emerging_overlay_source": os.path.relpath(EMERGING_OVERLAY, HERE).replace("\\", "/") if os.path.exists(EMERGING_OVERLAY) else None,
+        "framework_role_override_source": os.path.relpath(ROLE_SOURCE_OVERRIDES, HERE).replace("\\", "/") if os.path.exists(ROLE_SOURCE_OVERRIDES) else None,
+        "framework_role_overrides_applied": sum(1 for role in roles if f"{text(role.get('domain_id'))}|{text(role.get('role_name'))}" in role_overrides),
         "keyed_roles": len(roles_by_key),
         "roles_with_tools_before": len(old_with_tools),
         "roles_with_tool_or_skill_data_before": len(old_keys),
         "roles_with_tools_after": sum(1 for key, value in output.items() if key != "_meta" and value.get("tools")),
-        "roles_with_tool_or_skill_data_after": sum(1 for key, value in output.items() if key != "_meta" and (value.get("tools") or value.get("esco", {}).get("essential_skills") or value.get("esco", {}).get("optional_skills"))),
+        "roles_with_tool_or_skill_data_after": sum(1 for key, value in output.items() if key != "_meta" and (value.get("tools") or value.get("onet", {}).get("essential_skills") or value.get("esco", {}).get("essential_skills") or value.get("esco", {}).get("optional_skills"))),
+        "roles_with_onet_competencies_after": sum(1 for key, value in output.items() if key != "_meta" and value.get("onet", {}).get("essential_skills")),
         "roles_unsourced": sum(1 for key, value in output.items() if key != "_meta" and value.get("data_state") == "unsourced"),
     }
     with open(OUTPUT, "w", encoding="utf-8") as handle:

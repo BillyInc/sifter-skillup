@@ -8,6 +8,11 @@ from celery import Celery
 from celery.schedules import crontab
 from config import settings
 from database import db
+
+# Demand tables currently contain taxonomy-derived baselines, not a verified
+# labour-market feed. Keep scheduled jobs from turning those rows into new
+# derived signals until source-backed ingestion is wired and reviewed.
+_DEMAND_INGESTION_READY = False
 from datetime import datetime, date, timedelta, timezone
 from logger import log
 
@@ -247,6 +252,14 @@ def compute_elite_composite():
     When a dimension has no data it scores 0 and the composite simply stays
     below threshold — the role is not flagged elite.
     """
+    if not _DEMAND_INGESTION_READY:
+        log.info("compute_elite_composite skipped: source-backed demand unavailable")
+        return {
+            "status": "skipped",
+            "detail": "source_backed_demand_unavailable",
+            "scored": 0,
+        }
+
     W_BARRIER, W_COMP, W_SCARCITY, W_PRESTIGE = 0.35, 0.25, 0.25, 0.15
     THRESH = 0.62  # composite >= THRESH => elite
     try:

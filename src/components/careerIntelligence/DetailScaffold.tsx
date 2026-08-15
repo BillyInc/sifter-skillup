@@ -27,6 +27,7 @@ import type { DataState, SavedEntityType } from "../../types/career";
 import { DataStateView } from "./DataStateView";
 import { SaveButton } from "./SaveButton";
 import { PdfExportButton } from "./PdfExportButton";
+import { ShareExportButton } from "./ShareExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
 import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceReportButton";
 
@@ -138,6 +139,12 @@ export function DetailScaffold<T>({
             ) : null}
             {reportSelection ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
             {pdf ? <PdfExportButton title={pdfTitle ?? title} documentPath={pdfPath} /> : null}
+            {pdfPath ? (
+              <ShareExportButton
+                documentPath={pdfPath}
+                fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`}
+              />
+            ) : null}
           </View>
         </View>
       </View>

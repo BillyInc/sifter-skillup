@@ -18,6 +18,7 @@ import {
   MappingFeedbackButton,
   SectionLabel,
   RouteLine,
+  MethodEvidenceBlock,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -200,6 +201,8 @@ function RoleBody({
           ) : null}
         </View>
       ) : null}
+
+      <MethodEvidenceBlock methods={role.computationalMethods} title="Methods connected to this role" />
 
       {(roleTools.length || roleCertifications.length) ? (
         <View style={{ gap: Spacing.sm }}>

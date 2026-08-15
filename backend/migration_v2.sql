@@ -97,19 +97,19 @@ CREATE TABLE IF NOT EXISTS skillup_dev.badges (
 );
 
 INSERT INTO skillup_dev.badges (id, name, description, icon, xp_reward, rarity, sort_order) VALUES
-  ('first_level',       'First Step',           'Complete your very first lesson',                   'ðŸŽ¯', 50,   'common',    1),
-  ('week_warrior',      'Week Warrior',          'Maintain a 7-day streak',                           'ðŸ”¥', 200,  'rare',      2),
+  ('first_level',       'First Step',           'Complete your very first lesson',                   '🎯', 50,   'common',    1),
+  ('week_warrior',      'Week Warrior',          'Maintain a 7-day streak',                           '🔥', 200,  'rare',      2),
   ('month_master',      'Month Master',          'Maintain a 30-day streak',                          '🌟', 500,  'epic',      3),
-  ('boss_slayer',       'Boss Slayer',           'Defeat a boss level',                               'âš”ï¸', 150, 'rare',      4),
-  ('lab_grad',          'Lab Graduate',          'Complete a full lab',                               'ðŸŽ“', 200,  'common',    5),
-  ('track_certified',   'Track Certified',       'Complete an entire track',                          'ðŸ†', 1000, 'legendary', 6),
-  ('social_sharer',     'Social Sharer',         'Share your first achievement',                      'ðŸ“¢', 75,   'common',    7),
-  ('portfolio_builder', 'Portfolio Builder',     'Push your first portfolio artifact',                'ðŸ’¼', 200,  'rare',      8),
-  ('onchain_citizen',   'On-Chain Citizen',      'Execute your first Starknet transaction',           'âš¡', 250,  'rare',      9),
-  ('island_1',          'Bitcoin Bay Explorer',  'Complete Island 1',                                 'â‚¿',  100,  'common',   10),
-  ('github_portfolio',  'GitHub Deployer',       'Push portfolio to GitHub',                          'ðŸ™', 200,  'rare',     11),
-  ('starknet_grad',     'Starknet Graduate',     'Complete the Starknet World island',                'âš¡', 500,  'epic',     12),
-  ('defi_navigator',    'DeFi Navigator',        'Complete the DeFi Navigator certification',         'ðŸ§­', 1000, 'legendary',13)
+  ('boss_slayer',       'Boss Slayer',           'Defeat a boss level',                               '⚔️', 150, 'rare',      4),
+  ('lab_grad',          'Lab Graduate',          'Complete a full lab',                               '🎓', 200,  'common',    5),
+  ('track_certified',   'Track Certified',       'Complete an entire track',                          '🏆', 1000, 'legendary', 6),
+  ('social_sharer',     'Social Sharer',         'Share your first achievement',                      '📢', 75,   'common',    7),
+  ('portfolio_builder', 'Portfolio Builder',     'Push your first portfolio artifact',                '💼', 200,  'rare',      8),
+  ('onchain_citizen',   'On-Chain Citizen',      'Execute your first Starknet transaction',           '⚡', 250,  'rare',      9),
+  ('island_1',          'Bitcoin Bay Explorer',  'Complete Island 1',                                 '₿',  100,  'common',   10),
+  ('github_portfolio',  'GitHub Deployer',       'Push portfolio to GitHub',                          '🐙', 200,  'rare',     11),
+  ('starknet_grad',     'Starknet Graduate',     'Complete the Starknet World island',                '⚡', 500,  'epic',     12),
+  ('defi_navigator',    'DeFi Navigator',        'Complete the DeFi Navigator certification',         '🧭', 1000, 'legendary',13)
 ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS skillup_dev.user_badges (

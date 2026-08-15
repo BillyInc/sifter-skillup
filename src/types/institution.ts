@@ -75,6 +75,8 @@ export interface Organization {
   schoolCode?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
+  /** Set only after a proof file has been stored and submitted for review. */
+  verificationProofSubmittedAt?: string;
   /** True for tutorial_centre/jamb_cafe: provider/session only, never a roster. */
   providerSessionOnly?: boolean;
 }
@@ -327,7 +329,6 @@ export interface ProgrammeFilter {
 //  Domain demand ranking (right panel) 
 export type RankScope = "nigerian" | "global" | "remote";
 export type MarketValueBand = "high" | "medium" | "low" | "unknown";
-export type MarketDemandBand = "high" | "medium" | "low" | "unknown";
 export type MarketQuadrant =
   | "high_demand_high_value"
   | "high_demand_lower_value"
@@ -348,7 +349,6 @@ export interface DomainRankItem {
   trendPct?: number;
   trendDirection?: TrendDirection;
   valueBand?: MarketValueBand;
-  demandBand?: MarketDemandBand;
   quadrant?: MarketQuadrant;
   interpretation?: string;
 }
@@ -384,7 +384,6 @@ export interface RoleDemandRow {
   trendPct?: number;
   rankLens?: RankScope;
   valueBand?: MarketValueBand;
-  demandBand?: MarketDemandBand;
   quadrant?: MarketQuadrant;
   interpretation?: string;
   topEmployers?: string[];

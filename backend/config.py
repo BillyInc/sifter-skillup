@@ -27,6 +27,11 @@ class Settings:
     EMAIL_FROM: str = os.getenv("EMAIL_FROM", "LevelUp <noreply@levelup.com.ng>")
     EMAIL_CODE_TTL_MINUTES: int = int(os.getenv("EMAIL_CODE_TTL_MINUTES", "15"))
     EMAIL_CODE_MAX_ATTEMPTS: int = int(os.getenv("EMAIL_CODE_MAX_ATTEMPTS", "5"))
+    # Production uses the durable hashed Supabase table. Local development
+    # keeps Redis so the existing dev-code/test workflow remains fast.
+    EMAIL_CODE_STORAGE: str = os.getenv(
+        "EMAIL_CODE_STORAGE", "redis" if DEBUG else "database"
+    ).lower()
 
     # ── Supabase ─────────────────────────────────────────────
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")

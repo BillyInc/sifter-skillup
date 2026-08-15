@@ -168,6 +168,14 @@
       "access": "public_reference",
       "notes": "Game-development role vocabulary and industry context for the sparse Game Design domain."
     },
+    "tesda_psf_game_development": {
+      "name": "Philippine Skills Framework for Game Development",
+      "region": "global_proxy",
+      "evidence_type": "government_industry_skills_framework",
+      "url": "https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf",
+      "access": "public_pdf",
+      "notes": "Game production, design, technical development, QA and sound-design tracks used for source-backed role overlays."
+    },
     "global_xr": {
       "name": "Khronos Group open standards",
       "region": "global",
@@ -175,6 +183,78 @@
       "url": "https://www.khronos.org/",
       "access": "public",
       "notes": "OpenXR, 3D graphics and real-time technology terminology for XR and immersive roles."
+    },
+    "qt_cfqt": {
+      "name": "European Competence Framework for Quantum Technologies v3.0",
+      "region": "global_proxy",
+      "evidence_type": "competence_framework",
+      "url": "https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf",
+      "access": "public_pdf",
+      "notes": "Quantum Flagship reference framework with an eight-domain content map, proficiency areas and nine qualification profiles. Used for quantum role, skill and tool ownership; not as Nigerian labour-demand evidence."
+    },
+    "nac_arts_technical_theatre": {
+      "name": "Singapore National Arts Council Skills Framework for Arts - Technical Theatre and Production",
+      "region": "global_proxy",
+      "evidence_type": "national_industry_skills_framework",
+      "url": "https://www.skillsfuture.gov.sg/docs/default-source/skills-framework/skills-framework-for-arts-%28technical-theatre-production%29.pdf",
+      "access": "public_pdf",
+      "notes": "Job-role profiles and technical/core skills for production design, sound, lighting, stage management and production operations."
+    },
+    "skills_england_live_event": {
+      "name": "Skills England Creative Industries Production Technician - Live Event Technician",
+      "region": "global_proxy",
+      "evidence_type": "approved_occupational_standard",
+      "url": "https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1297A",
+      "access": "public_reference",
+      "notes": "Live performance and event technical systems, safety, setup, operation, maintenance and troubleshooting."
+    },
+    "mqa_performing_arts": {
+      "name": "Malaysian Qualifications Agency Programme Standards - Performing Arts",
+      "region": "global_proxy",
+      "evidence_type": "national_programme_and_occupation_reference",
+      "url": "https://www2.mqa.gov.my/qad/v2/pekeliling/2025/Programme%20Standards_Performing%20Arts%20FINAL_26.3.25.pdf",
+      "access": "public_pdf",
+      "notes": "Performing-arts employment role reference covering dance, drama, theatre, film and music; used for role names, not Nigerian licensing."
+    },
+    "jff_xr": {
+      "name": "Jobs for the Future XR and Immersive Learning Career Pathways Framework",
+      "region": "global_proxy",
+      "evidence_type": "career_pathways_framework",
+      "url": "https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/",
+      "access": "public_reference",
+      "notes": "Four XR/immersive career clusters, illustrative roles and critical skills."
+    },
+    "arm_robotics_career": {
+      "name": "ARM RoboticsCareer competency pathways",
+      "region": "global_proxy",
+      "evidence_type": "industry_vetted_competency_pathway",
+      "url": "https://www.roboticscareer.org/careers",
+      "access": "public_reference",
+      "notes": "Robotics Technician, Specialist and Integrator pathways."
+    },
+    "skills_england_robotics": {
+      "name": "Skills England Robotics Engineer occupational maps",
+      "region": "global_proxy",
+      "evidence_type": "approved_occupational_standard",
+      "urls": ["https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1317", "https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1381"],
+      "access": "public_reference",
+      "notes": "Approved robotics engineer and advanced robotics engineer role summaries and KSBs."
+    },
+    "british_esports": {
+      "name": "British Esports career pathways",
+      "region": "global_proxy",
+      "evidence_type": "industry_career_pathways",
+      "url": "https://britishesports.org/esports-and-education/career-pathways/",
+      "access": "public_reference",
+      "notes": "Esports role families and associated career routes."
+    },
+    "pearson_esports": {
+      "name": "Pearson BTEC Esports career pathways",
+      "region": "global_proxy",
+      "evidence_type": "qualification_role_framework",
+      "url": "https://qualifications.pearson.com/content/dam/pdf/BTEC-Higher-Nationals/esport/2024/specification-and-sample-assessments/9781292467900-btec-hnc-hnd-l45-esports-spc.pdf",
+      "access": "public_pdf",
+      "notes": "Qualification-linked esports roles and employability competency levels."
     },
     "global_esports": {
       "name": "Hitmarker esports and gaming jobs",
@@ -410,6 +490,7 @@
   },
   "domain_overrides": {
     "D004": ["global_nice"],
+    "D070": ["nac_arts_technical_theatre", "skills_england_live_event", "mqa_performing_arts", "global_creative", "ng_creative"],
     "D054": ["global_energy", "ng_energy"],
     "D055": ["global_energy", "ng_energy"],
     "D059": ["global_wef", "ng_engineering"],
@@ -422,17 +503,19 @@
     "D134": ["global_imo_imarest", "ng_engineering", "ng_aviation_maritime"],
     "D135": ["global_nuclear", "ng_engineering"],
     "D137": ["global_nuclear", "global_health", "ng_health"],
-    "D139": ["global_game_dev", "global_creative", "ng_creative"],
-    "D141": ["global_wef", "global_sfia", "ng_cpn"],
+    "D139": ["global_game_dev", "tesda_psf_game_development", "global_creative", "ng_creative"],
+    "D140": ["arm_robotics_career", "skills_england_robotics", "ng_engineering", "ng_nbte"],
+    "D141": ["qt_cfqt", "global_wef", "global_sfia", "ng_cpn"],
     "D143": ["global_nice", "ng_cpn"],
+    "D144": ["global_wef", "ng_environment"],
     "D148": ["global_energy", "global_imo_imarest", "ng_energy", "ng_aviation_maritime"],
     "D153": ["global_music", "global_creative", "ng_creative"],
     "D157": ["global_wipo", "ng_finance", "ng_legal"],
     "D162": ["ng_legal"],
     "D163": ["global_wipo", "ng_legal"],
     "D166": ["global_sfia", "global_xr", "ng_cpn", "ng_engineering"],
-    "D167": ["global_xr", "global_sfia", "ng_cpn"],
-    "D168": ["global_game_dev", "global_esports", "global_creative", "ng_creative"]
+    "D167": ["global_xr", "jff_xr", "global_sfia", "ng_cpn"],
+    "D168": ["global_game_dev", "global_esports", "british_esports", "pearson_esports", "global_creative", "ng_creative"]
   },
   "cross_domain_role_policy": {
     "canonical_role_rule": "Create one canonical role record and attach domain_ids; do not create a separate role merely because the same title appears under another domain.",

@@ -208,7 +208,8 @@ export default function CelebrationOverlay({
   const cardScale      = useRef(new Animated.Value(0.7)).current;
   const cardAlpha      = useRef(new Animated.Value(0)).current;
 
-  const copy = EVENT_COPY[type];
+  // The lesson completion modal should not show the legacy lightning mark.
+  const copy = type === 'lesson' ? { ...EVENT_COPY[type], emoji: '' } : EVENT_COPY[type];
 
   // Auto-dismiss timer
   useEffect(() => {
@@ -284,7 +285,7 @@ export default function CelebrationOverlay({
           ]}
         >
           {/* Headline */}
-          <Text style={styles.emoji}>{copy.emoji}</Text>
+          {copy.emoji ? <Text style={styles.emoji}>{copy.emoji}</Text> : null}
           <Text style={[styles.headline, { color: colors.text }]}>
             {stageUp && stageName ? `You're now a ${stageName}` : copy.headline}
           </Text>
