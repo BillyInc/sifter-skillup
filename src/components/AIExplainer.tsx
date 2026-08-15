@@ -17,10 +17,10 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, TouchableOpacity, TextInput,
-  ScrollView, Animated, Platform, useWindowDimensions,
-  KeyboardAvoidingView,
+  ScrollView, Animated, Platform, KeyboardAvoidingView,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 
@@ -62,8 +62,8 @@ export default function AIExplainer({
   onUsed,
 }: AIExplainerProps) {
   const { colors }     = useTheme();
-  const { width }      = useWindowDimensions();
-  const isWebWide      = Platform.OS === 'web' && width >= 768;
+  const { width, isWeb, isMobile }      = useResponsive();
+  const isWebWide = isWeb && !isMobile;
 
   const [question, setQuestion] = useState('');
   const [loading,  setLoading]  = useState(false);
