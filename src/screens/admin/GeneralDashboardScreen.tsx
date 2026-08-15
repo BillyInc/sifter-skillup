@@ -12,11 +12,11 @@
  *
  * Sections, in spec order:
  *   - Header: institution name, admin role, Export affordance (AdminShell)
- *   - Stat row: programmes · domains reached · demand score + YoY ·
- *     skills gaps · remote-eligible %, plus the "data as of" line
+ *   - Stat row: programmes and domains reached. Labour-market figures stay
+ *     absent until source-backed demand ingestion exists.
  *   - Intelligence alerts
- *   - Two panels side by side (stacking on narrow): Programme → Domain →
- *     Demand, and Market Intelligence, each with [View all →]
+ *   - Two panels side by side (stacking on narrow): programme/domain mapping
+ *     and Market Intelligence, each with [View all →]
  *   - Domain Reach Audit preview: direct/functional/adjacent/unreached +
  *     [Open full audit →]
  *   - Student Intelligence: affiliated / self-signed-up / provisioned counts
@@ -82,7 +82,6 @@ function loadingState<T>(): DataState<T> {
 
 const fmtInt = (n?: number) => (n == null ? "—" : n.toLocaleString());
 const fmtPct = (n?: number) => (n == null ? "—" : `${Math.round(n)}%`);
-const fmtSigned = (n: number) => `${n >= 0 ? "+" : ""}${Math.round(n)}`;
 
 export function GeneralDashboardScreen() {
   const { colors } = useTheme();
@@ -245,41 +244,6 @@ export function GeneralDashboardScreen() {
                 : fmtInt(d.domainsAccessible)
             }
           />
-          <StatCard
-            icon="📊"
-            label="Demand score"
-            state={summary}
-            select={(d) => fmtInt(d.ngPostingsPerMonth)}
-            selectDelta={(d) =>
-              d.ngPostingsYoyPct != null
-                ? `${fmtSigned(d.ngPostingsYoyPct)}% YoY`
-                : undefined
-            }
-            deltaPositive={(d) => (d.ngPostingsYoyPct ?? 0) >= 0}
-          />
-          <StatCard
-            icon="🧩"
-            label="Skills gaps"
-            state={summary}
-            select={(d) => fmtInt(d.skillsGapsFlagged)}
-            selectDelta={(d) =>
-              d.skillsGapProgrammes != null
-                ? `across ${d.skillsGapProgrammes} programmes`
-                : undefined
-            }
-            deltaPositive={() => false}
-          />
-          <StatCard
-            icon="🌍"
-            label="Remote-eligible"
-            state={summary}
-            select={(d) => fmtPct(d.remoteEligiblePct)}
-            selectDelta={(d) =>
-              d.remoteEligiblePrevPct != null
-                ? `was ${fmtPct(d.remoteEligiblePrevPct)}`
-                : undefined
-            }
-          />
         </View>
 
         {summary.status === "real" && summary.data?.dataAsOf ? (
@@ -313,7 +277,7 @@ export function GeneralDashboardScreen() {
         <View style={[styles.grid, wide && styles.gridWide]}>
           <View style={wide ? styles.gridCell : undefined}>
             <Panel
-              title="Programme → domain → demand"
+              title="Programme → domain mapping"
               linkLabel="View all"
               onPress={() => adminNav.marketIntelligence(router as Nav)}
             >
@@ -321,7 +285,7 @@ export function GeneralDashboardScreen() {
                 state={programmes}
                 empty={(rows) => rows.length === 0}
                 emptyTitle="No programmes yet"
-                emptyBody="Your programme mix and its demand appear here once mapped."
+                emptyBody="Programme/domain mapping is unavailable on this preview until the structural mapping is loaded."
               >
                 {(rows) => (
                   <View style={styles.list}>
@@ -337,7 +301,7 @@ export function GeneralDashboardScreen() {
                                 .join(" · ")
                             : undefined
                         }
-                        value={`${fmtInt(row.ngPostingsPerMonth)}/mo`}
+                        value="Mapped domains"
                       />
                     ))}
                   </View>
@@ -356,7 +320,7 @@ export function GeneralDashboardScreen() {
                 state={domains}
                 empty={(rows) => rows.length === 0}
                 emptyTitle="No domain ranking yet"
-                emptyBody="Top domains and roles by Nigerian demand appear here once populated."
+                emptyBody="Labour-market demand is unavailable until source-backed ingestion is added."
               >
                 {(rows) => (
                   <View style={styles.list}>
@@ -365,7 +329,7 @@ export function GeneralDashboardScreen() {
                         key={row.domainId}
                         label={`${row.rank}. ${row.domainName}`}
                         sub={row.routeNote}
-                        value={`${fmtInt(row.postingsPerMonth)}/mo`}
+                        value="Demand unavailable"
                       />
                     ))}
                   </View>

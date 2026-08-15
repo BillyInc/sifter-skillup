@@ -7,7 +7,17 @@ import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "../../hooks/useAuth";
 
 type BranchKind = "domains" | "subgroups" | "roles";
-type GuidancePathRecord = Record<string, any>;
+type GuidanceListItem = { id: string };
+type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
+
+function guidanceItems(path: GuidancePathRecord, kind: BranchKind): GuidanceListItem[] {
+  const value = path[kind];
+  return Array.isArray(value)
+    ? value.filter((entry): entry is GuidanceListItem => Boolean(
+      entry && typeof entry === "object" && "id" in entry && typeof (entry as { id?: unknown }).id === "string",
+    ))
+    : [];
+}
 
 const pathCache = new Map<string, GuidancePathRecord>();
 const pathReads = new Map<string, Promise<GuidancePathRecord>>();
@@ -71,9 +81,7 @@ export function GuidanceReportButton({
     let active = true;
     readGuidancePath(targetStudentId, ownerId).then((path) => {
       if (!active) return;
-      const list = Array.isArray(path[selection.kind])
-        ? path[selection.kind]
-        : [];
+      const list = guidanceItems(path, selection.kind);
       setSelected(list.some((entry) => entry.id === selection.id));
     });
     return () => {
@@ -87,7 +95,7 @@ export function GuidanceReportButton({
     setNotice(null);
     try {
       const path = await readGuidancePath(targetStudentId, ownerId);
-      const list = Array.isArray(path[selection.kind]) ? path[selection.kind] : [];
+      const list = guidanceItems(path, selection.kind);
       const item = {
         id: selection.id,
         name: selection.name,

@@ -1,0 +1,203 @@
+{
+ "schema_version": 1,
+ "source": "global_esco",
+ "methods": [
+  {
+   "name": "social network analysis",
+   "domain_id": "D078",
+   "isco_submajor": "21",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/33e584f9-ff7a-4979-bfc0-5a3a374a145a",
+   "description": "The research method that is mainly explored in sociology and communication science and focuses on the analysis of the relations between individuals and among organisations and states.",
+   "evidence_roles": [
+    "D078|sociologist",
+    "D078|political scientist",
+    "D078|communication scientist"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  },
+  {
+   "name": "social network analysis",
+   "domain_id": "D078",
+   "isco_submajor": "26",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/33e584f9-ff7a-4979-bfc0-5a3a374a145a",
+   "description": "The research method that is mainly explored in sociology and communication science and focuses on the analysis of the relations between individuals and among organisations and states.",
+   "evidence_roles": [
+    "D078|sociologist",
+    "D078|political scientist",
+    "D078|communication scientist"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  },
+  {
+   "name": "game theory",
+   "domain_id": "D078",
+   "isco_submajor": "26",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
+   "description": "The study of mathematical models of strategic decisions among stakeholders. It has applications in all fields of social science, as well as in systems science, computer science and logic. Essential concepts are the Nash Equilibrium and the Prisoner's Dilemma.",
+   "evidence_roles": [
+    "D078|economist",
+    "D063|economist",
+    "D011|financial analyst",
+    "D056|blockchain developer"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  },
+  {
+   "name": "game theory",
+   "domain_id": "D063",
+   "isco_submajor": "26",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
+   "description": "The study of mathematical models of strategic decisions among stakeholders. It has applications in all fields of social science, as well as in systems science, computer science and logic. Essential concepts are the Nash Equilibrium and the Prisoner's Dilemma.",
+   "evidence_roles": [
+    "D078|economist",
+    "D063|economist",
+    "D011|financial analyst",
+    "D056|blockchain developer"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  },
+  {
+   "name": "game theory",
+   "domain_id": "D011",
+   "isco_submajor": "24",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
+   "description": "The study of mathematical models of strategic decisions among stakeholders. It has applications in all fields of social science, as well as in systems science, computer science and logic. Essential concepts are the Nash Equilibrium and the Prisoner's Dilemma.",
+   "evidence_roles": [
+    "D078|economist",
+    "D063|economist",
+    "D011|financial analyst",
+    "D056|blockchain developer"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  },
+  {
+   "name": "game theory",
+   "domain_id": "D056",
+   "isco_submajor": "25",
+   "skill_type": "knowledge",
+   "esco_id": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
+   "description": "The study of mathematical models of strategic decisions among stakeholders. It has applications in all fields of social science, as well as in systems science, computer science and logic. Essential concepts are the Nash Equilibrium and the Prisoner's Dilemma.",
+   "evidence_roles": [
+    "D078|economist",
+    "D063|economist",
+    "D011|financial analyst",
+    "D056|blockchain developer"
+   ],
+   "source": "global_esco",
+   "data_state": "source_backed"
+  }
+ ],
+ "requested_method_audit": [
+  {
+   "requested": "social network analysis",
+   "esco_skill": "http://data.europa.eu/esco/skill/33e584f9-ff7a-4979-bfc0-5a3a374a145a",
+   "skill_type": "knowledge",
+   "mapped_role_count": 24,
+   "mapped_roles": [
+    "D002|data analyst",
+    "D003|data scientist",
+    "D009|data analyst",
+    "D009|data scientist",
+    "D009|statistician",
+    "D010|data analyst",
+    "D010|data scientist",
+    "D010|statistician",
+    "D011|statistician",
+    "D014|statistician",
+    "D026|statistician",
+    "D033|data analyst",
+    "D033|data scientist",
+    "D039|sociology lecturer",
+    "D041|statistician",
+    "D046|sociologist",
+    "D056|data analyst",
+    "D056|data scientist",
+    "D063|political scientist",
+    "D078|communication scientist",
+    "D078|political scientist",
+    "D078|sociologist",
+    "D078|statistician",
+    "D142|statistician"
+   ],
+   "repository_learning_evidence": [],
+   "status": "source_backed"
+  },
+  {
+   "requested": "game theory",
+   "esco_skill": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
+   "skill_type": "knowledge",
+   "mapped_role_count": 18,
+   "mapped_roles": [
+    "D002|ICT consultant",
+    "D002|data analyst",
+    "D009|ICT consultant",
+    "D009|data analyst",
+    "D010|ICT consultant",
+    "D010|data analyst",
+    "D011|financial analyst",
+    "D013|financial analyst",
+    "D033|ICT consultant",
+    "D033|data analyst",
+    "D056|ICT consultant",
+    "D056|blockchain developer",
+    "D056|data analyst",
+    "D062|financial analyst",
+    "D063|economist",
+    "D078|economist",
+    "D158|financial analyst",
+    "D159|financial analyst"
+   ],
+   "repository_learning_evidence": [],
+   "status": "source_backed"
+  },
+  {
+   "requested": "agent-based modelling",
+   "esco_skill": null,
+   "skill_type": null,
+   "mapped_role_count": 0,
+   "mapped_roles": [],
+   "repository_learning_evidence": [],
+   "status": "not_mapped"
+  },
+  {
+   "requested": "causal inference",
+   "esco_skill": null,
+   "skill_type": null,
+   "mapped_role_count": 0,
+   "mapped_roles": [],
+   "repository_learning_evidence": [],
+   "status": "not_mapped"
+  },
+  {
+   "requested": "CASEVO",
+   "esco_skill": null,
+   "skill_type": null,
+   "mapped_role_count": 0,
+   "mapped_roles": [],
+   "repository_learning_evidence": [
+    {
+     "path": "src\\data\\tracks\\starknet_ecosystem\\builder\\builderLessons.ts",
+     "lines": [
+      "38111"
+     ]
+    }
+   ],
+   "status": "learning_content_only"
+  }
+ ],
+ "interpretation": {
+  "knowledge_vs_competence": "ESCO labels social network analysis and game theory as knowledge. They must not be presented as demonstrated user competence; role evidence says the occupation uses or requires the knowledge.",
+  "tools_vs_competence": "Python libraries are recorded as source-backed tools where named. Tool association does not prove that every role has proficiency in the library.",
+  "learning_content_vs_career_evidence": "CASEVO is mentioned in the SkillUp Starknet learning curriculum as an optional grant-proposal framework. It is not a Career Intelligence role competency or source-backed method mapping."
+ }
+}

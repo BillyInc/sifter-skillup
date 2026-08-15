@@ -129,6 +129,24 @@ This is the controlling scope for the onboarding/discovery unblock. Do not jump 
 - Mockups should improve visual quality, interaction design, hierarchy, density, filters, cards, typography, and responsive behavior.
 - Implementation should wait for product-owner refinement of those mockups.
 
+### 7. Computational and quantitative evidence audit
+
+- Computational content must distinguish source classifications from learner
+  competence. ESCO-backed `social network analysis` and `game theory` are
+  stored as method knowledge, with `competence_status = not_demonstrated`.
+- Python and named libraries such as pandas, NumPy, scikit-learn, PyTorch and
+  TensorFlow are tools used by supported roles where O*NET evidence names
+  them. A tool association must never be rendered as proof of proficiency.
+- `agent-based modelling` and `causal inference` remain explicit `not_mapped`
+  items until an exact checked-in source mapping is verified. CASEVO appears
+  only as an optional grant-proposal framework in the SkillUp Starknet learning
+  curriculum, so it is recorded as `learning_content_only`, not as a Career
+  Intelligence competency. The system must not fill these gaps with guessed
+  role or skill data.
+- The generated method evidence and computational subgroup links must be
+  seeded and exposed as optional API enrichment. Older databases should still
+  render the core domain/role response until the additive migration is run.
+
 ## Unified guidance-to-report scope
 
 This is an update to the original goal, not a separate visual project. Every
@@ -243,10 +261,11 @@ checkpoint, not a generic onboarding screen, legacy route, or learning screen.
   as another. Role tools use `backend/migration_role_tools.sql`; role
   certifications use `backend/migration_role_detail_enrichment.sql`.
 - Current seed audit: role essential/optional competencies are present in
-  `domain_roles`, while the current career seed has no role-scoped tool rows or
-  role certification rows. The application must show those sections only when
-  source-backed rows exist; it must not inherit domain or subgroup data to fill
-  the gap.
+  `domain_roles`, and regenerated career seed data emits source-backed role
+  tool rows through `domain_tools` with `scope = role`. Role certification rows
+  remain absent where a recognized issuer is not verified. The application must
+  show each section only when source-backed rows exist; it must not inherit
+  domain or subgroup data to fill a gap.
 - `What the school teaches` belongs to the selected programme and must explain
   the actual programme learning outcomes in student language. It must not be
   presented as a promise that the university teaches a skill unless the source
@@ -470,9 +489,10 @@ Current implementation status: account-type and student setup branching exist; t
 - Patched: the SkillUp/lightning loading blocker has been removed from auth/onboarding routing.
 - Patched: PDF HTML report output includes a `Sifter LevelUp` watermark plus school name when available.
 - Patched schema: `backend/migration_auth_onboarding_security_patch.sql` adds durable auth email codes, onboarding drafts, admin MFA settings, and resume/checkpoint user columns.
-- Still to wire fully: frontend onboarding drafts are local-first today. The schema now exists, but backend routes are still needed for cross-device draft save/resume.
-- Still to wire fully: signup email verification has a dev/in-memory backend path today. Production should switch it to `auth_email_codes` plus a real email provider.
-- Still to wire fully: admin 2FA is prompted/deferable in Settings, but real MFA enforcement requires backend challenge verification against `user_mfa_settings` and `auth_email_codes`.
+- Patched: onboarding drafts now keep the fast local copy and synchronize the current user's checkpoint/profile to `onboarding_drafts` when authenticated, with server-first hydration when the remote copy is newer.
+- Patched: production signup verification uses hashed, durable `auth_email_codes` rows plus the configured transactional email provider; local DEBUG keeps the Redis/dev-code path for development.
+- Patched: admin email MFA now has request/verify/defer endpoints, durable state in `user_mfa_settings`, an MFA claim in the issued session token, and enforcement on guarded admin APIs after enablement.
+- Still to apply in the live project: `migration_school_identity.sql` is not present in the currently inspected database, so address-backed school search and compulsory admin address remain unavailable until that migration is applied.
 - Still to audit separately: bulk imported seed SQL contains source-data encoding artifacts. App/source files touched for onboarding are repaired; imported data should be cleaned from source imports or regenerated.
 - Replaced: the earlier UTME-only picker assumption is no longer valid. Onboarding and Admission Browse now request `exam_type=olevel` for O-level planning and `exam_type=utme` for UTME gates.
 - Patched: O-level and UTME subjects are now separate in onboarding, persistence, and Admission Browse handoff.
@@ -533,13 +553,14 @@ For an existing Supabase project, apply only migrations that have not already be
 3. `backend/migration_v2.sql` for auth/session support, active device sessions, and legacy SkillUp/My World data.
 4. `backend/migration_career_base_registry.sql`, then `backend/migration_career_v2.sql`, then `backend/migration_career_intelligence.sql` for programme/domain/role discovery foundations. Apply `backend/migration_role_tools.sql` after `migration_career_v2.sql` so role-owned tools use the canonical `domain_tools.role_id` layer.
 5. `backend/migration_admission_intelligence.sql`, then `backend/migration_remove_postutme_from_cutoff_view.sql`, then `backend/migration_student_pipeline_live.sql` for Admission Intelligence and onboarding-to-discovery data.
-6. `backend/seed_subject_catalog.sql`, `backend/seed_subject_options.sql`, `backend/seed_phase8_9_enrichment.sql`, the role-scoped tool rows in `seed_career_v2.sql`, and the admission importer/seed files already used by the project.
+6. `backend/seed_subject_catalog.sql`, `backend/seed_subject_options.sql`, `backend/seed_phase8_9_enrichment.sql`, and the admission importer/seed files already used by the project.
 7. `backend/migration_role_detail_enrichment.sql` for role-owned certifications. Role-owned tools use `backend/migration_role_tools.sql`; seed only source-backed rows after both migrations are present.
-8. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
-9. `backend/migration_guidance_report_paths.sql` for the account-scoped full selected guidance path used by students and admin-guided learners.
-10. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
-11. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
-12. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.
+8. `backend/migration_source_backed_career_layers.sql` for source confidence, data state, ESCO/O*NET identifiers, O*NET competencies, and tool provenance. Then apply the regenerated `backend/seed_career_v2.sql`.
+9. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
+10. `backend/migration_guidance_report_paths.sql` for the account-scoped full selected guidance path used by students and admin-guided learners.
+11. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
+12. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
+13. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.
 
 ## Application sequence
 
@@ -555,3 +576,87 @@ For an existing Supabase project, apply only migrations that have not already be
 10. Guest creates a guest session and lands in Explore preview. Guest does not enter onboarding from Home, Profile, or Explore.
 11. Explicit logout routes future opens to sign-in/signup. Browser close keeps the saved session and resumes from the current URL or correct post-auth surface.
 12. A second active device invalidates the previous active session; the rejected device clears its token and returns to login.
+
+## Scheduled source-backed domain population phase
+
+This phase is scheduled after the current role-join and leakage audit and before
+the final UI/data acceptance pass. It is deliberately separate from onboarding
+logic: discovery must consume corrected role data before its visual surfaces are
+refined.
+
+1. Rebuild the canonical role tools and competencies using exact ESCO occupation
+   identifiers and exact detailed O*NET SOC codes. Do not use ISCO groups as a
+   competency join.
+2. Reconcile the domain/subgroup structure with the canonical role layer and
+   publish `data/career-mapping/_audit/ROLE_COMPLETENESS_REPORT.md`.
+3. Populate the verified emerging-domain overlays:
+   - D139 Game Design: TESDA's Philippine Skills Framework for Game Development;
+   - D167 XR & Immersive Technology: JFF's four XR career clusters;
+   - D140 Robotics Engineering: ARM RoboticsCareer plus Skills England
+     robotics occupational maps;
+   - D141 Quantum Computing: European Competence Framework for Quantum
+     Technologies v3.0 (Quantum Flagship/QUCATS), with role mappings kept as
+     medium-confidence specialist framework evidence;
+   - D168 Esports & Creator Economy: British Esports and Pearson role pathways,
+     with certifications left empty unless a recognized issuer is verified.
+   - D070 Performing Arts & Entertainment: Singapore NAC Technical Theatre and
+     Production, Skills England Live Event Technician, and the Malaysian
+     Qualifications Agency Performing Arts standard.
+4. Add computational and quantitative subgroup ownership without inventing
+   occupations:
+   - D078 Social Sciences: Quantitative & Computational Methods plus Social &
+     Economic Research around existing ESCO roles such as sociologist,
+     demographer, statistician and behavioural scientist;
+   - D063 Economics: Economic Research & Quantitative Policy;
+   - D142 Bioinformatics, Computational Biology: Computational Biology &
+     Bioinformatics;
+   - make the existing quantitative/statistical subgroups explicit in D009,
+     D010, D011, D014 and D041.
+   - add source-backed computational subgroup ownership to D001, D002, D003,
+     D004, D005, D006, D012, D056 and D144 where the role layer already
+     contains computational, systems, cyber, blockchain or modelling work.
+   These layers use exact ESCO/O*NET role evidence, source-linked tools and
+   Nigerian context sources from the domain registry. Local context is not
+   presented as Nigerian demand, salary or licensing proof.
+5. Build `data/career-mapping/cross_domain_role_families.json` from exact ESCO
+   occupation URIs plus explicit source-backed family policies. A role family
+   has one canonical family record, domain links and aliases; it does not copy
+   role skills/tools into another domain. This supports discovery such as
+   third-party cyber risk from Cybersecurity and its valid Supply Chain,
+   Procurement and Compliance links.
+6. Keep the overlay source-backed and explicitly labelled as a framework proxy;
+   Nigerian sources are used later for local naming, training and credentials,
+   not for inventing missing competencies.
+7. Regenerate `backend/seed_career_v2.sql`, apply the additive source-backed
+   migration, then verify role ownership, subgroup ownership, tool provenance,
+   cross-domain family links, NaN-safe JSONB serialization, and medical-tool
+   leakage before the discovery UI is accepted.
+
+### Nigerian and global professional enrichment record
+
+The generated source-backed layers now carry `nigerian_context` on every
+visible domain, subgroup and role. The earlier provenance-only layer is not
+treated as completed enrichment. Actual local skills, tools, competencies,
+credentials, regulatory context and role names now come from the curated
+`data/career-mapping/nigerian_global_professional_overlays.json` file, based on
+the checked CPN, ICAN, COREN, NMCN, NDPC, NCAIR, NCC and NUC documents listed
+there. Global CFA, GARP and RICS material is kept under `global_enrichment` so
+it can enrich guidance without being mislabelled Nigerian.
+
+The context object excludes salary, role-level demand and automatic licensing
+claims. Source availability is explicit: `checked_in_extract`,
+`checked_in_source_document` or `registry_reference`. A role or subgroup with
+no evidence-backed Nigerian counterpart is reported as a gap rather than
+filled with a guessed local title. The coverage audit is:
+
+```text
+python data/career-mapping/_audit_nigerian_context.py
+```
+
+The current audit covers 160 visible domains, 323 subgroups and 4,619 visible
+role records with valid provenance. It currently finds actual local enrichment
+for 61 domains, 74 subgroups and 704 role-family matches, plus global
+enrichment for 19 domains, 23 subgroups and 116 roles. The remaining roles and
+groups are explicit review queues, including domains with no demonstrated
+Nigerian counterpart; they must not be filled with inherited or guessed
+content. The generated JSON report contains the complete gap list.

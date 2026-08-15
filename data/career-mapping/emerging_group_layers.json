@@ -1,0 +1,2569 @@
+{
+ "schema_version": 1,
+ "domains": {
+  "D140": {
+   "source": "skills_england_robotics",
+   "skills": [
+    "robotic system design",
+    "engineering mathematics",
+    "robotics control",
+    "robot programming",
+    "system testing",
+    "safe and sustainable system design"
+   ],
+   "tools": [
+    "robot simulation software",
+    "CAD and engineering design tools",
+    "industrial robot controllers"
+   ]
+  },
+  "D141": {
+   "source": "qt_cfqt",
+   "skills": [
+    "basic quantum concepts",
+    "mathematical formalism and information theory",
+    "laboratory techniques, noise and shielding",
+    "control technologies",
+    "quantum programming",
+    "quantum simulators",
+    "quantum algorithms",
+    "quantum sensors and imaging systems",
+    "quantum key distribution"
+   ],
+   "tools": [
+    "quantum programming tools and software stack",
+    "quantum simulators",
+    "quantum state control technologies",
+    "cryogenic, vacuum and cleanroom technologies",
+    "quantum sensors and imaging systems",
+    "quantum communication networks"
+   ]
+  },
+  "D070": {
+   "source": "nac_arts_technical_theatre",
+   "skills": [
+    "performance practice",
+    "artistic direction",
+    "rehearsal",
+    "production planning and scheduling",
+    "performing arts production operations",
+    "technical production operations",
+    "health and safety"
+   ],
+   "tools": [
+    "stage management systems",
+    "lighting control consoles",
+    "sound recording and mixing systems",
+    "production control consoles"
+   ]
+  },
+  "D167": {
+   "source": "jff_xr",
+   "skills": [
+    "XR hardware support",
+    "XR software support",
+    "requirements analysis",
+    "immersive experience design",
+    "XR system design",
+    "interactive systems"
+   ],
+   "tools": [
+    "XR hardware",
+    "XR software development kits",
+    "3D and immersive content tools"
+   ]
+  },
+  "D168": {
+   "source": "british_esports",
+   "skills": [
+    "teamwork",
+    "leadership",
+    "strategic thinking",
+    "communication",
+    "content creation",
+    "event management",
+    "audience engagement"
+   ],
+   "tools": [
+    "match analysis tools",
+    "stream production software",
+    "content editing tools",
+    "community and social media tools"
+   ]
+  },
+  "D009": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education"
+   ],
+   "skills": [
+    "digital data processing",
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "data quality assessment",
+    "data ethics"
+   ],
+   "tools": [
+    "IBM SPSS Statistics",
+    "R",
+    "SAS",
+    "Python"
+   ]
+  },
+  "D010": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_business"
+   ],
+   "skills": [
+    "digital data processing",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "data quality assessment",
+    "business analysis"
+   ],
+   "tools": [
+    "IBM SPSS Statistics",
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "Python"
+   ]
+  },
+  "D011": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "financial forecasting",
+    "risk analysis"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "IBM SPSS Statistics",
+    "Microsoft Excel"
+   ]
+  },
+  "D014": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "risk analysis",
+    "data quality assessment"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "IBM SPSS Statistics",
+    "Microsoft Excel"
+   ]
+  },
+  "D041": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "scientific modelling",
+    "statistics",
+    "manage research data",
+    "scientific research methodology"
+   ],
+   "tools": [
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "ESRI ArcGIS software"
+   ]
+  },
+  "D063": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance",
+    "ng_education"
+   ],
+   "skills": [
+    "mathematical economics",
+    "quantitative analysis",
+    "statistics",
+    "financial forecasting",
+    "market analysis",
+    "empirical analysis"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "SAS",
+    "IBM SPSS Statistics",
+    "ESRI ArcGIS software"
+   ]
+  },
+  "D078": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education",
+    "ng_creative"
+   ],
+   "skills": [
+    "research design",
+    "statistics",
+    "quantitative analysis",
+    "digital data processing",
+    "manage research data",
+    "scientific research methodology",
+    "data ethics"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Structured query language SQL",
+    "ESRI ArcGIS software"
+   ]
+  },
+  "D142": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nuc",
+    "ng_health",
+    "ng_nbs"
+   ],
+   "skills": [
+    "computer programming",
+    "genomics",
+    "database management systems",
+    "computational chemistry",
+    "statistics",
+    "laboratory techniques",
+    "manage research data"
+   ],
+   "tools": [
+    "Python",
+    "R",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Linux"
+   ]
+  },
+  "D001": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "computer programming",
+    "create software design",
+    "execute software tests",
+    "data models",
+    "systems development life-cycle",
+    "digital systems"
+   ],
+   "tools": [
+    "Linux",
+    "Git"
+   ]
+  },
+  "D002": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "data engineering",
+    "database management systems",
+    "data warehouse",
+    "data mining",
+    "data quality assessment",
+    "digital data processing"
+   ],
+   "tools": [
+    "Apache Spark",
+    "Apache Hadoop",
+    "Apache Kafka",
+    "Python",
+    "Linux"
+   ]
+  },
+  "D003": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "global_wef",
+    "ng_cpn"
+   ],
+   "skills": [
+    "machine learning",
+    "computer programming",
+    "statistics",
+    "mathematical modelling",
+    "scientific computing",
+    "data mining"
+   ],
+   "tools": [
+    "TensorFlow",
+    "Apache Spark",
+    "Kubernetes",
+    "Python",
+    "Git"
+   ]
+  },
+  "D004": {
+   "source": "global_nice",
+   "source_ids": [
+    "global_nice",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_legal"
+   ],
+   "skills": [
+    "information security strategy",
+    "computer forensics",
+    "cyber security",
+    "cyber attack counter-measures",
+    "define security policies",
+    "manage system security",
+    "risk management"
+   ],
+   "tools": []
+  },
+  "D005": {
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "cloud technologies",
+    "design cloud architecture",
+    "network engineering",
+    "deploy cloud resource",
+    "develop with cloud services",
+    "do cloud refactoring"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Apache Spark",
+    "Linux",
+    "Kubernetes"
+   ]
+  },
+  "D006": {
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_engineering"
+   ],
+   "skills": [
+    "Internet of Things",
+    "embedded systems",
+    "computer programming",
+    "integrate system components",
+    "software architecture models",
+    "perform ICT security testing"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Linux",
+    "Git"
+   ]
+  },
+  "D012": {
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_finance"
+   ],
+   "skills": [
+    "computer programming",
+    "create software design",
+    "data models",
+    "software architecture models",
+    "ICT system integration",
+    "perform ICT security testing"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git",
+    "Microsoft SQL Server"
+   ]
+  },
+  "D056": {
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_legal"
+   ],
+   "skills": [
+    "blockchain architecture",
+    "blockchain components",
+    "distributed ledger technology",
+    "cryptocurrency",
+    "computer programming",
+    "ICT encryption"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git",
+    "Linux"
+   ]
+  },
+  "D144": {
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_wef",
+    "ng_environment"
+   ],
+   "skills": [
+    "conduct research on climate processes",
+    "develop models for weather forecast",
+    "mathematical modelling",
+    "statistics",
+    "perform data analysis",
+    "use specialised computer models for weather forecasting"
+   ],
+   "tools": [
+    "Python",
+    "R",
+    "ESRI ArcGIS software"
+   ]
+  }
+ },
+ "subgroups": [
+  {
+   "domain_id": "D001",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "computer programming",
+    "create software design",
+    "execute software tests",
+    "systems development life-cycle",
+    "data models"
+   ],
+   "tools": [
+    "Linux",
+    "Git"
+   ]
+  },
+  {
+   "domain_id": "D002",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "data engineering",
+    "database management systems",
+    "data warehouse",
+    "data mining",
+    "data quality assessment",
+    "digital data processing"
+   ],
+   "tools": [
+    "Apache Spark",
+    "Apache Hadoop",
+    "Apache Kafka",
+    "Python",
+    "Linux"
+   ]
+  },
+  {
+   "domain_id": "D003",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "global_wef",
+    "ng_cpn"
+   ],
+   "skills": [
+    "machine learning",
+    "computer programming",
+    "statistics",
+    "mathematical modelling",
+    "scientific computing",
+    "data mining"
+   ],
+   "tools": [
+    "TensorFlow",
+    "Apache Spark",
+    "Kubernetes",
+    "Python",
+    "Git"
+   ]
+  },
+  {
+   "domain_id": "D004",
+   "isco_submajor": "12",
+   "source": "global_nice",
+   "source_ids": [
+    "global_nice",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_legal"
+   ],
+   "skills": [
+    "information security strategy",
+    "define security policies",
+    "manage IT security compliances",
+    "internal risk management policy"
+   ],
+   "tools": []
+  },
+  {
+   "domain_id": "D004",
+   "isco_submajor": "25",
+   "source": "global_nice",
+   "source_ids": [
+    "global_nice",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_legal"
+   ],
+   "skills": [
+    "information security strategy",
+    "computer forensics",
+    "cyber security",
+    "cyber attack counter-measures",
+    "define security policies",
+    "manage system security",
+    "risk management"
+   ],
+   "tools": []
+  },
+  {
+   "domain_id": "D005",
+   "isco_submajor": "25",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "cloud technologies",
+    "design cloud architecture",
+    "network engineering",
+    "deploy cloud resource",
+    "develop with cloud services",
+    "do cloud refactoring"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Apache Spark",
+    "Linux",
+    "Kubernetes"
+   ]
+  },
+  {
+   "domain_id": "D005",
+   "isco_submajor": "35",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "cloud technologies",
+    "network engineering",
+    "deploy cloud resource",
+    "monitor system performance"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Linux"
+   ]
+  },
+  {
+   "domain_id": "D006",
+   "isco_submajor": "21",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_engineering"
+   ],
+   "skills": [
+    "Internet of Things",
+    "engineering principles",
+    "computer technology",
+    "integrate system components",
+    "embedded systems",
+    "hardware components"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software"
+   ]
+  },
+  {
+   "domain_id": "D006",
+   "isco_submajor": "25",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_engineering"
+   ],
+   "skills": [
+    "Internet of Things",
+    "embedded systems",
+    "computer programming",
+    "integrate system components",
+    "software architecture models",
+    "perform ICT security testing"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Linux",
+    "Git"
+   ]
+  },
+  {
+   "domain_id": "D007",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_creative"
+   ],
+   "skills": [
+    "computer graphics",
+    "graphic design",
+    "follow a brief",
+    "follow work schedule",
+    "finish project within budget",
+    "adapt to type of media",
+    "design graphics",
+    "copyright legislation",
+    "web programming",
+    "ICT software specifications"
+   ],
+   "tools": [
+    "Adobe Illustrator",
+    "Adobe Photoshop",
+    "Adobe After Effects",
+    "Adobe Creative Cloud software",
+    "Cascading style sheets CSS",
+    "Adobe InDesign",
+    "Canva",
+    "Figma",
+    "Microsoft Excel",
+    "Hypertext markup language HTML"
+   ]
+  },
+  {
+   "domain_id": "D007",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_creative"
+   ],
+   "skills": [
+    "levels of software testing",
+    "report test findings",
+    "provide software testing documentation",
+    "execute software tests",
+    "address problems critically",
+    "replicate customer software issues",
+    "develop digital content",
+    "use an application-specific interface",
+    "software anomalies",
+    "World Wide Web Consortium standards"
+   ],
+   "tools": [
+    "Atlassian JIRA",
+    "Amazon Web Services AWS software",
+    "C#",
+    "Git",
+    "GitHub",
+    "Microsoft Excel",
+    "JavaScript",
+    "Jenkins CI",
+    "Linux",
+    "Microsoft Azure software"
+   ]
+  },
+  {
+   "domain_id": "D008",
+   "isco_submajor": "13",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "manage budgets",
+    "define technology strategy",
+    "manage staff",
+    "recruit employees",
+    "use ICT ticketing system",
+    "coordinate technological activities",
+    "decision support systems",
+    "attack vectors",
+    "ICT project management",
+    "ICT project management methodologies"
+   ],
+   "tools": [
+    "Atlassian JIRA",
+    "Amazon Web Services AWS software",
+    "Microsoft Azure software",
+    "Apache Cassandra",
+    "Apache Hadoop",
+    "Apache Maven",
+    "Apache Tomcat",
+    "Apple macOS",
+    "C",
+    "C#"
+   ]
+  },
+  {
+   "domain_id": "D008",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "microwave principles",
+    "procurement of ICT network equipment",
+    "electronics principles",
+    "ICT communications protocols",
+    "telecom regulations",
+    "design process",
+    "provide ICT system training",
+    "define technical requirements",
+    "use session border controller",
+    "systems development life-cycle"
+   ],
+   "tools": [
+    "C",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Apple macOS",
+    "Autodesk AutoCAD",
+    "Autodesk Revit",
+    "Linux",
+    "Microsoft Active Directory",
+    "Microsoft Outlook",
+    "Microsoft Visio"
+   ]
+  },
+  {
+   "domain_id": "D008",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "analyse business requirements",
+    "network engineering",
+    "ICT network routing",
+    "network standards",
+    "use an application-specific interface",
+    "design computer network",
+    "forecast future ICT network needs",
+    "implement a virtual private network",
+    "implement ICT network diagnostic tools",
+    "ICT capacity planning strategies"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Ansible software",
+    "IBM Terraform",
+    "Linux",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Border Gateway Protocol BGP",
+    "Microsoft Azure software",
+    "Microsoft PowerShell",
+    "Oracle Java"
+   ]
+  },
+  {
+   "domain_id": "D008",
+   "isco_submajor": "35",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_telecom"
+   ],
+   "skills": [
+    "common aviation safety regulations",
+    "communicate in air traffic services",
+    "perform risk analysis",
+    "use different communication channels",
+    "work in an aviation team",
+    "manage flight data communications programme",
+    "write work-related reports",
+    "manage data",
+    "apply technical communication skills",
+    "present reports"
+   ],
+   "tools": [
+    "Apple macOS",
+    "Linux",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Outlook",
+    "Amazon Web Services AWS software",
+    "Microsoft Azure software",
+    "Apache Cassandra",
+    "Apache Hadoop",
+    "Apache Maven"
+   ]
+  },
+  {
+   "domain_id": "D009",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "scientific modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "research design",
+    "data ethics"
+   ],
+   "tools": [
+    "R",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Python"
+   ]
+  },
+  {
+   "domain_id": "D009",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "define technical requirements",
+    "systems development life-cycle",
+    "digital systems",
+    "provide ICT consulting advice",
+    "use data processing techniques",
+    "use an application-specific interface",
+    "levels of software testing",
+    "address problems critically",
+    "data science",
+    "establish data processes"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git",
+    "Microsoft Excel",
+    "Atlassian JIRA",
+    "Microsoft Azure software",
+    "GitHub",
+    "Microsoft PowerPoint",
+    "Microsoft Power BI",
+    "Microsoft Office software",
+    "Python"
+   ]
+  },
+  {
+   "domain_id": "D009",
+   "isco_submajor": "33",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education"
+   ],
+   "skills": [
+    "digital data processing",
+    "mathematics",
+    "quantitative analysis",
+    "statistics",
+    "statistical analysis system software",
+    "identify statistical patterns",
+    "gather data",
+    "perform data analysis",
+    "execute analytical mathematical calculations",
+    "apply statistical analysis techniques"
+   ],
+   "tools": [
+    "IBM SPSS Statistics",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Python",
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "Tableau",
+    "Amazon Redshift",
+    "Amazon Web Services AWS software"
+   ]
+  },
+  {
+   "domain_id": "D010",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_business"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "data quality assessment"
+   ],
+   "tools": [
+    "R",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Structured query language SQL"
+   ]
+  },
+  {
+   "domain_id": "D010",
+   "isco_submajor": "24",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_business",
+    "ng_nbs"
+   ],
+   "skills": [
+    "apply change management",
+    "business analysis",
+    "management consulting",
+    "perform business analysis",
+    "advise on efficiency improvements",
+    "liaise with managers",
+    "operational research",
+    "strategic planning",
+    "identify undetected organisational needs",
+    "align efforts towards business development"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Microsoft Outlook",
+    "Microsoft Power BI",
+    "Salesforce software",
+    "SAP software",
+    "Python",
+    "Microsoft Project",
+    "Amazon Web Services AWS software"
+   ]
+  },
+  {
+   "domain_id": "D010",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_cpn",
+    "ng_business"
+   ],
+   "skills": [
+    "define technical requirements",
+    "use an application-specific interface",
+    "systems development life-cycle",
+    "digital systems",
+    "levels of software testing",
+    "address problems critically",
+    "use data processing techniques",
+    "provide ICT consulting advice",
+    "analyse business requirements",
+    "integrate system components"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git",
+    "Microsoft Excel",
+    "Atlassian JIRA",
+    "GitHub",
+    "Microsoft Azure software",
+    "Microsoft PowerPoint",
+    "Docker",
+    "C#",
+    "Microsoft Office software"
+   ]
+  },
+  {
+   "domain_id": "D010",
+   "isco_submajor": "33",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_business",
+    "ng_nbs"
+   ],
+   "skills": [
+    "digital data processing",
+    "mathematics",
+    "quantitative analysis",
+    "statistics",
+    "statistical analysis system software",
+    "identify statistical patterns",
+    "gather data",
+    "perform data analysis",
+    "execute analytical mathematical calculations",
+    "apply statistical analysis techniques"
+   ],
+   "tools": [
+    "IBM SPSS Statistics",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Python",
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "Tableau",
+    "Amazon Redshift",
+    "Amazon Web Services AWS software"
+   ]
+  },
+  {
+   "domain_id": "D011",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "financial forecasting"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "IBM SPSS Statistics"
+   ]
+  },
+  {
+   "domain_id": "D011",
+   "isco_submajor": "24",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_finance",
+    "ng_nbs"
+   ],
+   "skills": [
+    "actuarial science",
+    "analyse financial risk",
+    "quantitative analysis",
+    "economics",
+    "fundamental analysis",
+    "asset management",
+    "modern portfolio theory",
+    "analyse market financial trends",
+    "review investment portfolios",
+    "obtain financial information",
+    "game theory"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Python",
+    "Microsoft Power BI",
+    "Structured query language SQL",
+    "Microsoft Outlook",
+    "SAP software",
+    "Tableau",
+    "Alteryx software"
+   ]
+  },
+  {
+   "domain_id": "D011",
+   "isco_submajor": "33",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_finance",
+    "ng_nbs"
+   ],
+   "skills": [
+    "economics",
+    "analyse market financial trends",
+    "financial markets",
+    "forecast economic trends",
+    "actuarial science",
+    "financial jurisdiction",
+    "analyse economic trends",
+    "handle financial transactions",
+    "financial products",
+    "stock market"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Microsoft Access",
+    "C++",
+    "Linux",
+    "Microsoft SharePoint",
+    "Microsoft Visual Basic",
+    "Microsoft Windows"
+   ]
+  },
+  {
+   "domain_id": "D012",
+   "isco_submajor": "25",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_finance"
+   ],
+   "skills": [
+    "computer programming",
+    "create software design",
+    "data models",
+    "software architecture models",
+    "ICT system integration",
+    "perform ICT security testing"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git"
+   ]
+  },
+  {
+   "domain_id": "D012",
+   "isco_submajor": "33",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_finance"
+   ],
+   "skills": [
+    "computer programming",
+    "data models",
+    "ICT system integration",
+    "perform ICT security testing"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software"
+   ]
+  },
+  {
+   "domain_id": "D014",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance"
+   ],
+   "skills": [
+    "mathematical modelling",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "data quality assessment"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "IBM SPSS Statistics"
+   ]
+  },
+  {
+   "domain_id": "D014",
+   "isco_submajor": "24",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_finance",
+    "ng_nbs"
+   ],
+   "skills": [
+    "insurance law",
+    "principles of insurance",
+    "actuarial science",
+    "types of insurance",
+    "obtain financial information",
+    "credit control processes",
+    "insurance market",
+    "analyse loans",
+    "prepare credit reports",
+    "synthesise financial information"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Power BI",
+    "Microsoft PowerPoint",
+    "Microsoft Visual Basic for Applications VBA",
+    "Python",
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "Tableau"
+   ]
+  },
+  {
+   "domain_id": "D014",
+   "isco_submajor": "33",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_finance",
+    "ng_nbs"
+   ],
+   "skills": [
+    "actuarial science",
+    "insurance law",
+    "principles of insurance",
+    "types of insurance",
+    "claims procedures",
+    "review insurance process",
+    "analyse claim files",
+    "handle incoming insurance claims",
+    "interview insurance claimants",
+    "obtain financial information"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Microsoft Outlook",
+    "Microsoft Word",
+    "Microsoft Access",
+    "Microsoft Windows",
+    "Structured query language SQL",
+    "Python",
+    "R"
+   ]
+  },
+  {
+   "domain_id": "D026",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_nbs"
+   ],
+   "skills": [
+    "digital data processing",
+    "mathematical modelling",
+    "mathematics",
+    "quantitative analysis",
+    "statistical modeling techniques",
+    "research design",
+    "scientific literature",
+    "statistics",
+    "statistical analysis system software",
+    "data quality assessment"
+   ],
+   "tools": [
+    "IBM SPSS Statistics",
+    "Microsoft Azure software",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Power BI",
+    "Python",
+    "PyTorch",
+    "R",
+    "SAS",
+    "Snowflake"
+   ]
+  },
+  {
+   "domain_id": "D027",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_nuc"
+   ],
+   "skills": [
+    "perform scientific research",
+    "manage personal professional development",
+    "draft scientific or academic papers and technical documentation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "evaluate research activities",
+    "demonstrate disciplinary expertise",
+    "increase the impact of science on policy and society",
+    "apply for research funding"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "ESRI ArcGIS software",
+    "Autodesk AutoCAD",
+    "Adobe Photoshop",
+    "Microsoft Outlook",
+    "Adobe Acrobat",
+    "Microsoft Access",
+    "Adobe Illustrator"
+   ]
+  },
+  {
+   "domain_id": "D041",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_education",
+    "ng_nbs"
+   ],
+   "skills": [
+    "draft scientific or academic papers and technical documentation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "operate open source software",
+    "speak different languages",
+    "evaluate research activities",
+    "demonstrate disciplinary expertise",
+    "increase the impact of science on policy and society",
+    "manage findable accessible interoperable and reusable data"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Autodesk AutoCAD",
+    "Adobe Acrobat",
+    "Microsoft Access",
+    "C++",
+    "Microsoft Outlook",
+    "C",
+    "Adobe Photoshop"
+   ]
+  },
+  {
+   "domain_id": "D041",
+   "isco_submajor": "31",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_education",
+    "ng_nbs"
+   ],
+   "skills": [
+    "laboratory techniques",
+    "maintain laboratory equipment",
+    "perform laboratory tests",
+    "apply safety procedures in laboratory",
+    "biology",
+    "perform scientific research",
+    "apply scientific methods",
+    "analyse experimental laboratory data",
+    "calibrate laboratory equipment",
+    "stem cells"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Adobe Acrobat",
+    "Microsoft Outlook",
+    "Microsoft .NET Framework",
+    "Adobe Photoshop",
+    "ESRI ArcGIS software",
+    "Microsoft Access",
+    "Microsoft Word"
+   ]
+  },
+  {
+   "domain_id": "D050",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_engineering",
+    "ng_nbte"
+   ],
+   "skills": [
+    "engineering principles",
+    "adjust engineering designs",
+    "use technical drawing software",
+    "technical drawings",
+    "engineering processes",
+    "perform scientific research",
+    "approve engineering design",
+    "mechanical engineering",
+    "mechanics",
+    "mathematics"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Autodesk AutoCAD",
+    "Dassault Systemes SolidWorks",
+    "Python",
+    "Microsoft Outlook",
+    "Autodesk Revit",
+    "Adobe Illustrator",
+    "Autodesk AutoCAD Civil 3D"
+   ]
+  },
+  {
+   "domain_id": "D056",
+   "isco_submajor": "25",
+   "source": "global_sfia",
+   "source_ids": [
+    "global_sfia",
+    "global_esco",
+    "global_onet",
+    "ng_cpn",
+    "ng_legal"
+   ],
+   "skills": [
+    "blockchain architecture",
+    "blockchain components",
+    "distributed ledger technology",
+    "cryptocurrency",
+    "computer programming",
+    "ICT encryption",
+    "game theory"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Git",
+    "Linux"
+   ]
+  },
+  {
+   "domain_id": "D057",
+   "isco_submajor": "13",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_cpn"
+   ],
+   "skills": [
+    "communicate in healthcare",
+    "contribute to public health campaigns",
+    "health care legislation",
+    "healthcare administration",
+    "budgetary principles",
+    "health care system",
+    "manage healthcare staff",
+    "delegate emergency care",
+    "advise policy makers in healthcare",
+    "implement policy in healthcare practices"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Adobe Acrobat",
+    "Apache Hadoop",
+    "Apache Maven",
+    "Autodesk Revit",
+    "Cisco Webex",
+    "eClinicalWorks EHR software"
+   ]
+  },
+  {
+   "domain_id": "D057",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_cpn"
+   ],
+   "skills": [
+    "health information systems; HL7/FHIR; clinical workflows; data governance",
+    "mobile app development; health data APIs; HIPAA compliance; UI/UX for health",
+    "EHR systems; data migration; clinical workflow mapping; user training"
+   ],
+   "tools": []
+  },
+  {
+   "domain_id": "D063",
+   "isco_submajor": "24",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_education",
+    "ng_nbs",
+    "ng_finance"
+   ],
+   "skills": [
+    "government policy implementation",
+    "maintain relations with local representatives",
+    "manage government policy implementation",
+    "market analysis",
+    "business strategy concepts",
+    "competition law",
+    "create solutions to problems",
+    "promote free trade",
+    "maintain relationships with government agencies",
+    "advise on legislative acts"
+   ],
+   "tools": [
+    "Microsoft Access",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Power BI",
+    "Microsoft PowerPoint",
+    "Python",
+    "R",
+    "SAS",
+    "Structured query language SQL",
+    "Tableau"
+   ]
+  },
+  {
+   "domain_id": "D063",
+   "isco_submajor": "26",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_finance",
+    "ng_education"
+   ],
+   "skills": [
+    "mathematical economics",
+    "quantitative analysis",
+    "statistics",
+    "financial forecasting",
+    "market analysis",
+    "empirical analysis",
+    "game theory"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "SAS",
+    "IBM SPSS Statistics"
+   ]
+  },
+  {
+   "domain_id": "D070",
+   "isco_submajor": "26",
+   "source": "mqa_performing_arts",
+   "skills": [
+    "performance practice",
+    "dance technique",
+    "choreography",
+    "artistic direction",
+    "dramaturgy",
+    "rehearsal direction",
+    "audience communication"
+   ],
+   "tools": [
+    "rehearsal scheduling tools",
+    "performance production planning tools"
+   ]
+  },
+  {
+   "domain_id": "D070",
+   "isco_submajor": "34",
+   "source": "nac_arts_technical_theatre",
+   "skills": [
+    "performing arts production operations",
+    "stage management",
+    "production planning and scheduling",
+    "technical production operations",
+    "lighting operations",
+    "sound recording operations",
+    "risk assessment for production"
+   ],
+   "tools": [
+    "stage management systems",
+    "lighting control consoles",
+    "sound recording and mixing systems",
+    "production control consoles"
+   ]
+  },
+  {
+   "domain_id": "D072",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_built_environment",
+    "ng_engineering",
+    "ng_environment"
+   ],
+   "skills": [
+    "mathematics",
+    "geology",
+    "geographic information systems",
+    "cartography",
+    "apply statistical analysis techniques",
+    "perform scientific research",
+    "perform surveying calculations",
+    "prepare scientific reports",
+    "create thematic maps",
+    "create GIS reports"
+   ],
+   "tools": [
+    "Autodesk AutoCAD",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "ESRI ArcGIS software",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Autodesk AutoCAD Civil 3D",
+    "Microsoft Word",
+    "Adobe Acrobat",
+    "Python"
+   ]
+  },
+  {
+   "domain_id": "D078",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education",
+    "ng_creative"
+   ],
+   "skills": [
+    "mathematics",
+    "statistics",
+    "scientific research methodology",
+    "draft scientific or academic papers and technical documentation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "operate open source software",
+    "speak different languages",
+    "execute analytical mathematical calculations",
+    "social network analysis"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Python",
+    "R",
+    "IBM SPSS Statistics",
+    "SAS",
+    "C",
+    "Atlassian JIRA",
+    "C#",
+    "Eclipse IDE"
+   ]
+  },
+  {
+   "domain_id": "D078",
+   "isco_submajor": "26",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nbs",
+    "ng_education",
+    "ng_creative"
+   ],
+   "skills": [
+    "research design",
+    "statistics",
+    "sociology",
+    "empirical analysis",
+    "manage research data",
+    "scientific research methodology",
+    "disseminate results to the scientific community",
+    "social network analysis",
+    "game theory"
+   ],
+   "tools": [
+    "R",
+    "Python",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Structured query language SQL",
+    "ESRI ArcGIS software"
+   ]
+  },
+  {
+   "domain_id": "D138",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_engineering"
+   ],
+   "skills": [
+    "engineering principles",
+    "engineering processes",
+    "adjust engineering designs",
+    "perform scientific research",
+    "approve engineering design",
+    "biology",
+    "genetics",
+    "test procedures",
+    "scientific research methodology",
+    "develop test procedures"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Autodesk AutoCAD",
+    "C",
+    "Python",
+    "Dassault Systemes SolidWorks",
+    "R",
+    "Adobe Illustrator",
+    "Adobe Photoshop"
+   ]
+  },
+  {
+   "domain_id": "D138",
+   "isco_submajor": "31",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_engineering"
+   ],
+   "skills": [
+    "design drawings",
+    "medical device test procedures",
+    "medical devices materials",
+    "pneumatics",
+    "electricity",
+    "electrical wiring plans",
+    "biomedical engineering",
+    "medical devices",
+    "medical device regulations",
+    "mechanics"
+   ],
+   "tools": [
+    "Microsoft Office software",
+    "Microsoft Excel",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Microsoft Word",
+    "Salesforce software",
+    "SAP software",
+    "Inventory control system software",
+    "Computerized maintenance management system CMMS",
+    "FaceTime"
+   ]
+  },
+  {
+   "domain_id": "D138",
+   "isco_submajor": "32",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_health",
+    "ng_health",
+    "ng_engineering"
+   ],
+   "skills": [
+    "techniques of blood-sampling",
+    "microbiology-bacteriology",
+    "automated analysers in the medical laboratory",
+    "laboratory techniques",
+    "blood type classification",
+    "perform laboratory tests",
+    "conduct routine blood testing",
+    "transport blood samples",
+    "archive healthcare users' records",
+    "mix chemicals"
+   ],
+   "tools": [
+    "eClinicalWorks EHR software",
+    "Google Docs",
+    "Kronos Workforce Timekeeper",
+    "MEDITECH software",
+    "Microsoft Access",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Microsoft Project"
+   ]
+  },
+  {
+   "domain_id": "D139",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_game_dev",
+    "global_creative",
+    "ng_creative"
+   ],
+   "skills": [
+    "computer graphics",
+    "graphic design",
+    "follow a brief",
+    "finish project within budget",
+    "follow work schedule",
+    "adapt to type of media",
+    "analyse a script",
+    "design graphics",
+    "study media sources",
+    "develop animations"
+   ],
+   "tools": [
+    "Adobe Photoshop",
+    "Adobe After Effects",
+    "Adobe Creative Cloud software",
+    "Adobe Illustrator",
+    "Canva",
+    "Cascading style sheets CSS",
+    "Figma",
+    "Microsoft Excel",
+    "Adobe InDesign",
+    "Hypertext markup language HTML"
+   ]
+  },
+  {
+   "domain_id": "D139",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_game_dev",
+    "global_sfia",
+    "ng_cpn"
+   ],
+   "skills": [
+    "translate requirements into visual design",
+    "develop software prototype",
+    "define technical requirements",
+    "levels of software testing",
+    "report test findings",
+    "provide software testing documentation",
+    "execute software tests",
+    "address problems critically",
+    "replicate customer software issues",
+    "web programming"
+   ],
+   "tools": [
+    "Atlassian JIRA",
+    "C#",
+    "Git",
+    "Jenkins CI",
+    "Amazon Web Services AWS software",
+    "GitHub",
+    "JavaScript",
+    "Microsoft Excel",
+    "Cascading style sheets CSS",
+    "Linux"
+   ]
+  },
+  {
+   "domain_id": "D139",
+   "isco_submajor": "26",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_game_dev",
+    "global_creative",
+    "ng_creative"
+   ],
+   "skills": [
+    "adapt designers’ work to the performance venue",
+    "manage budgets",
+    "theatre techniques",
+    "manage staff",
+    "finish project within budget",
+    "analyse the need for technical resources",
+    "provide input to collaborators to guide their work",
+    "analyse a script",
+    "develop design concept",
+    "organise rehearsals"
+   ],
+   "tools": [
+    "Adobe After Effects",
+    "Adobe Creative Cloud software",
+    "Adobe Illustrator",
+    "Adobe InDesign",
+    "Adobe Photoshop",
+    "Figma",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Adobe Acrobat",
+    "AJAX"
+   ]
+  },
+  {
+   "domain_id": "D140",
+   "isco_submajor": "21",
+   "source": "skills_england_robotics",
+   "skills": [
+    "robotic system design",
+    "engineering mathematics",
+    "robotics control",
+    "robot programming",
+    "system testing"
+   ],
+   "tools": [
+    "robot simulation software",
+    "CAD and engineering design tools",
+    "industrial robot controllers"
+   ]
+  },
+  {
+   "domain_id": "D140",
+   "isco_submajor": "31",
+   "source": "arm_robotics_career",
+   "skills": [
+    "robot maintenance",
+    "equipment troubleshooting",
+    "safe work practices",
+    "preventive maintenance",
+    "technical documentation"
+   ],
+   "tools": [
+    "robot maintenance systems",
+    "industrial robot controllers"
+   ]
+  },
+  {
+   "domain_id": "D141",
+   "isco_submajor": "21",
+   "source": "qt_cfqt",
+   "skills": [
+    "laboratory techniques, noise and shielding",
+    "cryogenic, vacuum and cleanroom technologies",
+    "control technologies",
+    "quantum state control",
+    "quantum sensors and imaging systems"
+   ],
+   "tools": [
+    "cryogenic, vacuum and cleanroom technologies",
+    "quantum state control technologies",
+    "quantum sensors and imaging systems"
+   ]
+  },
+  {
+   "domain_id": "D141",
+   "isco_submajor": "24",
+   "source": "qt_cfqt",
+   "skills": [
+    "quantum computing and simulation applications",
+    "industry landscape and market analysis",
+    "impact and responsibility",
+    "education and communication"
+   ],
+   "tools": [
+    "quantum computing and simulation applications",
+    "quantum communication networks"
+   ]
+  },
+  {
+   "domain_id": "D141",
+   "isco_submajor": "25",
+   "source": "qt_cfqt",
+   "skills": [
+    "quantum programming",
+    "quantum simulators",
+    "quantum algorithms",
+    "quantum computing subroutines",
+    "error correction"
+   ],
+   "tools": [
+    "quantum programming tools and software stack",
+    "quantum simulators",
+    "quantum computing subroutines"
+   ]
+  },
+  {
+   "domain_id": "D141",
+   "isco_submajor": "31",
+   "source": "qt_cfqt",
+   "skills": [
+    "laboratory techniques, noise and shielding",
+    "cryogenic, vacuum and cleanroom technologies",
+    "control technologies",
+    "equipment calibration"
+   ],
+   "tools": [
+    "cryogenic, vacuum and cleanroom technologies",
+    "control technologies"
+   ]
+  },
+  {
+   "domain_id": "D142",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "ng_nuc",
+    "ng_health",
+    "ng_nbs"
+   ],
+   "skills": [
+    "computer programming",
+    "genomics",
+    "database management systems",
+    "computational chemistry",
+    "statistics",
+    "laboratory techniques",
+    "manage research data"
+   ],
+   "tools": [
+    "Python",
+    "R",
+    "SAS",
+    "IBM SPSS Statistics",
+    "Linux"
+   ]
+  },
+  {
+   "domain_id": "D143",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_nice",
+    "ng_cpn"
+   ],
+   "skills": [
+    "security engineering",
+    "ICT network security risks",
+    "cyber attack counter-measures",
+    "ICT security standards",
+    "cyber security",
+    "ethical hacking principles",
+    "manage IT security compliances",
+    "attack vectors",
+    "identify ICT security risks",
+    "ICT safety"
+   ],
+   "tools": [
+    "Amazon Web Services AWS software",
+    "Microsoft Azure software",
+    "Microsoft PowerShell",
+    "Linux",
+    "Microsoft Excel",
+    "Microsoft PowerPoint",
+    "Python",
+    "Microsoft Office software",
+    "Atlassian JIRA",
+    "IBM Terraform"
+   ]
+  },
+  {
+   "domain_id": "D144",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_wef",
+    "ng_environment"
+   ],
+   "skills": [
+    "conduct research on climate processes",
+    "develop models for weather forecast",
+    "mathematical modelling",
+    "statistics",
+    "perform data analysis",
+    "use specialised computer models for weather forecasting"
+   ],
+   "tools": [
+    "Python",
+    "R",
+    "ESRI ArcGIS software"
+   ]
+  },
+  {
+   "domain_id": "D147",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "ng_engineering",
+    "ng_nbte"
+   ],
+   "skills": [
+    "engineering principles",
+    "design drawings",
+    "electrical engineering",
+    "mathematics",
+    "technical drawings",
+    "physics",
+    "engineering processes",
+    "computer engineering",
+    "electronics",
+    "mechanical engineering"
+   ],
+   "tools": [
+    "Autodesk AutoCAD",
+    "C",
+    "C#",
+    "Dassault Systemes SolidWorks",
+    "Git",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft PowerPoint",
+    "Python",
+    "The MathWorks MATLAB"
+   ]
+  },
+  {
+   "domain_id": "D155",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_nuclear",
+    "ng_engineering"
+   ],
+   "skills": [
+    "perform scientific research",
+    "analytical chemistry",
+    "oxidation",
+    "green chemistry",
+    "scientific research methodology",
+    "draft scientific or academic papers and technical documentation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "operate open source software"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Autodesk AutoCAD",
+    "Microsoft PowerPoint",
+    "C",
+    "C++",
+    "Dassault Systemes SolidWorks",
+    "Extensible markup language XML",
+    "Hypertext markup language HTML",
+    "Microsoft Access"
+   ]
+  },
+  {
+   "domain_id": "D155",
+   "isco_submajor": "31",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_nuclear",
+    "ng_engineering"
+   ],
+   "skills": [
+    "cleanroom protocols; photolithography; deposition equipment; metrology tools"
+   ],
+   "tools": []
+  },
+  {
+   "domain_id": "D156",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_built_environment",
+    "ng_engineering",
+    "ng_environment"
+   ],
+   "skills": [
+    "mathematics",
+    "perform surveying calculations",
+    "cartography",
+    "geographic information systems",
+    "geomatics",
+    "process collected survey data",
+    "create thematic maps",
+    "create GIS reports",
+    "surveying methods",
+    "record survey data"
+   ],
+   "tools": [
+    "Autodesk AutoCAD",
+    "Autodesk AutoCAD Civil 3D",
+    "ESRI ArcGIS software",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Bentley MicroStation",
+    "Microsoft Outlook",
+    "Adobe Illustrator",
+    "Adobe Photoshop",
+    "Hypertext markup language HTML"
+   ]
+  },
+  {
+   "domain_id": "D164",
+   "isco_submajor": "21",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_built_environment",
+    "ng_engineering"
+   ],
+   "skills": [
+    "engineering principles",
+    "technical drawings",
+    "execute feasibility study",
+    "urban planning",
+    "environmental policy",
+    "ensure compliance with environmental legislation",
+    "civil engineering",
+    "engineering processes",
+    "adjust engineering designs",
+    "use technical drawing software"
+   ],
+   "tools": [
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Autodesk AutoCAD",
+    "Microsoft Outlook",
+    "Microsoft PowerPoint",
+    "Autodesk AutoCAD Civil 3D",
+    "Autodesk Revit",
+    "Adobe Acrobat",
+    "ESRI ArcGIS software",
+    "Bentley MicroStation"
+   ]
+  },
+  {
+   "domain_id": "D166",
+   "isco_submajor": "25",
+   "source": "global_esco",
+   "source_ids": [
+    "global_esco",
+    "global_onet",
+    "global_sfia",
+    "global_xr",
+    "ng_cpn",
+    "ng_engineering"
+   ],
+   "skills": [
+    "develop software prototype",
+    "define technical requirements",
+    "business requirements techniques",
+    "software architecture models",
+    "software design methodologies",
+    "legal requirements of ICT products",
+    "ICT system user requirements",
+    "data models",
+    "translate requirements into visual design",
+    "create software design"
+   ],
+   "tools": [
+    "Atlassian JIRA",
+    "IBM Terraform",
+    "Jenkins CI",
+    "Kubernetes",
+    "Microsoft Excel",
+    "Microsoft Office software",
+    "Microsoft Power BI",
+    "Microsoft PowerPoint",
+    "Microsoft SharePoint",
+    "Python"
+   ]
+  },
+  {
+   "domain_id": "D167",
+   "isco_submajor": "21",
+   "source": "jff_xr",
+   "skills": [
+    "immersive experience design",
+    "3D content development",
+    "spatial thinking",
+    "user testing"
+   ],
+   "tools": [
+    "3D and immersive content tools",
+    "XR hardware"
+   ]
+  },
+  {
+   "domain_id": "D167",
+   "isco_submajor": "24",
+   "source": "jff_xr",
+   "skills": [
+    "innovation facilitation",
+    "requirements translation",
+    "immersive experience planning",
+    "cross-functional collaboration"
+   ],
+   "tools": [
+    "immersive experience planning tools",
+    "XR system design tools"
+   ]
+  },
+  {
+   "domain_id": "D167",
+   "isco_submajor": "25",
+   "source": "jff_xr",
+   "skills": [
+    "software development",
+    "XR application development",
+    "interactive systems",
+    "testing and debugging"
+   ],
+   "tools": [
+    "XR software development kits",
+    "real-time development environments"
+   ]
+  },
+  {
+   "domain_id": "D167",
+   "isco_submajor": "35",
+   "source": "jff_xr",
+   "skills": [
+    "XR hardware support",
+    "XR software support",
+    "troubleshooting",
+    "user assistance"
+   ],
+   "tools": [
+    "XR support and diagnostic tools",
+    "device setup tools"
+   ]
+  },
+  {
+   "domain_id": "D168",
+   "isco_submajor": "12",
+   "source": "british_esports",
+   "skills": [
+    "event management",
+    "tournament operations",
+    "scheduling",
+    "stakeholder coordination"
+   ],
+   "tools": [
+    "event management systems",
+    "tournament administration systems"
+   ]
+  },
+  {
+   "domain_id": "D168",
+   "isco_submajor": "24",
+   "source": "british_esports",
+   "skills": [
+    "community management",
+    "social communication",
+    "audience engagement",
+    "content planning"
+   ],
+   "tools": [
+    "community and social media tools",
+    "social publishing tools"
+   ]
+  },
+  {
+   "domain_id": "D168",
+   "isco_submajor": "26",
+   "source": "british_esports",
+   "skills": [
+    "broadcast production",
+    "live event workflow",
+    "content creation",
+    "journalism",
+    "live commentary"
+   ],
+   "tools": [
+    "stream production software",
+    "content editing tools",
+    "live broadcast production tools"
+   ]
+  },
+  {
+   "domain_id": "D168",
+   "isco_submajor": "33",
+   "source": "british_esports",
+   "skills": [
+    "team coordination",
+    "player support",
+    "operations planning",
+    "relationship management"
+   ],
+   "tools": [
+    "team operations systems",
+    "player management systems"
+   ]
+  },
+  {
+   "domain_id": "D168",
+   "isco_submajor": "34",
+   "source": "pearson_esports",
+   "skills": [
+    "competitive game performance",
+    "performance analysis",
+    "coaching",
+    "strategic planning",
+    "fair play"
+   ],
+   "tools": [
+    "game performance analytics tools",
+    "match analysis tools"
+   ]
+  }
+ ]
+}

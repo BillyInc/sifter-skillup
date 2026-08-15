@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { CompassFonts, FontSize, Radius, Shadow, Spacing, useTheme, webContainer } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -50,11 +50,15 @@ export default function SettingsScreen() {
   const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
   const [actionBusy, setActionBusy] = useState(false);
   const [legalPage, setLegalPage] = useState<'terms' | 'privacy' | null>(null);
+  const [mfaStatus, setMfaStatus] = useState('recommended');
+  const [mfaCode, setMfaCode] = useState('');
+  const [mfaMessage, setMfaMessage] = useState<string | null>(null);
+  const [mfaBusy, setMfaBusy] = useState(false);
   const isAdmin = isAdminAccount(user?.account_type);
-  const admin2FA = useMemo(
-    () => (user?.settings?.admin2fa ?? {}) as { setupRequestedAt?: string; deferredAt?: string },
-    [user?.settings],
-  );
+  useEffect(() => {
+    if (!isAdmin) return;
+    API.getAdminMfa().then((state) => setMfaStatus(state.status)).catch(() => {});
+  }, [isAdmin]);
 
   const handleAccountAction = async () => {
     if (!accountAction || actionBusy) return;
@@ -69,16 +73,50 @@ export default function SettingsScreen() {
     }
   };
 
-  const updateAdmin2FA = async (patch: Record<string, unknown>) => {
-    const settings = {
-      ...(user?.settings ?? {}),
-      admin2fa: {
-        ...admin2FA,
-        ...patch,
-      },
-    };
-    await API.updateMe({ settings });
-    await refreshUser();
+  const startMfa = async () => {
+    if (mfaBusy) return;
+    setMfaBusy(true);
+    setMfaMessage(null);
+    try {
+      const result = await API.requestAdminMfa();
+      setMfaStatus('pending_setup');
+      if (result.devCode) setMfaCode(result.devCode);
+      setMfaMessage(result.devCode ? `Development code: ${result.devCode}` : 'A security code was sent to your account email.');
+    } catch (error) {
+      setMfaMessage(error instanceof Error ? error.message : 'Could not send the security code.');
+    } finally {
+      setMfaBusy(false);
+    }
+  };
+
+  const verifyMfa = async () => {
+    if (mfaBusy || !mfaCode.trim()) return;
+    setMfaBusy(true);
+    try {
+      const result = await API.verifyAdminMfa(mfaCode.trim());
+      await API.saveToken(result.token);
+      setMfaStatus(result.status);
+      setMfaMessage('Admin security is enabled.');
+      await refreshUser();
+    } catch (error) {
+      setMfaMessage(error instanceof Error ? error.message : 'Could not verify the security code.');
+    } finally {
+      setMfaBusy(false);
+    }
+  };
+
+  const deferMfa = async () => {
+    if (mfaBusy) return;
+    setMfaBusy(true);
+    try {
+      const result = await API.deferAdminMfa();
+      setMfaStatus(result.status);
+      setMfaMessage('Admin security setup deferred for 30 days.');
+    } catch (error) {
+      setMfaMessage(error instanceof Error ? error.message : 'Could not defer admin security.');
+    } finally {
+      setMfaBusy(false);
+    }
   };
 
   return (
@@ -138,21 +176,21 @@ export default function SettingsScreen() {
             </Text>
             <Row
               label="Status"
-              value={admin2FA.setupRequestedAt ? 'Setup requested' : admin2FA.deferredAt ? 'Deferred' : 'Recommended'}
+              value={mfaStatus === 'enabled' ? 'Enabled' : mfaStatus === 'pending_setup' ? 'Code requested' : mfaStatus === 'deferred' ? 'Deferred' : 'Recommended'}
             />
             <TouchableOpacity
               activeOpacity={0.85}
-              onPress={() => updateAdmin2FA({ setupRequestedAt: new Date().toISOString() })}
+              onPress={() => void startMfa()}
               style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
             >
               <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-                Start 2FA setup
+                {mfaStatus === 'enabled' ? 'Send a new security code' : 'Start 2FA setup'}
               </Text>
             </TouchableOpacity>
-            {!admin2FA.setupRequestedAt ? (
+            {mfaStatus !== 'enabled' ? (
               <TouchableOpacity
                 activeOpacity={0.85}
-                onPress={() => updateAdmin2FA({ deferredAt: new Date().toISOString() })}
+                onPress={() => void deferMfa()}
                 style={[styles.linkBtn, { borderColor: colors.borderRole.subtle }]}
               >
                 <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
@@ -160,6 +198,27 @@ export default function SettingsScreen() {
                 </Text>
               </TouchableOpacity>
             ) : null}
+            {mfaStatus === 'pending_setup' ? (
+              <View style={styles.mfaVerifyBox}>
+                <TextInput
+                  value={mfaCode}
+                  onChangeText={setMfaCode}
+                  placeholder="6-digit code"
+                  keyboardType="number-pad"
+                  maxLength={6}
+                  style={[styles.mfaInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle }]}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.85}
+                  onPress={() => void verifyMfa()}
+                  disabled={mfaBusy || mfaCode.trim().length < 6}
+                  style={[styles.linkBtn, { borderColor: colors.borderRole.subtle, opacity: mfaBusy || mfaCode.trim().length < 6 ? 0.5 : 1 }]}
+                >
+                  <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Verify code</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            {mfaMessage ? <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{mfaMessage}</Text> : null}
           </SettingsCard>
         ) : null}
 
@@ -330,6 +389,8 @@ const styles = StyleSheet.create({
   },
   deleteAccountBtn: { borderRadius: Radius.xl, borderWidth: 1, paddingVertical: Spacing.md, alignItems: 'center' },
   deleteAccountBtnText: { fontSize: FontSize.sm, fontWeight: '900' },
+  mfaVerifyBox: { gap: Spacing.sm },
+  mfaInput: { borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: FontSize.md, letterSpacing: 3 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
   modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
   modalTitle: { fontSize: FontSize.xl },

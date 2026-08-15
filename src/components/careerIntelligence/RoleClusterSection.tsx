@@ -17,6 +17,7 @@ import {
 import type { SubgroupV2 } from "@/types/career";
 import { ToolGroupsBlock } from "./ToolGroupsBlock";
 import { CertPlacementList } from "./CertPlacementList";
+import { MethodEvidenceBlock } from "./MethodEvidenceBlock";
 import { DomainIcon } from "./DomainIcon";
 import { GuidanceReportButton } from "./GuidanceReportButton";
 
@@ -154,6 +155,7 @@ export function RoleClusterSection({
             </View>
           ) : null}
 
+          <MethodEvidenceBlock methods={subgroup.methodEvidence} />
           <ToolGroupsBlock tools={subgroup.tools} />
           <CertPlacementList subgroup={subgroup.certifications} />
 

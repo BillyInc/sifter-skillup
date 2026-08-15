@@ -17,7 +17,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import {
   useTheme,
   Spacing,
@@ -28,6 +30,7 @@ import {
   webContainer,
 } from "@/theme";
 import { adminData } from "@/lib/adminData";
+import type { VerificationProofMeta } from "@/lib/adminData";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { useAuth } from "@/hooks/useAuth";
 import type { DataState } from "../../types/career";
@@ -73,6 +76,28 @@ function tiersFor(profile: EducatorProfile | null) {
   ];
 }
 
+function roleOutlookFor(profile: EducatorProfile | null): string {
+  switch (profile?.role) {
+    case "owner":
+      return "Owner outlook: manage the organisation identity, team seats, school code and institution-level settings. Verification proves the organisation; it does not grant access to individual learner data without consent.";
+    case "institution_admin":
+    case "admin":
+      return "Administrator outlook: run the organisation workspace and its approved workflows. Ownership and verification decisions remain scoped to the organisation owner or authorised reviewer.";
+    case "counsellor":
+    case "course_advisor":
+    case "provisioning_manager":
+      return "Guidance outlook: advise learners, manage the workflows assigned to your seat and use aggregate or consented information only. You do not inherit owner controls.";
+    case "hod":
+    case "dean":
+    case "admissions_officer":
+      return "Academic outlook: use programme and admissions intelligence within your faculty or admissions role. Institution-wide controls remain outside this seat.";
+    case "data_viewer":
+      return "Read-only outlook: review the aggregate intelligence your organisation has authorised. You cannot change identity, team or learner-provisioning settings.";
+    default:
+      return "Member outlook: access is limited to the organisation role selected during onboarding and expands only when that role is authorised and verified.";
+  }
+}
+
 export function VerificationScreen() {
   const { colors } = useTheme();
   const { user } = useAuth();
@@ -83,15 +108,32 @@ export function VerificationScreen() {
     data: null,
   });
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+  const [proof, setProof] = useState<VerificationProofMeta | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     let active = true;
-    Promise.all([getEducatorProfile(user?.id), adminData.getMyOrganization()]).then(
-      ([p, o]) => {
+    Promise.all([
+      getEducatorProfile(user?.id),
+      adminData.getMyOrganization(),
+      adminData.getVerificationProof(),
+    ]).then(
+      ([p, o, latestProof]) => {
         if (!active) return;
-        setProfile(p);
+        setProfile(
+          p && o.data
+            ? {
+                ...p,
+                organizationId: o.data.id,
+                verificationStatus: o.data.verificationStatus,
+                verificationMethod: o.data.verificationMethod ?? p.verificationMethod,
+                verificationProofSubmittedAt:
+                  o.data.verificationProofSubmittedAt ?? p.verificationProofSubmittedAt,
+              }
+            : p,
+        );
         setOrg(o);
+        setProof(latestProof);
         setLoaded(true);
       },
     );
@@ -120,20 +162,72 @@ export function VerificationScreen() {
         ? colors.gold
         : colors.textMuted;
 
-  const onResubmit = async () => {
-    if (!profile || submitting) return;
-    if (!profile.verificationProofSubmittedAt) {
-      setFeedback("No verification proof has been submitted. Add the appropriate proof for this organisation before requesting review.");
-      return;
-    }
-    setSubmitting(true);
+  const uploadProof = async (file: Blob, fileName: string, contentType: string) => {
+    if (!profile || uploading) return;
+    setUploading(true);
     setFeedback(null);
-    const res = await adminData.submitVerification(profile);
-    setSubmitting(false);
-    setFeedback(
-      res.meta?.notice ??
-        "Verification review is coming online with the institutional rollout.",
-    );
+    try {
+      const uploaded = await adminData.uploadVerificationProof({
+        file,
+        fileName,
+        contentType,
+        verificationMethod: profile.verificationMethod ?? "document_upload",
+      });
+      setProof(uploaded);
+      setProfile((current) => current
+        ? {
+            ...current,
+            verificationStatus: "pending",
+            verificationMethod: uploaded.verificationMethod as EducatorProfile["verificationMethod"],
+            verificationProofSubmittedAt: uploaded.submittedAt,
+          }
+        : current,
+      );
+      setFeedback("Proof submitted. Your organisation is now under review.");
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : "Could not submit verification proof.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const chooseProof = async () => {
+    if (uploading) return;
+    setFeedback(null);
+    try {
+      if (Platform.OS === "web" && typeof document !== "undefined") {
+        const file = await new Promise<File | null>((resolve) => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = ".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp";
+          input.onchange = () => resolve(input.files?.[0] ?? null);
+          input.click();
+        });
+        if (file) await uploadProof(file, file.name, file.type || "application/octet-stream");
+        return;
+      }
+
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        setFeedback("Photo access is needed to select a proof document.");
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: false,
+        quality: 0.9,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      });
+      if (result.canceled || !result.assets[0]) return;
+      const asset = result.assets[0];
+      const file = await fetch(asset.uri).then((response) => response.blob());
+      await uploadProof(
+        file,
+        asset.fileName ?? `verification-proof.${asset.mimeType?.split("/")[1] ?? "jpg"}`,
+        asset.mimeType ?? file.type ?? "image/jpeg",
+      );
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : "Could not select verification proof.");
+    }
   };
 
   return (
@@ -178,7 +272,7 @@ export function VerificationScreen() {
               />
               <Row
                 label="Registry code"
-                value={profile?.registryCode || "—"}
+                value={profile?.registryCode || "Not provided"}
                 colors={colors}
               />
               <Row
@@ -195,7 +289,16 @@ export function VerificationScreen() {
                 }
                 colors={colors}
               />
+              <Row
+                label="Proof document"
+                value={proof?.fileName || (profile?.verificationProofSubmittedAt ? "Submitted" : "Not submitted")}
+                colors={colors}
+              />
               <Text style={[styles.proofHint, { color: colors.textMuted }]}>{proofGuidance}</Text>
+              <View style={[styles.outlook, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                <Text style={[styles.outlookLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>WORKSPACE OUTLOOK</Text>
+                <Text style={[styles.outlookText, { color: colors.textSoft }]}>{roleOutlookFor(profile)}</Text>
+              </View>
               <LocalLegalNotice audience="institution" />
             </View>
 
@@ -205,7 +308,7 @@ export function VerificationScreen() {
                 Verification tiers
               </Text>
               <Text style={[styles.lede, { color: colors.textMuted }]}>
-                Assurance is tiered — higher tiers unlock more scoped
+                Assurance is tiered - higher tiers unlock more scoped
                 intelligence. Peer benchmarks are for verified institutions.
                 School and tutorial owners compare external schools as public
                 guidance, not their own school against a peer set. Individual
@@ -237,24 +340,27 @@ export function VerificationScreen() {
               </View>
             </View>
 
-            {/* Resubmit CTA */}
+            {/* Proof submission */}
             <View style={styles.section}>
               <TouchableOpacity
-                onPress={onResubmit}
+                onPress={chooseProof}
                 activeOpacity={0.85}
-                disabled={!profile || submitting}
+                disabled={!profile || uploading}
                 style={[
                   styles.cta,
                   {
                     backgroundColor: colors.navy,
-                    opacity: !profile || submitting ? 0.6 : 1,
+                    opacity: !profile || uploading ? 0.6 : 1,
                   },
                 ]}
               >
                 <Text style={[styles.ctaText, CompassFonts.bodyBold, { color: colors.textInverse }]}>
-                  {submitting ? "Submitting…" : "Resubmit / update verification"}
+                  {uploading ? "Uploading proof..." : proof ? "Replace proof document" : "Upload proof document"}
                 </Text>
               </TouchableOpacity>
+              <Text style={[styles.uploadHint, { color: colors.textMuted }]}>
+                Accepted formats: PDF, JPG, PNG, or WEBP; maximum 10 MB. A successful upload is what starts review.
+              </Text>
               {feedback ? (
                 <View
                   style={[
@@ -266,7 +372,7 @@ export function VerificationScreen() {
                   ]}
                 >
                   <Text style={[styles.feedbackText, { color: colors.textSoft }]}>
-                    🕐 {feedback}
+                    {feedback}
                   </Text>
                 </View>
               ) : null}
@@ -337,6 +443,9 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
   proofHint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
+  outlook: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
+  outlookLabel: { fontSize: FontSize.xs, letterSpacing: 1 },
+  outlookText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   section: { gap: Spacing.md },
   sectionTitle: { fontSize: FontSize.lg },
   lede: {
@@ -363,6 +472,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ctaText: { fontSize: FontSize.md },
+  uploadHint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
   feedback: {
     borderWidth: 1,
     borderRadius: Radius.lg,

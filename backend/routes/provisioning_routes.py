@@ -465,7 +465,9 @@ async def update_draft(
     try:
         res = _svc().table("student_provision_drafts").update(updates).eq(
             "id", draft_id
-        ).eq("school_id", school_id).eq("status", "draft").execute()
+        ).eq("school_id", school_id).eq("status", "draft").select(
+            "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
+        ).execute()
         if not res.data:
             raise HTTPException(status_code=404, detail="Draft not found or already generated.")
         return ResponseModel(data=DraftRow(**res.data[0]).model_dump())
@@ -1065,6 +1067,24 @@ class AffiliateRequest(BaseModel):
     school_code: str
 
 
+def _school_for_affiliation(svc, code: str) -> Optional[dict]:
+    """Read a school code across both sides of the address migration.
+
+    Affiliation itself only needs the school identity. Address fields are
+    enriched when migration 13 is present, but an older dev database should
+    not turn a valid school code into a generic 500.
+    """
+    try:
+        result = svc.table("schools").select(
+            "id, name, address, city, state, country"
+        ).eq("school_code", code).limit(1).execute()
+    except Exception:
+        result = svc.table("schools").select("id, name").eq(
+            "school_code", code
+        ).limit(1).execute()
+    return (result.data or [None])[0]
+
+
 @router.post("/students/affiliate", response_model=ResponseModel)
 async def affiliate(
     payload: AffiliateRequest = Body(...),
@@ -1076,10 +1096,7 @@ async def affiliate(
     if not code:
         raise HTTPException(status_code=400, detail="School code is required.")
     try:
-        sres = _svc().table("schools").select("id, name, address, city, state, country").eq(
-            "school_code", code
-        ).limit(1).execute()
-        school = (sres.data or [None])[0]
+        school = _school_for_affiliation(_svc(), code)
         if not school:
             raise HTTPException(status_code=404, detail="No school matches that code.")
         _svc().table("student_affiliations").upsert({
@@ -1285,9 +1302,14 @@ async def list_student_consent_requests(
         school_ids = list({row.get("school_id") for row in rows if row.get("school_id")})
         schools = {}
         if school_ids:
-            school_rows = _svc().table("schools").select(
-                "id, name, address"
-            ).in_("id", school_ids).execute().data or []
+            try:
+                school_rows = _svc().table("schools").select(
+                    "id, name, address"
+                ).in_("id", school_ids).execute().data or []
+            except Exception:
+                school_rows = _svc().table("schools").select(
+                    "id, name"
+                ).in_("id", school_ids).execute().data or []
             schools = {row.get("id"): row for row in school_rows}
         return ResponseModel(data=[_consent_request_out(row, schools.get(row.get("school_id"))) for row in rows])
     except Exception as exc:  # noqa: BLE001

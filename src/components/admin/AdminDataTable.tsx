@@ -89,7 +89,7 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
                     style={[styles.cellText, { color: colors.textRole.primary }]}
                     numberOfLines={2}
                   >
-                    {row[col.key] != null ? String(row[col.key]) : "—"}
+                    {row[col.key] != null ? String(row[col.key]) : "Not available"}
                   </Text>
                 )}
             </View>

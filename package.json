@@ -101,6 +101,16 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.ts"
     ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/.claude/worktrees/",
+      "<rootDir>/node_modules/"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/.claude/worktrees/"
+    ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/.claude/worktrees/"
+    ],
     "moduleNameMapper": {
       "^react-native/Libraries/BatchedBridge/NativeModules$": "<rootDir>/__mocks__/nativeModules.js"
     },

@@ -8,7 +8,8 @@
  *
  * Modelling rules (CCMAS v3.0 — do not reintroduce "Primary/Secondary"):
  *  - A programme→domain link carries a DOMAIN match type: direct | functional |
- *    adjacent. Ordering within a tier is by an "in-demand" signal, never a label.
+ *    adjacent. Ordering is structural; no live labour-market demand signal is
+ *    attached until source-backed ingestion is available.
  *  - A role within a matched domain carries a ROLE match: match (>=50% ESCO
  *    coverage) | adjacent (20-49%). Below 20% is not shown.
  *  - Skills are TWO layers: domain-level bridge skills (size scales with the
@@ -22,7 +23,6 @@
 import type { DomainMatchType, RoleMatchType } from "../theme";
 
 export type { DomainMatchType, RoleMatchType };
-import type { DemandMetrics } from "./demandMetrics";
 import type {
   EliteVerificationCheckKey,
   NigerianUserTypeKey,
@@ -59,6 +59,7 @@ export interface SourceBackedFields {
   sourceConfidence?: SourceConfidence;
   dataState?: SourceDataState;
   sourceProvenance?: Record<string, unknown>;
+  nigerianContext?: Record<string, unknown>;
 }
 
 export interface DataState<T> {
@@ -142,15 +143,7 @@ export interface DomainLink {
   domainId: string;
   domainName: string;
   matchType: DomainMatchType; // direct | functional | adjacent
-  /** In-demand signal (O*NET outlook + WEF). Higher sorts first within a tier. */
-  inDemandScore?: number;
   eliteFlag?: boolean;
-  /** Demand indicator from domain_demand_metrics (backend-computed badge data). */
-  demandIndicator?: {
-    postingsPerMonth: number;
-    growthRate?: number | null;
-    label: string;
-  };
 }
 
 export interface Domain {
@@ -174,7 +167,6 @@ export interface RoleSummary {
   alsoKnownAs?: string[];
   match: RoleMatchType; // match (>=50%) | adjacent (20-49%)
   coverageRatio: number; // 0..1, ESCO essential-skill coverage
-  inDemandScore?: number;
   eliteFlag?: boolean;
 }
 
@@ -183,6 +175,17 @@ export interface Role extends RoleSummary {
   description?: string;
   escoCode?: string;
   iscoGroup?: string;
+  /** Exact O*NET detailed occupation codes used for tool and competency joins. */
+  onetOccupationCodes?: string[];
+  /** O*NET Essential Skills records, kept separate from ESCO skills. */
+  onetEssentialSkills?: Array<{
+    elementId: string;
+    elementName: string;
+    importance?: number | null;
+    source?: string;
+    sourceConfidence?: SourceConfidence;
+    dataState?: SourceDataState;
+  }>;
   /** Role-level bridge skills — ESCO essentials the programme doesn't cover. */
   roleBridgeSkills: BridgeSkill[];
   coveredSkills?: string[];
@@ -514,8 +517,6 @@ export interface ToolV2 extends SourceBackedFields {
   tool: string;
   /** distinctive = characterises the field; common = widely-used, also expected. */
   group: "distinctive" | "common";
-  hot?: boolean;
-  inDemand?: boolean;
   roleFreq?: number | null;
   source?: string; // onet | curated_creative
   elementName?: string | null;
@@ -527,6 +528,19 @@ export interface ToolGroups {
   common: ToolV2[];
 }
 
+/** A source-backed method or concept. This is not proof that a learner has
+ * demonstrated competence in it. */
+export interface ComputationalMethodEvidence {
+  name: string;
+  classification: "knowledge" | "skill" | "competence" | "tool" | "unknown";
+  competenceStatus: "not_demonstrated" | "demonstrated" | "unknown";
+  escoId?: string | null;
+  description?: string | null;
+  evidenceRoles?: string[];
+  sourceProvenance?: Record<string, unknown>;
+  dataState?: SourceDataState;
+}
+
 export interface SubgroupV2 extends SourceBackedFields {
   id: string;
   iscoSubmajor?: string;
@@ -536,6 +550,7 @@ export interface SubgroupV2 extends SourceBackedFields {
   roleCount?: number;
   clusterSkills: string[];
   skillSources?: Record<string, unknown>;
+  methodEvidence?: ComputationalMethodEvidence[];
   tools: ToolGroups;
   certifications: CertificationV2[]; // specialization certs
 }
@@ -581,7 +596,6 @@ export interface DomainV2 extends SourceBackedFields {
   domainBridgeSkills?: { name: string; covered?: boolean }[];
   subgroups: SubgroupV2[];
   roles: DomainRoleSummary[];
-  demandMetrics?: DemandMetrics;
 }
 
 export interface DomainRoleV2 extends SourceBackedFields {
@@ -595,7 +609,17 @@ export interface DomainRoleV2 extends SourceBackedFields {
   eliteStatus?: string;
   essentialSkills: string[];
   optionalSkills: string[];
+  computationalMethods?: (ComputationalMethodEvidence & { subgroupId?: string | null })[];
   escoOccupationUris?: string[];
+  onetOccupationCodes?: string[];
+  onetEssentialSkills?: Array<{
+    elementId: string;
+    elementName: string;
+    importance?: number | null;
+    source?: string;
+    sourceConfidence?: SourceConfidence;
+    dataState?: SourceDataState;
+  }>;
   /** Tools owned by this role, distinct from domain/subgroup tools. */
   tools?: RoleToolV2[];
   /** Certifications owned by this role, distinct from domain/subgroup certs. */
@@ -606,7 +630,6 @@ export interface DomainRoleV2 extends SourceBackedFields {
   coveredSkills?: string[];
   roleBridgeSkills?: { name: string; covered?: boolean }[];
   careerLadder?: string[];
-  demandMetrics?: DemandMetrics;
 }
 
 /** A programme→domain→role readiness row (from programme_role_score). */
@@ -701,11 +724,6 @@ export interface JambDomainResult {
     cluster?: string;
     matchType: DomainMatchType;
     eliteFlag?: boolean;
-    demandInsight?: {
-      postingsPerMonth: number;
-      growthRate?: number | null;
-      label: string;
-    };
   }[];
 }
 
@@ -831,14 +849,6 @@ export interface SkillUriMap {
   uris: Record<string, string>;  // "skill name" -> "https://data.europa.eu/esco/skill/..."
 }
 
-/** Tool demand re-rank fields (Phase 7c/9). */
-export interface ToolDemandEnrichment {
-  demandScore?: number;          // 0..1 from posting frequency
-  demandSource?: "adzuna" | "stackoverflow" | "github_innovation" | "onet_hot";
-  demandAsOf?: string;           // ISO date
-  toolUrl?: string;              // canonical docs/download URL
-}
-
 /** Role currency status (Phase 9 L4). */
 export interface RoleCurrencyStatus {
   currencyStatus: "current" | "legacy" | "emerging";
@@ -872,9 +882,6 @@ export interface FoundationSkillEnriched extends FoundationSkill {
 }
 
 export interface ToolV2Enriched extends ToolV2 {
-  demandScore?: number;
-  demandSource?: "adzuna" | "stackoverflow" | "github_innovation" | "onet_hot";
-  demandAsOf?: string;
   toolUrl?: string;
 }
 

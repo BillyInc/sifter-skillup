@@ -889,10 +889,10 @@ export function MarketIntelligenceScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.section}>
-          <SectionHeading
-            title="Programme market intelligence"
-            note="Which of your programmes lead to real jobs. Advisory only — Nigerian local, global and Nigerian remote demand stay separate lenses, never averaged into one score. No individual student data."
-          />
+            <SectionHeading
+              title="Programme and domain mapping"
+              note="Curriculum mappings are available. Labour-market demand is not yet source-backed, so no current job, salary or trend claims are shown."
+            />
 
           <Segmented
             value={mode}
@@ -909,9 +909,8 @@ export function MarketIntelligenceScreen() {
           />
 
           <Notice>
-            ⚠ Only one month of demand data is currently seeded. Trend figures
-            activate as the ingestion pipeline runs — trend is shown as a number
-            beside each figure, never as a separate chart.
+            Demand intelligence is not available yet. Taxonomy-derived baselines
+            are not presented as current labour-market demand.
           </Notice>
         </View>
 
@@ -968,8 +967,8 @@ export function MarketIntelligenceScreen() {
         ) : (
           <View style={styles.section}>
             <SectionHeading
-              title="By domain / role"
-              note="The same demand data entered from the market side instead of your current offering. Expand a domain for its roles — remote share and salary are columns on the role row."
+              title="Domain and role mapping"
+              note="This view will show source-backed labour-market data after ingestion. Remote share, salary and trend fields remain unavailable for now."
             />
 
             <TextInput
@@ -1052,9 +1051,9 @@ export function MarketIntelligenceScreen() {
 
         <View style={styles.section}>
           <Notice>
-            Source: JSearch API · NBS NLFS · Glassdoor NG. Domain mapping: NUC
-            CCMAS 2022–2023. Demand data is a single-month seed; a multi-year
-            trend requires the live ingestion pipeline.
+            Programme and domain mapping is available from the curriculum
+            registry. Labour-market demand, salary, remote-share and trend data
+            remain unavailable until source-backed ingestion is live.
           </Notice>
         </View>
       </ScrollView>

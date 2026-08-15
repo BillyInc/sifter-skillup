@@ -2,8 +2,9 @@
 """Generate backend/seed_career_v2.sql — the POST-SWEEP career taxonomy seed.
 Idempotent: deterministic uuid5 ids + ON CONFLICT (id) DO UPDATE.
 Emits: domains, domain_subgroups, domain_roles, domain_tools,
-domain_certifications, programme_domain, programme_role_score,
-jamb_programme_domain, domain_overlap.
+domain_certifications, computational role-subgroup links,
+programme_domain, programme_role_score, jamb_programme_domain,
+domain_overlap.
 Programme-id resolution mirrors _gen_seed.py (uuid5 over (discipline,name)).
 Run AFTER migration_career_v2.sql (+ the pilot seed for programmes/jamb rows)."""
 import json, re, uuid, os, glob, math
@@ -15,9 +16,17 @@ def uid(*parts): return str(uuid.uuid5(NS, "|".join(parts)))
 def q(s):
     if s is None: return "NULL"
     return "'" + str(s).replace("'", "''") + "'"
+def json_safe(value):
+    if isinstance(value, float) and math.isnan(value):
+        return None
+    if isinstance(value, list):
+        return [json_safe(item) for item in value]
+    if isinstance(value, dict):
+        return {key: json_safe(item) for key, item in value.items()}
+    return value
 def jsonb(v):
     if v is None: return "'[]'::jsonb"
-    return "'" + json.dumps(v, ensure_ascii=False).replace("'", "''") + "'::jsonb"
+    return "'" + json.dumps(json_safe(v), ensure_ascii=False, allow_nan=False).replace("'", "''") + "'::jsonb"
 def arr(xs):
     if not xs: return "'{}'"
     # build the Postgres array literal, then double single-quotes for the enclosing SQL string
@@ -53,6 +62,9 @@ tools  = load("domain_tools.json")
 # file omitted source-backed O*NET/ESCO roles and is no longer used for seed
 # ownership.
 roles  = load("role_library_v3_cleaned.json")
+_overlay_path = os.path.join(HERE, "emerging_role_overlays.json")
+if os.path.exists(_overlay_path):
+    roles.extend(load("emerging_role_overlays.json").get("roles") or [])
 role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
 layer_provenance = load("domain_skill_provenance.json") if os.path.exists(os.path.join(HERE, "domain_skill_provenance.json")) else {}
 roles_by_key = {}
@@ -80,6 +92,9 @@ def alias_values(value):
 prog_dom = load("programme_domain_final.json")
 jamb_dom = load("jamb_domain_map.json")
 scores = load("programme_role_scores.json")
+cross_domain_families = load("cross_domain_role_families.json") if os.path.exists(os.path.join(HERE, "cross_domain_role_families.json")) else {"families": []}
+computational_links = load("computational_role_subgroup_links.json") if os.path.exists(os.path.join(HERE, "computational_role_subgroup_links.json")) else {"links": []}
+computational_methods = load("computational_method_evidence.json") if os.path.exists(os.path.join(HERE, "computational_method_evidence.json")) else {"methods": []}
 
 EXCLUDED = {d for d in meta if meta[d].get("excluded")}
 # UNIVERSITY-PIPELINE SCOPE (owner decision 2026-07-16, adversarially verified):
@@ -102,6 +117,89 @@ def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
 
 R = defaultdict(list)  # table -> list[list[str sql-literals]]
 
+# Cross-domain role families are a relationship layer over the existing
+# domain-scoped role rows. They let search/detail surfaces explain that a role
+# can be reached from several domains without copying skills or tools.
+for family in cross_domain_families.get("families") or []:
+    family_key = str(family.get("family_key") or "")
+    if not family_key:
+        continue
+    family_id = uid("role_family", family_key)
+    R["career_role_families"].append([
+        q(family_id), q(family_key), q(family.get("canonical_name")),
+        q(family.get("primary_domain_key")), arr(family.get("aliases", [])),
+        q(family.get("source_confidence") or "unsourced"),
+        q(family.get("data_state") or "partial"),
+        jsonb(family.get("source_provenance") or {}),
+        jsonb(family.get("nigerian_context") or {}),
+    ])
+    for link in family.get("domain_links") or []:
+        domain_key = str(link.get("domain_key") or "")
+        if not domain_key or domain_key in HIDDEN:
+            continue
+        R["career_role_family_domains"].append([
+            q(uid("role_family_domain", family_key, domain_key)), q(family_id),
+            q(dom_uid(domain_key)), q(domain_key), q(link.get("relationship") or "associated"),
+            jsonb({"source_provenance": family.get("source_provenance") or {}, "nigerian_context": family.get("nigerian_context") or {}}),
+        ])
+    for alias in family.get("aliases") or []:
+        alias_text = str(alias).strip()
+        if not alias_text:
+            continue
+        R["career_role_family_aliases"].append([
+            q(uid("role_family_alias", family_key, alias_text.lower())), q(family_id),
+            q(alias_text), q(re.sub(r"[^a-z0-9]+", " ", alias_text.lower()).strip()),
+        ])
+    for member in family.get("members") or []:
+        role_key = str(member.get("role_key") or "")
+        domain_key = str(member.get("domain_key") or "")
+        if not role_key or not domain_key or domain_key in HIDDEN:
+            continue
+        R["career_role_family_members"].append([
+            q(uid("role_family_member", family_key, role_key)), q(family_id),
+            q(role_key), q(dom_uid(domain_key)), q(domain_key),
+            q(member.get("match_basis") or "source_backed"),
+        ])
+
+# Computational practice can cross the primary occupational subgroup without
+# changing the role's source-backed primary assignment. This is especially
+# important for social-science roles such as sociologist and behavioural
+# scientist, whose source evidence includes quantitative research methods.
+for link in computational_links.get("links") or []:
+    role_key = str(link.get("role_key") or "")
+    domain_key = str(link.get("domain_id") or role_key.split("|", 1)[0])
+    subgroup_key = str(link.get("subgroup_isco_submajor") or "")
+    if not role_key or not domain_key or not subgroup_key or domain_key in HIDDEN:
+        continue
+    R["computational_role_subgroup_links"].append([
+        q(uid("computational_role_subgroup", role_key, subgroup_key)),
+        q(uid("role", role_key)), q(dom_uid(domain_key)),
+        q(sg_uid(domain_key, subgroup_key)), q(role_key),
+        q(link.get("relationship") or "related"),
+        jsonb(link.get("evidence_skills") or []),
+        jsonb(link.get("source_provenance") or {}),
+    ])
+
+# Method evidence is deliberately classified separately from demonstrated
+# competence. For example, ESCO labels social network analysis and game theory
+# as knowledge. The API can therefore explain the method without claiming that
+# a learner has already mastered it.
+for method in computational_methods.get("methods") or []:
+    domain_key = str(method.get("domain_id") or "")
+    subgroup_key = str(method.get("isco_submajor") or "")
+    method_name = str(method.get("name") or "").strip()
+    if not domain_key or not subgroup_key or not method_name or domain_key in HIDDEN:
+        continue
+    R["computational_method_evidence"].append([
+        q(uid("computational_method", domain_key, subgroup_key, method_name.lower())),
+        q(dom_uid(domain_key)), q(sg_uid(domain_key, subgroup_key)), q(method_name),
+        q(method.get("skill_type") or "unknown"), q("not_demonstrated"),
+        q(method.get("esco_id")), q(method.get("description")),
+        jsonb(method.get("evidence_roles") or []),
+        jsonb({"sources": [method.get("source") or "global_esco"], "mapping_method": "exact ESCO skill"}),
+        q(method.get("data_state") or "source_backed"),
+    ])
+
 # ── 1. domains ──────────────────────────────────────────────────
 for dk, m in meta.items():
     if dk in HIDDEN: continue
@@ -115,7 +213,8 @@ for dk, m in meta.items():
         jsonb(st.get("foundation_skills", [])),
         q(provenance.get("source_confidence") or "unsourced"),
         q(provenance.get("data_state") or "partial"),
-        jsonb(provenance.get("foundation_skills", {}))])
+        jsonb(provenance.get("foundation_skills", {})),
+        jsonb(provenance.get("nigerian_context") or {})])
 
 # ── 2. domain_subgroups ─────────────────────────────────────────
 for dk, st in struct.items():
@@ -129,7 +228,8 @@ for dk, st in struct.items():
             jsonb(sg.get("cluster_skills", [])),
             q(subgroup_provenance.get("source_confidence") or "unsourced"),
             q(subgroup_provenance.get("data_state") or "partial"),
-            jsonb(subgroup_provenance.get("skills", {}))])
+            jsonb(subgroup_provenance.get("skills", {})),
+            jsonb(subgroup_provenance.get("nigerian_context") or {})])
 
 # ── 3. domain_roles (role rows; role_key = domain_key|role_name) ─
 # map (domain, isco_submajor) -> subgroup uuid for FK
@@ -146,6 +246,7 @@ for r in roles:
     aka = alias_values(r.get("also_known_as"))
     source_entry = role_tools.get(rk, {})
     esco_entry = source_entry.get("esco") or {}
+    onet_entry = source_entry.get("onet") or {}
     role_source_confidence = source_entry.get("source_confidence") or "unsourced"
     role_data_state = source_entry.get("data_state") or "unsourced"
     R["domain_roles"].append([
@@ -155,11 +256,19 @@ for r in roles:
         q(r.get("elite_status") or "deferred"),
         jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", [])),
         arr(esco_entry.get("occupation_uris", [])), q(role_source_confidence),
-        q(role_data_state), jsonb({
+        q(role_data_state), arr(onet_entry.get("occupation_codes", [])),
+        jsonb(onet_entry.get("essential_skills", [])), jsonb({
             "socs": source_entry.get("socs", []),
             "esco_occupation_uris": esco_entry.get("occupation_uris", []),
-            "sources": [source for source in ("esco" if esco_entry.get("occupation_uris") else None, "onet" if source_entry.get("tools") else None) if source],
-        })])
+            "onet_occupation_codes": onet_entry.get("occupation_codes", []),
+            "framework": source_entry.get("source_provenance") or {},
+            "nigerian_context": source_entry.get("nigerian_context") or {},
+            "sources": [source for source in (
+                "esco" if esco_entry.get("occupation_uris") else None,
+                "onet" if onet_entry.get("essential_skills") or any(t.get("source") == "onet" for t in source_entry.get("tools") or []) else None,
+                "framework" if source_entry.get("source_provenance") else None,
+                ) if source],
+        }), jsonb(source_entry.get("nigerian_context") or {})])
 
 # ── 4. domain_tools (domain + subgroup scope, distinctive+common) ─
 def tool_rows(dk, entry, scope, sgid):
@@ -386,11 +495,17 @@ def emit(table, cols, vals, conflict="id"):
         out.append(f"ON CONFLICT ({conflict}) DO UPDATE SET {upd};")
     out.append("")
 
-emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills","source_confidence","data_state","foundation_skill_sources"], R["domains"])
-emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills","source_confidence","data_state","skill_sources"], R["domain_subgroups"])
-emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills","esco_occupation_uris","source_confidence","data_state","source_provenance"], R["domain_roles"])
+emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills","source_confidence","data_state","foundation_skill_sources","nigerian_context"], R["domains"])
+emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills","source_confidence","data_state","skill_sources","nigerian_context"], R["domain_subgroups"])
+emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills","esco_occupation_uris","source_confidence","data_state","onet_occupation_codes","onet_essential_skills","source_provenance","nigerian_context"], R["domain_roles"])
 emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source","role_id","element_name","element_id","source_confidence","data_state","source_provenance"], R["domain_tools"])
 emit("domain_certifications", ["id","domain_id","subgroup_id","placement","name","body","region","level","gate_reason"], R["domain_certifications"])
+emit("computational_role_subgroup_links", ["id","role_id","domain_id","subgroup_id","role_key","relationship","evidence_skills","source_provenance"], R["computational_role_subgroup_links"])
+emit("computational_method_evidence", ["id","domain_id","subgroup_id","method_name","classification","competence_status","esco_id","description","evidence_roles","source_provenance","data_state"], R["computational_method_evidence"])
+emit("career_role_families", ["id","family_key","canonical_name","primary_domain_key","aliases","source_confidence","data_state","source_provenance","nigerian_context"], R["career_role_families"])
+emit("career_role_family_domains", ["id","family_id","domain_id","domain_key","relationship","source_provenance"], R["career_role_family_domains"])
+emit("career_role_family_aliases", ["id","family_id","alias","normalized_alias"], R["career_role_family_aliases"])
+emit("career_role_family_members", ["id","family_id","role_key","domain_id","domain_key","match_basis"], R["career_role_family_members"])
 emit("programme_domain", ["id","programme_id","domain_id","match_type"], R["programme_domain"])
 emit("programme_role_score", ["id","programme_id","domain_id","role_key","role_name","label","coverage","tier","subgroup_label","bridge_skills"], R["programme_role_score"])
 emit("jamb_programme_domain", ["id","jamb_name","domain_id","match_type"], R["jamb_programme_domain"])
@@ -400,6 +515,6 @@ out += ["COMMIT;"]
 open(os.path.join(HERE, "..", "..", "backend", "seed_career_v2.sql"), "w", encoding="utf-8").write("\n".join(out))
 
 print("seed_career_v2.sql generated:")
-for t in ["domains","domain_subgroups","domain_roles","domain_tools","domain_certifications","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:
+for t in ["domains","domain_subgroups","domain_roles","domain_tools","domain_certifications","computational_role_subgroup_links","computational_method_evidence","career_role_families","career_role_family_domains","career_role_family_aliases","career_role_family_members","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:
     print(f"  {t:26} {len(R[t])} rows")
 print(f"  (programme_domain unresolved programmes: {pd_unresolved})")

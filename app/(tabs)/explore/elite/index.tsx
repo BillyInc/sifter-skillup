@@ -1,5 +1,5 @@
 import PathwaysHubScreen from "@/screens/careerIntelligence/PathwaysHubScreen";
 
 export default function ElitePathwaysRoute() {
-  return <PathwaysHubScreen initialSection="elite" />;
+  return <PathwaysHubScreen initialSection="target" requirementFocus="elite" />;
 }

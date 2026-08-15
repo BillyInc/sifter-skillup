@@ -1,11 +1,13 @@
 /**
- * Pathways is one product, not a collection of independent screens.
+ * Pathways is the route-selection layer for the career graph.
  *
- * The route-specific files under app/(tabs)/explore/pathways remain as deep-link
- * compatibility wrappers, but they all mount this component and select a
- * section inside the same route-selection experience. Account and user types
- * are deliberately not involved here: the qualification taxonomy is pathway
- * context only.
+ * A qualification, credential, chartered route, or PhD is not a separate
+ * product destination. It is requirement evidence attached to:
+ * pathway user type → domain → subgroup → role.
+ *
+ * The old deep-link files remain compatibility wrappers, but they all mount
+ * this screen and focus the relevant requirement lens inside Target path.
+ * Existing account/user types are not changed by this pathway taxonomy.
  */
 import React, { useEffect, useMemo, useState } from "react";
 import { Feather } from "@expo/vector-icons";
@@ -13,19 +15,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { DetailScaffold } from "@/components/careerIntelligence";
 import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
 import { EntrepreneurshipPathwayScreen } from "@/screens/careerIntelligence/EntrepreneurshipPathwayScreen";
-import { careerData } from "@/lib/careerData";
+import { careerData, type DomainClusterGroup } from "@/lib/careerData";
+import { NIGERIAN_USER_TYPES, type NigerianUserTypeKey } from "@/lib/elitePathwayPolicy";
 import {
   BRIDGE_LAYER_ORDER,
   comingSoon,
   type BridgePlan,
+  type CareerChangeType,
+  type CareerChangerPath,
   type DataState,
+  type DomainRoleV2,
+  type DomainV2,
   type ElitePathway,
   type ElitePathwaySummary,
-  type PhdRoute,
-  type QualificationUpgrade,
-  type Chartership,
-  type CareerChangerPath,
-  type CareerChangeType,
 } from "@/types/career";
 import {
   CompassFonts,
@@ -37,45 +39,30 @@ import {
   type ColorPalette,
 } from "@/theme";
 
-export type PathwaySection =
-  | "overview"
-  | "elite"
-  | "qualification"
-  | "credentials"
-  | "research"
-  | "career-change"
-  | "build";
+export type PathwaySection = "overview" | "target" | "career-change" | "build";
+export type PathwayRequirementFocus = "qualification" | "credentials" | "research" | "elite";
 
 export interface PathwaysHubScreenProps {
   initialSection?: PathwaySection;
+  /** Legacy deep links use this to load a selected elite destination. */
   pathwayId?: string;
+  /** Legacy deep links focus a requirement lens, not a new screen. */
+  requirementFocus?: PathwayRequirementFocus;
   entrepreneurshipContext?: { programmeName?: string; domainId?: string };
 }
 
-/** This is intentionally a pathway taxonomy, not an account/user enum. */
-const STARTING_POINTS = [
-  "SS3 / JAMB",
-  "University undergraduate",
-  "University graduate · white collar",
-  "University graduate · field / blue collar",
-  "MSc · Nigerian university",
-  "MSc · international university",
-  "PhD · limited publications",
-  "PhD · published / international",
-  "HND",
-  "OND / ND",
-  "NCE",
-  "Technical college / NABTEB / artisan",
-] as const;
-
-const SECTIONS: { key: PathwaySection; label: string; icon: keyof typeof Feather.glyphMap }[] = [
+const SECTION_TABS: { key: PathwaySection; label: string; icon: keyof typeof Feather.glyphMap }[] = [
   { key: "overview", label: "Overview", icon: "map" },
-  { key: "elite", label: "Elite routes", icon: "award" },
-  { key: "qualification", label: "Upgrades", icon: "trending-up" },
-  { key: "credentials", label: "Credentials", icon: "file-text" },
-  { key: "research", label: "PhD & research", icon: "search" },
+  { key: "target", label: "Target path", icon: "compass" },
   { key: "career-change", label: "Career change", icon: "repeat" },
   { key: "build", label: "Build a business", icon: "briefcase" },
+];
+
+const REQUIREMENT_FOCI: { key: PathwayRequirementFocus; label: string }[] = [
+  { key: "qualification", label: "Qualifications & bridges" },
+  { key: "credentials", label: "Credentials & chartered routes" },
+  { key: "research", label: "PhD & research evidence" },
+  { key: "elite", label: "Elite route evidence" },
 ];
 
 const SIX_LAYER_COPY: Record<string, string> = {
@@ -87,28 +74,6 @@ const SIX_LAYER_COPY: Record<string, string> = {
   ownership_path: "Documented proof that the route has been walked; no invented success stories.",
 };
 
-const QUALIFICATION_COVERAGE = [
-  "OND / ND → JAMB Direct Entry → 200 level degree route",
-  "OND → HND → degree top-up",
-  "HND → degree top-up or Direct Entry where the institution publishes it",
-  "NCE → degree / education progression routes",
-  "ELR and professional standing where the regulator publishes the route",
-];
-
-const CREDENTIAL_COVERAGE = [
-  "Engineering registration, CEng / IEng, COREN and ELR",
-  "CFA, ICAN and ACCA professional routes",
-  "Medicine, law, surveying and project-management credentials",
-  "Exemptions, recognition limits, and current regulator requirements",
-];
-
-const RESEARCH_ROUTES = [
-  "Academic research and postdoctoral routes",
-  "Policy, think-tank and international-organisation research",
-  "Quant finance, data science and specialist consulting",
-  "Corporate R&D and research entrepreneurship",
-];
-
 const CAREER_CHANGE_TYPES: { key: CareerChangeType; label: string }[] = [
   { key: "job_switch", label: "Same field · new role" },
   { key: "adjacent_pivot", label: "Adjacent pivot" },
@@ -119,25 +84,28 @@ const CAREER_CHANGE_TYPES: { key: CareerChangeType; label: string }[] = [
 export function PathwaysHubScreen({
   initialSection = "overview",
   pathwayId,
+  requirementFocus = "qualification",
   entrepreneurshipContext,
 }: PathwaysHubScreenProps) {
   const { colors } = useTheme();
   const [section, setSection] = useState<PathwaySection>(initialSection);
-  const [startingPoint, setStartingPoint] = useState<string>(STARTING_POINTS[0]);
+  const [focus, setFocus] = useState<PathwayRequirementFocus>(requirementFocus);
+  const [startingPoint, setStartingPoint] = useState(NIGERIAN_USER_TYPES[0]?.key ?? "ss3_jamb_candidate");
+  const [domainClusters, setDomainClusters] = useState<DataState<DomainClusterGroup[]>>(() =>
+    comingSoon<DomainClusterGroup[]>("Domain, subgroup, and role data is being added.")
+  );
+  const [selectedDomainId, setSelectedDomainId] = useState<string | null>(null);
+  const [domainState, setDomainState] = useState<DataState<DomainV2>>(() =>
+    comingSoon<DomainV2>("Select a domain to inspect its subgroups, roles, and route requirements.")
+  );
+  const [selectedSubgroupId, setSelectedSubgroupId] = useState<string | null>(null);
+  const [selectedRoleKey, setSelectedRoleKey] = useState<string | null>(null);
+  const [roleState, setRoleState] = useState<DataState<DomainRoleV2> | null>(null);
   const [eliteState, setEliteState] = useState<DataState<ElitePathwaySummary[]>>(() =>
     comingSoon<ElitePathwaySummary[]>("Sourced elite route data is being added.")
   );
   const [eliteDetail, setEliteDetail] = useState<DataState<ElitePathway> | null>(null);
   const [bridgeState, setBridgeState] = useState<DataState<BridgePlan> | null>(null);
-  const [qualificationState, setQualificationState] = useState<DataState<QualificationUpgrade[]>>(() =>
-    comingSoon<QualificationUpgrade[]>("Verified qualification-upgrade detail is being added.")
-  );
-  const [credentialState, setCredentialState] = useState<DataState<Chartership[]>>(() =>
-    comingSoon<Chartership[]>("Verified credential detail is being added.")
-  );
-  const [researchState, setResearchState] = useState<DataState<PhdRoute[]>>(() =>
-    comingSoon<PhdRoute[]>("Verified PhD and research route detail is being added.")
-  );
   const [careerState, setCareerState] = useState<DataState<CareerChangerPath[]>>(() =>
     comingSoon<CareerChangerPath[]>("Verified career-change route detail is being added.")
   );
@@ -148,20 +116,20 @@ export function PathwaysHubScreen({
   }, [initialSection]);
 
   useEffect(() => {
+    setFocus(requirementFocus);
+  }, [requirementFocus]);
+
+  useEffect(() => {
     let active = true;
     (async () => {
-      const [elite, upgrades, credentials, research, career] = await Promise.all([
+      const [clusters, elite, career] = await Promise.all([
+        careerData.getDomainClusters(),
         careerData.getElitePathways(),
-        careerData.getQualificationUpgrades(),
-        careerData.getCharterships(),
-        careerData.getPhdRoutes(),
         careerData.getCareerChangerPaths(),
       ]);
       if (!active) return;
+      setDomainClusters(clusters);
       setEliteState(elite);
-      setQualificationState(upgrades);
-      setCredentialState(credentials);
-      setResearchState(research);
       setCareerState(career);
     })();
     return () => {
@@ -170,7 +138,7 @@ export function PathwaysHubScreen({
   }, []);
 
   useEffect(() => {
-    if (section !== "elite" || !pathwayId) {
+    if (section !== "target" || !pathwayId) {
       setEliteDetail(null);
       setBridgeState(null);
       return;
@@ -187,10 +155,27 @@ export function PathwaysHubScreen({
     }
   };
 
+  const chooseDomain = async (domainId: string) => {
+    setSelectedDomainId(domainId);
+    setSelectedSubgroupId(null);
+    setSelectedRoleKey(null);
+    setRoleState(null);
+    setDomainState(await careerData.getDomainV2(domainId));
+  };
+
+  const chooseRole = async (roleKey: string) => {
+    setSelectedRoleKey(roleKey);
+    setRoleState(await careerData.getRoleV2(roleKey));
+  };
+
   const selectedCareerRoutes = useMemo(
     () => careerState.data?.filter((route) => route.type === careerType) ?? [],
     [careerState.data, careerType],
   );
+  const selectedDomain = domainState.data;
+  const selectedSubgroup = selectedDomain?.subgroups.find((item) => item.id === selectedSubgroupId);
+  const selectedRole = selectedDomain?.roles.find((item) => item.key === selectedRoleKey);
+  const selectedUserType = NIGERIAN_USER_TYPES.find((item) => item.key === startingPoint);
 
   return (
     <DetailScaffold
@@ -203,32 +188,13 @@ export function PathwaysHubScreen({
       {() => (
         <View style={styles.body}>
           <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Pathways connects your current position to an academic, professional, capability, or venture destination. The panels below are components of one product; they do not create new account or user types.
+            Pathways connects a pathway user type to a chosen domain, subgroup, and role. Qualifications, credentials, chartered routes, research evidence, and bridge skills explain what is needed to reach that destination.
           </Text>
 
-          <View style={[styles.contextCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.sectionLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>WHERE ARE YOU NOW?</Text>
-            <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{startingPoint}</Text>
-            <Text style={[styles.contextBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              This is pathway context only. It does not change your existing account type.
-            </Text>
-            <View style={styles.chips}>
-              {STARTING_POINTS.map((point) => (
-                <TouchableOpacity
-                  key={point}
-                  onPress={() => setStartingPoint(point)}
-                  style={[styles.chip, { borderColor: point === startingPoint ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: point === startingPoint ? colors.surface.subtle : colors.surface.base }]}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Starting point: ${point}`}
-                >
-                  <Text style={[styles.chipText, { color: point === startingPoint ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{point}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
+          <PathwayUserTypePicker value={startingPoint} onChange={setStartingPoint} colors={colors} />
 
           <View style={styles.sectionTabs}>
-            {SECTIONS.map((item) => (
+            {SECTION_TABS.map((item) => (
               <TouchableOpacity
                 key={item.key}
                 onPress={() => setSection(item.key)}
@@ -243,12 +209,32 @@ export function PathwaysHubScreen({
           </View>
 
           {section === "overview" ? <OverviewSection colors={colors} onSelect={setSection} /> : null}
-          {section === "elite" ? <EliteSection colors={colors} state={eliteState} detail={eliteDetail} bridge={bridgeState} onSelect={loadEliteDetail} /> : null}
-          {section === "qualification" ? <QualificationSection colors={colors} state={qualificationState} /> : null}
-          {section === "credentials" ? <CredentialsSection colors={colors} state={credentialState} /> : null}
-          {section === "research" ? <ResearchSection colors={colors} state={researchState} /> : null}
+          {section === "target" ? (
+            <TargetPathSection
+              colors={colors}
+              focus={focus}
+              onFocus={setFocus}
+              domainClusters={domainClusters}
+              selectedDomainId={selectedDomainId}
+              onDomain={chooseDomain}
+              domainState={domainState}
+              selectedSubgroupId={selectedSubgroupId}
+              onSubgroup={setSelectedSubgroupId}
+              selectedRoleKey={selectedRoleKey}
+              onRole={chooseRole}
+              roleState={roleState}
+              userType={selectedUserType?.label ?? startingPoint}
+              domain={selectedDomain ?? undefined}
+              subgroup={selectedSubgroup}
+              role={selectedRole}
+              eliteState={eliteState}
+              eliteDetail={eliteDetail}
+              bridge={bridgeState}
+              onElite={loadEliteDetail}
+            />
+          ) : null}
           {section === "career-change" ? <CareerChangeSection colors={colors} state={careerState} type={careerType} selected={selectedCareerRoutes} onType={setCareerType} /> : null}
-          {section === "build" ? <BuildSection colors={colors} context={entrepreneurshipContext} /> : null}
+          {section === "build" ? <BuildSection context={entrepreneurshipContext} /> : null}
 
           <CareerDisclaimer variant="footer" />
         </View>
@@ -257,27 +243,17 @@ export function PathwaysHubScreen({
   );
 }
 
-function OverviewSection({ colors, onSelect }: { colors: ColorPalette; onSelect: (section: PathwaySection) => void }) {
-  const cards: { key: PathwaySection; title: string; body: string; icon: keyof typeof Feather.glyphMap }[] = [
-    { key: "elite", title: "Structured and high-competition routes", body: "Sourced global standards, Nigerian qualification maps, bridges, timelines, entry points, and proof.", icon: "award" },
-    { key: "qualification", title: "Qualification and credential progression", body: "Upgrades, Direct Entry, top-ups, ELR, and professional credentials in the same route map.", icon: "trending-up" },
-    { key: "research", title: "PhD and research destinations", body: "Academic and non-academic outcomes such as policy, quant, consulting, R&D, and venture.", icon: "search" },
-    { key: "career-change", title: "Career transitions", body: "Job switches, adjacent pivots, significant changes, and forced-change stability routes.", icon: "repeat" },
-    { key: "build", title: "Entrepreneurial opportunity map", body: "Start from a programme, domain, skill, idea, or problem and inspect evidence-led venture options.", icon: "briefcase" },
-  ];
+function PathwayUserTypePicker({ value, onChange, colors }: { value: NigerianUserTypeKey; onChange: (value: NigerianUserTypeKey) => void; colors: ColorPalette }) {
+  const selected = NIGERIAN_USER_TYPES.find((item) => item.key === value);
   return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>One pathway layer</Text>
-      <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Where you are now → the route or transition → the academic, professional, and capability data → the next action.</Text>
-      <View style={styles.cards}>
-        {cards.map((card) => (
-          <TouchableOpacity key={card.key} onPress={() => onSelect(card.key)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-            <Feather name={card.icon} size={21} color={colors.accentRole.action} />
-            <View style={styles.cardText}>
-              <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{card.title}</Text>
-              <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{card.body}</Text>
-            </View>
-            <Feather name="chevron-right" size={18} color={colors.textRole.muted} />
+    <View style={[styles.contextCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.sectionLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>PATHWAY USER TYPE</Text>
+      <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{selected?.label ?? "Choose your current position"}</Text>
+      <Text style={[styles.contextBody, { color: colors.textRole.secondary }, CompassFonts.body]}>This is route context, not a new account or user type. It changes the qualification and bridge evidence shown for the destination.</Text>
+      <View style={styles.chips}>
+        {NIGERIAN_USER_TYPES.map((item) => (
+          <TouchableOpacity key={item.key} onPress={() => onChange(item.key)} style={[styles.chip, { borderColor: item.key === value ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: item.key === value ? colors.surface.subtle : colors.surface.base }]} accessibilityRole="button">
+            <Text style={[styles.chipText, { color: item.key === value ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -285,63 +261,125 @@ function OverviewSection({ colors, onSelect }: { colors: ColorPalette; onSelect:
   );
 }
 
-function EliteSection({ colors, state, detail, bridge, onSelect }: { colors: ColorPalette; state: DataState<ElitePathwaySummary[]>; detail: DataState<ElitePathway> | null; bridge: DataState<BridgePlan> | null; onSelect: (id: string) => void }) {
+function OverviewSection({ colors, onSelect }: { colors: ColorPalette; onSelect: (section: PathwaySection) => void }) {
   return (
     <View style={styles.section}>
-      <SectionHeading colors={colors} title="Elite pathways" body="Elite routes are sourced data, not decorative screens. Select a domain or role to inspect its evidence layers." />
-      {state.data?.length ? (
-        <View style={styles.cards}>{state.data.map((path) => <TouchableOpacity key={path.id} onPress={() => onSelect(path.id)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><Feather name="award" size={20} color={colors.accentRole.action} /><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{path.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{path.cluster ?? "Structured pathway"}{path.selectivityLabel ? ` · ${path.selectivityLabel}` : ""}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View>
-      ) : <StateNote colors={colors} state={state} />}
-      {detail?.data ? <EliteLayers colors={colors} detail={detail.data} bridge={bridge} /> : null}
-      {detail && !detail.data ? <StateNote colors={colors} state={detail} /> : null}
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>One pathway layer</Text>
+      <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Where you are now → target domain → subgroup → role → the qualifications, credentials, chartered routes, capabilities, and proof that make the next move credible.</Text>
+      <TouchableOpacity onPress={() => onSelect("target")} style={[styles.featureCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <Feather name="compass" size={22} color={colors.accentRole.action} />
+        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Choose a target path</Text>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Select a domain, subgroup, and role. Requirement details then appear in context rather than as disconnected upgrade or credential pages.</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => onSelect("career-change")} style={[styles.featureCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <Feather name="repeat" size={22} color={colors.accentRole.action} />
+        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Change direction</Text>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Translate existing evidence for a same-field move, adjacent pivot, significant change, or forced change.</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => onSelect("build")} style={[styles.featureCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <Feather name="briefcase" size={22} color={colors.accentRole.action} />
+        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Build from knowledge</Text>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Open the existing entrepreneurship Opportunity Map from a programme, domain, skill, idea, or market problem.</Text>
+      </TouchableOpacity>
     </View>
   );
+}
+
+function TargetPathSection({ colors, focus, onFocus, domainClusters, selectedDomainId, onDomain, domainState, selectedSubgroupId, onSubgroup, selectedRoleKey, onRole, roleState, userType, domain, subgroup, role, eliteState, eliteDetail, bridge, onElite }: {
+  colors: ColorPalette;
+  focus: PathwayRequirementFocus;
+  onFocus: (focus: PathwayRequirementFocus) => void;
+  domainClusters: DataState<DomainClusterGroup[]>;
+  selectedDomainId: string | null;
+  onDomain: (id: string) => void;
+  domainState: DataState<DomainV2>;
+  selectedSubgroupId: string | null;
+  onSubgroup: (id: string) => void;
+  selectedRoleKey: string | null;
+  onRole: (key: string) => void;
+  roleState: DataState<DomainRoleV2> | null;
+  userType: string;
+  domain?: DomainV2;
+  subgroup?: DomainV2["subgroups"][number];
+  role?: DomainV2["roles"][number];
+  eliteState: DataState<ElitePathwaySummary[]>;
+  eliteDetail: DataState<ElitePathway> | null;
+  bridge: DataState<BridgePlan> | null;
+  onElite: (id: string) => void;
+}) {
+  return (
+    <View style={styles.section}>
+      <SectionHeading colors={colors} title="Target path" body="The requirement view is selected after the destination is clear. Qualifications and credentials are route details, not independent destinations." />
+      <View style={styles.chips}>
+        {REQUIREMENT_FOCI.map((item) => (
+          <TouchableOpacity key={item.key} onPress={() => onFocus(item.key)} style={[styles.chip, { borderColor: focus === item.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: focus === item.key ? colors.surface.subtle : colors.surface.raised }]}>
+            <Text style={[styles.chipText, { color: focus === item.key ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>1. Choose a domain</Text>
+      {domainClusters.status === "real" && domainClusters.data?.length ? (
+        <View style={styles.domainGroups}>{domainClusters.data.map((group) => <View key={group.cluster} style={styles.group}><Text style={[styles.groupTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>{group.cluster}</Text><View style={styles.chips}>{group.domains.map((item) => <TouchableOpacity key={item.id} onPress={() => onDomain(item.id)} style={[styles.chip, { borderColor: item.id === selectedDomainId ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: item.id === selectedDomainId ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: item.id === selectedDomainId ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.name}</Text></TouchableOpacity>)}</View></View>)}</View>
+      ) : <StateNote colors={colors} state={domainClusters} />}
+
+      {selectedDomainId ? <>
+        <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>2. Choose a subgroup</Text>
+        {domain?.subgroups?.length ? <View style={styles.chips}>{domain.subgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => onSubgroup(item.id)} style={[styles.chip, { borderColor: item.id === selectedSubgroupId ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: item.id === selectedSubgroupId ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: item.id === selectedSubgroupId ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.name}</Text></TouchableOpacity>)}</View> : <StateNote colors={colors} state={domainState} />}
+        <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>3. Choose a role</Text>
+        {domain?.roles?.length ? <View style={styles.cards}>{domain.roles.filter((item) => !selectedSubgroupId || item.subgroupId === selectedSubgroupId).map((item) => <TouchableOpacity key={item.key} onPress={() => onRole(item.key)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: item.key === selectedRoleKey ? colors.accentRole.action : colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{item.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{item.tier ?? "Role"}{item.eliteStatus ? ` · ${item.eliteStatus}` : ""}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View> : <StateNote colors={colors} state={domainState} />}
+      </> : null}
+
+      {selectedRoleKey ? <RequirementPanel colors={colors} focus={focus} userType={userType} domain={domain} subgroup={subgroup} role={role} roleState={roleState} /> : null}
+      <EliteRequirementSection colors={colors} state={eliteState} detail={eliteDetail} bridge={bridge} onSelect={onElite} />
+    </View>
+  );
+}
+
+function RequirementPanel({ colors, focus, userType, domain, subgroup, role, roleState }: { colors: ColorPalette; focus: PathwayRequirementFocus; userType: string; domain?: DomainV2; subgroup?: DomainV2["subgroups"][number]; role?: DomainV2["roles"][number]; roleState: DataState<DomainRoleV2> | null }) {
+  const roleDetail = roleState?.data;
+  const certifications = [
+    ...(domain?.gatewayCertifications ?? []),
+    ...(subgroup?.certifications ?? []),
+    ...(roleDetail?.certifications ?? []),
+  ];
+  const bridgeSkills = [
+    ...(domain?.domainBridgeSkills ?? []).map((item) => item.name),
+    ...(roleDetail?.roleBridgeSkills ?? []).map((item) => item.name),
+  ];
+  return (
+    <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.sectionLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>ROUTE REQUIREMENTS</Text>
+      <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{role?.name ?? "Selected role"}</Text>
+      <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Starting point: {userType}</Text>
+      <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Domain: {domain?.name ?? "Selected domain"}{subgroup ? ` · ${subgroup.name}` : ""}</Text>
+      <RequirementBlock colors={colors} title={focus === "qualification" ? "Qualifications and bridges" : "Qualification context"} items={bridgeSkills} empty="No verified qualification or bridge rows are available for this role yet." />
+      <RequirementBlock colors={colors} title={focus === "credentials" ? "Credentials and chartered / registration routes" : "Credential context"} items={certifications.map((item) => `${item.name}${item.body ? ` · ${item.body}` : ""}`)} empty="No verified credential or chartered requirement is published for this role yet." />
+      <RequirementBlock colors={colors} title={focus === "research" ? "PhD and research evidence" : "Research evidence"} items={roleDetail?.careerLadder ?? []} empty="Research requirements, publications, and non-academic bridges remain source-gated for this role." />
+      <RequirementBlock colors={colors} title="Evidence status" items={roleState?.meta?.sources ?? []} empty={roleState?.meta?.notice ?? "Select a role to load source-backed requirement detail."} />
+    </View>
+  );
+}
+
+function RequirementBlock({ colors, title, items, empty }: { colors: ColorPalette; title: string; items: string[]; empty: string }) {
+  return <View style={styles.requirementBlock}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{title}</Text>{items.length ? items.map((item, index) => <Text key={`${title}-${index}`} style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>) : <Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>REQUIRES VERIFICATION · {empty}</Text>}</View>;
+}
+
+function EliteRequirementSection({ colors, state, detail, bridge, onSelect }: { colors: ColorPalette; state: DataState<ElitePathwaySummary[]>; detail: DataState<ElitePathway> | null; bridge: DataState<BridgePlan> | null; onSelect: (id: string) => void }) {
+  return <View style={styles.subsection}><SectionHeading colors={colors} title="Structured route evidence" body="Elite pathways are destination evidence attached to the selected route. Every detail follows the six-layer bridge model." />{state.data?.length ? <View style={styles.cards}>{state.data.map((path) => <TouchableOpacity key={path.id} onPress={() => onSelect(path.id)} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><Feather name="award" size={20} color={colors.accentRole.action} /><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{path.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{path.cluster ?? "Structured destination"}</Text></View><Feather name="chevron-right" size={18} color={colors.textRole.muted} /></TouchableOpacity>)}</View> : <StateNote colors={colors} state={state} />}{detail?.data ? <EliteLayers colors={colors} detail={detail.data} bridge={bridge} /> : null}{detail && !detail.data ? <StateNote colors={colors} state={detail} /> : null}</View>;
 }
 
 function EliteLayers({ colors, detail, bridge }: { colors: ColorPalette; detail: ElitePathway; bridge: DataState<BridgePlan> | null }) {
   const layers = bridge?.data?.layers ?? [];
-  return (
-    <View style={styles.subsection}>
-      <Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{detail.name}: six evidence layers</Text>
-      <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>A layer is actionable only when its claims, numbers, timelines, and route evidence have named sources. Missing evidence remains visible as missing.</Text>
-      <View style={styles.layers}>
-        {BRIDGE_LAYER_ORDER.map((definition, index) => {
-          const layer = layers.find((item) => item.key === definition.key);
-          return <View key={definition.key} style={[styles.layer, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><View style={[styles.layerNumber, { backgroundColor: colors.surface.subtle }]}><Text style={[styles.layerNumberText, { color: colors.accentRole.action }, CompassFonts.data]}>{index + 1}</Text></View><View style={styles.cardText}><Text style={[styles.layerTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{layer?.title ?? definition.title}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{layer?.body ?? SIX_LAYER_COPY[definition.key]}</Text>{layer?.items?.length ? layer.items.map((item, itemIndex) => <Text key={`${definition.key}-${itemIndex}`} style={[styles.layerItem, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>) : <Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>Verified detail not yet available</Text>}</View></View>;
-        })}
-      </View>
-      {bridge?.meta?.sources?.length ? <Text style={[styles.sourceText, { color: colors.textRole.muted }, CompassFonts.body]}>Sources: {bridge.meta.sources.join(" · ")}</Text> : null}
-    </View>
-  );
-}
-
-function QualificationSection({ colors, state }: { colors: ColorPalette; state: DataState<QualificationUpgrade[]> }) {
-  return <View style={styles.section}><SectionHeading colors={colors} title="Qualification upgrades" body="These are route components inside Pathways. The platform should show the entry condition, bridge, time, cost, and source status for each selected route." /><View style={[styles.featureCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><Text style={[styles.featureTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Canonical route coverage</Text>{QUALIFICATION_COVERAGE.map((item) => <Text key={item} style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>)}<Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>Upper Credit and institution-specific Direct Entry conditions must be checked against the current JAMB and university publication before action.</Text></View><DataRows colors={colors} state={state} kind="qualification" /></View>;
-}
-
-function CredentialsSection({ colors, state }: { colors: ColorPalette; state: DataState<Chartership[]> }) {
-  return <View style={styles.section}><SectionHeading colors={colors} title="Chartership and credentials" body="Credentials are another bridge component. Recognition, exemptions, regulator status, and current fees must be sourced per route." /><View style={styles.cards}>{CREDENTIAL_COVERAGE.map((item) => <View key={item} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><Feather name="file-text" size={19} color={colors.accentRole.action} /><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{item}</Text></View>)}</View><DataRows colors={colors} state={state} kind="credential" /></View>;
-}
-
-function ResearchSection({ colors, state }: { colors: ColorPalette; state: DataState<PhdRoute[]> }) {
-  return <View style={styles.section}><SectionHeading colors={colors} title="PhD and research" body="A doctorate is a research credential, not a lectureship guarantee. Academic and non-academic destinations remain in the same pathway map." /><View style={[styles.featureCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>{RESEARCH_ROUTES.map((route) => <Text key={route} style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>• {route}</Text>)}<Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>Route-specific bridge, timeline, cost, entry point, and proof remain locked until they have named evidence.</Text></View><DataRows colors={colors} state={state} kind="research" /></View>;
+  return <View style={styles.subsection}><Text style={[styles.subsectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{detail.name}: six evidence layers</Text><Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>Claims, numbers, timelines, costs, entry points, and proof remain unavailable until they have named sources.</Text><View style={styles.layers}>{BRIDGE_LAYER_ORDER.map((definition, index) => { const layer = layers.find((item) => item.key === definition.key); return <View key={definition.key} style={[styles.layer, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><View style={[styles.layerNumber, { backgroundColor: colors.surface.subtle }]}><Text style={[styles.layerNumberText, { color: colors.accentRole.action }, CompassFonts.data]}>{index + 1}</Text></View><View style={styles.cardText}><Text style={[styles.layerTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{layer?.title ?? definition.title}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{layer?.body ?? SIX_LAYER_COPY[definition.key]}</Text>{layer?.items?.length ? layer.items.map((item, itemIndex) => <Text key={`${definition.key}-${itemIndex}`} style={[styles.layerItem, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>) : <Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>REQUIRES VERIFICATION · Detail not yet available</Text>}</View></View>; })}</View>{bridge?.meta?.sources?.length ? <Text style={[styles.sourceText, { color: colors.textRole.muted }, CompassFonts.body]}>Sources: {bridge.meta.sources.join(" · ")}</Text> : null}</View>;
 }
 
 function CareerChangeSection({ colors, state, type, selected, onType }: { colors: ColorPalette; state: DataState<CareerChangerPath[]>; type: CareerChangeType; selected: CareerChangerPath[]; onType: (type: CareerChangeType) => void }) {
-  return <View style={styles.section}><SectionHeading colors={colors} title="Career change" body="Career change is the most interactive route component: translate existing evidence, show full or partial credit, and make forced-change stability visible." /><View style={styles.chips}>{CAREER_CHANGE_TYPES.map((item) => <TouchableOpacity key={item.key} onPress={() => onType(item.key)} style={[styles.chip, { borderColor: type === item.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: type === item.key ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: type === item.key ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.label}</Text></TouchableOpacity>)}</View>{selected.length ? <DataRows colors={colors} state={{ status: "real", data: selected }} kind="career" /> : <StateNote colors={colors} state={state} />}</View>;
+  return <View style={styles.section}><SectionHeading colors={colors} title="Career change" body="Career change remains an interactive route component: translate existing evidence, show full or partial credit, and make forced-change stability visible." /><View style={styles.chips}>{CAREER_CHANGE_TYPES.map((item) => <TouchableOpacity key={item.key} onPress={() => onType(item.key)} style={[styles.chip, { borderColor: type === item.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: type === item.key ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.chipText, { color: type === item.key ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodySemibold]}>{item.label}</Text></TouchableOpacity>)}</View>{selected.length ? <View style={styles.cards}>{selected.map((route) => <View key={route.type} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{route.title}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{route.body ?? "REQUIRES VERIFICATION · Route detail not yet available."}</Text></View></View>)}</View> : <StateNote colors={colors} state={state} />}</View>;
 }
 
-function BuildSection({ context }: { colors: ColorPalette; context?: { programmeName?: string; domainId?: string } }) {
-  // Build is the existing entrepreneurship product. Keep its Opportunity Map
-  // data loading, context resolution, role filters, evidence labels, and
-  // guest entitlement behavior intact while mounting it as one Pathways
-  // component.
+function BuildSection({ context }: { context?: { programmeName?: string; domainId?: string } }) {
   return <View style={styles.section}><EntrepreneurshipPathwayScreen embedded initialProgrammeName={context?.programmeName} initialDomainId={context?.domainId} /></View>;
-}
-
-function DataRows({ colors, state, kind }: { colors: ColorPalette; state: DataState<(QualificationUpgrade | Chartership | PhdRoute | CareerChangerPath)[]>; kind: string }) {
-  if (!state.data?.length) return <StateNote colors={colors} state={state} />;
-  return <View style={styles.cards}>{state.data.map((row, index) => { const title = "title" in row ? row.title : row.name; const body = "body" in row ? row.body : undefined; return <View key={`${kind}-${"id" in row ? row.id : index}`} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>{body ? <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{body}</Text> : null}{"steps" in row && row.steps?.length ? row.steps.map((step, stepIndex) => <Text key={stepIndex} style={[styles.layerItem, { color: colors.textRole.secondary }, CompassFonts.body]}>{stepIndex + 1}. {step}</Text>) : null}{"requirements" in row && row.requirements?.length ? row.requirements.map((item, itemIndex) => <Text key={itemIndex} style={[styles.layerItem, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>) : null}{"signals" in row && row.signals?.length ? row.signals.map((item, itemIndex) => <Text key={itemIndex} style={[styles.layerItem, { color: colors.textRole.secondary }, CompassFonts.body]}>• {item}</Text>) : null}</View></View>; })}</View>;
 }
 
 function SectionHeading({ colors, title, body }: { colors: ColorPalette; title: string; body: string }) {
@@ -374,13 +412,17 @@ const styles = StyleSheet.create({
   sectionBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   subsection: { gap: Spacing.sm, marginTop: Spacing.sm },
   subsectionTitle: { fontSize: FontSize.lg, lineHeight: FontSize.lg * 1.25 },
+  group: { gap: Spacing.xs },
+  groupTitle: { fontSize: FontSize.xs, letterSpacing: 0.5 },
+  domainGroups: { gap: Spacing.md },
   cards: { gap: Spacing.sm },
   card: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md },
   cardText: { flex: 1, gap: 4 },
   cardTitle: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.25 },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  featureCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: 5 },
-  featureTitle: { fontSize: FontSize.md },
+  featureCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.sm },
+  requirements: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
+  requirementBlock: { gap: Spacing.xs },
   layers: { gap: Spacing.sm },
   layer: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
   layerNumber: { width: 26, height: 26, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },

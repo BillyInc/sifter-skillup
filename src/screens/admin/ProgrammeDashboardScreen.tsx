@@ -5,10 +5,10 @@
  * Composition only — every figure comes from adminData (which returns
  * `coming_soon` envelopes this phase), so the screen renders graceful states,
  * never mock numbers:
- *   - 5 StatCards (the institution summary)
+ *   - Structural programme/domain StatCards (the institution summary)
  *   - IntelligenceAlerts (auto-surfaced aggregate signals)
- *   - ProgrammeDemandTable (programme × domain × demand, row-expandable)
- *   - DomainRankPanel (NG / Global / Remote scope toggle)
+ *   - ProgrammeDemandTable and DomainRankPanel, both data-gated until demand
+ *     ingestion is source-backed
  *
  * All wrapped in <AdminShell>, which owns the responsive sidebar↔drawer chrome
  * and the privacy-locked Student-management entry.
@@ -113,7 +113,6 @@ export function ProgrammeDashboardScreen() {
   }, [scope]);
 
   const fmtInt = (n: number) => n.toLocaleString();
-  const fmtPct = (n: number) => `${Math.round(n)}%`;
 
   return (
     <AdminShell
@@ -146,43 +145,6 @@ export function ProgrammeDashboardScreen() {
             }
             deltaPositive={(d) => (d.domainsDelta ?? 0) >= 0}
           />
-          <StatCard
-            icon="📊"
-            label="NG postings / month"
-            state={summary}
-            select={(d) => fmtInt(d.ngPostingsPerMonth)}
-            selectDelta={(d) =>
-              d.ngPostingsYoyPct != null
-                ? `${d.ngPostingsYoyPct >= 0 ? "+" : ""}${fmtPct(
-                    d.ngPostingsYoyPct,
-                  )} YoY`
-                : undefined
-            }
-            deltaPositive={(d) => (d.ngPostingsYoyPct ?? 0) >= 0}
-          />
-          <StatCard
-            icon="🧩"
-            label="Skills gaps flagged"
-            state={summary}
-            select={(d) => fmtInt(d.skillsGapsFlagged)}
-            selectDelta={(d) =>
-              d.skillsGapProgrammes != null
-                ? `across ${d.skillsGapProgrammes} programmes`
-                : undefined
-            }
-            deltaPositive={() => false}
-          />
-          <StatCard
-            icon="🌍"
-            label="Remote-eligible"
-            state={summary}
-            select={(d) => fmtPct(d.remoteEligiblePct)}
-            selectDelta={(d) =>
-              d.remoteEligiblePrevPct != null
-                ? `was ${fmtPct(d.remoteEligiblePrevPct)}`
-                : undefined
-            }
-          />
         </View>
 
         {summary.status !== "real" ? (
@@ -203,13 +165,13 @@ export function ProgrammeDashboardScreen() {
         {/* ── Main grid: table + domain rank ── */}
         <View style={[styles.grid, wide && styles.gridWide]}>
           <View style={wide ? styles.gridMain : undefined}>
-            <Section title="Programme → domain → demand" colors={colors}>
+            <Section title="Programme → domain mapping" colors={colors}>
               <ProgrammeDemandTable state={programmes} />
             </Section>
           </View>
 
           <View style={wide ? styles.gridSide : undefined}>
-            <Section title="Domain demand ranking" colors={colors}>
+            <Section title="Domain mapping" colors={colors}>
               <DomainRankPanel
                 state={domains}
                 scope={scope}
