@@ -130,4 +130,37 @@ describe("semantic colours stay distinguishable from the action", () => {
       hueGap(DarkColors.accentRole.action, DarkColors.accentRole.danger),
     ).toBeGreaterThanOrEqual(10);
   });
+
+  it("uses a dark label on the brand fill, because white fails there", () => {
+    // The design system's primary is #FF8A00. The mockups draw every primary
+    // button as white-on-that, which measures 2.36:1 -- far below AA's 4.5.
+    // Rather than darken the brand colour away from the spec, the label is
+    // dark: #0F172A on #FF8A00 is 7.56:1.
+    for (const P of [LightColors, DarkColors]) {
+      expect(P.accentRole.fill).toBe("#FF8A00");
+      expect(contrast(P.accentRole.onFill, P.accentRole.fill)).toBeGreaterThanOrEqual(4.5);
+      // The specific failure this replaced. If someone "fixes" onFill back to
+      // white, this is the assertion that should stop them.
+      expect(contrast("#FFFFFF", P.accentRole.fill)).toBeLessThan(4.5);
+    }
+  });
+
+  it("keeps `fill` out of the text role, where it would fail", () => {
+    // fill and action are deliberately different tokens. 214 sites render the
+    // accent as TEXT and 123 as a background; collapsing them onto the brand
+    // orange would silently drop every one of those 214 to 2.36:1.
+    expect(LightColors.accentRole.action).not.toBe(LightColors.accentRole.fill);
+    // action must survive as body text on the app's light surfaces.
+    expect(contrast(LightColors.accentRole.action, LightColors.surface.raised)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(LightColors.accentRole.action, LightColors.surface.base)).toBeGreaterThanOrEqual(4.5);
+    // ...and the brand fill must NOT, which is the whole reason it is separate.
+    expect(contrast(LightColors.accentRole.fill, LightColors.surface.raised)).toBeLessThan(4.5);
+  });
+
+  it("keeps the focus ring visible, which the brand orange is not", () => {
+    // Non-text contrast (WCAG 1.4.11) needs 3:1. #FF8A00 on white is 2.36, so
+    // the focus ring cannot be the brand orange even though it is the primary.
+    expect(contrast(LightColors.borderRole.focus, LightColors.surface.raised)).toBeGreaterThanOrEqual(3);
+    expect(LightColors.borderRole.focus).not.toBe(LightColors.accentRole.fill);
+  });
 });

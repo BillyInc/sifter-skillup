@@ -177,7 +177,10 @@ export function SifterButton({
   const onPressIn  = () => Animated.spring(scale, { toValue: 0.985, ...AnimPreset.springGentle }).start();
   const onPressOut = () => Animated.spring(scale, { toValue: 1,    ...AnimPreset.springGentle }).start();
 
-  const bg = variant === 'primary'  ? '#111111'
+  // The primary CTA is the design system's brand orange, filled. It used to be
+  // a hardcoded '#111111' with '#fff' text, which bypassed the token system
+  // entirely -- so the orange primary never actually reached the main button.
+  const bg = variant === 'primary'  ? colors.accentRole.fill
     : variant === 'secondary'     ? colors.bgSecondary
     : variant === 'destructive'   ? colors.red
     : variant === 'success'       ? colors.xpGreen
@@ -185,7 +188,12 @@ export function SifterButton({
     : colors.bgSecondary;
 
   const borderColor = variant === 'ghost' ? colors.border : variant === 'secondary' ? colors.border : 'transparent';
-  const txtColor    = variant === 'ghost' ? colors.text : variant === 'secondary' ? colors.text : '#fff';
+  // Dark label on the orange fill: white would be 2.36:1, below AA. Every
+  // other filled variant keeps a white label, which each of them passes.
+  const txtColor    = variant === 'ghost' ? colors.text
+    : variant === 'secondary' ? colors.text
+    : variant === 'primary'   ? colors.accentRole.onFill
+    : '#fff';
 
   const fontSize = size === 'sm' ? FontSize.sm : size === 'lg' ? FontSize.lg : FontSize.md;
 
