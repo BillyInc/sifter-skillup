@@ -1,5 +1,12 @@
 import { logger as rnLogger, consoleTransport } from 'react-native-logs';
 
+/**
+ * Jest sets JEST_WORKER_ID in every worker. Guarded for React Native, where
+ * `process` is a shim that may not carry env.
+ */
+const IS_TEST =
+  typeof process !== 'undefined' && !!process.env?.JEST_WORKER_ID;
+
 // Default configuration for the logger
 const DEFAULT_CONFIG = {
   // Output to console with custom format
@@ -35,8 +42,15 @@ const DEFAULT_CONFIG = {
     env: __DEV__ ? 'development' : 'production',
     platform: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
   },
-  // Async logging enabled for better performance
-  async: true,
+  // Async logging enabled for better performance -- except under Jest.
+  //
+  // react-native-logs defers async transports past the current tick, so a log
+  // emitted during a test lands AFTER the test finishes. Jest then reports
+  // "Cannot log after tests are done" and exits 1 even though every test
+  // passed, which is exactly what CI hit: "113 passed" followed by exit
+  // code 1. It is timing-dependent, so it reproduces on a loaded CI runner and
+  // not locally -- the worst kind of flake to chase.
+  async: !IS_TEST,
   // Enable date in logs (will be included in our custom format)
   dateFormat: 'iso',
   // Print level in logs
