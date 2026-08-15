@@ -9,6 +9,28 @@ supplied** — see "Blocked" at the end.
 
 ---
 
+## Status
+
+The audit was written before any redesign work; some findings have since been
+acted on. Findings are amended in place when investigation contradicts the
+original wording — H3 was materially wrong as first written, and says so.
+
+| Finding | State | Where |
+|---|---|---|
+| C1. Global search returns nothing | **Fixed** | #97 |
+| C2. Fabricated user data in search overlay | **Fixed** | #97 |
+| H1. Accessibility largely absent | **Partly fixed** — app shell closed; rest concentrated in legacy simulators | #101 |
+| H2. Design tokens leak (1,401 hex literals) | Open — reframed as a dark-mode consistency risk, not a broken rollout | — |
+| H3. Competing breakpoints | Open — **finding corrected**; the token set exists, 13 sites bypass it | — |
+| H4. `Opportunities` / `Jobs` mismatch | Open — **needs a product naming decision**, not a code change | — |
+| M1. Thin loading states | Open | — |
+| M2. Duplicate destinations | Open | — |
+
+Separately, the primary action colour moved from blue to orange (#99), with
+contrast and hue-collision pinned by `__tests__/paletteContrast.test.ts`.
+
+---
+
 ## Scope reality: the codebase contains two products
 
 This reframes the brief, so it comes first.
@@ -118,10 +140,46 @@ personal history — or better, derived from real query counts.
 
 ### H1. Accessibility is largely absent
 
-20 of 226 `.tsx` files under `src/screens` + `src/components` carry any
-`accessibilityLabel` or `accessibilityRole` — about **9%**. §21 asks for an
-accessible product; icon-only controls (the mobile bar, save buttons, carousel
-arrows) are the most exposed.
+29 of 230 `.tsx` files under `src/screens` + `src/components` carry any
+`accessibilityLabel` or `accessibilityRole` — about **12.6%**, up from 9% at
+first audit. §21 asks for an accessible product; icon-only controls are the most
+exposed, since a Feather glyph contributes no text to the accessibility tree.
+
+**The app shell is now fixed** (#101). It was the highest-leverage single file —
+it wraps every screen and had zero accessibility props, so its five icon-only
+controls (menu, search, theme toggle, avatar, drawer close) each announced as a
+bare "button", and the active nav item was distinguished by colour alone (a WCAG
+1.4.1 failure). Both are closed, with tests that assert the rendered
+accessibility tree.
+
+One lesson from that work is worth recording, because it will recur across the
+rest of this finding: **a naive "does this control contain a `<Text>`?" audit
+gives false confidence.** `@expo/vector-icons` renders every glyph as a `<Text>`,
+so a bare icon button looks named. Any coverage check has to ignore private-use
+-area codepoints (U+E000–U+F8FF).
+
+The remaining gap is concentrated, not diffuse — the untouched files with the
+most controls are almost entirely the legacy simulator surface:
+
+| Controls | File |
+|---|---|
+| 74 | `components/simulators/SimulatorCard.tsx` |
+| 39 | `components/simulators/QuantSimulatorCard.tsx` |
+| 34 | `screens/LessonScreen.tsx` |
+| 32 | `components/simulators/island08SimulatorDefs.tsx` |
+
+That concentration is useful for sequencing: the career-intelligence product
+(the brief's actual subject) is in better shape than the 12.6% headline suggests,
+and the bulk of the debt sits in the inherited quant/island learning components.
+And `SimulatorCard_ADDITIONS.tsx` (22 controls) is **dead code** — nothing
+imports it; its only mention anywhere is inside a comment in
+`hooks/useSimulatorWallet.ts`. Its sibling `SimulatorCard_PATCH.ts` is dead too.
+That is **1,394 lines** that should be deleted rather than made accessible, and
+deleting them also removes 22 controls from this finding's denominator.
+
+(`island08SimulatorDefs.tsx` is by contrast genuinely live — `SimulatorCard`
+imports 15 simulators from it. The `_ADDITIONS` / `_PATCH` naming is the tell:
+both are leftover scaffolding from a migration that landed elsewhere.)
 
 Worth noting the opposite finding, because it is a genuine strength: **reduced
 motion is properly implemented and consumed**. `src/theme/motion.ts` reads
@@ -138,18 +196,50 @@ reduced-motion requirement is already met.
 one exists but is bypassed at scale, which makes consistent theming — and the
 light/dark behaviour the shell already supports — unreliable.
 
-### H3. Three competing breakpoints, one of them web-only
+### H3. Four competing breakpoints bypassing the token set that exists
 
-The shell switches to the sidebar at `width >= 1100` **and** `Platform.OS === 'web'`,
-while screens independently use `width >= 768` (7 sites) and `width >= 900`
-(4 sites). §17 asks for a responsive system; there is no shared breakpoint token,
-and a large native tablet never receives the wide layout regardless of width.
+*Corrected after investigation.* This finding originally said "there is no shared
+breakpoint token". That is wrong: `src/hooks/useResponsive.ts` exports
+`BREAKPOINTS` (`wide: 1280`, `desktop: 1024`, `tablet: 768`, `mobile: 375`) plus
+`useResponsive()`, `useSidebarNav()` and `useCommandPalette()`, and it is used in
+73 places. §17's responsive system is built.
 
-### H4. Primary-nav label mismatch
+The real defect is that **13 sites bypass it with raw literals**, across four
+thresholds — `768`, `900`, `960`, `1100` — of which only `768` is a defined
+breakpoint at all:
+
+| Threshold | Sites | Notes |
+|---|---|---|
+| `1100` | `shell/ReferenceShell.tsx:194` | not a defined breakpoint; `useSidebarNav()` returns exactly this intent (`isWeb && isDesktop`) and is unused here |
+| `960` | `web/WebGrid.tsx:41` | not a defined breakpoint |
+| `900` | 3 admin dashboards | not a defined breakpoint; **no** `Platform.OS` guard, unlike the others |
+| `768` | 6 screens + `Sidebar`, `AIExplainer` | matches `BREAKPOINTS.tablet`, hardcoded anyway |
+
+Note the original claim that "a large native tablet never receives the wide
+layout" holds only for the web-guarded sites, and those guards look deliberate.
+The admin dashboards have no guard at all — so the inconsistency runs in both
+directions.
+
+Consolidating shifts layout at the margins (1100 → 1024 for the shell), so it
+wants a visual check, not a blind sweep.
+
+### H4. Primary-nav label mismatch — needs a naming decision, not a code fix
 
 The same destination is "Opportunities" in the desktop sidebar and "Jobs" in the
-mobile bar (`ReferenceShell.tsx:42` vs `:50`). The brief treats Opportunities as
-a first-class concept; the two names should not disagree across viewports.
+mobile bar (`ReferenceShell.tsx:45` vs `:62`).
+
+*Investigated:* this cannot be closed by renaming the mobile tab. "Opportunities"
+is ~78px at 11px semibold, and a five-way split tab bar on a 375px screen leaves
+each label ~59px — it does not fit inline or stacked.
+
+Nor can it be papered over with `accessibilityLabel="Opportunities"` on a tab
+that visibly reads "Jobs": that would *introduce* a WCAG 2.5.3 (Label in Name)
+failure and break voice control. The accessible name correctly follows the
+visible text today.
+
+Resolving it means choosing one short, accurate word for the destination. "Jobs"
+is not it — the section also covers scholarships and deadlines. **This is a
+product vocabulary decision and is deliberately left open.**
 
 ---
 
