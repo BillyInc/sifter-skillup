@@ -19,17 +19,12 @@ function guidanceItems(path: GuidancePathRecord, kind: BranchKind): GuidanceList
     : [];
 }
 
-/** A saved guidance entry. Typed so callers narrow past Array.isArray:
- *  as Record<string, any> the branch arrays produced implicitly-any
- *  callback params and failed noImplicitAny. */
-interface GuidancePathEntry {
-  id: string;
-  name?: string;
-  [key: string]: unknown;
-}
 // The record is deliberately loose: alongside the branch arrays it also
-// carries academicContext, subjects, notes and other non-array members.
-type GuidancePathRecord = Record<string, any>;
+// carries academicContext, subjects, notes and other non-array members. That
+// is already expressed by the declaration above -- this file briefly carried
+// two `GuidancePathRecord` declarations after a merge, which is a hard tsc
+// error (TS2300). `unknown` is kept over `any` because `guidanceItems` does
+// the narrowing properly.
 
 const pathCache = new Map<string, GuidancePathRecord>();
 const pathReads = new Map<string, Promise<GuidancePathRecord>>();

@@ -205,10 +205,12 @@ class TestAccessCodeRecordsTheGrant:
         _login_as(inst_db, _user_row())
         sc = inst_db.get_service_client.return_value
         # Matched nothing: no exception, empty data.
-        (
-            sc.schema.return_value.table.return_value.update.return_value.eq.return_value
-            .select.return_value.execute.return_value
-        ) = MagicMock(data=[])
+        # NB: no .select() in this chain. postgrest's SyncFilterRequestBuilder
+        # has no select() method -- update() already defaults to
+        # returning=representation, so .execute() returns the updated rows.
+        # A mock chain that includes .select() passes against MagicMock (which
+        # invents any attribute) while the real client raises AttributeError.
+        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
 
         r = client.post(
             "/api/institutions/access-code/validate",
@@ -229,7 +231,7 @@ class TestAccessCodeRecordsTheGrant:
         monkeypatch.setattr(settings, "EDUCATOR_ACCESS_CODES", ["LETMEIN"], raising=False)
         _login_as(inst_db, _user_row())
         sc = inst_db.get_service_client.return_value
-        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.select.return_value.execute.side_effect = RuntimeError("db down")
+        sc.schema.return_value.table.return_value.update.return_value.eq.return_value.execute.side_effect = RuntimeError("db down")
 
         r = client.post(
             "/api/institutions/access-code/validate",

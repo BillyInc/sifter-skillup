@@ -215,28 +215,24 @@ def _require_school_identity_schema(svc) -> None:
         ) from exc
 
 
-def _is_developer_admin_route(claim: "VerificationClaim") -> bool:
-    """Recognise the explicit local admin access code."""
-    submitted = (claim.access_code or "").strip().upper()
-    return bool(
-        settings.DEVELOPER_ACCESS_ENABLED
-        and submitted == "LEVELUP-EDU-DEV"
-        and any(
-            hmac.compare_digest(submitted, configured)
-            for configured in settings.EDUCATOR_ACCESS_CODES
-        )
-    )
-
-
 def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization"]:
     name = (claim.organization_name or "").strip()
     if not name:
         return None
     org_type = _normal_org_type(claim.organization_type)
     address = (claim.address or "").strip()
-    # #98 dropped this, leaving _is_developer_admin_route defined but never
-    # called, so the dev code could no longer exercise an already-selected row.
-    developer_route = _is_developer_admin_route(claim)
+    # The address requirement applies to the developer access code too.
+    #
+    # This flipped three times: #98 dropped the dev bypass (leaving
+    # _is_developer_admin_route defined but uncalled), #100 restored it, and
+    # #103 wrote tests asserting the bypass is gone -- but its route change was
+    # lost to a merge conflict resolution, so the tests failed against the
+    # restored bypass. Settled here in favour of no bypass, and the helper is
+    # deleted rather than left dangling so it cannot come back a fourth time.
+    #
+    # The cost is dev-only: the bypass never applied in production, since it
+    # required DEVELOPER_ACCESS_ENABLED. A local admin now supplies an address
+    # like everyone else.
     if not claim.organization_id and len(address) < 8:
         raise HTTPException(
             status_code=400,
@@ -259,11 +255,10 @@ def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization
             selected_row = selected[0]
             existing_address = (selected_row.get("address") or "").strip()
             effective_address = address or existing_address
-            # Selecting an existing school creates no row, so the dev code may
-            # proceed when the stored record has no address. Creating a NEW
-            # school still requires one above -- dev convenience must not write
-            # junk institution rows.
-            if not developer_route and len(effective_address) < 8:
+            # Selecting an existing school creates no row, but an admin grant
+            # against a school with no address on file is still an unverified
+            # claim, so it is refused here as well as on the create path.
+            if len(effective_address) < 8:
                 raise HTTPException(
                     status_code=400,
                     detail="A full organisation address is required for admin access.",
