@@ -1056,6 +1056,87 @@ No trusted learning link is available yet.
 Do not show raw fields such as `foundationSkills`, `essentialSkills`,
 `roleBridgeSkills` or `appearsIn` to the owner or student.
 
+## Admin Explore: structured catalogue view
+
+The owner is not a student in this workspace. When the owner searches Explore,
+the result may be explained in plain language, but the opened record must keep
+the repository's full structure visible enough for an educated administrator to
+review it.
+
+### Programme record
+
+```text
+BUSINESS ADMINISTRATION
+Canonical programme record
+
+What the university programme teaches
+  Technical learning outcomes
+    [source-backed programme outcomes, one per row]
+  Transferable learning outcomes
+    [source-backed programme outcomes, one per row]
+
+Programme → domain mapping
+  [domain name] · direct
+  [domain name] · functional
+  [domain name] · adjacent
+
+Open a domain to inspect its foundation skills, tools, certifications,
+subgroups and roles.
+```
+
+The programme record may also show the JAMB name, faculty, qualification,
+duration, subject requirements and the universities that offer that JAMB name.
+Those are separate admission fields. The admin view must not collapse them into
+the career mapping or label a JAMB name as a CCMAS discipline.
+
+### Domain record
+
+```text
+[Domain name]
+
+Domain-level intelligence
+  Foundation skills — prevalence by role
+  Domain tools — distinctive / common
+  Gateway certifications / role-hint certifications
+
+Subgroups
+  [Subgroup name]
+    Description
+    Subgroup skills
+    Subgroup tools
+    Subgroup certifications
+    Roles in this subgroup
+      [Role name] → open role record
+```
+
+Roles are displayed under their recorded subgroup. A role with no subgroup is
+shown as unassigned and is treated as a data-quality item, not silently placed
+under a guessed subgroup.
+
+### Role record
+
+```text
+[Role name]
+
+Essential skills
+Optional skills
+Methods and competencies
+Role-owned tools
+Role-owned certifications
+Source-backed occupation evidence
+Domain and subgroup placement
+```
+
+The role view keeps role-owned fields distinct from domain and subgroup fields.
+It can show source confidence, data state and evidence provenance. It must not
+turn a listed skill into proof that a student or staff member already has that
+skill, and it must not expose an unbounded database export.
+
+This is now a separate admin detail contract from the student cards. Student
+cards remain concise and guidance-oriented; admin Explore uses bounded,
+source-backed sections and allows the owner to open each domain, subgroup or
+role for its granular records.
+
 ## Data states and safety rules
 
 The owner workspace must distinguish these states:
