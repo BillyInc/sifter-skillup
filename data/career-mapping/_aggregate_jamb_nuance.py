@@ -31,7 +31,14 @@ for f in glob.glob("ccmas/*.json"):
         code_only.setdefault(p["code"], []).append(key)
 
 # custom Type-D programmes carry their own course skills? (enrichment files) — include if present
-for f in ["enrichment/anthropology.json", "enrichment/intelligence_security.json", "enrichment/social_justice.json"]:
+for f in [
+    "enrichment/anthropology.json",
+    "enrichment/intelligence_security.json",
+    "enrichment/social_justice.json",
+    "enrichment/french.json",
+    "enrichment/sport_science.json",
+    "enrichment/sport_management_education.json",
+]:
     d = json.load(open(f, encoding="utf-8"))
     # custom files list courses with skills_learned; roll them up as technical
     tech = []
@@ -108,10 +115,14 @@ unresolved = []
 for x in pm["mappings"]:
     jname = x["jamb_name"]
     code = x.get("ccmas_code"); disc = x.get("ccmas_discipline")
-    if not code:  # unlinked genuinely (shouldn't happen now) -> skip
-        continue
     comps = []
-    pk = resolve_key(disc, code, x.get("jamb_faculty"), x.get("ccmas_name"))
+    # Type-D rows have no CCMAS code by design.  Their reviewed enrichment
+    # curriculum is an external primary component and must still produce a
+    # skills profile; it must not be silently dropped from the JAMB bridge.
+    if not code:
+        pk = ("__custom__", jname) if ("__custom__", jname) in prog else None
+    else:
+        pk = resolve_key(disc, code, x.get("jamb_faculty"), x.get("ccmas_name"))
     if pk:
         comps.append((pk, "primary"))
     else:

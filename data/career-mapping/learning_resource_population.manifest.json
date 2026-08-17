@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0.0",
+  "storage": "partitioned_json_arrays",
+  "source_name": "learning_resource_population.json",
+  "max_part_bytes": 8388608,
+  "resource_rows": 160914,
+  "metadata": {
+    "schema_version": "1.0.0",
+    "generated_on": "2026-08-17",
+    "purpose": "Clickable source-backed domain, subgroup, role, skill, competency, certification and learning resources.",
+    "sql_regeneration_allowed": null,
+    "blocked_reason": "Run validate_career_resource_seed_gate.py for the source and domain reconciliation decision.",
+    "coverage": {
+      "audited_domains": 160,
+      "resource_rows": 160914,
+      "resource_types": {
+        "professional_body": 462,
+        "domain_overview": 803,
+        "competency_reference": 1692,
+        "skill_learning": 13151,
+        "skill_reference": 103192,
+        "tool_learning": 35650,
+        "certification_exam": 926,
+        "role_reference": 5038
+      },
+      "domains_by_resource_type": {
+        "professional_body": 160,
+        "domain_overview": 160,
+        "competency_reference": 160,
+        "skill_learning": 160,
+        "skill_reference": 160,
+        "tool_learning": 158,
+        "certification_exam": 160,
+        "role_reference": 160
+      },
+      "fixed_price_rows": 3821,
+      "fixed_price_currencies": {
+        "USD": 3809,
+        "NGN": 12
+      },
+      "dynamic_price_rows": 3080,
+      "validation_errors": 0
+    }
+  },
+  "parts": [
+    {
+      "file": "learning_resource_population_parts/part-001.json",
+      "part": 1,
+      "row_start": 0,
+      "row_count": 10905,
+      "bytes": 8387971,
+      "sha256": "17c75f6d848182e7519592922ec0830af68e8a15f1ce5d0be33bbe38226a3c4e"
+    },
+    {
+      "file": "learning_resource_population_parts/part-002.json",
+      "part": 2,
+      "row_start": 10905,
+      "row_count": 11087,
+      "bytes": 8388396,
+      "sha256": "d0f3fdfeccc00f8cea4292799637a6827c14c5f27f6da8d4b1cc5da2e65b0b3c"
+    },
+    {
+      "file": "learning_resource_population_parts/part-003.json",
+      "part": 3,
+      "row_start": 21992,
+      "row_count": 10321,
+      "bytes": 8388068,
+      "sha256": "e0473535034912a0a75a5aa9fbaefc8cecc1f390a53ca0d9446d5e17227a50d7"
+    },
+    {
+      "file": "learning_resource_population_parts/part-004.json",
+      "part": 4,
+      "row_start": 32313,
+      "row_count": 10359,
+      "bytes": 8387933,
+      "sha256": "3890d8071da5a424492aca43fe75d186f7ca89a12761684adef83cb5e67eb18c"
+    },
+    {
+      "file": "learning_resource_population_parts/part-005.json",
+      "part": 5,
+      "row_start": 42672,
+      "row_count": 10191,
+      "bytes": 8387951,
+      "sha256": "2afa4a0805f6762230a5b354a7e400839a098b5f0da54a5b0a5f8e37fbc634ce"
+    },
+    {
+      "file": "learning_resource_population_parts/part-006.json",
+      "part": 6,
+      "row_start": 52863,
+      "row_count": 10114,
+      "bytes": 8388408,
+      "sha256": "2eebb62db478cd5aedc4bae81683f3e14843749801a12d1ce4dabaedfc40ff5b"
+    },
+    {
+      "file": "learning_resource_population_parts/part-007.json",
+      "part": 7,
+      "row_start": 62977,
+      "row_count": 9833,
+      "bytes": 8388188,
+      "sha256": "14c2275060df75f51d10f919e5660a6519500f441ddcc7a79d2ae72535a56128"
+    },
+    {
+      "file": "learning_resource_population_parts/part-008.json",
+      "part": 8,
+      "row_start": 72810,
+      "row_count": 9851,
+      "bytes": 8388566,
+      "sha256": "99ab504e76ca3909f818b6a00f504ffb4a36d2ccbae26ad66faba042e1fa8239"
+    },
+    {
+      "file": "learning_resource_population_parts/part-009.json",
+      "part": 9,
+      "row_start": 82661,
+      "row_count": 10187,
+      "bytes": 8387828,
+      "sha256": "54992000c77295b62bf6aa9006623e718fe12305356e77a568afa22d24452338"
+    },
+    {
+      "file": "learning_resource_population_parts/part-010.json",
+      "part": 10,
+      "row_start": 92848,
+      "row_count": 10195,
+      "bytes": 8388320,
+      "sha256": "4534b35d85338288e8f683e83ecaaef13d6ace87310ab3d9636b612455f379c1"
+    },
+    {
+      "file": "learning_resource_population_parts/part-011.json",
+      "part": 11,
+      "row_start": 103043,
+      "row_count": 10078,
+      "bytes": 8388434,
+      "sha256": "28d3d40ca1e628cb2670ae5fa150b6bfc6e39324298652df71d4b08ad4bd19f7"
+    },
+    {
+      "file": "learning_resource_population_parts/part-012.json",
+      "part": 12,
+      "row_start": 113121,
+      "row_count": 10068,
+      "bytes": 8387967,
+      "sha256": "60eb2596180bed638bd51e4e351f629ce6cbac8fc65be26152a4a410618266ce"
+    },
+    {
+      "file": "learning_resource_population_parts/part-013.json",
+      "part": 13,
+      "row_start": 123189,
+      "row_count": 10267,
+      "bytes": 8388460,
+      "sha256": "58dfa55af6aa961c59141531cd56ea60d496b2a7a762e9134f4a130f3170c881"
+    },
+    {
+      "file": "learning_resource_population_parts/part-014.json",
+      "part": 14,
+      "row_start": 133456,
+      "row_count": 10253,
+      "bytes": 8388017,
+      "sha256": "ab09e3b4ad1bbbd2a1fe8761162105c79fec4c3bea3284f46e25695f3426f656"
+    },
+    {
+      "file": "learning_resource_population_parts/part-015.json",
+      "part": 15,
+      "row_start": 143709,
+      "row_count": 10246,
+      "bytes": 8388383,
+      "sha256": "c85688740c458b57940acd9b42c0a5f85e5b3e4a6b2abc657d786c4166640794"
+    },
+    {
+      "file": "learning_resource_population_parts/part-016.json",
+      "part": 16,
+      "row_start": 153955,
+      "row_count": 6959,
+      "bytes": 5731012,
+      "sha256": "f09d042e1594b1811237a4dc1a16a621dcb9d290b88d1be00ef80ef385e8c188"
+    }
+  ]
+}

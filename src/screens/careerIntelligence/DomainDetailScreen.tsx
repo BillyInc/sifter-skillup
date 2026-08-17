@@ -39,6 +39,7 @@ import {
   FoundationSkillsBlock,
   ToolGroupsBlock,
   CertPlacementList,
+  LearningResourcesBlock,
   RoleClusterSection,
   RoleCard,
   NotesWidget,
@@ -261,6 +262,10 @@ function DomainBody({
             roleHint={domain.roleHintCertifications}
           />
         </View>
+      </View>
+
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <LearningResourcesBlock resources={domain.resources} />
       </View>
 
       {/* Per-edge mapping feedback */}

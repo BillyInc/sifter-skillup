@@ -48901,6 +48901,26 @@
       },
       "element_name": "Graphics or photo imaging software",
       "element_id": "2.E.4.b"
+     },
+     {
+      "tool": "Microsoft Access",
+      "role_freq": null,
+      "score": null,
+      "hot": false,
+      "in_demand": false,
+      "domain_spread": null,
+      "group": "distinctive",
+      "source": "global_esco",
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_30_3_software_skills",
+       "element_names": [
+        "Data base user interface and query software"
+       ]
+      },
+      "element_name": "Data base user interface and query software",
+      "element_id": "2.E.6.f"
      }
     ],
     "common": [

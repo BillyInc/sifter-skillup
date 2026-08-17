@@ -185,6 +185,56 @@ def _tool_groups(rows: list[dict]) -> dict:
     return {"distinctive": distinctive, "common": common}
 
 
+def _career_resource(row: dict) -> dict:
+    """Map a normalized learning/professional resource to the API contract."""
+    return {
+        "id": row.get("id"),
+        "domainId": row.get("domain_id"),
+        "subgroupId": row.get("subgroup_id"),
+        "roleId": row.get("role_id"),
+        "resourceType": row.get("resource_type"),
+        "targetName": row.get("target_name"),
+        "provider": row.get("provider"),
+        "region": row.get("region"),
+        "accessType": row.get("access_type"),
+        "delivery": row.get("delivery"),
+        "url": row.get("url"),
+        "price": _num(row.get("price")),
+        "currency": row.get("currency"),
+        "pricePeriod": row.get("price_period"),
+        "priceAsOf": _date_str(row.get("price_as_of")),
+        "priceSource": row.get("price_source"),
+        "sourceUrl": row.get("source_url"),
+        "description": row.get("description"),
+        "sourceConfidence": row.get("source_confidence"),
+        "dataState": row.get("data_state"),
+        "sourceProvenance": row.get("source_provenance") or {},
+    }
+
+
+def _career_resources(
+    svc: Any,
+    *,
+    domain_id: Optional[str] = None,
+    role_id: Optional[str] = None,
+    include_role: bool = True,
+) -> list[dict]:
+    """Read the additive resource layer without breaking older databases."""
+    try:
+        query = svc.table("career_learning_resources").select("*")
+        if domain_id:
+            query = query.eq("domain_id", domain_id)
+        if role_id:
+            query = query.eq("role_id", role_id)
+        elif not include_role:
+            query = query.is_("role_id", "null")
+        rows = query.order("resource_type").order("target_name").execute().data or []
+        return [_career_resource(row) for row in rows]
+    except Exception as exc:  # noqa: BLE001
+        log.debug("career resource layer unavailable", error=str(exc))
+        return []
+
+
 def _foundation_skills(domain: dict) -> list[dict]:
     """Domain foundation_skills JSONB + parallel foundation_skill_uris map →
     FoundationSkillEnriched[] (skill/prevalence/n + ESCO uri by name)."""
@@ -629,6 +679,17 @@ async def get_domain(domain_id: str):
 
         tool_rows = tool_res.data or []
         cert_rows = cert_res.data or []
+        resource_rows = _career_resources(svc, domain_id=domain_uuid, include_role=False)
+        resources_by_subgroup: dict[str, list[dict]] = {}
+        resources_by_role: dict[str, list[dict]] = {}
+        domain_resources: list[dict] = []
+        for resource in resource_rows:
+            if resource.get("roleId"):
+                resources_by_role.setdefault(resource["roleId"], []).append(resource)
+            elif resource.get("subgroupId"):
+                resources_by_subgroup.setdefault(resource["subgroupId"], []).append(resource)
+            else:
+                domain_resources.append(resource)
 
         # Optional cross-domain role-family enrichment. The migration is
         # additive, so older databases still render the domain without it.
@@ -687,9 +748,10 @@ async def get_domain(domain_id: str):
                      "nigerianContext": sg.get("nigerian_context") or {},
                      "skillSources": sg.get("skill_sources") or {},
                      "methodEvidence": methods_by_subgroup.get(sg_id, []),
-                     "tools": _tool_groups(sg_tools),
-                    "certifications": sg_certs,
-                }
+                      "tools": _tool_groups(sg_tools),
+                     "certifications": sg_certs,
+                     "resources": resources_by_subgroup.get(sg_id, []),
+                 }
             )
 
         roles = [
@@ -702,7 +764,7 @@ async def get_domain(domain_id: str):
                 "nigerianContext": role_context_by_key.get(r.get("role_key"), {}),
                 "computationalSubgroups": computational_links_by_role.get(r.get("role_key"), []),
                 "eliteStatus": r.get("elite_status"),
-                "crossDomainFamily": (
+                 "crossDomainFamily": (
                     {
                         "key": family_by_role[r["role_key"]].get("family_key"),
                         "name": family_by_role[r["role_key"]].get("canonical_name"),
@@ -711,9 +773,10 @@ async def get_domain(domain_id: str):
                         "sourceConfidence": family_by_role[r["role_key"]].get("source_confidence"),
                         "dataState": family_by_role[r["role_key"]].get("data_state"),
                     }
-                    if r.get("role_key") in family_by_role else None
-                ),
-            }
+                     if r.get("role_key") in family_by_role else None
+                 ),
+                 "resources": resources_by_role.get(r.get("id"), []),
+             }
             for r in (role_res.data or [])
         ]
 
@@ -736,8 +799,9 @@ async def get_domain(domain_id: str):
             "gatewayCertifications": gateway,
             "roleHintCertifications": role_hint,
             "subgroups": subgroups,
-            "roles": roles,
-        }
+             "roles": roles,
+             "resources": domain_resources,
+         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
         log.error("career get_domain failed", error=str(exc))
@@ -762,6 +826,7 @@ async def get_role(role_id: str):
         if not rres.data:
             return ResponseModel(data=_coming_soon("Role not found."))
         role = rres.data[0]
+        resource_rows = _career_resources(svc, role_id=role.get("id"))
         role_tools: list[dict] = []
         role_certs: list[dict] = []
         try:
@@ -977,6 +1042,7 @@ async def get_role(role_id: str):
             "currencyStatus": role.get("currency_status"),
             "currencyVerifiedAt": _date_str(role.get("currency_verified_at")),
             "currencySource": role.get("currency_source"),
+            "resources": resource_rows,
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001

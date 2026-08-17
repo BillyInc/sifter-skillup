@@ -136,7 +136,7 @@
    "requested": "game theory",
    "esco_skill": "http://data.europa.eu/esco/skill/8b0f73ff-d36b-4196-bb83-464c3a6ef07d",
    "skill_type": "knowledge",
-   "mapped_role_count": 18,
+   "mapped_role_count": 20,
    "mapped_roles": [
     "D002|ICT consultant",
     "D002|data analyst",
@@ -145,6 +145,8 @@
     "D010|ICT consultant",
     "D010|data analyst",
     "D011|financial analyst",
+    "D012|blockchain developer",
+    "D012|financial analyst",
     "D013|financial analyst",
     "D033|ICT consultant",
     "D033|data analyst",
