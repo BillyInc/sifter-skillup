@@ -181,7 +181,7 @@ export default function CareerHomeScreen() {
   const { user } = useAuth();
   const isGuest = user?.auth_provider === "guest";
   const name =
-    user?.username && user.username !== "Learner"
+    user?.username && user.username !== "Student"
       ? user.username.split(" ")[0]
       : null;
 

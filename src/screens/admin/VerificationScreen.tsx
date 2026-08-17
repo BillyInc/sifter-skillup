@@ -79,20 +79,20 @@ function tiersFor(profile: EducatorProfile | null) {
 function roleOutlookFor(profile: EducatorProfile | null): string {
   switch (profile?.role) {
     case "owner":
-      return "Owner outlook: manage the organisation identity, team seats, school code and institution-level settings. Verification proves the organisation; it does not grant access to individual learner data without consent.";
+      return "Owner outlook: manage the organisation identity, team seats, school code and institution-level settings. Verification proves the organisation; it does not grant access to individual student data without consent.";
     case "institution_admin":
     case "admin":
       return "Administrator outlook: run the organisation workspace and its approved workflows. Ownership and verification decisions remain scoped to the organisation owner or authorised reviewer.";
     case "counsellor":
     case "course_advisor":
     case "provisioning_manager":
-      return "Guidance outlook: advise learners, manage the workflows assigned to your seat and use aggregate or consented information only. You do not inherit owner controls.";
+      return "Guidance outlook: advise students, manage the workflows assigned to your seat and use aggregate or consented information only. You do not inherit owner controls.";
     case "hod":
     case "dean":
     case "admissions_officer":
       return "Academic outlook: use programme and admissions intelligence within your faculty or admissions role. Institution-wide controls remain outside this seat.";
     case "data_viewer":
-      return "Read-only outlook: review the aggregate intelligence your organisation has authorised. You cannot change identity, team or learner-provisioning settings.";
+      return "Read-only outlook: review the aggregate intelligence your organisation has authorised. You cannot change identity, team or student-provisioning settings.";
     default:
       return "Member outlook: access is limited to the organisation role selected during onboarding and expands only when that role is authorised and verified.";
   }

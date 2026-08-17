@@ -26,18 +26,18 @@ export default function AdminStudentGuidancePage() {
   };
 
   return (
-    <AdminShell title="Guide learner" eyebrow="Student guidance">
+    <AdminShell title="Guide student" eyebrow="Student guidance">
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}
         contentContainerStyle={[styles.content, webContainer as object]}
       >
         <View style={styles.intro}>
-          <Text style={[styles.title, CompassFonts.displayBold, { color: colors.text }]}>Build this learner&apos;s guidance path</Text>
-          <Text style={[styles.body, { color: colors.textMuted }]}>Start with the learner&apos;s programme and university, then select the domains, sub-groups and career roles that are relevant to the conversation. The report will include the selected branches and their own skills, tools and certifications.</Text>
+          <Text style={[styles.title, CompassFonts.displayBold, { color: colors.text }]}>Build this student&apos;s guidance path</Text>
+          <Text style={[styles.body, { color: colors.textMuted }]}>Start with the student&apos;s programme and university, then select the domains, sub-groups and career roles that are relevant to the conversation. The report will include the selected branches and their own skills, tools and certifications.</Text>
         </View>
         <LocalLegalNotice audience="institution" />
         <SifterButton
-          label="Start learner guidance"
+          label="Start student guidance"
           onPress={startGuidance}
           disabled={!userId}
           variant="track"

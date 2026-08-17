@@ -91,7 +91,7 @@ export function SkillsGapScreen() {
               state={{ status: "coming_soon", data: null, meta: { notice: "Programme skill coverage is for university curriculum teams." } }}
               empty={() => true}
               emptyTitle="Not part of this workspace"
-              emptyBody="School and tutorial teams should use learner guidance and teaching workflows instead."
+              emptyBody="School and tutorial teams should use student guidance and teaching workflows instead."
             >
               {() => null}
             </ComingSoonPanel>

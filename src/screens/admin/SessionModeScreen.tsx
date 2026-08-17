@@ -87,7 +87,7 @@ export function SessionModeScreen() {
               <Text style={[styles.heroBody, { color: colors.textSoft }]}>
                 Use the admission guidance flow with a student sitting beside
                 you. The session uses subjects, programmes and universities
-                without saving personal learner data.
+                without saving personal student data.
               </Text>
             </View>
 

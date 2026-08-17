@@ -528,7 +528,7 @@ export interface ToolGroups {
   common: ToolV2[];
 }
 
-/** A source-backed method or concept. This is not proof that a learner has
+/** A source-backed method or concept. This is not proof that a student has
  * demonstrated competence in it. */
 export interface ComputationalMethodEvidence {
   name: string;

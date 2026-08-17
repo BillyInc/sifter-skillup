@@ -568,7 +568,7 @@ const opt_s = StyleSheet.create({
 // ═══════════════════════════════════════════════════════════════════════════════
 // SIMULATOR 2 — CAIRO INVOKE
 // Make a real JSON-RPC call to a live Starknet Sepolia contract
-// The learner sees: raw request → raw response → decoded result
+// The student sees: raw request → raw response → decoded result
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const INVOKE_SCENARIOS: Record<string, {

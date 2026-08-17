@@ -3194,7 +3194,7 @@ This lesson comes before Lab 1's formal lessons about the type system. Lab 1 wil
   examples: [
     {
       contextTag: '[Reading every part of the function definition]',
-      context: 'A new learner reads: fn calculate_fee(amount: u256, rate_bps: u16) -> u256',
+      context: 'A new student reads: fn calculate_fee(amount: u256, rate_bps: u16) -> u256',
       scenario: 'They identify each part: fn marks the start of a function definition. calculate_fee is the name. amount: u256 means "I need a piece of information named amount, and it must be a very large whole number." rate_bps: u16 means "I also need rate_bps, a smaller whole number." -> u256 means "I will give back a very large whole number."',
       outcome: 'Breaking down the function definition into its parts makes it readable. The function takes two pieces of information (its parameters), does something with them, and gives one piece back (its return value). The types tell you what kind of information each piece is.',
     },
@@ -14802,7 +14802,7 @@ Required tests (minimum):
 // JAVASCRIPT PREREQUISITE DECLARATION:
 //   This lab uses TypeScript and React Native. No prior JS knowledge assumed.
 //   Every JS/TS syntax element is defined inline on first use.
-//   An Expo starter template is provided — learners write inside scaffolded files.
+//   An Expo starter template is provided — students write inside scaffolded files.
 //   Chapters referenced from pythonLevels.ts: not applicable (JS, not Python).
 //   The Starkzap SDK abstracts all low-level Starknet complexity.
 //
@@ -16860,7 +16860,7 @@ Required features:
 // JAVASCRIPT PREREQUISITE DECLARATION:
 //   This lab uses TypeScript and React Native. No prior JS knowledge assumed.
 //   Every JS/TS syntax element is defined inline on first use.
-//   An Expo starter template is provided — learners write inside scaffolded files.
+//   An Expo starter template is provided — students write inside scaffolded files.
 //   Chapters referenced from pythonLevels.ts: not applicable (JS, not Python).
 //   The Starkzap SDK abstracts all low-level Starknet complexity.
 //

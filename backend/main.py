@@ -690,7 +690,7 @@ async def _post_auth_device_register(user_id: str, body: dict, request: Request)
         await register_device_for_user(user_id, device_id, device_name, platform, app_version, push_token)
 
 
-def _create_user(telegram_id=None, wallet_address=None, username="Learner",
+def _create_user(telegram_id=None, wallet_address=None, username="Student",
                  avatar_url=None, auth_provider="guest", email=None, password_hash=None,
                  first_name=None, middle_name=None, last_name=None, date_of_birth=None) -> dict:
     onboarding_completed = auth_provider == "guest"
