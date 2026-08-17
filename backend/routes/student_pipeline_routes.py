@@ -241,7 +241,7 @@ class StartingPointIn(BaseModel):
 
 
 class GuidanceReportPathIn(BaseModel):
-    """The selected branches of one learner's guidance journey.
+    """The selected branches of one Student's guidance journey.
 
     The path stores source identifiers plus display snapshots. Detailed source
     records are resolved when a report is rendered, so the report does not
@@ -480,7 +480,7 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
 
 @router.get("/guidance-path", response_model=ResponseModel)
 async def get_guidance_path(current_user: dict = Depends(Auth.get_current_user)):
-    """Return the learner's current selected guidance branches."""
+    """Return the Student's current selected guidance branches."""
     try:
         res = (
             _svc().table("guidance_report_paths").select("*")
@@ -506,7 +506,7 @@ async def save_guidance_path(
     payload: GuidanceReportPathIn = Body(...),
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """Persist the selected branches used by the learner's eventual report."""
+    """Persist the selected branches used by the Student's eventual report."""
     source = payload.source if payload.source in {"self", "onboarding", "explore"} else "explore"
     snapshot = _path_snapshot(payload.path)
     if not snapshot:
@@ -564,7 +564,7 @@ def _current_guidance_report_context(current_user: dict) -> ReportContext:
 async def get_my_guidance_report_html(
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """Authenticated learner report; print-to-PDF is handled by the browser."""
+    """Authenticated Student report; print-to-PDF is handled by the browser."""
     try:
         ctx = _current_guidance_report_context(current_user)
         return Response(content=build_report_html(ctx), media_type="text/html")
@@ -579,7 +579,7 @@ async def get_my_guidance_report_html(
 async def get_my_guidance_report_docx(
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """Authenticated learner report as an editable document."""
+    """Authenticated Student report as an editable document."""
     try:
         ctx = _current_guidance_report_context(current_user)
         safe = (ctx.student_name or "student").replace(" ", "_")[:40]
@@ -626,7 +626,7 @@ async def list_subjects(
             query = query.contains("exam_types", [exam_type.strip().lower()])
         # Return the complete active catalogue for the requested exam type.
         # Stream tags only affect ordering; they must never hide valid subjects
-        # that a learner may need to choose.
+        # that a Student may need to choose.
         res = query.order("name").execute()
         items = [
             {

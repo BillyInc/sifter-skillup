@@ -80,7 +80,7 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
             <>
               <Text style={styles.emoji}>⚡</Text>
               <Text style={styles.title}>How are we doing?</Text>
-              <Text style={styles.sub}>Your feedback makes Sifter better for every learner.</Text>
+              <Text style={styles.sub}>Your feedback makes Sifter better for every student.</Text>
               <View style={styles.stars}>
                 {[1,2,3,4,5].map(s => (
                   <TouchableOpacity key={s} onPress={() => handleRating(s)}>
@@ -122,7 +122,7 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
               <Text style={styles.emoji}>🙏</Text>
               <Text style={styles.title}>Thanks! Would you rate us?</Text>
               <Text style={styles.sub}>
-                A store rating takes 10 seconds and helps other learners find us — especially in low-income regions where word-of-mouth matters most.
+                A store rating takes 10 seconds and helps other students find us — especially in low-income regions where word-of-mouth matters most.
               </Text>
               <TouchableOpacity style={styles.submitBtn} onPress={handleStoreRedirect}>
                 <Text style={styles.submitText}>Rate Sifter LevelUp ★★★★★</Text>

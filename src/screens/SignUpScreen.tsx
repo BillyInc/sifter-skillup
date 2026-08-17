@@ -276,7 +276,7 @@ export default function SignUpScreen() {
         try {
           await studentAccountApi.claim({ code: claimCode.trim() });
         } catch {
-          // The account is already created. The learner can retry the same
+          // The account is already created. The student can retry the same
           // code from My school without losing the new account.
         }
       }
@@ -420,11 +420,11 @@ export default function SignUpScreen() {
          hint="You can also add this during onboarding."
       />
       <AuthField
-        label="Learner claim code (optional)"
+        label="Student claim code (optional)"
         value={claimCode}
         onChangeText={(value) => setClaimCode(value.toUpperCase())}
         placeholder="SCHOOL-SS1-XXXXXXXX"
-        hint="Use this if your school already created your learner account."
+        hint="Use this if your school already created your student account."
       />
       {passwordMismatch ? (
         <Text style={[styles.inlineError, { color: colors.accentRole.danger }, CompassFonts.bodyMedium]}>
