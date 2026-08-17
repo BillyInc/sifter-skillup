@@ -477,7 +477,7 @@ export const provisioningData = {
     return openStudentDocument(`/api/provisioning/students/${userId}/report.html`);
   },
 
-  /** Save the complete selected guidance path for a provisioned learner. */
+  /** Save the complete selected guidance path for a provisioned student. */
   async saveGuidancePath(userId: string, path: Record<string, unknown>): Promise<void> {
     await request(`/api/provisioning/students/${encodeURIComponent(userId)}/guidance-path`, {
       method: "PUT",
@@ -485,7 +485,7 @@ export const provisioningData = {
     });
   },
 
-  /** Load the complete selected guidance path for an admin-guided learner. */
+  /** Load the complete selected guidance path for an admin-guided student. */
   async getGuidancePath(userId: string): Promise<{ path: Record<string, any> } | null> {
     const payload = await request<{ path?: Record<string, any> }>(
       `/api/provisioning/students/${encodeURIComponent(userId)}/guidance-path`,
@@ -493,7 +493,7 @@ export const provisioningData = {
     return payload ? { path: payload.path ?? {} } : null;
   },
 
-  /** Ask hidden claimed learners for consent without receiving their identities. */
+  /** Ask hidden claimed students for consent without receiving their identities. */
   async requestConsent(scope: "progress" | "contact" | "full" = "progress", message?: string): Promise<{ queued: number }> {
     const w = await request<{ queued: number }>(`/api/provisioning/consent-requests`, {
       method: "POST",

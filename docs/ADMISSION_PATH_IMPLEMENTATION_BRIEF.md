@@ -40,7 +40,7 @@ users do not repeatedly see it. Direct auth routes may retain a safe intro fallb
 but the root route is the canonical first-visit entry.
 
 The carousel copy must describe Sifter LevelUp as career/programme intelligence for
-Nigerian learners and institutions. Do not call it a `skill platform`. Do not claim
+Nigerian students and institutions. Do not call it a `skill platform`. Do not claim
 that it is a generic learning platform. The three functional messages are:
 
 1. Sifter LevelUp — career intelligence for Nigerian starting points.

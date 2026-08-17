@@ -173,7 +173,7 @@ export default function AdmissionBrowseScreen() {
     setNotice(null);
   };
 
-  // The organisation type owns the learner context. Providers are JAMB-only,
+  // The organisation type owns the student context. Providers are JAMB-only,
   // universities are undergraduate-only, and only secondary schools have
   // streams; stale URL values must not widen that contract. Do not silently
   // choose the first class or stream: an admin must make that choice before
@@ -312,7 +312,7 @@ export default function AdmissionBrowseScreen() {
       >
         <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>GUIDANCE CONTEXT</Text>
         <Text style={[styles.title, { color: colors.text }]}>Organisation context unavailable</Text>
-        <Text style={[styles.hint, { color: colors.textMuted }]}>We need the administrator organisation type before showing learner guidance. Return to Explore and start again.</Text>
+        <Text style={[styles.hint, { color: colors.textMuted }]}>We need the administrator organisation type before showing student guidance. Return to Explore and start again.</Text>
        <CareerDisclaimer variant="footer" />
      </ScrollView>
     );
@@ -333,7 +333,7 @@ export default function AdmissionBrowseScreen() {
         <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>GUIDANCE CONTEXT</Text>
         <Text style={[styles.title, { color: colors.text }]}>Who are you guiding?</Text>
         <Text style={[styles.hint, { color: colors.textMuted }]}>{learnerAudience.description} Choose this context before we show admission subjects or programme guidance.</Text>
-        <Text style={[styles.label, { color: colors.textSoft }]}>Learner type</Text>
+        <Text style={[styles.label, { color: colors.textSoft }]}>Student type</Text>
         <View style={styles.modeRow}>
           {learnerAudience.learnerTypes.map((value) => (
             <TouchableOpacity

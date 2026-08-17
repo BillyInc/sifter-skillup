@@ -55,8 +55,8 @@ export default function AdminExploreRoute() {
         profile?.organizationType === "university"
           ? "Review programmes,\ndomains and peers"
           : profile?.organizationType === "tutorial_centre" || profile?.organizationType === "jamb_cafe"
-            ? "Guide JAMB learners\nfrom skills to routes"
-          : "Guide a learner through\nsubjects and programmes"
+            ? "Guide JAMB students\nfrom skills to routes"
+          : "Guide a student through\nsubjects and programmes"
       }
       intro={
         <AdminExploreIntro

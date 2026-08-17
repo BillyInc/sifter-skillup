@@ -1,8 +1,8 @@
-"""Resolve a learner's selected guidance branches for report rendering.
+"""Resolve a Student's selected guidance branches for report rendering.
 
 The resolver is intentionally selection-driven. It fetches the detailed source
 records for selected IDs only; it never treats the complete domain catalogue as
-the learner's chosen path.
+the Student's chosen path.
 """
 from __future__ import annotations
 
@@ -105,7 +105,7 @@ def resolve_guidance_report_context(
     subgroup_choices = _selected_items(path, "subgroups")
     role_choices = _selected_items(path, "roles")
     # Direct subgroup/role selections still belong to a domain. Resolve those
-    # parents even when the learner did not select the domain header itself.
+    # parents even when the Student did not select the domain header itself.
     inferred_domain_choices = list(domain_choices)
     known_domain_keys = {
         str(item.get("id") or item.get("domainId") or item.get("domainKey"))

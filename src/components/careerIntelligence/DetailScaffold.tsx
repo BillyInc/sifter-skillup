@@ -41,9 +41,9 @@ export interface DetailScaffoldProps<T> {
   pdfTitle?: string;
   /** Authenticated full-report endpoint. */
   pdfPath?: string;
-  /** Explicitly add this selected branch to the learner's report path. */
+  /** Explicitly add this selected branch to the student's report path. */
   reportSelection?: GuidanceReportSelection;
-  /** When an administrator is guiding a learner, save to that learner. */
+  /** When an administrator is guiding a student, save to that student. */
   targetStudentId?: string;
   /** The data envelope the body renders from. */
   state: DataState<T>;

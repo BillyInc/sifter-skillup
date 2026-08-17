@@ -12,15 +12,15 @@
  * §6 boundary — educators get NO national institution leaderboard, NO peer
  * comparison and NO Domain Reach Audit: a secondary school has no programme
  * mix of its own to audit or benchmark. Those surfaces are university-only
- * (§0.6) and are deliberately absent here. Learner data is aggregate-only.
+ * (§0.6) and are deliberately absent here. Student data is aggregate-only.
  *
  * Sections, per §6.0:
  *   - Header: school name, school type, admin role
- *   - Learner counts (aggregate) + domains represented
+ *   - Student counts (aggregate) + domains represented
  *   - Intelligence alerts
  *   - Two panels side by side (stacking narrow): Guidance workflow, and
  *     Guidance market intelligence with [View all →]
- *   - Your learners' interests (aggregate, no PII) with [Open Learners →]
+ *   - Your students' interests (aggregate, no PII) with [Open Students →]
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -69,7 +69,7 @@ interface LearnerDomainShareView {
   domainId?: string;
   domainName?: string;
   pct?: number;
-  /** Points above/below the national learner mix, when computed (§6.0). */
+  /** Points above/below the national student mix, when computed (§6.0). */
 }
 
 interface LearnerIntelligenceView {
@@ -104,7 +104,7 @@ export function SchoolGuidanceDashboardScreen() {
     useState<DataState<InstitutionSummary>>(loadingState);
   const [alerts, setAlerts] =
     useState<DataState<IntelligenceAlert[]>>(loadingState);
-  const [learners, setLearners] = useState<DataState<unknown>>(loadingState);
+  const [students, setLearners] = useState<DataState<unknown>>(loadingState);
 
   useEffect(() => {
     let active = true;
@@ -116,7 +116,7 @@ export function SchoolGuidanceDashboardScreen() {
     };
   }, [user?.id]);
 
-  // Aggregate reads only — educators never receive individual learner rows.
+  // Aggregate reads only — educators never receive individual student rows.
   useEffect(() => {
     let active = true;
     (async () => {
@@ -136,18 +136,18 @@ export function SchoolGuidanceDashboardScreen() {
   }, []);
 
   const providerOnly = Boolean(profile?.providerSessionOnly);
-  const learnerNoun = providerOnly ? "Sessions" : "Learners";
+  const learnerNoun = providerOnly ? "Sessions" : "Students";
   // NOT "General dashboard". An advisory organisation's home is Explore (see
   // adminHomeForProfile) — this is one view among several, and calling it a
   // general dashboard is what made it read as a second, worse copy of the
-  // catalogue. It is the cohort: who your learners are, in aggregate.
+  // catalogue. It is the cohort: who your students are, in aggregate.
   const title = providerOnly ? "Guidance sessions" : "Cohort";
   const orgName =
     (summary.status === "real" ? summary.data?.institutionName : null) ||
     profile?.organizationName ||
     "Your organisation";
 
-  const learnerState: DataState<unknown> = learners;
+  const learnerState: DataState<unknown> = students;
 
   return (
     <AdminShell title={title} eyebrow={orgName}>
@@ -183,14 +183,14 @@ export function SchoolGuidanceDashboardScreen() {
               .join("  ·  ")}
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            Who your learners are, in aggregate. Programme and university
+            Who your students are, in aggregate. Programme and university
             lookup lives in Explore. Aggregate only — you never see an
-            individual learner&apos;s choices unless they explicitly link their
+            individual student&apos;s choices unless they explicitly link their
             account.
           </Text>
         </View>
 
-        {/* ── Aggregate learner stats ── */}
+        {/* ── Aggregate student stats ── */}
         <View style={styles.guidanceActions}>
           {!providerOnly ? (
             <TouchableOpacity
@@ -201,7 +201,7 @@ export function SchoolGuidanceDashboardScreen() {
                 Create student accounts
               </Text>
               <Text style={[styles.guidanceActionBody, { color: colors.textMuted }]}>
-                Provision learners and print claim cards.
+                Provision students and print claim cards.
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -225,7 +225,7 @@ export function SchoolGuidanceDashboardScreen() {
         <View style={styles.stats}>
           <StatCard
             icon="👥"
-            label={providerOnly ? "Session learners" : "Learners"}
+            label={providerOnly ? "Session students" : "Students"}
             state={learnerState}
             select={(d) => fmtInt(view<LearnerIntelligenceView>(d).totalAffiliated)}
             selectDelta={(d) => {
@@ -265,7 +265,7 @@ export function SchoolGuidanceDashboardScreen() {
           >
             Guidance signals (optional)
           </Text>
-          <Text style={[styles.panelNote, { color: colors.textMuted }]}>These are aggregate market or curriculum signals for planning guidance work. They never describe an individual learner, and the section can remain empty when no verified signal has been ingested.</Text>
+          <Text style={[styles.panelNote, { color: colors.textMuted }]}>These are aggregate market or curriculum signals for planning guidance work. They never describe an individual student, and the section can remain empty when no verified signal has been ingested.</Text>
           <IntelligenceAlerts state={alerts} />
         </View>
 
@@ -273,14 +273,14 @@ export function SchoolGuidanceDashboardScreen() {
         <View style={[styles.grid, wide && styles.gridWide]}>
           <View style={wide ? styles.gridCell : undefined}>
             <Panel
-              title="Advising a learner?"
+              title="Advising a student?"
               linkLabel="Open Explore"
               onPress={() => adminNav.explore(router as Nav)}
             >
               <Text style={[styles.panelNote, { color: colors.textMuted }]}>
                 Programmes, universities, requirements and cut-offs are in
                 Explore — your home page. This screen answers a different
-                question: who your learners are, taken together.
+                question: who your students are, taken together.
               </Text>
             </Panel>
           </View>
@@ -300,7 +300,7 @@ export function SchoolGuidanceDashboardScreen() {
           </View>
         </View>
 
-        {/* ── Learners' interests (aggregate, no PII) ── */}
+        {/* ── Students' interests (aggregate, no PII) ── */}
         <Panel
           title={`Your ${learnerNoun.toLowerCase()}' interests`}
           linkLabel={`Open ${learnerNoun}`}
@@ -311,13 +311,13 @@ export function SchoolGuidanceDashboardScreen() {
           }
         >
           <Text style={[styles.panelNote, { color: colors.textMuted }]}>
-            Aggregate and k-anonymised. No individual learner, and no record of
-            which learner chose which programme.
+            Aggregate and k-anonymised. No individual student, and no record of
+            which student chose which programme.
           </Text>
           <ComingSoonPanel
             state={learnerState}
-            emptyTitle="No learner interests yet"
-            emptyBody="Once learners link their accounts, their aggregate domain mix appears here."
+            emptyTitle="No student interests yet"
+            emptyBody="Once students link their accounts, their aggregate domain mix appears here."
           >
             {(data) => {
               const v = view<LearnerIntelligenceView>(data);
@@ -369,7 +369,7 @@ export function SchoolGuidanceDashboardScreen() {
         <Text style={[styles.footNote, { color: colors.textMuted }]}>
           {providerOnly
             ? "Tutorial centres and JAMB cafés advise per session — there is no persistent roster to benchmark."
-            : "Secondary schools do not have a programme mix to audit. Use guidance and peer context to support learner decisions."}
+            : "Secondary schools do not have a programme mix to audit. Use guidance and peer context to support student decisions."}
         </Text>
       </ScrollView>
     </AdminShell>
