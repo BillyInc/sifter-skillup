@@ -4,8 +4,8 @@ Status: reconciled and regenerated on 2026-08-17.
 
 This is the authoritative runbook for the current career, JAMB, domain,
 admission, and source-backed resource data. SQL files are generated outputs;
-the JSON files and generators under `data/career-mapping/` are the sources of
-truth.
+the partition manifest, JSON parts, and generators under
+`data/career-mapping/` are the sources of truth.
 
 Do not paste every SQL file in `backend/` into Supabase in filename order.
 Several files are historical patches, rollback scripts, or superseded schema
@@ -19,6 +19,19 @@ variants.
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,560 programme-role scores, 3,342 JAMB-domain links, 4,000 overlaps |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 3,342 JAMB-domain links; standalone replacement only |
+
+The resource artifacts are intentionally partitioned. The JSON parts are
+build inputs and are not read by the application at runtime. The SQL parts
+seed the `skillup_dev.career_learning_resources` table consumed by the backend.
+
+- JSON manifest: `data/career-mapping/learning_resource_population.manifest.json`
+- JSON parts: `data/career-mapping/learning_resource_population_parts/part-*.json`
+- SQL manifest: `backend/seed_career_resources_v1.manifest.json`
+- SQL parts: `backend/seed_career_resources_v1_parts/part-*.sql`
+- Each SQL part is a complete transaction. Run `part-001.sql` through the
+  final numbered part in order after `migration_career_resources_v1.sql`.
+- The old monolithic `learning_resource_population.json` and
+  `seed_career_resources_v1.sql` files are intentionally not used.
 
 The JAMB inheritance audit is clean: all 416 names have an explicit scope,
 with 111 full CCMAS, 28 combined CCMAS, 272 course-scoped partial CCMAS, and
@@ -64,6 +77,10 @@ python _emit_jamb_domain_refresh_sql.py
 The first gate must pass before `seed_career_resources_v1_parts/` is treated as
 seedable. The current gate has eight informational source-exception records,
 but no pending review or mechanical validation errors.
+
+The build command recreates the JSON parts and checksum manifest. The resource
+seed generator reads those parts and recreates the ordered SQL parts and SQL
+manifest. Do not recreate a monolithic JSON or SQL file for deployment.
 
 ## Fresh or staging database order
 
@@ -140,7 +157,8 @@ Run after the schema above:
 4. `backend/seed_career_v2.sql`
 5. `backend/seed_phase8_9_enrichment.sql`
 6. `backend/seed_demand_baseline.sql` if demand baseline data is wanted
-7. `backend/seed_career_resources_v1.manifest.json` and `backend/seed_career_resources_v1_parts/`
+7. `backend/seed_career_resources_v1_parts/` in numeric filename order; keep
+   `seed_career_resources_v1.manifest.json` for row counts and checksums
 8. `backend/patch_subject_catalog_streams.sql`
 
 `seed_career_v2.sql` already contains the complete current
