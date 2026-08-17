@@ -77,6 +77,8 @@ export { FoundationSkillsBlock } from "./FoundationSkillsBlock";
 export type { FoundationSkillsBlockProps } from "./FoundationSkillsBlock";
 export { ToolGroupsBlock } from "./ToolGroupsBlock";
 export type { ToolGroupsBlockProps } from "./ToolGroupsBlock";
+export { LearningResourcesBlock } from "./LearningResourcesBlock";
+export type { LearningResourcesBlockProps } from "./LearningResourcesBlock";
 export { MethodEvidenceBlock } from "./MethodEvidenceBlock";
 export type { MethodEvidenceBlockProps } from "./MethodEvidenceBlock";
 export { CertPlacementList } from "./CertPlacementList";

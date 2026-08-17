@@ -6,6 +6,8 @@ satisfied those groups in matchedSubjectCount, instead of reporting 0
 and being mis-ranked.
 """
 
+import asyncio
+
 from routes import student_pipeline_routes as spr
 
 
@@ -25,6 +27,15 @@ class _FakeQuery:
         return self
 
     def in_(self, *args, **kwargs):
+        return self
+
+    def contains(self, *args, **kwargs):
+        return self
+
+    def ilike(self, *args, **kwargs):
+        return self
+
+    def order(self, *args, **kwargs):
         return self
 
     def limit(self, *args, **kwargs):
@@ -149,3 +160,80 @@ def test_unsatisfied_one_of_group_still_excludes_option(monkeypatch):
     # Only one subject from the group; min_from_group is 2.
     out = spr._match_structured_subject_options({"physics"}, limit=10)
     assert out == []
+
+
+def test_combined_match_requires_minimum_utme_and_olevel_subjects():
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics, Chemistry",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry",
+            exam_type="combined",
+        )
+    )
+
+    assert result.data["data"] == []
+    assert "five O-level" in result.data["meta"]["notice"]
+
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry, Biology",
+            exam_type="combined",
+        )
+    )
+
+    assert result.data["data"] == []
+    assert "three other UTME" in result.data["meta"]["notice"]
+
+
+def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
+    monkeypatch.setattr(spr, "get_json", lambda _key: None)
+    monkeypatch.setattr(spr, "set_json", lambda *args: None)
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _FakeSvc(
+            {
+                "subject_catalog": [
+                    {
+                        "id": "science-subject",
+                        "code": "PHY",
+                        "name": "Physics",
+                        "aliases": [],
+                        "category": "science",
+                        "stream_tags": ["science"],
+                    },
+                    {
+                        "id": "cross-stream-subject",
+                        "code": "ECON",
+                        "name": "Economics",
+                        "aliases": [],
+                        "category": "social_science",
+                        "stream_tags": ["commercial", "art"],
+                    },
+                ]
+            }
+        ),
+    )
+
+    result = asyncio.run(spr.list_subjects(q=None, stream="science", exam_type="utme"))
+    names = [row["name"] for row in result.data["data"]]
+
+    assert names == ["Physics", "Economics"]
+
+
+def test_programme_search_shape_keeps_requirements_for_detail_view():
+    result = spr._jamb_detail_out(
+        {
+            "jamb_programme_id": "jp1",
+            "jamb_name": "Business Administration",
+            "jamb_faculty": "Management Sciences",
+            "degree_type": "B.Sc.",
+            "utme_subjects": "English, Mathematics",
+            "olevel_requirement": "Five credits",
+        }
+    )
+
+    assert result["jambName"] == "Business Administration"
+    assert "utmeSubjects" not in result
+    assert "olevelRequirement" not in result

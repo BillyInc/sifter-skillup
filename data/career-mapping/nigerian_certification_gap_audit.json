@@ -1,0 +1,444 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Certification and credential-state audit for Nigerian evidence linked to visible Sifter LevelUp domains.",
+  "sql_regeneration": "blocked_until_evidence_review",
+  "interpretation": {
+    "statutory_registration_and_practice_licence": "A Nigerian regulator explicitly provides registration, licensing, a register or a practice authorisation pathway.",
+    "sector_training_and_competency_context": "A Nigerian institution or sector body provides training, certificates or named competencies, but a universal individual licence was not verified.",
+    "sector_context_no_general_individual_licence_found": "The reviewed sources provide sector or institutional context; no general individual Nigerian licence was found in this pass. This is not proof that no specialised credential exists."
+  },
+  "reviews": [
+    {
+      "review_id": "ng_cert_d024_nmcn",
+      "domain_ids": [
+        "D024"
+      ],
+      "domain_names": [
+        "Nursing"
+      ],
+      "body_ids": [
+        "ng_nmcn"
+      ],
+      "evidence_state": "statutory_registration_and_practice_licence",
+      "credential_signals": [
+        "NMCN registration after the professional qualifying examination",
+        "NMCN practising licence and licence renewal",
+        "certificate and registration verification services"
+      ],
+      "competency_signals": [
+        "general nursing and midwifery professional qualifying examination",
+        "registered nursing specialties and continuing professional development"
+      ],
+      "sources": [
+        {
+          "name": "Nursing and Midwifery Council of Nigeria Registration",
+          "url": "https://www.nmcn.gov.ng/unitreg.html",
+          "supports": "registration categories, qualifying examination and registration process"
+        },
+        {
+          "name": "Nursing and Midwifery Council of Nigeria Licensing",
+          "url": "https://nmcn.gov.ng/licensing.html",
+          "supports": "practice licence issuance, renewal and continuing professional development evidence"
+        }
+      ],
+      "conclusion": "Nursing has a Nigerian statutory registration and practising-licence pathway.",
+      "review_action": "Use NMCN registration/licence as a bounded credential signal; do not present it as a generic nursing course certificate."
+    },
+    {
+      "review_id": "ng_cert_d066_vcn",
+      "domain_ids": [
+        "D066"
+      ],
+      "domain_names": [
+        "Veterinary Science"
+      ],
+      "body_ids": [
+        "ng_vcn"
+      ],
+      "evidence_state": "statutory_registration_and_practice_licence",
+      "credential_signals": [
+        "Veterinary Council of Nigeria register of veterinary surgeons",
+        "VCN registration, licensing and practitioner verification services"
+      ],
+      "competency_signals": [
+        "standards of knowledge and skills for registration as a veterinary surgeon",
+        "professional conduct and veterinary practice standards"
+      ],
+      "sources": [
+        {
+          "name": "Veterinary Council of Nigeria",
+          "url": "https://vcn.gov.ng/",
+          "supports": "statutory mandate, standards of knowledge and skills, register and practice oversight"
+        },
+        {
+          "name": "Veterinary Council of Nigeria Practitioner Portal",
+          "url": "https://portal.vcn.gov.ng/",
+          "supports": "profile approval and practitioner identity/licence verification workflow"
+        }
+      ],
+      "conclusion": "Veterinary practice has a Nigerian statutory registration and licensing authority.",
+      "review_action": "Keep veterinary surgeon licensing separate from animal-health, livestock and production training credentials."
+    },
+    {
+      "review_id": "ng_cert_d067_mdcn",
+      "domain_ids": [
+        "D067"
+      ],
+      "domain_names": [
+        "Dentistry"
+      ],
+      "body_ids": [
+        "ng_mdcn",
+        "ng_dtrbn"
+      ],
+      "evidence_state": "statutory_registration_and_practice_licence",
+      "credential_signals": [
+        "MDCN dental registration categories",
+        "MDCN annual or life practising licence for dental practitioners",
+        "MDCN registration, licensing and credential verification"
+      ],
+      "competency_signals": [
+        "standards of knowledge and skill for dental practice",
+        "dental professional registration, ethics and continuing professional development"
+      ],
+      "sources": [
+        {
+          "name": "Medical and Dental Council of Nigeria",
+          "url": "https://mdcn.gov.ng/",
+          "supports": "dental registration, annual/life licence, accredited dental education and professional regulation"
+        },
+        {
+          "name": "MDCN Guideline on Registration as a Medical or Dental Practitioner",
+          "url": "https://mdcn.gov.ng/public/storage/documents/sub_document_1215406857.pdf",
+          "supports": "registration and licensure requirements for medicine and dentistry"
+        }
+      ],
+      "conclusion": "Dentistry has a Nigerian statutory registration and practising-licence pathway through MDCN.",
+      "review_action": "Keep dental therapy and other oral-health cadres as separate regulated pathways where their own board data is available."
+    },
+    {
+      "review_id": "ng_cert_d047_arcn",
+      "domain_ids": [
+        "D047"
+      ],
+      "domain_names": [
+        "Agricultural Science"
+      ],
+      "body_ids": [
+        "ng_arcn",
+        "ng_fman"
+      ],
+      "evidence_state": "sector_training_and_competency_context",
+      "credential_signals": [
+        "National Diploma and Higher National Diploma agriculture certificates through ARCN colleges",
+        "short courses and agricultural personnel training"
+      ],
+      "competency_signals": [
+        "crop cultivation and preservation",
+        "animal breeding and production",
+        "post-harvest processing",
+        "agricultural equipment fabrication and maintenance",
+        "extension services and agribusiness practice"
+      ],
+      "sources": [
+        {
+          "name": "Agricultural Research Council of Nigeria",
+          "url": "https://arcn.gov.ng/",
+          "supports": "agricultural research, training and extension mandates"
+        },
+        {
+          "name": "Federal College of Agriculture, Ibadan, ARCN",
+          "url": "https://www.arcn.gov.ng/mandate/training/fca-ibadan/institute",
+          "supports": "practical skills, ND/HND certificates and short competency courses"
+        }
+      ],
+      "conclusion": "Nigeria has strong agricultural training and competency evidence, but this pass did not verify one general statutory licence for every agricultural role.",
+      "review_action": "Show agriculture credentials by pathway or occupation; do not imply that every agriculturist needs one national practice licence."
+    },
+    {
+      "review_id": "ng_cert_d071_sports",
+      "domain_ids": [
+        "D071"
+      ],
+      "domain_names": [
+        "Sports Management"
+      ],
+      "body_ids": [
+        "ng_nso",
+        "ng_nff"
+      ],
+      "evidence_state": "sector_training_and_competency_context",
+      "credential_signals": [
+        "National Institute of Sports certificates, diplomas and higher diplomas for sports administrators, coaches and technicians"
+      ],
+      "competency_signals": [
+        "sports administration and organisation",
+        "coach and sports technician development",
+        "event, facility and competition management"
+      ],
+      "sources": [
+        {
+          "name": "Federal Ministry of Sports Development Strategic Plan",
+          "url": "https://sports.gov.ng/resources/Federal-Ministry-of-Sports-Development-Strategic-Plan-2024.pdf",
+          "supports": "National Institute of Sports training and sports administration mandate"
+        },
+        {
+          "name": "NCCE Nigeria Certificate in Education sports management curriculum",
+          "url": "https://ncce.gov.ng/NCCE-Digitization/minstandard/new_cul_pdf/science.pdf",
+          "supports": "sports organisation, administration, leadership and event-management competencies"
+        }
+      ],
+      "conclusion": "Nigeria has sports-management training and sector institutions, but this pass did not verify a general individual sports-manager licence.",
+      "review_action": "Use training and role competencies; avoid displaying a licence requirement unless a specific sports occupation or federation requires one."
+    },
+    {
+      "review_id": "ng_cert_d144_nimet",
+      "domain_ids": [
+        "D144"
+      ],
+      "domain_names": [
+        "Climate Science, Meteorology"
+      ],
+      "body_ids": [
+        "ng_nimet",
+        "ng_nihsa",
+        "ng_nesrea"
+      ],
+      "evidence_state": "sector_training_and_competency_context",
+      "credential_signals": [
+        "NiMet regional training and meteorological education capacity-building"
+      ],
+      "competency_signals": [
+        "weather and climate observation",
+        "forecasting and interpretation",
+        "meteorological data collection, processing and dissemination",
+        "research and technical climate services"
+      ],
+      "sources": [
+        {
+          "name": "Nigerian Meteorological Agency",
+          "url": "https://nimet.gov.ng/about",
+          "supports": "national meteorological mandate, services, observation, forecasting and research"
+        },
+        {
+          "name": "Regional Training Centre Nigeria meteorology handbook",
+          "url": "https://rtc.org.ng/wp-content/uploads/2023/09/Handbook-RTC-Reviewed-2023-UPDATED-1.pdf",
+          "supports": "meteorology training and certificate pathway; not a general independent practice licence"
+        }
+      ],
+      "conclusion": "Nigeria has official meteorology services and training evidence, but this pass did not verify a universal individual meteorologist licence.",
+      "review_action": "Present NiMet and training credentials as sector or role-specific evidence, with the licensing field left bounded and explicit."
+    },
+    {
+      "review_id": "ng_cert_d152_ncmm_nga",
+      "domain_ids": [
+        "D152"
+      ],
+      "domain_names": [
+        "Museum Curation, Cultural Heritage, Archives"
+      ],
+      "body_ids": [
+        "ng_ncmm",
+        "ng_ncg",
+        "ng_fmacce"
+      ],
+      "evidence_state": "sector_context_no_general_individual_licence_found",
+      "credential_signals": [
+        "institutional museum, heritage and visual-arts capacity-building"
+      ],
+      "competency_signals": [
+        "collection documentation",
+        "conservation and preservation",
+        "museum management and public interpretation",
+        "heritage research and cultural-property stewardship"
+      ],
+      "sources": [
+        {
+          "name": "National Commission for Museums and Monuments functions",
+          "url": "https://museum.ng/functions-of-ncmm/",
+          "supports": "collection, documentation, conservation, preservation, research and public presentation mandates"
+        },
+        {
+          "name": "National Gallery of Art Nigeria",
+          "url": "https://nga.gov.ng/",
+          "supports": "national visual-arts and gallery-sector context"
+        }
+      ],
+      "conclusion": "The reviewed Nigerian sources provide museum, heritage and gallery competencies but no general individual professional licence for curators or archivists.",
+      "review_action": "Use training, portfolio and institution-specific evidence; do not invent a Nigerian curator or archivist licence."
+    },
+    {
+      "review_id": "ng_cert_d155_naseni",
+      "domain_ids": [
+        "D155"
+      ],
+      "domain_names": [
+        "Nanotechnology, Advanced Materials"
+      ],
+      "body_ids": [
+        "ng_naseni",
+        "ng_rmrdc",
+        "ng_nas"
+      ],
+      "evidence_state": "sector_context_no_general_individual_licence_found",
+      "credential_signals": [
+        "NASENI nanotechnology and advanced-materials capacity-building and research programmes"
+      ],
+      "competency_signals": [
+        "nanomedicine and nano-bioengineering",
+        "nanoelectronics and nanoenergy",
+        "nanostructured materials",
+        "instrumentation, materials analysis and interdisciplinary research"
+      ],
+      "sources": [
+        {
+          "name": "NASENI Centre of Excellence in Nanotechnology and Advanced Materials",
+          "url": "https://naseni.dhagun.com.ng/institutes/center_details/1/co_ex_na/",
+          "supports": "national nanotechnology capacity-building, research themes and skills mandate"
+        },
+        {
+          "name": "Raw Materials Research and Development Council",
+          "url": "https://rmrdc.gov.ng/",
+          "supports": "Nigerian raw-materials research and industrial development context"
+        }
+      ],
+      "conclusion": "Nigeria has nanotechnology and advanced-materials research capacity, but this pass did not verify a general individual nanotechnology licence or national practitioner credential.",
+      "review_action": "Use research, laboratory and engineering credentials from the relevant discipline; do not create a standalone Nigerian nanotechnology licence."
+    },
+    {
+      "review_id": "ng_cert_d041_d078_research_social",
+      "domain_ids": [
+        "D041",
+        "D078"
+      ],
+      "domain_names": [
+        "Scientific Research",
+        "Social Sciences"
+      ],
+      "body_ids": [
+        "ng_nas",
+        "ng_nucc",
+        "ng_nimr",
+        "ng_niser"
+      ],
+      "evidence_state": "sector_context_no_general_individual_licence_found",
+      "credential_signals": [
+        "academic and research qualifications",
+        "institutional research training and professional association membership where applicable"
+      ],
+      "competency_signals": [
+        "research design and methods",
+        "data collection, analysis and interpretation",
+        "evidence-based reporting and publication",
+        "policy and social research communication"
+      ],
+      "sources": [
+        {
+          "name": "Nigerian Academy of Science",
+          "url": "https://nas.org.ng/",
+          "supports": "scientific professional community and research excellence context"
+        },
+        {
+          "name": "Nigerian Institute of Medical Research",
+          "url": "https://nimr.gov.ng/",
+          "supports": "research institution and scientific research context"
+        },
+        {
+          "name": "Nigerian Institute of Social and Economic Research",
+          "url": "https://niser.gov.ng/",
+          "supports": "social and economic research context"
+        }
+      ],
+      "conclusion": "The reviewed Nigerian sources support research competencies and institutional pathways, but not one general individual licence covering scientific or social research roles.",
+      "review_action": "Represent degrees, research methods, publications, projects and bounded memberships; do not show a universal research licence."
+    },
+    {
+      "review_id": "ng_cert_d121_forestry",
+      "domain_ids": [
+        "D121"
+      ],
+      "domain_names": [
+        "Forestry, Wildlife Management"
+      ],
+      "body_ids": [
+        "ng_fan",
+        "ng_fman",
+        "ng_nesrea"
+      ],
+      "evidence_state": "sector_context_no_general_individual_licence_found",
+      "credential_signals": [
+        "forestry, conservation and environmental training or academic qualifications"
+      ],
+      "competency_signals": [
+        "forest management",
+        "wildlife and habitat conservation",
+        "environmental compliance and field assessment",
+        "forest inventory and natural-resource stewardship"
+      ],
+      "sources": [
+        {
+          "name": "Forestry Association of Nigeria",
+          "url": "https://fan.org.ng/",
+          "supports": "Nigerian forestry professional association context"
+        },
+        {
+          "name": "National Environmental Standards and Regulations Enforcement Agency",
+          "url": "https://nesrea.gov.ng/",
+          "supports": "environmental compliance and enforcement context"
+        }
+      ],
+      "conclusion": "The reviewed sources support forestry and environmental competencies, but no general individual forestry or wildlife-management licence was verified.",
+      "review_action": "Use academic, field and conservation credentials and identify permits only where a specific activity requires them."
+    },
+    {
+      "review_id": "ng_cert_d150_religious",
+      "domain_ids": [
+        "D150"
+      ],
+      "domain_names": [
+        "Religious Ministry, Theology"
+      ],
+      "body_ids": [
+        "ng_fmacce"
+      ],
+      "evidence_state": "sector_context_no_general_individual_licence_found",
+      "credential_signals": [
+        "institutional theological, ministry or faith-organisation training may apply by denomination"
+      ],
+      "competency_signals": [
+        "scriptural or doctrinal study",
+        "pastoral care and community leadership",
+        "teaching, counselling and ethical practice"
+      ],
+      "sources": [
+        {
+          "name": "Federal Ministry of Arts, Culture and the Creative Economy",
+          "url": "https://fmino.gov.ng/departments/entertainment-creative-service/",
+          "supports": "national cultural-sector context only; no religious professional licence inferred"
+        }
+      ],
+      "conclusion": "No general Nigerian individual religious-ministry licence was verified in this pass; credentials are usually institution or denomination specific.",
+      "review_action": "Keep ministry credentials denomination-specific and clearly label the source institution; do not infer government licensing."
+    }
+  ],
+  "coverage": {
+    "review_rows": 11,
+    "domain_ids_reviewed": [
+      "D024",
+      "D041",
+      "D047",
+      "D066",
+      "D067",
+      "D071",
+      "D078",
+      "D121",
+      "D144",
+      "D150",
+      "D152",
+      "D155"
+    ],
+    "statutory_rows": 3,
+    "training_rows": 3,
+    "no_general_licence_rows": 5
+  }
+}

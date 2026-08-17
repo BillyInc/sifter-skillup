@@ -19,17 +19,14 @@ import { useRouter, type Router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import {
   DetailScaffold,
-  DomainChip,
   DataSourceBadge,
   DegreeSkills,
-  NotesWidget,
   SectionLabel,
   TextTabs,
   invalidateGuidancePathCache,
 } from "@/components/careerIntelligence";
 import {
   careerData,
-  type JambProgrammeSuggestion,
   type JambProgrammeSchool,
   type JambProgrammeRequirements,
 } from "@/lib/careerData";
@@ -45,8 +42,6 @@ import {
   type DataState,
   type DataMeta,
   type Programme,
-  type DomainLink,
-  type DomainMatchType,
   type AdmissionInsight,
 } from "@/types/career";
 import {
@@ -65,12 +60,6 @@ export interface ProgrammeOverviewScreenProps {
 
 type TrackTab = "employment" | "entrepreneurship" | "admission";
 
-const DOMAIN_TIERS: { type: DomainMatchType; title: string }[] = [
-  { type: "direct", title: "Direct domains" },
-  { type: "functional", title: "Functional domains" },
-  { type: "adjacent", title: "Adjacent domains" },
-];
-
 const PLACEHOLDER: Programme = {
   id: "",
   name: "Programme",
@@ -83,20 +72,9 @@ const SECTIONS = [
   { key: "overview", label: "Overview" },
   { key: "requirements", label: "Requirements" },
   { key: "schools", label: "Schools" },
-  { key: "careers", label: "Careers" },
 ] as const;
 
 const CHROME_OFFSET = 104;
-
-function groupDomains(domains: DomainLink[]): Record<DomainMatchType, DomainLink[]> {
-  const by: Record<DomainMatchType, DomainLink[]> = {
-    direct: [],
-    functional: [],
-    adjacent: [],
-  };
-  for (const link of domains) by[link.matchType].push(link);
-  return by;
-}
 
 export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreenProps) {
   const router = useRouter();
@@ -110,7 +88,6 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   const [admissionState, setAdmissionState] = useState<DataState<AdmissionInsight>>(
     () => comingSoon<AdmissionInsight>("Admission requirements are not available for this programme yet."),
   );
-  const [jambSuggestions, setJambSuggestions] = useState<JambProgrammeSuggestion[]>([]);
   const [jambSchools, setJambSchools] = useState<JambProgrammeSchool[]>([]);
   const [jambRequirements, setJambRequirements] =
     useState<JambProgrammeRequirements | null>(null);
@@ -140,7 +117,6 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
     (async () => {
       const result = await careerData.searchJambProgrammes(state.data!.name);
       if (active && result.status === "real" && result.data) {
-        setJambSuggestions(result.data);
         const firstJamb = result.data[0];
         if (firstJamb) {
           const [detailRes, schoolsRes] = await Promise.all([
@@ -160,9 +136,13 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
   }, [state.status, state.data]);
 
   const programme = state.data;
+  // The programme endpoint is the authoritative name source. Search results
+  // are only used to find a JAMB requirements row; their first result must not
+  // replace the mapped student-facing name.
   const jambName =
-    jambSuggestions[0]?.studentName ??
     programme?.studentName ??
+    programme?.studentNames?.[0] ??
+    programme?.name ??
     "Programme name unavailable";
 
   const header = (
@@ -204,7 +184,6 @@ export function ProgrammeOverviewScreen({ programmeId }: ProgrammeOverviewScreen
           tab={tab}
           admissionState={admissionState}
           resp={resp}
-          jambSuggestions={jambSuggestions}
           jambSchools={jambSchools}
           jambRequirements={jambRequirements}
         />
@@ -233,7 +212,6 @@ function ProgrammeBody({
   tab,
   admissionState,
   resp,
-  jambSuggestions,
   jambSchools,
   jambRequirements,
 }: {
@@ -246,11 +224,9 @@ function ProgrammeBody({
   tab: TrackTab;
   admissionState: DataState<AdmissionInsight>;
   resp: ReturnType<typeof useResponsive>;
-  jambSuggestions: JambProgrammeSuggestion[];
   jambSchools: JambProgrammeSchool[];
   jambRequirements: JambProgrammeRequirements | null;
 }) {
-  const exploreNav = useExploreNav();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   // Keep hook order stable when the user changes tabs.
@@ -272,9 +248,11 @@ function ProgrammeBody({
     }
     setActiveSection(key);
   }, []);
-  const grouped = useMemo(() => groupDomains(data.domains ?? []), [data.domains]);
   const studentProgrammeName =
-    jambSuggestions[0]?.studentName ?? data.studentName ?? "Programme name unavailable";
+    data.studentName ??
+    data.studentNames?.[0] ??
+    data.name ??
+    "Programme name unavailable";
   const requirementCards = useMemo(
     () => [
       {
@@ -502,41 +480,6 @@ function ProgrammeBody({
       )}
 
       {/* ── Career domains ────────────────────────────────── */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("careers", e.nativeEvent.layout.y)} />
-        <View style={styles.leadRow}>
-          <Text style={[styles.lead, { color: colors.textRole.secondary }]}>
-            These are the career areas connected to this programme. Direct areas
-            are closest to the programme; functional and adjacent areas show
-            other routes supported by the mapping.
-          </Text>
-        </View>
-
-        {DOMAIN_TIERS.map(({ type, title }) => {
-          const links = grouped[type];
-          if (!links.length) return null;
-          return (
-            <View key={type} style={styles.section}>
-              <SectionLabel>{title}</SectionLabel>
-              <View style={styles.chips}>
-                {links.map((link) => (
-                  <DomainChip
-                    key={link.domainId}
-                    label={link.domainName}
-                    matchType={link.matchType}
-                    onPress={() => exploreNav.domain(router, link.domainId)}
-                  />
-                ))}
-              </View>
-            </View>
-          );
-        })}
-
-        <View style={styles.section}>
-          <NotesWidget entityType="programme" entityId={programmeId} />
-        </View>
-
-      </View>
     </>
   );
 

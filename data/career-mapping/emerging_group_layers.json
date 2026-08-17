@@ -1851,10 +1851,10 @@
     "perform scientific research",
     "approve engineering design",
     "biology",
-    "genetics",
-    "test procedures",
-    "scientific research methodology",
-    "develop test procedures"
+    "technical drawings",
+    "use technical drawing software",
+    "mathematics",
+    "medical devices materials"
    ],
    "tools": [
     "Microsoft Excel",
@@ -2245,28 +2245,28 @@
     "ng_nbte"
    ],
    "skills": [
+    "electronics",
     "engineering principles",
     "design drawings",
     "electrical engineering",
     "mathematics",
     "technical drawings",
     "physics",
-    "engineering processes",
     "computer engineering",
-    "electronics",
-    "mechanical engineering"
+    "automation technology",
+    "adjust engineering designs"
    ],
    "tools": [
     "Autodesk AutoCAD",
-    "C",
-    "C#",
     "Dassault Systemes SolidWorks",
-    "Git",
     "Microsoft Excel",
     "Microsoft Office software",
+    "The MathWorks MATLAB",
+    "C",
+    "C#",
     "Microsoft PowerPoint",
     "Python",
-    "The MathWorks MATLAB"
+    "Git"
    ]
   },
   {
@@ -2345,14 +2345,14 @@
    "tools": [
     "Autodesk AutoCAD",
     "Autodesk AutoCAD Civil 3D",
-    "ESRI ArcGIS software",
     "Microsoft Excel",
     "Microsoft Office software",
-    "Bentley MicroStation",
+    "ESRI ArcGIS software",
     "Microsoft Outlook",
+    "Bentley MicroStation",
     "Adobe Illustrator",
     "Adobe Photoshop",
-    "Hypertext markup language HTML"
+    "Microsoft Access"
    ]
   },
   {

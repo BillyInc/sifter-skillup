@@ -15,6 +15,7 @@ import re
 from collections import Counter, defaultdict
 
 from _nigerian_context import resolved_nigerian_context
+from _role_overlay_loader import load_overlay_roles
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
@@ -105,8 +106,7 @@ def main():
     source_registry = load(DOMAIN_SOURCE_REGISTRY) if os.path.exists(DOMAIN_SOURCE_REGISTRY) else {}
     structure = load(DOMAIN_STRUCTURE)
     roles = load(ROLE_LIBRARY)
-    overlay = load(EMERGING_OVERLAY) if os.path.exists(EMERGING_OVERLAY) else {"roles": []}
-    roles.extend(overlay.get("roles") or [])
+    roles.extend(load_overlay_roles())
     role_tools = load(ROLE_TOOLS)
     group_layers = load(GROUP_LAYERS) if os.path.exists(GROUP_LAYERS) else {"domains": {}, "subgroups": []}
     group_layers_by_key = {
