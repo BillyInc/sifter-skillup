@@ -1239,10 +1239,10 @@ async def programmes_by_subjects(
                 require_full=True,
             )
         if structured:
-            return ResponseModel(data=_real(structured))
+            return ResponseModel(data=_real(_attach_school_context(structured)))
         fallback = _match_text_requirements(selected_norm, limit=min(limit, 80))
         notice = "Some requirements need review, so these are possible matches from the published requirement text. Confirm the programme details before deciding."
-        return ResponseModel(data=_fallback(fallback, notice))
+        return ResponseModel(data=_fallback(_attach_school_context(fallback), notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Subject-to-programme matching is temporarily unavailable."))
@@ -1395,6 +1395,72 @@ def _jamb_details_for_ids(ids: list[str]) -> dict[str, dict]:
         .execute()
     ).data or []
     return {r["jamb_programme_id"]: _jamb_detail_out(r) for r in rows}
+
+
+def _attach_school_context(items: list[dict]) -> list[dict]:
+    """Attach bounded university offerings to subject-match rows.
+
+    Subject matching produces a national JAMB-programme result. That is not a
+    university admission decision, but hiding the offering list until after a
+    programme is opened makes the result difficult to evaluate. Keep the
+    response bounded and show the actual offering names; the user still picks a
+    specific university before guidance is finalized.
+    """
+    ids = [item.get("jambProgrammeId") for item in items if item.get("jambProgrammeId")]
+    if not ids:
+        return items
+    try:
+        svc = _svc()
+        rows = (
+            svc.table("v_school_jamb_programmes")
+            .select("school_id, school_name, institution_type, jamb_programme_id, jamb_name")
+            .in_("jamb_programme_id", list(dict.fromkeys(ids)))
+            .limit(2000)
+            .execute()
+        ).data or []
+        school_ids = list({row.get("school_id") for row in rows if row.get("school_id")})
+        locations: dict[str, dict] = {}
+        if school_ids:
+            try:
+                location_rows = (
+                    svc.table("schools")
+                    .select("id, address, city, state, country")
+                    .in_("id", school_ids)
+                    .execute()
+                ).data or []
+                locations = {str(row.get("id")): row for row in location_rows}
+            except Exception as location_exc:  # noqa: BLE001
+                log.debug("subject match school address enrichment unavailable", error=str(location_exc))
+        by_jamb: dict[str, list[dict]] = {}
+        for row in rows:
+            jid = row.get("jamb_programme_id")
+            school_name = (row.get("school_name") or "").strip()
+            if not jid or not school_name:
+                continue
+            location = locations.get(str(row.get("school_id"))) or {}
+            offering = {
+                "schoolId": row.get("school_id"),
+                "schoolName": school_name,
+                "institutionType": row.get("institution_type"),
+                "programmeName": row.get("jamb_name") or "",
+                "studentName": _student_programme_name(row.get("jamb_name")) or row.get("jamb_name"),
+                "address": location.get("address"),
+                "city": location.get("city"),
+                "state": location.get("state"),
+                "country": location.get("country"),
+            }
+            existing = by_jamb.setdefault(jid, [])
+            if offering not in existing:
+                existing.append(offering)
+        for item in items:
+            offerings = by_jamb.get(item.get("jambProgrammeId"), [])
+            item["schoolOfferings"] = offerings[:12]
+            item["schoolNames"] = list(dict.fromkeys(row["schoolName"] for row in offerings))[:3]
+            item["schoolCount"] = len(offerings)
+        return items
+    except Exception as exc:  # noqa: BLE001
+        log.debug("subject match university context unavailable", error=str(exc))
+        return items
 
 
 class SchoolCodeIn(BaseModel):

@@ -335,3 +335,54 @@ and data behavior first, then improve usability and adapt the visual system
 around reality. The full brief in `docs/` is authoritative for the complete
 design rationale and detailed examples; this section is the operational
 checklist Claude Code must follow automatically.
+
+## Career Resource SQL Migration
+
+This repository does not use monolithic career-resource JSON or SQL files.
+The resource population is partitioned so it remains pushable to GitHub.
+
+### Source and generated artifacts
+
+- JSON manifest: `data/career-mapping/learning_resource_population.manifest.json`
+- JSON parts: `data/career-mapping/learning_resource_population_parts/part-*.json`
+- JSON loader: `data/career-mapping/_learning_resource_population_io.py`
+- SQL migration: `backend/migration_career_resources_v1.sql`
+- SQL manifest: `backend/seed_career_resources_v1.manifest.json`
+- SQL seed parts: `backend/seed_career_resources_v1_parts/part-*.sql`
+- Full legacy files `learning_resource_population.json` and
+  `seed_career_resources_v1.sql` are intentionally absent. Do not recreate
+  them for deployment.
+
+### Regenerate and validate
+
+Run from the repository root after changing source data:
+
+```powershell
+python data/career-mapping/_build_learning_resource_population.py
+python data/career-mapping/validate_career_resource_seed_gate.py
+python data/career-mapping/_gen_career_resource_seed.py
+python data/career-mapping/validate_career_resource_seed_gate.py
+```
+
+The builder recreates the JSON parts and checksum manifest. The SQL generator
+loads those parts and recreates the ordered SQL parts and SQL manifest. The
+gate must pass before applying or committing regenerated resource SQL. Expected
+resource population: 160,914 rows, 160 visible domains, and zero validation
+errors.
+
+### Apply to Supabase
+
+1. Apply `backend/migration_career_resources_v1.sql` once.
+2. Apply every file in `backend/seed_career_resources_v1_parts/` in numeric
+   order, from `part-001.sql` through the final numbered part.
+3. Keep each part's `BEGIN;` and `COMMIT;` transaction intact.
+4. Do not paste JSON into Supabase. JSON is a build/audit input; the backend
+   reads the seeded `skillup_dev.career_learning_resources` table.
+5. Verify the final row count and orphan foreign-key checks using the queries
+   in `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
+
+### Git workflow for this migration
+
+After validation, commit the manifests, parts, generator changes, and
+documentation together. Push project changes to `origin/new-changes`. Leave
+machine-local files such as `.claude/settings.local.json` uncommitted.

@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
-import DomainDetailScreen from "@/screens/careerIntelligence/DomainDetailScreen";
+import AdminCareerDetailScreen from "@/screens/admin/AdminCareerDetailScreen";
 
 export default function AdminDomainRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  return <DomainDetailScreen domainId={String(id)} />;
+  return <AdminCareerDetailScreen entity="domain" id={String(id)} />;
 }

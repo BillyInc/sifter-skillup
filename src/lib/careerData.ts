@@ -136,9 +136,14 @@ export interface JambProgrammeSuggestion {
   schoolNames?: string[];
   schoolCount?: number;
   schoolOfferings?: {
+    schoolId?: string | null;
     schoolName: string;
     programmeName: string;
     studentName?: string | null;
+    address?: string | null;
+    city?: string | null;
+    state?: string | null;
+    country?: string | null;
   }[];
   /**
    * What this degree teaches — derived from the CCMAS course learning
@@ -195,6 +200,10 @@ export interface JambProgrammeSchool {
   id?: string | null;
   schoolId: string;
   schoolName: string;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
   institutionType?: string | null;
   jambProgrammeId?: string | null;
   jambName?: string | null;
