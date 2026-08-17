@@ -119,8 +119,8 @@ export default function AdmissionBrowseScreen() {
     decodeURIComponent(readParam(params.olevel_subjects)).replace(/,/g, ", "),
   );
   const rawExamType = readParam(params.exam_type);
-  const [subjectExamType] = useState<"olevel" | "combined">(
-    rawExamType === "olevel" ? "olevel" : "combined",
+  const [subjectExamType, setSubjectExamType] = useState<"utme" | "olevel" | "combined">(
+    rawExamType === "olevel" ? "olevel" : rawExamType === "utme" ? "utme" : "combined",
   );
   const isAdminExplore = readParam(params.admin) === "1";
   const adminType = readParam(params.admin_type);
@@ -156,11 +156,18 @@ export default function AdmissionBrowseScreen() {
     () => olevelSubjectText.split(",").map((s) => s.trim()).filter(Boolean),
     [olevelSubjectText],
   );
-  const hasSubjectContext = subjects.length >= 4 && olevelSubjects.length >= 5;
+  const hasSubjectContext =
+    subjectExamType === "utme"
+      ? subjects.length >= 4
+      : subjectExamType === "olevel"
+        ? olevelSubjects.length >= 5
+        : subjects.length >= 4 && olevelSubjects.length >= 5;
   const canMatchSubjects =
-    subjectExamType === "olevel"
-      ? olevelSubjects.length >= 5
-      : subjects.length >= 4 && olevelSubjects.length >= 5;
+    subjectExamType === "utme"
+      ? subjects.length >= 4
+      : subjectExamType === "olevel"
+        ? olevelSubjects.length >= 5
+        : subjects.length >= 4 && olevelSubjects.length >= 5;
 
   const updateSubjectSelection = (next: string[], kind: "utme" | "olevel") => {
     if (kind === "utme") setSubjectText(next.join(", "));
@@ -228,7 +235,7 @@ export default function AdmissionBrowseScreen() {
       setNotice("Choose at least five O-level subjects before checking programme fit.");
       return;
     }
-    if (subjectExamType === "combined" && subjects.length < 4) {
+    if ((subjectExamType === "utme" || subjectExamType === "combined") && subjects.length < 4) {
       setCandidates([]);
       setNotice("Choose Use of English and three other UTME subjects before matching programmes.");
       return;
@@ -246,7 +253,7 @@ export default function AdmissionBrowseScreen() {
         subjectExamType === "olevel" ? olevelSubjects : subjects,
         stream || undefined,
         {
-          examType: subjectExamType,
+            examType: subjectExamType,
           olevelSubjects,
         },
       );
@@ -406,10 +413,14 @@ export default function AdmissionBrowseScreen() {
       careerData.getJambProgrammeSchools(id),
       careerData.getJambProgramme(id),
       hasSubjectContext
-        ? careerData.getProgrammesBySubjects(subjects, stream || undefined, {
-            examType: "combined",
+          ? careerData.getProgrammesBySubjects(
+            subjectExamType === "olevel" ? olevelSubjects : subjects,
+            stream || undefined,
+            {
+            examType: subjectExamType,
             olevelSubjects,
-          })
+            },
+          )
         : Promise.resolve(null),
     ]);
     setProgrammeDetail(
@@ -724,6 +735,27 @@ export default function AdmissionBrowseScreen() {
         </View>
       ) : (
         <View style={styles.panel}>
+          <Text style={[styles.label, { color: colors.textSoft }]}>What do you want to check?</Text>
+          <View style={styles.modeRow}>
+            <ModeButton label="UTME subjects" active={subjectExamType === "utme"} onPress={() => {
+              setSubjectExamType("utme");
+              setCandidates([]);
+              setSelected(null);
+              setNotice(null);
+            }} />
+            <ModeButton label="O-level subjects" active={subjectExamType === "olevel"} onPress={() => {
+              setSubjectExamType("olevel");
+              setCandidates([]);
+              setSelected(null);
+              setNotice(null);
+            }} />
+            <ModeButton label="Both" active={subjectExamType === "combined"} onPress={() => {
+              setSubjectExamType("combined");
+              setCandidates([]);
+              setSelected(null);
+              setNotice(null);
+            }} />
+          </View>
           {subjectExamType === "combined" ? (
             <LiveSubjectMultiSelect
               label="Your UTME subjects"
@@ -738,25 +770,27 @@ export default function AdmissionBrowseScreen() {
               helperText="Use of English is fixed. Choose 3 other UTME subjects for the JAMB gate."
             />
           ) : null}
-          <LiveSubjectMultiSelect
-            label={
-              subjectExamType === "olevel"
-                ? "O-level subjects you are taking or considering"
-                : "Your O-level subjects"
-            }
-            stream={stream || undefined}
-            examType="olevel"
-            value={olevelSubjects}
-            onChange={(next) => updateSubjectSelection(next, "olevel")}
-            minSelected={5}
-            maxSelected={9}
-            showSearch={false}
-            helperText={
-              subjectExamType === "olevel"
-                ? "Choose at least 5 O-level subjects for early programme guidance. UTME requirements appear after you open a programme."
-                : "Choose at least 5 O-level subjects so the result can show whether the programme requirement is satisfied or has gaps."
-            }
-          />
+          {subjectExamType !== "utme" ? (
+            <LiveSubjectMultiSelect
+              label={
+                subjectExamType === "olevel"
+                  ? "O-level subjects you are taking or considering"
+                  : "Your O-level subjects"
+              }
+              stream={stream || undefined}
+              examType="olevel"
+              value={olevelSubjects}
+              onChange={(next) => updateSubjectSelection(next, "olevel")}
+              minSelected={5}
+              maxSelected={9}
+              showSearch={false}
+              helperText={
+                subjectExamType === "olevel"
+                  ? "Choose at least 5 O-level subjects for early programme guidance. UTME requirements appear after you open a programme."
+                  : "Choose at least 5 O-level subjects so the result can show whether the programme requirement is satisfied or has gaps."
+              }
+            />
+          ) : null}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={runSubjectMatch}
