@@ -17,6 +17,7 @@ hardcode this example.
 - Subject matching becomes available after at least five O-level subjects. English Language and Mathematics are included first by the current form.
 - Programme-name search and subject matching are separate experiences.
 - A programme result shows enough information to choose a university. Full requirements appear after a university is selected.
+- The programme-first route continues directly into guidance; it does not send the student to Home or general Explore after programme selection.
 - A selected-university overview shows only that university's requirements. `Change university` returns to the picker without clearing the plan.
 - Students can save and compare more than one programme. They are not forced to choose one during onboarding.
 - The student-facing experience never shows curriculum classification labels, raw mapping fields or department wording that is not useful to the student.
@@ -578,14 +579,19 @@ After selection:
 ```text
 Business Administration
 
-Choose a university to see its exact details.
+Continue your guidance
 
-[ View universities ]  [ Check my subjects ]  [ Explore connected fields ]
+Next, choose a university so we can show its exact programme details and
+requirements.
+
+[ Continue guidance ]  [ Check my subjects ]
 ```
 
-`View universities` opens the same university picker as Route A. `Check my
-subjects` opens the subject requirements view and uses the existing subject
-minimum rules. The student may later add more programmes to comparison.
+`Continue guidance` opens the university picker and then the selected-university
+programme overview. `Check my subjects` is an optional preparation check; it
+does not redirect the student into general Explore. The student may later add
+another programme from an explicit `Add another programme` action, but that is
+not the next step for this route.
 
 ## SS1 Home
 
@@ -595,7 +601,7 @@ Good afternoon, Amaka
 SS1 · Commercial · Asterfield College
 
 YOUR NEXT STEP
-Continue comparing Business Administration and Accounting.
+Continue your Business Administration guidance.
 
 [ Continue guidance ]
 
@@ -607,8 +613,8 @@ Saved learning          4
 Reports                 1
 
 QUICK ACTIONS
-[ Explore programmes ]  [ Review subjects ]
-[ Open My World ]       [ View saved learning ]
+[ Review subjects ]     [ Open My World ]
+[ View saved learning ]  [ Add another programme ]
 
 EXPLORE
 Start with General Management, then try one beginner resource.
