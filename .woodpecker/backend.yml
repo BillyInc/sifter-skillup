@@ -1,0 +1,34 @@
+# Backend Checks — mirrors the `backend` job in .github/workflows/ci.yml.
+
+when:
+  - event: [push, pull_request]
+    branch: [main, develop]
+
+steps:
+  - name: tests
+    # Ships uv on top of the interpreter, replacing the setup-uv +
+    # setup-python action pair. Pinned to 3.13 to match CI; pyproject only
+    # requires >=3.11, so this is the tighter of the two constraints.
+    image: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+    directory: backend
+    environment:
+      # Placeholder credentials, exactly as in the GitHub workflow. Nothing
+      # here reaches a real service: the suite never opens a socket, and these
+      # exist only because config.py validates presence at import time.
+      #
+      # JWT_SECRET must stay >=32 chars or the auth tests fail on a length
+      # check rather than on what they mean to assert.
+      DEBUG: 'true'
+      JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
+      SUPABASE_URL: https://placeholder.supabase.co
+      SUPABASE_ANON_KEY: placeholder
+      SUPABASE_SERVICE_KEY: placeholder
+      REDIS_URL: redis://localhost:6379/0
+      SINGLE_DEVICE_ENFORCEMENT: 'false'
+    commands:
+      - uv sync --extra test
+      # The whole suite, not a hand-maintained list of files. Carried over from
+      # the GitHub workflow, where naming files explicitly had silently
+      # excluded every test added since -- a test that cannot fail the build is
+      # documentation, and nobody edits an allowlist they don't know exists.
+      - uv run pytest -v
