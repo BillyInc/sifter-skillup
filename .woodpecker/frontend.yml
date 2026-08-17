@@ -1,0 +1,68 @@
+# Frontend Checks — mirrors the `frontend` job in .github/workflows/ci.yml.
+#
+# Woodpecker runs each file under .woodpecker/ as its own workflow, in
+# parallel, which is how the two GitHub jobs (frontend, backend) map across.
+#
+# Unlike GitHub Actions there is no marketplace action for Node/pnpm setup:
+# steps are plain containers sharing one workspace volume, so `node_modules`
+# written by the install step is still there for the steps after it.
+
+when:
+  - event: [push, pull_request]
+    branch: [main, develop]
+
+variables:
+  # Kept in one place so the toolchain version is a single edit. `node:20` and
+  # pnpm 10.33.0 match setup-node's node-version and package.json's
+  # packageManager field respectively.
+  - &node_image 'node:20'
+
+steps:
+  - name: install
+    image: *node_image
+    commands:
+      # corepack ships with Node 20 and reads packageManager from package.json,
+      # so this pins pnpm to exactly the version the lockfile was written with.
+      - corepack enable
+      - corepack prepare --activate
+      - pnpm install --frozen-lockfile
+
+  - name: typescript
+    image: *node_image
+    commands:
+      # Same filter as CI: src/data/ is generated content and is excluded, and
+      # only src/ errors fail the build. `|| true` on the tsc call is
+      # deliberate -- tsc's exit code is discarded so that the grep decides,
+      # otherwise an error in an ignored path would still fail the step.
+      - |
+        OUTPUT=$(npx tsc --noEmit 2>&1 || true)
+        FILTERED=$(echo "$OUTPUT" | grep -v 'src/data/' | grep '^src/' || true)
+        if [ -n "$FILTERED" ]; then
+          echo "$FILTERED"
+          exit 1
+        fi
+
+  - name: tests
+    image: *node_image
+    commands:
+      # sourceEncoding.test.ts shells out to `git ls-files`, so git has to be
+      # willing to read the workspace. Under Woodpecker's own clone step the
+      # ownership matches and this is a no-op; it matters when the workspace is
+      # a bind-mount owned by a different uid, where git refuses with "detected
+      # dubious ownership" and takes the whole suite down with it. Cheap
+      # insurance against a failure mode that reads as a test bug.
+      # `|| true` because this is insurance, not a requirement: if git cannot
+      # even evaluate the config command the build should still get to run the
+      # tests and fail on something meaningful.
+      - git config --global --add safe.directory "$CI_WORKSPACE" || true
+      - npx jest --ci --coverage --passWithNoTests
+
+  - name: web-build
+    image: *node_image
+    commands:
+      - npx expo export --platform web
+
+  # GitHub's upload-artifact has no built-in Woodpecker equivalent. The build
+  # still has to run -- it catches bundler failures that tsc and jest do not --
+  # but the `dist/` output is not retained. Wire an S3/artifact plugin here if
+  # the 7-day retention actually gets used for something.
