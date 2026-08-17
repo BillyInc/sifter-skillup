@@ -10,6 +10,8 @@ Run AFTER migration_career_v2.sql (+ the pilot seed for programmes/jamb rows).""
 import json, re, uuid, os, glob, math
 from collections import Counter, defaultdict
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 NS = uuid.UUID("5c1f7e00-0000-4000-8000-0000ca4ee401")  # SAME namespace as _gen_seed.py
 def uid(*parts): return str(uuid.uuid5(NS, "|".join(parts)))
@@ -43,7 +45,7 @@ for f in sorted(glob.glob(os.path.join(HERE, "ccmas", "*.json"))):
     disc = d["discipline"]
     for p in d["programmes"]:
         prog_id_by_disc_name[(disc, p["name"])] = uid("programme", "ccmas", disc, p["name"])
-for f in ["enrichment/anthropology.json", "enrichment/intelligence_security.json", "enrichment/social_justice.json"]:
+for f in sorted(glob.glob(os.path.join(HERE, "enrichment", "*.json"))):
     try:
         d = load(f)
         prog_id_by_disc_name[("__custom__", d["programme"])] = uid("programme", "custom", d["programme"])
@@ -58,13 +60,12 @@ def resolve_programme(disc, name):
 meta   = load("domain_meta.json")
 struct = load("domain_structure.json")
 tools  = load("domain_tools.json")
+scope_audit = load("domain_skill_competency_certification_audit.json")
 # The cleaned library is the canonical 4,698-key role source. The older v3
 # file omitted source-backed O*NET/ESCO roles and is no longer used for seed
 # ownership.
 roles  = load("role_library_v3_cleaned.json")
-_overlay_path = os.path.join(HERE, "emerging_role_overlays.json")
-if os.path.exists(_overlay_path):
-    roles.extend(load("emerging_role_overlays.json").get("roles") or [])
+roles.extend(load_overlay_roles())
 role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
 layer_provenance = load("domain_skill_provenance.json") if os.path.exists(os.path.join(HERE, "domain_skill_provenance.json")) else {}
 roles_by_key = {}
@@ -96,22 +97,12 @@ cross_domain_families = load("cross_domain_role_families.json") if os.path.exist
 computational_links = load("computational_role_subgroup_links.json") if os.path.exists(os.path.join(HERE, "computational_role_subgroup_links.json")) else {"links": []}
 computational_methods = load("computational_method_evidence.json") if os.path.exists(os.path.join(HERE, "computational_method_evidence.json")) else {"methods": []}
 
-EXCLUDED = {d for d in meta if meta[d].get("excluded")}
-# UNIVERSITY-PIPELINE SCOPE (owner decision 2026-07-16, adversarially verified):
-# hide domains by REACHABILITY, not by institution_type[] — that flag describes
-# who staffs the domain's workforce, and would wrongly hide 28 domains that
-# CCMAS programmes / JAMB names actually map into (Food Science, Chemical
-# Engineering, agriculture, trades reached as functional/adjacent links).
-# HIDDEN = excluded ∪ domains with no CCMAS-programme link AND no JAMB-name
-# link (verified 2026-07-16: exactly 8 — D086 D087 D088 D089 D100 D101 D108 D113).
-_reachable = set()
-for _v in prog_dom.values():
-    for _l in (_v["links"] if isinstance(_v, dict) and "links" in _v else _v):
-        _reachable.add(_l["domain_id"])
-for _ent in jamb_dom.values():
-    for _l in _ent.get("links", []):
-        _reachable.add(_l["domain_id"])
-HIDDEN = EXCLUDED | {d for d in meta if d not in _reachable}
+# The source-backed resource audit is the authoritative user-facing scope.
+# Do not re-derive visibility from current programme/JAMB reachability: a
+# valid domain may be resource-backed before a programme bridge reaches it.
+# This keeps the career taxonomy and resource seed on the same FK-safe domain
+# denominator (160 visible domains, eight explicitly hidden IDs).
+HIDDEN = set(scope_audit.get("scope", {}).get("hidden_domains_excluded", []))
 def dom_uid(dk): return uid("domain", dk)
 def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
 

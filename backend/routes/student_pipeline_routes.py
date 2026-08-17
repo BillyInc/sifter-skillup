@@ -1162,11 +1162,25 @@ async def programmes_by_subjects(
                 "Choose at least five O-level subjects before checking programme fit.",
             )
         )
-    if exam != "olevel" and utme_norm and len(utme_norm) < 4:
+    if exam == "combined" and len(utme_norm) < 4:
         return ResponseModel(
             data=_real(
                 [],
                 "Choose Use of English and three other UTME subjects before matching programmes.",
+            )
+        )
+    if exam == "utme" and utme_norm and len(utme_norm) < 4:
+        return ResponseModel(
+            data=_real(
+                [],
+                "Choose Use of English and three other UTME subjects before matching programmes.",
+            )
+        )
+    if exam == "combined" and len(olevel_norm) < 5:
+        return ResponseModel(
+            data=_real(
+                [],
+                "Choose at least five O-level subjects so we can check the programme requirement, not only the UTME gate.",
             )
         )
 

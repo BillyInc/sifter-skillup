@@ -22,8 +22,10 @@ ONET_OCCUPATIONS = os.path.join(HERE, "_source_extracts", "onet_30_3", "Occupati
 ONET_ALIASES = os.path.join(HERE, "_tax_src", "onet", "Alternate Titles.txt")
 CROSSWALK = os.path.join(HERE, "_tax_src", "esco_onet_crosswalk.csv")
 OUT = os.path.join(HERE, "thin_domain_role_overlays.json")
+SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
-FLOOR = 15
+ROLE_CUTOFF = 15
+ROLE_TARGET = int(os.environ.get("ROLE_TARGET", "20"))
 
 # These are title/alias anchors, not invented roles. A candidate must match one
 # of these anchors in the ESCO preferred or alternative occupation title.
@@ -36,9 +38,9 @@ KEYWORDS = {
     "D146": ["hvac", "heating", "ventilation", "air conditioning", "electrical installation", "building automation", "fire protection", "mechanical service", "building services"],
     "D161": ["humanitarian", "emergency", "disaster", "relief", "aid worker", "refugee", "crisis", "rescue", "response coordinator"],
     "D135": ["nuclear", "radiation", "reactor", "radiochem", "radiological", "radioactive", "nuclear medicine"],
-    "D144": ["climate", "meteorolog", "weather", "atmospher", "hydrolog", "oceanograph", "climatolog"],
+    "D144": ["climate", "meteorolog*", "weather", "atmospher*", "hydrolog*", "oceanograph*", "climatolog*"],
     "D150": ["minister of religion", "religious", "theology", "chaplain", "pastoral", "priest", "faith", "church", "imam", "religion"],
-    "D003": ["artificial intelligence", "machine learning", "data scientist", "neural", "natural language", "computer vision", "deep learning", "robotics", "algorithm"],
+    "D003": ["artificial intelligence", "machine learning", "data scientist", "neural", "natural language", "computer vision", "deep learning", "robot*", "algorithm*"],
     "D067": ["dentist", "dental", "orthodont", "prosthodont", "oral", "maxillofacial", "hygienist"],
     "D128": ["social work", "social worker", "youth", "welfare", "community development", "caseworker", "care worker", "child protection", "foster care"],
     "D160": ["fashion", "stylist", "image consultant", "make-up", "make up", "hairdresser", "visual merch", "wardrobe", "beauty"],
@@ -53,7 +55,7 @@ KEYWORDS = {
     "D125": ["medical secretary", "medical administrator", "medical records", "medical transcription", "clinical administration", "medical receptionist", "medical practice", "health records"],
     "D126": ["complementary", "alternative medicine", "herbal", "acupuncture", "homeopath", "naturopath", "osteopath", "chiropractic", "massage"],
     "D136": ["aeronaut", "aerospace", "aircraft", "aviation engineer", "flight", "avionics", "aerodrome"],
-    "D145": ["neuroscience", "neuropsych", "cognitive", "brain", "neurolog", "clinical psychologist", "sensory scientist"],
+    "D145": ["neuroscience", "neuropsych*", "cognitive", "brain", "neurolog*", "clinical psychologist", "sensory scientist"],
     "D152": ["museum", "curator", "heritage", "archive", "archivist", "cultural", "conservation", "librarian", "exhibition"],
     "D012": ["fintech", "financial technology", "payment", "banking software", "blockchain", "financial analyst", "quantitative", "financial markets"],
     "D065": ["translator", "translation", "interpreter", "locali", "linguist", "language engineer", "sign language"],
@@ -62,9 +64,9 @@ KEYWORDS = {
     "D138": ["biomedical", "medical engineering", "bioengineering", "prosthetic", "clinical engineering", "medical device", "orthotic"],
     "D151": ["criminology", "criminal justice", "criminologist", "correctional", "prison", "forensic", "police", "probation"],
     "D005": ["cloud", "devops", "infrastructure", "server", "network", "systems administrator", "cloud architect"],
-    "D123": ["radiograph", "radiology", "medical imaging", "sonograph", "ultrasound", "mri", "ct scan", "imaging", "nuclear medicine radiographer"],
+    "D123": ["radiograph*", "radiology", "medical imaging", "sonograph*", "ultrasound", "mri", "ct scan", "imaging", "nuclear medicine radiographer"],
     "D155": ["nanotechnology", "nanomaterial", "materials science", "material engineer", "semiconductor", "microfabrication", "nanoelectronics", "surface science"],
-    "D166": ["autonomous vehicle", "self-driving", "driverless", "vehicle systems", "transport automation", "robotics", "automotive test"],
+    "D166": ["autonomous vehicle", "self-driving", "driverless", "vehicle systems", "transport automation", "robot*", "automotive test"],
     "D168": ["esport", "gaming", "streamer", "caster", "broadcast", "content creator", "community manager", "sport manager", "event manager", "video game"],
     "D074": ["occupational health", "health and safety", "safety officer", "workplace safety", "industrial hygiene", "safety inspector", "safety engineer"],
     "D084": ["payroll", "bookkeeping", "bookkeeper", "accounts clerk", "accounting technician", "wages"],
@@ -73,7 +75,7 @@ KEYWORDS = {
     "D061": ["insurance", "underwriter", "actuary", "claims", "broker", "risk consultant"],
     "D063": ["economist", "economics", "economic analyst", "policy analyst", "econometric"],
     "D134": ["naval", "marine engineering", "ship", "maritime", "shipbuilding", "offshore", "marine"],
-    "D140": ["robotics", "robot", "automation", "mechatronics", "control systems", "autonomous system"],
+    "D140": ["robotics", "robot*", "automation", "mechatronics", "control systems", "autonomous system"],
     "D154": ["exercise", "sports therapy", "physiotherapy", "fitness", "kinesiolog", "athletic", "sports medicine", "sport therapist"],
     "D004": ["cybersecurity", "information security", "security analyst", "penetration", "forensic", "incident", "cyber"],
     "D051": ["real estate", "property", "valuation", "estate agent", "facilities", "valuer", "broker"],
@@ -94,16 +96,27 @@ KEYWORDS = {
 
 # Title hits such as "mission" or "facility" are too broad on their own.
 EXCLUDE = {
+    "D003": ["industrial robot", "robotics engineering technician"],
+    "D005": ["network marketer", "railway", "sewerage", "water network", "picture archiving"],
+    "D006": ["physiotherapist", "biotechnical", "food biotechnologist"],
+    "D025": ["addiction counsellor", "drug and alcohol"],
+    "D064": ["embassy counsellor", "environmental health inspector"],
+    "D067": ["equine", "army corporal", "pastoral worker", "floral designer", "substance abuse"],
+    "D081": ["secretary of state"],
+    "D091": ["railway"],
+    "D126": ["animal massage", "animal osteopath"],
+    "D152": ["agricultural", "horticulture", "nature conservation", "water conservation"],
+    "D168": ["brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector"],
     "D132": ["police", "missionary", "commissioner", "fire commissioner", "electricity", "gas transmission", "interior", "welder", "de-icer"],
     "D059": ["police", "missionary", "commissioner", "electricity", "gas transmission", "commissioning"],
     "D150": ["secretary of state", "government minister", "political affairs", "speechwriter", "secondary school", "learning mentor"],
     "D161": ["missionary", "immigration", "cyber incident", "social counsellor", "special-interest"],
     "D146": ["swimming facility", "sport facility", "recreational facilities", "mine ventilation", "wholesale merchant", "sales representative"],
     "D167": ["specialised seller", "shop manager", "gaming dealer", "web designer"],
-    "D168": ["weather forecaster", "translator", "telecommunications engineer", "disc jockey"],
+    "D168": ["weather forecaster", "translator", "telecommunications engineer", "disc jockey", "brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector"],
     "D160": ["vlogger", "editorial assistant", "shop manager"],
     "D145": ["physicist", "sociologist", "seismologist", "remote sensing", "research manager"],
-    "D166": ["vocational teacher", "assembler", "engineering drafter"],
+    "D166": ["vocational teacher", "assembler", "engineering drafter", "industrial robot"],
     "D096": ["construction equipment", "wholesale merchant", "sales representative", "rental service", "import export"],
     "D165": ["animal feed", "specialised veterinarian", "vlogger"],
 }
@@ -112,6 +125,10 @@ MANUAL = [
     {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology business analyst", "isco_group": 2421, "description": "Translates quantum technology capabilities into use cases, market requirements and implementation decisions for organisations.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT business analyst qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "use-case analysis", "requirements analysis", "business communication"], "optional_skills": ["market analysis", "technology strategy"]},
     {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology product strategist", "isco_group": 2422, "description": "Shapes product direction, partnerships and responsible adoption plans for quantum technology products and services.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT product strategist qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "product strategy", "technology roadmapping", "responsible innovation"], "optional_skills": ["business development", "stakeholder communication"]},
     {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology training specialist", "isco_group": 2359, "description": "Designs and delivers learning that helps technical and non-technical teams understand and use quantum technologies.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT training and development qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "instructional design", "technical explanation", "learning assessment"], "optional_skills": ["curriculum mapping", "workshop facilitation"]},
+    {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology practitioner", "isco_group": 2511, "description": "Applies quantum technology concepts and tools in a technical or applied work setting.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT practitioner qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "technical problem solving", "experimentation", "responsible technology use"], "optional_skills": ["quantum software", "quantum hardware"]},
+    {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology engineering professional", "isco_group": 2151, "description": "Engineers quantum technology systems and supports their design, integration, testing and operation.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT engineering professional qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "systems engineering", "hardware-software integration", "testing and validation"], "optional_skills": ["control systems", "laboratory methods"]},
+    {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology hardware and software specialist", "isco_group": 2512, "description": "Develops or supports the hardware and software components used in quantum technology systems.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT hardware/software specialist qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "software development", "hardware integration", "technical documentation"], "optional_skills": ["quantum programming", "instrumentation"]},
+    {"domain_id": "D141", "domain_name": "Quantum Computing, Quantum Information", "role_name": "quantum technology core innovator", "isco_group": 2166, "description": "Creates new quantum technology methods, products or research directions at the frontier of the field.", "source_provenance": {"sources": ["qt_cfqt"], "evidence": "CFQT v3.0 QT core innovator qualification profile.", "mapping_method": "specialist framework role profile"}, "source_confidence": "medium", "data_state": "source_backed", "essential_skills": ["quantum technology literacy", "research design", "innovation", "scientific communication"], "optional_skills": ["quantum algorithms", "quantum sensing"]},
 ]
 
 
@@ -135,11 +152,58 @@ def unique(values):
     return result
 
 
+_SOURCE_REGISTRY_CACHE = None
+_META_CACHE = None
+
+
+def source_sets_for(domain_id, taxonomy_source):
+    """Return global placement evidence separately from Nigerian context."""
+    global _SOURCE_REGISTRY_CACHE, _META_CACHE
+    if _SOURCE_REGISTRY_CACHE is None:
+        _SOURCE_REGISTRY_CACHE = load(SOURCE_REGISTRY)
+    if _META_CACHE is None:
+        _META_CACHE = load(META)
+    registry = _SOURCE_REGISTRY_CACHE
+    meta = _META_CACHE
+    domain = meta.get(domain_id) or {}
+    ids = list(registry.get("default_sources") or [])
+    ids.extend((registry.get("cluster_sources") or {}).get(domain.get("cluster", ""), []))
+    ids.extend((registry.get("domain_overrides") or {}).get(domain_id, []))
+    ids.append(taxonomy_source)
+    ids = list(dict.fromkeys(str(value) for value in ids if value))
+    catalog = registry.get("source_catalog") or {}
+    global_ids = [source_id for source_id in ids if (catalog.get(source_id) or {}).get("region") in {"global", "global_proxy"}]
+    local_ids = [source_id for source_id in ids if (catalog.get(source_id) or {}).get("region") == "nigeria"]
+    return global_ids, local_ids
+
+
 def title_hits(record, terms):
     title = norm(record.get("label"))
-    aliases = " ".join(norm(item) for item in record.get("alt_labels") or [])
-    hay = f"{title} {aliases}".strip()
-    return [term for term in terms if norm(term) in hay]
+    tokens = title.split()
+    hits = []
+    for raw_term in terms:
+        term = norm(raw_term)
+        if not term:
+            continue
+        prefix = term.endswith("*")
+        if prefix:
+            term = term[:-1].strip()
+        term_tokens = term.split()
+        matched = False
+        for index in range(len(tokens) - len(term_tokens) + 1):
+            window = tokens[index:index + len(term_tokens)]
+            if prefix:
+                matched = all(
+                    (word.startswith(expected) if position == len(term_tokens) - 1 else word == expected)
+                    for position, (word, expected) in enumerate(zip(window, term_tokens))
+                )
+            else:
+                matched = window == term_tokens
+            if matched:
+                break
+        if matched:
+            hits.append(raw_term)
+    return hits
 
 
 def is_excluded(label, domain_id):
@@ -148,6 +212,7 @@ def is_excluded(label, domain_id):
 
 
 def esco_row(domain_id, domain_name, record, hits, score):
+    global_ids, local_ids = source_sets_for(domain_id, "global_esco")
     return {
         "domain_id": domain_id,
         "domain_name": domain_name,
@@ -160,9 +225,10 @@ def esco_row(domain_id, domain_name, record, hits, score):
         "essential_skills": unique(record.get("essential_skills")),
         "optional_skills": unique(record.get("optional_skills")),
         "source_provenance": {
-            "sources": ["global_esco"],
+            "sources": global_ids,
+            "context_sources": local_ids,
             "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
-            "mapping_method": "title_or_alias_anchor",
+            "mapping_method": "curated_domain_source_family_title_anchor",
             "matched_terms": hits,
             "mapping_score": score,
             "region": "global",
@@ -173,6 +239,7 @@ def esco_row(domain_id, domain_name, record, hits, score):
 
 
 def onet_row(domain_id, domain_name, record, title, hits, score, isco_group=None):
+    global_ids, local_ids = source_sets_for(domain_id, "global_onet")
     return {
         "domain_id": domain_id,
         "domain_name": domain_name,
@@ -183,9 +250,10 @@ def onet_row(domain_id, domain_name, record, title, hits, score, isco_group=None
         "isco_group": isco_group,
         "description": record.get("Description") or "Source-backed occupation title from the O*NET taxonomy.",
         "source_provenance": {
-            "sources": ["global_onet"],
-            "evidence": "Exact O*NET occupation or alternate-title record; the domain placement is a documented cross-domain taxonomy mapping.",
-            "mapping_method": "exact_onet_title_or_alias_anchor",
+            "sources": global_ids,
+            "context_sources": local_ids,
+            "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+            "mapping_method": "curated_domain_source_family_title_anchor",
             "matched_terms": hits,
             "mapping_score": score,
             "region": "global_proxy",
@@ -229,18 +297,15 @@ def load_onet_candidates(esco):
     candidates = []
     for code, row in occupations.items():
         candidates.append((code, str(row.get("Title") or "").strip(), row, onet_to_isco.get(code, set())))
-    if os.path.exists(ONET_ALIASES):
-        with open(ONET_ALIASES, encoding="utf-8-sig", newline="") as handle:
-            for row in csv.DictReader(handle, delimiter="\t"):
-                code = str(row.get("O*NET-SOC Code") or "").strip()
-                title = str(row.get("Alternate Title") or "").strip()
-                if code and title and code in occupations:
-                    candidates.append((code, title, occupations[code], onet_to_isco.get(code, set())))
+    # Alternate titles are retained by O*NET as aliases, not independent
+    # occupations. They must not inflate the role count or turn a broad alias
+    # into a specialist role row.
     return candidates
 
 
 def main():
     meta = load(META)
+    registry = load(SOURCE_REGISTRY)
     base = load(BASE)
     emerging = load(EMERGING).get("roles") or []
     esco = load(ESCO)
@@ -256,9 +321,9 @@ def main():
         if domain_id in HIDDEN or domain.get("excluded"):
             continue
         current = len(existing[domain_id])
-        if current >= FLOOR:
+        if current >= ROLE_CUTOFF:
             continue
-        needed = FLOOR - current
+        needed = ROLE_TARGET - current
         terms = KEYWORDS.get(domain_id, [])
         candidates = []
         for code, record in esco.items():
@@ -312,15 +377,15 @@ def main():
         roles.extend(selected)
         counts[domain_id] = {"before": current, "added": len(selected), "after": current + len(selected), "selected": [row["role_name"] for row in selected]}
 
+    used_source_ids = sorted({source_id for role in roles for source_id in ((role.get("source_provenance") or {}).get("sources") or []) + ((role.get("source_provenance") or {}).get("context_sources") or [])})
+    source_catalog = registry.get("source_catalog") or {}
     output = {
         "schema_version": 1,
         "purpose": "Source-backed role population for visible domains below the 15-role floor.",
-        "role_floor": FLOOR,
-        "sources": {
-            "global_esco": {"name": "ESCO occupations and skills", "url": "https://esco.ec.europa.eu/en/use-esco", "region": "global", "evidence_type": "occupation_taxonomy", "access": "public_download_api"},
-            "global_onet": {"name": "O*NET 30.3 Database", "url": "https://www.onetcenter.org/database.html", "region": "global_proxy", "evidence_type": "occupation_taxonomy_and_job_titles", "access": "public_download_api"},
-            "qt_cfqt": {"name": "European Competence Framework for Quantum Technologies v3.0", "url": "https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf", "region": "global_proxy", "evidence_type": "competence_framework", "access": "public_pdf"},
-        },
+        "role_floor": ROLE_CUTOFF,
+        "role_cutoff": ROLE_CUTOFF,
+        "role_target": ROLE_TARGET,
+        "sources": {source_id: source_catalog[source_id] for source_id in used_source_ids if source_id in source_catalog},
         "mapping_policy": "Exact ESCO occupation records may be attached to more than one relevant domain. This layer does not assert Nigerian demand, salary, licensing or university teaching. Local evidence remains in nigerian_context.actual_enrichment.",
         "roles": roles,
         "coverage": counts,
@@ -329,7 +394,7 @@ def main():
     with open(OUT, "w", encoding="utf-8") as handle:
         json.dump(output, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
-    print(json.dumps({"domains": len(counts), "roles_added": len(roles), "gaps": gaps, "min_after": min(item["after"] for item in counts.values()) if counts else FLOOR}, indent=2))
+    print(json.dumps({"domains": len(counts), "roles_added": len(roles), "gaps": gaps, "min_after": min(item["after"] for item in counts.values()) if counts else ROLE_CUTOFF}, indent=2))
 
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ import {
   SectionLabel,
   RouteLine,
   MethodEvidenceBlock,
+  LearningResourcesBlock,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -221,6 +222,8 @@ function RoleBody({
           ) : null}
         </View>
       ) : null}
+
+      <LearningResourcesBlock resources={role.resources} />
 
       {/* 4 — Routes into this role */}
       <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />

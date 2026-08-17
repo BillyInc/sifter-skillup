@@ -5,6 +5,8 @@ import json
 import os
 from collections import Counter, defaultdict
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROLE_LIBRARY = os.path.join(HERE, "role_library_v3_cleaned.json")
 OVERLAY = os.path.join(HERE, "emerging_role_overlays.json")
@@ -93,7 +95,7 @@ def main():
     labels = {**SUBGROUP_LABELS, **computational_labels}
     group_layers = load(GROUP_LAYERS) if os.path.exists(GROUP_LAYERS) else {"domains": {}, "subgroups": []}
     structure = load(STRUCTURE)
-    overlay_roles = overlay.get("roles") or []
+    overlay_roles = load_overlay_roles()
     changed_domains = sorted(
         {text(role.get("domain_id")) for role in overlay_roles if text(role.get("domain_id"))}
         | {text(domain_id) for domain_id in (group_layers.get("domains") or {}) if text(domain_id)}

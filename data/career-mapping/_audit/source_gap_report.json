@@ -8,126 +8,19 @@
   "P3": "Structural mismatch or missing subgroups; reconcile structure before UI acceptance."
  },
  "empty_domains": [],
- "thin_domain_count": 125,
- "roles_without_source_signal": 86,
+ "thin_domain_count": 49,
+ "roles_without_source_signal": 0,
  "gaps": [
   {
    "priority": "P3",
-   "domain_id": "D132",
-   "domain_name": "Space Science, Exploration",
-   "roles": 1,
-   "structure_roles": 7,
-   "subgroups": 0,
-   "any_source_signal": 1,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D059",
-   "domain_name": "Space Technology",
-   "roles": 2,
-   "structure_roles": 6,
-   "subgroups": 0,
-   "any_source_signal": 2,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D163",
-   "domain_name": "Intellectual Property Law, Patents",
-   "roles": 2,
+   "domain_id": "D003",
+   "domain_name": "Artificial Intelligence",
+   "roles": 5,
    "structure_roles": 5,
    "subgroups": 0,
-   "any_source_signal": 2,
-   "framework_signal": 0,
+   "any_source_signal": 5,
+   "framework_signal": 1,
    "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D058",
-   "domain_name": "EdTech",
-   "roles": 3,
-   "structure_roles": 7,
-   "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D137",
-   "domain_name": "Medical Physics, Radiation Therapy",
-   "roles": 3,
-   "structure_roles": 4,
-   "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D146",
-   "domain_name": "Building Services Engineering — Mechanical, Electrical",
-   "roles": 3,
-   "structure_roles": 9,
-   "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D161",
-   "domain_name": "Humanitarian Aid, Emergency Response",
-   "roles": 3,
-   "structure_roles": 5,
-   "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D135",
-   "domain_name": "Nuclear Engineering, Radiation Science",
-   "roles": 4,
-   "structure_roles": 8,
-   "subgroups": 0,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
     "no subgroups"
    ]
   },
@@ -135,311 +28,64 @@
    "priority": "P3",
    "domain_id": "D144",
    "domain_name": "Climate Science, Meteorology",
-   "roles": 4,
-   "structure_roles": 4,
-   "subgroups": 1,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D150",
-   "domain_name": "Religious Ministry, Theology",
-   "roles": 4,
-   "structure_roles": 6,
-   "subgroups": 0,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "thin role count",
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D003",
-   "domain_name": "Artificial Intelligence",
    "roles": 5,
    "structure_roles": 5,
-   "subgroups": 1,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D067",
-   "domain_name": "Dentistry",
-   "roles": 5,
-   "structure_roles": 6,
    "subgroups": 0,
    "any_source_signal": 5,
-   "framework_signal": 0,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D128",
-   "domain_name": "Social Welfare, Youth Services",
-   "roles": 5,
-   "structure_roles": 8,
-   "subgroups": 0,
-   "any_source_signal": 5,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D160",
-   "domain_name": "Fashion Styling, Image Consulting",
-   "roles": 5,
-   "structure_roles": 7,
-   "subgroups": 2,
-   "any_source_signal": 5,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D162",
-   "domain_name": "Immigration Law, Asylum",
-   "roles": 5,
-   "structure_roles": 8,
-   "subgroups": 2,
-   "any_source_signal": 5,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
    ]
   },
   {
    "priority": "P3",
    "domain_id": "D091",
    "domain_name": "Driving Instruction",
-   "roles": 6,
-   "structure_roles": 6,
-   "subgroups": 0,
-   "any_source_signal": 6,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D096",
-   "domain_name": "Agricultural",
-   "roles": 6,
-   "structure_roles": 10,
-   "subgroups": 3,
-   "any_source_signal": 6,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D130",
-   "domain_name": "Recruitment, Employment",
-   "roles": 6,
+   "roles": 7,
    "structure_roles": 7,
    "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D126",
-   "domain_name": "Complementary, Alternative",
-   "roles": 7,
-   "structure_roles": 8,
-   "subgroups": 0,
-   "any_source_signal": 6,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D136",
-   "domain_name": "Aeronautical",
-   "roles": 7,
-   "structure_roles": 9,
-   "subgroups": 2,
    "any_source_signal": 7,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D145",
-   "domain_name": "Neuroscience, Cognitive Science",
-   "roles": 7,
-   "structure_roles": 11,
-   "subgroups": 2,
-   "any_source_signal": 7,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D152",
-   "domain_name": "Museum Curation, Cultural Heritage, Archives",
-   "roles": 7,
-   "structure_roles": 12,
-   "subgroups": 2,
-   "any_source_signal": 7,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D012",
-   "domain_name": "FinTech Engineering",
-   "roles": 8,
-   "structure_roles": 8,
-   "subgroups": 2,
-   "any_source_signal": 7,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D065",
-   "domain_name": "Translation, Interpretation",
-   "roles": 8,
-   "structure_roles": 10,
-   "subgroups": 0,
-   "any_source_signal": 8,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D117",
-   "domain_name": "Railway",
-   "roles": 8,
-   "structure_roles": 8,
-   "subgroups": 0,
-   "any_source_signal": 8,
-   "framework_signal": 0,
+   "framework_signal": 1,
    "reasons": [
     "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D121",
-   "domain_name": "Forestry, Wildlife Management",
+   "domain_id": "D132",
+   "domain_name": "Space Science, Exploration",
    "roles": 8,
-   "structure_roles": 11,
+   "structure_roles": 8,
    "subgroups": 0,
    "any_source_signal": 8,
-   "framework_signal": 0,
+   "framework_signal": 7,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D151",
-   "domain_name": "Criminology, Criminal Justice",
-   "roles": 8,
-   "structure_roles": 10,
-   "subgroups": 3,
-   "any_source_signal": 8,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D005",
-   "domain_name": "Cloud Computing",
-   "roles": 9,
-   "structure_roles": 9,
-   "subgroups": 2,
-   "any_source_signal": 8,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P2",
    "domain_id": "D123",
    "domain_name": "Radiography, Medical Imaging",
-   "roles": 9,
-   "structure_roles": 8,
+   "roles": 11,
+   "structure_roles": 11,
    "subgroups": 0,
-   "any_source_signal": 3,
-   "framework_signal": 0,
+   "any_source_signal": 11,
+   "framework_signal": 10,
    "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P2",
-   "domain_id": "D155",
-   "domain_name": "Nanotechnology, Advanced Materials",
-   "roles": 9,
-   "structure_roles": 9,
-   "subgroups": 2,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D074",
-   "domain_name": "Occupational Health, Safety",
-   "roles": 10,
+   "domain_id": "D126",
+   "domain_name": "Complementary, Alternative",
+   "roles": 11,
    "structure_roles": 11,
    "subgroups": 0,
-   "any_source_signal": 10,
-   "framework_signal": 0,
+   "any_source_signal": 11,
+   "framework_signal": 4,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
    ]
   },
@@ -447,146 +93,12 @@
    "priority": "P3",
    "domain_id": "D084",
    "domain_name": "Payroll, Bookkeeping",
-   "roles": 10,
-   "structure_roles": 12,
-   "subgroups": 0,
-   "any_source_signal": 10,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D127",
-   "domain_name": "Early Childhood Education, Nursery",
-   "roles": 10,
-   "structure_roles": 12,
-   "subgroups": 3,
-   "any_source_signal": 10,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D006",
-   "domain_name": "Internet of Things",
-   "roles": 11,
-   "structure_roles": 11,
-   "subgroups": 2,
-   "any_source_signal": 4,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D061",
-   "domain_name": "Insurance",
-   "roles": 11,
-   "structure_roles": 13,
-   "subgroups": 2,
-   "any_source_signal": 11,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D095",
-   "domain_name": "Motor Vehicle Mechanics, Repairs",
-   "roles": 11,
-   "structure_roles": 12,
-   "subgroups": 0,
-   "any_source_signal": 11,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D134",
-   "domain_name": "Naval Architecture, Marine Engineering",
-   "roles": 11,
-   "structure_roles": 12,
-   "subgroups": 2,
-   "any_source_signal": 11,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D154",
-   "domain_name": "Exercise Science, Sports Therapy",
-   "roles": 11,
-   "structure_roles": 20,
-   "subgroups": 3,
-   "any_source_signal": 11,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D051",
-   "domain_name": "Real Estate",
-   "roles": 12,
-   "structure_roles": 16,
-   "subgroups": 0,
-   "any_source_signal": 12,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D057",
-   "domain_name": "Digital Health",
-   "roles": 12,
-   "structure_roles": 12,
-   "subgroups": 4,
-   "any_source_signal": 7,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D165",
-   "domain_name": "Wellness Coaching, Lifestyle Medicine",
-   "roles": 12,
+   "roles": 14,
    "structure_roles": 14,
-   "subgroups": 2,
-   "any_source_signal": 12,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D103",
-   "domain_name": "Jewellery Making, Goldsmithing",
-   "roles": 13,
-   "structure_roles": 10,
    "subgroups": 0,
-   "any_source_signal": 13,
-   "framework_signal": 0,
+   "any_source_signal": 14,
+   "framework_signal": 4,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
    ]
   },
@@ -594,95 +106,13 @@
    "priority": "P3",
    "domain_id": "D105",
    "domain_name": "Handicraft, Basketry, Textile Craft",
-   "roles": 13,
-   "structure_roles": 13,
-   "subgroups": 0,
-   "any_source_signal": 13,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D122",
-   "domain_name": "Medical Laboratory Technology",
-   "roles": 13,
-   "structure_roles": 11,
-   "subgroups": 0,
-   "any_source_signal": 5,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D025",
-   "domain_name": "Pharmacy",
-   "roles": 14,
-   "structure_roles": 15,
-   "subgroups": 2,
-   "any_source_signal": 9,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D064",
-   "domain_name": "Psychology, Counselling",
-   "roles": 14,
-   "structure_roles": 16,
-   "subgroups": 0,
-   "any_source_signal": 14,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D099",
-   "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
    "roles": 14,
    "structure_roles": 14,
    "subgroups": 0,
    "any_source_signal": 14,
-   "framework_signal": 0,
+   "framework_signal": 1,
    "reasons": [
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D119",
-   "domain_name": "Livestock, Poultry, Dairy",
-   "roles": 14,
-   "structure_roles": 16,
-   "subgroups": 2,
-   "any_source_signal": 14,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D073",
-   "domain_name": "Library, Archive",
-   "roles": 15,
-   "structure_roles": 14,
-   "subgroups": 2,
-   "any_source_signal": 15,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
    ]
   },
   {
@@ -700,28 +130,15 @@
   },
   {
    "priority": "P3",
-   "domain_id": "D014",
-   "domain_name": "Actuarial Science",
+   "domain_id": "D004",
+   "domain_name": "Cybersecurity",
    "roles": 16,
    "structure_roles": 16,
-   "subgroups": 3,
-   "any_source_signal": 15,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D029",
-   "domain_name": "Human Resources",
-   "roles": 16,
-   "structure_roles": 17,
-   "subgroups": 2,
+   "subgroups": 0,
    "any_source_signal": 16,
-   "framework_signal": 0,
+   "framework_signal": 5,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -729,12 +146,12 @@
    "domain_id": "D082",
    "domain_name": "Customer Service, Contact Centre",
    "roles": 17,
-   "structure_roles": 18,
-   "subgroups": 2,
+   "structure_roles": 17,
+   "subgroups": 0,
    "any_source_signal": 17,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -742,13 +159,12 @@
    "domain_id": "D124",
    "domain_name": "Community Health Extension",
    "roles": 17,
-   "structure_roles": 12,
-   "subgroups": 2,
-   "any_source_signal": 16,
+   "structure_roles": 17,
+   "subgroups": 0,
+   "any_source_signal": 17,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -756,26 +172,25 @@
    "domain_id": "D157",
    "domain_name": "Tax Advisory, Transfer Pricing",
    "roles": 17,
-   "structure_roles": 15,
+   "structure_roles": 17,
    "subgroups": 0,
    "any_source_signal": 17,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D054",
-   "domain_name": "Oil",
+   "domain_id": "D072",
+   "domain_name": "Geospatial Science",
    "roles": 18,
-   "structure_roles": 21,
-   "subgroups": 4,
+   "structure_roles": 18,
+   "subgroups": 0,
    "any_source_signal": 18,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -783,12 +198,12 @@
    "domain_id": "D148",
    "domain_name": "Offshore, Subsea",
    "roles": 18,
-   "structure_roles": 20,
-   "subgroups": 2,
+   "structure_roles": 18,
+   "subgroups": 0,
    "any_source_signal": 18,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -796,12 +211,11 @@
    "domain_id": "D109",
    "domain_name": "Metal Processing, Foundry",
    "roles": 19,
-   "structure_roles": 21,
+   "structure_roles": 19,
    "subgroups": 0,
    "any_source_signal": 19,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
    ]
   },
@@ -810,12 +224,12 @@
    "domain_id": "D019",
    "domain_name": "Renewable Energy Engineering",
    "roles": 20,
-   "structure_roles": 23,
-   "subgroups": 3,
+   "structure_roles": 20,
+   "subgroups": 0,
    "any_source_signal": 20,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -823,12 +237,12 @@
    "domain_id": "D020",
    "domain_name": "Environmental Engineering",
    "roles": 20,
-   "structure_roles": 23,
-   "subgroups": 3,
+   "structure_roles": 20,
+   "subgroups": 0,
    "any_source_signal": 20,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -836,79 +250,12 @@
    "domain_id": "D116",
    "domain_name": "Heavy Equipment, Earthmoving",
    "roles": 20,
-   "structure_roles": 16,
+   "structure_roles": 20,
    "subgroups": 0,
    "any_source_signal": 20,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D120",
-   "domain_name": "Fisheries, Aquaculture",
-   "roles": 20,
-   "structure_roles": 21,
-   "subgroups": 2,
-   "any_source_signal": 20,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D158",
-   "domain_name": "Corporate Finance, Investment Banking",
-   "roles": 20,
-   "structure_roles": 19,
-   "subgroups": 0,
-   "any_source_signal": 20,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D060",
-   "domain_name": "Banking, Credit",
-   "roles": 21,
-   "structure_roles": 24,
-   "subgroups": 5,
-   "any_source_signal": 21,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D066",
-   "domain_name": "Veterinary Science",
-   "roles": 21,
-   "structure_roles": 23,
-   "subgroups": 3,
-   "any_source_signal": 21,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D092",
-   "domain_name": "Culinary Arts, Catering",
-   "roles": 21,
-   "structure_roles": 23,
-   "subgroups": 3,
-   "any_source_signal": 21,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
    ]
   },
   {
@@ -916,39 +263,12 @@
    "domain_id": "D093",
    "domain_name": "Electrical Installation, Wiring",
    "roles": 21,
-   "structure_roles": 22,
+   "structure_roles": 21,
    "subgroups": 0,
    "any_source_signal": 21,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D153",
-   "domain_name": "Music Production",
-   "roles": 21,
-   "structure_roles": 30,
-   "subgroups": 3,
-   "any_source_signal": 21,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D015",
-   "domain_name": "Accounting",
-   "roles": 22,
-   "structure_roles": 24,
-   "subgroups": 3,
-   "any_source_signal": 22,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
    ]
   },
   {
@@ -956,13 +276,12 @@
    "domain_id": "D021",
    "domain_name": "Architecture",
    "roles": 22,
-   "structure_roles": 13,
-   "subgroups": 2,
-   "any_source_signal": 21,
-   "framework_signal": 0,
+   "structure_roles": 22,
+   "subgroups": 0,
+   "any_source_signal": 22,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -970,25 +289,25 @@
    "domain_id": "D083",
    "domain_name": "Travel, Tourism",
    "roles": 22,
-   "structure_roles": 23,
-   "subgroups": 2,
+   "structure_roles": 22,
+   "subgroups": 0,
    "any_source_signal": 22,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D076",
-   "domain_name": "Maritime",
-   "roles": 23,
-   "structure_roles": 25,
-   "subgroups": 4,
-   "any_source_signal": 23,
+   "domain_id": "D112",
+   "domain_name": "Wood Processing, Pulp",
+   "roles": 22,
+   "structure_roles": 22,
+   "subgroups": 0,
+   "any_source_signal": 22,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -996,25 +315,38 @@
    "domain_id": "D080",
    "domain_name": "Interior Design",
    "roles": 23,
-   "structure_roles": 13,
-   "subgroups": 2,
+   "structure_roles": 23,
+   "subgroups": 0,
    "any_source_signal": 23,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D098",
-   "domain_name": "Precision Engineering, Toolmaking",
+   "domain_id": "D118",
+   "domain_name": "Crop Production, Horticulture",
    "roles": 23,
-   "structure_roles": 24,
-   "subgroups": 3,
+   "structure_roles": 23,
+   "subgroups": 0,
    "any_source_signal": 23,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
+   ]
+  },
+  {
+   "priority": "P3",
+   "domain_id": "D078",
+   "domain_name": "Social Sciences",
+   "roles": 24,
+   "structure_roles": 24,
+   "subgroups": 0,
+   "any_source_signal": 24,
+   "framework_signal": 0,
+   "reasons": [
+    "no subgroups"
    ]
   },
   {
@@ -1022,14 +354,12 @@
    "domain_id": "D104",
    "domain_name": "Pottery, Ceramics, Glass",
    "roles": 24,
-   "structure_roles": 14,
+   "structure_roles": 24,
    "subgroups": 0,
-   "any_source_signal": 23,
+   "any_source_signal": 24,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1038,11 +368,24 @@
    "domain_name": "Data Engineering",
    "roles": 25,
    "structure_roles": 25,
-   "subgroups": 1,
-   "any_source_signal": 23,
+   "subgroups": 0,
+   "any_source_signal": 25,
+   "framework_signal": 4,
+   "reasons": [
+    "no subgroups"
+   ]
+  },
+  {
+   "priority": "P3",
+   "domain_id": "D056",
+   "domain_name": "Blockchain",
+   "roles": 25,
+   "structure_roles": 25,
+   "subgroups": 0,
+   "any_source_signal": 25,
    "framework_signal": 0,
    "reasons": [
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1051,63 +394,24 @@
    "domain_name": "UI/UX Design",
    "roles": 26,
    "structure_roles": 26,
-   "subgroups": 2,
-   "any_source_signal": 24,
-   "framework_signal": 0,
+   "subgroups": 0,
+   "any_source_signal": 26,
+   "framework_signal": 1,
    "reasons": [
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D026",
-   "domain_name": "Public Health",
+   "domain_id": "D094",
+   "domain_name": "Electronics Servicing, ICT Equipment",
    "roles": 26,
    "structure_roles": 26,
-   "subgroups": 5,
-   "any_source_signal": 19,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D131",
-   "domain_name": "Motorsport Engineering",
-   "roles": 26,
-   "structure_roles": 19,
-   "subgroups": 2,
+   "subgroups": 0,
    "any_source_signal": 26,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D143",
-   "domain_name": "Forensic Science, Digital Forensics",
-   "roles": 26,
-   "structure_roles": 26,
-   "subgroups": 5,
-   "any_source_signal": 23,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D069",
-   "domain_name": "Aviation",
-   "roles": 27,
-   "structure_roles": 29,
-   "subgroups": 3,
-   "any_source_signal": 27,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1115,12 +419,12 @@
    "domain_id": "D159",
    "domain_name": "Credit Analysis, Structured Finance",
    "roles": 27,
-   "structure_roles": 25,
-   "subgroups": 2,
+   "structure_roles": 27,
+   "subgroups": 0,
    "any_source_signal": 27,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1128,14 +432,12 @@
    "domain_id": "D106",
    "domain_name": "Garment Making, Tailoring, Dressmaking",
    "roles": 28,
-   "structure_roles": 21,
+   "structure_roles": 28,
    "subgroups": 0,
-   "any_source_signal": 27,
-   "framework_signal": 0,
+   "any_source_signal": 28,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1143,53 +445,12 @@
    "domain_id": "D115",
    "domain_name": "Road Transport Operations (Drivers",
    "roles": 28,
-   "structure_roles": 19,
-   "subgroups": 0,
-   "any_source_signal": 25,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D062",
-   "domain_name": "Trading",
-   "roles": 29,
    "structure_roles": 28,
-   "subgroups": 2,
-   "any_source_signal": 29,
-   "framework_signal": 0,
+   "subgroups": 0,
+   "any_source_signal": 28,
+   "framework_signal": 3,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D071",
-   "domain_name": "Sports Management",
-   "roles": 31,
-   "structure_roles": 46,
-   "subgroups": 2,
-   "any_source_signal": 31,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D133",
-   "domain_name": "Luxury",
-   "roles": 33,
-   "structure_roles": 36,
-   "subgroups": 4,
-   "any_source_signal": 33,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1197,54 +458,25 @@
    "domain_id": "D016",
    "domain_name": "Electrical",
    "roles": 35,
-   "structure_roles": 33,
-   "subgroups": 2,
-   "any_source_signal": 33,
-   "framework_signal": 0,
+   "structure_roles": 35,
+   "subgroups": 0,
+   "any_source_signal": 35,
+   "framework_signal": 2,
    "reasons": [
-    "structure mismatch",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D040",
-   "domain_name": "Vocational",
-   "roles": 35,
+   "domain_id": "D142",
+   "domain_name": "Bioinformatics, Computational Biology",
+   "roles": 36,
    "structure_roles": 36,
-   "subgroups": 3,
-   "any_source_signal": 35,
+   "subgroups": 0,
+   "any_source_signal": 36,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D013",
-   "domain_name": "Investment Analysis",
-   "roles": 36,
-   "structure_roles": 38,
-   "subgroups": 2,
-   "any_source_signal": 35,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D102",
-   "domain_name": "Carpentry, Joinery, Wood Technology",
-   "roles": 36,
-   "structure_roles": 30,
-   "subgroups": 3,
-   "any_source_signal": 35,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1253,24 +485,11 @@
    "domain_name": "Software Engineering",
    "roles": 37,
    "structure_roles": 37,
-   "subgroups": 1,
-   "any_source_signal": 35,
-   "framework_signal": 0,
+   "subgroups": 0,
+   "any_source_signal": 37,
+   "framework_signal": 2,
    "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D009",
-   "domain_name": "Data Science",
-   "roles": 38,
-   "structure_roles": 38,
-   "subgroups": 3,
-   "any_source_signal": 36,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1278,39 +497,12 @@
    "domain_id": "D024",
    "domain_name": "Nursing",
    "roles": 38,
-   "structure_roles": 20,
-   "subgroups": 3,
-   "any_source_signal": 37,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D032",
-   "domain_name": "Project Management",
-   "roles": 38,
-   "structure_roles": 39,
-   "subgroups": 3,
+   "structure_roles": 38,
+   "subgroups": 0,
    "any_source_signal": 38,
-   "framework_signal": 0,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D044",
-   "domain_name": "Graphic Design",
-   "roles": 38,
-   "structure_roles": 36,
-   "subgroups": 3,
-   "any_source_signal": 38,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1318,51 +510,12 @@
    "domain_id": "D068",
    "domain_name": "Allied Health",
    "roles": 38,
-   "structure_roles": 40,
-   "subgroups": 2,
+   "structure_roles": 38,
+   "subgroups": 0,
    "any_source_signal": 38,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D010",
-   "domain_name": "Business Intelligence",
-   "roles": 39,
-   "structure_roles": 39,
-   "subgroups": 4,
-   "any_source_signal": 37,
-   "framework_signal": 0,
-   "reasons": [
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D049",
-   "domain_name": "Automotive Engineering",
-   "roles": 41,
-   "structure_roles": 38,
-   "subgroups": 3,
-   "any_source_signal": 41,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D053",
-   "domain_name": "Hospitality",
-   "roles": 42,
-   "structure_roles": 46,
-   "subgroups": 4,
-   "any_source_signal": 42,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1370,26 +523,12 @@
    "domain_id": "D041",
    "domain_name": "Scientific Research",
    "roles": 43,
-   "structure_roles": 45,
-   "subgroups": 2,
-   "any_source_signal": 42,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D111",
-   "domain_name": "Textile, Garment",
-   "roles": 43,
-   "structure_roles": 45,
-   "subgroups": 5,
+   "structure_roles": 43,
+   "subgroups": 0,
    "any_source_signal": 43,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1397,26 +536,25 @@
    "domain_id": "D114",
    "domain_name": "Assembly, Packaging",
    "roles": 43,
-   "structure_roles": 39,
-   "subgroups": 2,
-   "any_source_signal": 42,
-   "framework_signal": 0,
+   "structure_roles": 43,
+   "subgroups": 0,
+   "any_source_signal": 43,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
    "priority": "P3",
-   "domain_id": "D028",
-   "domain_name": "General Management",
+   "domain_id": "D017",
+   "domain_name": "Mechanical",
    "roles": 45,
-   "structure_roles": 44,
-   "subgroups": 3,
+   "structure_roles": 45,
+   "subgroups": 0,
    "any_source_signal": 45,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1424,25 +562,12 @@
    "domain_id": "D030",
    "domain_name": "Marketing, Brand",
    "roles": 46,
-   "structure_roles": 48,
-   "subgroups": 2,
+   "structure_roles": 46,
+   "subgroups": 0,
    "any_source_signal": 46,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D075",
-   "domain_name": "Fashion, Textiles",
-   "roles": 46,
-   "structure_roles": 47,
-   "subgroups": 3,
-   "any_source_signal": 46,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1450,39 +575,12 @@
    "domain_id": "D023",
    "domain_name": "Medicine",
    "roles": 49,
-   "structure_roles": 12,
-   "subgroups": 3,
-   "any_source_signal": 48,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D055",
-   "domain_name": "Chemical Engineering",
-   "roles": 49,
-   "structure_roles": 50,
-   "subgroups": 3,
+   "structure_roles": 49,
+   "subgroups": 0,
    "any_source_signal": 49,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D033",
-   "domain_name": "Product Management",
-   "roles": 51,
-   "structure_roles": 40,
-   "subgroups": 3,
-   "any_source_signal": 51,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1490,27 +588,12 @@
    "domain_id": "D110",
    "domain_name": "Chemical, Rubber",
    "roles": 56,
-   "structure_roles": 57,
+   "structure_roles": 56,
    "subgroups": 0,
    "any_source_signal": 56,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D022",
-   "domain_name": "Mining",
-   "roles": 60,
-   "structure_roles": 49,
-   "subgroups": 4,
-   "any_source_signal": 57,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
    ]
   },
   {
@@ -1518,14 +601,12 @@
    "domain_id": "D043",
    "domain_name": "Journalism",
    "roles": 62,
-   "structure_roles": 34,
+   "structure_roles": 62,
    "subgroups": 0,
-   "any_source_signal": 61,
-   "framework_signal": 0,
+   "any_source_signal": 62,
+   "framework_signal": 1,
    "reasons": [
-    "structure mismatch",
-    "no subgroups",
-    "unsourced roles"
+    "no subgroups"
    ]
   },
   {
@@ -1543,15 +624,15 @@
   },
   {
    "priority": "P3",
-   "domain_id": "D107",
-   "domain_name": "Leather Technology, Shoemaking",
-   "roles": 68,
-   "structure_roles": 64,
-   "subgroups": 7,
-   "any_source_signal": 68,
+   "domain_id": "D018",
+   "domain_name": "Civil",
+   "roles": 67,
+   "structure_roles": 67,
+   "subgroups": 0,
+   "any_source_signal": 67,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch"
+    "no subgroups"
    ]
   },
   {
@@ -1559,144 +640,12 @@
    "domain_id": "D085",
    "domain_name": "Retail Sales, Shop Operations",
    "roles": 70,
-   "structure_roles": 23,
+   "structure_roles": 70,
    "subgroups": 0,
    "any_source_signal": 70,
    "framework_signal": 0,
    "reasons": [
-    "structure mismatch",
     "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D045",
-   "domain_name": "Public Administration",
-   "roles": 74,
-   "structure_roles": 59,
-   "subgroups": 3,
-   "any_source_signal": 74,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D046",
-   "domain_name": "Social Work",
-   "roles": 77,
-   "structure_roles": 75,
-   "subgroups": 3,
-   "any_source_signal": 77,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D038",
-   "domain_name": "Compliance, Regulation",
-   "roles": 78,
-   "structure_roles": 65,
-   "subgroups": 4,
-   "any_source_signal": 78,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D052",
-   "domain_name": "Construction Management",
-   "roles": 83,
-   "structure_roles": 84,
-   "subgroups": 4,
-   "any_source_signal": 83,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D042",
-   "domain_name": "Media Production",
-   "roles": 109,
-   "structure_roles": 91,
-   "subgroups": 3,
-   "any_source_signal": 106,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch",
-    "unsourced roles"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D031",
-   "domain_name": "Sales",
-   "roles": 122,
-   "structure_roles": 59,
-   "subgroups": 4,
-   "any_source_signal": 122,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D079",
-   "domain_name": "Customs, Trade",
-   "roles": 137,
-   "structure_roles": 23,
-   "subgroups": 2,
-   "any_source_signal": 137,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D035",
-   "domain_name": "Logistics",
-   "roles": 143,
-   "structure_roles": 51,
-   "subgroups": 4,
-   "any_source_signal": 143,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D034",
-   "domain_name": "Supply Chain Management",
-   "roles": 157,
-   "structure_roles": 60,
-   "subgroups": 4,
-   "any_source_signal": 157,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D036",
-   "domain_name": "Procurement",
-   "roles": 170,
-   "structure_roles": 38,
-   "subgroups": 3,
-   "any_source_signal": 170,
-   "framework_signal": 0,
-   "reasons": [
-    "structure mismatch"
    ]
   }
  ]

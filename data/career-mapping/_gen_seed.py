@@ -42,7 +42,7 @@ for f in sorted(_glob.glob(os.path.join(HERE, "ccmas", "*.json"))):
                                    disc, p["code"], "ccmas"))
 # ── 1b. programmes: custom (Type-D enrichment) ──────────────────
 prog_id_by_name = {}
-for f in ["enrichment/anthropology.json", "enrichment/intelligence_security.json", "enrichment/social_justice.json"]:
+for f in sorted(_glob.glob(os.path.join(HERE, "enrichment", "*.json"))):
     d = load(f)
     pid = uid("programme", "custom", d["programme"])
     prog_id_by_name[d["programme"]] = pid
@@ -130,9 +130,16 @@ for f in sorted(_g2.glob(os.path.join(HERE, "jamb", "enrich", "*.json"))):
     if jid not in _seen_jids:
         _enrich_skipped += 1  # programme not in any offerings file — nothing to attach to
         continue
-    row = (uid("psr", jname), jid, as_text(e.get("utme_subjects")),
-           e.get("olevel_requirement"), e.get("direct_entry"))
-    i = _psr_ix.get(row[0])
+    row_id = uid("psr", jname)
+    i = _psr_ix.get(row_id)
+    base = rows["programme_subject_requirements"][i] if i is not None else None
+    def _enriched_or_base(field, convert=False):
+        value = e.get(field)
+        if value is not None and (not isinstance(value, str) or value.strip()):
+            return as_text(value) if convert else value
+        return base[2 if field == "utme_subjects" else 3 if field == "olevel_requirement" else 4] if base else None
+    row = (row_id, jid, _enriched_or_base("utme_subjects", convert=True),
+           _enriched_or_base("olevel_requirement"), _enriched_or_base("direct_entry"))
     if i is not None:
         rows["programme_subject_requirements"][i] = row
     else:
@@ -142,8 +149,7 @@ print(f"jamb/enrich overlay: {_enrich_applied} applied, {_enrich_skipped} skippe
 
 # ── 3. programme_mapping (bridge) ───────────────────────────────
 pm = load("programme_mapping.json")
-custom_link = {"Intelligence and Security Studies": "Intelligence and Security Studies",
-               "Social Justice": "Social Justice", "Anthropology": "Anthropology"}
+custom_link = {name: name for name in prog_id_by_name}
 seen_jids = set()
 for x in pm["mappings"]:
     jname = x["jamb_name"]; jid = uid("jamb", jname)
@@ -162,7 +168,7 @@ for x in pm["mappings"]:
     # 3) code-only (legacy pilot rows; their codes are globally unique)
     if pid is None and x.get("ccmas_code"):
         pid = prog_id_by_code.get(x["ccmas_code"])
-    if pid is None and jname in custom_link:
+    if pid is None and (jname in custom_link or x.get("mapping_type") == "D_custom"):
         pid = prog_id_by_name.get(custom_link[jname])
     rows["programme_mapping"].append(
         (uid("pm", jname), jid, pid, x["mapping_type"], x.get("mapping_note")))

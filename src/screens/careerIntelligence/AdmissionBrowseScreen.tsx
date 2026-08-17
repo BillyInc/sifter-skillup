@@ -157,6 +157,21 @@ export default function AdmissionBrowseScreen() {
     [olevelSubjectText],
   );
   const hasSubjectContext = subjects.length >= 4 && olevelSubjects.length >= 5;
+  const canMatchSubjects =
+    subjectExamType === "olevel"
+      ? olevelSubjects.length >= 5
+      : subjects.length >= 4 && olevelSubjects.length >= 5;
+
+  const updateSubjectSelection = (next: string[], kind: "utme" | "olevel") => {
+    if (kind === "utme") setSubjectText(next.join(", "));
+    else setOlevelSubjectText(next.join(", "));
+    // A previous match is no longer valid after the subject set changes.
+    // Requiring a fresh click also prevents stale results from appearing while
+    // the selection is below the minimum gate.
+    setCandidates([]);
+    setSelected(null);
+    setNotice(null);
+  };
 
   // The organisation type owns the learner context. Providers are JAMB-only,
   // universities are undergraduate-only, and only secondary schools have
@@ -179,7 +194,7 @@ export default function AdmissionBrowseScreen() {
   }, [adminType, isAdminExplore, learnerAudience, contextClass, stream]);
 
   useEffect(() => {
-    if (initialMode === "subjects" && (subjects.length || olevelSubjects.length)) {
+    if (initialMode === "subjects" && canMatchSubjects) {
       void runSubjectMatch();
     } else if (initialMode === "programme" && query.trim().length >= 2) {
       void runProgrammeSearch(query);
@@ -715,7 +730,7 @@ export default function AdmissionBrowseScreen() {
               examType="utme"
               stream={stream || undefined}
               value={subjects}
-              onChange={(next) => setSubjectText(next.join(", "))}
+              onChange={(next) => updateSubjectSelection(next, "utme")}
               minSelected={4}
               maxSelected={4}
               showSearch={false}
@@ -732,7 +747,7 @@ export default function AdmissionBrowseScreen() {
             stream={stream || undefined}
             examType="olevel"
             value={olevelSubjects}
-            onChange={(next) => setOlevelSubjectText(next.join(", "))}
+            onChange={(next) => updateSubjectSelection(next, "olevel")}
             minSelected={5}
             maxSelected={9}
             showSearch={false}
@@ -745,14 +760,12 @@ export default function AdmissionBrowseScreen() {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={runSubjectMatch}
+            disabled={!canMatchSubjects || loading}
+            accessibilityState={{ disabled: !canMatchSubjects || loading }}
             style={[
               styles.actionBtn,
               {
-                backgroundColor:
-                  (subjectExamType === "olevel" && olevelSubjects.length >= 5) ||
-                  (subjectExamType === "combined" && subjects.length >= 4 && olevelSubjects.length >= 5)
-                    ? Brand.primary
-                    : colors.border,
+                backgroundColor: canMatchSubjects ? Brand.primary : colors.border,
                 alignSelf: "flex-start",
               },
             ]}

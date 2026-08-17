@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0.0",
+  "as_of": "2026-08-17",
+  "purpose": "Official learning, skills, assessment and professional-resource destinations. Provider prices are observations, not guarantees.",
+  "providers": {
+    "freecodecamp": {
+      "name": "freeCodeCamp",
+      "url": "https://www.freecodecamp.org/learn/",
+      "region": "global",
+      "access_type": "free",
+      "delivery": "self-paced online",
+      "description": "Free interactive coding lessons, projects and certificates."
+    },
+    "w3schools": {
+      "name": "W3Schools",
+      "url": "https://www.w3schools.com/",
+      "region": "global",
+      "access_type": "mixed",
+      "delivery": "self-paced online",
+      "price": 14.99,
+      "currency": "USD",
+      "price_period": "monthly",
+      "price_as_of": "2026-08-17",
+      "price_source": "https://www.w3schools.com/pro/index.php",
+      "description": "Free tutorials are available; Plus and certification options are paid."
+    },
+    "mdn": {
+      "name": "MDN Learn Web Development",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
+      "region": "global",
+      "access_type": "free",
+      "delivery": "self-paced online",
+      "description": "Structured web-development learning content and skill checks."
+    },
+    "mit_ocw": {
+      "name": "MIT OpenCourseWare",
+      "url": "https://ocw.mit.edu/",
+      "region": "global",
+      "access_type": "free",
+      "delivery": "self-paced course materials",
+      "description": "Free, openly published course materials across many academic fields."
+    },
+    "ibm_skillsbuild": {
+      "name": "IBM SkillsBuild",
+      "url": "https://skillsbuild.org/students",
+      "region": "global",
+      "access_type": "free",
+      "delivery": "self-paced online",
+      "description": "Free technology and workplace learning pathways with digital credentials."
+    },
+    "microsoft_learn": {
+      "name": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/training/",
+      "region": "global",
+      "access_type": "mixed",
+      "delivery": "self-paced online and applied labs",
+      "description": "Free learning paths; certification exams and some assessments are paid or region-dependent."
+    },
+    "aws_skill_builder": {
+      "name": "AWS Skill Builder",
+      "url": "https://aws.amazon.com/training/digital/",
+      "region": "global",
+      "access_type": "mixed",
+      "delivery": "self-paced online and labs",
+      "price": 29.0,
+      "currency": "USD",
+      "price_period": "monthly",
+      "price_as_of": "2026-08-17",
+      "price_source": "https://aws.amazon.com/training/digital/",
+      "description": "Free courses are available; subscription unlocks additional labs and exam preparation."
+    },
+    "google_skills": {
+      "name": "Google Cloud Skills Boost",
+      "url": "https://www.cloudskillsboost.google/subscriptions",
+      "region": "global",
+      "access_type": "mixed",
+      "delivery": "self-paced online and hands-on labs",
+      "price": 29.0,
+      "currency": "USD",
+      "price_period": "monthly",
+      "price_as_of": "2026-08-17",
+      "price_source": "https://www.cloudskillsboost.google/subscriptions",
+      "description": "Free monthly credits are available; paid plans unlock the wider lab catalogue."
+    },
+    "coursera": {
+      "name": "Coursera",
+      "url": "https://www.coursera.org/courseraplus/",
+      "region": "global",
+      "access_type": "mixed",
+      "delivery": "online courses and guided projects",
+      "price": 59.0,
+      "currency": "USD",
+      "price_period": "monthly",
+      "price_as_of": "2026-08-17",
+      "price_source": "https://www.coursera.org/courseraplus/",
+      "description": "Course access and certificates vary by course, subscription and region."
+    },
+    "udemy": {
+      "name": "Udemy",
+      "url": "https://www.udemy.com/courses/",
+      "region": "global_proxy",
+      "access_type": "dynamic",
+      "delivery": "self-paced online courses",
+      "description": "Course prices and promotions vary by account location, course and promotion period."
+    },
+    "three_mtt": {
+      "name": "3MTT Nigeria",
+      "url": "https://3mtt.nitda.gov.ng/",
+      "region": "nigeria",
+      "access_type": "free",
+      "delivery": "hybrid programme when a cohort is open",
+      "description": "Nigeria-focused government-backed digital-skills cohorts; availability is cohort-dependent."
+    }
+  },
+  "keyword_routes": [
+    {"keywords": ["software", "web", "programming", "frontend", "backend", "data", "artificial intelligence", "machine learning", "cyber", "cloud", "technology", "computing"], "providers": ["freecodecamp", "w3schools", "mdn", "ibm_skillsbuild", "microsoft_learn", "aws_skill_builder", "google_skills", "three_mtt"]},
+    {"keywords": ["engineering", "science", "mathematics", "physics", "chemistry", "nuclear", "space", "environment", "agriculture", "forestry", "fisheries", "veterinary", "health", "medicine", "nursing", "pharmacy", "radiography"], "providers": ["mit_ocw", "coursera", "ibm_skillsbuild"]},
+    {"keywords": ["accounting", "banking", "finance", "insurance", "tax", "management", "marketing", "sales", "procurement", "logistics", "supply", "human resources", "public administration", "economics", "business"], "providers": ["coursera", "mit_ocw", "ibm_skillsbuild"]},
+    {"keywords": ["design", "fashion", "media", "journalism", "music", "creative", "art", "theatre", "hospitality", "tourism", "culinary", "craft"], "providers": ["coursera", "mit_ocw", "ibm_skillsbuild"]}
+  ],
+  "tool_urls": {
+    "python": "https://www.w3schools.com/python/",
+    "javascript": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+    "typescript": "https://www.typescriptlang.org/docs/",
+    "react": "https://react.dev/learn",
+    "sql": "https://www.w3schools.com/sql/",
+    "git": "https://git-scm.com/book/en/v2",
+    "docker": "https://docs.docker.com/get-started/",
+    "kubernetes": "https://kubernetes.io/docs/tutorials/",
+    "aws": "https://aws.amazon.com/training/",
+    "azure": "https://learn.microsoft.com/training/azure/",
+    "google cloud": "https://www.cloudskillsboost.google/",
+    "power bi": "https://learn.microsoft.com/training/powerplatform/power-bi/",
+    "excel": "https://support.microsoft.com/training",
+    "figma": "https://help.figma.com/hc/en-us/categories/360002051613-Learn-design"
+  }
+}

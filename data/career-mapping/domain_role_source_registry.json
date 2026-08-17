@@ -280,6 +280,30 @@
       "access": "public",
       "notes": "Patent, trademark, copyright and technology-transfer terminology."
     },
+    "global_cfa_finance": {
+      "name": "CFA Institute curriculum and investment profession resources",
+      "region": "global",
+      "evidence_type": "professional_competency_and_credential_framework",
+      "url": "https://www.cfainstitute.org/",
+      "access": "public_reference",
+      "notes": "Investment analysis, portfolio management, ethics and finance competency context."
+    },
+    "global_garp_risk": {
+      "name": "Global Association of Risk Professionals resources",
+      "region": "global",
+      "evidence_type": "professional_competency_and_credential_framework",
+      "url": "https://www.garp.org/",
+      "access": "public_reference",
+      "notes": "Risk management, financial risk and FRM competency context."
+    },
+    "global_driver_training": {
+      "name": "DVSA National Standard for Driver and Rider Training",
+      "region": "global_proxy",
+      "evidence_type": "regulated_training_and_competency_framework",
+      "url": "https://www.gov.uk/government/publications/national-standard-for-driver-and-rider-training/national-standard-for-driver-and-rider-training",
+      "access": "public",
+      "notes": "Official driver-trainer framework covering coaching, learner assessment, communication, safety, risk management and continuing professional development; UK regulatory context, not Nigerian licensing or demand data."
+    },
     "ng_jobberman": {
       "name": "Jobberman Nigeria jobs",
       "region": "nigeria",
@@ -304,6 +328,14 @@
       "access": "public",
       "notes": "National employment, sector and labour-context evidence; not a replacement for role-level vacancy data."
     },
+    "ng_national_ai": {
+      "name": "Nigeria National Artificial Intelligence Strategy 2025",
+      "region": "nigeria",
+      "evidence_type": "national_strategy_and_competency_context",
+      "local_files": ["C:/Users/USER/Downloads/professional bodies docs/National-Artificial-Intelligence-Strategy-19092025 (1).pdf"],
+      "access": "checked_in_source_document",
+      "notes": "Nigerian AI ecosystem, research, skills, responsible AI and data-governance context; not a professional license."
+    },
     "ng_nbte": {
       "name": "NBTE National Occupational Standards and curricula",
       "region": "nigeria",
@@ -311,6 +343,254 @@
       "url": "https://web.nbte.gov.ng/downloads",
       "access": "public",
       "notes": "Primary Nigerian source for technical, vocational, trade and technician role names and performance standards."
+    },
+    "ng_cpn_syllabus_2021": {
+      "name": "CPN 2021 Examination Syllabus",
+      "region": "nigeria",
+      "evidence_type": "professional_exam_and_competency_framework",
+      "url": "https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf",
+      "access": "public_pdf",
+      "notes": "Use the named computing skills, competency outcomes and CLE/CFE/CPE credential ladder as Nigerian evidence."
+    },
+    "ng_ncs": {
+      "name": "Nigeria Computer Society",
+      "region": "nigeria",
+      "evidence_type": "professional_association_and_sector_skills_context",
+      "url": "https://www.ncs.org.ng/",
+      "access": "public",
+      "notes": "Nigerian ICT professional terminology and current AI, robotics, cybersecurity, fintech, IoT and education themes."
+    },
+    "ng_nsqf_nos": {
+      "name": "NBTE NSQF and National Occupational Standards",
+      "region": "nigeria",
+      "evidence_type": "national_skills_and_occupational_standard",
+      "urls": ["https://www.web.nbte.gov.ng/nsqf", "https://www.digitalnbte.nbte.gov.ng/Public/PUCNOS"],
+      "access": "public",
+      "notes": "Nigerian competency, occupational-standard and NSQ qualification evidence for technical and vocational domains."
+    },
+    "ng_cieeen": {
+      "name": "Council for Innovative Engineering and Emerging Engineering in Nigeria",
+      "region": "nigeria",
+      "evidence_type": "engineering_specialisation_and_certification_context",
+      "url": "https://cieeen.gov.ng/",
+      "access": "public",
+      "notes": "Emerging engineering specialisations and professional categories; keep separate from statutory COREN registration."
+    },
+    "ng_health_ministry": {
+      "name": "Federal Ministry of Health and Social Welfare Nigeria",
+      "region": "nigeria",
+      "evidence_type": "government_health_regulatory_context",
+      "url": "https://health.gov.ng/hospital-services/",
+      "access": "public",
+      "notes": "Health-system and regulator directory context; it does not establish each profession's credential."
+    },
+    "ng_mls": {
+      "name": "Medical Laboratory Science Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "statutory_health_regulator_and_competency_standard",
+      "url": "https://mlscn.gov.ng/about/mandate",
+      "access": "public",
+      "notes": "Medical laboratory knowledge and skill standards, registration categories and examination evidence."
+    },
+    "ng_clmis_corbon": {
+      "name": "CORBON Construction Labour Market Information System and NOS",
+      "region": "nigeria",
+      "evidence_type": "national_occupational_standard_and_trade_regulator",
+      "urls": ["https://www.clmis.corbon.gov.ng/nos", "https://clmis.corbon.gov.ng/public/assets/nos/MASONRY%20WORKS.pdf"],
+      "access": "public",
+      "notes": "Construction-trade skills and occupational standards for Nigerian building trades."
+    },
+    "ng_qsrbn": {
+      "name": "Quantity Surveyors Registration Board of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "statutory_professional_regulator",
+      "url": "https://qsrbn.gov.ng/registration/",
+      "access": "public",
+      "notes": "Quantity-surveying registration, supervised experience, induction and practice-licence evidence."
+    },
+    "ng_nnra": {
+      "name": "Nigerian Nuclear Regulatory Authority",
+      "region": "nigeria",
+      "evidence_type": "statutory_nuclear_and_radiation_regulator",
+      "url": "https://nnra.gov.ng/nnra/page-radiation_safety_officers",
+      "access": "public",
+      "notes": "Radiation-safety officer training, accreditation, monitoring and regulatory compliance evidence."
+    },
+    "ng_trcn": {
+      "name": "Teachers Registration Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "statutory_education_regulator_and_competency_framework",
+      "urls": ["https://trcn.gov.ng/", "https://www.trcn.gov.ng/pqe-curriculum"],
+      "access": "public",
+      "notes": "Teacher professional standards, PQE competency areas, registration, licensing and continuing development."
+    },
+    "ng_nogicjqs": {
+      "name": "Nigerian Oil and Gas Industry Content Joint Qualification System",
+      "region": "nigeria",
+      "evidence_type": "sector_competency_and_certificate_verification_system",
+      "url": "https://nogicjqs.gov.ng/",
+      "access": "public",
+      "notes": "Nigerian oil-and-gas individual/company competency search and NCDMB-approved certificate verification."
+    },
+    "ng_cmd": {
+      "name": "Centre for Management Development Nigeria",
+      "region": "nigeria",
+      "evidence_type": "government_management_development_body",
+      "url": "https://www.cmd.gov.ng/",
+      "access": "public",
+      "notes": "Management, leadership, entrepreneurship, finance, research, consultancy and ICT development context."
+    },
+    "ng_nasrda": {
+      "name": "National Space Research and Development Agency",
+      "region": "nigeria",
+      "evidence_type": "government_science_and_engineering_context",
+      "urls": ["https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/", "https://central.nasrda.gov.ng/departments/engineering-and-space-systems/"],
+      "access": "public",
+      "notes": "Nigerian space science, space engineering, satellite and remote-sensing context; not a standalone licence."
+    },
+    "ng_nema": {
+      "name": "National Emergency Management Agency",
+      "region": "nigeria",
+      "evidence_type": "government_emergency_management_context",
+      "url": "https://nema.gov.ng/",
+      "access": "public",
+      "notes": "Emergency preparedness, response, humanitarian logistics and multi-agency coordination context."
+    },
+    "ng_fmacce": {
+      "name": "Federal Ministry of Arts, Culture, Creative Economy and Social Development",
+      "region": "nigeria",
+      "evidence_type": "government_creative_sector_context",
+      "urls": ["https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece", "https://www.fmacce.gov.ng/gaming"],
+      "access": "public",
+      "notes": "Creative economy, entertainment and gaming sector context; do not infer professional licensing or credentials."
+    },
+    "ng_ican_syllabus": {
+      "name": "Institute of Chartered Accountants of Nigeria 2026 syllabus",
+      "region": "nigeria",
+      "evidence_type": "professional_exam_and_competency_framework",
+      "url": "https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf",
+      "access": "public_pdf",
+      "notes": "Accounting, audit, tax, financial-management, professional-judgement and ethics evidence."
+    },
+    "ng_cibn": {
+      "name": "Chartered Institute of Bankers of Nigeria competency framework",
+      "region": "nigeria",
+      "evidence_type": "statutory_professional_body_and_competency_framework",
+      "urls": ["https://portal.cibng.org/cb_competencyframework.asp", "https://portal.cibng.org/cb_examinations.asp"],
+      "access": "public",
+      "notes": "Nigerian banking competency standards, professional examinations and CIB/ACIB certification."
+    },
+    "ng_nuj": {
+      "name": "Nigeria Union of Journalists professional ethics",
+      "region": "nigeria",
+      "evidence_type": "professional_association_and_ethics_framework",
+      "urls": ["https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/", "https://nuj.org.ng/functions.html"],
+      "access": "public",
+      "notes": "Nigerian journalism ethics, accuracy, fairness, privacy, confidentiality, copyright and training context."
+    },
+    "ng_nla": {
+      "name": "Nigerian Library Association and LRCN context",
+      "region": "nigeria",
+      "evidence_type": "professional_association_and_profession_standards_context",
+      "urls": ["https://nla.org.ng/public/", "https://nla.org.ng/about/presidents-message"],
+      "access": "public",
+      "notes": "Librarianship, archives, information science, standards, certification and capacity-building context."
+    },
+    "ng_nicfost": {
+      "name": "Nigerian Council of Food Science and Technology",
+      "region": "nigeria",
+      "evidence_type": "statutory_professional_regulator_and_practice_licence",
+      "urls": ["https://nicfost.gov.ng/", "https://nicfost.gov.ng/faqs/"],
+      "access": "public",
+      "notes": "Food-science practice regulation, CFSN registration, annual practice licence and CPD."
+    },
+    "ng_nihotour": {
+      "name": "NIHOTOUR RIVAC registration portal",
+      "region": "nigeria",
+      "evidence_type": "government_sector_registration_and_certification_context",
+      "url": "https://rivac.nihotour.gov.ng/",
+      "access": "public",
+      "notes": "Hospitality, travel and tourism personnel registration, accreditation, certification and verification."
+    },
+    "ng_fmafs": {
+      "name": "Federal Ministry of Agriculture and Food Security",
+      "region": "nigeria",
+      "evidence_type": "government_agriculture_and_food_systems_context",
+      "urls": ["https://agriculture.gov.ng/structure/", "https://agriculture.gov.ng/about-us/"],
+      "access": "public",
+      "notes": "Agriculture, fisheries, veterinary services, animal husbandry, agribusiness, extension, food safety and climate context."
+    },
+    "ng_npa_psychology": {
+      "name": "Nigerian Psychological Association",
+      "region": "nigeria",
+      "evidence_type": "professional_association_and_psychology_practice_context",
+      "urls": ["https://npafct.org/", "https://npafct.org/about"],
+      "access": "public",
+      "notes": "Psychology training, research, psychosocial services and membership progression."
+    },
+    "ng_fashion_council": {
+      "name": "Nigerian Fashion Council and FADAN",
+      "region": "nigeria",
+      "evidence_type": "sector_skills_council_and_professional_association",
+      "urls": ["https://nigerianfashioncouncil.org/", "https://fadan.ng/registration/"],
+      "access": "public",
+      "notes": "Fashion sector skills, value-chain and designer membership context."
+    },
+    "ng_sports_context": {
+      "name": "Nigeria Olympic Committee sports-sector context",
+      "region": "nigeria",
+      "evidence_type": "sports_sector_context",
+      "url": "https://nigeriaolympic.org/athletes-commission/commissions/",
+      "access": "public",
+      "notes": "Athlete development, competition administration and sports programme context; not a universal sports-management licence."
+    },
+    "ng_public_health_context": {
+      "name": "NPHCDA and Nigerian public-health sources",
+      "region": "nigeria",
+      "evidence_type": "government_public_health_context",
+      "urls": ["https://nphcda.gov.ng/brief-history-mandate/", "https://health.gov.ng/hospital-services/"],
+      "access": "public",
+      "notes": "Primary-health-care policy, implementation, supervision, monitoring and workforce-development context."
+    },
+    "ng_nemet": {
+      "name": "Nigeria Meteorological Agency",
+      "region": "nigeria",
+      "evidence_type": "government_meteorology_and_climate_context",
+      "url": "https://nimet.gov.ng/foi",
+      "access": "public",
+      "notes": "Weather, climate services, observation, forecasting and applied meteorology context."
+    },
+    "ng_nmdpra": {
+      "name": "Nigerian upstream and midstream petroleum regulators",
+      "region": "nigeria",
+      "evidence_type": "statutory_energy_regulatory_context",
+      "urls": ["https://www.nuprc.gov.ng/", "https://www.nmdpra.gov.ng/"],
+      "access": "public",
+      "notes": "Petroleum operations, safety, environmental and regulatory-compliance context."
+    },
+    "ng_legal_context": {
+      "name": "Nigerian legal, immigration, diplomacy and IP source set",
+      "region": "nigeria",
+      "evidence_type": "professional_and_regulatory_legal_context",
+      "urls": ["https://nigerianbar.org.ng/", "https://nila.ng/about-us/"],
+      "access": "public_reference",
+      "notes": "Local legal-practice and specialist legal terminology; association membership is not automatically a practice licence."
+    },
+    "ng_cipsmn": {
+      "name": "Chartered Institute of Purchasing and Supply Management of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "professional_association_and_procurement_context",
+      "url": "https://www.cipsmn.org.ng/about",
+      "access": "public",
+      "notes": "Procurement, sourcing, supplier, contract and commercial supply terminology in Nigeria."
+    },
+    "ng_nas_research": {
+      "name": "Nigerian Academy of Science and national research sources",
+      "region": "nigeria",
+      "evidence_type": "professional_academy_and_research_context",
+      "url": "https://nas.org.ng/",
+      "access": "public_reference",
+      "notes": "Research design, scientific communication, evidence review and national science-sector context."
     },
     "ng_nuc": {
       "name": "National Universities Commission CCMAS and standards",
@@ -447,6 +727,70 @@
       "url": "https://nesrea.gov.ng/",
       "access": "public_reference",
       "notes": "Environmental engineering, climate, occupational safety and environmental compliance context."
+    },
+    "ng_surcon": {
+      "name": "Surveyors Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://www.surcon.gov.ng/",
+      "access": "public_reference",
+      "notes": "Survey practice, professional examinations, enrolment and company eligibility in Nigeria."
+    },
+    "ng_nimet": {
+      "name": "Nigerian Meteorological Agency",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "url": "https://nimet.gov.ng/foi",
+      "access": "public_reference",
+      "notes": "Meteorological services, forecasting, observation, research, training and technical services in Nigeria."
+    },
+    "ng_nnra": {
+      "name": "Nigerian Nuclear Regulatory Authority",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://nnra.gov.ng/",
+      "access": "public_reference",
+      "notes": "Ionising-radiation safety, regulatory authorization, occupational exposure and radiation-source control in Nigeria."
+    },
+    "ng_mls": {
+      "name": "Medical Laboratory Science Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://mlscn.gov.ng/publications/mlscn-approved-documents",
+      "access": "public_reference",
+      "notes": "Medical laboratory practice, laboratory inspection, quality, sample management and IVD regulation in Nigeria."
+    },
+    "ng_mdcn": {
+      "name": "Medical and Dental Council of Nigeria",
+      "region": "nigeria",
+      "evidence_type": "professional_regulatory_context",
+      "url": "https://www.mdcn.gov.ng/",
+      "access": "public_reference",
+      "notes": "Medical and dental practice regulation, registration and scope of professional practice in Nigeria."
+    },
+    "ng_transport": {
+      "name": "Federal Ministry of Transportation Nigeria",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "url": "https://transportation.gov.ng/about/",
+      "access": "public_reference",
+      "notes": "Intermodal transport, road, rail, maritime and mass-transit policy context in Nigeria."
+    },
+    "ng_aviation": {
+      "name": "Federal Ministry of Aviation and Aerospace Development Nigeria",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "url": "https://aviation.gov.ng/index.php/about",
+      "access": "public_reference",
+      "notes": "Aviation, airports, airspace, safety oversight, infrastructure and aerospace-development context in Nigeria."
+    },
+    "ng_nema": {
+      "name": "National Emergency Management Agency Nigeria",
+      "region": "nigeria",
+      "evidence_type": "sector_and_regulatory_context",
+      "url": "https://nema.gov.ng/",
+      "access": "public_reference",
+      "notes": "Emergency-management, disaster-response, transport-support and humanitarian coordination context in Nigeria."
     }
   },
   "default_sources": ["global_esco", "global_onet", "global_isco", "global_wef", "ng_jobberman", "ng_myjobmag", "ng_nbs"],
@@ -493,27 +837,74 @@
     "D070": ["nac_arts_technical_theatre", "skills_england_live_event", "mqa_performing_arts", "global_creative", "ng_creative"],
     "D054": ["global_energy", "ng_energy"],
     "D055": ["global_energy", "ng_energy"],
-    "D059": ["global_wef", "ng_engineering"],
     "D069": ["global_icao_iata", "ng_aviation_maritime"],
     "D076": ["global_imo_imarest", "ng_aviation_maritime"],
     "D086": ["global_game_dev", "global_esports", "ng_gaming"],
     "D129": ["ng_jobberman", "ng_myjobmag"],
     "D131": ["global_icao_iata", "ng_engineering"],
-    "D132": ["global_wef", "ng_engineering"],
-    "D134": ["global_imo_imarest", "ng_engineering", "ng_aviation_maritime"],
-    "D135": ["global_nuclear", "ng_engineering"],
-    "D137": ["global_nuclear", "global_health", "ng_health"],
     "D139": ["global_game_dev", "tesda_psf_game_development", "global_creative", "ng_creative"],
-    "D140": ["arm_robotics_career", "skills_england_robotics", "ng_engineering", "ng_nbte"],
-    "D141": ["qt_cfqt", "global_wef", "global_sfia", "ng_cpn"],
     "D143": ["global_nice", "ng_cpn"],
-    "D144": ["global_wef", "ng_environment"],
     "D148": ["global_energy", "global_imo_imarest", "ng_energy", "ng_aviation_maritime"],
     "D153": ["global_music", "global_creative", "ng_creative"],
     "D157": ["global_wipo", "ng_finance", "ng_legal"],
-    "D162": ["ng_legal"],
+    "D003": ["global_sfia", "global_wef", "ng_national_ai", "ng_cpn"],
+    "D005": ["global_sfia", "ng_cpn", "ng_telecom"],
+    "D006": ["global_sfia", "ng_cpn", "ng_telecom", "ng_engineering"],
+    "D012": ["global_sfia", "global_wipo", "ng_finance", "ng_cpn"],
+    "D025": ["global_health", "ng_health"],
+    "D051": ["global_built_environment", "ng_built_environment"],
+    "D057": ["global_health", "ng_health", "ng_nuc"],
+    "D058": ["global_unesco", "ng_nuc", "ng_education"],
+    "D059": ["global_esco", "global_onet", "global_isco", "global_icao_iata", "global_unesco", "ng_aviation", "ng_engineering"],
+    "D061": ["ng_finance", "global_cfa_finance", "global_garp_risk"],
+    "D063": ["global_unesco", "ng_nbs", "ng_finance"],
+    "D064": ["global_health", "ng_health", "ng_education"],
+    "D065": ["global_unesco", "ng_education", "ng_creative"],
+    "D067": ["global_health", "ng_mdcn"],
+    "D074": ["ng_engineering", "ng_environment", "global_health"],
+    "D081": ["ng_business", "ng_education", "ng_health"],
+    "D084": ["global_esco", "global_onet", "global_isco", "global_sfia", "ng_finance", "ng_business"],
+    "D091": ["global_esco", "global_onet", "global_isco", "global_icao_iata", "global_driver_training", "ng_nbte", "ng_transport"],
+    "D095": ["ng_nbte", "ng_engineering"],
+    "D096": ["global_fao", "ng_agriculture", "ng_nbte"],
+    "D099": ["global_esco", "global_onet", "global_isco", "global_built_environment", "ng_nbte", "ng_built_environment"],
+    "D103": ["ng_nbte", "ng_creative"],
+    "D105": ["global_esco", "global_onet", "global_isco", "global_creative", "global_unesco", "ng_nbte", "ng_creative"],
+    "D117": ["global_imo_imarest", "ng_transport", "ng_aviation_maritime"],
+    "D119": ["global_fao", "ng_agriculture", "ng_nbte"],
+    "D121": ["global_fao", "ng_agriculture", "ng_environment"],
+    "D122": ["global_health", "ng_mls"],
+    "D123": ["global_health", "global_nuclear", "ng_nnra", "ng_health"],
+    "D125": ["global_health", "ng_health", "ng_nuc"],
+    "D126": ["global_health", "ng_health"],
+    "D127": ["ng_education", "ng_nuc"],
+    "D130": ["global_esco", "global_onet", "global_isco", "global_wef", "global_unesco", "ng_business"],
+    "D132": ["global_esco", "global_onet", "global_isco", "global_wef", "global_icao_iata", "global_unesco", "ng_aviation", "ng_engineering"],
+    "D134": ["global_imo_imarest", "ng_transport", "ng_aviation_maritime", "ng_engineering"],
+    "D135": ["global_nuclear", "ng_nnra", "ng_engineering"],
+    "D136": ["global_icao_iata", "ng_aviation", "ng_engineering"],
+    "D137": ["global_nuclear", "global_health", "ng_nnra", "ng_health"],
+    "D138": ["global_health", "ng_health", "ng_engineering"],
+    "D140": ["arm_robotics_career", "skills_england_robotics", "ng_engineering", "ng_nbte"],
+    "D141": ["qt_cfqt", "global_wef", "global_sfia", "ng_cpn"],
+    "D144": ["global_wef", "ng_nimet", "ng_environment"],
+    "D145": ["global_health", "ng_health", "ng_education"],
+    "D146": ["global_built_environment", "ng_engineering", "ng_built_environment"],
+    "D147": ["global_sfia", "ng_engineering", "ng_nbte"],
+    "D149": ["global_unesco", "ng_legal", "ng_nbs"],
+    "D150": ["global_unesco", "ng_education", "ng_creative"],
+    "D151": ["global_nice", "ng_legal", "ng_nbs"],
+    "D152": ["global_unesco", "ng_education", "ng_creative"],
+    "D154": ["global_health", "ng_health", "ng_education"],
+    "D155": ["global_nuclear", "ng_engineering", "ng_nbte"],
+    "D156": ["global_built_environment", "ng_surcon", "ng_engineering"],
+    "D160": ["global_esco", "global_onet", "global_isco", "global_creative", "ng_nbte", "ng_creative"],
+    "D161": ["global_health", "ng_nema", "ng_nbs"],
+    "D162": ["global_esco", "global_onet", "global_isco", "global_wipo", "ng_legal", "ng_nbs"],
     "D163": ["global_wipo", "ng_legal"],
-    "D166": ["global_sfia", "global_xr", "ng_cpn", "ng_engineering"],
+    "D164": ["global_icao_iata", "ng_transport", "ng_nbs"],
+    "D165": ["global_health", "ng_health", "ng_education"],
+    "D166": ["global_sfia", "global_xr", "ng_engineering", "ng_cpn"],
     "D167": ["global_xr", "jff_xr", "global_sfia", "ng_cpn"],
     "D168": ["global_game_dev", "global_esports", "british_esports", "pearson_esports", "global_creative", "ng_creative"]
   },
@@ -534,6 +925,61 @@
     "rule": "Sparse posting volume is not evidence that the domain has no roles. Use specialist industry sources plus ESCO/O*NET/ISCO for the role spine, and label Nigerian evidence as limited when Jobberman/MyJobMag do not produce a stable sample.",
     "priority_domain_ids": ["D086", "D139", "D141", "D153", "D167", "D168"],
     "minimum_evidence": ["one global taxonomy source", "one specialist global industry source where available", "one Nigerian vacancy source", "one Nigerian regulator/industry source where available"]
+  },
+  "nigerian_body_audit": {
+    "artifact": "data/career-mapping/nigerian_professional_body_audit.json",
+    "report": "data/career-mapping/NIGERIAN_PROFESSIONAL_BODY_AUDIT.md",
+    "active_domains_audited": 167,
+    "thin_gaps_audited": 42,
+    "status": "web_audited_inventory_pending_role_level_review",
+    "rule": "Do not treat a government or sector-context body as a statutory professional regulator; do not create a local credential without source-backed evidence."
+  },
+  "nigerian_web_evidence_audit": {
+    "artifact": "data/career-mapping/nigerian_web_source_evidence_audit.json",
+    "report": "data/career-mapping/NIGERIAN_WEB_SOURCE_EVIDENCE_AUDIT.md",
+    "visible_domains_audited": 160,
+    "verified_anchor_sources": 32,
+    "existing_source_log_entries": 28,
+    "status": "source_verified_visible_domain_coverage_pending_skill_document_review",
+    "rule": "Only source-named skills, competencies, registration, examinations or credentials may be promoted into local evidence."
+  },
+  "nigerian_body_web_evidence_audit": {
+    "artifact": "data/career-mapping/nigerian_remaining_body_web_evidence.json",
+    "report": "data/career-mapping/NIGERIAN_BODY_WEB_EVIDENCE_AUDIT.md",
+    "visible_domains_audited": 160,
+    "distinct_body_ids_audited": 129,
+    "remaining_body_ids_reviewed": 44,
+    "follow_up_body_ids": 0,
+    "status": "body_source_audited_with_all_remaining_body_ids_reviewed",
+    "rule": "A source-backed body or agency can contribute only the named skills, competencies, registration, examination or credential evidence; association membership is not automatically a licence."
+  },
+  "domain_skill_evidence_audit": {
+    "artifact": "data/career-mapping/domain_skill_competency_certification_audit.json",
+    "report": "data/career-mapping/DOMAIN_SKILL_COMPETENCY_CERTIFICATION_AUDIT.md",
+    "visible_domains_audited": 160,
+    "status": "nigerian_and_global_evidence_matrix_pending_field_level_review",
+    "sql_regeneration": "blocked"
+  },
+  "nigerian_certification_gap_audit": {
+    "artifact": "data/career-mapping/nigerian_certification_gap_audit.json",
+    "report": "data/career-mapping/NIGERIAN_CERTIFICATION_GAP_AUDIT.md",
+    "review_rows": 11,
+    "domains_reviewed": 12,
+    "statutory_registration_or_licence_rows": 3,
+    "sector_training_or_competency_rows": 3,
+    "no_general_individual_licence_found_rows": 5,
+    "status": "certification_state_audited_pending_field_level_review",
+    "sql_regeneration": "blocked",
+    "rule": "Do not convert sector training, association membership or institutional context into a universal individual professional licence."
+  },
+  "global_thin_gap_evidence_audit": {
+    "artifact": "data/career-mapping/global_thin_gap_evidence_audit.json",
+    "report": "data/career-mapping/GLOBAL_THIN_GAP_EVIDENCE_AUDIT.md",
+    "thin_queue_rows": 42,
+    "actual_unpopulated_gap_rows": 41,
+    "reconciliation_rows": 1,
+    "status": "multi_source_global_role_evidence_audited_pending_field_level_review",
+    "sql_regeneration": "blocked"
   },
   "implementation_notes": [
     "Resolve the source set for a domain by unioning default_sources, the domain cluster rule and domain_overrides.",
