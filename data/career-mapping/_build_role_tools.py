@@ -19,6 +19,7 @@ import sys
 from collections import defaultdict
 
 from _nigerian_context import resolved_nigerian_context
+from _role_overlay_loader import load_overlay_roles
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -34,6 +35,7 @@ ESCO_OCCUPATIONS = os.path.join(HERE, "taxonomies", "esco_occupations.json")
 # roles. The older v3 file is retained for historical seed comparison only.
 ROLE_LIBRARY = os.path.join(HERE, "role_library_v3_cleaned.json")
 EMERGING_OVERLAY = os.path.join(HERE, "emerging_role_overlays.json")
+THIN_OVERLAY = os.path.join(HERE, "thin_domain_role_overlays.json")
 ROLE_SOURCE_OVERRIDES = os.path.join(HERE, "framework_role_overrides.json")
 DOMAIN_META = os.path.join(HERE, "domain_meta.json")
 DOMAIN_SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
@@ -106,8 +108,7 @@ def health_adjacent(meta):
 def main():
     onet_path = first_existing(ONET_SKILLS)
     roles = load_json(ROLE_LIBRARY)
-    overlay = load_json(EMERGING_OVERLAY) if os.path.exists(EMERGING_OVERLAY) else {"roles": []}
-    roles.extend(overlay.get("roles") or [])
+    roles.extend(load_overlay_roles())
     role_overrides = load_json(ROLE_SOURCE_OVERRIDES).get("roles", {}) if os.path.exists(ROLE_SOURCE_OVERRIDES) else {}
     source_registry = load_json(DOMAIN_SOURCE_REGISTRY) if os.path.exists(DOMAIN_SOURCE_REGISTRY) else {}
     enriched_roles = []

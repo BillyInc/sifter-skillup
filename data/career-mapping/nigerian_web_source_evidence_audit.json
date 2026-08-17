@@ -1,0 +1,3724 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "_build_nigerian_web_evidence_audit.py",
+  "purpose": "Record internet-verified Nigerian skills, competency and certification anchors before any SQL or seed regeneration.",
+  "scope": {
+    "visible_domains": 160,
+    "hidden_domain_ids_excluded": [
+      "D086",
+      "D087",
+      "D088",
+      "D089",
+      "D100",
+      "D101",
+      "D108",
+      "D113"
+    ],
+    "source_log_entries_in_existing_audit": 28,
+    "verified_anchor_sources": 32,
+    "note": "A body or government page is not treated as proof of a professional licence unless the source explicitly establishes regulation, registration, examination or certification."
+  },
+  "verified_sources": [
+    {
+      "source_id": "ng_cpn_syllabus_2021",
+      "name": "Computer Professionals Registration Council of Nigeria, 2021 Examination Syllabus",
+      "url": "https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf",
+      "source_class": "professional_regulator_and_exam_framework",
+      "verified_claims": [
+        "The CPN examination is a route into recognised IT professional practice in Nigeria.",
+        "The syllabus is intended to sustain competence and skills across the Nigerian computing and ICT industry."
+      ],
+      "skills": [
+        "computer systems and programming",
+        "software packages",
+        "multimedia document production",
+        "networks and computer security",
+        "web design",
+        "database management",
+        "data protection and backup"
+      ],
+      "competencies": [
+        "develop and document software",
+        "design and query databases",
+        "configure and secure networks",
+        "protect and recover data"
+      ],
+      "certifications": [
+        "Computer Literacy Examination (CLE)",
+        "Computer Foundation Examination (CFE)",
+        "Computer Professional Examination (CPE)"
+      ],
+      "domain_signal": "ICT, data, AI, cloud, cybersecurity, IoT, telecommunications and digital-production domains",
+      "covered_body_ids": [
+        "ng_cpn",
+        "ng_ncs",
+        "ng_nitda"
+      ]
+    },
+    {
+      "source_id": "ng_ncs",
+      "name": "Nigeria Computer Society",
+      "url": "https://www.ncs.org.ng/",
+      "source_class": "professional_association_and_sector_skills_context",
+      "verified_claims": [
+        "NCS describes itself as the umbrella body for Nigerian IT professionals and interest groups.",
+        "Its current programmes cover AI, robotics, cybersecurity, fintech, IoT, digital learning and computing education."
+      ],
+      "skills": [
+        "AI engineering and ethics",
+        "robotics",
+        "cybersecurity",
+        "digital forensics",
+        "fintech",
+        "IoT",
+        "data analytics"
+      ],
+      "competencies": [
+        "continuous professional development",
+        "AI-enabled threat detection",
+        "cyber risk governance",
+        "responsible AI and digital innovation"
+      ],
+      "certifications": [
+        "NCS membership and professional recognition"
+      ],
+      "domain_signal": "ICT, AI, cyber, fintech, robotics, IoT and computing education",
+      "covered_body_ids": [
+        "ng_aaai",
+        "ng_dsn",
+        "ng_ncs"
+      ]
+    },
+    {
+      "source_id": "ng_nsqf_nos",
+      "name": "National Board for Technical Education, NSQF and National Occupational Standards",
+      "url": "https://www.web.nbte.gov.ng/nsqf",
+      "secondary_url": "https://www.digitalnbte.nbte.gov.ng/Public/PUCNOS",
+      "source_class": "national_skills_and_occupational_standard",
+      "verified_claims": [
+        "NSQF defines skills, knowledge, understanding and competencies regardless of where learning occurred.",
+        "NBTE publishes National Occupational Standards and National Skills Qualifications routes."
+      ],
+      "skills": [
+        "occupational performance",
+        "recognition of prior learning",
+        "technical trade practice",
+        "progression through qualification levels"
+      ],
+      "competencies": [
+        "perform defined occupational outcomes",
+        "demonstrate practical competence against NOS",
+        "progress through NSQ levels"
+      ],
+      "certifications": [
+        "National Skills Qualifications (NSQ)",
+        "National Occupational Standards (NOS) aligned awards"
+      ],
+      "domain_signal": "technical, vocational, craft, construction, ICT and trade domains",
+      "covered_body_ids": [
+        "ng_nabteb",
+        "ng_nbte"
+      ]
+    },
+    {
+      "source_id": "ng_cieeen",
+      "name": "Council for Innovative Engineering and Emerging Engineering in Nigeria",
+      "url": "https://cieeen.gov.ng/",
+      "source_class": "engineering_professional_and_specialisation_context",
+      "verified_claims": [
+        "The council lists professional categories from engineer to craftsman and describes structured certification and standards.",
+        "Its listed specialisations include AI, big data, blockchain, biomedical, clean energy, IoT, machine learning, robotics, quantum and telecommunications."
+      ],
+      "skills": [
+        "AI",
+        "big data",
+        "blockchain",
+        "biomedical engineering",
+        "clean energy",
+        "IoT",
+        "machine learning",
+        "robotics",
+        "telecommunications"
+      ],
+      "competencies": [
+        "engineering safety and reliability",
+        "interoperability",
+        "standards-based engineering practice",
+        "emerging-technology application"
+      ],
+      "certifications": [
+        "structured professional certification categories listed by the council"
+      ],
+      "domain_signal": "emerging engineering, AI, robotics, telecoms, energy and automation",
+      "covered_body_ids": [
+        "ng_coren",
+        "ng_engineering",
+        "ng_nieee"
+      ]
+    },
+    {
+      "source_id": "ng_health_ministry",
+      "name": "Federal Ministry of Health and Social Welfare, Nigeria",
+      "url": "https://health.gov.ng/hospital-services/",
+      "source_class": "government_health_regulatory_context",
+      "verified_claims": [
+        "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals."
+      ],
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "domain_signal": "medicine, nursing, pharmacy, public health and allied-health context",
+      "covered_body_ids": [
+        "ng_chprbn",
+        "ng_ehorecon",
+        "ng_mdcn",
+        "ng_mls",
+        "ng_mrtb",
+        "ng_nmcn",
+        "ng_pcn",
+        "ng_rrbn",
+        "ng_vcn"
+      ]
+    },
+    {
+      "source_id": "ng_mls",
+      "name": "Medical Laboratory Science Council of Nigeria",
+      "url": "https://mlscn.gov.ng/about/mandate",
+      "source_class": "statutory_health_regulator",
+      "verified_claims": [
+        "MLSCN regulates medical laboratory science and sets the standard of knowledge and skill for scientists, technicians and assistants.",
+        "It conducts examinations and maintains separate professional registers."
+      ],
+      "skills": [
+        "clinical laboratory sample management",
+        "diagnostic reagent handling",
+        "laboratory quality practice",
+        "safe laboratory work"
+      ],
+      "competencies": [
+        "meet Council knowledge and skill standards",
+        "document and retain samples",
+        "operate within laboratory approval and inspection requirements"
+      ],
+      "certifications": [
+        "MLSCN registration categories for scientists, technicians and assistants",
+        "Council examinations for technicians and assistants"
+      ],
+      "domain_signal": "medical laboratory and allied-health domains",
+      "covered_body_ids": [
+        "ng_mls"
+      ]
+    },
+    {
+      "source_id": "ng_clmis_corbon",
+      "name": "Council for the Regulation of Engineering in Nigeria, Construction Labour Market Information System",
+      "url": "https://www.clmis.corbon.gov.ng/nos",
+      "secondary_url": "https://clmis.corbon.gov.ng/public/assets/nos/MASONRY%20WORKS.pdf",
+      "source_class": "national_occupational_standard_and_trade_regulator",
+      "verified_claims": [
+        "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+        "The published standards cover electrical installation, carpentry and joinery, masonry, painting and decoration, and plumbing."
+      ],
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "domain_signal": "construction and building-trade domains",
+      "covered_body_ids": [
+        "ng_arcon",
+        "ng_corbon",
+        "ng_esvarbon",
+        "ng_niob",
+        "ng_qsrbn",
+        "ng_surcon",
+        "ng_toprec"
+      ]
+    },
+    {
+      "source_id": "ng_qsrbn",
+      "name": "Quantity Surveyors Registration Board of Nigeria",
+      "url": "https://qsrbn.gov.ng/registration/",
+      "source_class": "statutory_professional_regulator",
+      "verified_claims": [
+        "QSRBN regulates and controls quantity surveying practice in Nigeria and registers individuals and firms.",
+        "Registration requires relevant education, professional certificates, supervised experience and induction."
+      ],
+      "skills": [
+        "construction measurement",
+        "cost estimation",
+        "financial management of construction projects",
+        "contract and project cost monitoring"
+      ],
+      "competencies": [
+        "complete supervised professional experience",
+        "meet registration and practice requirements",
+        "apply ethical and professional standards"
+      ],
+      "certifications": [
+        "Registered Quantity Surveyor (RQS)",
+        "QSRBN registration and practice licence"
+      ],
+      "domain_signal": "quantity surveying and built-environment domains",
+      "covered_body_ids": [
+        "ng_qsrbn"
+      ]
+    },
+    {
+      "source_id": "ng_nnra",
+      "name": "Nigerian Nuclear Regulatory Authority",
+      "url": "https://nnra.gov.ng/nnra/page-radiation_safety_officers",
+      "secondary_url": "https://nnra.gov.ng/nnra/department-radiological_safety",
+      "source_class": "statutory_nuclear_and_radiation_regulator",
+      "verified_claims": [
+        "NNRA registers, licences, inspects and enforces nuclear safety and radiological protection in Nigeria.",
+        "Radiation Safety Officers need relevant education, training, accredited radiation-protection examination and supervised on-the-job training."
+      ],
+      "skills": [
+        "radiation protection",
+        "dose monitoring",
+        "radiological surveys",
+        "quality assurance",
+        "emergency response",
+        "radioactive-waste safety"
+      ],
+      "competencies": [
+        "control exposure",
+        "maintain safety records",
+        "interpret licence conditions",
+        "respond to incidents",
+        "train workers in radiation safety"
+      ],
+      "certifications": [
+        "NNRA-accredited radiation-protection course and RSO accreditation requirements"
+      ],
+      "domain_signal": "radiation, nuclear, medical physics and imaging domains",
+      "covered_body_ids": [
+        "ng_nnra"
+      ]
+    },
+    {
+      "source_id": "ng_trcn",
+      "name": "Teachers Registration Council of Nigeria",
+      "url": "https://trcn.gov.ng/",
+      "secondary_url": "https://www.trcn.gov.ng/pqe-curriculum",
+      "source_class": "statutory_education_regulator_and_competency_framework",
+      "verified_claims": [
+        "TRCN establishes teacher standards, approves qualifications, registers and licenses teachers, and administers the Professional Qualifying Examination.",
+        "The current PQE curriculum names pedagogy, literacy, numeracy, ICT and safeguarding as core areas."
+      ],
+      "skills": [
+        "pedagogy",
+        "literacy",
+        "numeracy",
+        "ICT for teaching",
+        "safeguarding",
+        "professional communication"
+      ],
+      "competencies": [
+        "plan and deliver learning",
+        "assess learner progress",
+        "communicate professionally",
+        "protect learners",
+        "meet professional conduct standards"
+      ],
+      "certifications": [
+        "TRCN registration and licence",
+        "Professional Qualifying Examination (PQE)",
+        "MCPD routes"
+      ],
+      "domain_signal": "teaching, education administration and learning-support domains",
+      "covered_body_ids": [
+        "ng_trcn"
+      ]
+    },
+    {
+      "source_id": "ng_nogicjqs",
+      "name": "Nigerian Oil and Gas Industry Content Joint Qualification System",
+      "url": "https://nogicjqs.gov.ng/",
+      "source_class": "sector_competency_and_certificate_verification_system",
+      "verified_claims": [
+        "NOGIC-JQS maintains individual and company competency searches and validates NCDMB-approved certifications in the Nigerian oil and gas industry.",
+        "The system is intended as a national skills-development pool and includes certificate verification."
+      ],
+      "skills": [
+        "oil and gas technical practice",
+        "marine and offshore work",
+        "safety and security",
+        "operations and supply chain",
+        "engineering"
+      ],
+      "competencies": [
+        "demonstrate verified individual competency",
+        "meet Nigerian content capability requirements",
+        "maintain valid sector qualifications"
+      ],
+      "certifications": [
+        "NCDMB-approved certificates",
+        "NCEC, NCRC, NCTRC and marine-vessel categorization certificates"
+      ],
+      "domain_signal": "energy, petroleum, offshore, marine, engineering and industrial-safety domains",
+      "covered_body_ids": [
+        "ng_ncdmb",
+        "ng_nogic"
+      ]
+    },
+    {
+      "source_id": "ng_cmd",
+      "name": "Centre for Management Development, Nigeria",
+      "url": "https://www.cmd.gov.ng/",
+      "source_class": "government_management_development_body",
+      "verified_claims": [
+        "CMD is the operational arm of the Nigerian Council for Management Development and supports management training, consultancy, research and education.",
+        "Its published values include integrity, professionalism and excellence."
+      ],
+      "skills": [
+        "management",
+        "leadership",
+        "entrepreneurship and business development",
+        "finance and accounting",
+        "research and consultancy",
+        "ICT"
+      ],
+      "competencies": [
+        "act ethically",
+        "lead teams and organisations",
+        "apply management standards",
+        "develop and evaluate business practice"
+      ],
+      "certifications": [
+        "CMD professional training and certification renewal signals; exact credential names require programme-level verification"
+      ],
+      "domain_signal": "management, administration, entrepreneurship and business domains",
+      "covered_body_ids": [
+        "ng_cmd",
+        "ng_nim"
+      ]
+    },
+    {
+      "source_id": "ng_nasrda",
+      "name": "National Space Research and Development Agency",
+      "url": "https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/",
+      "secondary_url": "https://central.nasrda.gov.ng/departments/engineering-and-space-systems/",
+      "source_class": "government_science_and_engineering_context",
+      "verified_claims": [
+        "NASRDA has institutes and departments covering space science, space engineering, satellite systems and related technology development."
+      ],
+      "skills": [
+        "space science",
+        "space systems engineering",
+        "satellite systems",
+        "remote sensing",
+        "astronomy",
+        "ICT for space applications"
+      ],
+      "competencies": [
+        "design or analyse space systems",
+        "use scientific and engineering methods",
+        "work with satellite and remote-sensing systems"
+      ],
+      "certifications": [
+        "No Nigerian professional licence is inferred from NASRDA pages; use academic and engineering regulators separately."
+      ],
+      "domain_signal": "space technology and space science domains",
+      "covered_body_ids": [
+        "ng_nasrda"
+      ]
+    },
+    {
+      "source_id": "ng_nema",
+      "name": "National Emergency Management Agency",
+      "url": "https://nema.gov.ng/",
+      "source_class": "government_emergency_management_context",
+      "verified_claims": [
+        "NEMA is the Nigerian national emergency-management source for preparedness, response, relief and recovery coordination."
+      ],
+      "skills": [
+        "emergency preparedness",
+        "incident coordination",
+        "humanitarian logistics",
+        "evacuation and relief operations",
+        "disaster recovery"
+      ],
+      "competencies": [
+        "coordinate multi-agency response",
+        "allocate resources during emergencies",
+        "support evacuation and recovery",
+        "communicate under pressure"
+      ],
+      "certifications": [
+        "No statutory professional credential is inferred from the NEMA homepage; training credentials require source-specific confirmation."
+      ],
+      "domain_signal": "humanitarian aid, emergency response and public-safety domains",
+      "covered_body_ids": [
+        "ng_nema"
+      ]
+    },
+    {
+      "source_id": "ng_fmacce",
+      "name": "Federal Ministry of Arts, Culture, Creative Economy and Social Development",
+      "url": "https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece",
+      "secondary_url": "https://www.fmacce.gov.ng/gaming",
+      "source_class": "government_creative_sector_context",
+      "verified_claims": [
+        "The ministry provides Nigerian creative-economy, entertainment and gaming sector context; it is not a professional licensing body."
+      ],
+      "skills": [
+        "creative production",
+        "entertainment operations",
+        "gaming and interactive media",
+        "cultural and creative entrepreneurship"
+      ],
+      "competencies": [
+        "create and manage creative work",
+        "work across production and distribution",
+        "understand creative-sector enterprise"
+      ],
+      "certifications": [
+        "No professional credential is inferred from the ministry pages."
+      ],
+      "domain_signal": "media, performing arts, games, fashion and creative-economy domains",
+      "covered_body_ids": [
+        "ng_copyright",
+        "ng_fmacce",
+        "ng_nfcvb"
+      ]
+    },
+    {
+      "source_id": "ng_ican_syllabus",
+      "name": "Institute of Chartered Accountants of Nigeria, 2026 syllabus",
+      "url": "https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf",
+      "source_class": "professional_exam_and_competency_framework",
+      "verified_claims": [
+        "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+        "The qualification combines technical knowledge, professional judgement, ethics, communication and practical experience."
+      ],
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "domain_signal": "accounting, finance, audit, tax, investment and credit domains",
+      "covered_body_ids": [
+        "ng_anan",
+        "ng_ciin",
+        "ng_citn",
+        "ng_ican",
+        "ng_riman"
+      ]
+    },
+    {
+      "source_id": "ng_cibn",
+      "name": "Chartered Institute of Bankers of Nigeria competency framework",
+      "url": "https://portal.cibng.org/cb_competencyframework.asp",
+      "secondary_url": "https://portal.cibng.org/cb_examinations.asp",
+      "source_class": "statutory_professional_body_and_competency_framework",
+      "verified_claims": [
+        "CIBN is the Nigerian banking profession body and is appointed under the banking competency framework to accredit training and certification.",
+        "Its examination material includes business communication, economics, accounting, finance, management, business law and ethics, ICT and quantitative techniques."
+      ],
+      "skills": [
+        "banking",
+        "credit and loan processing",
+        "financial accounting",
+        "business finance",
+        "quantitative techniques",
+        "e-payments"
+      ],
+      "competencies": [
+        "meet banking knowledge and skill standards",
+        "apply ethics and professionalism",
+        "process and document loans",
+        "work with payment systems"
+      ],
+      "certifications": [
+        "Certificate in Banking (CIB)",
+        "Associateship of the Chartered Institute of Bankers (ACIB)",
+        "specialised e-payment and microfinance certifications"
+      ],
+      "domain_signal": "banking, credit, fintech, finance and financial-risk domains",
+      "covered_body_ids": [
+        "ng_cbn",
+        "ng_cibn",
+        "ng_riman"
+      ]
+    },
+    {
+      "source_id": "ng_nuj",
+      "name": "Nigeria Union of Journalists code and registration resources",
+      "url": "https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/",
+      "secondary_url": "https://nuj.org.ng/functions.html",
+      "source_class": "professional_association_and_ethics_framework",
+      "verified_claims": [
+        "NUJ's code requires truth, accuracy, fairness, privacy, confidentiality, public interest and copyright-aware practice.",
+        "NUJ lists training, education and adherence to its ethics code among its professional functions."
+      ],
+      "skills": [
+        "fact checking",
+        "news reporting",
+        "source confidentiality",
+        "interviewing and information gathering",
+        "copyright-aware publishing"
+      ],
+      "competencies": [
+        "separate facts from commentary",
+        "verify information",
+        "protect confidential sources",
+        "report fairly and in the public interest"
+      ],
+      "certifications": [
+        "NUJ membership and professional registration signals; no statutory licence inferred"
+      ],
+      "domain_signal": "journalism, media production, communications and translation context",
+      "covered_body_ids": [
+        "ng_nbc",
+        "ng_nipc",
+        "ng_nuj"
+      ]
+    },
+    {
+      "source_id": "ng_nla",
+      "name": "Nigerian Library Association and Librarians Registration Council context",
+      "url": "https://nla.org.ng/public/",
+      "secondary_url": "https://nla.org.ng/about/presidents-message",
+      "source_class": "professional_association_and_profession_standards_context",
+      "verified_claims": [
+        "NLA supports capacity building and standards for education and certification of librarians, archivists and information scientists.",
+        "The association identifies LRCN as the Nigerian practice regulator and supports lifelong learning, digital transformation and information literacy."
+      ],
+      "skills": [
+        "library and information services",
+        "knowledge management",
+        "information literacy",
+        "digital library systems",
+        "research support",
+        "professional communication"
+      ],
+      "competencies": [
+        "manage information resources",
+        "support users' information needs",
+        "apply professional standards",
+        "communicate and lead knowledge services"
+      ],
+      "certifications": [
+        "LRCN registration context",
+        "NLA membership categories"
+      ],
+      "domain_signal": "library, archive, information science and research domains",
+      "covered_body_ids": [
+        "ng_lrcn",
+        "ng_nla"
+      ]
+    },
+    {
+      "source_id": "ng_nicfost",
+      "name": "Nigerian Council of Food Science and Technology",
+      "url": "https://nicfost.gov.ng/",
+      "secondary_url": "https://nicfost.gov.ng/faqs/",
+      "source_class": "statutory_professional_regulator_and_practice_licence",
+      "verified_claims": [
+        "NiCFoST regulates the practice and profession of Food Science and Technology in Nigeria.",
+        "The Council requires registration as a Certified Food Scientist of Nigeria and an annual practice licence for practice."
+      ],
+      "skills": [
+        "food science and technology",
+        "food safety",
+        "food premises inspection",
+        "food processing and quality",
+        "continuing professional development"
+      ],
+      "competencies": [
+        "apply food-scientific knowledge safely",
+        "meet professional registration requirements",
+        "support food business compliance",
+        "maintain competence through CPD"
+      ],
+      "certifications": [
+        "Certified Food Scientist of Nigeria (CFSN)",
+        "annual practice licence",
+        "food business premises licence"
+      ],
+      "domain_signal": "food science, nutrition, food production and hospitality domains",
+      "covered_body_ids": [
+        "ng_nafdac",
+        "ng_nicfost",
+        "ng_nislt"
+      ]
+    },
+    {
+      "source_id": "ng_nihotour",
+      "name": "NIHOTOUR RIVAC registration portal",
+      "url": "https://rivac.nihotour.gov.ng/",
+      "source_class": "government_sector_registration_and_certification_context",
+      "verified_claims": [
+        "NIHOTOUR's portal describes registration, identification, verification, accreditation and certification for Nigerian hospitality, travel and tourism personnel and operators."
+      ],
+      "skills": [
+        "hospitality operations",
+        "travel and tourism service",
+        "operator compliance",
+        "customer service",
+        "sector administration"
+      ],
+      "competencies": [
+        "work within tourism and hospitality compliance requirements",
+        "provide professional visitor services",
+        "maintain verifiable sector identity"
+      ],
+      "certifications": [
+        "RIVAC verifiable professional identity and certificate"
+      ],
+      "domain_signal": "hospitality, travel, tourism and visitor-services domains",
+      "covered_body_ids": [
+        "ng_nanta",
+        "ng_nihotour"
+      ]
+    },
+    {
+      "source_id": "ng_fmafs",
+      "name": "Federal Ministry of Agriculture and Food Security structure",
+      "url": "https://agriculture.gov.ng/structure/",
+      "secondary_url": "https://agriculture.gov.ng/about-us/",
+      "source_class": "government_agriculture_and_food_systems_context",
+      "verified_claims": [
+        "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments."
+      ],
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "domain_signal": "agriculture, food, forestry, wildlife, veterinary and climate domains",
+      "covered_body_ids": [
+        "ng_arcn",
+        "ng_fan",
+        "ng_fman",
+        "ng_nesrea",
+        "ng_niss"
+      ]
+    },
+    {
+      "source_id": "ng_social_work_registry",
+      "name": "Nigerian social-work professional context",
+      "url": "https://nisw.org.ng/",
+      "source_class": "professional_association_context",
+      "verified_claims": [
+        "The Nigerian Institute of Social Workers is used as the local professional reference for social-work role naming in the repository."
+      ],
+      "skills": [
+        "case work",
+        "community development",
+        "support planning",
+        "advocacy",
+        "safeguarding"
+      ],
+      "competencies": [
+        "assess social needs",
+        "coordinate support",
+        "work ethically with vulnerable people",
+        "maintain professional records"
+      ],
+      "certifications": [
+        "Professional registration details require direct council or institute document confirmation"
+      ],
+      "domain_signal": "social work, social welfare, youth and humanitarian domains",
+      "covered_body_ids": [
+        "ng_casson",
+        "ng_nasow"
+      ]
+    },
+    {
+      "source_id": "ng_nemet",
+      "name": "Nigeria Meteorological Agency and climate services",
+      "url": "https://nimet.gov.ng/foi",
+      "source_class": "government_meteorology_and_climate_context",
+      "verified_claims": [
+        "NiMet is the Nigerian meteorological source for weather and climate-service context used by the repository."
+      ],
+      "skills": [
+        "weather observation",
+        "forecasting",
+        "climate data interpretation",
+        "meteorological communication",
+        "applied climate services"
+      ],
+      "competencies": [
+        "interpret meteorological evidence",
+        "communicate forecasts",
+        "apply climate information to operational decisions"
+      ],
+      "certifications": [
+        "No independent professional credential inferred from this page"
+      ],
+      "domain_signal": "climate science, meteorology, agriculture, aviation and environmental domains",
+      "covered_body_ids": [
+        "ng_nesrea",
+        "ng_nihsa",
+        "ng_nimet"
+      ]
+    },
+    {
+      "source_id": "ng_nmdpra",
+      "name": "Nigerian upstream and midstream petroleum regulatory sources",
+      "url": "https://www.nuprc.gov.ng/",
+      "secondary_url": "https://www.nmdpra.gov.ng/",
+      "source_class": "statutory_energy_regulatory_context",
+      "verified_claims": [
+        "NUPRC and NMDPRA are the Nigerian regulatory context sources for upstream and midstream/downstream petroleum operations in the repository."
+      ],
+      "skills": [
+        "petroleum operations",
+        "process and facility safety",
+        "regulatory compliance",
+        "environmental management",
+        "technical reporting"
+      ],
+      "competencies": [
+        "work within petroleum regulations",
+        "manage operational risk",
+        "document compliance and technical activity"
+      ],
+      "certifications": [
+        "Sector credentials must be linked to the issuing body; do not infer a licence from the regulator homepage"
+      ],
+      "domain_signal": "oil, gas, petroleum engineering and energy domains",
+      "covered_body_ids": [
+        "ng_nape",
+        "ng_nmdpra",
+        "ng_nuprc"
+      ]
+    },
+    {
+      "source_id": "ng_legal_context",
+      "name": "Nigerian legal, immigration, diplomacy and IP source set",
+      "url": "https://nigerianbar.org.ng/",
+      "secondary_url": "https://nila.ng/about-us/",
+      "source_class": "professional_and_regulatory_legal_context",
+      "verified_claims": [
+        "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership."
+      ],
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "domain_signal": "legal practice, compliance, tax, immigration, diplomacy and IP domains",
+      "covered_body_ids": [
+        "ng_cia",
+        "ng_citn",
+        "ng_cle",
+        "ng_firs",
+        "ng_nba",
+        "ng_nccopyright",
+        "ng_ndpc",
+        "ng_niia",
+        "ng_nila",
+        "ng_nis_service"
+      ]
+    },
+    {
+      "source_id": "ng_cipsmn",
+      "name": "Chartered Institute of Purchasing and Supply Management of Nigeria",
+      "url": "https://www.cipsmn.org.ng/about",
+      "source_class": "professional_association_and_procurement_context",
+      "verified_claims": [
+        "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository."
+      ],
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "domain_signal": "procurement, supply chain, logistics and commercial operations domains",
+      "covered_body_ids": [
+        "ng_bpp",
+        "ng_cilt",
+        "ng_cipsmn",
+        "ng_crffn",
+        "ng_nagaff",
+        "ng_nitt"
+      ]
+    },
+    {
+      "source_id": "ng_nas_research",
+      "name": "Nigerian Academy of Science and national research sources",
+      "url": "https://nas.org.ng/",
+      "source_class": "professional_academy_and_research_context",
+      "verified_claims": [
+        "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context."
+      ],
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "domain_signal": "scientific research, neuroscience, social science, advanced science and materials domains",
+      "covered_body_ids": [
+        "ng_nas",
+        "ng_naseni",
+        "ng_nimr",
+        "ng_niser",
+        "ng_nucc",
+        "ng_rmrdc"
+      ]
+    },
+    {
+      "source_id": "ng_npa_psychology",
+      "name": "Nigerian Psychological Association",
+      "url": "https://npafct.org/",
+      "secondary_url": "https://npafct.org/about",
+      "source_class": "professional_association_and_psychology_practice_context",
+      "verified_claims": [
+        "NPA describes psychology development, training, research and psychosocial service delivery as its professional mission.",
+        "Its membership categories distinguish student, graduate, associate, full and fellow progression."
+      ],
+      "skills": [
+        "psychological assessment",
+        "psychosocial service delivery",
+        "research",
+        "training",
+        "mental-health support"
+      ],
+      "competencies": [
+        "apply psychological knowledge responsibly",
+        "work within qualification and practice requirements",
+        "support psychosocial wellbeing",
+        "maintain professional development"
+      ],
+      "certifications": [
+        "NPA membership progression",
+        "clinical psychology practice-licence context requires the relevant practice body"
+      ],
+      "domain_signal": "psychology, counselling, cognitive science and wellness context",
+      "covered_body_ids": [
+        "ng_npa"
+      ]
+    },
+    {
+      "source_id": "ng_fashion_council",
+      "name": "Nigerian Fashion Council and FADAN",
+      "url": "https://nigerianfashioncouncil.org/",
+      "secondary_url": "https://fadan.ng/registration/",
+      "source_class": "sector_skills_council_and_professional_association",
+      "verified_claims": [
+        "The Nigerian Fashion Council identifies itself as an NBTE-inaugurated sector skills council for the fashion value chain.",
+        "FADAN provides student, emerging-designer and professional membership routes and states aims around education and practice standards."
+      ],
+      "skills": [
+        "fashion design",
+        "garment production",
+        "styling and image work",
+        "fashion entrepreneurship",
+        "quality and value-chain practice"
+      ],
+      "competencies": [
+        "develop and present designs",
+        "work with fashion production processes",
+        "build a professional portfolio and business",
+        "meet sector practice expectations"
+      ],
+      "certifications": [
+        "FADAN membership categories",
+        "sector-skills qualifications require the applicable NSQ or training provider"
+      ],
+      "domain_signal": "fashion, textiles, garments, styling and creative enterprise domains",
+      "covered_body_ids": [
+        "ng_apfpn",
+        "ng_fadan",
+        "ng_fashion_council"
+      ]
+    },
+    {
+      "source_id": "ng_sports_context",
+      "name": "Nigerian sports federation and sports-sector context",
+      "url": "https://nigeriaolympiccommittee.org/",
+      "source_class": "government_and_sports_sector_context",
+      "verified_claims": [
+        "The repository uses Nigerian sports bodies as local terminology and sector context; specific coaching or management credentials require the issuing federation or institute."
+      ],
+      "skills": [
+        "sports administration",
+        "event operations",
+        "athlete support",
+        "governance",
+        "safety and safeguarding"
+      ],
+      "competencies": [
+        "organise sporting programmes",
+        "support athlete and event operations",
+        "apply governance and safeguarding expectations"
+      ],
+      "certifications": [
+        "No general sports-management licence inferred"
+      ],
+      "domain_signal": "sports management, exercise science and sports therapy domains",
+      "covered_body_ids": [
+        "ng_nff",
+        "ng_nso"
+      ]
+    },
+    {
+      "source_id": "ng_public_health_context",
+      "name": "Nigerian public-health regulatory and public-health association sources",
+      "url": "https://health.gov.ng/hospital-services/",
+      "secondary_url": "https://nphcda.gov.ng/",
+      "source_class": "government_public_health_context",
+      "verified_claims": [
+        "The Nigerian health regulator directory and NPHCDA are used for public-health and primary-health-care context; professional licences remain council-specific."
+      ],
+      "skills": [
+        "population health",
+        "health promotion",
+        "disease prevention",
+        "health programme coordination",
+        "health data"
+      ],
+      "competencies": [
+        "plan public-health interventions",
+        "interpret population evidence",
+        "coordinate community health programmes",
+        "work within health policy and ethics"
+      ],
+      "certifications": [
+        "Profession-specific health registration must be verified against the relevant council"
+      ],
+      "domain_signal": "public health, community health, health policy and social-care domains",
+      "covered_body_ids": [
+        "ng_aphpn",
+        "ng_health_ministry",
+        "ng_nphcda"
+      ]
+    },
+    {
+      "source_id": "ng_nahbpon_hair_beauty",
+      "name": "National Association of Hair and Beauty Practitioners of Nigeria",
+      "url": "https://nahbpon.com/about-nahbpon/",
+      "source_class": "professional_association_and_sector_skills_context",
+      "verified_claims": [
+        "The association describes itself as a Nigerian hair and beauty practitioners body.",
+        "It states that it works to promote standards, professional development and sanitation in the sector."
+      ],
+      "skills": [
+        "hairdressing and barbering practice",
+        "beauty-service hygiene and sanitation",
+        "client service and salon professionalism"
+      ],
+      "competencies": [
+        "deliver hair and beauty services safely",
+        "follow sector standards and professional conduct"
+      ],
+      "certifications": [],
+      "domain_signal": "hairdressing, barbering and beauty services",
+      "covered_body_ids": []
+    },
+    {
+      "source_id": "ng_apsman_aesthetics",
+      "name": "Association of Practitioners of Spa and Medical Aesthetics of Nigeria",
+      "url": "https://apsman.org/",
+      "source_class": "professional_association_and_training_context",
+      "verified_claims": [
+        "APSMAN describes itself as a Nigerian professional organisation for spa and medical aesthetics practitioners.",
+        "It reports training, certification and licensing activity for members; this is not treated as a statutory medical licence."
+      ],
+      "skills": [
+        "spa and wellness practice",
+        "aesthetic treatment practice",
+        "hygiene and client safety"
+      ],
+      "competencies": [
+        "deliver treatments within professional scope",
+        "apply hygiene, safety and ethical practice"
+      ],
+      "certifications": [
+        "APSMAN training and certification routes"
+      ],
+      "domain_signal": "beauty therapy, spa and medical aesthetics",
+      "covered_body_ids": []
+    },
+    {
+      "source_id": "ng_posban_beauty",
+      "name": "Practitioners of Spa and Beauty Association of Nigeria",
+      "url": "https://posbann.com/about-us/",
+      "source_class": "professional_association_and_sector_skills_context",
+      "verified_claims": [
+        "POSBAN describes a Nigerian association for spa, hair and beauty practitioners.",
+        "Its published rules reference training, qualification, sanitation and practice standards; membership is not treated as a statutory licence."
+      ],
+      "skills": [
+        "hair and beauty service delivery",
+        "salon and spa hygiene",
+        "beauty business operations"
+      ],
+      "competencies": [
+        "maintain safe salon and spa practice",
+        "apply professional and business standards"
+      ],
+      "certifications": [
+        "POSBAN membership and training routes"
+      ],
+      "domain_signal": "hairdressing, barbering, beauty therapy and aesthetics",
+      "covered_body_ids": []
+    },
+    {
+      "source_id": "ng_corbon_plumbing_painting_nos",
+      "name": "Council of Registered Builders of Nigeria, Construction Labour Market Information System",
+      "url": "https://www.clmis.corbon.gov.ng/nos",
+      "secondary_url": "https://www.corbon.gov.ng/resources/PLUMBING%20IN%20CONSTRUCTION.pdf",
+      "source_class": "national_occupational_standard_and_trade_regulator",
+      "verified_claims": [
+        "CORBON publishes National Occupational Standards for construction trades in Nigeria.",
+        "The published trade set includes plumbing in construction and painting and decoration."
+      ],
+      "skills": [
+        "plumbing installation and maintenance",
+        "pipe fitting and leak prevention",
+        "painting and decoration",
+        "construction safety and work quality"
+      ],
+      "competencies": [
+        "install and maintain building plumbing systems",
+        "prepare, estimate and execute painting and decoration work",
+        "meet occupational performance criteria and evidence requirements"
+      ],
+      "certifications": [
+        "National Occupational Standards and National Skills Qualification routes"
+      ],
+      "domain_signal": "plumbing, pipefitting, painting and decorating",
+      "covered_body_ids": [
+        "ng_corbon",
+        "ng_nbte"
+      ]
+    },
+    {
+      "source_id": "ng_cippon_printing_act",
+      "name": "Chartered Institute of Professional Printers of Nigeria",
+      "url": "https://www.cipponinstituteedu-ng.org/about.html",
+      "secondary_url": "https://placng.org/lawsofnigeria/print.php?sn=111",
+      "source_class": "statutory_professional_body_and_exam_context",
+      "verified_claims": [
+        "CIPPON describes a Nigerian statutory institute for regulating and administering printing practice.",
+        "The governing Act provides for registration, approved qualifications and professional standards for printing practitioners."
+      ],
+      "skills": [
+        "printing production and press operations",
+        "pre-press file preparation and plate production",
+        "print quality and production workflow"
+      ],
+      "competencies": [
+        "prepare and manage print production work",
+        "apply professional printing standards",
+        "work within registration and practice requirements"
+      ],
+      "certifications": [
+        "CIPPON professional registration and membership categories"
+      ],
+      "domain_signal": "printing technology, pre-press and print production",
+      "covered_body_ids": [
+        "ng_nbte"
+      ]
+    },
+    {
+      "source_id": "ng_sppn_printing",
+      "name": "Society of Printing Practitioners of Nigeria",
+      "url": "https://sppn.com.ng/",
+      "source_class": "professional_association_and_training_context",
+      "verified_claims": [
+        "SPPN describes a Nigerian printing professional body covering printing, packaging, publishing and graphic communication.",
+        "It advertises training, certification, professional support and membership activity."
+      ],
+      "skills": [
+        "printing and packaging production",
+        "graphic communication workflows",
+        "print technology and quality practice"
+      ],
+      "competencies": [
+        "operate within print production workflows",
+        "apply quality and professional practice standards"
+      ],
+      "certifications": [
+        "SPPN training and certification programmes"
+      ],
+      "domain_signal": "printing technology, pre-press and packaging",
+      "covered_body_ids": []
+    },
+    {
+      "source_id": "ng_son_building_materials",
+      "name": "Standards Organisation of Nigeria, Product Certification",
+      "url": "https://www.son.gov.ng/son-product-certification/",
+      "secondary_url": "https://son.gov.ng/mancapservice/",
+      "source_class": "national_standards_and_product_certification_regulator",
+      "verified_claims": [
+        "SON publishes Nigerian standards and product conformity and certification schemes.",
+        "The source covers materials, products, laboratories and quality assurance; it does not create an individual craft licence."
+      ],
+      "skills": [
+        "materials quality assurance",
+        "product conformity assessment",
+        "testing, inspection and standards compliance"
+      ],
+      "competencies": [
+        "interpret and apply relevant Nigerian Industrial Standards",
+        "document product and material conformity",
+        "support quality control and certification processes"
+      ],
+      "certifications": [
+        "MANCAP product certification",
+        "SON conformity assessment routes"
+      ],
+      "domain_signal": "glass, ceramics, building materials and manufacturing quality",
+      "covered_body_ids": [
+        "ng_rmrdc"
+      ]
+    },
+    {
+      "source_id": "ng_bumpan_building_materials",
+      "name": "Building Materials Producers Association of Nigeria",
+      "url": "https://bumpanng.com/",
+      "source_class": "sector_association_and_industry_context",
+      "verified_claims": [
+        "BUMPAN describes a Nigerian association representing building-material producers.",
+        "It provides sector advocacy and industry context; it is not treated as a personal professional licensing body."
+      ],
+      "skills": [
+        "building-material production",
+        "manufacturing quality and compliance",
+        "industry and supplier coordination"
+      ],
+      "competencies": [
+        "work with building-material production standards",
+        "coordinate production and sector stakeholders"
+      ],
+      "certifications": [],
+      "domain_signal": "building materials, manufacturing and construction supply",
+      "covered_body_ids": []
+    },
+    {
+      "source_id": "ng_niob_building_materials",
+      "name": "Nigerian Institute of Building",
+      "url": "https://niobnat.org/",
+      "source_class": "professional_association_and_built_environment_context",
+      "verified_claims": [
+        "NIOB describes a Nigerian professional organisation for the building profession.",
+        "Its public material references built-environment practice and building-material standards work."
+      ],
+      "skills": [
+        "building construction practice",
+        "materials and construction standards",
+        "site and quality coordination"
+      ],
+      "competencies": [
+        "apply building and materials standards",
+        "coordinate construction quality and practice"
+      ],
+      "certifications": [
+        "NIOB professional membership routes"
+      ],
+      "domain_signal": "building materials and construction practice",
+      "covered_body_ids": [
+        "ng_corbon"
+      ]
+    },
+    {
+      "source_id": "global_nafd_funeral_education",
+      "name": "National Association of Funeral Directors Education",
+      "url": "https://www.nafd.org.uk/education/nafd-education-and-training/",
+      "source_class": "international_professional_body_and_training_context",
+      "verified_claims": [
+        "NAFD publishes a funeral-service education framework with entry, operational and funeral-directing routes.",
+        "This is international learning and role evidence only; it is not a Nigerian licence or Nigerian regulator."
+      ],
+      "skills": [
+        "funeral service operations",
+        "arrangement and family support",
+        "funeral directing and professional conduct"
+      ],
+      "competencies": [
+        "support families through funeral arrangements",
+        "manage funeral-service operations ethically",
+        "progress through structured funeral-service training"
+      ],
+      "certifications": [
+        "NAFD funeral-service education and DipFD routes"
+      ],
+      "domain_signal": "funeral services and funeral directing",
+      "covered_body_ids": []
+    }
+  ],
+  "coverage_summary": {
+    "domains_with_nigerian_body_or_context": 160,
+    "domains_with_verified_web_anchor": 160,
+    "domains_requiring_direct_document_review": 0,
+    "thin_gaps": 42,
+    "thin_gaps_with_verified_web_anchor": 42,
+    "verified_anchor_sources": 42,
+    "new_direct_source_records_2026_08_17": 10,
+    "domains_with_international_only_anchor": 1,
+    "domains_with_local_body_gap_requiring_limited_copy": [
+      "D089"
+    ],
+    "supplemental_hidden_domains_audited": 7
+  },
+  "domain_coverage": [
+    {
+      "domain_id": "D001",
+      "domain_name": "Software Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 5,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D002",
+      "domain_name": "Data Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D003",
+      "domain_name": "Artificial Intelligence",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 5,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D004",
+      "domain_name": "Cybersecurity",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D005",
+      "domain_name": "Cloud Computing",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D006",
+      "domain_name": "Internet of Things",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D007",
+      "domain_name": "UI/UX Design",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D008",
+      "domain_name": "Telecommunications",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D139",
+      "domain_name": "Game Design",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs",
+        "ng_nsqf_nos",
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 4,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D140",
+      "domain_name": "Robotics Engineering, Systems Design",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs",
+        "ng_cieeen",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 4,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D009",
+      "domain_name": "Data Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D010",
+      "domain_name": "Business Intelligence",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_ncs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D011",
+      "domain_name": "Quantitative Finance",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 9,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D012",
+      "domain_name": "FinTech Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cibn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D013",
+      "domain_name": "Investment Analysis",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 9,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D014",
+      "domain_name": "Actuarial Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D015",
+      "domain_name": "Accounting",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D060",
+      "domain_name": "Banking, Credit",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 9,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D061",
+      "domain_name": "Insurance",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D062",
+      "domain_name": "Trading",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cibn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D158",
+      "domain_name": "Corporate Finance, Investment Banking",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 9,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D159",
+      "domain_name": "Credit Analysis, Structured Finance",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_cibn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D016",
+      "domain_name": "Electrical",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D017",
+      "domain_name": "Mechanical",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D018",
+      "domain_name": "Civil",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D019",
+      "domain_name": "Renewable Energy Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D020",
+      "domain_name": "Environmental Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_fmafs",
+        "ng_nemet"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D021",
+      "domain_name": "Architecture",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D022",
+      "domain_name": "Mining",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D069",
+      "domain_name": "Aviation",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D072",
+      "domain_name": "Geospatial Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D074",
+      "domain_name": "Occupational Health, Safety",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 5,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_fmafs",
+        "ng_nemet"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D146",
+      "domain_name": "Building Services Engineering — Mechanical, Electrical",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D147",
+      "domain_name": "Process Automation, SCADA, PLC",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D156",
+      "domain_name": "Land Surveying, Cadastral Mapping",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D164",
+      "domain_name": "Urban Mobility, Smart City Systems",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_clmis_corbon",
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D023",
+      "domain_name": "Medicine",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D024",
+      "domain_name": "Nursing",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D025",
+      "domain_name": "Pharmacy",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D026",
+      "domain_name": "Public Health",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D027",
+      "domain_name": "Biomedical",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D064",
+      "domain_name": "Psychology, Counselling",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_npa_psychology",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D066",
+      "domain_name": "Veterinary Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D067",
+      "domain_name": "Dentistry",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D068",
+      "domain_name": "Allied Health",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 8,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D154",
+      "domain_name": "Exercise Science, Sports Therapy",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry",
+        "ng_npa_psychology"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D165",
+      "domain_name": "Wellness Coaching, Lifestyle Medicine",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_npa_psychology",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D028",
+      "domain_name": "General Management",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D029",
+      "domain_name": "Human Resources",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D030",
+      "domain_name": "Marketing, Brand",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D031",
+      "domain_name": "Sales",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D032",
+      "domain_name": "Project Management",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D033",
+      "domain_name": "Product Management",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D130",
+      "domain_name": "Recruitment, Employment",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D034",
+      "domain_name": "Supply Chain Management",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D035",
+      "domain_name": "Logistics",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D036",
+      "domain_name": "Procurement",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D076",
+      "domain_name": "Maritime",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D079",
+      "domain_name": "Customs, Trade",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D037",
+      "domain_name": "Legal Practice",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D038",
+      "domain_name": "Compliance, Regulation",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D157",
+      "domain_name": "Tax Advisory, Transfer Pricing",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D162",
+      "domain_name": "Immigration Law, Asylum",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D149",
+      "domain_name": "Diplomacy, International Relations",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D163",
+      "domain_name": "Intellectual Property Law, Patents",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D039",
+      "domain_name": "Higher Education",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 5,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_trcn",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D040",
+      "domain_name": "Vocational",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D041",
+      "domain_name": "Scientific Research",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D078",
+      "domain_name": "Social Sciences",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D042",
+      "domain_name": "Media Production",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 6,
+      "verified_web_anchor_ids": [
+        "ng_fmacce",
+        "ng_nuj",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D043",
+      "domain_name": "Journalism",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nuj"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D044",
+      "domain_name": "Graphic Design",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D065",
+      "domain_name": "Translation, Interpretation",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nuj"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D071",
+      "domain_name": "Sports Management",
+      "body_audit_class": "government_or_sector_context",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_sports_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D080",
+      "domain_name": "Interior Design",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_clmis_corbon",
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D152",
+      "domain_name": "Museum Curation, Cultural Heritage, Archives",
+      "body_audit_class": "government_or_sector_context",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D153",
+      "domain_name": "Music Production",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_fmacce",
+        "ng_nuj",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D160",
+      "domain_name": "Fashion Styling, Image Consulting",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D045",
+      "domain_name": "Public Administration",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D046",
+      "domain_name": "Social Work",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_social_work_registry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D063",
+      "domain_name": "Economics",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D073",
+      "domain_name": "Library, Archive",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nla"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D077",
+      "domain_name": "Security Services",
+      "body_audit_class": "government_or_sector_context",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D128",
+      "domain_name": "Social Welfare, Youth Services",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_social_work_registry"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D143",
+      "domain_name": "Forensic Science, Digital Forensics",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D150",
+      "domain_name": "Religious Ministry, Theology",
+      "body_audit_class": "government_or_sector_context",
+      "nigerian_body_count": 1,
+      "verified_web_anchor_ids": [
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D151",
+      "domain_name": "Criminology, Criminal Justice",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D161",
+      "domain_name": "Humanitarian Aid, Emergency Response",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_nema",
+        "ng_social_work_registry"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D047",
+      "domain_name": "Agricultural Science",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_fmafs",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D048",
+      "domain_name": "Food Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nicfost"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D049",
+      "domain_name": "Automotive Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D050",
+      "domain_name": "Industrial Automation",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D075",
+      "domain_name": "Fashion, Textiles",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D051",
+      "domain_name": "Real Estate",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D052",
+      "domain_name": "Construction Management",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D053",
+      "domain_name": "Hospitality",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nihotour"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D054",
+      "domain_name": "Oil",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nmdpra"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D055",
+      "domain_name": "Chemical Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D148",
+      "domain_name": "Offshore, Subsea",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_nmdpra"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D056",
+      "domain_name": "Blockchain",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D057",
+      "domain_name": "Digital Health",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_legal_context",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D058",
+      "domain_name": "EdTech",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_nsqf_nos",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D059",
+      "domain_name": "Space Technology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cieeen",
+        "ng_nasrda"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D081",
+      "domain_name": "Office Administration, Secretarial",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D082",
+      "domain_name": "Customer Service, Contact Centre",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D083",
+      "domain_name": "Travel, Tourism",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nihotour"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D084",
+      "domain_name": "Payroll, Bookkeeping",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_ican_syllabus"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D085",
+      "domain_name": "Retail Sales, Shop Operations",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cmd"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D090",
+      "domain_name": "Animal Care, Grooming",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_health_ministry"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D091",
+      "domain_name": "Driving Instruction",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D092",
+      "domain_name": "Culinary Arts, Catering",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_nihotour"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D093",
+      "domain_name": "Electrical Installation, Wiring",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D094",
+      "domain_name": "Electronics Servicing, ICT Equipment",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D095",
+      "domain_name": "Motor Vehicle Mechanics, Repairs",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D096",
+      "domain_name": "Agricultural",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D097",
+      "domain_name": "Welding, Fabrication, Blacksmithing",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D098",
+      "domain_name": "Precision Engineering, Toolmaking",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D099",
+      "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D102",
+      "domain_name": "Carpentry, Joinery, Wood Technology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_clmis_corbon"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D103",
+      "domain_name": "Jewellery Making, Goldsmithing",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D104",
+      "domain_name": "Pottery, Ceramics, Glass",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D105",
+      "domain_name": "Handicraft, Basketry, Textile Craft",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fmacce",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D106",
+      "domain_name": "Garment Making, Tailoring, Dressmaking",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D107",
+      "domain_name": "Leather Technology, Shoemaking",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D109",
+      "domain_name": "Metal Processing, Foundry",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D110",
+      "domain_name": "Chemical, Rubber",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D111",
+      "domain_name": "Textile, Garment",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D112",
+      "domain_name": "Wood Processing, Pulp",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D114",
+      "domain_name": "Assembly, Packaging",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D115",
+      "domain_name": "Road Transport Operations (Drivers",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D116",
+      "domain_name": "Heavy Equipment, Earthmoving",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D117",
+      "domain_name": "Railway",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_cipsmn"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D118",
+      "domain_name": "Crop Production, Horticulture",
+      "body_audit_class": "sector_skills_or_education_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fmafs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D119",
+      "domain_name": "Livestock, Poultry, Dairy",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry",
+        "ng_fmafs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D120",
+      "domain_name": "Fisheries, Aquaculture",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos",
+        "ng_fmafs"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D121",
+      "domain_name": "Forestry, Wildlife Management",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_fmafs",
+        "ng_nemet"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D122",
+      "domain_name": "Medical Laboratory Technology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nicfost"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D123",
+      "domain_name": "Radiography, Medical Imaging",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry",
+        "ng_nnra"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D124",
+      "domain_name": "Community Health Extension",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_health_ministry",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D125",
+      "domain_name": "Medical Secretarial",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_nsqf_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D126",
+      "domain_name": "Complementary, Alternative",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_nicfost",
+        "ng_public_health_context"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D127",
+      "domain_name": "Early Childhood Education, Nursery",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_trcn"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D129",
+      "domain_name": "Military, Defence",
+      "body_audit_class": "government_or_sector_context",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D131",
+      "domain_name": "Motorsport Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D132",
+      "domain_name": "Space Science, Exploration",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_nasrda"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D133",
+      "domain_name": "Luxury",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_fmacce",
+        "ng_fashion_council"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D134",
+      "domain_name": "Naval Architecture, Marine Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D166",
+      "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D135",
+      "domain_name": "Nuclear Engineering, Radiation Science",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_nnra"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D136",
+      "domain_name": "Aeronautical",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D137",
+      "domain_name": "Medical Physics, Radiation Therapy",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cieeen",
+        "ng_health_ministry",
+        "ng_nnra"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D138",
+      "domain_name": "Biomedical Engineering",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 2,
+      "verified_web_anchor_ids": [
+        "ng_cieeen"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D142",
+      "domain_name": "Bioinformatics, Computational Biology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D144",
+      "domain_name": "Climate Science, Meteorology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_fmafs",
+        "ng_nemet"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D145",
+      "domain_name": "Neuroscience, Cognitive Science",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nas_research",
+        "ng_npa_psychology"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D155",
+      "domain_name": "Nanotechnology, Advanced Materials",
+      "body_audit_class": "professional_body_or_association",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D141",
+      "domain_name": "Quantum Computing, Quantum Information",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_nas_research"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D167",
+      "domain_name": "XR & Immersive Technology",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 3,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_fmacce"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D168",
+      "domain_name": "Esports & Creator Economy",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 4,
+      "verified_web_anchor_ids": [
+        "ng_cpn_syllabus_2021",
+        "ng_fmacce",
+        "ng_sports_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D070",
+      "domain_name": "Performing Arts & Entertainment",
+      "body_audit_class": "regulator_or_statutory_body",
+      "nigerian_body_count": 6,
+      "verified_web_anchor_ids": [
+        "ng_fmacce",
+        "ng_nuj",
+        "ng_legal_context"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    }
+  ],
+  "source_log": [
+    {
+      "topic": "ICT, AI, cloud, fintech, telecoms, cybersecurity, healthtech and edtech",
+      "url": "https://nipc.gov.ng/sectors/ict"
+    },
+    {
+      "topic": "NITDA mandate and ICT standards",
+      "url": "https://nitda.gov.ng/"
+    },
+    {
+      "topic": "Health regulatory bodies",
+      "url": "https://health.gov.ng/hospital-services/"
+    },
+    {
+      "topic": "Construction regulators and associations",
+      "url": "https://clmis.corbon.gov.ng/sectors"
+    },
+    {
+      "topic": "Engineering registration and sectors",
+      "url": "https://coren.gov.ng/engineering-regulatory-and-monitoring/"
+    },
+    {
+      "topic": "Agriculture, food, fisheries and animal sectors",
+      "url": "https://agriculture.gov.ng/structure/"
+    },
+    {
+      "topic": "Food science regulation",
+      "url": "https://nicfost.gov.ng/about-us/"
+    },
+    {
+      "topic": "Transport stakeholders",
+      "url": "https://transportation.gov.ng/stakeholders/"
+    },
+    {
+      "topic": "Aviation regulation",
+      "url": "https://www.ncaa.gov.ng/about/about-ncaa"
+    },
+    {
+      "topic": "Arts, culture, tourism and creative sectors",
+      "url": "https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece"
+    },
+    {
+      "topic": "Education and technical/vocational bodies",
+      "url": "https://databank.ned.gov.ng/info/regulatory-agencies"
+    },
+    {
+      "topic": "National Skills Qualification trade awarding bodies",
+      "url": "https://web.nbte.gov.ng/sites/default/files/2024-05/NSQF%20IN%20BRIEF.pdf"
+    },
+    {
+      "topic": "Psychology",
+      "url": "https://www.npafct.org/"
+    },
+    {
+      "topic": "Fashion sector",
+      "url": "https://nigerianfashioncouncil.org/"
+    },
+    {
+      "topic": "Artificial intelligence",
+      "url": "https://aaai.org.ng/"
+    },
+    {
+      "topic": "Nigeria Computer Society and digital games/AI/robotics/IoT themes",
+      "url": "https://www.ncs.org.ng/"
+    },
+    {
+      "topic": "Procurement and supply management",
+      "url": "https://www.cipsmn.org.ng/about"
+    },
+    {
+      "topic": "International relations and diplomacy research/training",
+      "url": "https://niia.gov.ng/"
+    },
+    {
+      "topic": "Immigration law practice",
+      "url": "https://nila.ng/about-us/"
+    },
+    {
+      "topic": "Occupational safety and health practitioners",
+      "url": "https://ossnigeria.org/"
+    },
+    {
+      "topic": "Space science and engineering",
+      "url": "https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/"
+    },
+    {
+      "topic": "Esports in Nigeria",
+      "url": "https://esportsfederationofnigeria.com/"
+    },
+    {
+      "topic": "Humanitarian and social protection mandate",
+      "url": "https://fmhds.gov.ng/about-fmhds/"
+    },
+    {
+      "topic": "Complementary and integrative medicine association evidence",
+      "url": "https://apctcim.org.ng/e-library"
+    },
+    {
+      "topic": "Surveying",
+      "url": "https://www.surcon.gov.ng/"
+    },
+    {
+      "topic": "Meteorology and climate context",
+      "url": "https://nimet.gov.ng/foi"
+    },
+    {
+      "topic": "Radiation and nuclear regulation",
+      "url": "https://nnra.gov.ng/"
+    },
+    {
+      "topic": "Emergency management",
+      "url": "https://nema.gov.ng/"
+    },
+    {
+      "topic": "hairdressing, barbering and beauty services",
+      "url": "https://nahbpon.com/about-nahbpon/"
+    },
+    {
+      "topic": "beauty therapy, spa and medical aesthetics",
+      "url": "https://apsman.org/"
+    },
+    {
+      "topic": "hairdressing, barbering, beauty therapy and aesthetics",
+      "url": "https://posbann.com/about-us/"
+    },
+    {
+      "topic": "plumbing, pipefitting, painting and decorating",
+      "url": "https://www.clmis.corbon.gov.ng/nos"
+    },
+    {
+      "topic": "printing technology, pre-press and print production",
+      "url": "https://www.cipponinstituteedu-ng.org/about.html"
+    },
+    {
+      "topic": "printing technology, pre-press and packaging",
+      "url": "https://sppn.com.ng/"
+    },
+    {
+      "topic": "glass, ceramics, building materials and manufacturing quality",
+      "url": "https://www.son.gov.ng/son-product-certification/"
+    },
+    {
+      "topic": "building materials, manufacturing and construction supply",
+      "url": "https://bumpanng.com/"
+    },
+    {
+      "topic": "building materials and construction practice",
+      "url": "https://niobnat.org/"
+    },
+    {
+      "topic": "funeral services and funeral directing",
+      "url": "https://www.nafd.org.uk/education/nafd-education-and-training/"
+    }
+  ],
+  "quality_gate": [
+    "Do not regenerate SQL or seed data from this audit alone.",
+    "Use source-specific skills and competencies only where the source names them or clearly defines the work.",
+    "Use generic global taxonomies for role normalization, never as Nigerian licensing or demand evidence.",
+    "Keep local regulator, professional association and government-context evidence visibly distinct in the UI and data model."
+  ],
+  "supplemental_hidden_domain_coverage": [
+    {
+      "domain_id": "D087",
+      "domain_name": "Hairdressing, Barbering",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_nahbpon_hair_beauty"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D087",
+      "domain_name": "Hairdressing, Barbering",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_nahbpon_hair_beauty"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D088",
+      "domain_name": "Beauty Therapy, Aesthetics",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_apsman_aesthetics",
+        "ng_posban_beauty"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D088",
+      "domain_name": "Beauty Therapy, Aesthetics",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_apsman_aesthetics",
+        "ng_posban_beauty"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D089",
+      "domain_name": "Funeral",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "global_nafd_funeral_education"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "international_anchor_only_local_body_unverified",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D089",
+      "domain_name": "Funeral",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "global_nafd_funeral_education"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "international_anchor_only_local_body_unverified",
+      "thin_gap": true
+    },
+    {
+      "domain_id": "D100",
+      "domain_name": "Plumbing, Pipefitting",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_corbon_plumbing_painting_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D100",
+      "domain_name": "Plumbing, Pipefitting",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_corbon_plumbing_painting_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D101",
+      "domain_name": "Painting, Decorating",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_corbon_plumbing_painting_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D101",
+      "domain_name": "Painting, Decorating",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_corbon_plumbing_painting_nos"
+      ],
+      "verified_web_anchor_count": 1,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_cippon_printing_act",
+        "ng_sppn_printing"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D108",
+      "domain_name": "Printing Technology, Pre-press",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_cippon_printing_act",
+        "ng_sppn_printing"
+      ],
+      "verified_web_anchor_count": 2,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_son_building_materials",
+        "ng_bumpan_building_materials",
+        "ng_niob_building_materials"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    },
+    {
+      "domain_id": "D113",
+      "domain_name": "Glass, Ceramics, Building Materials",
+      "body_audit_class": "supplemental_hidden_domain",
+      "nigerian_body_count": 0,
+      "verified_web_anchor_ids": [
+        "ng_son_building_materials",
+        "ng_bumpan_building_materials",
+        "ng_niob_building_materials"
+      ],
+      "verified_web_anchor_count": 3,
+      "status": "web_anchor_available",
+      "thin_gap": false
+    }
+  ],
+  "audit_updates": {
+    "source_records_added": 10,
+    "direct_search_completed_for_previously_unassigned_domains": 7,
+    "sql_generated": false
+  }
+}
