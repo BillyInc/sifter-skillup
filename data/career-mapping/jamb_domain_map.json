@@ -1739,7 +1739,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Statistics"
@@ -2172,7 +2172,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Industrial Mathematics"
@@ -17687,7 +17687,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "component_refs": [
           "Computing::Computer Science"
@@ -17981,7 +17981,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Mathematics"
@@ -18361,7 +18361,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -18466,7 +18466,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Statistics"
@@ -18584,7 +18584,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Computing::Software Engineering"
@@ -18614,7 +18614,7 @@
       },
       {
         "domain_id": "D139",
-        "domain_name": "D139 Game Design",
+        "domain_name": "Game Design",
         "match_type": "functional",
         "component_refs": [
           "Computing::Software Engineering"
@@ -18948,7 +18948,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Computing::Information Technology"
@@ -19232,7 +19232,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Industrial Mathematics"
@@ -19788,7 +19788,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Computing::Information Systems"
@@ -19856,7 +19856,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "component_refs": [
           "Computing::Data Science"
@@ -20338,7 +20338,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Computing::Information and Communication Technology"
@@ -20844,7 +20844,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -21666,7 +21666,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -22563,7 +22563,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -22831,7 +22831,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -22944,7 +22944,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -23062,7 +23062,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -23159,7 +23159,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -23654,7 +23654,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -23717,7 +23717,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -23813,7 +23813,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -24071,7 +24071,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -24170,7 +24170,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -24328,7 +24328,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -26548,7 +26548,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -26778,7 +26778,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -27089,7 +27089,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -27206,7 +27206,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -27320,7 +27320,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -30631,7 +30631,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -30723,7 +30723,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -30822,7 +30822,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -30931,7 +30931,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -31042,7 +31042,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -35739,7 +35739,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -35859,7 +35859,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -35900,7 +35900,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -36006,7 +36006,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -36142,7 +36142,7 @@
     "links": [
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -37748,7 +37748,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Allied Health Sciences::Radiography"
@@ -40587,7 +40587,7 @@
       },
       {
         "domain_id": "D153",
-        "domain_name": "D153 Music Production",
+        "domain_name": "Music Production",
         "match_type": "functional",
         "component_refs": [
           "Arts::Theatre Arts",
@@ -40652,7 +40652,7 @@
       },
       {
         "domain_id": "D139",
-        "domain_name": "D139 Game Design",
+        "domain_name": "Game Design",
         "match_type": "functional",
         "component_refs": [
           "Arts::Film Production"
@@ -42459,7 +42459,7 @@
     "links": [
       {
         "domain_id": "D153",
-        "domain_name": "D153 Music Production",
+        "domain_name": "Music Production",
         "match_type": "functional",
         "component_refs": [
           "Arts::Music"
@@ -43731,7 +43731,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "direct",
         "src": "reconcile",
         "direct_source": "direct_sweep",
@@ -49253,7 +49253,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Sciences::Industrial Mathematics"
@@ -50437,7 +50437,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "component_refs": [
           "Computing::Information Systems"
@@ -53735,7 +53735,7 @@
       },
       {
         "domain_id": "D153",
-        "domain_name": "D153 Music Production",
+        "domain_name": "Music Production",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -53923,7 +53923,7 @@
     "links": [
       {
         "domain_id": "D153",
-        "domain_name": "D153 Music Production",
+        "domain_name": "Music Production",
         "match_type": "functional",
         "src": "scorer",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
@@ -55010,7 +55010,7 @@
       },
       {
         "domain_id": "D003",
-        "domain_name": "D003 Artificial Intelligence",
+        "domain_name": "Artificial Intelligence",
         "match_type": "functional",
         "src": "reconcile",
         "source": "jamb_curriculum_scope_ccmas_course_anchors",
