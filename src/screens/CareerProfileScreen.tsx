@@ -121,7 +121,7 @@ export default function CareerProfileScreen() {
   );
 
   const displayName =
-    user?.username && user.username !== "Learner" ? user.username : null;
+    user?.username && user.username !== "Student" ? user.username : null;
 
   // Notifications: edit the local profile copy and persist it (only when a
   // starting-point profile already exists - we don't fabricate one here).

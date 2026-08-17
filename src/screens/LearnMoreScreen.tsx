@@ -102,7 +102,7 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
               <Text style={styles.heroTitle}>Use Sifter as a launchpad, not your only source.</Text>
               <Text style={styles.heroBody}>
                 We help you build skills, complete simulations, and earn artifacts you can actually talk about.
-                The strongest learners still combine this with books, mentors, communities, and real project work.
+                The strongest students still combine this with books, mentors, communities, and real project work.
               </Text>
             </View>
 

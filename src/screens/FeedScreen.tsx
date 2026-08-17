@@ -239,7 +239,7 @@ export default function FeedScreen() {
           <Text style={[styles.headerEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>COMMUNITY FEED</Text>
           <Text style={[styles.headerTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Feed</Text>
           <Text style={[styles.headerCopy, { color: colors.textRole.secondary }]}>
-            Track activity, learner signals, and workspace updates in one compact stream.
+            Track activity, student signals, and workspace updates in one compact stream.
           </Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
             {activeTrack?.label ?? 'Your track'}

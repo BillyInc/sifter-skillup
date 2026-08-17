@@ -2759,7 +2759,7 @@ export function BridgeSelectorSim({ onComplete, onSkip, colors }: SimProps) {
     await simulateDelay(900);
 
     if (bridge === 'starkgate') {
-      // Show 12-hour countdown UI — learner fast-forwards
+      // Show 12-hour countdown UI — student fast-forwards
       setFlowStep('waiting');
       setLoading(false);
     } else {

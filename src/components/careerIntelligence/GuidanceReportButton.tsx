@@ -128,7 +128,7 @@ export function GuidanceReportButton({
         await provisioningData.saveGuidancePath(targetStudentId, nextPath);
         pathCache.set(pathCacheKey(targetStudentId, ownerId), nextPath);
         setSelected(!selected);
-        setNotice(selected ? "Removed from this learner's guidance." : "Added to this learner's guidance.");
+        setNotice(selected ? "Removed from this student's guidance." : "Added to this student's guidance.");
       } else {
         const saved = await careerData.saveGuidancePath({
           source: "explore",
@@ -143,7 +143,7 @@ export function GuidanceReportButton({
         }
       }
     } catch {
-      setNotice(targetStudentId ? "Could not save this learner's selection yet." : "Create an account to save this report path.");
+      setNotice(targetStudentId ? "Could not save this student's selection yet." : "Create an account to save this report path.");
     } finally {
       setBusy(false);
       if (timer.current) clearTimeout(timer.current);

@@ -264,19 +264,47 @@ The programme screen should use these sections:
 1. **Overview** — programme name, qualification, duration, what the programme teaches and programme skills.
 2. **Requirements** — O-level and UTME requirements for the selected university.
 3. **Schools** — used as the university picker or `Change university` surface, not mixed into a selected school's requirements page.
-4. **Career connections** — the domain → subgroup → role path connected to the programme. A separate `Employment` label is unnecessary because it duplicates this information.
+4. **Guidance entry point** — a short preview of the closest connected field and a clear handoff into the full domain → subgroup → role guidance. The programme page does not repeat the full guidance.
 5. **Entrepreneurship** — an optional contextual action for building from the programme.
 6. **University admission details** — folded into Requirements and Schools. Do not create an empty `Admission` tab for SS1.
 
 The overview must use the programme's stored curriculum components and skills,
 translated into student language. A generic paragraph alone is not enough.
 
-## Route A continued: fields, areas and roles
-
-### Screen 9: how the programme connects to fields
+The programme page should end with a compact handoff rather than a second copy
+of the guidance:
 
 ```text
-Where could this programme take you?
+WHERE THIS CAN LEAD
+
+Closest connection
+General Management
+Business Administration studies planning, organisation, people, resources and
+decisions, so this is the first field to explore.
+
+Other connected fields
+Economics · functional connection
+Marketing, Brand · adjacent connection
+
+[ Continue guidance ]
+```
+
+`Continue guidance` opens the full field screen. The selected programme and
+university remain attached to the path, so the student does not start over.
+Once inside guidance, the student sees the domain explanation, then its
+subgroups, then roles and resources. The programme page does not show those
+cards again.
+
+## Guidance destination: fields, areas and roles
+
+### Screen 9: guidance starts with the connected field
+
+```text
+Continue your guidance
+
+Business Administration · Rivergate University
+
+Where could this programme lead you to explore?
 
 Business Administration connects most closely to General Management because it
 studies how organisations, people, money and work are planned and coordinated.
@@ -517,40 +545,21 @@ URL and description. It still needs complete deployment and coverage auditing:
 No resource should be hardcoded into the student screen or presented as
 actionable without a verified link.
 
-## Route A saved path
+## Save confirmation
 
 ```text
-Your guidance path is saved
+Saved to My World
 
-SS1 · Commercial · Asterfield College
+Your subjects, programme, university, field, area, role and saved links are
+available in My World.
 
-SUBJECTS
-English Language · Mathematics · Economics · Government · Accounting
-
-PROGRAMMES SAVED
-Business Administration · Accounting · Marketing
-
-UNIVERSITY SELECTED FOR THIS PATH
-Rivergate University
-Main campus, Minna, Niger State
-
-FIELD TO EXPLORE
-General Management
-
-AREA TO EXPLORE
-Business Analysts & Consultants
-
-ROLE TO UNDERSTAND
-Business Analyst
-
-SAVED LEARNING LINKS
-4
-
-[ Open My World ]  [ View guidance summary ]
+[ Continue guidance ]  [ Open My World ]
 ```
 
-Saving a path does not force one programme. The student can add or remove
-programmes and can choose which university is attached to each programme.
+There is no separate saved-path screen. Saving keeps the student on the current
+guidance page. My World is the structured return point for the complete path.
+Saving also does not force one programme: the student can add or remove
+programmes and attach a university to each one.
 
 ## Route B: I already have a programme in mind
 

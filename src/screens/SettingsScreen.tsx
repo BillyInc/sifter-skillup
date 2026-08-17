@@ -147,7 +147,7 @@ export default function SettingsScreen() {
         </SettingsCard>
 
         <SettingsCard title="ACCOUNT">
-          <Row label="Name" value={user?.username ?? 'Learner'} />
+          <Row label="Name" value={user?.username ?? 'Student'} />
           <Row label="Email" value={user?.email || 'Not set'} />
         </SettingsCard>
 
@@ -172,7 +172,7 @@ export default function SettingsScreen() {
               Two-factor authentication
             </Text>
             <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Admin accounts can manage learners and institution data, so 2FA is recommended after onboarding. You can defer this, but it will remain visible here.
+              Admin accounts can manage students and institution data, so 2FA is recommended after onboarding. You can defer this, but it will remain visible here.
             </Text>
             <Row
               label="Status"
