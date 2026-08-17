@@ -1,0 +1,695 @@
+{
+  "audit": "full_repository_mapping_coverage",
+  "generated_from": [
+    "backend/seed_career_pilot.sql",
+    "backend/seed_subject_catalog.sql",
+    "data/career-mapping/programme_mapping.json",
+    "data/career-mapping/jamb_domain_map.json",
+    "data/career-mapping/_audit/jamb_ccmas_inheritance_canonical_2026-08-17.json",
+    "data/career-mapping/jamb/*_offerings.json",
+    "data/career-mapping/domain_structure.json",
+    "data/career-mapping/domain_meta.json",
+    "data/career-mapping/jamb_name_aliases.json"
+  ],
+  "contract": {
+    "structural_pass": "All foreign keys, active/canonical link sets, domain references, and requirement coverage must resolve.",
+    "semantic_boundary": "A pass proves internal consistency against repository sources; it does not independently prove that a source interpretation is substantively correct.",
+    "demand_data_used": false,
+    "ccmas_labels_for_user_display": false
+  },
+  "summary": {
+    "seed_raw_rows": {
+      "schools": 778,
+      "programmes": 420,
+      "requirements": 420,
+      "offerings": 7888,
+      "subjects": 44
+    },
+    "seed_unique_rows": {
+      "schools": 778,
+      "programmes": 420,
+      "requirements": 420,
+      "unique_offerings": 7888,
+      "unique_subjects": 44,
+      "unique_school_programme_pairs": 7888
+    },
+    "programme_mapping": {
+      "registry_names": 420,
+      "ccmas_bridge_names": 416,
+      "active_domain_map_names": 416,
+      "canonical_inheritance_names": 416,
+      "registry_missing_from_bridge": 4,
+      "registry_gaps_resolved_by_normalized_identity": 4,
+      "registry_gaps_resolved_by_declared_alias": 4,
+      "undeclared_registry_aliases": 0,
+      "bridge_missing_from_registry": 0,
+      "active_missing_from_bridge": 0,
+      "active_extra_over_bridge": 0
+    },
+    "requirements": {
+      "programmes_with_requirement_row": 420,
+      "programmes_without_requirement_row": 0,
+      "broken_requirement_foreign_keys": 0,
+      "subject_catalog_codes": 44
+    },
+    "offerings": {
+      "broken_foreign_keys": 0,
+      "duplicate_pairs": 0,
+      "duplicate_pair_rows": 0
+    },
+    "domain_links": {
+      "total_active_links": 3342,
+      "by_match_type": {
+        "direct": 325,
+        "functional": 2888,
+        "adjacent": 129
+      },
+      "invalid_domain_references_or_names": 0,
+      "active_vs_canonical_mismatches": 0,
+      "refresh_sql_edge_mismatches": 0,
+      "refresh_sql_unknown_domain_uuids": 0,
+      "flat_domains_referenced": 42,
+      "active_domain_ids": 145
+    },
+    "source_coverage": {
+      "brochure_rows": 439,
+      "bridge_names_without_brochure_hit": 0,
+      "normalized_name_collisions": 4,
+      "rows_with_blank_or_shared_requirement_field": 244,
+      "bridge_names_with_blank_or_shared_requirement_field": 240,
+      "domain_name_format_variants": 0
+    },
+    "inheritance": {
+      "by_type": {
+        "partial_curriculum_scope_review_required": 272,
+        "single_ccmas_full_curriculum": 111,
+        "combined_ccmas_curriculum": 28,
+        "external_sources_required": 5
+      },
+      "by_status": {
+        "ready_partial": 272,
+        "ready": 139,
+        "ready_external": 5
+      },
+      "partial_scope_rows": 272,
+      "external_source_rows": 5,
+      "existing_audit_component_mismatches": 0,
+      "existing_audit_unscoped_partial_rows": []
+    },
+    "taxonomy": {
+      "domains": 168,
+      "flat_domains": 56,
+      "sql_seed_domains": 160,
+      "json_domains_missing_from_sql_seed": 8,
+      "json_domains_without_active_jamb_link": 23,
+      "subgroups": 464,
+      "subgroup_empty_or_overlapping_skill_findings": 5,
+      "role_audit_empty_domains": 0
+    },
+    "institution_identity": {
+      "school_seed_columns": [
+        "id",
+        "name",
+        "institution_type",
+        "ibass_verified",
+        "jamb_code"
+      ],
+      "address_column_present": false
+    },
+    "sql_materialization": {
+      "refresh_rows": 3342,
+      "refresh_sql_mismatches": {
+        "missing_from_refresh_sql": [],
+        "extra_in_refresh_sql": [],
+        "refresh_rows_with_unknown_domain_uuid": []
+      }
+    }
+  },
+  "structural_errors": {
+    "broken_offering_foreign_keys": [],
+    "broken_requirement_foreign_keys": [],
+    "programmes_without_requirement_row": [],
+    "invalid_domain_references_or_names": [],
+    "active_vs_canonical_link_mismatches": [],
+    "refresh_sql_edge_mismatches": {
+      "missing_from_refresh_sql": [],
+      "extra_in_refresh_sql": [],
+      "refresh_rows_with_unknown_domain_uuid": []
+    }
+  },
+  "data_quality_findings": {
+    "duplicate_school_programme_pairs": [],
+    "domain_name_format_variants": [],
+    "registry_names_resolved_by_normalized_identity": [
+      [
+        "Anthropology",
+        "ANTHROPOLOGY"
+      ],
+      [
+        "LIBRARY AND INFORMATION SCIENCE",
+        "Library and Information Science"
+      ],
+      [
+        "LIBRARY SCIENCE",
+        "Library Science"
+      ],
+      [
+        "Meteorology",
+        "METEOROLOGY"
+      ]
+    ],
+    "undeclared_registry_aliases": []
+  },
+  "coverage_gaps_and_review_flags": {
+    "registry_missing_from_ccmas_bridge": [
+      "Anthropology",
+      "LIBRARY AND INFORMATION SCIENCE",
+      "LIBRARY SCIENCE",
+      "Meteorology"
+    ],
+    "ccmas_bridge_missing_from_registry": [],
+    "active_domain_map_missing_from_bridge": [],
+    "active_domain_map_extra_over_bridge": [],
+    "bridge_names_without_brochure_hit": [],
+    "brochure_normalized_name_collisions": {
+      "anthropology": [
+        "Anthropology",
+        "ANTHROPOLOGY"
+      ],
+      "libraryscience": [
+        "Library Science",
+        "LIBRARY SCIENCE"
+      ],
+      "libraryandinformationscience": [
+        "LIBRARY AND INFORMATION SCIENCE",
+        "Library and Information Science"
+      ],
+      "meteorology": [
+        "Meteorology",
+        "METEOROLOGY"
+      ]
+    },
+    "duplicate_school_programme_pairs": [],
+    "domain_name_format_variants": [],
+    "json_domains_missing_from_sql_seed": [
+      "D086",
+      "D087",
+      "D088",
+      "D089",
+      "D100",
+      "D101",
+      "D108",
+      "D113"
+    ],
+    "json_domains_without_active_jamb_link": [
+      "D082",
+      "D086",
+      "D087",
+      "D088",
+      "D089",
+      "D100",
+      "D101",
+      "D105",
+      "D106",
+      "D107",
+      "D108",
+      "D112",
+      "D113",
+      "D114",
+      "D115",
+      "D116",
+      "D117",
+      "D125",
+      "D127",
+      "D131",
+      "D133",
+      "D160",
+      "D166"
+    ],
+    "partial_curriculum_scope_rows": [
+      "APPLIED BIOLOGY",
+      "APPLIED BIOLOGY AND BIOTECHNOLOGY",
+      "APPLIED BIOLOGY AND GENETICS",
+      "APPLIED BOTANY",
+      "Accountancy and Forensic Studies",
+      "Accounting and Data Analytics",
+      "Accounting and Finance",
+      "African and Asian Studies",
+      "Agribusiness and Economics",
+      "Agricultural Engineering",
+      "Agricultural and Bio-Resources Engineering",
+      "Agriculture",
+      "Agronomy",
+      "Anatomy",
+      "Animal Biology and Environment",
+      "Animal Breeding and Genetics",
+      "Animal Physiology",
+      "Animal Production",
+      "Animal and Environmental Biology",
+      "Applied Biochemistry",
+      "Applied Chemistry",
+      "Applied Geology",
+      "Applied Mathematics with Statistics",
+      "Applied Microbiology and Brewing / Applied Microbiology",
+      "Applied Physics",
+      "Applied Statistics",
+      "Applied Zoology",
+      "Arabic Language and Literature Studies",
+      "Arabic Studies",
+      "Aviation Business",
+      "Aviation Security",
+      "BIOCHEMISTRY AND MOLECULAR BIOLOGY",
+      "BIOTECHNOLOGY AND MOLECULAR BIOLOGY",
+      "Banking and Finance",
+      "Biology/Biotechnology",
+      "Biomedical Engineering",
+      "Biostatistics",
+      "Biotechnology and Food Technology",
+      "Botany and Ecological Studies",
+      "Building Technology",
+      "Business Management",
+      "CELL BIOLOGY & GENETICS",
+      "COMPUTER SCIENCE AND MATHEMATICS",
+      "COMPUTER SCIENCE WITH ECONOMICS",
+      "COMPUTER SCIENCE WITH MATHEMATICS",
+      "COMPUTER WITH STATISTICS",
+      "CYBER SECURITY",
+      "CYBER SECURITY SCIENCE",
+      "Chemical Engineering",
+      "Chemical Sciences",
+      "Chemistry and Industrial Chemistry",
+      "Christian Religious",
+      "Christian Studies",
+      "Civil Law",
+      "Classical Studies",
+      "Common Law",
+      "Communication Arts",
+      "Communication Technology",
+      "Computer Science and Informatics",
+      "Computer Science and Information Science",
+      "Computer Science and Information Technology",
+      "Computer and Information Science",
+      "Computer with Electronics",
+      "Computer, Information and Communication Science",
+      "Computing and Artificial Intelligence",
+      "Conservation Biology",
+      "Conservation and Environmental Biology",
+      "Cooperative Economics and Management",
+      "Cooperative Management",
+      "Cooperative and Rural Development",
+      "Criminology",
+      "Criminology and Penology",
+      "Crop Production",
+      "Crop Protection",
+      "DATA MANAGEMENT",
+      "Data Science and Analytics",
+      "Demography and Social Studies",
+      "Demography and Statistics",
+      "Development and Communication Studies",
+      "Digital Entrepreneurship",
+      "Drama/Dramatic Arts/Performing Arts",
+      "ELECTRONICS AND COMPUTER SYSTEMS",
+      "ELECTRONICS AND COMPUTER TECHNOLOGY",
+      "ENGINEERING PHYSICS",
+      "Eco-Tourism and Wildlife Management",
+      "Education and Business Administration",
+      "Efik-Ibibio",
+      "Electrical Engineering",
+      "Electrical/Electronic Engineering",
+      "Electronics",
+      "Electronics Engineering",
+      "English Studies",
+      "English and Literary Studies",
+      "Entrepreneurship and Business Management",
+      "Entrepreneurship and Innovation",
+      "Environmental Biology",
+      "Environmental Biology and Fisheries",
+      "Environmental Chemistry and Toxicology",
+      "Environmental Management and Technology",
+      "Environmental Science and Technology",
+      "Family, Nutrition and Consumer Sciences",
+      "Farm Management & Agric. Extension",
+      "Film and Video Studies",
+      "Finance",
+      "Finance and Financial Technology",
+      "Finance and Investment",
+      "Fine Art/Fine and Applied Arts",
+      "Fisheries",
+      "Food Science & Nutrition",
+      "Food Science and Engineering",
+      "Food Science and Technology",
+      "Food Science with Business",
+      "Food Technology",
+      "French and German/Russian",
+      "Fulfulde",
+      "Gas Engineering",
+      "Genetics and Biotechnology",
+      "Geography and Environmental Studies",
+      "Geological Sciences",
+      "Geology and Applied Geophysics",
+      "Geology and Geophysics",
+      "Geology and Mineral Science",
+      "Geology and Mineral Sciences",
+      "Geology and Mining",
+      "Geology and Petroleum Studies",
+      "Geophysics",
+      "German",
+      "HOME SCIENCE",
+      "HUMAN BIOLOGY",
+      "Hausa",
+      "History",
+      "Home Economics",
+      "Home Economics and Food Management",
+      "Home Economics and Hotel Management",
+      "Home Science & Management",
+      "Home Science, Nutrition and Dietetics",
+      "Horticulture",
+      "Hotel Management & Tourism",
+      "Hotel Management and Tourism",
+      "Hotel and Tourism Management",
+      "Human Resources Management",
+      "ICT Engineering",
+      "INFORMATION AND COMMUNICATION SCIENCE",
+      "INFORMATION AND MEDIA SCIENCE",
+      "INFORMATION AND MEDIA TECHNOLOGY",
+      "INFORMATION SCIENCE AND MEDIA STUDIES",
+      "INFORMATION SYSTEMS AND TECHNOLOGY",
+      "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS",
+      "Igbo",
+      "Industral Mathematics/Computer",
+      "Industrial Chemistry and Chemical Entrepreneurship",
+      "Industrial Mathematics /Applied Statistics",
+      "Industrial Mathematics and Computer Science",
+      "Industrial Microbiology",
+      "Industrial Physics with Applied Geophysics",
+      "Industrial Physics with Electronics and IT Application",
+      "Industrial Physics with Renewable Energy",
+      "Industrial Relations / Industrial and Labour Relations",
+      "Industrial Relations and Human Resources Management",
+      "Industrial Relations and Personnel Management",
+      "Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management",
+      "Industrial and Environmental Chemistry",
+      "Information and Media Studies",
+      "Insurance and Actuarial Science",
+      "International Relations and Diplomacy",
+      "International Relations and Diplomatic Studies",
+      "International Relations and Strategic Studies",
+      "International Relationship & Strategic Studies",
+      "International Studies",
+      "International Studies and",
+      "International Studies and Diplomacy",
+      "Islamic Law/Sharia Law",
+      "Kanuri",
+      "LIBRARY AND INFORMATION TECHNOLOGY",
+      "Land Surveying",
+      "Library Science",
+      "Linguistics/Edo",
+      "Literature in English",
+      "Livestock Production Technology",
+      "Local Government Studies",
+      "MANAGEMENT INFORMATION SYSTEM",
+      "MARINE BIOLOGY",
+      "MARINE BIOLOGY & FISHERIES",
+      "MATHEMATICAL SCIENCES",
+      "METEOROLOGY AND CLIMATE CHANGE",
+      "METEOROLOGY AND CLIMATE SCIENCE",
+      "Management",
+      "Management Studies",
+      "Marine Geology",
+      "Marine Science and Technology",
+      "Marketing and Consumer Studies",
+      "Mass Communication",
+      "Mathematics and Economics / Mathematics with Economics",
+      "Mathematics with Computer Science",
+      "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Medical Biochemistry",
+      "Medical Laboratory Technology/Science",
+      "Medicine and Surgery (Human Medicine)",
+      "Microbiology and Biotechnology",
+      "Microbiology and Industrial Biotechnology",
+      "Microbiology/Parasitology",
+      "Modern Language and Translation",
+      "Molecular Biology",
+      "Nursing/Nursing Science",
+      "Office and Information Technology / Information Resource Management",
+      "PURE AND APPLIED BIOLOGY",
+      "Pasture & Range Management",
+      "Peace Studies",
+      "Peace and Conflict Studies",
+      "Personnel Management",
+      "Pharmacy",
+      "Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)",
+      "Physics Electronics",
+      "Physics and Applied Physics",
+      "Physics and Computer Electronic",
+      "Physics and Energy Studies",
+      "Physics with Computational Modeling",
+      "Physics with Solar Energy",
+      "Physics/Astrology",
+      "Physics/Industrial Physics",
+      "Physiology",
+      "Plant Biology",
+      "Plant Biology and Biotechnology",
+      "Plant Breeding and Seed Technology",
+      "Plant Science",
+      "Plant Science and Biotechnology",
+      "Plant Science and Forestry",
+      "Plant Science and Microbiology",
+      "Policy and Strategic Studies",
+      "Political and Administrative Studies",
+      "Polymer and Textile Engineering",
+      "Population Studies",
+      "Portuguese/English",
+      "Procurement",
+      "Production Engineering",
+      "Public Administration",
+      "Public Administration and Local Govt",
+      "Public Administration and Policy Studies",
+      "Public Health Technology",
+      "Public Relations and Advertising",
+      "Public and International Law",
+      "Pure Chemistry",
+      "Pure Physics",
+      "Pure and Applied Chemistry",
+      "Pure and Applied Mathematics",
+      "Pure and Applied Physics",
+      "Pure and Industrial Chemistry",
+      "Pure and Industrial Physics",
+      "Robotics (Artificial Intelligence)",
+      "Russian with French/German",
+      "Secretarial Administration",
+      "Securities and Investment",
+      "Social Innovation and Entrepreneurship",
+      "Software Engineering and Digital Entrepreneurship",
+      "Statistics Education",
+      "Statistics and Data Sciences",
+      "Statistics with Demography",
+      "Strategic Communication",
+      "Supply Chain Management",
+      "Teacher Education",
+      "Textile Science and Technology",
+      "Theology",
+      "Tourism Studies",
+      "Transport Planning and Management",
+      "Transport and Logistics Management",
+      "Transport and Tourism",
+      "Vocational Education",
+      "Water Resources and Environmental Engr",
+      "Yoruba",
+      "Zoology and Aquaculture"
+    ],
+    "external_source_rows": [
+      "French",
+      "Intelligence and Security Studies",
+      "Social Justice",
+      "Sport Management (Education)",
+      "Sport Science"
+    ],
+    "flat_domains_referenced": [
+      "D001",
+      "D002",
+      "D003",
+      "D004",
+      "D007",
+      "D016",
+      "D017",
+      "D018",
+      "D019",
+      "D020",
+      "D021",
+      "D023",
+      "D024",
+      "D030",
+      "D041",
+      "D043",
+      "D056",
+      "D068",
+      "D072",
+      "D078",
+      "D080",
+      "D083",
+      "D084",
+      "D085",
+      "D090",
+      "D091",
+      "D093",
+      "D094",
+      "D097",
+      "D104",
+      "D109",
+      "D110",
+      "D118",
+      "D123",
+      "D124",
+      "D126",
+      "D132",
+      "D142",
+      "D144",
+      "D148",
+      "D157",
+      "D159"
+    ],
+    "subgroup_audit": {
+      "definition_conflicts": [
+        {
+          "kind": "priority_overlap",
+          "domains": [
+            "D022"
+          ],
+          "detail": "The specification lists D022 as both Priority 1 needing clustering and Priority 3 excluded because engineer/technician is a level split."
+        }
+      ],
+      "independent_resolution": [
+        {
+          "domain_id": "D022",
+          "observed_submajors": {
+            "13": {
+              "role_count": 4,
+              "role_examples": [
+                "oil and gas production manager",
+                "mine manager",
+                "quarry manager",
+                "mine production manager"
+              ]
+            },
+            "21": {
+              "role_count": 25,
+              "role_examples": [
+                "quarry engineer",
+                "mine geologist",
+                "chemical metallurgist",
+                "drilling engineer",
+                "explosives engineer",
+                "liquid fuel engineer"
+              ]
+            },
+            "31": {
+              "role_count": 5,
+              "role_examples": [
+                "metallurgical technician",
+                "mine surveying technician",
+                "geotechnician",
+                "mine safety officer",
+                "Calibration Technologists and Technicians"
+              ]
+            },
+            "81": {
+              "role_count": 26,
+              "role_examples": [
+                "pipeline pump operator",
+                "driller",
+                "derrickhand",
+                "underground heavy equipment operator",
+                "dewatering technician",
+                "well-digger"
+              ]
+            }
+          },
+          "recommended_priority": "P1",
+          "reason": "The four groups represent materially different work directions: management, engineering/geology, technical surveying/safety, and drilling/mining operations."
+        }
+      ],
+      "threshold_design": [
+        {
+          "kind": "single_submajor_large_domain",
+          "domains": [
+            "D043",
+            "D085",
+            "D097",
+            "D110"
+          ],
+          "reason": "The current OR threshold requests a subgroup card even when all roles share one ISCO sub-major; that produces one card and does not reduce directional clutter.",
+          "recommendation": "Use more than two sub-majors, or more than 50 roles with at least two sub-majors, as the clustering trigger; keep a single-sub-major domain flat and demand-sorted."
+        }
+      ],
+      "derivation": [],
+      "thresholds": [],
+      "level_direction": [],
+      "labels": [],
+      "skills": [
+        {
+          "domain_id": "D042",
+          "isco_submajor": "11",
+          "kind": "empty_cluster_skills"
+        },
+        {
+          "domain_id": "D042",
+          "isco_submajor": "12",
+          "kind": "empty_cluster_skills"
+        },
+        {
+          "domain_id": "D150",
+          "isco_submajor": "34",
+          "kind": "empty_cluster_skills"
+        },
+        {
+          "domain_id": "D155",
+          "isco_submajor": "31",
+          "kind": "empty_cluster_skills"
+        },
+        {
+          "domain_id": "D167",
+          "isco_submajor": "24",
+          "kind": "empty_cluster_skills"
+        }
+      ],
+      "source_layer": [
+        {
+          "kind": "source_backed_foundation_overlap",
+          "overlap_skill_count": 35868,
+          "subgroup_count": 508,
+          "detail": "domain_skill_provenance currently repeats domain foundation skills inside subgroup skill maps."
+        }
+      ],
+      "role_counts": [],
+      "runtime": [
+        {
+          "kind": "phantom_subgroup_demand_path",
+          "status": "none_found"
+        },
+        {
+          "kind": "role_demand_ordering",
+          "status": "deferred",
+          "detail": "No role-demand dataset is available yet; roles must not be ordered by an unavailable demand metric. Preserve source/insertion order until a validated demand table is introduced."
+        }
+      ],
+      "schema": [
+        {
+          "kind": "field_missing_from_migration",
+          "field": "what_people_do"
+        },
+        {
+          "kind": "field_missing_from_migration",
+          "field": "work_context"
+        },
+        {
+          "kind": "field_missing_from_migration",
+          "field": "display_order"
+        }
+      ]
+    },
+    "school_address_contract_gap": true
+  }
+}
