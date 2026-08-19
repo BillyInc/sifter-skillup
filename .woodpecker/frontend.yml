@@ -57,12 +57,23 @@ steps:
       - git config --global --add safe.directory "$CI_WORKSPACE" || true
       - npx jest --ci --coverage --passWithNoTests
 
-  - name: web-build
-    image: *node_image
-    commands:
-      - npx expo export --platform web
-
-  # GitHub's upload-artifact has no built-in Woodpecker equivalent. The build
-  # still has to run -- it catches bundler failures that tsc and jest do not --
-  # but the `dist/` output is not retained. Wire an S3/artifact plugin here if
-  # the 7-day retention actually gets used for something.
+  # NO web-build step, and this is a real coverage gap rather than an oversight.
+  #
+  # `expo export --platform web` wants roughly 1.5-2GB. The agent runs on
+  # storytime, which had ~840MB free with 2.7GB of its 6GB swap already in use,
+  # while also serving levelup.com.ng, its API, KYS, storytime and fetchit. An
+  # OOM there does not fail a build, it takes production down with it.
+  #
+  # What this costs: bundler and resolver failures that tsc and jest cannot
+  # see -- a bad import path, a missing asset, a metro config error -- now
+  # reach main unchallenged.
+  #
+  # Restore the step when CI moves to a host with headroom:
+  #
+  #   - name: web-build
+  #     image: *node_image
+  #     commands:
+  #       - npx expo export --platform web
+  #
+  # GitHub's upload-artifact also has no Woodpecker equivalent, so `dist/`
+  # would not be retained either way.
