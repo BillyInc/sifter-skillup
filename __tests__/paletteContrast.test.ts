@@ -163,4 +163,57 @@ describe("semantic colours stay distinguishable from the action", () => {
     expect(contrast(LightColors.borderRole.focus, LightColors.surface.raised)).toBeGreaterThanOrEqual(3);
     expect(LightColors.borderRole.focus).not.toBe(LightColors.accentRole.fill);
   });
+
+  it("keeps every text role at AA, and in a readable order", () => {
+    // These three failed before: muted 3.78:1, placeholder 2.61:1 and success
+    // 3.60:1 on white. muted is the resting colour of the mobile tab bar's
+    // inactive labels, so the app's primary navigation sat below AA.
+    //
+    // Fixing them is not just "darken until it passes" — the roles have to stay
+    // distinguishable from each other, and there is very little room between
+    // 4.5:1 and secondary's 7.56:1 to fit two of them. Hence muted moved too,
+    // even though 4.5 alone would not have required it.
+    const order = ["primary", "secondary", "muted", "placeholder"] as const;
+    const ratios = order.map(k => contrast(LightColors.textRole[k], LightColors.surface.raised));
+
+    for (let i = 0; i < ratios.length; i++) {
+      expect(ratios[i]).toBeGreaterThanOrEqual(4.5);
+    }
+    // Strictly decreasing: primary is the strongest, placeholder the weakest.
+    // If a later tweak flattens two roles together the hierarchy is gone even
+    // though every individual ratio still passes.
+    for (let i = 0; i < ratios.length - 1; i++) {
+      expect(ratios[i]).toBeGreaterThan(ratios[i + 1]);
+    }
+  });
+
+  it("holds text roles at AA on the subtle surface too, where they also land", () => {
+    // Passing on white is not enough: muted and secondary are routinely drawn
+    // on surface/subtle (chips, wells, inactive rows).
+    for (const k of ["primary", "secondary", "muted"] as const) {
+      expect(contrast(LightColors.textRole[k], LightColors.surface.subtle)).toBeGreaterThanOrEqual(4.5);
+    }
+    // placeholder on subtle is 4.32 and deliberately NOT asserted at 4.5: that
+    // pairing only occurs in a disabled input, and WCAG 1.4.3 exempts text in
+    // an inactive control. Pinned below so the exemption stays a decision
+    // rather than drift.
+    const ph = contrast(LightColors.textRole.placeholder, LightColors.surface.subtle);
+    expect(ph).toBeGreaterThanOrEqual(4.0);
+    expect(ph).toBeLessThan(4.5);
+  });
+
+  it("brings success up to AA without colliding with danger", () => {
+    expect(contrast(LightColors.accentRole.success, LightColors.surface.raised)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DarkColors.accentRole.success, DarkColors.surface.raised)).toBeGreaterThanOrEqual(4.5);
+    // Darkening a green moves it toward the reds in luminance, so check the
+    // thing that actually separates them: hue.
+    expect(hueGap(LightColors.accentRole.success, LightColors.accentRole.danger)).toBeGreaterThanOrEqual(60);
+  });
+
+  it("keeps the dark placeholder at AA", () => {
+    // Was 4.12:1 — the only dark-theme role that failed.
+    expect(contrast(DarkColors.textRole.placeholder, DarkColors.surface.raised)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(DarkColors.textRole.muted, DarkColors.surface.raised))
+      .toBeGreaterThan(contrast(DarkColors.textRole.placeholder, DarkColors.surface.raised));
+  });
 });
