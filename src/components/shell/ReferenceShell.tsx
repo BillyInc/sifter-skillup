@@ -18,6 +18,7 @@ import { FontSize, CompassFonts, Radius, Spacing, useTheme } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '@/lib/trackContext';
 import { SearchOverlay, SearchBar } from '@/components/careerIntelligence';
+import { TOUCH_TARGET_MIN } from '@/components/ui';
 import { Spring, useReducedMotion } from '@/theme/motion';
 import { careerData } from '@/lib/careerData';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
@@ -729,7 +730,9 @@ const styles = StyleSheet.create({
   },
   mobileTab: {
     flex: 1,
-    minHeight: 42,
+    // Was 42 — just under the 44pt minimum, and this is the app's primary
+    // navigation. Uses the shared constant so it cannot drift again.
+    minHeight: TOUCH_TARGET_MIN,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
