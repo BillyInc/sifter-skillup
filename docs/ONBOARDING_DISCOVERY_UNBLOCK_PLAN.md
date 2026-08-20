@@ -423,10 +423,17 @@ The supplied mockups are the visual-quality target, not the source of truth for 
 - Onboarding screens are functionally branching, but visually they are still basic stacked forms.
 - Some copy still explains implementation details instead of guiding the student.
 - The SS1/SS2 form previously asked for subjects before asking what the student wanted help with; this is now being corrected.
-- Admission Browse still feels like separate modes instead of one guided discovery surface.
-- Programme detail and several deferred pathway surfaces still need the full visual pass.
+- Admission Browse now uses one shared guided surface with account-type-aware
+  subject, programme, university and guidance hand-offs; the remaining visual
+  polish is separate from the state/data contract.
+- Student programme detail now uses the refined Overview, Requirements,
+  Universities and Career guidance sections. Pathways and Elite are retained
+  because the repository's PathwaysHubScreen already consolidates them into one
+  route-selection layer; they are not duplicated on Home.
 - Domain, sub-group, and role detail now separate their own skills, tools, and certifications and explain the first-to-supplementary order; programme and deferred surfaces still need the same treatment.
-- `What the school teaches` is not yet surfaced as a clear student-facing explanation in programme detail.
+- `What the school teaches` is surfaced when the programme record has a
+  source-backed overview or learning-outcome profile; missing source data stays
+  an honest unavailable state.
 - Current UI still needs proper responsive composition, stronger type scale, cleaner cards, better select/search modals, and less raw metadata.
 
 ### Design rules to apply while building
@@ -472,7 +479,14 @@ The user's selected type and answer path must decide what appears next.
   - allow skipping student provisioning to reach other admin surfaces;
   - keep admin access guarded.
 
-Current implementation status: account-type and student setup branching exist; the current pass is making Admission Browse, programme/domain/role detail, and admin student guidance preserve the selected context and present only source-backed choices. Broader Home and platform-wide visual cleanup remain later stages.
+Current implementation status: account-type and student setup branching exist; Admission Browse, programme/domain/role detail, shared Home resumption, and admin student guidance preserve the selected context and present only source-backed choices. Broader platform-wide visual cleanup remains a later stage.
+
+The admin workspace also has an account-scoped resume contract: the last
+permitted admin route and its query context are retained, while the student
+provisioning stage is retained separately. This lets an educator return to
+student account creation, student guidance, Explore/admission, verification,
+peer comparison or another admin task without mixing that state into a
+student's saved guidance path.
 
 ## Current blockers found
 

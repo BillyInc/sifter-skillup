@@ -85,6 +85,78 @@ def _html_certs(certs: list) -> str:
     return "".join(items) or "<li>No certifications are recorded for this selection.</li>"
 
 
+def _report_title(academic: dict) -> str:
+    """Use the student's route language in the printable heading."""
+    user_type = str(academic.get("userType") or "").lower()
+    student_class = str(academic.get("class") or "").lower()
+    if user_type == "senior_secondary":
+        return f"{student_class.upper()} Guidance Summary" if student_class in {"ss1", "ss2"} else "Secondary Student Guidance Summary"
+    if user_type == "ss3_secondary":
+        return "SS3 Guidance Summary"
+    if user_type == "jamb":
+        return "JAMB Guidance Summary"
+    if user_type == "student":
+        return "Undergraduate Guidance Summary"
+    return "Student Guidance Summary"
+
+
+def _guidance_requirement_rows(path: dict) -> list[tuple[str, str]]:
+    """Return only student-facing requirement fields for the selected route.
+
+    Direct Entry is intentionally excluded from the ordinary supported student
+    routes. University-specific text takes precedence over the national
+    programme text when it exists, while the two sources remain labelled.
+    """
+    national = path.get("requirements") if isinstance(path.get("requirements"), dict) else {}
+    university = path.get("universityRequirements") if isinstance(path.get("universityRequirements"), dict) else {}
+    rows: list[tuple[str, str]] = []
+    utme = university.get("utmeSubjects") or national.get("utmeSubjects")
+    olevel = university.get("olevelRequirement") or national.get("olevelRequirement")
+    note = university.get("note")
+    if utme:
+        rows.append(("UTME subjects", str(utme)))
+    if olevel:
+        rows.append(("O-level requirements", str(olevel)))
+    if note:
+        rows.append(("University note", str(note)))
+    if not rows and national.get("variesByInstitution"):
+        rows.append(("Requirement note", "Universities may phrase or add requirements differently. Check the selected university's current notice."))
+    return rows
+
+
+def _report_access_block(access_code: object) -> str:
+    """Render a real provisioned-student handoff, when one exists."""
+    if not access_code:
+        return ""
+    code = str(access_code)
+    claim_url = f"https://levelup.com.ng/settings/my-school?claim={quote(code)}"
+    qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + quote(claim_url, safe="")
+    return f"""<section class='access entity'>
+      <h2>Student access</h2>
+      <p>Use this code to claim the school-created account. Keep it private.</p>
+      <div class='access-code'>{html.escape(code)}</div>
+      <img class='qr' src='{html.escape(qr_url)}' alt='Scan to open the student claim page' />
+    </section>"""
+
+
+def _saved_programmes(path: dict) -> list[tuple[dict, dict]]:
+    """Return the saved programme/university pairs in display order."""
+    raw = path.get("programmes") if isinstance(path.get("programmes"), list) else []
+    pairs: list[tuple[dict, dict]] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        programme = item.get("programme") if isinstance(item.get("programme"), dict) else item
+        university = item.get("university") if isinstance(item.get("university"), dict) else {}
+        pairs.append((programme, university))
+    if not pairs:
+        programme = path.get("programme") if isinstance(path.get("programme"), dict) else {}
+        university = path.get("university") if isinstance(path.get("university"), dict) else {}
+        if programme or university:
+            pairs.append((programme, university))
+    return pairs
+
+
 def build_full_guidance_report_html(ctx: ReportContext) -> str:
     """Render the complete selected path without importing unselected data."""
     e = html.escape
@@ -93,7 +165,6 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
     subjects = path.get("subjects") or {}
     programme = path.get("programme") or {}
     university = path.get("university") or {}
-    requirements = path.get("requirements") or {}
     domains = path.get("domains") or []
     watermark = "Sifter LevelUp" + (f" - {academic.get('schoolName')}" if academic.get("schoolName") else "")
     subject_rows = "".join(
@@ -111,8 +182,8 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
         )) if value
     )
     requirement_rows = "".join(
-        f"<div class='row'><strong>{e(str(key))}</strong><span>{e(str(value))}</span></div>"
-        for key, value in requirements.items() if value not in (None, "", [])
+        f"<div class='row'><strong>{e(label)}</strong><span>{e(value)}</span></div>"
+        for label, value in _guidance_requirement_rows(path)
     ) or "<p class='muted'>The published requirement details were not available for this selection.</p>"
     domain_blocks = []
     for domain in domains:
@@ -153,6 +224,15 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
           </section>""")
     domains_html = "".join(domain_blocks) or "<p class='muted'>No domain, sub-group, or role has been selected for this report yet.</p>"
     school = academic.get("schoolName") or ctx.school_name
+    access_block = _report_access_block(path.get("accessCode"))
+    programme_blocks = []
+    for saved_programme, saved_university in _saved_programmes(path):
+        address = f"<p><strong>Address:</strong> {e(str(saved_university.get('address')))}</p>" if saved_university.get("address") else ""
+        programme_blocks.append(
+            f"<div class='entity'><h3>{e(str(saved_programme.get('name') or 'Programme not confirmed'))}</h3>"
+            f"<p><strong>University:</strong> {e(str(saved_university.get('name') or 'Not confirmed'))}</p>{address}</div>"
+        )
+    programme_html = "".join(programme_blocks) or "<p class='muted'>No programme choice has been recorded yet.</p>"
     return f"""<!doctype html>
 <html><head><meta charset='utf-8'><title>Guidance report - {e(ctx.student_name)}</title>
 <style>
@@ -167,16 +247,18 @@ h4 {{ margin:18px 0 6px; font-size:14px; text-transform:uppercase; letter-spacin
 .eyebrow,.entity-kicker {{ color:#8b5700; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }}
 .row {{ display:grid; grid-template-columns:minmax(150px, .35fr) 1fr; gap:14px; padding:6px 0; border-bottom:1px solid #eee; }}
 .entity {{ margin-top:18px; padding:16px; border:1px solid #ddd; border-radius:6px; }} .nested {{ margin-top:12px; background:#fafafa; }}
+.access {{ text-align:center; }} .access-code {{ font-family: 'Courier New', monospace; font-size:26px; font-weight:700; letter-spacing:3px; margin:12px 0; }} .qr {{ width:180px; height:180px; display:block; margin:12px auto; }}
 ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ color:#5f6368; }}
 .foot {{ margin-top:30px; padding-top:12px; border-top:1px solid #ddd; font-size:11px; color:#5f6368; }}
 </style></head><body><div class='toolbar'><button onclick='window.print()'>Print / save PDF</button></div>
 <div class='watermark'>{e(watermark)}</div><div class='content'>
-<header class='head'><div class='eyebrow'>{e(str(school or 'Sifter LevelUp'))}</div><h1>{e(ctx.student_name)}</h1><div class='muted'>Full guidance report - generated {e(ctx.generated_on)}</div></header>
+<header class='head'><div class='eyebrow'>{e(str(school or 'Sifter LevelUp'))}</div><h1>{e(ctx.student_name)}</h1><div class='muted'>{e(_report_title(academic))} - generated {e(ctx.generated_on)}</div></header>
 <h2>Your guidance context</h2><div>{context_rows or '<p class="muted">No additional academic context was recorded.</p>'}</div>
 <h2>Subjects you entered</h2><div>{subject_rows or '<p class="muted">No subjects were recorded.</p>'}</div>
-<h2>Programme and university</h2><div class='entity'><h3>{e(str(programme.get('name') or 'Programme not confirmed'))}</h3><p><strong>University:</strong> {e(str(university.get('name') or 'Not confirmed'))}</p><p><strong>Discovery door:</strong> {e(str(path.get('discoveryDoor') or 'Not recorded'))}</p></div>
+<h2>Programmes you saved</h2>{programme_html}<p class='muted'>Current guidance path: {e(str(programme.get('name') or 'Programme not confirmed'))} at {e(str(university.get('name') or 'Not confirmed'))}.</p>
 <h2>Admission requirements</h2><div>{requirement_rows}</div>
 <h2>Selected intelligence path</h2>{domains_html}
+{access_block}
 <div class='foot'>This report contains the source-backed selections made during guidance. It does not include unselected catalogue entities, unsupported demand claims, or Post-UTME claims. Guidance is not an admission, employment, salary, immigration, legal or professional guarantee. Verify current requirements with the relevant Nigerian institution or regulator before acting. Generated by Sifter LevelUp.</div>
 </div></body></html>"""
 
@@ -422,11 +504,10 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
     subjects = path.get("subjects") or {}
     programme = path.get("programme") or {}
     university = path.get("university") or {}
-    requirements = path.get("requirements") or {}
     parts: List[str] = []
     parts.append(_p("Sifter LevelUp", bold=True, size=30))
     parts.append(_p(ctx.student_name, bold=True, size=36))
-    parts.append(_p("Full guidance report", size=22))
+    parts.append(_p(_report_title(academic), size=22))
     parts.append(_p("Watermark: Sifter LevelUp" + (f" - {academic.get('schoolName')}" if academic.get("schoolName") else ""), size=16))
 
     parts.append(_p("Your guidance context", bold=True, size=26, heading=True))
@@ -446,14 +527,23 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
         parts.extend(_bullet(str(value)) for value in (values or ["None recorded"]))
 
     parts.append(_p("Programme and university", bold=True, size=26, heading=True))
-    parts.append(_p(f"Programme: {programme.get('name') or 'Programme not confirmed'}"))
-    parts.append(_p(f"University: {university.get('name') or 'Not confirmed'}"))
+    saved_programmes = _saved_programmes(path)
+    for saved_programme, saved_university in saved_programmes:
+        parts.append(_p(f"Programme: {saved_programme.get('name') or 'Programme not confirmed'}"))
+        parts.append(_p(f"University: {saved_university.get('name') or 'Not confirmed'}"))
+        if saved_university.get("address"):
+            parts.append(_p(f"Address: {saved_university.get('address')}"))
+
+    if path.get("accessCode"):
+        parts.append(_p("Student access", bold=True, size=26, heading=True))
+        parts.append(_p(f"Access code: {path.get('accessCode')}"))
+        parts.append(_p("Keep this code private. The printable HTML report also includes a QR link to the claim page."))
 
     parts.append(_p("Admission requirements", bold=True, size=26, heading=True))
-    if requirements:
-        for key, value in requirements.items():
-            if value not in (None, "", []):
-                parts.append(_p(f"{key}: {value}"))
+    requirement_rows = _guidance_requirement_rows(path)
+    if requirement_rows:
+        for label, value in requirement_rows:
+            parts.append(_p(f"{label}: {value}"))
     else:
         parts.append(_p("Published requirement details were not available for this selection."))
 
