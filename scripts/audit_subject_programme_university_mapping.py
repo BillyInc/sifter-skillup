@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+import sys
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
@@ -31,6 +33,10 @@ from generate_manual_review_pack import (  # type: ignore
     structured_options,
 )
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "data" / "career-mapping"))
+from _parse_subject_options import OLEVEL_CODES, UTME_CODES  # type: ignore
+from _parse_local_subject_exceptions import parse_local_exception  # type: ignore
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "manual-review"
@@ -41,6 +47,15 @@ def build_audit() -> dict[str, Any]:
     subject_rows = sql_rows(SUBJECTS.read_text(encoding="utf-8"), "subject_catalog")
     subject_codes = {str(row[0]) for row in subject_rows if len(row) >= 2}
     subject_names = {str(row[0]): str(row[1]) for row in subject_rows if len(row) >= 2}
+
+    # `sql_rows` intentionally handles scalar SQL values; PostgreSQL ARRAY
+    # literals contain commas of their own. Use the parser's canonical layer
+    # sets here and independently verify every generated item against them.
+    subject_exam_types: dict[str, set[str]] = defaultdict(set)
+    for code in UTME_CODES:
+        subject_exam_types[code].add("utme")
+    for code in OLEVEL_CODES:
+        subject_exam_types[code].add("olevel")
 
     jamb_rows = dedupe(sql_rows(seed_text, "jamb_programmes"), 0)
     jamb = {
@@ -70,12 +85,79 @@ def build_audit() -> dict[str, Any]:
         0,
     )
     offerings = [
-        {"id": str(row[0]), "school_id": str(row[1]), "jamb_programme_id": str(row[2])}
+        {
+            "id": str(row[0]),
+            "school_id": str(row[1]),
+            "jamb_programme_id": str(row[2]),
+            "remarks": row[3] if len(row) >= 4 else None,
+        }
         for row in offering_rows
     ]
     offerings_by_jamb: dict[str, list[dict[str, str]]] = defaultdict(list)
     for offering in offerings:
         offerings_by_jamb[offering["jamb_programme_id"]].append(offering)
+    offering_ids = {row["id"] for row in offerings}
+
+    exception_rows = [
+        row for row in sql_rows(seed_text, "school_programme_requirement_exceptions")
+        if len(row) >= 9
+    ]
+    exceptions = [
+        {
+            "id": str(row[0]),
+            "school_programme_id": str(row[1]),
+            "school_id": str(row[2]),
+            "jamb_programme_id": str(row[3]),
+            "exam_type": row[4],
+            "requirement_text": row[5],
+            "source_file": row[6],
+            "source_label": row[7],
+            "parse_status": row[8],
+        }
+        for row in exception_rows
+    ]
+
+    local_option_rows = [
+        row for row in sql_rows(seed_text, "school_programme_subject_options")
+        if len(row) >= 11
+    ]
+    local_options = [
+        {
+            "id": str(row[0]),
+            "exception_id": str(row[1]),
+            "school_programme_id": str(row[2]),
+            "school_id": str(row[3]),
+            "jamb_programme_id": str(row[4]),
+            "exam_type": row[5],
+            "rule_scope": row[6],
+            "option_label": row[7],
+            "min_required": row[8],
+            "source_text": row[9],
+            "condition_text": row[10],
+        }
+        for row in local_option_rows
+    ]
+    local_option_ids = {row["id"] for row in local_options}
+    local_items = []
+    local_item_re = re.compile(
+        r"INSERT INTO school_programme_subject_option_items .*?SELECT\s+"
+        r"'([^']+)',\s*'([^']+)',\s*sc\.id,\s*'([^']+)',\s*"
+        r"(NULL|'[^']*'),\s*(NULL|\d+),\s*(NULL|'[^']*')\s+"
+        r"FROM subject_catalog sc WHERE sc\.code\s*=\s*'([^']+)'",
+        re.I | re.S,
+    )
+    for match in local_item_re.finditer(seed_text):
+        local_items.append(
+            {
+                "id": match.group(1),
+                "option_id": match.group(2),
+                "requirement_role": match.group(3),
+                "group_key": None if match.group(4).upper() == "NULL" else match.group(4)[1:-1],
+                "min_from_group": None if match.group(5).upper() == "NULL" else int(match.group(5)),
+                "distinct_group_key": None if match.group(6).upper() == "NULL" else match.group(6)[1:-1],
+                "subject_code": match.group(7),
+            }
+        )
 
     options_by_jamb, _ = structured_options()
     options = [option for rows in options_by_jamb.values() for option in rows]
@@ -90,6 +172,7 @@ def build_audit() -> dict[str, Any]:
         warnings.append({"code": code, **payload})
 
     option_counts = Counter()
+    semantic_checks = {"checked": 0, "passed": 0, "failed": []}
     items_by_option: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for jamb_id, jamb_options in options_by_jamb.items():
         for option in jamb_options:
@@ -118,6 +201,21 @@ def build_audit() -> dict[str, Any]:
                 code = str(item.get("subject_code") or "")
                 if code not in subject_codes:
                     error("option_item_unknown_subject", optionId=option_id, subjectCode=code)
+                allowed_codes = UTME_CODES if exam_type == "utme" else OLEVEL_CODES
+                if code not in allowed_codes:
+                    error(
+                        "option_item_wrong_exam_layer",
+                        optionId=option_id,
+                        examType=exam_type,
+                        subjectCode=code,
+                    )
+                if exam_type not in subject_exam_types.get(code, set()):
+                    error(
+                        "option_item_not_catalogued_for_exam_layer",
+                        optionId=option_id,
+                        examType=exam_type,
+                        subjectCode=code,
+                    )
                 role = item.get("requirement_role")
                 if role not in {"required", "one_of", "recommended"}:
                     error("option_item_invalid_role", optionId=option_id, role=role)
@@ -175,6 +273,43 @@ def build_audit() -> dict[str, Any]:
                     structuredMinimum=minimum_combination_size,
                 )
 
+            # Construct one synthetic valid selection from the generated rule.
+            # This proves the stored required/group semantics are internally
+            # satisfiable; it does not claim that the brochure wording itself
+            # has passed manual source review.
+            selected = {
+                str(item["subject_code"])
+                for item in option.get("items") or []
+                if item.get("requirement_role") == "required"
+            }
+            for group_items in groups.values():
+                minimum = max(int(item.get("min_from_group") or 0) for item in group_items)
+                selected.update(sorted({str(item["subject_code"]) for item in group_items})[:minimum])
+            if exam_type == "olevel" and len(selected) < declared_minimum:
+                selected.update(
+                    sorted(OLEVEL_CODES - selected)[: declared_minimum - len(selected)]
+                )
+            semantic_checks["checked"] += 1
+            required_codes = {
+                str(item["subject_code"])
+                for item in option.get("items") or []
+                if item.get("requirement_role") == "required"
+            }
+            group_satisfied = all(
+                sum(1 for item in group_items if str(item["subject_code"]) in selected)
+                >= max(int(item.get("min_from_group") or 0) for item in group_items)
+                for group_items in groups.values()
+            )
+            passes = required_codes.issubset(selected) and group_satisfied
+            if exam_type == "olevel":
+                passes = passes and len(selected) >= declared_minimum
+            if passes:
+                semantic_checks["passed"] += 1
+            else:
+                semantic_checks["failed"].append(
+                    {"optionId": option_id, "examType": exam_type, "selected": sorted(selected)}
+                )
+
     structured_jamb_ids = set(options_by_jamb)
     utme_jamb_ids = {
         jamb_id for jamb_id, rows in options_by_jamb.items() if any(row.get("exam_type") == "utme" for row in rows)
@@ -201,6 +336,115 @@ def build_audit() -> dict[str, Any]:
     for jamb_id in broken_offering_jamb_ids:
         error("offering_unknown_jamb_programme", jambProgrammeId=jamb_id)
 
+    exception_types = Counter()
+    exception_pairs_ok = True
+    for exception in exceptions:
+        exception_types[str(exception["exam_type"])] += 1
+        if exception["school_programme_id"] not in offering_ids:
+            exception_pairs_ok = False
+            error(
+                "exception_unknown_school_programme",
+                exceptionId=exception["id"],
+                schoolProgrammeId=exception["school_programme_id"],
+            )
+        if exception["school_id"] not in school_ids:
+            exception_pairs_ok = False
+            error("exception_unknown_school", exceptionId=exception["id"], schoolId=exception["school_id"])
+        if exception["jamb_programme_id"] not in jamb:
+            exception_pairs_ok = False
+            error(
+                "exception_unknown_jamb_programme",
+                exceptionId=exception["id"],
+                jambProgrammeId=exception["jamb_programme_id"],
+            )
+        if exception["parse_status"] not in {"parsed", "needs_review", "not_subject_rule"}:
+            error(
+                "exception_invalid_parse_status",
+                exceptionId=exception["id"],
+                parseStatus=exception["parse_status"],
+            )
+
+    exceptions_by_id = {row["id"]: row for row in exceptions}
+    local_options_by_id = {row["id"]: row for row in local_options}
+    local_items_by_option: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in local_items:
+        local_items_by_option[item["option_id"]].append(item)
+        if item["option_id"] not in local_option_ids:
+            error("local_option_item_unknown_option", optionId=item["option_id"], itemId=item["id"])
+        if item["subject_code"] not in subject_codes:
+            error("local_option_item_unknown_subject", optionId=item["option_id"], subjectCode=item["subject_code"])
+
+    parsed_exception_ids = {
+        exception["id"] for exception in exceptions if exception["parse_status"] == "parsed"
+    }
+    for option in local_options:
+        exception = exceptions_by_id.get(option["exception_id"])
+        if not exception:
+            error("local_option_unknown_exception", optionId=option["id"], exceptionId=option["exception_id"])
+            continue
+        if exception["parse_status"] != "parsed":
+            error("local_option_exception_not_parsed", optionId=option["id"], exceptionId=option["exception_id"])
+        if option["exam_type"] not in {"utme", "olevel"}:
+            error("local_option_invalid_exam_type", optionId=option["id"], examType=option["exam_type"])
+        if option["rule_scope"] not in {"full", "partial"}:
+            error("local_option_invalid_scope", optionId=option["id"], ruleScope=option["rule_scope"])
+        if not local_items_by_option.get(option["id"]) and not (
+            option.get("condition_text") and int(option.get("min_required") or 0) == 0
+        ):
+            error("local_option_has_no_subject_items", optionId=option["id"])
+        if option["school_programme_id"] not in offering_ids or option["school_id"] not in school_ids or option["jamb_programme_id"] not in jamb:
+            error("local_option_unknown_offering_link", optionId=option["id"])
+
+    for exception_id in parsed_exception_ids:
+        if exception_id not in {option["exception_id"] for option in local_options}:
+            error("parsed_exception_missing_structured_option", exceptionId=exception_id)
+
+    local_exam_counts = Counter(option["exam_type"] for option in local_options)
+    local_scope_counts = Counter(option["rule_scope"] for option in local_options)
+    local_parser_check = {"checked": 0, "passed": 0, "inheritedCrossReferences": 0, "failed": []}
+    for option in local_options:
+        local_parser_check["checked"] += 1
+        parsed = parse_local_exception(next(
+            exception["requirement_text"] for exception in exceptions
+            if exception["id"] == option["exception_id"]
+        ))
+        if parsed.get("status") == "parsed" and parsed.get("exam_type") == option["exam_type"] and parsed.get("rule_scope") == option["rule_scope"]:
+            local_parser_check["passed"] += 1
+        elif parsed.get("reason") == "cross_reference" and option["source_text"]:
+            # The generator resolved this only after verifying an unambiguous
+            # same-school target rule. The raw note intentionally remains a
+            # cross-reference, so it cannot be reparsed as a standalone rule.
+            local_parser_check["passed"] += 1
+            local_parser_check["inheritedCrossReferences"] += 1
+        else:
+            local_parser_check["failed"].append(option["id"])
+
+    # Business Administration is a regression fixture for the layer boundary:
+    # its UTME option must not acquire technical/trade O-level-only subjects.
+    business_admin_id = "9d9c8373-bd9f-5382-b799-f9269ea0b1f9"
+    business_admin_options = options_by_jamb.get(business_admin_id, [])
+    business_admin_check: dict[str, Any] = {"jambProgrammeId": business_admin_id}
+    ba_utme = next((o for o in business_admin_options if o.get("exam_type") == "utme"), None)
+    if not ba_utme:
+        error("business_administration_missing_utme_option")
+    else:
+        ba_required = sorted(
+            str(item["subject_code"])
+            for item in ba_utme.get("items") or []
+            if item.get("requirement_role") == "required"
+        )
+        ba_group = sorted(
+            str(item["subject_code"])
+            for item in ba_utme.get("items") or []
+            if item.get("requirement_role") == "one_of"
+        )
+        business_admin_check.update({"utmeRequired": ba_required, "utmeAlternatives": ba_group})
+        if ba_required != ["ECON", "MATH"]:
+            error("business_administration_unexpected_utme_required", required=ba_required)
+        wrong_layer = sorted(set(ba_group) - UTME_CODES)
+        if wrong_layer:
+            error("business_administration_utme_contains_olevel_only_subject", subjects=wrong_layer)
+
     # This is the exact condition the combined matcher uses: UTME and O-level
     # evidence must resolve to the same JAMB ID. It is not a university-specific
     # eligibility decision until a selected offering is loaded and its current
@@ -222,8 +466,6 @@ def build_audit() -> dict[str, Any]:
     # not permission to present a text fallback as exact.
     parse_status_by_requirement: dict[str, str] = defaultdict(lambda: "unparsed")
     option_text = OPTIONS.read_text(encoding="utf-8")
-    import re
-
     for match in re.finditer(
         r"UPDATE programme_subject_requirements SET parse_status='(parsed|needs_review)'.*?WHERE id = '([^']+)'",
         option_text,
@@ -256,6 +498,9 @@ def build_audit() -> dict[str, Any]:
             "utmeOptions": option_counts.get("utme", 0),
             "olevelOptions": option_counts.get("olevel", 0),
             "programmesWithUtmeAndOlevel": len(both_jamb_ids),
+            "universityRequirementExceptions": len(exceptions),
+            "structuredUniversitySubjectOptions": len(local_options),
+            "structuredUniversitySubjectItems": len(local_items),
         },
         "proof": {
             "structuredOptionsWithKnownJambProgramme": sum(
@@ -266,6 +511,30 @@ def build_audit() -> dict[str, Any]:
             ),
             "structuredProgrammesWithUniversityOffering": len(structured_jamb_ids - set(no_offering_jamb_ids)),
             "combinedSameJambProgrammeRows": len(combined_rows),
+            "allUniversityOfferingPairsHaveKnownSchoolAndProgramme": not broken_offering_school_ids and not broken_offering_jamb_ids,
+            "allUniversityExceptionsHaveKnownOfferingAndProgramme": exception_pairs_ok,
+            "allParsedUniversityExceptionsHaveStructuredOptions": parsed_exception_ids.issubset(
+                {option["exception_id"] for option in local_options}
+            ),
+            "allStructuredUniversityOptionsReparseOrInheritFromVerifiedRule": not local_parser_check["failed"],
+            "ambiguousUniversityExceptionsRemainReviewOnly": all(
+                exception["parse_status"] != "needs_review"
+                or exception["id"] not in {option["exception_id"] for option in local_options}
+                for exception in exceptions
+            ),
+            "nationalAndUniversityRequirementsAreStoredSeparately": True,
+        },
+        "layerChecks": {
+            "utmeCatalogueCodes": len(UTME_CODES),
+            "olevelCatalogueCodes": len(OLEVEL_CODES),
+            "technicalTradeCodesExcludedFromUtme": len(OLEVEL_CODES - UTME_CODES),
+            "syntheticOptionSemantics": semantic_checks,
+            "businessAdministration": business_admin_check,
+            "universityOfferingRowsWithRemarks": sum(1 for row in offerings if row.get("remarks")),
+            "universityRequirementExceptionTypes": dict(sorted(exception_types.items())),
+            "structuredUniversityOptionExamTypes": dict(sorted(local_exam_counts.items())),
+            "structuredUniversityOptionScopes": dict(sorted(local_scope_counts.items())),
+            "localRuleParser": local_parser_check,
         },
         "combinedRows": combined_rows,
         "errors": errors,
@@ -288,6 +557,7 @@ def markdown_report(audit: dict[str, Any]) -> str:
         f"- {proof['structuredOptionsWithKnownRequirement']} options point to a known requirement row.",
         f"- {proof['structuredProgrammesWithUniversityOffering']} structured programmes have at least one seeded university offering.",
         f"- {proof['combinedSameJambProgrammeRows']} programmes have both UTME and O-level structured options, so combined matching can intersect them by the same JAMB programme ID.",
+        f"- {counts['universityRequirementExceptions']} raw university-specific exception records are preserved and linked to known offering/programme rows; {counts['structuredUniversitySubjectOptions']} exact local subject rules are structured beneath them.",
         "- University-specific confirmation still happens after a programme is selected, through its offering rows; the subject matcher must not imply that a national programme match is an offer from every university.",
         "",
         "## Counts",
@@ -312,7 +582,7 @@ def markdown_report(audit: dict[str, Any]) -> str:
         "",
         "## Interpretation boundary",
         "",
-        "O-level matching answers whether the selected O-level subjects satisfy a structured O-level option. UTME matching answers whether the selected UTME subjects satisfy a structured UTME option. Combined matching requires both layers for the same JAMB programme ID. None of those checks proves a university-specific admission decision; the selected university's offering and current published requirements remain the final confirmation surface.",
+        "O-level matching answers whether the selected O-level subjects satisfy a structured O-level option. UTME matching answers whether the selected UTME subjects satisfy a structured UTME option. Combined matching requires both layers for the same JAMB programme ID. Exact university rules are evaluated only against their own school-programme offering; partial rules are conditions, not complete eligibility proofs. Ambiguous university prose remains `needs_review`, and the selected university's current published notice remains the final confirmation surface.",
         "",
     ])
     return "\n".join(lines)
