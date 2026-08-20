@@ -336,6 +336,43 @@ around reality. The full brief in `docs/` is authoritative for the complete
 design rationale and detailed examples; this section is the operational
 checklist Claude Code must follow automatically.
 
+## JAMB Subject SQL Pipeline
+
+The JAMB subject data is split between matchable picker rows and a complete
+typed rule-record layer. SQL files are generated from
+`data/career-mapping/`; they are not automatically executed in Supabase.
+
+Apply the schema in this dependency order:
+
+1. `backend/migration_career_base_registry.sql`
+2. `backend/migration_subject_catalog.sql`
+3. `backend/migration_career_pilot.sql`
+4. `backend/migration_subject_rule_records.sql`
+5. `backend/migration_student_pipeline_live.sql`
+
+Then apply the subject data in this order:
+
+1. `backend/seed_subject_catalog.sql`
+2. `backend/seed_career_pilot.sql`
+3. `backend/seed_subject_rule_records.sql`
+4. `backend/seed_subject_options.sql`
+
+Current generated coverage is 46 catalog subjects, 420 JAMB programme names,
+9,130 unique university offerings, 740 national matcher options, 7,246 option
+items, and 1,260 typed requirement records. The typed records preserve
+conditions, cross-references, direct-entry requirements, source variants, and
+14 explicitly source-missing layers. Only directly matchable records become
+subject-picker options; missing source text must never be guessed.
+
+`seed_subject_options.sql` is a replacement transaction for the two national
+matcher tables. It is not an ordinary additive seed and requires a backup or
+controlled deployment on an existing Supabase project.
+
+After applying the SQL, verify the counts and foreign-key checks in
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. A successful local generator
+run does not prove that Supabase has been updated; the SQL editor results are
+the deployment proof.
+
 ## Career Resource SQL Migration
 
 This repository does not use monolithic career-resource JSON or SQL files.

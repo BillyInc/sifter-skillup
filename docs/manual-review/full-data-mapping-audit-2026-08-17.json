@@ -19,28 +19,28 @@
   },
   "summary": {
     "seed_raw_rows": {
-      "schools": 778,
+      "schools": 861,
       "programmes": 420,
       "requirements": 420,
-      "offerings": 7888,
-      "subjects": 44
+      "offerings": 9130,
+      "subjects": 46
     },
     "seed_unique_rows": {
-      "schools": 778,
+      "schools": 861,
       "programmes": 420,
       "requirements": 420,
-      "unique_offerings": 7888,
-      "unique_subjects": 44,
-      "unique_school_programme_pairs": 7888
+      "unique_offerings": 9130,
+      "unique_subjects": 46,
+      "unique_school_programme_pairs": 9130
     },
     "programme_mapping": {
       "registry_names": 420,
-      "ccmas_bridge_names": 416,
-      "active_domain_map_names": 416,
-      "canonical_inheritance_names": 416,
-      "registry_missing_from_bridge": 4,
-      "registry_gaps_resolved_by_normalized_identity": 4,
-      "registry_gaps_resolved_by_declared_alias": 4,
+      "ccmas_bridge_names": 420,
+      "active_domain_map_names": 420,
+      "canonical_inheritance_names": 420,
+      "registry_missing_from_bridge": 0,
+      "registry_gaps_resolved_by_normalized_identity": 0,
+      "registry_gaps_resolved_by_declared_alias": 0,
       "undeclared_registry_aliases": 0,
       "bridge_missing_from_registry": 0,
       "active_missing_from_bridge": 0,
@@ -50,7 +50,7 @@
       "programmes_with_requirement_row": 420,
       "programmes_without_requirement_row": 0,
       "broken_requirement_foreign_keys": 0,
-      "subject_catalog_codes": 44
+      "subject_catalog_codes": 46
     },
     "offerings": {
       "broken_foreign_keys": 0,
@@ -58,41 +58,41 @@
       "duplicate_pair_rows": 0
     },
     "domain_links": {
-      "total_active_links": 3342,
+      "total_active_links": 3164,
       "by_match_type": {
-        "direct": 325,
-        "functional": 2888,
-        "adjacent": 129
+        "direct": 324,
+        "functional": 2709,
+        "adjacent": 131
       },
       "invalid_domain_references_or_names": 0,
       "active_vs_canonical_mismatches": 0,
       "refresh_sql_edge_mismatches": 0,
       "refresh_sql_unknown_domain_uuids": 0,
-      "flat_domains_referenced": 42,
-      "active_domain_ids": 145
+      "flat_domains_referenced": 39,
+      "active_domain_ids": 140
     },
     "source_coverage": {
       "brochure_rows": 439,
       "bridge_names_without_brochure_hit": 0,
       "normalized_name_collisions": 4,
       "rows_with_blank_or_shared_requirement_field": 244,
-      "bridge_names_with_blank_or_shared_requirement_field": 240,
-      "domain_name_format_variants": 0
+      "bridge_names_with_blank_or_shared_requirement_field": 241,
+      "domain_name_format_variants": 51
     },
     "inheritance": {
       "by_type": {
-        "partial_curriculum_scope_review_required": 272,
-        "single_ccmas_full_curriculum": 111,
+        "partial_curriculum_scope": 273,
+        "single_ccmas_full_curriculum": 113,
         "combined_ccmas_curriculum": 28,
-        "external_sources_required": 5
+        "external_sources_required": 6
       },
       "by_status": {
-        "ready_partial": 272,
-        "ready": 139,
-        "ready_external": 5
+        "ready_partial": 273,
+        "ready": 141,
+        "ready_external": 6
       },
-      "partial_scope_rows": 272,
-      "external_source_rows": 5,
+      "partial_scope_rows": 273,
+      "external_source_rows": 6,
       "existing_audit_component_mismatches": 0,
       "existing_audit_unscoped_partial_rows": []
     },
@@ -101,7 +101,7 @@
       "flat_domains": 56,
       "sql_seed_domains": 160,
       "json_domains_missing_from_sql_seed": 8,
-      "json_domains_without_active_jamb_link": 23,
+      "json_domains_without_active_jamb_link": 28,
       "subgroups": 464,
       "subgroup_empty_or_overlapping_skill_findings": 5,
       "role_audit_empty_domains": 0
@@ -117,7 +117,7 @@
       "address_column_present": false
     },
     "sql_materialization": {
-      "refresh_rows": 3342,
+      "refresh_rows": 3164,
       "refresh_sql_mismatches": {
         "missing_from_refresh_sql": [],
         "extra_in_refresh_sql": [],
@@ -139,34 +139,319 @@
   },
   "data_quality_findings": {
     "duplicate_school_programme_pairs": [],
-    "domain_name_format_variants": [],
-    "registry_names_resolved_by_normalized_identity": [
-      [
-        "Anthropology",
-        "ANTHROPOLOGY"
-      ],
-      [
-        "LIBRARY AND INFORMATION SCIENCE",
-        "Library and Information Science"
-      ],
-      [
-        "LIBRARY SCIENCE",
-        "Library Science"
-      ],
-      [
-        "Meteorology",
-        "METEOROLOGY"
-      ]
+    "domain_name_format_variants": [
+      {
+        "jamb_name": "Economics and Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Economics with/and Operation Research",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "CYBER SECURITY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Software Engineering",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Software Engineering",
+        "domain_id": "D139",
+        "stored": "D139 Game Design",
+        "display_value": "Game Design"
+      },
+      {
+        "jamb_name": "INFORMATION TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SYSTEMS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Data Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION AND COMMUNICATION TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics with Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Information Technology",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION AND COMMUNICATION SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE WITH ECONOMICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE AND MATHEMATICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER WITH STATISTICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Biostatistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Statistics and Data Sciences",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Data Science and Analytics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "MANAGEMENT INFORMATION SYSTEM",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SYSTEMS AND TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "CYBER SECURITY SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Information Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "DATA MANAGEMENT",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE WITH MATHEMATICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "ELECTRONICS AND COMPUTER TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "ELECTRONICS AND COMPUTER SYSTEMS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics and Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics /Applied Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Applied Mathematics with Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Applied Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industral Mathematics/Computer",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer, Information and Communication Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Informatics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computing and Artificial Intelligence",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer with Electronics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Robotics (Artificial Intelligence)",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Radiography",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Creative Arts",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Creative Arts",
+        "domain_id": "D139",
+        "stored": "D139 Game Design",
+        "display_value": "Game Design"
+      },
+      {
+        "jamb_name": "Music",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Computer and Information Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "OPERATIONS RESEARCH",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Drama/Dramatic Arts/Performing Arts",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Igbo",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Statistics Education",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      }
     ],
+    "registry_names_resolved_by_normalized_identity": [],
     "undeclared_registry_aliases": []
   },
   "coverage_gaps_and_review_flags": {
-    "registry_missing_from_ccmas_bridge": [
-      "Anthropology",
-      "LIBRARY AND INFORMATION SCIENCE",
-      "LIBRARY SCIENCE",
-      "Meteorology"
-    ],
+    "registry_missing_from_ccmas_bridge": [],
     "ccmas_bridge_missing_from_registry": [],
     "active_domain_map_missing_from_bridge": [],
     "active_domain_map_extra_over_bridge": [],
@@ -185,12 +470,319 @@
         "Library and Information Science"
       ],
       "meteorology": [
-        "Meteorology",
-        "METEOROLOGY"
+        "METEOROLOGY",
+        "Meteorology"
       ]
     },
     "duplicate_school_programme_pairs": [],
-    "domain_name_format_variants": [],
+    "domain_name_format_variants": [
+      {
+        "jamb_name": "Economics and Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Economics with/and Operation Research",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "CYBER SECURITY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Software Engineering",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Software Engineering",
+        "domain_id": "D139",
+        "stored": "D139 Game Design",
+        "display_value": "Game Design"
+      },
+      {
+        "jamb_name": "INFORMATION TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SYSTEMS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Data Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION AND COMMUNICATION TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Mathematics with Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Information Technology",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION AND COMMUNICATION SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE WITH ECONOMICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE AND MATHEMATICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER WITH STATISTICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Biostatistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Statistics and Data Sciences",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Data Science and Analytics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "MANAGEMENT INFORMATION SYSTEM",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SYSTEMS AND TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "CYBER SECURITY SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Information Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "DATA MANAGEMENT",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "COMPUTER SCIENCE WITH MATHEMATICS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "ELECTRONICS AND COMPUTER TECHNOLOGY",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "ELECTRONICS AND COMPUTER SYSTEMS",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics and Computer Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industrial Mathematics /Applied Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Applied Mathematics with Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Applied Statistics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Industral Mathematics/Computer",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer, Information and Communication Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer Science and Informatics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computing and Artificial Intelligence",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Computer with Electronics",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Robotics (Artificial Intelligence)",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Radiography",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Creative Arts",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Creative Arts",
+        "domain_id": "D139",
+        "stored": "D139 Game Design",
+        "display_value": "Game Design"
+      },
+      {
+        "jamb_name": "Music",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Computer and Information Science",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "OPERATIONS RESEARCH",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "INFORMATION SCIENCE",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      },
+      {
+        "jamb_name": "Drama/Dramatic Arts/Performing Arts",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Igbo",
+        "domain_id": "D153",
+        "stored": "D153 Music Production",
+        "display_value": "Music Production"
+      },
+      {
+        "jamb_name": "Statistics Education",
+        "domain_id": "D003",
+        "stored": "D003 Artificial Intelligence",
+        "display_value": "Artificial Intelligence"
+      }
+    ],
     "json_domains_missing_from_sql_seed": [
       "D086",
       "D087",
@@ -202,11 +794,15 @@
       "D113"
     ],
     "json_domains_without_active_jamb_link": [
+      "D080",
       "D082",
+      "D085",
       "D086",
       "D087",
       "D088",
       "D089",
+      "D091",
+      "D092",
       "D100",
       "D101",
       "D105",
@@ -221,6 +817,7 @@
       "D117",
       "D125",
       "D127",
+      "D129",
       "D131",
       "D133",
       "D160",
@@ -401,6 +998,7 @@
       "Islamic Law/Sharia Law",
       "Kanuri",
       "LIBRARY AND INFORMATION TECHNOLOGY",
+      "LIBRARY SCIENCE",
       "Land Surveying",
       "Library Science",
       "Linguistics/Edo",
@@ -501,6 +1099,7 @@
       "Zoology and Aquaculture"
     ],
     "external_source_rows": [
+      "Anthropology",
       "French",
       "Intelligence and Security Studies",
       "Social Justice",
@@ -528,12 +1127,9 @@
       "D068",
       "D072",
       "D078",
-      "D080",
       "D083",
       "D084",
-      "D085",
       "D090",
-      "D091",
       "D093",
       "D094",
       "D097",

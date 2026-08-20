@@ -507,8 +507,16 @@ export default function AdmissionBrowseScreen() {
         university: {
           id: school.schoolId,
           name: school.schoolName,
+          address: school.address ?? null,
         },
         requirements: programmeDetail?.requirements ?? {},
+        universityRequirements: {
+          utmeSubjects: school.universityUtmeSubjects ?? null,
+          olevelRequirement: school.universityOlevelRequirement ?? null,
+          directEntry: school.universityDirectEntry ?? null,
+          note: school.universityNote ?? null,
+          requiresReview: Boolean(school.hasUniversityException),
+        },
       };
       if (guidanceStudentId) {
         const currentPath = await provisioningData.getGuidancePath(guidanceStudentId);
@@ -691,6 +699,11 @@ export default function AdmissionBrowseScreen() {
                             variant="teaser"
                             color={active ? colors.textInverse : undefined}
                           />
+                          {o.hasUniversityException ? (
+                            <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
+                              University-specific admission note available
+                            </Text>
+                          ) : null}
                         </TouchableOpacity>
                       );
                     })}
@@ -756,7 +769,7 @@ export default function AdmissionBrowseScreen() {
               setNotice(null);
             }} />
           </View>
-          {subjectExamType === "combined" ? (
+          {subjectExamType !== "olevel" ? (
             <LiveSubjectMultiSelect
               label="Your UTME subjects"
               examType="utme"
@@ -782,7 +795,7 @@ export default function AdmissionBrowseScreen() {
               value={olevelSubjects}
               onChange={(next) => updateSubjectSelection(next, "olevel")}
               minSelected={5}
-              maxSelected={9}
+              maxSelected={12}
               showSearch={false}
               helperText={
                 subjectExamType === "olevel"
@@ -962,9 +975,15 @@ export default function AdmissionBrowseScreen() {
               >
                 <View style={{ flex: 1 }}>
                   <Text style={[styles.infoTitle, { color: colors.text }]}>{school.schoolName}</Text>
+                  {school.address ? (
+                    <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{school.address}</Text>
+                  ) : null}
                   <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
                     {school.year ? `${school.year} cycle` : "Offering listed"}
                   </Text>
+                  {school.hasUniversityException ? (
+                    <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]}>University-specific admission note available</Text>
+                  ) : null}
                 </View>
                 <Text style={[styles.score, { color: colors.text }]}>
                   {selectedAdmissionSchool?.schoolId === school.schoolId ? "Selected" : "Choose"}
@@ -974,6 +993,16 @@ export default function AdmissionBrowseScreen() {
           ) : (
             <Text style={[styles.hint, { color: colors.textMuted }]}>No university admission rows are available yet.</Text>
           )}
+
+          {selectedAdmissionSchool?.hasUniversityException ? (
+            <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}55` }]}>
+              <Text style={[styles.noticeText, { color: Brand.primaryDeep }]}>University-specific note for {selectedAdmissionSchool.schoolName}</Text>
+              <Text style={[styles.requirementText, { color: colors.text }]}>
+                {selectedAdmissionSchool.universityNote || "This university has additional or differently worded requirements. Review its current admission notice before applying."}
+              </Text>
+              <Text style={[styles.cardMeta, { color: colors.textMuted }]}>This note applies to this university only. The national programme requirement above remains separate.</Text>
+            </View>
+          ) : null}
 
           <Text style={[styles.section, { color: colors.textSoft }]}>Domains and roles</Text>
           {domains?.domains?.length ? (

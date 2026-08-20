@@ -1,11 +1,15 @@
 # Sifter LevelUp complete data migration
 
-Status: reconciled and regenerated on 2026-08-17.
+Status: reconciled and regenerated on 2026-08-20.
 
 This is the authoritative runbook for the current career, JAMB, domain,
 admission, and source-backed resource data. SQL files are generated outputs;
 the partition manifest, JSON parts, and generators under
 `data/career-mapping/` are the sources of truth.
+
+The generated SQL has been locally regenerated and audited. It has not been
+executed against Supabase by this audit; the post-seed queries below are the
+required proof of a successful Supabase run.
 
 Do not paste every SQL file in `backend/` into Supabase in filename order.
 Several files are historical patches, rollback scripts, or superseded schema
@@ -15,10 +19,13 @@ variants.
 
 | Output | Current contents |
 |---|---:|
-| `seed_career_pilot.sql` | 243 programmes, 778 schools, 420 JAMB offerings, 416 mappings, 7,889 school offerings |
-| `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,560 programme-role scores, 3,342 JAMB-domain links, 4,000 overlaps |
+| `seed_career_pilot.sql` | 243 CCMAS/custom programmes, 861 schools, 420 JAMB programme names, 420 mappings, 9,130 unique university offerings, 420 national requirement rows, 3,884 university exceptions, 2,031 university subject options, 12,213 university option items, 2,706 brochure source variants |
+| `seed_subject_catalog.sql` | 46 canonical subjects |
+| `seed_subject_options.sql` | 740 national subject options and 7,246 national option items; replacement seed for directly matchable subject combinations |
+| `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 739 matchable, 84 structured source rules, 3 cross-references, 420 direct-entry records, 14 explicit source-missing records |
+| `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
-| `refresh_jamb_programme_domain_2026-08-17.sql` | 3,342 JAMB-domain links; standalone replacement only |
+| `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
 
 The resource artifacts are intentionally partitioned. The JSON parts are
 build inputs and are not read by the application at runtime. The SQL parts
@@ -33,9 +40,15 @@ seed the `skillup_dev.career_learning_resources` table consumed by the backend.
 - The old monolithic `learning_resource_population.json` and
   `seed_career_resources_v1.sql` files are intentionally not used.
 
-The JAMB inheritance audit is clean: all 416 names have an explicit scope,
-with 111 full CCMAS, 28 combined CCMAS, 272 course-scoped partial CCMAS, and
-5 separately evidenced external curricula.
+The JAMB inheritance audit resolves all 420 names to an explicit scope, with
+113 full CCMAS, 28 combined CCMAS, 273 course-scoped partial CCMAS, and 6
+separately evidenced external curricula. The university/programme graph is
+complete and structurally valid: all 420 names have a canonical mapping and
+all 9,130 offerings resolve through that chain. This does not mean every
+source sentence is a machine-matchable subject rule: 39 programme layers still
+need subject parsing review and one layer has an empty requirement. Their
+official text is retained as a fallback and must not be presented as a fully
+enumerated subject combination.
 
 The resource gate is also green: 160 visible domains, zero resource
 validation errors, zero unsourced roles, and no invalid domain, subgroup, or
@@ -99,15 +112,24 @@ Run each file in the order below. Keep each SQL file's transaction intact.
 ### 2. Career and admission schema
 
 1. `backend/migration_career_base_registry.sql`
-2. `backend/migration_career_pilot.sql`
-3. `backend/migration_career_v2.sql`
-4. `backend/migration_admission_intelligence.sql`
-5. `backend/migration_enrichment_v1.sql`
-6. `backend/migration_market_intelligence_v1.sql`
-7. `backend/migration_role_tools.sql`
-8. `backend/migration_role_detail_enrichment.sql`
-9. `backend/migration_source_backed_career_layers.sql`
-10. `backend/migration_career_resources_v1.sql`
+2. `backend/migration_subject_catalog.sql`
+3. `backend/migration_career_pilot.sql`
+4. `backend/migration_subject_rule_records.sql`
+5. `backend/migration_career_v2.sql`
+6. `backend/migration_admission_intelligence.sql`
+7. `backend/migration_enrichment_v1.sql`
+8. `backend/migration_market_intelligence_v1.sql`
+9. `backend/migration_role_tools.sql`
+10. `backend/migration_role_detail_enrichment.sql`
+11. `backend/migration_source_backed_career_layers.sql`
+12. `backend/migration_career_resources_v1.sql`
+
+`migration_subject_catalog.sql` is required before
+`migration_career_pilot.sql` on a fresh database because the latter creates
+the school-specific subject-option item table with a foreign key to
+`subject_catalog`. `migration_student_pipeline_live.sql` retains an
+`IF NOT EXISTS` copy for compatibility; do not use that duplicate as a reason
+to move the catalog migration later.
 
 `migration_career_v2.sql` recreates the taxonomy tables with `DROP TABLE ...
 CASCADE`. Use it only for an empty/staging database or an explicitly approved
@@ -152,14 +174,23 @@ make conflicting business logic equivalent.
 Run after the schema above:
 
 1. `backend/seed_subject_catalog.sql`
-2. `backend/seed_subject_options.sql`
-3. `backend/seed_career_pilot.sql`
-4. `backend/seed_career_v2.sql`
-5. `backend/seed_phase8_9_enrichment.sql`
-6. `backend/seed_demand_baseline.sql` if demand baseline data is wanted
-7. `backend/seed_career_resources_v1_parts/` in numeric filename order; keep
+2. `backend/seed_career_pilot.sql`
+3. `backend/seed_subject_rule_records.sql`
+4. `backend/seed_subject_options.sql`
+5. `backend/seed_career_v2.sql`
+6. `backend/seed_phase8_9_enrichment.sql`
+7. `backend/seed_demand_baseline.sql` if demand baseline data is wanted
+8. `backend/seed_career_resources_v1_parts/` in numeric filename order; keep
    `seed_career_resources_v1.manifest.json` for row counts and checksums
-8. `backend/patch_subject_catalog_streams.sql`
+9. `backend/patch_subject_catalog_streams.sql`
+
+`seed_subject_rule_records.sql` replaces the complete typed rule-record layer.
+`seed_subject_options.sql` deliberately deletes and replaces the national
+parsed-option tables before inserting the current 740 options and 7,246
+items. Run both after `seed_career_pilot.sql`; take a backup before using the
+replacement seed on an existing production database. The rule-record layer
+preserves every source condition and blank cell; only matchable records become
+subject-picker rows.
 
 `seed_career_v2.sql` already contains the complete current
 `jamb_programme_domain` population. Do not run the JAMB refresh after it in the
@@ -215,7 +246,19 @@ is intentional.
 Run this in the Supabase SQL editor after the seeds finish:
 
 ```sql
-SELECT 'domains' AS table_name, COUNT(*) AS rows FROM skillup_dev.domains
+SELECT 'subject_catalog' AS table_name, COUNT(*) AS rows FROM skillup_dev.subject_catalog
+UNION ALL SELECT 'jamb_programmes', COUNT(*) FROM skillup_dev.jamb_programmes
+UNION ALL SELECT 'programme_subject_requirements', COUNT(*) FROM skillup_dev.programme_subject_requirements
+UNION ALL SELECT 'programme_subject_options', COUNT(*) FROM skillup_dev.programme_subject_options
+UNION ALL SELECT 'programme_subject_option_items', COUNT(*) FROM skillup_dev.programme_subject_option_items
+UNION ALL SELECT 'programme_subject_rule_records', COUNT(*) FROM skillup_dev.programme_subject_rule_records
+UNION ALL SELECT 'schools', COUNT(*) FROM skillup_dev.schools
+UNION ALL SELECT 'school_programmes', COUNT(*) FROM skillup_dev.school_programmes
+UNION ALL SELECT 'school_programme_requirement_exceptions', COUNT(*) FROM skillup_dev.school_programme_requirement_exceptions
+UNION ALL SELECT 'school_programme_subject_options', COUNT(*) FROM skillup_dev.school_programme_subject_options
+UNION ALL SELECT 'school_programme_subject_option_items', COUNT(*) FROM skillup_dev.school_programme_subject_option_items
+UNION ALL SELECT 'programme_mapping', COUNT(*) FROM skillup_dev.programme_mapping
+UNION ALL SELECT 'domains', COUNT(*) FROM skillup_dev.domains
 UNION ALL SELECT 'domain_subgroups', COUNT(*) FROM skillup_dev.domain_subgroups
 UNION ALL SELECT 'domain_roles', COUNT(*) FROM skillup_dev.domain_roles
 UNION ALL SELECT 'domain_tools', COUNT(*) FROM skillup_dev.domain_tools
@@ -246,17 +289,25 @@ WHERE d.id IS NULL OR (r.subgroup_id IS NOT NULL AND sg.id IS NULL)
    OR (r.role_id IS NOT NULL AND dr.id IS NULL);
 ```
 
-Expected core counts are 160 domains, 460 subgroups, 5,038 roles, 243
-programmes, 420 JAMB programmes, 416 programme mappings, 2,058
-programme-domain links, 3,342 JAMB-domain links, and 160,914 resource rows.
+Expected current counts are 46 subjects, 420 JAMB programmes, 420 national
+requirement rows, 740 national subject options, 7,246 national option items,
+1,260 typed subject-rule records,
+861 schools, 9,130 unique school-programme offerings, 3,884 university
+exceptions, 2,031 university subject options, 12,213 university option items,
+420 programme mappings, 160 visible domains, 460 subgroups, 5,038 roles,
+2,058 programme-domain links, 709 JAMB-domain links, and 160,914 resource
+rows. The 9,130 offering pairs and all 420 mapping chains were independently
+audited with zero structural errors. The typed rule layer covers every
+national requirement layer; 14 rows are explicitly source-missing and are not
+invented into subject combinations.
 All three orphan checks must return zero.
 
 ## Local verification already completed
 
 - Resource gate: PASS; 160,914 rows and zero mechanical validation errors.
 - Resource FK reconciliation: zero invalid domain, subgroup, or role IDs.
-- JAMB inheritance audit: 416/416 names resolved; zero stale names and zero
+- JAMB inheritance audit: 420/420 names resolved; zero stale names and zero
   component mismatches.
-- Seed regeneration: all 416 programme mappings link to a programme.
+- Seed regeneration: all 420 programme mappings link to a programme.
 - Python compilation and JSON parsing passed for the generators and canonical
   artifacts.

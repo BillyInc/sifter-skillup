@@ -2824,34 +2824,34 @@
    "_m3": "arts_hum"
   },
   {
-   "jamb_name": "Portuguese/English",
+      "jamb_name": "Portuguese/English",
    "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
    "ccmas_code": "FRE",
    "ccmas_discipline": "Arts",
-   "ccmas_name": "Modern European Languages B.A",
+      "ccmas_name": "Modern European Languages B.A (French)",
    "mapping_note": "portuguese ~ modern euro lang -> Modern European Languages B.A",
    "enrichment": null,
    "_m3": "arts_hum"
   },
   {
-   "jamb_name": "German",
+      "jamb_name": "German",
    "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
-   "ccmas_code": "GER",
+      "ccmas_code": "GER",
    "ccmas_discipline": "Arts",
-   "ccmas_name": "Modern European Languages B.A",
+      "ccmas_name": "Modern European Languages B.A (German)",
    "mapping_note": "german -> Modern European Languages B.A",
    "enrichment": null,
    "_m3": "arts_hum"
   },
   {
-   "jamb_name": "French and German/Russian",
+      "jamb_name": "French and German/Russian",
    "jamb_faculty": "Arts and Humanities",
    "mapping_type": "B_granular",
-   "ccmas_code": "FRE",
+      "ccmas_code": "FRE",
    "ccmas_discipline": "Arts",
-   "ccmas_name": "Modern European Languages B.A",
+      "ccmas_name": "Modern European Languages B.A (French)",
    "mapping_note": "french/german ~ modern euro lang -> Modern European Languages B.A",
    "enrichment": null,
    "_m3": "arts_hum"
@@ -3806,12 +3806,22 @@
    "jamb_name": "ANTHROPOLOGY",
    "jamb_faculty": null,
    "mapping_type": "C_reclassified",
-   "ccmas_code": "SOC",
-   "ccmas_discipline": "Social Sciences",
-   "ccmas_name": "Sociology",
-   "mapping_note": "anthropology ~ Sociology (host; also Type-D custom exists) -> Sociology",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "ccmas_name": "Biology",
+   "mapping_note": "The source row is ANTHROPOLOGY (BIOLOGICAL); it is reclassified to the CCMAS Biology host. General Anthropology is handled separately as a Type-D custom programme.",
    "enrichment": null,
    "_m3": "_nearest"
+  },
+  {
+   "jamb_name": "Anthropology",
+   "jamb_faculty": "Arts and Humanities",
+   "mapping_type": "D_custom",
+   "ccmas_code": null,
+   "ccmas_discipline": "Social Sciences (custom — no CCMAS standard)",
+   "ccmas_name": null,
+   "mapping_note": "General Anthropology has no standalone CCMAS programme; use the source-backed Nigerian anthropology enrichment while retaining the related CCMAS Sociology foundation.",
+   "enrichment": "enrichment/anthropology.json"
   },
   {
    "jamb_name": "ARCHEAOLOGY",
@@ -3834,6 +3844,36 @@
    "mapping_note": "vocational ~ technology education (weak) -> Technology Education",
    "enrichment": null,
    "_m3": "education"
+  },
+  {
+   "jamb_name": "LIBRARY SCIENCE",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LIS",
+   "ccmas_discipline": "Social Sciences",
+   "ccmas_name": "Library and Information Science",
+   "mapping_note": "The all-caps Social/Management Sciences source row is the non-education LIS variant; inherit the Social Sciences LIS curriculum.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "LIBRARY AND INFORMATION SCIENCE",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "LIS",
+   "ccmas_discipline": "Social Sciences",
+   "ccmas_name": "Library and Information Science",
+   "mapping_note": "The all-caps Social/Management Sciences source row matches the Social Sciences CCMAS LIS programme exactly; the title-case Education row remains a separate JAMB programme identity.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Meteorology",
+   "jamb_faculty": "Engineering/Environmental/Technology",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MET",
+   "ccmas_discipline": "Sciences",
+   "ccmas_name": "Meteorology",
+   "mapping_note": "The title-case Engineering/Environmental/Technology source row maps to the CCMAS Meteorology programme exactly; the all-caps Sciences row is retained as a separate source identity.",
+   "enrichment": null
   },
   {
    "jamb_name": "Technology Education",
@@ -4124,12 +4164,12 @@
    "_supp": true
   },
   {
-   "jamb_name": "Modern Language and Translation",
+      "jamb_name": "Modern Language and Translation",
    "jamb_faculty": "Arts",
    "mapping_type": "B_granular",
    "ccmas_code": "GER",
    "ccmas_discipline": "Arts",
-   "ccmas_name": "Modern European Languages B.A",
+      "ccmas_name": "Modern European Languages B.A (German)",
    "mapping_note": "supplement extraction -> Modern European Languages B.A",
    "_supp": true
   },

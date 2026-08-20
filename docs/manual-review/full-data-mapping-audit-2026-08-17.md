@@ -6,12 +6,12 @@ This report audits the complete current repository surface. It checks internal c
 
 - Structural errors: **0**
 - JAMB registry programmes: **420**
-- CCMAS bridge names: **416**
-- Active domain-map names: **416**
-- Active domain links: **3342**
-- Unique university/programme offerings: **7888**
-- Partial curriculum-scope rows requiring source interpretation review: **272**
-- External-source rows requiring source review: **5**
+- CCMAS bridge names: **420**
+- Active domain-map names: **420**
+- Active domain links: **3164**
+- Unique university/programme offerings: **9130**
+- Partial curriculum-scope rows requiring source interpretation review: **273**
+- External-source rows requiring source review: **6**
 
 ## What is automatically proven
 
@@ -24,10 +24,10 @@ This report audits the complete current repository surface. It checks internal c
 
 ## What still needs source judgment
 
-- **272** JAMB names use course-scoped/partial CCMAS inheritance. The link set is internally consistent, but the selected curriculum scope still needs subject-matter approval.
+- **273** JAMB names use course-scoped/partial CCMAS inheritance. The link set is internally consistent, but the selected curriculum scope still needs subject-matter approval.
 - **244** brochure rows contain blank or shared requirement fields. The UI must preserve that uncertainty and must not present shared text as a universal university requirement.
 - **5** subgroup skill findings remain in the existing taxonomy audit.
-- **0** stored link labels include an internal domain-key prefix; student-facing display must use the clean domain name.
+- **51** stored link labels include an internal domain-key prefix; student-facing display must use the clean domain name.
 - Duplicate university/programme pairs after the correction: **0**.
 - The four registry spelling/case variants are explicitly recorded in `jamb_name_aliases.json`; they are not four new unmapped programme concepts.
 - **8** non-active taxonomy domains are present in JSON but not in the current SQL taxonomy seed; they have no active JAMB edge and remain disabled until their user-type scope is approved.

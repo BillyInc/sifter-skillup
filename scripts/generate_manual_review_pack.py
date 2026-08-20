@@ -184,7 +184,7 @@ def structured_options() -> tuple[dict[str, list[dict[str, Any]]], dict[str, str
     item_pattern = re.compile(
         r"INSERT INTO programme_subject_option_items.*?SELECT\s+"
         r"'[^']+',\s*'([^']+)',\s*sc\.id,\s*'([^']+)'"
-        r"(?:,\s*'([^']+)',\s*(\d+))?.*?WHERE sc\.code\s*=\s*'([^']+)'",
+        r"(?:,\s*'([^']+)',\s*(\d+)(?:,\s*(NULL|'(?:[^']|'')*'))?)?.*?WHERE sc\.code\s*=\s*'([^']+)'",
         re.IGNORECASE,
     )
     by_option = {option["id"]: option for values in options.values() for option in values}
@@ -192,7 +192,7 @@ def structured_options() -> tuple[dict[str, list[dict[str, Any]]], dict[str, str
         match = item_pattern.search(line)
         if not match:
             continue
-        option_id, requirement_role, group_key, group_min, subject_code = match.groups()
+        option_id, requirement_role, group_key, group_min, distinct_group_key, subject_code = match.groups()
         if option_id not in by_option:
             continue
         by_option[option_id]["items"].append(
@@ -201,6 +201,11 @@ def structured_options() -> tuple[dict[str, list[dict[str, Any]]], dict[str, str
                 "requirement_role": requirement_role,
                 "group_key": group_key,
                 "min_from_group": int(group_min) if group_min else None,
+                "distinct_group_key": (
+                    distinct_group_key[1:-1].replace("''", "'")
+                    if distinct_group_key and distinct_group_key.upper() != "NULL"
+                    else None
+                ),
             }
         )
     return dict(options), option_to_programme
