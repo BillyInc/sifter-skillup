@@ -253,6 +253,9 @@ function ProgrammeBody({
     data.studentNames?.[0] ??
     data.name ??
     "Programme name unavailable";
+  const selectedUniversity = selectedSchoolId
+    ? jambSchools.find((school) => school.schoolId === selectedSchoolId)
+    : null;
   const requirementCards = useMemo(
     () => [
       {
@@ -299,7 +302,18 @@ function ProgrammeBody({
             name: school.studentName ?? school.jambName ?? studentProgrammeName,
             sourceName: school.jambName ?? studentProgrammeName,
           },
-          university: { id: school.schoolId, name: school.schoolName },
+          university: {
+            id: school.schoolId,
+            name: school.schoolName,
+            address: school.address ?? null,
+          },
+          universityRequirements: {
+            utmeSubjects: school.universityUtmeSubjects ?? null,
+            olevelRequirement: school.universityOlevelRequirement ?? null,
+            directEntry: school.universityDirectEntry ?? null,
+            note: school.universityNote ?? null,
+            requiresReview: Boolean(school.hasUniversityException),
+          },
           // A closed interface has no index signature, so it is not
           // structurally assignable to Record<string, unknown>. Widening
           // is sound here: every field is a known, serialisable property.
@@ -309,7 +323,11 @@ function ProgrammeBody({
       if (saved.status === "real") {
         invalidateGuidancePathCache();
         setSelectedSchoolId(school.schoolId);
-        setSchoolNotice("University selected for your guidance path.");
+        setSchoolNotice(
+          school.hasUniversityException
+            ? `${school.schoolName}: ${school.universityNote || "This university has additional or differently worded requirements. Check its current admission notice."}`
+            : "University selected for your guidance path.",
+        );
       } else {
         setSchoolNotice(saved.meta?.notice ?? "Create an account to save this guidance path.");
       }
@@ -457,6 +475,16 @@ function ProgrammeBody({
                         Programme name: {s.studentName ?? s.jambName}
                       </Text>
                     ) : null}
+                    {s.address ? (
+                      <Text style={[styles.schoolMeta, { color: colors.textRole.muted }]} numberOfLines={2}>
+                        {s.address}
+                      </Text>
+                    ) : null}
+                    {s.hasUniversityException ? (
+                      <Text style={[styles.schoolMeta, { color: colors.accentRole.action }]} numberOfLines={2}>
+                        University-specific admission note available
+                      </Text>
+                    ) : null}
                   </View>
                   <TouchableOpacity
                     onPress={() => void chooseUniversity(s)}
@@ -469,6 +497,15 @@ function ProgrammeBody({
                 </View>
               ))}
             </View>
+            {selectedUniversity?.hasUniversityException ? (
+              <View style={[styles.reqCard, { borderColor: colors.accentRole.action }]}>
+                <Text style={[styles.reqLabel, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>University-specific note</Text>
+                <Text style={[styles.reqText, { color: colors.textRole.secondary }]}>
+                  {selectedUniversity.universityNote || "This university has additional or differently worded requirements. Check its current admission notice."}
+                </Text>
+                <Text style={[styles.schoolMeta, { color: colors.textRole.muted }]}>This applies to this university only; it does not replace the national programme requirement.</Text>
+              </View>
+            ) : null}
             {schoolNotice ? <Text style={[styles.schoolsMore, { color: colors.textRole.muted }]}>{schoolNotice}</Text> : null}
             {jambSchools.length > 8 ? (
               <Text style={[styles.schoolsMore, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>

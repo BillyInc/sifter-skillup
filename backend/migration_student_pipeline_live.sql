@@ -174,9 +174,12 @@ CREATE TABLE IF NOT EXISTS skillup_dev.programme_subject_option_items (
                      CHECK (requirement_role IN ('required', 'one_of', 'recommended')),
     group_key       TEXT, -- one_of group, e.g. "science_elective"
     min_from_group  SMALLINT,
+    distinct_group_key TEXT, -- groups in this scope must use different subjects
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE(option_id, subject_id, requirement_role, group_key)
 );
+ALTER TABLE skillup_dev.programme_subject_option_items
+    ADD COLUMN IF NOT EXISTS distinct_group_key TEXT;
 CREATE INDEX IF NOT EXISTS idx_subject_option_items_option
     ON skillup_dev.programme_subject_option_items(option_id);
 CREATE INDEX IF NOT EXISTS idx_subject_option_items_subject

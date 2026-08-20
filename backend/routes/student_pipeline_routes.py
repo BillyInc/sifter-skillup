@@ -114,10 +114,17 @@ def _canonical_subject_name(value: str) -> str:
         "english": "English Language",
         "math": "Mathematics",
         "maths": "Mathematics",
+        "agric science": "Agricultural Science",
         "financial accounting": "Principles of Accounts",
         "accounting": "Principles of Accounts",
         "accounting/financial accounting": "Principles of Accounts",
         "book keeping": "Principles of Accounts",
+        "bookkeeping": "Principles of Accounts",
+        "general wood work": "Woodwork",
+        "general metal work": "Metalwork",
+        "building engineering drawing": "Technical Drawing",
+        "basic catering and food services": "Catering Craft Practice",
+        "fine arts": "Fine Art",
         "literature": "Literature in English",
         "lit in english": "Literature in English",
         "computer": "Computer Studies",
@@ -701,13 +708,22 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
         # search such as "Nursing" can lead to different names by university.
         try:
             jamb_ids = [item["jambProgrammeId"] for item in items if item.get("jambProgrammeId")]
-            offering_rows = (
-                svc.table("v_school_jamb_programmes")
-                .select("jamb_programme_id, school_name, jamb_name")
-                .in_("jamb_programme_id", jamb_ids)
-                .limit(2000)
-                .execute()
-            ).data or []
+            # A typeahead page can contain many JAMB IDs and a single database
+            # row limit would silently drop universities for the later IDs.
+            # Batch the IDs so every offering for every returned programme is
+            # loaded before the UI takes its three-name preview.
+            offering_rows: list[dict] = []
+            for start in range(0, len(jamb_ids), 5):
+                offering_rows.extend(
+                    (
+                        svc.table("v_school_jamb_programmes")
+                        .select("jamb_programme_id, school_name, jamb_name")
+                        .in_("jamb_programme_id", jamb_ids[start : start + 5])
+                        .limit(2000)
+                        .execute()
+                    ).data
+                    or []
+                )
             schools_by_jamb: dict[str, list[str]] = {}
             offerings_by_jamb: dict[str, list[dict[str, str]]] = {}
             for row in offering_rows:
@@ -730,7 +746,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 names = schools_by_jamb.get(jid, [])
                 item["schoolNames"] = names[:3]
                 item["schoolCount"] = len(names)
-                item["schoolOfferings"] = offerings_by_jamb.get(jid, [])[:12]
+                item["schoolOfferings"] = offerings_by_jamb.get(jid, [])
         except Exception as exc:  # noqa: BLE001
             log.warning("student programme school context skipped", error=str(exc))
         set_json(cache_key, items, SEARCH_TTL_SECONDS)
@@ -1043,6 +1059,7 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
                     **_skills_out(sk, full=False),
                 }
             )
+        items = _attach_school_details(items)
         set_json(cache_key, items, SEARCH_TTL_SECONDS if query_text else REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
@@ -1074,7 +1091,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
         )
         if target_year:
             query = query.eq("year", target_year)
-        res = query.order("school_name").limit(200).execute()
+        res = query.order("school_name").limit(2000).execute()
         # NOTE: per-school requirement columns on v_school_jamb_programmes
         # (utme_subjects / olevel_requirement / direct_entry) are 100% NULL —
         # programme-level requirements live in programme_subject_requirements
@@ -1087,7 +1104,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 .select("*")
                 .eq("jamb_programme_id", jamb_programme_id)
                 .order("school_name")
-                .limit(200)
+                .limit(2000)
                 .execute()
             )
             items = [
@@ -1108,8 +1125,8 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 }
                 for r in (offerings.data or [])
             ]
-            return ResponseModel(data=_fallback(items, "No admission rows found yet; showing schools offering the programme."))
-        return ResponseModel(data=_real(items))
+            return ResponseModel(data=_fallback(_attach_school_details(items), "No admission rows found yet; showing schools offering the programme."))
+        return ResponseModel(data=_real(_attach_school_details(items)))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb schools failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Schools and admission rows are temporarily unavailable."))
@@ -1136,15 +1153,261 @@ def _cutoff_out(r: dict) -> dict:
     }
 
 
+def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selected_norm: set[str]) -> dict:
+    """Evaluate one parsed university-scoped rule without changing national matching."""
+    if not item_rows and option.get("condition_text"):
+        # A condition-only local note (for example a waiver, exclusion, grade
+        # condition, or sitting rule) is intentionally not treated as passed
+        # by an empty matcher.  The exact source remains visible for manual
+        # confirmation, but it cannot manufacture university eligibility.
+        return {
+            "passes": False,
+            "matchedSubjects": [],
+            "missingSubjects": [str(option.get("condition_text"))],
+        }
+    required = []
+    grouped: dict[str, list[dict]] = {}
+    group_min: dict[str, int] = {}
+    group_distinct: dict[str, str] = {}
+    for row in item_rows:
+        catalog = row.get("subject_catalog") or {}
+        name = catalog.get("name") or ""
+        norm = _normalise_subject(name)
+        if row.get("requirement_role") == "required":
+            required.append({"name": name, "norm": norm})
+        elif row.get("group_key"):
+            key = str(row["group_key"])
+            grouped.setdefault(key, []).append({"name": name, "norm": norm})
+            group_min[key] = int(row.get("min_from_group") or 1)
+            if row.get("distinct_group_key"):
+                group_distinct[key] = str(row["distinct_group_key"])
+
+    missing = [row["name"] for row in required if row["norm"] and row["norm"] not in selected_norm]
+    distinct_scopes: dict[str, list[tuple[str, list[dict]]]] = {}
+    for key, names in grouped.items():
+        scope = group_distinct.get(key)
+        if scope:
+            distinct_scopes.setdefault(scope, []).append((key, names))
+            continue
+        count = sum(1 for row in names if row["norm"] in selected_norm)
+        if count < group_min.get(key, 1):
+            missing.append(
+                f"{group_min.get(key, 1) - count} from: "
+                + ", ".join(row["name"] for row in names if row["name"])
+            )
+    for scope_groups in distinct_scopes.values():
+        specs = [
+            (group_min.get(key, 1), {row["norm"] for row in names if row["norm"]})
+            for key, names in scope_groups
+        ]
+        matched_distinct = _max_distinct_group_matches(specs, selected_norm)
+        needed = sum(minimum for minimum, _codes in specs)
+        if matched_distinct < needed:
+            missing.append(
+                f"{needed - matched_distinct} distinct subject(s) from: "
+                + ", ".join(
+                    row["name"] for _key, names in scope_groups for row in names if row["name"]
+                )
+            )
+
+    minimum_required = int(option.get("min_required") or 0)
+    exam_type = str(option.get("exam_type") or "")
+    minimum_gap = max(0, minimum_required - len(selected_norm)) if exam_type == "olevel" else 0
+    if minimum_gap:
+        missing.append(f"{minimum_gap} more O-level subject(s)")
+    return {
+        "passes": not missing,
+        "matchedSubjects": list(dict.fromkeys(
+            [row["name"] for row in required if row["norm"] in selected_norm]
+            + [row["name"] for names in grouped.values() for row in names if row["norm"] in selected_norm]
+        )),
+        "missingSubjects": list(dict.fromkeys(missing)),
+    }
+
+
+def _attach_school_details(
+    items: list[dict],
+    utme_selected: set[str] | None = None,
+    olevel_selected: set[str] | None = None,
+) -> list[dict]:
+    """Attach address and school-scoped requirement notes to offerings.
+
+    National JAMB requirements identify the programme first. The
+    ``school_programmes`` row is then used for the selected university's own
+    note or exception; it does not rewrite the national rule or downstream
+    CCMAS/domain/role mapping.
+    """
+    school_ids = list(dict.fromkeys(str(i.get("schoolId")) for i in items if i.get("schoolId")))
+    if not school_ids:
+        return items
+    svc = _svc()
+    locations: dict[str, dict] = {}
+    try:
+        rows = (
+            svc.table("schools")
+            .select("id, address, city, state, country")
+            .in_("id", school_ids)
+            .execute()
+        ).data or []
+        locations = {str(r.get("id")): r for r in rows}
+    except Exception as exc:  # noqa: BLE001
+        log.debug("school location enrichment unavailable", error=str(exc))
+
+    overrides: dict[tuple[str, str], dict] = {}
+    try:
+        rows = (
+            svc.table("school_programmes")
+            .select("id, school_id, jamb_programme_id, utme_subjects, olevel_requirement, direct_entry, remarks")
+            .in_("school_id", school_ids)
+            .execute()
+        ).data or []
+        overrides = {
+            (str(r.get("school_id")), str(r.get("jamb_programme_id"))): r
+            for r in rows
+            if r.get("school_id") and r.get("jamb_programme_id")
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.debug("school-specific requirement enrichment unavailable", error=str(exc))
+
+    local_options_by_pair: dict[tuple[str, str], list[dict]] = {}
+    local_items_by_option: dict[str, list[dict]] = {}
+    try:
+        local_options = (
+            svc.table("school_programme_subject_options")
+            .select(
+                "id, exception_id, school_programme_id, school_id, jamb_programme_id, "
+                "exam_type, rule_scope, option_label, min_required, source_text, condition_text"
+            )
+            .in_("school_id", school_ids)
+            .execute()
+        ).data or []
+        for option in local_options:
+            key = (str(option.get("school_id")), str(option.get("jamb_programme_id")))
+            local_options_by_pair.setdefault(key, []).append(option)
+        option_ids = [row.get("id") for row in local_options if row.get("id")]
+        if option_ids:
+            local_items = (
+                svc.table("school_programme_subject_option_items")
+                .select(
+                    "option_id, requirement_role, group_key, min_from_group, distinct_group_key, "
+                    "subject_catalog(name, code)"
+                )
+                .in_("option_id", option_ids)
+                .execute()
+            ).data or []
+            for row in local_items:
+                local_items_by_option.setdefault(str(row.get("option_id")), []).append(row)
+    except Exception as exc:  # noqa: BLE001
+        # The raw exception table remains useful on a database that has not yet
+        # received the structured local-rule migration.
+        log.debug("structured university subject rules unavailable", error=str(exc))
+
+    exceptions_by_pair: dict[tuple[str, str], list[dict]] = {}
+    try:
+        exception_rows = (
+            svc.table("school_programme_requirement_exceptions")
+            .select(
+                "school_id, jamb_programme_id, exam_type, requirement_text, "
+                "source_file, source_label, parse_status"
+            )
+            .in_("school_id", school_ids)
+            .execute()
+        ).data or []
+        for row in exception_rows:
+            key = (str(row.get("school_id")), str(row.get("jamb_programme_id")))
+            exceptions_by_pair.setdefault(key, []).append(
+                {
+                    "examType": row.get("exam_type"),
+                    "text": row.get("requirement_text"),
+                    "sourceFile": row.get("source_file"),
+                    "sourceLabel": row.get("source_label"),
+                    "parseStatus": row.get("parse_status") or "needs_review",
+                }
+            )
+    except Exception as exc:  # noqa: BLE001
+        # Older databases may not have the evidence table yet. Keep the
+        # offering usable, but do not pretend that exception evidence was read.
+        log.debug("school-specific requirement evidence unavailable", error=str(exc))
+
+    for item in items:
+        sid = str(item.get("schoolId")) if item.get("schoolId") else ""
+        location = locations.get(sid) or {}
+        for key in ("address", "city", "state", "country"):
+            if location.get(key) is not None:
+                item[key] = location.get(key)
+        jid = str(item.get("jambProgrammeId")) if item.get("jambProgrammeId") else ""
+        override = overrides.get((sid, jid)) or {}
+        item["universityUtmeSubjects"] = override.get("utme_subjects")
+        item["universityOlevelRequirement"] = override.get("olevel_requirement")
+        item["universityDirectEntry"] = override.get("direct_entry")
+        item["universityNote"] = override.get("remarks")
+        exception_rows = exceptions_by_pair.get((sid, jid), [])
+        local_options = local_options_by_pair.get((sid, jid), [])
+        item["universityRequirementExceptions"] = exception_rows
+        local_status = "none"
+        if any(row.get("parseStatus") == "needs_review" for row in exception_rows):
+            local_status = "needs_confirmation"
+        elif local_options:
+            selected_by_exam = {"utme": utme_selected, "olevel": olevel_selected}
+            evaluated = []
+            for option in local_options:
+                selected = selected_by_exam.get(str(option.get("exam_type") or ""))
+                if selected is not None:
+                    evaluated.append((option, _evaluate_school_subject_option(
+                        option, local_items_by_option.get(str(option.get("id")), []), selected
+                    )))
+            if not evaluated:
+                local_status = "structured"
+            elif any(result[1]["passes"] and result[0].get("rule_scope") == "full" for result in evaluated):
+                local_status = "eligible_local_rule"
+            elif any(result[1]["passes"] for result in evaluated):
+                local_status = "local_condition_met"
+            elif any(option.get("rule_scope") == "full" for option, _result in evaluated):
+                local_status = "local_rule_gap"
+            else:
+                local_status = "local_condition_gap"
+        elif exception_rows:
+            local_status = "structured" if any(
+                row.get("parseStatus") == "parsed" for row in exception_rows
+            ) else "none"
+        item["universityExceptionStatus"] = local_status
+        item["universityEligibilityStatus"] = local_status
+        item["universityStructuredSubjectRules"] = [
+            {
+                "examType": option.get("exam_type"),
+                "scope": option.get("rule_scope"),
+                "text": option.get("source_text"),
+                "minimumRequired": option.get("min_required"),
+                "conditionText": option.get("condition_text"),
+            }
+            for option in local_options
+        ]
+        item["hasUniversityException"] = bool(
+            override.get("remarks")
+            or override.get("utme_subjects")
+            or override.get("olevel_requirement")
+            or override.get("direct_entry")
+            or exception_rows
+        )
+    return items
+
+
 @router.get("/programmes/by-subjects", response_model=ResponseModel)
 async def programmes_by_subjects(
     subjects: str = Query(""),
     olevel_subjects: str = Query(""),
     exam_type: str = Query("combined"),
     stream: Optional[str] = Query(None),
-    limit: int = Query(40),
+    # The selector must return every matching programme. The UI can paginate or
+    # progressively render the result list, but the API must not silently hide
+    # valid matches behind the old 40/80-item cap.
+    limit: int = Query(2000),
 ):
     exam = (exam_type or "combined").strip().lower()
+    if exam not in {"utme", "olevel", "combined"}:
+        return ResponseModel(
+            data=_real([], "Choose UTME subjects, O-level subjects, or both before matching programmes.")
+        )
     utme_selected = [_canonical_subject_name(s) for s in subjects.split(",") if s.strip()]
     olevel_selected = [_canonical_subject_name(s) for s in olevel_subjects.split(",") if s.strip()]
     if exam == "olevel" and not olevel_selected:
@@ -1188,14 +1451,14 @@ async def programmes_by_subjects(
         if exam == "olevel":
             structured = _match_structured_subject_options(
                 olevel_norm,
-                limit=min(limit, 80),
+                limit=min(limit, 2000),
                 exam_type="olevel",
                 require_full=True,
             )
         elif utme_norm and olevel_norm:
             utme_matches = _match_structured_subject_options(
                 utme_norm,
-                limit=200,
+                limit=2000,
                 exam_type="utme",
                 require_full=True,
             )
@@ -1230,19 +1493,23 @@ async def programmes_by_subjects(
                         "eligibilityStatus": "utme_match_olevel_unparsed",
                         "matchBasis": "combined",
                     })
-            structured = structured[: min(limit, 80)]
+            structured = structured[: min(limit, 2000)]
         else:
             structured = _match_structured_subject_options(
                 utme_norm,
-                limit=min(limit, 80),
+                limit=min(limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
         if structured:
-            return ResponseModel(data=_real(_attach_school_context(structured)))
-        fallback = _match_text_requirements(selected_norm, limit=min(limit, 80))
+            return ResponseModel(data=_real(_attach_school_context(structured, utme_norm, olevel_norm)))
+        fallback = _match_text_requirements(
+            selected_norm,
+            limit=min(limit, 2000),
+            exam_type=exam,
+        )
         notice = "Some requirements need review, so these are possible matches from the published requirement text. Confirm the programme details before deciding."
-        return ResponseModel(data=_fallback(_attach_school_context(fallback), notice))
+        return ResponseModel(data=_fallback(_attach_school_context(fallback, utme_norm, olevel_norm), notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Subject-to-programme matching is temporarily unavailable."))
@@ -1268,7 +1535,7 @@ def _match_structured_subject_options(
     option_ids = [r["id"] for r in option_rows]
     item_rows = (
         svc.table("programme_subject_option_items")
-        .select("option_id, requirement_role, group_key, min_from_group, subject_catalog(name, code)")
+        .select("option_id, requirement_role, group_key, min_from_group, distinct_group_key, subject_catalog(name, code)")
         .in_("option_id", option_ids[:2000])
         .execute()
     ).data or []
@@ -1291,10 +1558,17 @@ def _match_structured_subject_options(
         ]
         required = [s for s in required if s["norm"]]
         missing_required = [s["name"] for s in required if s["norm"] not in selected_norm]
-        if require_full and missing_required:
+        min_required = int(opt.get("min_required") or 0)
+        # UTME options describe the named JAMB combination itself (the UI also
+        # gates the student's four-subject selection, including English). O-level
+        # options additionally carry the total credit-pass minimum, so that
+        # minimum must be enforced here rather than inferred from named items.
+        minimum_gap = max(0, min_required - len(selected_norm)) if exam_type == "olevel" else 0
+        if require_full and (missing_required or minimum_gap):
             continue
         grouped: dict[str, list[dict]] = {}
         group_min: dict[str, int] = {}
+        group_distinct: dict[str, str] = {}
         for i in items:
             if i.get("requirement_role") != "one_of" or not i.get("group_key"):
                 continue
@@ -1305,9 +1579,16 @@ def _match_structured_subject_options(
                 "norm": _normalise_subject(name),
             })
             group_min[key] = int(i.get("min_from_group") or 1)
+            if i.get("distinct_group_key"):
+                group_distinct[key] = str(i["distinct_group_key"])
         failed_group = False
         missing_groups: list[str] = []
+        distinct_scopes: dict[str, list[tuple[str, list[dict]]]] = {}
         for key, names in grouped.items():
+            scope = group_distinct.get(key)
+            if scope:
+                distinct_scopes.setdefault(scope, []).append((key, names))
+                continue
             count = len([n for n in names if n["norm"] in selected_norm])
             if count < group_min.get(key, 1):
                 needed = group_min.get(key, 1) - count
@@ -1316,6 +1597,29 @@ def _match_structured_subject_options(
                 if require_full:
                     failed_group = True
                     break
+        if not failed_group:
+            for scope_groups in distinct_scopes.values():
+                specs = [
+                    (
+                        group_min.get(key, 1),
+                        {n["norm"] for n in names if n["norm"]},
+                    )
+                    for key, names in scope_groups
+                ]
+                count = _max_distinct_group_matches(specs, selected_norm)
+                needed_total = sum(minimum for minimum, _codes in specs)
+                if count < needed_total:
+                    needed = needed_total - count
+                    options_text = ", ".join(
+                        n["name"]
+                        for _key, names in scope_groups
+                        for n in names
+                        if n["name"]
+                    )
+                    missing_groups.append(f"{needed} distinct subject{'s' if needed != 1 else ''} from: {options_text}")
+                    if require_full:
+                        failed_group = True
+                        break
         if failed_group:
             continue
         # Matched = the option's required subjects the student actually selected
@@ -1327,6 +1631,10 @@ def _match_structured_subject_options(
         matched_subjects = list(dict.fromkeys(matched_subjects))
         matched_count = len(matched_subjects)
         missing_subjects = list(dict.fromkeys([*missing_required, *missing_groups]))
+        if minimum_gap:
+            missing_subjects.append(
+                f"{minimum_gap} more {exam_type.upper()} subject{'s' if minimum_gap != 1 else ''}"
+            )
         if not require_full and matched_count == 0:
             continue
         entry = scored.get(opt["jamb_programme_id"])
@@ -1336,6 +1644,8 @@ def _match_structured_subject_options(
                 "matchedSubjectCount": matched_count,
                 "matchedSubjects": matched_subjects,
                 "missingSubjects": missing_subjects,
+                "minimumRequired": min_required,
+                "minimumGap": minimum_gap,
                 "requirementText": opt.get("source_text"),
                 "matchBasis": exam_type,
             }
@@ -1351,7 +1661,47 @@ def _match_structured_subject_options(
     return out[:limit]
 
 
-def _match_text_requirements(selected_norm: set[str], limit: int) -> list[dict]:
+def _max_distinct_group_matches(
+    groups: list[tuple[int, set[str]]],
+    selected_norm: set[str],
+) -> int:
+    """Maximum distinct subject assignment across related one-of groups.
+
+    A brochure can require, for example, two subjects from a broad category
+    and one additional subject from a narrower category.  Counting each group
+    independently lets one selected subject satisfy both groups.  This small
+    bipartite matching calculation keeps the groups exact while remaining
+    cheap for the subject picker.
+    """
+    slots: list[set[str]] = []
+    for minimum, codes in groups:
+        candidates = set(codes) & selected_norm
+        slots.extend([candidates] * max(0, int(minimum)))
+    matched: dict[str, int] = {}
+
+    def augment(slot_index: int, visited: set[str]) -> bool:
+        for subject in slots[slot_index]:
+            if subject in visited:
+                continue
+            visited.add(subject)
+            previous = matched.get(subject)
+            if previous is None or augment(previous, visited):
+                matched[subject] = slot_index
+                return True
+        return False
+
+    total = 0
+    for slot_index in range(len(slots)):
+        if augment(slot_index, set()):
+            total += 1
+    return total
+
+
+def _match_text_requirements(
+    selected_norm: set[str],
+    limit: int,
+    exam_type: str = "combined",
+) -> list[dict]:
     svc = _svc()
     rows = (
         svc.table("programme_subject_requirements")
@@ -1361,7 +1711,12 @@ def _match_text_requirements(selected_norm: set[str], limit: int) -> list[dict]:
     ).data or []
     scored: dict[str, dict] = {}
     for row in rows:
-        text = f"{row.get('utme_subjects') or ''} {row.get('olevel_requirement') or ''}"
+        if exam_type == "utme":
+            text = row.get("utme_subjects") or ""
+        elif exam_type == "olevel":
+            text = row.get("olevel_requirement") or ""
+        else:
+            text = f"{row.get('utme_subjects') or ''} {row.get('olevel_requirement') or ''}"
         norm_text = _normalise_subject(text)
         hits = [s for s in selected_norm if s and s in norm_text]
         if not hits:
@@ -1397,27 +1752,54 @@ def _jamb_details_for_ids(ids: list[str]) -> dict[str, dict]:
     return {r["jamb_programme_id"]: _jamb_detail_out(r) for r in rows}
 
 
-def _attach_school_context(items: list[dict]) -> list[dict]:
-    """Attach bounded university offerings to subject-match rows.
+def _attach_school_context(
+    items: list[dict],
+    utme_selected: set[str] | None = None,
+    olevel_selected: set[str] | None = None,
+) -> list[dict]:
+    """Attach every university offering to subject-match rows.
 
     Subject matching produces a national JAMB-programme result. That is not a
     university admission decision, but hiding the offering list until after a
-    programme is opened makes the result difficult to evaluate. Keep the
-    response bounded and show the actual offering names; the user still picks a
-    specific university before guidance is finalized.
+    programme is opened makes the result difficult to evaluate. Return the
+    actual offering names; the frontend may preview them, while the user still
+    picks a specific university before guidance is finalized.
     """
     ids = [item.get("jambProgrammeId") for item in items if item.get("jambProgrammeId")]
     if not ids:
         return items
     try:
         svc = _svc()
-        rows = (
-            svc.table("v_school_jamb_programmes")
-            .select("school_id, school_name, institution_type, jamb_programme_id, jamb_name")
-            .in_("jamb_programme_id", list(dict.fromkeys(ids)))
-            .limit(2000)
-            .execute()
-        ).data or []
+        # A broad subject selection can match many programmes. Query small
+        # programme-ID batches so the database row limit cannot truncate the
+        # university offerings for the tail of the result set.
+        rows: list[dict] = []
+        unique_ids = list(dict.fromkeys(ids))
+        for start in range(0, len(unique_ids), 5):
+            rows.extend(
+                (
+                    svc.table("v_school_jamb_programmes")
+                    .select("school_id, school_name, institution_type, jamb_programme_id, jamb_name")
+                    .in_("jamb_programme_id", unique_ids[start : start + 5])
+                    .limit(2000)
+                    .execute()
+                ).data
+                or []
+            )
+        school_detail_rows = _attach_school_details([
+            {
+                "schoolId": row.get("school_id"),
+                "schoolName": row.get("school_name"),
+                "institutionType": row.get("institution_type"),
+                "jambProgrammeId": row.get("jamb_programme_id"),
+                "jambName": row.get("jamb_name"),
+            }
+            for row in rows
+        ], utme_selected, olevel_selected)
+        school_details = {
+            (str(row.get("schoolId")), str(row.get("jambProgrammeId"))): row
+            for row in school_detail_rows
+        }
         school_ids = list({row.get("school_id") for row in rows if row.get("school_id")})
         locations: dict[str, dict] = {}
         if school_ids:
@@ -1449,12 +1831,27 @@ def _attach_school_context(items: list[dict]) -> list[dict]:
                 "state": location.get("state"),
                 "country": location.get("country"),
             }
+            school_detail = school_details.get((str(row.get("school_id")), str(jid))) or {}
+            offering.update({
+                "universityUtmeSubjects": school_detail.get("universityUtmeSubjects"),
+                "universityOlevelRequirement": school_detail.get("universityOlevelRequirement"),
+                "universityDirectEntry": school_detail.get("universityDirectEntry"),
+                "universityNote": school_detail.get("universityNote"),
+                "hasUniversityException": school_detail.get("hasUniversityException", False),
+                "universityExceptionStatus": school_detail.get("universityExceptionStatus", "none"),
+                "universityEligibilityStatus": school_detail.get("universityEligibilityStatus", "none"),
+                "universityRequirementExceptions": school_detail.get("universityRequirementExceptions", []),
+                "universityStructuredSubjectRules": school_detail.get("universityStructuredSubjectRules", []),
+            })
             existing = by_jamb.setdefault(jid, [])
             if offering not in existing:
                 existing.append(offering)
         for item in items:
             offerings = by_jamb.get(item.get("jambProgrammeId"), [])
-            item["schoolOfferings"] = offerings[:12]
+            # Keep all offerings in the payload. The frontend may render a
+            # short preview, but the API must not make the remaining
+            # universities undiscoverable.
+            item["schoolOfferings"] = offerings
             item["schoolNames"] = list(dict.fromkeys(row["schoolName"] for row in offerings))[:3]
             item["schoolCount"] = len(offerings)
         return items

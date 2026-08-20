@@ -1,0 +1,394 @@
+# Programme-domain quarantined-link audit — 2026-08-19
+
+This is a row-by-row audit of every link retained under `unverified_links`. The original scorer ranking is not treated as curriculum proof.
+
+- Quarantined links checked: **375**
+- Restore candidates: **0**
+- Retained in quarantine: **375**
+
+## Decision rule
+
+A link can only be restored when at least two CCMAS courses contain source-backed anchors for the domain and the programme has no unresolved source blocker. A single generic phrase is retained for audit but is not promoted to active guidance.
+
+## Anchor counts
+
+- `0` course anchor(s): **362**
+- `1` course anchor(s): **13**
+
+## Rows
+
+- `Administration and Management::Accounting` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Accounting` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D015 Accounting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D035 Logistics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D053 Hospitality` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Aviation Management` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Business Administration` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Business Administration` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Business Information Technology` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Co-operative and Rural Development` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Co-operative and Rural Development` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D015 Accounting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D061 Insurance` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Employment and Human Resource Management` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D015 Accounting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Entrepreneurship` → `D085 Retail Sales, Shop Operations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Finance / Banking and Finance` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Finance / Banking and Finance` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Hospitality and Tourism Management` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Hospitality and Tourism Management` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Hospitality and Tourism Management` → `D082 Customer Service, Contact Centre` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Hospitality and Tourism Management` → `D092 Culinary Arts, Catering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Hospitality and Tourism Management` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Information Resource Management` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Information Resource Management` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Information Resource Management` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Information Resource Management` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Insurance` → `D012 FinTech Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Insurance` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Insurance` → `D051 Real Estate` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Insurance` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Local Government and Development Studies` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Local Government and Development Studies` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Logistics and Supply Chain Management` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Logistics and Supply Chain Management` → `D085 Retail Sales, Shop Operations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Logistics and Supply Chain Management` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Marketing` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Marketing` → `D042 Media Production` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Marketing` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Marketing` → `D085 Retail Sales, Shop Operations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Office and Information Management` → `D012 FinTech Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Office and Information Management` → `D015 Accounting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Office and Information Management` → `D082 Customer Service, Contact Centre` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Procurement Management` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Procurement Management` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Procurement Management` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Procurement Management` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Procurement Management` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D011 Quantitative Finance` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D061 Insurance` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Project Management` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D012 FinTech Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D061 Insurance` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D149 Diplomacy, International Relations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Public Administration` → `D158 Corporate Finance, Investment Banking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Securities and Investments Management` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Securities and Investments Management` → `D061 Insurance` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Securities and Investments Management` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Taxation` → `D013 Investment Analysis` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Taxation` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Taxation` → `D062 Trading` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Taxation` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Taxation` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: ACC 102 Financial Accounting II [financial statements].
+- `Administration and Management::Transport Management` → `D012 FinTech Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Transport Management` → `D091 Driving Instruction` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Administration and Management::Transport Management` → `D164 Urban Mobility, Smart City Systems` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Agribusiness` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Agribusiness` → `D034 Supply Chain Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Agricultural Economics` → `D034 Supply Chain Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Agricultural Extension` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Animal Science` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Animal Science` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::B.Sc./B.Tech Food Science and Technology` → `D092 Culinary Arts, Catering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Family and Consumer Sciences` → `D092 Culinary Arts, Catering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Fisheries and Aquaculture` → `D020 Environmental Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Fisheries and Aquaculture` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Fisheries and Aquaculture` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Forest Resources and Wildlife Management` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Forest Resources and Wildlife Management` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Agricultural Science::Horticulture and Landscape Management` → `D021 Architecture` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Audiology` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Audiology` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Audiology` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Audiology` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Audiology` → `D126 Complementary, Alternative` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Complementary and Alternative Medicine` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Complementary and Alternative Medicine` → `D027 Biomedical` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Complementary and Alternative Medicine` → `D122 Medical Laboratory Technology` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D098 Precision Engineering, Toolmaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D103 Jewellery Making, Goldsmithing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D104 Pottery, Ceramics, Glass` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Technology` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Therapy` → `D123 Radiography, Medical Imaging` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Dental Therapy` → `D126 Complementary, Alternative` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Environmental Health Science` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Environmental Health Science` → `D048 Food Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Environmental Health Science` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Health Care Administration and Hospital Management` → `D015 Accounting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Health Care Administration and Hospital Management` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Health Care Administration and Hospital Management` → `D125 Medical Secretarial` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Human Nutrition and Dietetics` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Human Nutrition and Dietetics` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Information Technology and Health Informatics` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Information Technology and Health Informatics` → `D138 Biomedical Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Information Technology and Health Informatics` → `D143 Forensic Science, Digital Forensics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Medical Laboratory Science` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Medical Laboratory Science` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Medical Laboratory Science` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Medical Laboratory Science` → `D145 Neuroscience, Cognitive Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Nursing Sciences` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Nursing Sciences` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Nursing Sciences` → `D125 Medical Secretarial` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Occupational Therapy` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Occupational Therapy` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Occupational Therapy` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Occupational Therapy` → `D154 Exercise Science, Sports Therapy` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: OCT 314 Pharmacology for Occupational Therapy [kinetics].
+- `Allied Health Sciences::Optometry` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Pharmacology` → `D064 Psychology, Counselling` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Pharmacology` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D064 Psychology, Counselling` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D071 Sports Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D123 Radiography, Medical Imaging` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D126 Complementary, Alternative` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Physiotherapy` → `D154 Exercise Science, Sports Therapy` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D106 Garment Making, Tailoring, Dressmaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D123 Radiography, Medical Imaging` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D154 Exercise Science, Sports Therapy` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Prosthetics and Orthotics` → `D155 Nanotechnology, Advanced Materials` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Public Health` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Public Health` → `D124 Community Health Extension` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Public Health` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Radiography` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Speech-Language Therapy` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Speech-Language Therapy` → `D064 Psychology, Counselling` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Allied Health Sciences::Speech-Language Therapy` → `D145 Neuroscience, Cognitive Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architectural Technology` → `D019 Renewable Energy Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architectural Technology` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architectural Technology` → `D093 Electrical Installation, Wiring` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architectural Technology` → `D099 Masonry, Bricklaying, Tiling, Plastering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architectural Technology` → `D146 Building Services Engineering — Mechanical, Electrical` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architecture` → `D018 Civil` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architecture` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Architecture` → `D080 Interior Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D017 Mechanical` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D099 Masonry, Bricklaying, Tiling, Plastering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D104 Pottery, Ceramics, Glass` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Furniture Design` → `D133 Luxury` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Interior Architecture and Design` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Interior Architecture and Design` → `D146 Building Services Engineering — Mechanical, Electrical` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Landscape Architecture` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Landscape Architecture` → `D072 Geospatial Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Architecture::Naval Architecture` → `D146 Building Services Engineering — Mechanical, Electrical` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::African Languages and Literature Yoruba` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::African Languages and Literature Yoruba` → `D152 Museum Curation, Cultural Heritage, Archives` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Arabic` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Arabic` → `D081 Office Administration, Secretarial` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Archaeology` → `D043 Journalism` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Christian Religious Studies` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Efik` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::English Language and Literature` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::English Language and Literature` → `D081 Office Administration, Secretarial` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Film Production` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Film Production` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Film Production` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Film Production` → `D139 Game Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Folklore Studies` → `D043 Journalism` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Folklore Studies` → `D065 Translation, Interpretation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Folklore Studies` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Folklore Studies` → `D139 Game Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Folklore Studies` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Hausa` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Hausa` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Hausa` → `D081 Office Administration, Secretarial` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Ibibio` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Igbo` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Igbo` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Islamic Studies` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Modern European Languages B.A (French)` → `D149 Diplomacy, International Relations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Modern European Languages B.A (German)` → `D149 Diplomacy, International Relations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Music` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Music` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Arts::Music` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Basic Medical Sciences::Human Anatomy` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Basic Medical Sciences::Physiology` → `D023 Medicine` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::ADVERTISING — P12, P13, P14` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14` → `D045 Public Administration` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::FILM & MULTIMEDIA — P12, P13, P14` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::FILM & MULTIMEDIA — P12, P13, P14` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::JOURNALISM AND MEDIA STUDIES — P12, P13, P14` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::MASS COMMUNICATION — P12, P13, P14` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::PUBLIC RELATIONS — P12, P13, P14` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14` → `D031 Sales` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14` → `D044 Graphic Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14` → `D045 Public Administration` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Computer Science` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Computer Science` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Cybersecurity` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Cybersecurity` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Cybersecurity` → `D143 Forensic Science, Digital Forensics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Information Technology` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Information and Communication Technology` → `D002 Data Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Information and Communication Technology` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Information and Communication Technology` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Computing::Software Engineering` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Agricultural Education` → `D119 Livestock, Poultry, Dairy` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Agricultural Education` → `D121 Forestry, Wildlife Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Business Education` → `D084 Payroll, Bookkeeping` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Computer Science` → `D002 Data Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Computer Science` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Computer Science` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Computer Science` → `D040 Vocational` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Creative Arts Education` → `D008 Telecommunications` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Early Childhood Education` → `D127 Early Childhood Education, Nursery` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: EEC 310 Counselling and in early childhood and [social development].
+- `Education::Educational Technology` → `D058 EdTech` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: EDU 301 Teaching Practice I [learning difficulties].
+- `Education::Home Economics` → `D048 Food Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Home Economics` → `D092 Culinary Arts, Catering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Home Economics` → `D106 Garment Making, Tailoring, Dressmaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Human Kinetics/Physical Education` → `D071 Sports Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Music` → `D070 Performing Arts & Entertainment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Physics` → `D141 Quantum Computing, Quantum Information` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Political Science` → `D077 Security Services` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Special Needs Education` → `D127 Early Childhood Education, Nursery` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Sustainable Development Studies` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Education::Technology Education` → `D099 Masonry, Bricklaying, Tiling, Plastering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::CIVIL ENGINEERING` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::COMPUTER ENGINEERING` → `D004 Cybersecurity` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::ELECTRICAL AND ELECTRONIC ENGINEERING` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::ELECTRICAL AND ELECTRONIC ENGINEERING` → `D094 Electronics Servicing, ICT Equipment` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::FOOD ENGINEERING` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::INDUSTRIAL AND PRODUCTION ENGINEERING` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::MECHATRONICS ENGINEERING` → `D002 Data Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::MECHATRONICS ENGINEERING` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::MINING ENGINEERING` → `D020 Environmental Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::NATURAL GAS ENGINEERING` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::NUCLEAR ENGINEERING` → `D135 Nuclear Engineering, Radiation Science` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: GET 204 Students Workshop Practice [metrology].
+- `Engineering::PETROCHEMICAL ENGINEERING` → `D020 Environmental Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::RAILWAY ENGINEERING` → `D032 Project Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::STRUCTURAL ENGINEERING` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::TELECOMMUNICATIONS ENGINEERING` → `D006 Internet of Things` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Engineering::WOOD PRODUCTS ENGINEERING` → `D102 Carpentry, Joinery, Wood Technology` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: GET 399 SIWES III: Students Work 4 C 12 Weeks Experience Scheme [furniture making].
+- `Environmental Sciences::Building` → `D099 Masonry, Bricklaying, Tiling, Plastering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Clothing and Textile Design` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Clothing and Textile Design` → `D105 Handicraft, Basketry, Textile Craft` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: CLT 205 Principles and Techniques of Textile Design [textile techniques].
+- `Environmental Sciences::Clothing and Textile Design` → `D106 Garment Making, Tailoring, Dressmaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Clothing and Textile Design` → `D160 Fashion Styling, Image Consulting` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::ENVIRONMENTAL STANDARDS` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Environmental Management` → `D045 Public Administration` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Estate management` → `D021 Architecture` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Estate management` → `D052 Construction Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fashion design` → `D105 Handicraft, Basketry, Textile Craft` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fashion design` → `D106 Garment Making, Tailoring, Dressmaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fashion design` → `D107 Leather Technology, Shoemaking` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fashion design` → `D160 Fashion Styling, Image Consulting` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: FAD 303 Fashion Modelling [hair].
+- `Environmental Sciences::Fine and Applied Arts` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fine and Applied Arts` → `D104 Pottery, Ceramics, Glass` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fine and Applied Arts` → `D152 Museum Curation, Cultural Heritage, Archives` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Fine and Applied Arts` → `D167 XR & Immersive Technology` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Industrial Design` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Industrial Design` → `D080 Interior Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Industrial Design` → `D104 Pottery, Ceramics, Glass` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Industrial Design` → `D167 XR & Immersive Technology` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Quantity Surveying` → `D052 Construction Management` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: QTS 308 Introduction to Construction Management [construction management].
+- `Environmental Sciences::Surveying and Geoinformatics` → `D021 Architecture` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Urban and Regional Planning` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Urban and Regional Planning` → `D051 Real Estate` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Environmental Sciences::Urban and Regional Planning` → `D164 Urban Mobility, Smart City Systems` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: URP 401 Planning Studio V [urban planning].
+- `Law::Common and Islamic Law` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Law::Common and Islamic Law` → `D149 Diplomacy, International Relations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Law::Common and Islamic Law` → `D162 Immigration Law, Asylum` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Law::Law` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Law::Law` → `D149 Diplomacy, International Relations` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Law::Law` → `D162 Immigration Law, Asylum` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Medicine and Dentistry::Bachelor of Dental Surgery (BDS/BChD)` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Medicine and Dentistry::Bachelor of Dental Surgery (BDS/BChD)` → `D123 Radiography, Medical Imaging` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Medicine and Dentistry::Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Bachelor of Pharmacy` → `D068 Allied Health` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Bachelor of Pharmacy` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Bachelor of Pharmacy` → `D145 Neuroscience, Cognitive Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Doctor of Pharmacy` → `D024 Nursing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Doctor of Pharmacy` → `D068 Allied Health` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Pharmacy and Pharmaceutical Sciences::Doctor of Pharmacy` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biology` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biology` → `D073 Library, Archive` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biology` → `D090 Animal Care, Grooming` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biotechnology` → `D055 Chemical Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biotechnology` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Biotechnology` → `D090 Animal Care, Grooming` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Brewing Science and Technology` → `D026 Public Health` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Brewing Science and Technology` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Brewing Science and Technology` → `D092 Culinary Arts, Catering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Chemistry` → `D135 Nuclear Engineering, Radiation Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Forensic Science` → `D129 Military, Defence` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Forensic Science` → `D143 Forensic Science, Digital Forensics` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: FRS 206 Forensic Microbiology [biology].
+- `Sciences::Industrial Physics` → `D141 Quantum Computing, Quantum Information` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Maritime Science` → `D035 Logistics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Mathematics` → `D002 Data Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Medical Physics` → `D135 Nuclear Engineering, Radiation Science` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: MPH 525 Applications Software and Programming for Medical Physics [radiation protection].
+- `Sciences::Medical Physics` → `D137 Medical Physics, Radiation Therapy` — `retain_quarantined`; anchors: 1; one incidental or ambiguous course anchor is insufficient for restoration. Evidence: MPH 525 Applications Software and Programming for Medical Physics [radiation protection].
+- `Sciences::Medical Physics` → `D141 Quantum Computing, Quantum Information` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Meteorology` → `D020 Environmental Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Microbiology` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Physics` → `D135 Nuclear Engineering, Radiation Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Physics` → `D141 Quantum Computing, Quantum Information` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Physics with Electronics` → `D141 Quantum Computing, Quantum Information` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Statistics` → `D001 Software Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Statistics` → `D012 FinTech Engineering` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Zoology` → `D026 Public Health` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Zoology` → `D066 Veterinary Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Sciences::Zoology` → `D090 Animal Care, Grooming` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Criminology and Security Studies` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Criminology and Security Studies` → `D143 Forensic Science, Digital Forensics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Demography and Social Statistics` → `D151 Criminology, Criminal Justice` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Development Studies` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Development Studies` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Economics` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Economics` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::International Relations` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::International Relations` → `D151 Criminology, Criminal Justice` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::International Relations` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::International Relations` → `D162 Immigration Law, Asylum` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Peace Studies and Conflict Resolution` → `D028 General Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Peace Studies and Conflict Resolution` → `D151 Criminology, Criminal Justice` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Peace Studies and Conflict Resolution` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Petroleum Economics and Policy Studies` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Petroleum Economics and Policy Studies` → `D060 Banking, Credit` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Petroleum Economics and Policy Studies` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Political Science` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Political Science` → `D077 Security Services` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Political Science` → `D162 Immigration Law, Asylum` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Politics, Philosophy and Economics (PPE)` → `D028 General Management` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Politics, Philosophy and Economics (PPE)` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Politics, Philosophy and Economics (PPE)` → `D151 Criminology, Criminal Justice` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Politics, Philosophy and Economics (PPE)` → `D157 Tax Advisory, Transfer Pricing` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Psychology` → `D007 UI/UX Design` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Psychology` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Social Standards` → `D161 Humanitarian Aid, Emergency Response` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Social Work` → `D038 Compliance, Regulation` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Social Work` → `D143 Forensic Science, Digital Forensics` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Social Work` → `D162 Immigration Law, Asylum` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Sociology` → `D045 Public Administration` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Social Sciences::Sociology` → `D073 Library, Archive` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Veterinary Medicine::Veterinary Medicine` → `D074 Occupational Health, Safety` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Veterinary Medicine::Veterinary Medicine` → `D123 Radiography, Medical Imaging` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.
+- `Veterinary Medicine::Veterinary Medicine` → `D145 Neuroscience, Cognitive Science` — `retain_quarantined`; anchors: 0; no source-backed CCMAS course anchor. Evidence: none.

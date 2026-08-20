@@ -40,6 +40,7 @@ REPORT_MD = ROOT / "_audit" / "ccmas_jamb_inheritance_audit_2026-08-17.md"
 CANONICAL_JSON = ROOT / "_audit" / "jamb_ccmas_inheritance_canonical_2026-08-17.json"
 BROCHURE_AUDIT_JSON = ROOT / "_audit" / "jamb_brochure_source_audit_2026-08-17.json"
 CURRICULUM_SCOPES_JSON = ROOT / "_audit" / "jamb_curriculum_scopes_2026-08-17.json"
+DOMAIN_EVIDENCE_JSON = ROOT / "_audit" / "programme_domain_evidence_2026-08-17.json"
 
 FACULTY_DISC = {
     "Social/Management Sciences": "Social Sciences",
@@ -94,8 +95,16 @@ def resolve_with_method(
     discipline = row.get("ccmas_discipline")
     name = row.get("ccmas_name")
     code = row.get("ccmas_code")
-    if discipline and name and (discipline, name) in by_name:
-        return (discipline, name), "explicit_discipline_and_name"
+    named_key = (discipline, name) if discipline and name else None
+    named_code_candidates = by_code.get((discipline, code), []) if named_key and code else []
+    # A displayed CCMAS programme name is not unique in Arts: French and
+    # German both use "Modern European Languages B.A". When a bridge row also
+    # supplies a source code, the code must disambiguate the curriculum before
+    # the name lookup is considered.
+    if named_key and len(named_code_candidates) == 1:
+        return named_code_candidates[0], "explicit_discipline_name_and_code"
+    if named_key and named_key in by_name:
+        return named_key, "explicit_discipline_and_name"
     candidates = by_code.get((discipline, code), [])
     if len(candidates) == 1:
         return candidates[0], "discipline_and_unique_code"
@@ -135,7 +144,7 @@ def component_rows(mapping: list[dict], by_name, by_code, secondary):
         if row.get("mapping_type") == "D_custom" and external_key in by_name:
             components.append({"discipline": "__custom__", "name": name, "role": "primary", "resolution_method": "external_enrichment"})
         elif primary:
-            components.append({"discipline": primary[0], "name": primary[1], "role": "primary", "resolution_method": primary_method})
+            components.append({"discipline": primary[0], "name": primary[1], "code": row.get("ccmas_code"), "role": "primary", "resolution_method": primary_method})
         elif row.get("ccmas_code"):
             unresolved.append({"jamb_name": name, "role": "primary", "mapping": row})
         for discipline, code in secondary.get(name, []):
@@ -147,7 +156,7 @@ def component_rows(mapping: list[dict], by_name, by_code, secondary):
                 continue
             candidates = by_code.get((discipline, code), [])
             if len(candidates) == 1:
-                components.append({"discipline": candidates[0][0], "name": candidates[0][1], "role": "supporting", "resolution_method": "discipline_and_unique_code"})
+                components.append({"discipline": candidates[0][0], "name": candidates[0][1], "code": code, "role": "supporting", "resolution_method": "discipline_and_unique_code"})
             else:
                 unresolved.append({"jamb_name": name, "role": "supporting", "discipline": discipline, "code": code})
         result[name] = components
@@ -160,7 +169,7 @@ def classify(row: dict, components: list[dict]) -> str:
     if len(components) > 1:
         return "combined_ccmas_curriculum"
     if row.get("mapping_type") == "B_granular":
-        return "partial_curriculum_scope_review_required"
+        return "partial_curriculum_scope"
     return "single_ccmas_full_curriculum"
 
 
@@ -201,6 +210,7 @@ def canonical_inheritance_rows(
     programme_domains: dict,
     jamb_domains: dict,
     curriculum_scopes: dict[str, dict] | None = None,
+    domain_evidence: dict[str, dict] | None = None,
 ) -> list[dict]:
     """Build a reviewable, non-production inheritance contract.
 
@@ -218,7 +228,7 @@ def canonical_inheritance_rows(
         candidate_links = list(union_links(components, programme_domains).values())
         scoped_links = scope.get("domain_links") or []
         if scoped_links and (
-            category in {"partial_curriculum_scope_review_required", "external_sources_required"}
+            category in {"partial_curriculum_scope", "external_sources_required"}
             or any(ref.startswith("__custom__::") for ref in component_refs)
         ):
             candidate_links = scoped_links
@@ -226,14 +236,24 @@ def canonical_inheritance_rows(
         for component in components:
             ref = f"{component['discipline']}::{component['name']}"
             links = links_for(component, programme_domains)
+            evidence_rows = [
+                (domain_evidence or {}).get(f"{ref}::{link.get('domain_id')}") or {}
+                for link in links
+            ]
+            reviewed_links = [item for item in evidence_rows if item and not item.get("review_required")]
+            source_review_links = [item for item in evidence_rows if item.get("source_review_required")]
             component_evidence.append({
                 "component_ref": ref,
                 "role": component["role"],
                 "domain_link_count": len(links),
-                "has_reviewed_domain_evidence": bool(links),
+                "reviewed_domain_link_count": len(reviewed_links),
+                "source_review_link_count": len(source_review_links),
+                "has_reviewed_domain_evidence": bool(links) and len(reviewed_links) == len(links),
             })
 
-        if category == "single_ccmas_full_curriculum" and len(components) == 1 and candidate_links:
+        if category == "single_ccmas_full_curriculum" and len(components) == 1 and candidate_links and all(
+            item["has_reviewed_domain_evidence"] for item in component_evidence
+        ):
             status = "ready"
             reason = "one resolved CCMAS programme with reviewed domain links"
             exposed_links = candidate_links
@@ -256,18 +276,18 @@ def canonical_inheritance_rows(
                 status = "external_review_required"
                 reason = "no CCMAS curriculum; domain evidence must come from external sources"
                 exposed_links = []
-        elif category == "partial_curriculum_scope_review_required":
-            if scope.get("scope_status") == "partial_scope_evidenced" and scoped_links:
+        elif category == "partial_curriculum_scope":
+            if scope.get("scope_status") == "partial_scope_reviewed" and scope.get("scope_approval") == "reviewed" and scoped_links:
                 status = "ready_partial"
-                reason = "selected CCMAS course-title/content anchors support the exposed domain links"
+                reason = "explicitly reviewed partial CCMAS scope supports the exposed domain links"
                 exposed_links = scoped_links
             else:
                 status = "review_required"
-                reason = scope.get("scope_reason") or "the JAMB name is a granular CCMAS variant and has no recorded curriculum slice"
+                reason = scope.get("scope_reason") or "the JAMB name is a granular CCMAS variant and has no approved curriculum slice"
                 exposed_links = []
         else:
             status = "review_required"
-            reason = "CCMAS component or reviewed domain evidence is unresolved"
+            reason = "CCMAS component or reviewed domain evidence is unresolved; source-flagged curriculum cannot expose downstream links as certified"
             exposed_links = []
 
         result.append({
@@ -285,6 +305,7 @@ def canonical_inheritance_rows(
                 ),
                 "source": scope.get("scope_selection_method") or "programme_mapping.json mapping_type and _aggregate_jamb_nuance.py SECONDARY",
                 "note": row.get("mapping_note"),
+                "approval": scope.get("scope_approval") or "not_recorded",
                 "selected_course_count": len(scope.get("selected_courses") or []),
                 "selected_course_codes": [item.get("code") for item in scope.get("selected_courses") or []],
             },
@@ -316,10 +337,19 @@ def domain_alignment_audit(
         current_links = jamb_domains.get(name, {}).get("links") or []
         current = {link.get("domain_id"): link.get("match_type") for link in current_links if link.get("domain_id")}
         category = row["inheritance_type"]
-        if category in {"single_ccmas_full_curriculum", "combined_ccmas_curriculum", "external_sources_required", "partial_curriculum_scope_review_required"} and row.get("mapping_status") in {"ready", "ready_external", "ready_partial"}:
+        if category in {"single_ccmas_full_curriculum", "combined_ccmas_curriculum", "external_sources_required", "partial_curriculum_scope"} and row.get("mapping_status") in {"ready", "ready_external", "ready_partial"}:
+            # For partial, combined, and external rows, the saved scoped
+            # links are the certified expectation.  The candidate union can
+            # intentionally contain broader parent-component links that are
+            # not part of the approved scope.
+            expected_links = (
+                row.get("domain_links") or []
+                if category in {"partial_curriculum_scope", "combined_ccmas_curriculum", "external_sources_required"}
+                else row.get("candidate_ccmas_domain_links") or []
+            )
             expected = {
                 link.get("domain_id"): link.get("match_type")
-                for link in row.get("candidate_ccmas_domain_links") or []
+                for link in expected_links
                 if link.get("domain_id")
             }
             extras = sorted(set(current) - set(expected))
@@ -358,7 +388,7 @@ def domain_alignment_audit(
                 "missing_ccmas_derived_domain_ids": [],
                 "match_type_mismatch_domain_ids": [],
             })
-        elif category == "partial_curriculum_scope_review_required":
+        elif category == "partial_curriculum_scope":
             status = "unsafe_full_parent_or_manual_links_until_slice_reviewed" if current else "no_links_pending_slice_review"
             summary[(category, status)] += 1
             rows.append({
@@ -513,6 +543,7 @@ def main() -> None:
     jamb_domains = load(JAMB_DOMAINS)
     curriculum_scopes_document = load(CURRICULUM_SCOPES_JSON) if CURRICULUM_SCOPES_JSON.exists() else {"rows": []}
     curriculum_scopes = {row["jamb_name"]: row for row in curriculum_scopes_document.get("rows") or []}
+    domain_evidence = load(DOMAIN_EVIDENCE_JSON) if DOMAIN_EVIDENCE_JSON.exists() else {}
     jamb_skills = load(JAMB_SKILLS)
     structure = load(DOMAIN_STRUCTURE)
     meta = load(DOMAIN_META)
@@ -522,7 +553,7 @@ def main() -> None:
     components, unresolved = component_rows(mappings, by_name, by_code, secondary)
 
     rows_by_name = {row["jamb_name"]: row for row in mappings}
-    canonical_rows = canonical_inheritance_rows(rows_by_name, components, programme_domains, jamb_domains, curriculum_scopes)
+    canonical_rows = canonical_inheritance_rows(rows_by_name, components, programme_domains, jamb_domains, curriculum_scopes, domain_evidence)
     domain_alignment = domain_alignment_audit(canonical_rows, jamb_domains)
     jamb_details = jamb_details_audit(mappings)
     resolution_methods = Counter(
@@ -562,7 +593,7 @@ def main() -> None:
         category = classify(row, components.get(name, []))
         current = {link.get("domain_id") for link in (jamb_domains.get(name, {}).get("links") or [])}
         canonical = canonical_by_name.get(name) or {}
-        if category == "partial_curriculum_scope_review_required" and current and canonical.get("mapping_status") == "review_required":
+        if category == "partial_curriculum_scope" and current and canonical.get("mapping_status") == "review_required":
             current_domain_scope.append({
                 "jamb_name": name,
                 "current_link_count": len(current),
@@ -583,10 +614,11 @@ def main() -> None:
             "jamb_domain_map.json (post-materialization validation)",
             "_aggregate_jamb_nuance.py SECONDARY",
             "_audit/jamb_curriculum_scopes_2026-08-17.json",
+            "_audit/programme_domain_evidence_2026-08-17.json",
         ],
         "contract": {
             "single_ccmas_full_curriculum": "A_exact/C_reclassified rows inherit one reviewed CCMAS programme.",
-            "partial_curriculum_scope_review_required": "B_granular rows expose only the domain links anchored by their recorded CCMAS course slice.",
+            "partial_curriculum_scope": "B_granular rows expose only the domain links anchored by their recorded CCMAS course slice.",
             "combined_ccmas_curriculum": "Resolved blends inherit the primary plus all supporting CCMAS components.",
             "external_sources_required": "D_custom rows use explicit external curriculum evidence and do not inherit an unscoped CCMAS fan-out.",
         },
@@ -606,7 +638,7 @@ def main() -> None:
         )
     else:
         decision = (
-            "All 416 active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, "
+            f"All {len(rows_by_name)} active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, "
             "course-scoped partial CCMAS, or separately evidenced external curriculum. "
             "The active domain links match the saved canonical scope artifact."
         )
@@ -615,7 +647,7 @@ def main() -> None:
         "decision": decision,
         "mapping_contract": {
             "single_ccmas_full_curriculum": "A_exact and C_reclassified rows inherit one reviewed CCMAS programme's domain links.",
-            "partial_curriculum_scope_review_required": "B_granular rows expose only domains anchored by their recorded CCMAS course slice; a full-parent fan-out is not proof.",
+            "partial_curriculum_scope": "B_granular rows expose only domains anchored by their recorded CCMAS course slice; a full-parent fan-out is not proof.",
             "combined_ccmas_curriculum": "Blend rows inherit the primary CCMAS curriculum plus each reviewed supporting component, with domain links unioned by strongest supported tier.",
             "external_sources_required": "D_custom rows use separately reviewed external curriculum evidence and do not inherit an unscoped CCMAS curriculum.",
         },
