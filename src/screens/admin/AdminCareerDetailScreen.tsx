@@ -12,9 +12,10 @@ function stateMessage<T>(state: DataState<T>): string {
   return state.meta?.notice ?? "This record is not available yet.";
 }
 
-function Provenance({ value }: { value: { sourceConfidence?: string; dataState?: string } }) {
+function Provenance({ value }: { value: unknown }) {
   const { colors } = useTheme();
-  const parts = [value.sourceConfidence, value.dataState].filter(Boolean);
+  const source = value as { sourceConfidence?: string; dataState?: string };
+  const parts = [source.sourceConfidence, source.dataState].filter(Boolean);
   return parts.length ? (
     <Text style={[styles.provenance, { color: colors.textRole.muted }]}>Data state: {parts.join(" · ")}</Text>
   ) : null;

@@ -53,12 +53,13 @@ class _FakeSvc:
         return _FakeQuery(self._tables.get(name, []))
 
 
-def _item(option_id, role, name, group_key=None, min_from_group=None):
+def _item(option_id, role, name, group_key=None, min_from_group=None, distinct_group_key=None):
     return {
         "option_id": option_id,
         "requirement_role": role,
         "group_key": group_key,
         "min_from_group": min_from_group,
+        "distinct_group_key": distinct_group_key,
         "subject_catalog": {"name": name, "code": name[:3].upper()},
     }
 
@@ -162,6 +163,34 @@ def test_unsatisfied_one_of_group_still_excludes_option(monkeypatch):
     assert out == []
 
 
+def test_distinct_one_of_groups_cannot_reuse_one_subject(monkeypatch):
+    tables = {
+        "programme_subject_options": [
+            {
+                "id": "opt1",
+                "jamb_programme_id": "jp1",
+                "exam_type": "utme",
+                "option_label": "A",
+                "min_required": 3,
+                "source_text": "Any two from Arts and one of History or Government",
+            }
+        ],
+        "programme_subject_option_items": [
+            _item("opt1", "one_of", "Literature", group_key="g1", min_from_group=2, distinct_group_key="d1"),
+            _item("opt1", "one_of", "History", group_key="g1", min_from_group=2, distinct_group_key="d1"),
+            _item("opt1", "one_of", "Government", group_key="g2", min_from_group=1, distinct_group_key="d1"),
+            _item("opt1", "one_of", "History", group_key="g2", min_from_group=1, distinct_group_key="d1"),
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    # History alone cannot satisfy both groups. A third distinct subject is
+    # required even though History appears in both source groups.
+    assert spr._match_structured_subject_options({"literature", "history"}, limit=10) == []
+    assert spr._match_structured_subject_options({"literature", "history", "government"}, limit=10)
+
+
 def test_combined_match_requires_minimum_utme_and_olevel_subjects():
     result = asyncio.run(
         spr.programmes_by_subjects(
@@ -237,3 +266,62 @@ def test_programme_search_shape_keeps_requirements_for_detail_view():
     assert result["jambName"] == "Business Administration"
     assert "utmeSubjects" not in result
     assert "olevelRequirement" not in result
+
+
+def test_text_fallback_respects_requested_exam_layer(monkeypatch):
+    tables = {
+        "programme_subject_requirements": [
+            {
+                "jamb_programme_id": "jp1",
+                "utme_subjects": "Physics and Mathematics",
+                "olevel_requirement": "Five credits including Woodwork",
+            }
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_text_requirements({"woodwork"}, limit=10, exam_type="utme") == []
+    assert spr._match_text_requirements({"woodwork"}, limit=10, exam_type="olevel")
+
+
+def test_invalid_subject_exam_mode_does_not_default_to_utme():
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics, Chemistry",
+            olevel_subjects="",
+            exam_type="not-an-exam-layer",
+        )
+    )
+
+    assert result.data["data"] == []
+    assert "UTME subjects" in result.data["meta"]["notice"]
+
+
+def test_subject_match_keeps_all_university_offerings(monkeypatch):
+    offerings = [
+        {
+            "school_id": f"school-{index}",
+            "school_name": f"University {index}",
+            "institution_type": "university",
+            "jamb_programme_id": "jp1",
+            "jamb_name": "Business Administration",
+        }
+        for index in range(15)
+    ]
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _FakeSvc(
+            {
+                "v_school_jamb_programmes": offerings,
+                "schools": [],
+                "school_programmes": [],
+            }
+        ),
+    )
+
+    rows = spr._attach_school_context([{"jambProgrammeId": "jp1"}])
+
+    assert len(rows[0]["schoolOfferings"]) == 15
+    assert rows[0]["schoolCount"] == 15

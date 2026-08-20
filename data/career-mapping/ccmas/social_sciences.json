@@ -34,7 +34,7 @@
     "Graduate training for teaching and research in tertiary institutions."
    ],
    "pathways": [],
-   "courses": [
+    "courses": [
     {
      "level": 100,
      "code": "GST 111",
@@ -5814,12 +5814,27 @@
   },
   {
    "code": "LIS",
-   "name": "Library and Information Science",
+    "name": "Library and Information Science",
+    "source_state": "programme_section_not_listed_in_table",
+    "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS programme section pp.136-158; absent from Table 1.1 and glossary",
    "qualification": "BSc",
    "duration_years": 4,
-   "employability_skills": [],
-   "pathways": [],
-   "courses": [
+    "employability_skills": [],
+    "pathways": [],
+    "source_only_courses": [
+     {
+      "level": 300,
+      "code": "LIS 316",
+      "title": "Library Environment and Buildings",
+      "units": 2,
+      "status": "C",
+      "lh": 30,
+      "ph": null,
+      "source_state": "content_only",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, printed p.153; course contents entry absent from the 300-level P12 table"
+     }
+    ],
+    "courses": [
     {
      "level": 100,
      "code": "GST 111",
@@ -6039,9 +6054,11 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "code/title mismatch with course contents (LIS 211/212)"
-     ],
+      "flags": [
+       "code/title mismatch with course contents (LIS 211/212)"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table and P13/P14 contents",
      "skills_learned": [
       "Define basic concepts in the course",
       "Explain the concept of library automation",
@@ -6065,9 +6082,11 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "code/title mismatch with course contents (LIS 211/212)"
-     ],
+      "flags": [
+       "code/title mismatch with course contents (LIS 211/212)"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table and P13/P14 contents",
      "skills_learned": [
       "Define the basic concepts in the course",
       "Explain the paradigms, theoretical and philosophical foundations of library and information science",
@@ -6206,9 +6225,11 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "no corresponding course contents entry"
-     ],
+      "flags": [
+       "no corresponding course contents entry"
+      ],
+      "source_state": "table_only",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table; no P13/P14 content entry found",
      "skills_learned": []
     },
     {
@@ -6370,9 +6391,11 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "course contents shows LIS 225 for this title"
-     ],
+      "flags": [
+       "course contents shows LIS 225 for this title"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table versus P13/P14 contents",
      "skills_learned": []
     },
     {
@@ -6541,9 +6564,11 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "course contents shows LIS 321 for this title"
-     ],
+      "flags": [
+       "course contents shows LIS 321 for this title"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table versus P13/P14 contents",
      "skills_learned": [
       "Define the various concepts of the course",
       "Enumerate the various disaster and security issues in libraries and information centres",
@@ -6612,9 +6637,11 @@
      "status": "C",
      "lh": null,
      "ph": 270,
-     "flags": [
-      "course contents shows LIS 419 for this title"
-     ],
+      "flags": [
+       "course contents shows LIS 419 for this title"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, LIS P12 table versus P13/P14 contents",
      "skills_learned": [
       "Select a topic of their choice",
       "Conduct the research",
@@ -10393,7 +10420,29 @@
     "a higher-level skill and understanding of issues of politics and management of society; and",
     "skills that make a well-rounded citizen, able to contribute to all aspects of social development."
    ],
-   "pathways": [],
+    "pathways": [],
+    "source_omitted_courses": [
+     {
+      "code": "SSC 202",
+      "source_state": "table_omitted",
+      "reason": "Common course appears in other Social Sciences programme tables but not in PPE's 200-level P12 table"
+     },
+     {
+      "code": "SSC 301",
+      "source_state": "table_omitted",
+      "reason": "Common course appears in other Social Sciences programme tables but not in PPE's P12 table"
+     },
+     {
+      "code": "SSC 302",
+      "source_state": "table_omitted",
+      "reason": "Common course appears in other Social Sciences programme tables but not in PPE's P12 table"
+     },
+     {
+      "code": "SSC 401",
+      "source_state": "table_omitted",
+      "reason": "Common course appears in other Social Sciences programme tables but not in PPE's P12 table"
+     }
+    ],
    "courses": [
     {
      "level": 100,
@@ -10934,47 +10983,63 @@
     },
     {
      "level": 300,
-     "code": "PHL 301",
+      "code": "PHL 301",
      "title": "Early Modern Philosophy",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [
+       "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, PPE P12 pp.225-226 and P13/P14 p.238; course contents absent",
      "skills_learned": [],
      "content_summary": "---"
     },
     {
      "level": 300,
-     "code": "PHL 302",
+      "code": "PHL 302",
      "title": "Epistemology",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [
+       "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, PPE P12 pp.225-226 and P13/P14 p.238; course contents absent",
      "skills_learned": []
     },
     {
      "level": 300,
-     "code": "PHL 305",
+      "code": "PHL 305",
      "title": "Professional Ethics",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [
+       "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, PPE P12 pp.225-226 and P13/P14 p.238; course contents absent",
      "skills_learned": []
     },
     {
      "level": 300,
-     "code": "PHL 306",
+      "code": "PHL 306",
      "title": "Metaphysics",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [
+       "PPE P12 course has no corresponding P13/P14 content entry in the source"
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Social-Sciences-CCMAS-FINAL-2023-A.pdf, PPE P12 pp.225-226 and P13/P14 p.238; course contents absent",
      "skills_learned": []
     },
     {
