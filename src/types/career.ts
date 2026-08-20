@@ -125,6 +125,8 @@ export interface Programme {
   discipline: string;
   qualification?: string; // B.Sc, NCE, ND, HND, ...
   durationYears?: number;
+  /** Source-backed plain-language programme overview, when the catalogue has one. */
+  overview?: string | null;
   /**
    * What this degree teaches. Resolved server-side by following
    * programme_mapping to the JAMB names' CCMAS skills profile, and unioned when
@@ -301,7 +303,8 @@ export type SavedEntityType =
   | "comparison"
   | "opportunity"
   | "organisation"
-  | "elite_pathway";
+  | "elite_pathway"
+  | "resource";
 
 /** What a note can be attached to: any saveable entity, or a global quick note
  *  written from the NotesFab with no entity context. */

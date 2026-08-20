@@ -410,12 +410,15 @@ errors.
 ### Apply to Supabase
 
 1. Apply `backend/migration_career_resources_v1.sql` once.
-2. Apply every file in `backend/seed_career_resources_v1_parts/` in numeric
+2. Apply `backend/migration_saved_resource_support.sql` after the `saved_items`
+   table exists. It only permits canonical resource URLs to be stored as
+   `resource` items; it does not invent or seed resource links.
+3. Apply every file in `backend/seed_career_resources_v1_parts/` in numeric
    order, from `part-001.sql` through the final numbered part.
-3. Keep each part's `BEGIN;` and `COMMIT;` transaction intact.
-4. Do not paste JSON into Supabase. JSON is a build/audit input; the backend
+4. Keep each part's `BEGIN;` and `COMMIT;` transaction intact.
+5. Do not paste JSON into Supabase. JSON is a build/audit input; the backend
    reads the seeded `skillup_dev.career_learning_resources` table.
-5. Verify the final row count and orphan foreign-key checks using the queries
+6. Verify the final row count and orphan foreign-key checks using the queries
    in `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
 
 ### Git workflow for this migration
