@@ -103,6 +103,8 @@ export interface GuidanceReportPath {
     subjects?: { olevel?: string[]; utme?: string[] };
     discoveryDoor?: string;
     programme?: Record<string, unknown>;
+    /** Saved programme/university choices; `programme` remains the active one. */
+    programmes?: Record<string, unknown>[];
     university?: Record<string, unknown>;
     universityRequirements?: Record<string, unknown>;
     requirements?: Record<string, unknown>;
