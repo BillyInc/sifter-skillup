@@ -446,6 +446,7 @@ async def get_programme(programme_id: str):
             "discipline": r.get("discipline"),
             "qualification": r.get("qualification"),
             "durationYears": float(duration) if duration is not None else None,
+            "overview": r.get("description"),
             "domains": domains,
             **_programme_skills(svc, programme_id),
         }
