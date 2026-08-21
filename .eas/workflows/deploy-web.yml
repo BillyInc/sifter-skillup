@@ -1,0 +1,30 @@
+# Web deploy — runs on EAS runners, not on storytime.
+#
+# `expo export --platform web` wants ~1.5-2GB. storytime has 3.8GB total and
+# also serves levelup.com.ng, its API, KYS, storytime and fetchit, so an OOM
+# there does not merely fail a build -- the kernel picks a victim and it can be
+# a live service. Building on the box we are deploying to was the wrong trade;
+# EAS runners cost us nothing locally.
+#
+# Note this is a genuine EAS job type, not `eas deploy` in a shell step:
+# `eas deploy` only UPLOADS, the export still runs wherever you invoke the CLI.
+# `type: deploy` is what actually moves the build onto Expo's infrastructure.
+#
+# Environment variables are NOT set here. EXPO_PUBLIC_API_URL and the three
+# EXPO_PUBLIC_PRIVY_* values live as EAS environment variables on the Expo
+# project (`eas env:list --environment production`). They are compiled into the
+# shipped bundle and are public by design -- but they must EXIST, or the build
+# silently ships an app that cannot reach the API or authenticate.
+
+name: Deploy web (dev)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_web:
+    type: deploy
+    params:
+      prod: true

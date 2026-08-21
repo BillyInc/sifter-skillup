@@ -1,0 +1,22 @@
+# Per-PR web preview URL.
+#
+# This replaces the Netlify deploy previews. Netlify is being decommissioned --
+# `netlify.toml` is already deleted -- but the two sites are still connected to
+# the repo, so Netlify keeps building every PR and failing four checks on each
+# one. Once those connections are removed in the Netlify dashboard, this is what
+# gives reviewers a running app to look at.
+#
+# `prod: false` publishes to a preview URL rather than the production alias, so
+# it cannot overwrite the deployed dev site.
+
+name: Web PR preview
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  preview:
+    type: deploy
+    params:
+      prod: false
