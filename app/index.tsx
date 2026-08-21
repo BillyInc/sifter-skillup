@@ -13,6 +13,7 @@ import { useAuth } from "../src/hooks/useAuth";
 import { isAdminAccount, needsLegacyTypeSelection, useEffectiveAccountType } from "../src/lib/accountType";
 import { getEducatorProfile } from "../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../src/lib/adminAudience";
+import { getAdminResume } from "../src/lib/adminResume";
 import { resolvePostAuthHref } from "../src/lib/resumeNavigation";
 import type { EducatorProfile } from "../src/types/institution";
 import {
@@ -38,6 +39,8 @@ export default function LandingPage() {
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
   const [educatorProfile, setEducatorProfile] = useState<EducatorProfile | null>(null);
   const [profileHydrated, setProfileHydrated] = useState(false);
+  const [adminResumeHref, setAdminResumeHref] = useState<string | null>(null);
+  const [adminResumeHydrated, setAdminResumeHydrated] = useState(false);
   const [guestBusy, setGuestBusy] = useState(false);
   const [guestError, setGuestError] = useState<string | null>(null);
   const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
@@ -53,6 +56,8 @@ export default function LandingPage() {
     if (!user?.id) {
       setEducatorProfile(null);
       setProfileHydrated(true);
+      setAdminResumeHref(null);
+      setAdminResumeHydrated(true);
       return;
     }
 
@@ -69,6 +74,13 @@ export default function LandingPage() {
         setProfileHydrated(true);
       },
     );
+    setAdminResumeHydrated(false);
+    getAdminResume(user.id).then((resume) => {
+      if (active) {
+        setAdminResumeHref(resume?.href ?? null);
+        setAdminResumeHydrated(true);
+      }
+    });
     return () => {
       active = false;
     };
@@ -79,11 +91,11 @@ export default function LandingPage() {
     if (user.auth_provider === "guest") return "/(tabs)/explore";
     if (needsLegacyTypeSelection(user)) return "/(auth)/onboarding?restart=1";
     if (!user.onboarding_completed) return "/(auth)/onboarding";
-    if (isAdminAccount(accountType)) return adminHomeForProfile(educatorProfile);
+    if (isAdminAccount(accountType)) return adminResumeHref ?? adminHomeForProfile(educatorProfile);
     return resolvePostAuthHref(user);
-  }, [accountType, educatorProfile, user]);
+  }, [accountType, adminResumeHref, educatorProfile, user]);
 
-  if (introState === "loading" || loading || (user && (!hydrated || !profileHydrated))) {
+  if (introState === "loading" || loading || (user && (!hydrated || !profileHydrated || !adminResumeHydrated))) {
     return (
       <View style={[styles.loading, { backgroundColor: colors.bg }]}>
         <LevelUpLogo size={96} animated />
