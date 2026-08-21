@@ -71,6 +71,49 @@ def run(coro):
     return asyncio.get_event_loop_policy().new_event_loop().run_until_complete(coro)
 
 
+def _config_with_unset(monkeypatch, *unset_keys: str):
+    """Load an INDEPENDENT copy of config.py with `unset_keys` absent.
+
+    Observing a config default is harder than it looks, and the two obvious
+    approaches are both wrong:
+
+      * `monkeypatch.delenv` alone does nothing, because config.py calls
+        `load_dotenv()` at module scope and a local .env repopulates the value.
+      * patching `config.load_dotenv` and calling `importlib.reload` does not
+        work either: reload re-executes the module source, which re-runs
+        `from dotenv import load_dotenv` and rebinds the name straight over the
+        patch. The earlier version of this test did exactly that, so it read
+        whatever the developer's .env happened to contain and passed or failed
+        on ambient state rather than on the default. It went green while
+        backend/.env carried `EMAIL_FROM=` (empty), which is the opposite of
+        what it claims to assert.
+
+    So intercept `os.getenv` instead -- it is the only thing config.py reads,
+    58 times, and it is immune to dotenv -- and exec the source as a NEW module
+    object that is never registered in sys.modules. Nothing rebinds
+    `config.settings`, so unlike reload this cannot leak into other tests that
+    monkeypatch settings (see the note in test_dev_codes_cannot_be_enabled...).
+    """
+    import importlib.util
+    import os
+    import pathlib
+
+    real_getenv = os.getenv
+
+    def fake_getenv(key, default=None):
+        # Behave exactly as if the variable were never set anywhere.
+        return default if key in unset_keys else real_getenv(key, default)
+
+    monkeypatch.setattr(os, "getenv", fake_getenv)
+
+    source = pathlib.Path(__file__).resolve().parent.parent / "config.py"
+    spec = importlib.util.spec_from_file_location("_config_isolated", source)
+    assert spec is not None and spec.loader is not None, f"cannot load {source}"
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class TestCodesSurviveAcrossWorkers:
     def test_code_stored_by_one_worker_verifies_on_another(self, redis):
         """The regression that made verification fail ~50% of the time.
@@ -266,21 +309,7 @@ class TestDelivery:
         os.getenv at import time, so the default cannot be observed any other
         way.
         """
-        import importlib
-
-        import config as config_module
-
-        monkeypatch.delenv("EMAIL_FROM", raising=False)
-        # load_dotenv() at module scope would repopulate EMAIL_FROM from a
-        # local .env and re-mask the default, which is exactly the failure this
-        # test exists to catch.
-        monkeypatch.setattr(config_module, "load_dotenv", lambda *a, **k: None)
-        try:
-            reloaded = importlib.reload(config_module)
-            default_sender = reloaded.Settings.EMAIL_FROM
-        finally:
-            # Leave the imported module as the rest of the suite found it.
-            importlib.reload(config_module)
+        default_sender = _config_with_unset(monkeypatch, "EMAIL_FROM").Settings.EMAIL_FROM
 
         assert default_sender.endswith("@hello.levelup.com.ng>"), (
             f"EMAIL_FROM default is {default_sender!r}; it must be on the "
@@ -347,6 +376,13 @@ class TestDevCodeExposure:
     def test_bypass_code_is_refused_when_dev_codes_are_off(self, redis, monkeypatch):
         import main
 
+        # EMAIL_CODE_STORAGE decides which store _require_valid_email_code
+        # consults, and it defaults to "redis" only while DEBUG is on. Left
+        # unpinned this test silently followed whatever the developer's .env
+        # said and broke the moment a local .env set EMAIL_CODE_STORAGE=database
+        # -- it would then query Supabase instead of the `redis` fixture. The
+        # database path has its own coverage; this one is about the bypass.
+        monkeypatch.setattr(main.settings, "EMAIL_CODE_STORAGE", "redis")
         monkeypatch.setattr(main.settings, "EMAIL_VERIFICATION_DEV_CODES", False)
         with pytest.raises(HTTPException) as exc:
             run(main._require_valid_email_code("g@example.com", "000000"))
