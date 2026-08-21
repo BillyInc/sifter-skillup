@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Linking, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from "../../theme";
 import type { CareerLearningResource } from "../../types/career";
+import { careerData } from "../../lib/careerData";
 import { SectionLabel } from "./RedesignPrimitives";
 
 export interface LearningResourcesBlockProps {
@@ -42,12 +43,30 @@ function resourceTitle(resource: CareerLearningResource): string {
   return resource.targetName || resource.provider;
 }
 
+function openLabel(resource: CareerLearningResource): string {
+  switch (resource.resourceType) {
+    case "skill_reference":
+      return "Open skill reference";
+    case "skill_learning":
+      return "Open learning link";
+    case "tool_learning":
+      return "Open tool guide";
+    case "certification_exam":
+    case "professional_body":
+      return "Open qualification information";
+    default:
+      return "Open resource";
+  }
+}
+
 export function LearningResourcesBlock({
   resources,
   title = "Where to learn and go next",
   style,
 }: LearningResourcesBlockProps) {
   const { colors } = useTheme();
+  const [saved, setSaved] = React.useState<Record<string, boolean>>({});
+  const [saveNotice, setSaveNotice] = React.useState<string | null>(null);
   const grouped = useMemo(() => {
     const unique = new Map<string, CareerLearningResource>();
     for (const resource of resources ?? []) {
@@ -101,13 +120,32 @@ export function LearningResourcesBlock({
                   </Text>
                 ) : null}
               </View>
-              <Text style={[styles.open, { color: colors.accentRole.action }]}>
-                Open
-              </Text>
+              <View style={styles.actions}>
+                <Text style={[styles.open, { color: colors.accentRole.action }]}>{openLabel(resource)}</Text>
+                <Pressable
+                  accessibilityRole="button"
+                  onPress={async (event) => {
+                    event.stopPropagation();
+                    const key = resource.url;
+                    if (saved[key]) return;
+                    const result = await careerData.saveItem("resource", key, resourceTitle(resource));
+                    if (result.status === "real") {
+                      setSaved((current) => ({ ...current, [key]: true }));
+                      setSaveNotice("Saved to My World");
+                    } else {
+                      setSaveNotice(result.meta?.notice ?? "Sign in to save resources to My World.");
+                    }
+                  }}
+                  style={styles.saveButton}
+                >
+                  <Text style={[styles.saveText, { color: colors.accentRole.action }]}>{saved[resource.url] ? "Saved" : "Save"}</Text>
+                </Pressable>
+              </View>
             </Pressable>
           ))}
         </View>
       ))}
+      {saveNotice ? <Text style={[styles.saveNotice, { color: colors.textRole.muted }]}>{saveNotice}</Text> : null}
     </View>
   );
 }
@@ -139,8 +177,12 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
   },
   copy: { flex: 1, gap: 2 },
+  actions: { alignItems: "flex-end", gap: Spacing.xs },
   name: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.3 },
   meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.3 },
   description: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
   open: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, textDecorationLine: "underline" },
+  saveButton: { paddingVertical: 3, paddingHorizontal: 2 },
+  saveText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  saveNotice: { fontSize: FontSize.xs },
 });
