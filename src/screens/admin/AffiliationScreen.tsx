@@ -175,8 +175,8 @@ export function AffiliationScreen() {
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             {stats.status === "real"
               ? belowThreshold
-                ? "The count is hidden until at least five affiliations are recorded, to protect learner privacy."
-                : `${count ?? 0} learners have affiliated with this school.`
+                ? "The count is hidden until at least five affiliations are recorded, to protect student privacy."
+                : `${count ?? 0} students have affiliated with this school.`
               : stats.meta?.notice ?? "Affiliation data is unavailable right now."}
           </Text>
         </View>

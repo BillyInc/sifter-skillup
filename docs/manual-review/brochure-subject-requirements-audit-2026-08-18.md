@@ -1,0 +1,1280 @@
+# Brochure subject-requirement source audit
+
+Source: `C:\Users\USER\Downloads\jamb brochure`
+
+This report compares unstructured repository subject layers with the original brochure table cells. It does not convert a waiver or a shared continuation into a national rule.
+
+- effective_programmes: **420**
+- source_table_rows: **1363**
+- review_layers: **1260**
+- review_programmes: **420**
+
+## Status counts
+
+- `multiple_primary_source_candidates`: **200**
+- `one_primary_source_candidate`: **390**
+- `source_row_found_but_primary_cell_empty`: **535**
+- `source_row_not_found`: **135**
+
+## Review layers
+
+- `utme` `ANTHROPOLOGY` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `ANTHROPOLOGY` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `ANTHROPOLOGY` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `APPLIED BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `APPLIED BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `APPLIED BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `APPLIED BIOLOGY AND BIOTECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `APPLIED BIOLOGY AND BIOTECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `APPLIED BIOLOGY AND BIOTECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `APPLIED BIOLOGY AND GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `APPLIED BIOLOGY AND GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `APPLIED BIOLOGY AND GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `APPLIED BOTANY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `APPLIED BOTANY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `APPLIED BOTANY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `ARCHEAOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `ARCHEAOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `ARCHEAOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Accountancy and Forensic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Accountancy and Forensic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Accountancy and Forensic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Accounting and Data Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Accounting and Data Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Accounting and Data Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Accounting and Finance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Accounting and Finance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Accounting and Finance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Actuarial Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Actuarial Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Actuarial Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `African and Asian Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `African and Asian Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `African and Asian Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Agribusiness and Economics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Agribusiness and Economics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Agribusiness and Economics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Agricultural Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Agricultural Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Agricultural Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Agricultural and Bio-Resources Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Agricultural and Bio-Resources Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Agricultural and Bio-Resources Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Agriculture` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Agriculture` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Agriculture` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Agronomy` — `one_primary_source_candidate`; 8 brochure candidate(s).
+- `olevel` `Agronomy` — `one_primary_source_candidate`; 8 brochure candidate(s).
+- `direct_entry` `Agronomy` — `one_primary_source_candidate`; 8 brochure candidate(s).
+- `utme` `Anatomy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Anatomy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Anatomy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Animal Biology and Environment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Animal Biology and Environment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Animal Biology and Environment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Animal Breeding and Genetics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Animal Breeding and Genetics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Animal Breeding and Genetics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Animal Physiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Animal Physiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Animal Physiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Animal Production` — `one_primary_source_candidate`; 11 brochure candidate(s).
+- `olevel` `Animal Production` — `one_primary_source_candidate`; 11 brochure candidate(s).
+- `direct_entry` `Animal Production` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `utme` `Animal Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `olevel` `Animal Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `direct_entry` `Animal Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `utme` `Animal and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Animal and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Animal and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Anthropology` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Anthropology` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Anthropology` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Applied Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Applied Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Applied Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Applied Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Applied Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Applied Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Applied Geology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Applied Geology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Applied Geology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Applied Geophysics` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Applied Geophysics` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Applied Geophysics` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Applied Mathematics with Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Applied Mathematics with Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Applied Mathematics with Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Applied Microbiology and Brewing / Applied Microbiology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Applied Microbiology and Brewing / Applied Microbiology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Applied Microbiology and Brewing / Applied Microbiology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Applied Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Applied Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Applied Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Applied Zoology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Applied Zoology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Applied Zoology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Applied and Renewable Energy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Applied and Renewable Energy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Applied and Renewable Energy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Arabic Language and Literature Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Arabic Language and Literature Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Arabic Language and Literature Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Arabic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Arabic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Arabic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Archaeology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Archaeology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Archaeology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Architecture` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Architecture` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Architecture` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Aviation Business` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Aviation Business` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Aviation Business` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Aviation Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Aviation Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Aviation Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Aviation Security` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Aviation Security` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Aviation Security` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `BIOCHEMISTRY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `BIOCHEMISTRY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `BIOCHEMISTRY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `BIOINFORMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `BIOINFORMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `BIOINFORMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `BIOLOGICAL SCIENCE(S)` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `BIOLOGICAL SCIENCE(S)` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `BIOLOGICAL SCIENCE(S)` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `BIOLOGY` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `olevel` `BIOLOGY` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `direct_entry` `BIOLOGY` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `utme` `BIOTECHNOLOGY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `BIOTECHNOLOGY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `BIOTECHNOLOGY AND MOLECULAR BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Banking and Finance` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Banking and Finance` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Banking and Finance` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Biochemistry` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `olevel` `Biochemistry` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `Biochemistry` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `utme` `Biology/Biotechnology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Biology/Biotechnology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Biology/Biotechnology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Biomedical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Biomedical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Biomedical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Biostatistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Biostatistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Biostatistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Biotechnology` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `olevel` `Biotechnology` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `direct_entry` `Biotechnology` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `utme` `Biotechnology and Food Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Biotechnology and Food Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Biotechnology and Food Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Botany` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `olevel` `Botany` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `direct_entry` `Botany` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `utme` `Botany and Ecological Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Botany and Ecological Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Botany and Ecological Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Brewing Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Brewing Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Brewing Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Building` — `source_row_found_but_primary_cell_empty`; 6 brochure candidate(s).
+- `olevel` `Building` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `Building` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `utme` `Building Technology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `olevel` `Building Technology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `Building Technology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `utme` `Business Administration` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Business Administration` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Business Administration` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Business Education` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Business Education` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Business Education` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Business Management` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `Business Management` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `Business Management` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `utme` `CELL BIOLOGY & GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `CELL BIOLOGY & GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `CELL BIOLOGY & GENETICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `COMMUNICATION AND DIGITAL MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `COMMUNICATION AND DIGITAL MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `COMMUNICATION AND DIGITAL MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `COMMUNICATION AND WIRELESS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `COMMUNICATION AND WIRELESS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `COMMUNICATION AND WIRELESS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `COMMUNICATIONS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `COMMUNICATIONS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `COMMUNICATIONS TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `COMPUTER SCIENCE AND MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `COMPUTER SCIENCE AND MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `COMPUTER SCIENCE AND MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `COMPUTER SCIENCE WITH ECONOMICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `COMPUTER SCIENCE WITH ECONOMICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `COMPUTER SCIENCE WITH ECONOMICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `COMPUTER SCIENCE WITH MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `COMPUTER SCIENCE WITH MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `COMPUTER SCIENCE WITH MATHEMATICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `COMPUTER WITH STATISTICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `COMPUTER WITH STATISTICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `COMPUTER WITH STATISTICS` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `CYBER SECURITY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `CYBER SECURITY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `CYBER SECURITY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `CYBER SECURITY SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `CYBER SECURITY SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `CYBER SECURITY SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Chemical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Chemical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Chemical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Chemical Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Chemical Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Chemical Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Chemistry` — `multiple_primary_source_candidates`; 17 brochure candidate(s).
+- `olevel` `Chemistry` — `multiple_primary_source_candidates`; 17 brochure candidate(s).
+- `direct_entry` `Chemistry` — `multiple_primary_source_candidates`; 17 brochure candidate(s).
+- `utme` `Chemistry and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Chemistry and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Chemistry and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Christian Religious` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Christian Religious` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Christian Religious` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Christian Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Christian Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Christian Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Civil Engineering` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Civil Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Civil Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Civil Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Civil Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Civil Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Classical Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Classical Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Classical Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Common Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Common Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Common Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Common and Islamic Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Common and Islamic Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Common and Islamic Law` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Communication Arts` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Communication Arts` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Communication Arts` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Communication Technology` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Communication Technology` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Communication Technology` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `utme` `Computer Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `olevel` `Computer Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `direct_entry` `Computer Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `utme` `Computer Science and Informatics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computer Science and Informatics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computer Science and Informatics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Computer Science and Information Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computer Science and Information Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computer Science and Information Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Computer Science and Information Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computer Science and Information Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computer Science and Information Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Computer and Information Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Computer and Information Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Computer and Information Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Computer with Electronics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computer with Electronics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computer with Electronics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Computer, Information and Communication Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computer, Information and Communication Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computer, Information and Communication Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Computing and Artificial Intelligence` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Computing and Artificial Intelligence` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Computing and Artificial Intelligence` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Conservation Biology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Conservation Biology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Conservation Biology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Conservation and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Conservation and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Conservation and Environmental Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Cooperative Economics and Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Cooperative Economics and Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Cooperative Economics and Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Cooperative Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Cooperative Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Cooperative Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Cooperative and Rural Development` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Cooperative and Rural Development` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Cooperative and Rural Development` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Creative Arts` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Creative Arts` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Creative Arts` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Criminology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Criminology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Criminology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Criminology and Penology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Criminology and Penology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Criminology and Penology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Criminology and Security Studies` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Criminology and Security Studies` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Criminology and Security Studies` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Criminology and Security Studies (printed under Law faculty block)` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Criminology and Security Studies (printed under Law faculty block)` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Criminology and Security Studies (printed under Law faculty block)` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Crop Production` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `olevel` `Crop Production` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `direct_entry` `Crop Production` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `utme` `Crop Protection` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `olevel` `Crop Protection` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `direct_entry` `Crop Protection` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `utme` `Crop Science` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Crop Science` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Crop Science` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `utme` `DATA MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `DATA MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `DATA MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Data Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Data Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Data Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Data Science and Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Data Science and Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Data Science and Analytics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Demography and Social Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Demography and Social Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Demography and Social Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Demography and Social Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Demography and Social Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Demography and Social Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Development and Communication Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Development and Communication Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Development and Communication Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Drama/Dramatic Arts/Performing Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Drama/Dramatic Arts/Performing Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Drama/Dramatic Arts/Performing Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `ELECTRONICS AND COMMUNICATIONS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `ELECTRONICS AND COMMUNICATIONS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `ELECTRONICS AND COMMUNICATIONS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `ELECTRONICS AND COMPUTER SYSTEMS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `ELECTRONICS AND COMPUTER SYSTEMS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `ELECTRONICS AND COMPUTER SYSTEMS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `ELECTRONICS AND COMPUTER TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `ELECTRONICS AND COMPUTER TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `ELECTRONICS AND COMPUTER TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `ENGINEERING PHYSICS` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `ENGINEERING PHYSICS` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `ENGINEERING PHYSICS` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Earth Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Earth Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Earth Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Eco-Tourism and Wildlife Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Eco-Tourism and Wildlife Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Eco-Tourism and Wildlife Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Ecology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Ecology and Environmental Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Ecology and Environmental Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Ecology and Environmental Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Economics` — `multiple_primary_source_candidates`; 32 brochure candidate(s).
+- `olevel` `Economics` — `multiple_primary_source_candidates`; 32 brochure candidate(s).
+- `direct_entry` `Economics` — `multiple_primary_source_candidates`; 32 brochure candidate(s).
+- `utme` `Economics and Development Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Economics and Development Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Economics and Development Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Efik-Ibibio` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Efik-Ibibio` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Efik-Ibibio` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Electrical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Electrical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Electrical Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Electrical/Electronic Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Electrical/Electronic Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Electrical/Electronic Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Electronics` — `multiple_primary_source_candidates`; 15 brochure candidate(s).
+- `olevel` `Electronics` — `multiple_primary_source_candidates`; 15 brochure candidate(s).
+- `direct_entry` `Electronics` — `multiple_primary_source_candidates`; 15 brochure candidate(s).
+- `utme` `Electronics Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Electronics Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Electronics Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Electrons` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Electrons` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Electrons` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Employment and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Employment and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Employment and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Energy and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Energy and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Energy and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `English Studies` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `English Studies` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `English Studies` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `English and Literary Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `English and Literary Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `English and Literary Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Entrepreneurship` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `olevel` `Entrepreneurship` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `direct_entry` `Entrepreneurship` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `utme` `Entrepreneurship and Business Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Entrepreneurship and Business Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Entrepreneurship and Business Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Entrepreneurship and Innovation` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Entrepreneurship and Innovation` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Entrepreneurship and Innovation` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Environmental Biology` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `Environmental Biology` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `Environmental Biology` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `utme` `Environmental Biology and Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Environmental Biology and Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Environmental Biology and Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Environmental Chemistry and Toxicology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Environmental Chemistry and Toxicology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Environmental Chemistry and Toxicology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Environmental Health Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Environmental Health Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Environmental Health Science` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Environmental Management` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `olevel` `Environmental Management` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `direct_entry` `Environmental Management` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `utme` `Environmental Management and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Environmental Management and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Environmental Management and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Environmental Management and Toxicology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Environmental Management and Toxicology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Environmental Management and Toxicology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Environmental Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Environmental Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Environmental Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Environmental Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Environmental Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Environmental Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Estate Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Estate Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Estate Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `FISHERIES AND AQUACULTURE` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `FISHERIES AND AQUACULTURE` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `FISHERIES AND AQUACULTURE` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `utme` `FORENSIC SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `FORENSIC SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `FORENSIC SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Family, Nutrition and Consumer Sciences` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Family, Nutrition and Consumer Sciences` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Family, Nutrition and Consumer Sciences` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Farm Management & Agric. Extension` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Farm Management & Agric. Extension` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Farm Management & Agric. Extension` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Film and Video Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Film and Video Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Film and Video Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Finance` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `Finance` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `Finance` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `utme` `Finance and Financial Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Finance and Financial Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Finance and Financial Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Finance and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Finance and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Finance and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Fine Art/Fine and Applied Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Fine Art/Fine and Applied Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Fine Art/Fine and Applied Arts` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Fisheries` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `olevel` `Fisheries` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `direct_entry` `Fisheries` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `utme` `Food Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Food Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Food Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Food Science & Nutrition` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Food Science & Nutrition` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Food Science & Nutrition` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Food Science and Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Food Science and Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Food Science and Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Food Science and Technology` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Food Science and Technology` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Food Science and Technology` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Food Science with Business` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Food Science with Business` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Food Science with Business` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `olevel` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `direct_entry` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `utme` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `French` — `multiple_primary_source_candidates`; 16 brochure candidate(s).
+- `olevel` `French` — `multiple_primary_source_candidates`; 16 brochure candidate(s).
+- `direct_entry` `French` — `multiple_primary_source_candidates`; 16 brochure candidate(s).
+- `utme` `French and German/Russian` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `French and German/Russian` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `French and German/Russian` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Fulfulde` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Fulfulde` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Fulfulde` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Genetics and Biotechnology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Genetics and Biotechnology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Genetics and Biotechnology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Geography` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `olevel` `Geography` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `direct_entry` `Geography` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `utme` `Geography and Environmental Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Geography and Environmental Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Geography and Environmental Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Geography and Environmental Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Geography and Environmental Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Geography and Environmental Studies` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Geography and Geosciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geography and Geosciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geography and Geosciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geological Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geological Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geological Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Geology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Geology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Geology and Applied Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geology and Applied Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geology and Applied Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geology and Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geology and Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geology and Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geology and Mineral Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geology and Mineral Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geology and Mineral Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geology and Mineral Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geology and Mineral Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geology and Mineral Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geology and Mining` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Geology and Mining` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Geology and Mining` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Geology and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geology and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geology and Petroleum Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Geophysics` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Geophysics` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Geophysics` — `source_row_found_but_primary_cell_empty`; 5 brochure candidate(s).
+- `utme` `Geoscience` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Geoscience` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Geoscience` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `German` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `German` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `German` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Government and Public Administration` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Government and Public Administration` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Government and Public Administration` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `HOME SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `HOME SCIENCE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `HOME SCIENCE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `HUMAN BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `HUMAN BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `HUMAN BIOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Hausa` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Hausa` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Hausa` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `History` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `olevel` `History` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `direct_entry` `History` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `utme` `History and International Relations` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `History and International Relations` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `History and International Relations` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `History and International Studies` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `History and International Studies` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `History and International Studies` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `History and Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `History and Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `History and Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Home Economics` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `olevel` `Home Economics` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `direct_entry` `Home Economics` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `utme` `Home Economics and Food Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Home Economics and Food Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Home Economics and Food Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Home Economics and Hotel Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Home Economics and Hotel Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Home Economics and Hotel Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Home Science & Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Home Science & Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Home Science & Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Home Science, Nutrition and Dietetics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Home Science, Nutrition and Dietetics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Home Science, Nutrition and Dietetics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Horticulture` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Horticulture` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Horticulture` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `utme` `Hotel Management & Tourism` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Hotel Management & Tourism` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Hotel Management & Tourism` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Hotel Management and Tourism` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Hotel Management and Tourism` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Hotel Management and Tourism` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Hotel and Tourism Management` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Hotel and Tourism Management` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Hotel and Tourism Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Human Nutrition and Dietetics` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Human Nutrition and Dietetics` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Human Nutrition and Dietetics` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Human Resources Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Human Resources Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Human Resources Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `ICT Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `ICT Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `ICT Engineering` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `INFORMATION AND COMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `INFORMATION AND COMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `INFORMATION AND COMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `INFORMATION AND COMMUNICATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `olevel` `INFORMATION AND COMMUNICATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `direct_entry` `INFORMATION AND COMMUNICATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `utme` `INFORMATION AND MEDIA SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `INFORMATION AND MEDIA SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `INFORMATION AND MEDIA SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `INFORMATION AND MEDIA TECHNOLOGY` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `INFORMATION AND MEDIA TECHNOLOGY` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `INFORMATION AND MEDIA TECHNOLOGY` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `INFORMATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 4 brochure candidate(s).
+- `olevel` `INFORMATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 4 brochure candidate(s).
+- `direct_entry` `INFORMATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 4 brochure candidate(s).
+- `utme` `INFORMATION SCIENCE AND MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `INFORMATION SCIENCE AND MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `INFORMATION SCIENCE AND MEDIA STUDIES` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `INFORMATION SYSTEMS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `olevel` `INFORMATION SYSTEMS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `direct_entry` `INFORMATION SYSTEMS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `utme` `INFORMATION SYSTEMS AND TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `INFORMATION SYSTEMS AND TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `INFORMATION SYSTEMS AND TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `olevel` `INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `direct_entry` `INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `utme` `INFORMATION TECHNOLOGY AND HEALTH INFORMATICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `INFORMATION TECHNOLOGY AND HEALTH INFORMATICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `INFORMATION TECHNOLOGY AND HEALTH INFORMATICS` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Igbo` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `Igbo` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `Igbo` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Industral Mathematics/Computer` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Industral Mathematics/Computer` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Industral Mathematics/Computer` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Industrial Chemistry` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Industrial Chemistry` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Industrial Chemistry` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `utme` `Industrial Chemistry and Chemical Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Industrial Chemistry and Chemical Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Chemistry and Chemical Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Design` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Industrial Design` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Industrial Design` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Industrial Mathematics` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Industrial Mathematics` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Industrial Mathematics` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Industrial Mathematics /Applied Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Industrial Mathematics /Applied Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Mathematics /Applied Statistics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Mathematics and Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Industrial Mathematics and Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Mathematics and Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Microbiology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Industrial Microbiology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Industrial Microbiology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Industrial Physics` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `olevel` `Industrial Physics` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `Industrial Physics` — `one_primary_source_candidate`; 6 brochure candidate(s).
+- `utme` `Industrial Physics with Applied Geophysics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Industrial Physics with Applied Geophysics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Physics with Applied Geophysics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Physics with Electronics and IT Application` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Industrial Physics with Electronics and IT Application` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Physics with Electronics and IT Application` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Physics with Renewable Energy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Industrial Physics with Renewable Energy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Physics with Renewable Energy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Relations / Industrial and Labour Relations` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Industrial Relations / Industrial and Labour Relations` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Industrial Relations / Industrial and Labour Relations` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Industrial Relations and Human Resources Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Industrial Relations and Human Resources Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Industrial Relations and Human Resources Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Industrial Relations and Personnel Management` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Industrial Relations and Personnel Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Industrial Relations and Personnel Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Industrial and Environmental Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Industrial and Environmental Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Industrial and Environmental Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Information and Media Studies` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Information and Media Studies` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Information and Media Studies` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Insurance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Insurance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Insurance` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Insurance and Actuarial Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Insurance and Actuarial Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Insurance and Actuarial Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Intelligence and Security Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Intelligence and Security Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Intelligence and Security Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `International Relations` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `olevel` `International Relations` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `International Relations` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `utme` `International Relations and Diplomacy` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `International Relations and Diplomacy` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `International Relations and Diplomacy` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `International Relations and Diplomatic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `International Relations and Diplomatic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `International Relations and Diplomatic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `International Relations and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `International Relations and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `International Relations and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `International Relationship & Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `International Relationship & Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `International Relationship & Strategic Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `International Studies` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `olevel` `International Studies` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `direct_entry` `International Studies` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `utme` `International Studies and` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `International Studies and` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `International Studies and` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `International Studies and Diplomacy` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `International Studies and Diplomacy` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `International Studies and Diplomacy` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `International and Comparative Politics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `International and Comparative Politics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `International and Comparative Politics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Islamic Law/Sharia Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Islamic Law/Sharia Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Islamic Law/Sharia Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Islamic Studies` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `olevel` `Islamic Studies` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `direct_entry` `Islamic Studies` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `utme` `Kanuri` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Kanuri` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Kanuri` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `LIBRARY AND INFORMATION SCIENCE` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `LIBRARY AND INFORMATION SCIENCE` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `LIBRARY AND INFORMATION SCIENCE` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `LIBRARY AND INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `LIBRARY AND INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `LIBRARY AND INFORMATION TECHNOLOGY` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `LIBRARY SCIENCE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `LIBRARY SCIENCE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `LIBRARY SCIENCE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Land Surveying` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Land Surveying` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Land Surveying` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Library Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Library Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Library Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Library and Information Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Library and Information Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Library and Information Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Linguistics` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `olevel` `Linguistics` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `direct_entry` `Linguistics` — `multiple_primary_source_candidates`; 10 brochure candidate(s).
+- `utme` `Linguistics/Edo` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Linguistics/Edo` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Linguistics/Edo` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Literature in English` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Literature in English` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Literature in English` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Livestock Production Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Livestock Production Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Livestock Production Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Local Government Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Local Government Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Local Government Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Logistics and Supply Chain Management` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Logistics and Supply Chain Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Logistics and Supply Chain Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `MANAGEMENT INFORMATION SYSTEM` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `MANAGEMENT INFORMATION SYSTEM` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `MANAGEMENT INFORMATION SYSTEM` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `MARINE BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `MARINE BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `MARINE BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `MARINE BIOLOGY & FISHERIES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `MARINE BIOLOGY & FISHERIES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `MARINE BIOLOGY & FISHERIES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `MATHEMATICAL SCIENCES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `MATHEMATICAL SCIENCES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `MATHEMATICAL SCIENCES` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `METEOROLOGY` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `olevel` `METEOROLOGY` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `METEOROLOGY` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `utme` `METEOROLOGY AND CLIMATE CHANGE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `METEOROLOGY AND CLIMATE CHANGE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `METEOROLOGY AND CLIMATE CHANGE` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `METEOROLOGY AND CLIMATE SCIENCE` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `METEOROLOGY AND CLIMATE SCIENCE` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `METEOROLOGY AND CLIMATE SCIENCE` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Management` — `multiple_primary_source_candidates`; 70 brochure candidate(s).
+- `olevel` `Management` — `multiple_primary_source_candidates`; 70 brochure candidate(s).
+- `direct_entry` `Management` — `multiple_primary_source_candidates`; 70 brochure candidate(s).
+- `utme` `Management Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Management Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Management Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Marine Geology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Marine Geology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Marine Geology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Marine Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Marine Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Marine Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Marine Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Marine Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Marine Science and Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Marketing` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `olevel` `Marketing` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `direct_entry` `Marketing` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `utme` `Marketing and Consumer Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Marketing and Consumer Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Marketing and Consumer Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Mass Communication` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `olevel` `Mass Communication` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `direct_entry` `Mass Communication` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `utme` `Mathematics` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `olevel` `Mathematics` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `direct_entry` `Mathematics` — `multiple_primary_source_candidates`; 18 brochure candidate(s).
+- `utme` `Mathematics and Economics / Mathematics with Economics` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Mathematics and Economics / Mathematics with Economics` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Mathematics and Economics / Mathematics with Economics` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Mathematics with Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Mathematics with Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Mathematics with Computer Science` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Mechanical Engineering` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Mechanical Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Mechanical Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Mechatronics Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Mechatronics Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Mechatronics Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Medical Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Medical Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Medical Biochemistry` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Medical Laboratory Technology/Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Medical Laboratory Technology/Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Medical Laboratory Technology/Science` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Medical Rehabilitation` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Medical Rehabilitation` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Medical Rehabilitation` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Medicine and Surgery (Human Medicine)` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Medicine and Surgery (Human Medicine)` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Medicine and Surgery (Human Medicine)` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Meteorology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `olevel` `Meteorology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `direct_entry` `Meteorology` — `multiple_primary_source_candidates`; 6 brochure candidate(s).
+- `utme` `Microbiology` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `olevel` `Microbiology` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `direct_entry` `Microbiology` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `utme` `Microbiology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Microbiology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Microbiology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Microbiology and Industrial Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Microbiology and Industrial Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Microbiology and Industrial Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Microbiology/Parasitology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Microbiology/Parasitology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Microbiology/Parasitology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Modern Language and Translation` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Modern Language and Translation` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Modern Language and Translation` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Molecular Biology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Molecular Biology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Molecular Biology` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Music` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Music` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Music` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `NATURAL AND ENVIRONMENTAL SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `NATURAL AND ENVIRONMENTAL SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `NATURAL AND ENVIRONMENTAL SCIENCE` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Nursing/Nursing Science` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Nursing/Nursing Science` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Nursing/Nursing Science` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `OCEANOGRAPHY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `OCEANOGRAPHY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `OCEANOGRAPHY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `OPERATIONS RESEARCH` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `OPERATIONS RESEARCH` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `OPERATIONS RESEARCH` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Office and Information Technology / Information Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Office and Information Technology / Information Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Office and Information Technology / Information Resource Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Optometry` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Optometry` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Optometry` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `PHYSICS` — `multiple_primary_source_candidates`; 20 brochure candidate(s).
+- `olevel` `PHYSICS` — `multiple_primary_source_candidates`; 20 brochure candidate(s).
+- `direct_entry` `PHYSICS` — `multiple_primary_source_candidates`; 20 brochure candidate(s).
+- `utme` `PHYSICS WITH ELECTRONICS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `olevel` `PHYSICS WITH ELECTRONICS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `direct_entry` `PHYSICS WITH ELECTRONICS` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
+- `utme` `PURE AND APPLIED BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `PURE AND APPLIED BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `PURE AND APPLIED BIOLOGY` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Parasitology and Entomology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Parasitology and Entomology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Parasitology and Entomology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pasture & Range Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Pasture & Range Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Pasture & Range Management` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Peace Strategic and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Peace Strategic and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Peace Strategic and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Peace Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Peace Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Peace Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Peace Studies and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Peace Studies and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Peace Studies and Conflict Resolution` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Peace and Conflict Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Peace and Conflict Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Peace and Conflict Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Peace and Development Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Peace and Development Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Peace and Development Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Personnel Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Personnel Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Personnel Management` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Petroleum Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Petroleum Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Petroleum Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Petroleum and Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Petroleum and Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Petroleum and Gas Engineering` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pharmacology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Pharmacology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Pharmacology` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Pharmacy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Pharmacy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Pharmacy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Philosophy` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Philosophy` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `direct_entry` `Philosophy` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `utme` `Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Physics Electronics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Physics Electronics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Physics Electronics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Physics and Applied Physics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Physics and Applied Physics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Physics and Applied Physics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Physics and Computer Electronic` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Physics and Computer Electronic` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Physics and Computer Electronic` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Physics and Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Physics and Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Physics and Energy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Physics with Computational Modeling` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Physics with Computational Modeling` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Physics with Computational Modeling` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Physics with Solar Energy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Physics with Solar Energy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Physics with Solar Energy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Physics/Astrology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Physics/Astrology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Physics/Astrology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Physics/Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Physics/Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Physics/Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Physiology` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `olevel` `Physiology` — `one_primary_source_candidate`; 5 brochure candidate(s).
+- `direct_entry` `Physiology` — `multiple_primary_source_candidates`; 5 brochure candidate(s).
+- `utme` `Physiotherapy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Physiotherapy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Physiotherapy` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Plant Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Plant Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Plant Biology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Plant Biology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Plant Biology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Plant Biology and Biotechnology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Plant Breeding and Seed Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Plant Breeding and Seed Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Plant Breeding and Seed Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Plant Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Plant Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Plant Science` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Plant Science and Biotechnology` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Plant Science and Biotechnology` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Plant Science and Biotechnology` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Plant Science and Forestry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Plant Science and Forestry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Plant Science and Forestry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Plant Science and Microbiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Plant Science and Microbiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Plant Science and Microbiology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Policy and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Policy and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Policy and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Policy and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Policy and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Policy and Strategic Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `olevel` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `direct_entry` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
+- `utme` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Political Science and Defence Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Political Science and Defence Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Political Science and Defence Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Political Science and Diplomacy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Political Science and Diplomacy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Political Science and Diplomacy` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Political Science and International Relations` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Political Science and International Relations` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Political Science and International Relations` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Political Science and International Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Political Science and International Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Political Science and International Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Political Science and Public Administration` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Political Science and Public Administration` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Political Science and Public Administration` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Political and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Political and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Political and Administrative Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Polymer and Textile Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Polymer and Textile Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Polymer and Textile Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Population Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Population Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Population Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Portuguese/English` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Portuguese/English` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Portuguese/English` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Procurement` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Procurement` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Procurement` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Procurement Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Procurement Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Procurement Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Production Engineering` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Production Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Production Engineering` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Project Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Project Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Project Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Psychology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Psychology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Psychology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Public Administration` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `olevel` `Public Administration` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `direct_entry` `Public Administration` — `multiple_primary_source_candidates`; 8 brochure candidate(s).
+- `utme` `Public Administration and Local Govt` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Public Administration and Local Govt` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Public Administration and Local Govt` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Public Administration and Policy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Public Administration and Policy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Public Administration and Policy Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Public Health Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Public Health Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Public Health Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Public Relations and Advertising` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Public Relations and Advertising` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Public Relations and Advertising` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `Public and International Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Public and International Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Public and International Law` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Pure Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Pure Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Pure Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pure Physics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Pure Physics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Pure Physics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Pure and Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Pure and Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Pure and Applied Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pure and Applied Mathematics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Pure and Applied Mathematics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Pure and Applied Mathematics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Pure and Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Pure and Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Pure and Applied Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pure and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Pure and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Pure and Industrial Chemistry` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Pure and Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Pure and Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Pure and Industrial Physics` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Quantity Surveying` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Quantity Surveying` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Quantity Surveying` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Radiography` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Radiography` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Radiography` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Religious Studies` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `olevel` `Religious Studies` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `direct_entry` `Religious Studies` — `multiple_primary_source_candidates`; 12 brochure candidate(s).
+- `utme` `Robotics (Artificial Intelligence)` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Robotics (Artificial Intelligence)` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Robotics (Artificial Intelligence)` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Russian with French/German` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Russian with French/German` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Russian with French/German` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Science Laboratory Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Science Laboratory Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Science Laboratory Technology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Secretarial Administration` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Secretarial Administration` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Secretarial Administration` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Securities and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Securities and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Securities and Investment` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Social Innovation and Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Social Innovation and Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Social Innovation and Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Social Justice` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Social Justice` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Social Justice` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Social Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Social Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Social Standards` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Social Work` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Social Work` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Social Work` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Sociology` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `olevel` `Sociology` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `direct_entry` `Sociology` — `multiple_primary_source_candidates`; 7 brochure candidate(s).
+- `utme` `Sociology and Anthroplogy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Sociology and Anthroplogy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Sociology and Anthroplogy` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Sociology and Social Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Sociology and Social Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Sociology and Social Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Software Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `olevel` `Software Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Software Engineering` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Software Engineering and Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Software Engineering and Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Software Engineering and Digital Entrepreneurship` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Soil Science` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `olevel` `Soil Science` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `direct_entry` `Soil Science` — `multiple_primary_source_candidates`; 13 brochure candidate(s).
+- `utme` `Sport Management (Education)` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Sport Management (Education)` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Sport Management (Education)` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Sport Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `olevel` `Sport Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `direct_entry` `Sport Science` — `multiple_primary_source_candidates`; 2 brochure candidate(s).
+- `utme` `Statistics` — `multiple_primary_source_candidates`; 9 brochure candidate(s).
+- `olevel` `Statistics` — `multiple_primary_source_candidates`; 9 brochure candidate(s).
+- `direct_entry` `Statistics` — `multiple_primary_source_candidates`; 9 brochure candidate(s).
+- `utme` `Statistics Education` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Statistics Education` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Statistics Education` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Statistics and Data Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Statistics and Data Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Statistics and Data Sciences` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Statistics with Demography` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Statistics with Demography` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Statistics with Demography` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Strategic Communication` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Strategic Communication` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `Strategic Communication` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Supply Chain Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Supply Chain Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Supply Chain Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Surveying and Geoinformatics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Surveying and Geoinformatics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Surveying and Geoinformatics` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Systems Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Systems Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Systems Engineering` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `TELECOMMUNICATION AND WIRELESS TECHNOLOGY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `TELECOMMUNICATION AND WIRELESS TECHNOLOGY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `direct_entry` `TELECOMMUNICATION AND WIRELESS TECHNOLOGY` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `utme` `TELECOMMUNICATION MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `TELECOMMUNICATION MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `TELECOMMUNICATION MANAGEMENT` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `TELECOMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `TELECOMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `TELECOMMUNICATION SCIENCE` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Taxation` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Taxation` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Taxation` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Teacher Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Teacher Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Teacher Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Technology Education` — `source_row_found_but_primary_cell_empty`; 6 brochure candidate(s).
+- `olevel` `Technology Education` — `source_row_found_but_primary_cell_empty`; 6 brochure candidate(s).
+- `direct_entry` `Technology Education` — `source_row_found_but_primary_cell_empty`; 6 brochure candidate(s).
+- `utme` `Textile Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Textile Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Textile Science and Technology` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Theology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Theology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Theology` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Tourism Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `olevel` `Tourism Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Tourism Studies` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Transport Management` — `multiple_primary_source_candidates`; 3 brochure candidate(s).
+- `olevel` `Transport Management` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `direct_entry` `Transport Management` — `one_primary_source_candidate`; 3 brochure candidate(s).
+- `utme` `Transport Planning and Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Transport Planning and Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Transport Planning and Management` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Transport and Logistics Management` — `one_primary_source_candidate`; 2 brochure candidate(s).
+- `olevel` `Transport and Logistics Management` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `direct_entry` `Transport and Logistics Management` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
+- `utme` `Transport and Tourism` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Transport and Tourism` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Transport and Tourism` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `utme` `Urban and Regional Planning` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Urban and Regional Planning` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Urban and Regional Planning` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Vocational Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `olevel` `Vocational Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `direct_entry` `Vocational Education` — `one_primary_source_candidate`; 1 brochure candidate(s).
+- `utme` `Water Resources and Environmental Engr` — `source_row_not_found`; 0 brochure candidate(s).
+- `olevel` `Water Resources and Environmental Engr` — `source_row_not_found`; 0 brochure candidate(s).
+- `direct_entry` `Water Resources and Environmental Engr` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Yoruba` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `olevel` `Yoruba` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `direct_entry` `Yoruba` — `one_primary_source_candidate`; 4 brochure candidate(s).
+- `utme` `Zoology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `olevel` `Zoology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `direct_entry` `Zoology` — `multiple_primary_source_candidates`; 4 brochure candidate(s).
+- `utme` `Zoology and Aquaculture` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `olevel` `Zoology and Aquaculture` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
+- `direct_entry` `Zoology and Aquaculture` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).

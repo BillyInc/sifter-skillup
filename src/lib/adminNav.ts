@@ -205,7 +205,7 @@ export function getAdminNavGroups(
   const audience = audienceFor(ctx);
   // "Cohort", not "Cohort dashboard": for an advisory organisation this row is
   // not the home page and does not summarise the other views. It is one view —
-  // learner aggregates — and naming it a dashboard is what made it read as a
+  // student aggregates — and naming it a dashboard is what made it read as a
   // duplicate of Explore.
   const dashboardLabel =
     audience === "university" ? "Programme dashboard" : "Cohort";
@@ -223,7 +223,7 @@ export function getAdminNavGroups(
     audience === "provider"
       ? [{
           key: "session",
-          label: "Learner sessions",
+          label: "Student sessions",
           icon: "🎯",
           match: "session",
           go: (n) => adminNav.session(n),
@@ -236,7 +236,7 @@ export function getAdminNavGroups(
         }]
       : audience === "school" ? {
            key: "students",
-           label: "Learners",
+           label: "Students",
           icon: "👥",
           match: "students",
           go: (n) => adminNav.students(n),

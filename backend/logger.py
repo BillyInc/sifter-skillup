@@ -6,7 +6,6 @@ Provides structured JSON logging with console and file output
 from loguru import logger
 import os
 import sys
-from datetime import datetime
 from typing import Any, Dict, Optional
 
 
@@ -130,7 +129,14 @@ class Logger:
         if isinstance(error, BaseException):
             logger.opt(exception=error).error(message, **kwargs)
         elif isinstance(error, str):
-            logger.error(f"{message} | {error}", **kwargs)
+            # Loguru runs str.format on the message whenever args or kwargs are
+            # present, so f-string-ing provider text into the TEMPLATE makes any
+            # brace in that text a format placeholder. A Resend rejection body
+            # -- {"statusCode":422,"name":"validation_error",...} -- therefore
+            # raised KeyError('"statusCode"') from inside the error handler,
+            # turning the intended 502 into a 500 with a stack trace. Passing
+            # the text as an ARGUMENT means it is substituted, never re-scanned.
+            logger.error("{} | {}", message, error, **kwargs)
         else:
             logger.error(message, **kwargs)
 
@@ -139,7 +145,8 @@ class Logger:
         if isinstance(error, BaseException):
             logger.opt(exception=error).critical(message, **kwargs)
         elif isinstance(error, str):
-            logger.critical(f"{message} | {error}", **kwargs)
+            # Same brace-injection hazard as error(); see the note there.
+            logger.critical("{} | {}", message, error, **kwargs)
         else:
             logger.critical(message, **kwargs)
 

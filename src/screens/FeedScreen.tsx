@@ -11,11 +11,11 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, RefreshControl,
-  Platform, useWindowDimensions,
-} from 'react-native';
+  } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '@/theme';
 import { CompassFonts } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -130,8 +130,8 @@ function SkeletonCard() {
 export default function FeedScreen() {
   const { colors }  = useTheme();
   const { user }    = useAuth();
-  const { width }   = useWindowDimensions();
-  const isWebWide   = Platform.OS === 'web' && width >= 768;
+  const { width, isWeb, isMobile }   = useResponsive();
+  const isWebWide = isWeb && !isMobile;
 
   const userContext: UserFeedContext = {
     primaryTrackId: user?.currentTrackId ?? 'defi-research-analyst',
@@ -239,7 +239,7 @@ export default function FeedScreen() {
           <Text style={[styles.headerEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>COMMUNITY FEED</Text>
           <Text style={[styles.headerTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Feed</Text>
           <Text style={[styles.headerCopy, { color: colors.textRole.secondary }]}>
-            Track activity, learner signals, and workspace updates in one compact stream.
+            Track activity, student signals, and workspace updates in one compact stream.
           </Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
             {activeTrack?.label ?? 'Your track'}

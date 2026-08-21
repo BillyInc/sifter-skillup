@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Modal,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -18,10 +17,14 @@ import { FontSize, CompassFonts, Radius, Spacing, useTheme } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '@/lib/trackContext';
 import { SearchOverlay, SearchBar } from '@/components/careerIntelligence';
+import { TOUCH_TARGET_MIN } from '@/components/ui';
 import { Spring, useReducedMotion } from '@/theme/motion';
 import { careerData } from '@/lib/careerData';
+// The fourth destination names itself the same way everywhere; see worldNav.
+import { WORLD_NAV } from '@/lib/worldNav';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
 import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
+import { useSidebarNav } from '@/hooks/useResponsive';
 import type { CareerSearchResult, SearchScope } from '@/types/career';
 
 type NavId =
@@ -43,7 +46,7 @@ const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
   { id: 'explore',       label: 'Explore',       icon: 'compass', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
   { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Jobs, scholarships & windows' },
-  { id: 'myworld',       label: 'My World',      icon: 'book-open', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
+  { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld', sub: WORLD_NAV.sub },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
 
@@ -60,7 +63,7 @@ const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMa
   { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
   { id: 'explore',       label: 'Explore', icon: 'compass', href: '/(tabs)/explore' },
   { id: 'opportunities', label: 'Jobs',    icon: 'briefcase', href: '/(tabs)/opportunities' },
-  { id: 'myworld',       label: 'My World', icon: 'book-open', href: '/(tabs)/myworld' },
+  { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld' },
   { id: 'profile',       label: 'Profile', icon: 'user', href: '/(tabs)/profile' },
 ];
 
@@ -195,7 +198,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const activeItem = primaryNav.find(item => item.id === activeId) ?? primaryNav[0];
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const reduced = useReducedMotion();
-  const isWide = Platform.OS === 'web' && width >= 1100;
+  // 1100 was not a defined breakpoint at all, and useSidebarNav() -- which
+  // returns exactly this intent -- already existed but went unused here. The
+  // design system puts the left sidebar on the Desktop tier (1025px+), so the
+  // threshold drops from 1100 to 1025.
+  const isWide = useSidebarNav();
 
   // Load the user's real search history when the overlay opens. Empty until
   // they have actually searched -- the overlay hides the section in that case.
@@ -729,7 +736,9 @@ const styles = StyleSheet.create({
   },
   mobileTab: {
     flex: 1,
-    minHeight: 42,
+    // Was 42 — just under the 44pt minimum, and this is the app's primary
+    // navigation. Uses the shared constant so it cannot drift again.
+    minHeight: TOUCH_TARGET_MIN,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

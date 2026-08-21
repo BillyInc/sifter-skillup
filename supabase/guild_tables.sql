@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS guild_messages (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   guild_id     TEXT NOT NULL,
   user_id      UUID REFERENCES users(id) ON DELETE CASCADE,
-  username     TEXT NOT NULL DEFAULT 'Learner',
+  username     TEXT NOT NULL DEFAULT 'Student',
   content      TEXT NOT NULL CHECK (char_length(content) <= 500),
   created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

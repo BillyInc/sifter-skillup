@@ -9,7 +9,7 @@ export interface MethodEvidenceBlockProps {
   title?: string;
 }
 
-/** Shows source-backed methods without implying demonstrated learner mastery. */
+/** Shows source-backed methods without implying demonstrated student mastery. */
 export function MethodEvidenceBlock({ methods, title = "Methods used in this area" }: MethodEvidenceBlockProps) {
   const { colors } = useTheme();
   if (!methods?.length) return null;

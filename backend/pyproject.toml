@@ -4,7 +4,8 @@ version = "1.0.0"
 description = "FastAPI backend for Sifter Skill_Up — crypto/quant learning platform"
 requires-python = ">=3.11"
 dependencies = [
-    "fastapi==0.111.0",
+    "fastapi>=0.115.6",
+    "python-multipart>=0.0.18",
     "uvicorn[standard]==0.29.0",
     "supabase>=2.4.0",
     "PyJWT[crypto]>=2.9.0",
@@ -18,7 +19,6 @@ dependencies = [
     "slowapi==0.1.9",
     "bcrypt>=5.0.0",
     "loguru~=0.7.0",
-    "ecdsa>=0.19.2",
     "cryptography>=50.0.0",
     "feedparser>=6.0.0",
     "google-auth>=2.30.0",

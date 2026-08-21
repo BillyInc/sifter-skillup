@@ -615,7 +615,7 @@ function ConnectedView({
 // Portfolio file builder — generates real Python files from user's progress
 // ─────────────────────────────────────────────────────────────────────────────
 function buildPortfolioFiles(user: any): Array<{ path: string; content: string }> {
-  const name = user?.username ?? 'Sifter Learner';
+  const name = user?.username ?? 'Sifter Student';
   const date = new Date().toISOString().split('T')[0];
 
   const readme = `# Quant Finance Portfolio — ${name}
