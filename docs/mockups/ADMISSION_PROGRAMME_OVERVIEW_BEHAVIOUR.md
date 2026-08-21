@@ -77,23 +77,23 @@ Rules:
 ```text
 Guidance workspace                         School: Country Heights
 
-[Learner: Ada Okafor v] [Learner scope: SS2 Science v]
+[Student: Ada Okafor v] [Student scope: SS2 Science v]
 
 Current guidance session
 SS2 Science -> O-level subjects -> programme options
 
-[Start from subjects] [Start from programme] [Open learner profile]
+[Start from subjects] [Start from programme] [Open student profile]
 
-Learner scope view
-12 learners linked      8 setups started      5 programme choices
-[Review cohort patterns] [Add learner]
+Student scope view
+12 students linked      8 setups started      5 programme choices
+[Review cohort patterns] [Add student]
 ```
 
 Rules:
 
-- Switching learner or learner scope clears the prior learner's unsaved programme,
+- Switching student or student scope clears the prior student's unsaved programme,
   university, and subject state before loading the new context.
-- Any aggregate learner pattern is a separate admin guidance signal, not an
+- Any aggregate student pattern is a separate admin guidance signal, not an
   individual diagnosis. It is not the meaning of the sibling sections beside
   `Overview` on a student programme screen.
 - The educator can skip provisioning and use the national catalogue, but the

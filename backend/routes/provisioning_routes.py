@@ -138,13 +138,13 @@ def _code_slug(value: Optional[str], fallback: str = "SCHOOL") -> str:
 
 
 def _gen_claim_code(school_name: Optional[str] = None, context: Optional[str] = None) -> str:
-    """Create a human-readable code scoped to one school and learner context.
+    """Create a human-readable code scoped to one school and Student context.
 
     The UUID-derived suffix keeps codes unique even when two schools share a
     name or initials, and remains unique after old rows are archived/deleted.
     """
     school = _code_slug(school_name)
-    scope = _code_slug(context, "LEARNER")[:8]
+    scope = _code_slug(context, "Student")[:8]
     suffix = uuid.uuid4().hex[:8].upper()
     return f"{school}-{scope}-{suffix}"
 
@@ -177,23 +177,23 @@ def _provisioning_context(current_user: dict) -> tuple[str, str]:
     row = (_svc().table("schools").select("institution_type").eq("id", school_id).limit(1).execute().data or [None])[0]
     org_type = (row or {}).get("institution_type") or "secondary_school"
     if org_type == "university":
-        raise HTTPException(status_code=403, detail="University admins do not create learner accounts here.")
+        raise HTTPException(status_code=403, detail="University admins do not create Student accounts here.")
     return school_id, org_type
 
 
 def _validate_provisioning_type(value: Optional[str], org_type: str) -> str:
     student_type = _clean_student_type(value)
     if not student_type:
-        raise HTTPException(status_code=400, detail="Choose the learner stage before creating an account.")
+        raise HTTPException(status_code=400, detail="Choose the Student stage before creating an account.")
     if org_type in {"tutorial_centre", "jamb_cafe"} and student_type != "jamb":
-        raise HTTPException(status_code=403, detail="This organisation can create JAMB learner accounts only.")
+        raise HTTPException(status_code=403, detail="This organisation can create JAMB Student accounts only.")
     if org_type == "secondary_school" and student_type == "jamb":
-        raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 learner accounts only.")
+        raise HTTPException(status_code=403, detail="A secondary school can create SS1, SS2 or SS3 Student accounts only.")
     return student_type
 
 
 def _stored_provisioned_type(user: dict) -> Optional[str]:
-    """Read the learner stage from either schema generation.
+    """Read the Student stage from either schema generation.
 
     Older live databases may not yet have the additive
     ``users.provisioned_user_type`` column.  Keep the value in settings until
@@ -265,7 +265,7 @@ class GenerateRequest(BaseModel):
 
 
 class DeleteStudentsRequest(BaseModel):
-    """Explicit learner ids selected by an administrator for deletion."""
+    """Explicit Student ids selected by an administrator for deletion."""
 
     student_ids: List[str] = Field(default_factory=list)
 
@@ -277,7 +277,7 @@ class ClearDraftsRequest(BaseModel):
 
 
 class GuidanceUpdate(BaseModel):
-    """The direction an administrator selected with a learner."""
+    """The direction an administrator selected with a Student."""
 
     chosen_direction: DirectionInput
 
@@ -511,7 +511,7 @@ async def generate_accounts(
     drafts_by_id = {d["id"]: d for d in (dres.data or [])}
     missing_drafts = [draft_id for draft_id in draft_ids if draft_id not in drafts_by_id]
     if missing_drafts:
-        raise HTTPException(status_code=404, detail="One or more selected learner rows are no longer available.")
+        raise HTTPException(status_code=404, detail="One or more selected Student rows are no longer available.")
     items_by_draft = {i.draft_id: i for i in payload.items}
     generated: List[GeneratedStudent] = []
     failed_count = 0
@@ -591,7 +591,7 @@ async def generate_accounts(
             log.error("provisioning: account generate failed", draft_id=draft_id, error=str(exc))
             # The account, affiliation, claim code and draft status are created
             # through separate Supabase requests. If a later request fails, do
-            # not leave a half-created learner that never appears in the admin
+            # not leave a half-created Student that never appears in the admin
             # result. This UUID was generated in this loop, so cleanup cannot
             # affect an existing account.
             try:
@@ -613,7 +613,7 @@ async def generate_accounts(
             success=False,
             data=None,
             message=(
-                "No learner accounts were created. Apply the provisioning schema "
+                "No Student accounts were created. Apply the provisioning schema "
                 "patch, then try again."
             ),
         )
@@ -649,7 +649,7 @@ async def regenerate_code(
             "student_id", user_id
         ).is_("redeemed_at", "null").is_("revoked_at", "null").execute()
         school_row = (_svc().table("schools").select("name").eq("id", school_id).limit(1).execute().data or [None])[0]
-        code = _gen_claim_code((school_row or {}).get("name"), _stored_provisioned_type(u) or "learner")
+        code = _gen_claim_code((school_row or {}).get("name"), _stored_provisioned_type(u) or "Student")
         expires = (datetime.now(timezone.utc) + timedelta(days=_CLAIM_CODE_TTL_DAYS)).isoformat()
         _svc().table("claim_codes").insert({
             "id": str(uuid.uuid4()),
@@ -668,8 +668,8 @@ def _deletion_gate(user: dict, school_id: str) -> None:
     """Apply the product's irreversible privacy boundary before deletion.
 
     A school may correct and remove a provisioned shell only while it is still
-    unclaimed and unguided. Once a learner has completed guidance or claimed
-    the code, the school must never be able to erase or recover the learner's
+    unclaimed and unguided. Once a Student has completed guidance or claimed
+    the code, the school must never be able to erase or recover the Student's
     account through the provisioning surface.
     """
 
@@ -678,9 +678,9 @@ def _deletion_gate(user: dict, school_id: str) -> None:
     if user.get("provenance") != "provisioned":
         raise HTTPException(status_code=409, detail="Only accounts created by this school can be removed here.")
     if user.get("claim_state") != "unclaimed":
-        raise HTTPException(status_code=409, detail="This learner has claimed the account. The school can no longer delete it.")
+        raise HTTPException(status_code=409, detail="This Student has claimed the account. The school can no longer delete it.")
     if user.get("chosen_direction"):
-        raise HTTPException(status_code=409, detail="Guidance is complete. This learner account can no longer be deleted by the school.")
+        raise HTTPException(status_code=409, detail="Guidance is complete. This Student account can no longer be deleted by the school.")
 
 
 def _delete_unclaimed_student(svc, user_id: str) -> None:
@@ -688,7 +688,7 @@ def _delete_unclaimed_student(svc, user_id: str) -> None:
 
     # Revoke/delete the code first so an already-issued card can never redeem
     # after the account is removed. The hard delete is safe because the gate
-    # has already established that the learner has not claimed it.
+    # has already established that the Student has not claimed it.
     svc.table("claim_codes").delete().eq("student_id", user_id).execute()
     svc.table("student_affiliations").delete().eq("student_id", user_id).eq(
         "source", "provisioned"
@@ -702,7 +702,7 @@ async def delete_student_account(
     user_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Delete one wrong/unclaimed learner shell created by this school."""
+    """Delete one wrong/unclaimed Student shell created by this school."""
 
     school_id = _require_school(current_user)
     try:
@@ -722,7 +722,7 @@ async def delete_student_account(
         raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: delete student failed", student_id=user_id, error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not delete this learner account.")
+        raise HTTPException(status_code=500, detail="Could not delete this Student account.")
 
 
 @router.delete("/students", response_model=ResponseModel)
@@ -739,14 +739,14 @@ async def delete_student_accounts(
     school_id = _require_school(current_user)
     ids = list(dict.fromkeys(i.strip() for i in payload.student_ids if i and i.strip()))
     if not ids:
-        raise HTTPException(status_code=400, detail="Select at least one learner account to delete.")
+        raise HTTPException(status_code=400, detail="Select at least one Student account to delete.")
     try:
         rows = _users().select(
             "id, provisioning_school_id, provenance, claim_state, chosen_direction"
         ).in_("id", ids).execute().data or []
         by_id = {r.get("id"): r for r in rows}
         if len(by_id) != len(ids):
-            raise HTTPException(status_code=404, detail="One or more selected learners could not be found.")
+            raise HTTPException(status_code=404, detail="One or more selected Students could not be found.")
         for student_id in ids:
             _deletion_gate(by_id[student_id], school_id)
         svc = _svc()
@@ -757,7 +757,7 @@ async def delete_student_accounts(
         raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: batch delete students failed", count=len(ids), error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not delete the selected learner accounts.")
+        raise HTTPException(status_code=500, detail="Could not delete the selected Student accounts.")
 
 
 @router.delete("/drafts", response_model=ResponseModel)
@@ -1235,7 +1235,7 @@ async def request_student_consent(
             row.get("student_id") for row in affiliations if row.get("student_id")
         ))
         if not student_ids:
-            return ResponseModel(data={"queued": 0}, message="There are no claimed affiliated learners to contact.")
+            return ResponseModel(data={"queued": 0}, message="There are no claimed affiliated Students to contact.")
 
         claimed_ids: list[str] = []
         for i in range(0, len(student_ids), 500):
@@ -1277,8 +1277,8 @@ async def request_student_consent(
         return ResponseModel(
             data={"queued": queued, "already_shared": len(already_shared)},
             message=(
-                f"Consent request sent to {queued} claimed learner(s). "
-                "Nothing is shared until each learner chooses."
+                f"Consent request sent to {queued} claimed Student(s). "
+                "Nothing is shared until each Student chooses."
             ),
         )
     except HTTPException:
@@ -1381,7 +1381,7 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
     """
     # New guidance-path records preserve the complete selected branches. Keep
     # the legacy direction resolver below as a compatibility fallback for
-    # existing provisioned learners created before the path migration.
+    # existing provisioned Students created before the path migration.
     try:
         path_row = (_svc().table("guidance_report_paths").select("path, source, updated_at")
                     .eq("student_id", user.get("id")).limit(1).execute().data or [None])[0]
@@ -1504,7 +1504,7 @@ def _require_guided_student(user: dict) -> dict:
     if not user.get("chosen_direction"):
         raise HTTPException(
             status_code=409,
-            detail="Complete learner guidance before printing a report.",
+            detail="Complete Student guidance before printing a report.",
         )
     return user
 
@@ -1523,7 +1523,7 @@ def _require_confirmed_report_path(user_id: str) -> dict:
     if not (programme.get("id") or programme.get("name")) or not (university.get("id") or university.get("name")):
         raise HTTPException(
             status_code=409,
-            detail="Complete the learner's programme and university guidance before printing a report.",
+            detail="Complete the Student's programme and university guidance before printing a report.",
         )
     return row
 
@@ -1542,9 +1542,9 @@ async def save_student_guidance(
     payload: GuidanceUpdate = Body(...),
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Save the learner's selected direction before a report can be printed.
+    """Save the Student's selected direction before a report can be printed.
 
-    The administrator may guide a provisioned learner before the learner claims
+    The administrator may guide a provisioned Student before the Student claims
     the account. Only the direction is persisted; subjects and grades remain
     transient inputs and are never copied into the account.
     """
@@ -1562,12 +1562,12 @@ async def save_student_guidance(
             .execute()
         )
         if not result.data:
-            raise RuntimeError("learner guidance update matched no account")
+            raise RuntimeError("Student guidance update matched no account")
     except HTTPException:
         raise
     except Exception as exc:  # noqa: BLE001
-        log.error("provisioning: learner guidance save failed", error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not save learner guidance.")
+        log.error("provisioning: Student guidance save failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not save Student guidance.")
     return ResponseModel(
         data={
             "user_id": user_id,
@@ -1583,7 +1583,7 @@ async def save_student_guidance_path(
     payload: dict = Body(default_factory=dict),
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Save the full selected path for one learner under admin access."""
+    """Save the full selected path for one Student under admin access."""
     school_id = _require_school(current_user)
     student = _load_school_student(user_id, school_id)
     raw_path = payload.get("path") if isinstance(payload.get("path"), dict) else {}
@@ -1607,7 +1607,7 @@ async def save_student_guidance_path(
         return ResponseModel(data={"student_id": user_id, "saved": True, "path": path})
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: selected guidance path save failed", error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not save learner guidance yet.")
+        raise HTTPException(status_code=500, detail="Could not save Student guidance yet.")
 
 
 @router.get("/students/{user_id}/guidance-path", response_model=ResponseModel)
@@ -1615,7 +1615,7 @@ async def get_student_guidance_path(
     user_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Return the selected guidance path for a learner this admin may guide."""
+    """Return the selected guidance path for a Student this admin may guide."""
     school_id = _require_school(current_user)
     _load_school_student(user_id, school_id)
     try:
@@ -1628,8 +1628,8 @@ async def get_student_guidance_path(
             "updated_at": (row or {}).get("updated_at"),
         })
     except Exception as exc:  # noqa: BLE001
-        log.error("provisioning: learner guidance path read failed", error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not load this learner's guidance yet.")
+        log.error("provisioning: Student guidance path read failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not load this Student's guidance yet.")
 
 
 @router.get("/students/{user_id}/report.docx")

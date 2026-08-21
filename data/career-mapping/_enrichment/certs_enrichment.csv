@@ -1,4 +1,4 @@
-domain_key,cert_name,cert_body,official_url,seniority_tier,tier_type,price,currency,price_as_of,price_source
+domain_key,cert_name,cert_body,official_url,seniority_tier,tier_type,price,currency,price_as_of,price_source,price_period
 D001,CFA Level I,CFA Institute,https://www.cfainstitute.org/en/programs/cfa/level-1,1,stages,450,USD,2025-01-15,https://www.cfainstitute.org/en/programs/cfa/exam-fees
 D001,CFA Level II,CFA Institute,https://www.cfainstitute.org/en/programs/cfa/level-2,2,stages,450,USD,2025-01-15,https://www.cfainstitute.org/en/programs/cfa/exam-fees
 D001,CFA Level III,CFA Institute,https://www.cfainstitute.org/en/programs/cfa/level-3,3,stages,450,USD,2025-01-15,https://www.cfainstitute.org/en/programs/cfa/exam-fees
@@ -18,4 +18,16 @@ D002,Cisco CCNA,Cisco,https://www.cisco.com/site/us/en/learn/training-certificat
 D002,PMP,Project Management Institute,https://www.pmi.org/certifications/project-management-pmp,2,ladder,405,USD,2025-01-15,https://www.pmi.org/certifications/project-management-pmp/getting-started
 D002,CISSP,ISC2,https://www.isc2.org/Certifications/CISSP,3,stages,749,USD,2025-01-15,https://www.isc2.org/Certifications/CISSP/Exam-Pricing
 D010,CPA,Nigerian Accounting Standards Board,https://www.frcn.gov.ng/,2,stages,75000,NGN,2025-01-15,https://www.frcn.gov.ng/fees
+D011,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D013,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D014,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D015,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D015,ACA qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D029,CIPM professional membership and re-certification,Chartered Institute of Personnel Management of Nigeria,https://cipmnigeria.org/membership/membership-routes/,1,stages,64050,NGN,2026-08-17,https://cipmnigeria.org/membership/membership-routes/,per professional exam stage
+D032,CIPM professional membership and re-certification,Chartered Institute of Personnel Management of Nigeria,https://cipmnigeria.org/membership/membership-routes/,1,stages,64050,NGN,2026-08-17,https://cipmnigeria.org/membership/membership-routes/,per professional exam stage
+D060,Certificate in Banking (CIB),Chartered Institute of Bankers of Nigeria,https://portal.cibng.org/cb_prof_exam.asp,1,stages,8000,NGN,2026-08-17,https://portal.cibng.org/cb_prof_exam.asp,per diploma subject
+D060,Associateship of the Chartered Institute of Bankers (ACIB),Chartered Institute of Bankers of Nigeria,https://portal.cibng.org/cb_prof_exam.asp,2,stages,20000,NGN,2026-08-17,https://portal.cibng.org/cb_prof_exam.asp,per chartered banker subject
+D061,Associateship of the Chartered Institute of Bankers (ACIB),Chartered Institute of Bankers of Nigeria,https://portal.cibng.org/cb_prof_exam.asp,2,stages,20000,NGN,2026-08-17,https://portal.cibng.org/cb_prof_exam.asp,per chartered banker subject
+D158,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
+D159,ICAN ACA professional accountancy qualification,Institute of Chartered Accountants of Nigeria,https://icanig.org/ican/students/faqs.php,1,stages,40740,NGN,2026-08-17,https://icanig.org/ican/students/faqs.php,per paper
 D010,ACCA,Association of Chartered Certified Accountants,https://www.accaglobal.com/gb/en/qualifications/glance.html,2,stages,150,GBP,2025-01-15,https://www.accaglobal.com/gb/en/student/exam-entry-and-administration/exam-fees.html

@@ -141,7 +141,7 @@ export const merchandiseItems: MerchandiseItem[] = [
     technical_embedding: '⚡ Sifter',
     description: '5-panel cap. Embroidered ⚡ Sifter on front.',
     image_url: '', shopify_product_id: '', available: true,
-    unlock_condition: { type: 'open', description: 'Available to all learners' },
+    unlock_condition: { type: 'open', description: 'Available to all students' },
   },
   {
     id: 'sifter-tee-foundation', name: 'Sifter Foundation Tee', field_id: 'crypto',
@@ -149,14 +149,14 @@ export const merchandiseItems: MerchandiseItem[] = [
     technical_embedding: '⚡ Learning is compounding.',
     description: 'The entry-level Sifter tee. Front: ⚡ logo. Back: "Learning is compounding."',
     image_url: '', shopify_product_id: '', available: true,
-    unlock_condition: { type: 'open', description: 'Available to all learners' },
+    unlock_condition: { type: 'open', description: 'Available to all students' },
   },
   {
     id: 'sifter-runner-01', name: 'Sifter Runner Sneakers', field_id: 'crypto',
     category: 'footwear', tier: 'foundation', price_usd: 95, merch_credits_cost: 1900,
     technical_embedding: 'Progress compounds daily.',
-    description: 'Low-profile trainers with Sifter detailing for learners who want the merch line to extend beyond apparel.',
+    description: 'Low-profile trainers with Sifter detailing for students who want the merch line to extend beyond apparel.',
     image_url: '', shopify_product_id: '', available: true,
-    unlock_condition: { type: 'open', description: 'Available to all learners' },
+    unlock_condition: { type: 'open', description: 'Available to all students' },
   },
 ];

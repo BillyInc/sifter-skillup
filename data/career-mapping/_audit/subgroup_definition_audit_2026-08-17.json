@@ -1,0 +1,165 @@
+{
+  "definition": {
+    "grouping_key": "first_two_digits_of_role.isco_group",
+    "threshold": "explicit P1/P2, or distinct sub-majors > 2, or roles > 50 with at least two distinct sub-majors; P3 stays flat except the independently resolved D022 case",
+    "priority3_override": "P3 excludes clustering; D022 conflict with P1 is recorded, not silently resolved",
+    "role_demand_ordering": "deferred until a validated role-demand dataset exists",
+    "promotion_impact": {
+      "domain_count": "Promoting a subgroup creates a new top-level domain and increases the domain count; it is not a display-only rename.",
+      "ccmas_programme_mapping": "Every promotion requires a fresh CCMAS programme-to-domain mapping pass because programme links, match tiers, and downstream domain references may change.",
+      "proof_gate": "Do not promote from subgroup size or intuition alone; require an independent source-backed domain definition, distinct foundation evidence, role boundary, and reviewed programme impact."
+    }
+  },
+  "canonical_roles": 5154,
+  "domains": 168,
+  "subgroups": 464,
+  "summary": {
+    "derivation_findings": 0,
+    "threshold_findings": 0,
+    "level_direction_findings": 0,
+    "placeholder_or_missing_label_or_description": 0,
+    "empty_or_overlapping_skill_findings": 5,
+    "source_layer_overlap_is_evidence_index": 1,
+    "stored_role_count_findings": 0,
+    "independent_resolution_findings": 1
+  },
+  "findings": {
+    "definition_conflicts": [
+      {
+        "kind": "priority_overlap",
+        "domains": [
+          "D022"
+        ],
+        "detail": "The specification lists D022 as both Priority 1 needing clustering and Priority 3 excluded because engineer/technician is a level split."
+      }
+    ],
+    "independent_resolution": [
+      {
+        "domain_id": "D022",
+        "observed_submajors": {
+          "13": {
+            "role_count": 4,
+            "role_examples": [
+              "oil and gas production manager",
+              "mine manager",
+              "quarry manager",
+              "mine production manager"
+            ]
+          },
+          "21": {
+            "role_count": 25,
+            "role_examples": [
+              "quarry engineer",
+              "mine geologist",
+              "chemical metallurgist",
+              "drilling engineer",
+              "explosives engineer",
+              "liquid fuel engineer"
+            ]
+          },
+          "31": {
+            "role_count": 5,
+            "role_examples": [
+              "metallurgical technician",
+              "mine surveying technician",
+              "geotechnician",
+              "mine safety officer",
+              "Calibration Technologists and Technicians"
+            ]
+          },
+          "81": {
+            "role_count": 26,
+            "role_examples": [
+              "pipeline pump operator",
+              "driller",
+              "derrickhand",
+              "underground heavy equipment operator",
+              "dewatering technician",
+              "well-digger"
+            ]
+          }
+        },
+        "recommended_priority": "P1",
+        "reason": "The four groups represent materially different work directions: management, engineering/geology, technical surveying/safety, and drilling/mining operations."
+      }
+    ],
+    "threshold_design": [
+      {
+        "kind": "single_submajor_large_domain",
+        "domains": [
+          "D043",
+          "D085",
+          "D097",
+          "D110"
+        ],
+        "reason": "The current OR threshold requests a subgroup card even when all roles share one ISCO sub-major; that produces one card and does not reduce directional clutter.",
+        "recommendation": "Use more than two sub-majors, or more than 50 roles with at least two sub-majors, as the clustering trigger; keep a single-sub-major domain flat and demand-sorted."
+      }
+    ],
+    "derivation": [],
+    "thresholds": [],
+    "level_direction": [],
+    "labels": [],
+    "skills": [
+      {
+        "domain_id": "D042",
+        "isco_submajor": "11",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D042",
+        "isco_submajor": "12",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D150",
+        "isco_submajor": "34",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D155",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D167",
+        "isco_submajor": "24",
+        "kind": "empty_cluster_skills"
+      }
+    ],
+    "source_layer": [
+      {
+        "kind": "source_backed_foundation_overlap",
+        "overlap_skill_count": 35868,
+        "subgroup_count": 508,
+        "detail": "domain_skill_provenance currently repeats domain foundation skills inside subgroup skill maps."
+      }
+    ],
+    "role_counts": [],
+    "runtime": [
+      {
+        "kind": "phantom_subgroup_demand_path",
+        "status": "none_found"
+      },
+      {
+        "kind": "role_demand_ordering",
+        "status": "deferred",
+        "detail": "No role-demand dataset is available yet; roles must not be ordered by an unavailable demand metric. Preserve source/insertion order until a validated demand table is introduced."
+      }
+    ],
+    "schema": [
+      {
+        "kind": "field_missing_from_migration",
+        "field": "what_people_do"
+      },
+      {
+        "kind": "field_missing_from_migration",
+        "field": "work_context"
+      },
+      {
+        "kind": "field_missing_from_migration",
+        "field": "display_order"
+      }
+    ]
+  }
+}

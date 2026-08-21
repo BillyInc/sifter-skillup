@@ -8,6 +8,8 @@
    "name": "Veterinary Medicine",
    "qualification": "B.Sc",
    "duration_years": 5,
+   "source_state": "source_conflict",
+   "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf: VPM 507/508, VCH 501/502 versus VCH 503/504, parser extraction gaps, and VRP 608 learning outcomes missing",
    "objectives": [],
    "employability_skills": [],
    "skills_21st_century": [],
@@ -1210,16 +1212,35 @@
      "status": "C",
      "lh": 30,
      "ph": null,
-     "skills_learned": [
-      "describe the procedure required for preoperative assessment",
-      "explain the history, clinical signs, laboratory tests and diagnostic imaging carried out; and",
-      "diagnose and treat lamenesses in animals",
-      "describe lesions and decide treatment options that best fit the presentation",
-      "determine appropriate implants and treatment options; and",
-      "determine the diagnostic method that best fits the clinical presentation and apply treatment."
-     ],
-     "content_summary": "Surgical management involving the head, neck and thorax as well as abdomen, limbs and lameness. Features of cosmetic surgery. Common operations of all regions will be discussed including indications and contraindications. VSR 507 Orthopaedic Surgery       (2 Units C: LH 30) Learning Outcomes Fractures and fracture healing; examination and evaluation of the orthopaedic patient, reduction and fixati"
-    },
+      "skills_learned": [
+       "describe the procedure required for preoperative assessment",
+       "explain the history, clinical signs, laboratory tests and diagnostic imaging carried out; and",
+       "diagnose and treat lamenesses in animals",
+       "describe lesions and decide treatment options that best fit the presentation",
+       "determine appropriate implants and treatment options; and",
+       "determine the diagnostic method that best fits the clinical presentation and apply treatment."
+      ],
+      "content_summary": "Surgical management involving the head, neck and thorax as well as abdomen, limbs and lameness. Features of cosmetic surgery. Common operations of all regions will be discussed including indications and contraindications.",
+      "source_state": "extraction_gap",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P13/P14 p.50; parser had appended the following VSR 507 section to VSR 506"
+     },
+     {
+      "level": 500,
+      "code": "VSR 507",
+      "title": "Orthopaedic Surgery",
+      "units": 2,
+      "status": "C",
+      "lh": 30,
+      "ph": null,
+      "skills_learned": [
+       "describe lesions and decide treatment options that best fit the presentation",
+       "determine appropriate implants and treatment options; and",
+       "determine the diagnostic method that best fits the clinical presentation and apply treatment."
+      ],
+      "content_summary": "Fractures and fracture healing; examination and evaluation of the orthopaedic patient, reduction and fixation of fractures; nursing care, diagnosis and treatment of fractures of long bones, pelvis, spine and skull of animal species. Management of bone infections; nutritional, neoplastic bone and joint diseases. Use of implants and fixation devices.",
+      "source_state": "source_reconciled",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P12 p.19 and P13/P14 p.50"
+     },
     {
      "level": 500,
      "code": "VSR 508",
@@ -1314,9 +1335,27 @@
      ],
      "content_summary": "Concepts, definitions, and classification of zoonoses. Studies of specific bacterial, viral, prions, parasitic, rickettsial, protozoal and fungal zoonoses with emphasis on prevention, early detection, control, and eradication. Ecology, water sources and purification. Waste disposal. Public health significance of rodents, birds, flies and mosquitoes. Environment pollution and control. VPM 505 Epide"
     },
-    {
-     "level": 500,
-     "code": "VPM 506",
+     {
+      "level": 500,
+      "code": "VPM 505",
+      "title": "Epidemiology and Principles of Disease Prevention",
+      "units": 2,
+      "status": "C",
+      "lh": 30,
+      "ph": null,
+      "skills_learned": [
+       "discuss model epidemiological efforts taken by individuals, groups and communities in the past and the reasons for success or failure of each effort",
+       "explain various sources of epidemiologic data including household survey, clinics, farms and laboratories",
+       "explain the determinants of diseases and set goals for their epidemiological survey on farms, homes and identified fields/communities; and",
+       "determine and report the monthly/annual incidence of specific animal and/or human illnesses and associated deaths in a given location."
+      ],
+      "content_summary": "Definition, scope and uses of epidemiology and disease prevention. Basic concepts of epidemiology. Ecology of disease. Disease-host-agent-environment. Web of causation. Statistical and biological significance of epidemiologic associations. Methods of epidemiologic investigations. Patterns of disease occurrence. Principles and procedures for screening diseases. Screening tests and evaluation. Vaccinations. Dairy Herd Health. Submission of specimens.",
+      "source_state": "source_reconciled",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P12 p.19 and P13/P14 p.53"
+     },
+     {
+      "level": 500,
+      "code": "VPM 506",
      "title": "Veterinary Administration, Jurisprudence and Ethics",
      "units": 2,
      "status": "C",
@@ -1332,7 +1371,7 @@
     },
     {
      "level": 500,
-     "code": "VPM 507",
+      "code": "VPM 508",
      "title": "Veterinary Biostatistics and Economics",
      "units": 2,
      "status": "C",
@@ -1345,12 +1384,54 @@
       "demonstrate acquaintance with relevant statistical software for veterinary application; and",
       "demonstrate knowledge and application of basic economic concepts in setting costs, benefits and prices in food and non-food animal health enterprise."
      ],
-     "content_summary": "Veterinary recording and data types. Classification and tabulation of data. Descriptive and inferential statistics. Measures of central tendency and variability. Population and sample inferences. Test of hypotheses, chi-square tests, normal and other distribution, t-tests, introduction to simple linear regression, sampling methods. Uses of statistics in veterinary practice and research. Basic micr"
-    },
-    {
-     "level": 500,
-     "code": "VEX 599",
+      "content_summary": "Veterinary recording and data types. Classification and tabulation of data. Descriptive and inferential statistics. Measures of central tendency and variability. Population and sample inferences. Test of hypotheses, chi-square tests, normal and other distribution, t-tests, introduction to simple linear regression, sampling methods. Uses of statistics in veterinary practice and research. Basic micro- and macro-economics concepts. Cost of public health schemes. Demand and supply of veterinary services. Economics of livestock production. Economics of operating a veterinary practice and managing veterinary clinic/hospital. Benefit-cost analysis. Business organisations, administration, and promotion. Business management. Project appraisal and feasibility reports.",
+      "source_aliases": ["VPM 507"],
+      "source_state": "source_conflict",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P12 p.19 uses VPM 508; P13/P14 p.54 uses VPM 507"
+     },
+     {
+      "level": 500,
+      "code": "VCH 501",
+      "title": "Clinics I",
+      "units": 2,
+      "status": "C",
+      "lh": null,
+      "ph": 90,
+      "skills_learned": [
+       "receive and clerk clinical cases presented at the different clinics",
+       "examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a confirmatory diagnosis",
+       "institute treatment and make recommendations as necessary",
+       "carry out or organize prophylactic measures in Veterinary practice including vaccinations and biosecurity."
+      ],
+      "content_summary": "Clinics I is to be further divided into clinical modules in Medicine, Surgery, Theriogenology, Public Health and Preventive Medicine & Diagnostics. Clinical exercises involving familiarization with methods of case reception, clinical manipulations, sample collection from clinical cases, diagnosis, and treatment should be undertaken.",
+      "source_aliases": ["VCH 503"],
+      "source_state": "source_conflict",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P12 p.20 uses VCH 501; P13/P14 pp.54-55 uses VCH 503"
+     },
+     {
+      "level": 500,
+      "code": "VCH 502",
+      "title": "Clinics II",
+      "units": 2,
+      "status": "C",
+      "lh": null,
+      "ph": 90,
+      "skills_learned": [
+       "receive and clerk clinical cases presented at the different clinics",
+       "examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a confirmatory diagnosis",
+       "institute treatment and make recommendations as necessary",
+       "carry out or organize prophylactic measures in Veterinary practice including vaccinations and biosecurity."
+      ],
+      "content_summary": "Clinics II is to be further divided into clinical modules in Medicine, Surgery, Theriogenology, Public Health and Preventive Medicine. During the rotations, the students participate in clinical practice involving case reception, clerking, clinical manipulations, sample collection, diagnosis and treatment.",
+      "source_aliases": ["VCH 504"],
+      "source_state": "source_conflict",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P12 p.20 uses VCH 502; P13/P14 p.55 uses VCH 504"
+     },
+     {
+      "level": 500,
+      "code": "VEX 599",
      "title": "Externship IV",
+     "mapping_excluded": true,
      "units": 2,
      "status": "C",
      "lh": null,
@@ -1359,16 +1440,13 @@
       "relate teachings in Veterinary medicine, surgery and theriogenology to cases presented at Veterinary hospitals/clinics.",
       "analyze clinical presentations in lethargic animals and use ancillary diagnostic methods to achieve disease diagnosis.",
       "demonstrate the knowledge of appropriate treatment regimen for diagnosed diseases",
-      "receive and clerk clinical cases presented at the different clinics",
-      "examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a confirmatory diagnosis;",
-      "institute treatment and make recommendations as necessary; and",
-      "carry out or organize prophylactic measures in Veterinary practice including vaccinations and biosecurity. Veterinary Medicine  54                          New",
-      "receive and clerk clinical cases presented at the different clinics",
-      "examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a confirmatory diagnosis;",
-      "institute treatment and make recommendations as necessary; and",
-      "carry out or organize prophylactic measures in Veterinary practice including vaccinations and biosecurity."
-     ],
-     "content_summary": "A long vacation field practice of six weeks duration in Clinics and Veterinary Hospitals (under the supervision of a qualified veterinarian) during the long vacation following 500 level. Inspection visits may be conducted to such places by lecturers from the coordinating departments. VCH 503 Clinics I                                (2 Units; C) (PH 90) Learning outcomes Clinics I is to be further "
+       "relate teachings in Veterinary medicine, surgery and theriogenology to cases presented at Veterinary hospitals/clinics.",
+       "analyze clinical presentations in lethargic animals and use ancillary diagnostic methods to achieve disease diagnosis.",
+       "demonstrate the knowledge of appropriate treatment regimen for diagnosed diseases"
+      ],
+      "content_summary": "A long vacation field practice of six weeks duration in Clinics and Veterinary Hospitals (under the supervision of a qualified veterinarian) during the long vacation following 500 level. Inspection visits may be conducted to such places by lecturers from the coordinating departments.",
+      "source_state": "extraction_gap",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P13/P14 p.54; parser had appended the following VCH 501/503 section to VEX 599"
     },
     {
      "level": 600,
@@ -1498,14 +1576,17 @@
     },
     {
      "level": 600,
-     "code": "VRP 608",
+      "code": "VRP 608",
      "title": "Research Project",
+     "mapping_excluded": true,
      "units": 4,
      "status": "C",
      "lh": null,
      "ph": null,
      "skills_learned": [],
-     "content_summary": "A project involving a research topic in any subject area in Veterinary Medicine. Each student shall be allowed to carry out the study in his/her area of interest as may be moderated by the Faculty and the relevant Department. Minimum Academic Standards Staffing Academic Staff The NUC guidelines on staff/student ratio of 1:10 for Veterinary Medicine shall apply. However, there should be a minimum o"
+      "content_summary": "A project involving a research topic in any subject area in Veterinary Medicine. Each student shall be allowed to carry out the study in his/her area of interest as may be moderated by the Faculty and the relevant Department.",
+      "source_state": "source_missing",
+      "source_reference": "Veterinary-Medicine-CCMAS-2023-FINAL.pdf, P13/P14 p.58 provides course contents but no learning outcomes"
     }
    ],
    "skills_profile": [

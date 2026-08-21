@@ -180,7 +180,7 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
           {[
             'Share the lesson or lab you are working on.',
             'Ask clear questions when blocked.',
-            'Help other learners with context, not just answers.',
+            'Help other students with context, not just answers.',
             'Keep the room free of spam.',
           ].map(g => (
             <Text key={g} style={[styles.guidelineText, { color: colors.textSoft }]}>{g}</Text>

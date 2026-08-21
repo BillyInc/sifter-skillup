@@ -1765,7 +1765,7 @@ export const LAB1_AGGREGATE_SIMS = {
 
 // ─────────────────────────────────────────────────────────────
 // LAB 1 — BUILD TASK
-// Platform-specified (Lab progression = 1 — no learner choice)
+// Platform-specified (Lab progression = 1 — no student choice)
 // ─────────────────────────────────────────────────────────────
 
 export const LAB1_BUILD_TASK = {
@@ -2897,7 +2897,7 @@ export const LAB2_AGGREGATE_SIMS = {
 
 // ─────────────────────────────────────────────────────────────
 // LAB 2 — BUILD TASK
-// Platform-specified (Lab progression = 2 — no learner choice)
+// Platform-specified (Lab progression = 2 — no student choice)
 // ─────────────────────────────────────────────────────────────
 
 export const LAB2_BUILD_TASK = {
@@ -4240,7 +4240,7 @@ Solidity has 10 years of accumulated documentation, YouTube tutorials, Udemy cou
 
 Cairo has the official book and a growing but smaller set of supplementary resources. Questions on Stack Overflow remain sparse — a developer hitting a Cairo-specific problem is far more likely to have to dig into GitHub Issues or Discord than to find an existing answer.
 
-Quality of documentation: comparable to Solidity's early 2017 state. Adequate for determined learners; not yet at the level that makes self-learning frictionless.
+Quality of documentation: comparable to Solidity's early 2017 state. Adequate for determined students; not yet at the level that makes self-learning frictionless.
 
 DIMENSION 3 — AVAILABLE LIBRARIES (PACKAGES)
 
@@ -6424,7 +6424,7 @@ export const LAB5_META = {
 //   L6.4 — TYPE B: revenue formula (DEX = volume × fee; lending = interest spread)
 //   L6.5 — TYPE A: research workflow, process, judgment
 //
-// Intermediate level: learner has Junior foundation.
+// Intermediate level: student has Junior foundation.
 // Terminology can be used without full re-anchoring — callback phrases apply.
 // Still: never use jargon without a one-clause definition on first appearance.
 
@@ -9664,7 +9664,7 @@ Query the mock tables exactly as you would real Dune tables — same field names
   examples: [
     {
       contextTag: '[First query execution: syntax error recovery]',
-      context: 'A learner writes their first AVNU daily volume query and hits a syntax error.',
+      context: 'A student writes their first AVNU daily volume query and hits a syntax error.',
       scenario: 'Error: "Syntax error near GROUP BY." She checks: her SELECT line is DATE_TRUNC(\'day\', block_time) AS trade_date, SUM(sell_amount)/1e18 AS volume — missing the comma between the two SELECT columns. She adds the comma, reruns. Result: 90 rows, one per day, with volume in human-readable ETH.',
       outcome: 'The most common SQL syntax errors are: missing commas between SELECT columns; missing alias after AS; table name with a typo. The error message identifies the location — "near GROUP BY" means the error is in the SELECT line, not the GROUP BY itself.',
     },

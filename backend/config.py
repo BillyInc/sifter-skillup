@@ -24,7 +24,12 @@ class Settings:
     # ── Email delivery (Resend) ──────────────────────────────
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
     # Must be a domain verified in Resend, or the API rejects every send.
-    EMAIL_FROM: str = os.getenv("EMAIL_FROM", "LevelUp <noreply@levelup.com.ng>")
+    # The verified domain is the SUBdomain hello.levelup.com.ng, not the root:
+    # the root MX is reserved for a future mailbox provider and its SPF belongs
+    # to WhoGoHost. See "Resend sender" in DEPLOY-SETUP.md.
+    EMAIL_FROM: str = os.getenv(
+        "EMAIL_FROM", "LevelUp <noreply@hello.levelup.com.ng>"
+    )
     EMAIL_CODE_TTL_MINUTES: int = int(os.getenv("EMAIL_CODE_TTL_MINUTES", "15"))
     EMAIL_CODE_MAX_ATTEMPTS: int = int(os.getenv("EMAIL_CODE_MAX_ATTEMPTS", "5"))
     # Production uses the durable hashed Supabase table. Local development

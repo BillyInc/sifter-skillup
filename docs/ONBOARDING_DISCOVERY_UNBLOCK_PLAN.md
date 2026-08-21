@@ -131,7 +131,7 @@ This is the controlling scope for the onboarding/discovery unblock. Do not jump 
 
 ### 7. Computational and quantitative evidence audit
 
-- Computational content must distinguish source classifications from learner
+- Computational content must distinguish source classifications from student
   competence. ESCO-backed `social network analysis` and `game theory` are
   stored as method knowledge, with `competence_status = not_demonstrated`.
 - Python and named libraries such as pandas, NumPy, scikit-learn, PyTorch and
@@ -221,13 +221,13 @@ checkpoint, not a generic onboarding screen, legacy route, or learning screen.
   - select the university first, then the programme names that university uses;
   - proceed to programme-to-domain mapping rather than admission onboarding.
 - Educator, school owner, tutorial centre, and JAMB cafe:
-  - their primary job is to guide a learner, not to use a student-shaped Home;
+  - their primary job is to guide a student, not to use a student-shaped Home;
   - they can create or provision one student account at a time, upload a class
     list as a document or image, or skip provisioning to use other admin tools;
-  - guidance must accept the learner's class, stream, institution, programme,
+  - guidance must accept the student's class, stream, institution, programme,
     university, and subject state and use the same matching rules as students;
-  - the current learner context must be visible and switching learner must clear
-    the previous learner's unsaved data.
+  - the current student context must be visible and switching student must clear
+    the previous student's unsaved data.
 - University admin:
   - use a university workspace and university peer comparison;
   - do not show school-owner, tutorial-centre, student, national aggregate,
@@ -296,20 +296,20 @@ checkpoint, not a generic onboarding screen, legacy route, or learning screen.
   route, or a generic Home page.
 
 The report is a full selected-path record, not a compact replacement for the
-guidance flow. It includes the learner's selected academic context, subjects,
+guidance flow. It includes the student's selected academic context, subjects,
 programme, university, requirements, and only the domains, sub-groups, and
-roles the learner selected. Detail belonging to each selected entity remains
+roles the student selected. Detail belonging to each selected entity remains
 available in the report; grouping and page breaks control readability rather
 than silently truncating the data. The surface contract is recorded in
 `docs/mockups/GUIDANCE_REPORT_BEHAVIOUR.md`.
 
-Selection is multi-valued at every intelligence level. A learner or educator
+Selection is multi-valued at every intelligence level. A student or educator
 may select several domains, several sub-groups, and several career roles. Each
 selected branch keeps its parent identifiers and source names. Domain,
 sub-group, and role competencies/skills, tools, and certifications remain
 separate ownership layers; selecting a role never causes the resolver to copy
 the whole parent catalogue into the report. Admin-guided selections are saved
-against the learner being guided, not against the administrator's session.
+against the student being guided, not against the administrator's session.
 
 ### Mockup gate before surface implementation
 
@@ -350,7 +350,7 @@ product decision is recorded and the current surface's data contract is known.
   entering subjects.
 - A user who asks for matching cannot receive a programme recommendation from
   an incomplete or conflicting subject combination.
-- The same rules work when an educator guides a student, with the learner's
+- The same rules work when an educator guides a student, with the student's
   context visible and isolated.
 - Every discovery detail preserves the actual programme/domain/sub-group/role
   hierarchy and explains what the user should do next.
@@ -391,15 +391,15 @@ product decision is recorded and the current surface's data contract is known.
   `Universities / schools`, and `Career mapping` where the source data supports
   them. Similar detail screens must expose their own relevant sibling sections
   rather than dumping every field below the overview.
-- In admin guidance, learner scope is an independent concern. Educators see
-  their own affiliated/provisioned learners where consent and access rules allow;
+- In admin guidance, student scope is an independent concern. Educators see
+  their own affiliated/provisioned students where consent and access rules allow;
   universities see their own programmes and peer comparison; tutorial centres
   see their own guidance sessions. No admin type receives a national aggregate
-  or another institution's private learner data by default.
-- Changing learner, learner scope, institution, or comparison scope clears dependent
+  or another institution's private student data by default.
+- Changing student, student scope, institution, or comparison scope clears dependent
   filters/results and reloads the new scope. Browser back returns to the prior
   scope instead of resetting to Community, Forgot Password, or a legacy route.
-- A cohort overview must expose the next useful action: open a learner, start a
+- A cohort overview must expose the next useful action: open a student, start a
   guidance session, review a programme/subject pattern, or export an allowed
   report. It must not pretend that a cohort-level insight is an individual
   student's recommendation.
@@ -423,10 +423,17 @@ The supplied mockups are the visual-quality target, not the source of truth for 
 - Onboarding screens are functionally branching, but visually they are still basic stacked forms.
 - Some copy still explains implementation details instead of guiding the student.
 - The SS1/SS2 form previously asked for subjects before asking what the student wanted help with; this is now being corrected.
-- Admission Browse still feels like separate modes instead of one guided discovery surface.
-- Programme detail and several deferred pathway surfaces still need the full visual pass.
+- Admission Browse now uses one shared guided surface with account-type-aware
+  subject, programme, university and guidance hand-offs; the remaining visual
+  polish is separate from the state/data contract.
+- Student programme detail now uses the refined Overview, Requirements,
+  Universities and Career guidance sections. Pathways and Elite are retained
+  because the repository's PathwaysHubScreen already consolidates them into one
+  route-selection layer; they are not duplicated on Home.
 - Domain, sub-group, and role detail now separate their own skills, tools, and certifications and explain the first-to-supplementary order; programme and deferred surfaces still need the same treatment.
-- `What the school teaches` is not yet surfaced as a clear student-facing explanation in programme detail.
+- `What the school teaches` is surfaced when the programme record has a
+  source-backed overview or learning-outcome profile; missing source data stays
+  an honest unavailable state.
 - Current UI still needs proper responsive composition, stronger type scale, cleaner cards, better select/search modals, and less raw metadata.
 
 ### Design rules to apply while building
@@ -472,7 +479,14 @@ The user's selected type and answer path must decide what appears next.
   - allow skipping student provisioning to reach other admin surfaces;
   - keep admin access guarded.
 
-Current implementation status: account-type and student setup branching exist; the current pass is making Admission Browse, programme/domain/role detail, and admin learner guidance preserve the selected context and present only source-backed choices. Broader Home and platform-wide visual cleanup remain later stages.
+Current implementation status: account-type and student setup branching exist; Admission Browse, programme/domain/role detail, shared Home resumption, and admin student guidance preserve the selected context and present only source-backed choices. Broader platform-wide visual cleanup remains a later stage.
+
+The admin workspace also has an account-scoped resume contract: the last
+permitted admin route and its query context are retained, while the student
+provisioning stage is retained separately. This lets an educator return to
+student account creation, student guidance, Explore/admission, verification,
+peer comparison or another admin task without mixing that state into a
+student's saved guidance path.
 
 ## Current blockers found
 
@@ -557,7 +571,7 @@ For an existing Supabase project, apply only migrations that have not already be
 7. `backend/migration_role_detail_enrichment.sql` for role-owned certifications. Role-owned tools use `backend/migration_role_tools.sql`; seed only source-backed rows after both migrations are present.
 8. `backend/migration_source_backed_career_layers.sql` for source confidence, data state, ESCO/O*NET identifiers, O*NET competencies, and tool provenance. Then apply the regenerated `backend/seed_career_v2.sql`.
 9. `backend/migration_provisioning.sql` for institution-provisioned student accounts, school codes, claim codes, affiliations, and consent.
-10. `backend/migration_guidance_report_paths.sql` for the account-scoped full selected guidance path used by students and admin-guided learners.
+10. `backend/migration_guidance_report_paths.sql` for the account-scoped full selected guidance path used by students and admin-guided students.
 11. `backend/migration_admin_access_grant.sql` and `backend/migration_institution_team_access.sql` for guarded admin access and institution team membership.
 12. `backend/migration_feedback_storage.sql`, `backend/migration_internal_staff.sql`, and related admin/support migrations if those surfaces are enabled.
 13. `backend/migration_auth_onboarding_security_patch.sql` last, because it depends on users, active sessions, admission/student pipeline, and provisioning concepts being present.

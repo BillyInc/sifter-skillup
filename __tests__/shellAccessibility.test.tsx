@@ -42,6 +42,19 @@ jest.mock("@/hooks/useAuth", () => ({
   useAuth: () => ({ user: { id: "u1", username: "tester" } }),
 }));
 
+// Pin the launch flag OFF so the fourth destination is deterministically
+// "Saved". WORLD_NAV reads featureFlags.myWorldLive at module load, and that
+// reads process.env.EXPO_PUBLIC_MY_WORLD_LIVE — so without this mock the tab
+// label depends on the developer's shell environment. Anyone with the flag
+// exported (and CI after go-live) would see this suite fail claiming the app
+// shell's accessibility broke, when all that changed is a launch toggle.
+//
+// Mocking the flag rather than WORLD_NAV keeps the real label/icon/eyebrow
+// mapping under test; only its input is fixed.
+jest.mock("@/lib/featureFlags", () => ({
+  featureFlags: { myWorldLive: false },
+}));
+
 import { ReferenceShell } from "../src/components/shell/ReferenceShell";
 import { ThemeProvider } from "../src/theme";
 
@@ -93,6 +106,31 @@ describe("ReferenceShell accessibility", () => {
       expect(tab.props.accessibilityState).toHaveProperty("selected");
       expect(typeof tab.props.accessibilityLabel).toBe("string");
       expect(tab.props.accessibilityLabel.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("exposes the final-concepts mobile destinations, named as they read", async () => {
+    await renderShell();
+    // Below the 1100px web breakpoint the shell renders only the mobile tab
+    // bar, so every tab in the tree is a bottom-bar destination.
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs.map((t: any) => t.props.accessibilityLabel)).toEqual([
+      "Home",
+      "Explore",
+      "Jobs",
+      // The fourth destination is /(tabs)/myworld, which pre-launch IS the
+      // saved-items page. Named "Saved" per the final UI concepts sheet.
+      "Saved",
+      "Profile",
+    ]);
+
+    // WCAG 2.5.3 Label in Name: the spoken name must contain the visible text.
+    for (const tab of tabs) {
+      const visible = tab
+        .findAll((n: any) => typeof n.children?.[0] === "string")
+        .map((n: any) => n.children[0])
+        .join(" ");
+      expect(visible).toContain(tab.props.accessibilityLabel);
     }
   });
 

@@ -138,9 +138,8 @@ export function SeniorSecondaryExploreSetupForm({
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            Search by the name you know. We will show the official names used by
-            universities, where each one is offered, and the requirements you
-            need to check before exploring related careers.
+             Search by the name you know. We will show the universities that offer
+             it and let you choose one before showing its full requirements.
           </Text>
         </View>
       ) : selectedIntent === "choose_subjects" ? (
@@ -166,7 +165,7 @@ export function SeniorSecondaryExploreSetupForm({
       ) : null}
 
       <SifterButton
-        label="Show my guidance"
+        label="Continue guidance"
         onPress={onContinue}
         disabled={
           !ssClass ||

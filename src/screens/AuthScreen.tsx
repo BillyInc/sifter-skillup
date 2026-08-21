@@ -468,11 +468,11 @@ export default function AuthScreen() {
                 hint="Link your account to your school after signing in."
               />
               <AuthField
-                label="Learner claim code (optional)"
+                label="Student claim code (optional)"
                 value={claimCode}
                 onChangeText={(value) => setClaimCode(value.toUpperCase())}
                 placeholder="SCHOOL-SS1-XXXXXXXX"
-                hint="Use this if your school already created your learner account."
+                hint="Use this if your school already created your student account."
               />
 
               <TouchableOpacity

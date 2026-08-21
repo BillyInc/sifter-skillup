@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "policy": "These profiles add only Nigerian regulator, agency or professional terminology that is supported by the named source. Global taxonomies remain separate.",
+  "sources": [],
+  "profiles": [
+    {
+      "id": "ng_surcon_surveying",
+      "region": "nigeria",
+      "source_ids": ["ng_surcon"],
+      "domain_ids": ["D156"],
+      "role_patterns": ["surveyor", "cadastral", "geodetic", "hydrographic", "photogrammet", "cartograph", "survey technician"],
+      "local_role_names": ["Surveyor", "Pupil Surveyor"],
+      "skills": [
+        {"name": "Survey practice and professional field work", "priority": "core", "evidence": "SURCON professional examination and enrolment guidance"},
+        {"name": "Survey documentation and professional standards", "priority": "core", "evidence": "SURCON minimum standard and professional examination resources"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Complete supervised practical survey work", "priority": "core", "evidence": "SURCON professional examination requirements"},
+        {"name": "Prepare and present a professional survey project synopsis", "priority": "core", "evidence": "SURCON professional examination resources"}
+      ],
+      "certifications": [
+        {"name": "SURCON professional examination and registration", "issuer": "Surveyors Council of Nigeria", "level": "professional", "evidence": "SURCON official registration and examination guidance"}
+      ],
+      "subgroups": []
+    },
+    {
+      "id": "ng_nimet_meteorology",
+      "region": "nigeria",
+      "source_ids": ["ng_nimet"],
+      "domain_ids": ["D144"],
+      "role_patterns": ["meteorolog", "weather", "climate", "atmospheric", "hydrolog", "oceanograph"],
+      "local_role_names": ["Meteorologist", "Weather Forecaster"],
+      "skills": [
+        {"name": "Weather observation and forecasting", "priority": "core", "evidence": "NiMet functions and meteorological services"},
+        {"name": "Applied meteorology for agriculture, aviation, water and energy", "priority": "core", "evidence": "NiMet official functions"},
+        {"name": "Meteorological data collection and dissemination", "priority": "core", "evidence": "NiMet official functions"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Interpret and communicate weather information", "priority": "core", "evidence": "NiMet weather and forecasting mandate"},
+        {"name": "Apply meteorological evidence to operational decisions", "priority": "core", "evidence": "NiMet aviation, maritime, agriculture and hydrology functions"}
+      ],
+      "certifications": [],
+      "subgroups": []
+    },
+    {
+      "id": "ng_nnra_radiation",
+      "region": "nigeria",
+      "source_ids": ["ng_nnra"],
+      "domain_ids": ["D123", "D135", "D137"],
+      "role_patterns": ["radiation", "radiograph", "radiolog", "nuclear medicine", "medical physic", "dosimet", "nuclear technician", "radiographer"],
+      "local_role_names": ["Radiation Protection Officer", "Medical Physicist", "Radiographer"],
+      "skills": [
+        {"name": "Radiation protection and occupational exposure control", "priority": "core", "evidence": "NNRA Nigeria Basic Ionizing Radiation Regulation 2023"},
+        {"name": "Radiation-source authorization and compliance", "priority": "core", "evidence": "NNRA regulatory mandate and ionizing-radiation regulation"},
+        {"name": "Patient and worker safety in medical imaging", "priority": "core", "evidence": "NNRA and international basic safety standards referenced by the source"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Assess and control ionising-radiation exposure", "priority": "core", "evidence": "NNRA Nigeria Basic Ionizing Radiation Regulation 2023"},
+        {"name": "Maintain radiation-safety records and procedures", "priority": "core", "evidence": "NNRA occupational exposure and authorization requirements"}
+      ],
+      "certifications": [],
+      "regulatory_requirements": [
+        {"name": "Follow NNRA authorization and radiation-safety requirements", "priority": "core", "evidence": "NNRA Nigeria Basic Ionizing Radiation Regulation 2023"}
+      ],
+      "subgroups": []
+    },
+    {
+      "id": "ng_mls_laboratory",
+      "region": "nigeria",
+      "source_ids": ["ng_mls"],
+      "domain_ids": ["D122"],
+      "role_patterns": ["medical laboratory", "clinical laboratory", "laboratory scientist", "medical technologist", "pathology", "bacteriology"],
+      "local_role_names": ["Medical Laboratory Scientist", "Medical Laboratory Technician"],
+      "skills": [
+        {"name": "Clinical laboratory sample management", "priority": "core", "evidence": "MLSCN guideline on sample management"},
+        {"name": "Laboratory quality management and inspection readiness", "priority": "core", "evidence": "MLSCN quality manual and laboratory inspection guidance"},
+        {"name": "In-vitro diagnostic regulation and safe laboratory practice", "priority": "core", "evidence": "MLSCN guideline for IVD regulation in Nigeria"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Handle, document and retain laboratory samples correctly", "priority": "core", "evidence": "MLSCN sample-management and document-retention guidance"},
+        {"name": "Apply laboratory inspection and accreditation requirements", "priority": "core", "evidence": "MLSCN laboratory inspection and accreditation documents"}
+      ],
+      "certifications": [],
+      "regulatory_requirements": [
+        {"name": "Practise within MLSCN registration and laboratory approval requirements", "priority": "core", "evidence": "Medical Laboratory Science Council of Nigeria official documents"}
+      ],
+      "subgroups": []
+    },
+    {
+      "id": "ng_mdcn_dentistry",
+      "region": "nigeria",
+      "source_ids": ["ng_mdcn"],
+      "domain_ids": ["D067"],
+      "role_patterns": ["dentist", "dental", "orthodont", "prosthodont", "oral", "maxillofacial"],
+      "local_role_names": ["Dentist", "Dental Practitioner"],
+      "skills": [
+        {"name": "Safe dental and oral-health practice", "priority": "core", "evidence": "MDCN mandate to regulate medicine, dentistry and alternative medicine"},
+        {"name": "Patient assessment, treatment planning and professional conduct", "priority": "core", "evidence": "MDCN registration and professional regulation resources"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Practise within the regulated scope of dentistry", "priority": "core", "evidence": "MDCN official mandate and registration resources"},
+        {"name": "Protect patient safety and professional standards", "priority": "core", "evidence": "MDCN professional regulation resources"}
+      ],
+      "certifications": [],
+      "regulatory_requirements": [
+        {"name": "MDCN registration and practice requirements", "priority": "core", "evidence": "Medical and Dental Council of Nigeria"}
+      ],
+      "subgroups": []
+    },
+    {
+      "id": "ng_nema_emergency",
+      "region": "nigeria",
+      "source_ids": ["ng_nema"],
+      "domain_ids": ["D161"],
+      "role_patterns": ["emergency", "disaster", "humanitarian", "relief", "rescue", "crisis", "response coordinator", "paramedic"],
+      "local_role_names": ["Emergency Management Officer", "Disaster Response Coordinator"],
+      "skills": [
+        {"name": "Emergency preparedness, response and recovery coordination", "priority": "core", "evidence": "NEMA National Disaster Response Plan"},
+        {"name": "Humanitarian logistics and transport coordination", "priority": "core", "evidence": "NEMA National Disaster Response Plan"},
+        {"name": "Multi-agency incident coordination", "priority": "core", "evidence": "NEMA National Disaster Response Plan"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Coordinate resources during an emergency", "priority": "core", "evidence": "NEMA National Disaster Response Plan"},
+        {"name": "Support evacuation, relief and recovery operations", "priority": "core", "evidence": "NEMA National Disaster Response Plan"}
+      ],
+      "certifications": [],
+      "subgroups": []
+    },
+    {
+      "id": "ng_aviation_aerospace",
+      "region": "nigeria",
+      "source_ids": ["ng_aviation"],
+      "domain_ids": ["D059", "D132", "D136"],
+      "role_patterns": ["aerospace", "aeronaut", "aviation", "aircraft", "avionics", "satellite", "spacecraft"],
+      "local_role_names": ["Aviation Engineer", "Aircraft Maintenance Engineer", "Aviation Safety Professional"],
+      "skills": [
+        {"name": "Aviation safety and regulatory compliance", "priority": "core", "evidence": "Federal Ministry of Aviation and Aerospace Development mandate"},
+        {"name": "Aircraft, airport and airspace systems awareness", "priority": "core", "evidence": "Federal Ministry of Aviation and Aerospace Development mandate"},
+        {"name": "Aerospace infrastructure and service operations", "priority": "supplementary", "evidence": "Federal Ministry of Aviation and Aerospace Development mandate"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Apply aviation safety standards and procedures", "priority": "core", "evidence": "Federal Ministry of Aviation and Aerospace Development mandate"},
+        {"name": "Work with regulated aviation infrastructure and services", "priority": "core", "evidence": "Federal Ministry of Aviation and Aerospace Development mandate"}
+      ],
+      "certifications": [],
+      "subgroups": []
+    },
+    {
+      "id": "ng_transport_rail_mobility",
+      "region": "nigeria",
+      "source_ids": ["ng_transport"],
+      "domain_ids": ["D117", "D164"],
+      "role_patterns": ["railway", "rail", "locomotive", "traffic", "mobility", "transport planner", "public transport"],
+      "local_role_names": ["Rail Transport Professional", "Transport Planning Professional"],
+      "skills": [
+        {"name": "Safe and integrated transport operations", "priority": "core", "evidence": "Federal Ministry of Transportation mandate"},
+        {"name": "Intermodal and mass-transit planning", "priority": "core", "evidence": "Federal Ministry of Transportation mandate"},
+        {"name": "Transport infrastructure and service coordination", "priority": "core", "evidence": "Federal Ministry of Transportation mandate"}
+      ],
+      "tools": [],
+      "competencies": [
+        {"name": "Analyse transport systems across road, rail, air and water", "priority": "core", "evidence": "Federal Ministry of Transportation mandate"},
+        {"name": "Support safe, efficient and affordable mobility services", "priority": "core", "evidence": "Federal Ministry of Transportation mandate"}
+      ],
+      "certifications": [],
+      "subgroups": []
+    }
+  ]
+}

@@ -368,7 +368,7 @@ async def send_guild_message(
             "id": msg_id,
             "guild_id": guild_id,
             "user_id": current_user["id"],
-            "username": current_user.get("username", "Learner"),
+            "username": current_user.get("username", "Student"),
             "content": content,
             "created_at": datetime.now(timezone.utc).isoformat(),
         }).execute()

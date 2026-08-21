@@ -1,0 +1,28 @@
+{
+  "programme": "Sport Management (Education)",
+  "mapping_type": "D_custom",
+  "qualification": "B.Ed/B.Sc equivalent",
+  "duration_years": 4,
+  "enrichment_basis": {
+    "strategy": "official_university_curriculum",
+    "note": "The JAMB name is a sport-management education variant, but the resolved CCMAS parent has no sport-specific curriculum. It uses the University of Nigeria Human Kinetics and Sports Studies curriculum and retains only management, pedagogy and sport-organisation content.",
+    "sources": ["https://humankinetics.unn.edu.ng/course-modules/"]
+  },
+  "external_domain_links": [
+    {"domain_id": "D071", "domain_name": "Sports Management", "match_type": "direct", "source": "official_sports_curriculum", "evidence": "Planning and management of intramural/interscholastic sport, competitive sport administration, supervision and sports marketing are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
+    {"domain_id": "D039", "domain_name": "Higher Education", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Curriculum planning, methods/resources for school programmes and teaching practice are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
+    {"domain_id": "D031", "domain_name": "Sales", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Sports marketing and sponsorship are explicit course areas.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"},
+    {"domain_id": "D032", "domain_name": "Project Management", "match_type": "functional", "source": "official_sports_curriculum", "evidence": "Planning and administration of sport programmes are explicit.", "source_url": "https://humankinetics.unn.edu.ng/course-modules/"}
+  ],
+  "courses": [
+    {"level": 200, "code": "HKS 243", "title": "Curriculum Planning in Human Kinetics and Sports Programmes", "status": "C"},
+    {"level": 200, "code": "HKS 245", "title": "Methods and Resources for Conduct of Human Kinetics Programme in Schools", "status": "C"},
+    {"level": 300, "code": "HKS 341", "title": "Research Methods in Human Kinetics and Sports Studies", "status": "C"},
+    {"level": 300, "code": "HKS 342", "title": "Administration of Community Recreation and Tourism", "status": "C"},
+    {"level": 300, "code": "HKS 345", "title": "Planning and Management of Intramural and Interscholastic Sports Programme", "status": "C"},
+    {"level": 400, "code": "HKS 440", "title": "Planning and Administration of Competitive Sports", "status": "C"},
+    {"level": 400, "code": "HKS 442", "title": "Supervision in Human Kinetic and Sports Programme", "status": "C"},
+    {"level": 400, "code": "HKS 447", "title": "Sports Marketing and Sponsorship", "status": "C"},
+    {"level": 400, "code": "EDU 425", "title": "Professional Teaching Practice Experience II", "status": "C"}
+  ]
+}

@@ -41,6 +41,12 @@ import {
 import { AdminShell } from "./AdminShell";
 import LocalLegalNotice from "@/components/LocalLegalNotice";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import {
+  getAdminProvisioningDrafts,
+  getAdminTask,
+  saveAdminProvisioningDrafts,
+  saveAdminTask,
+} from "@/lib/adminResume";
 import { useAuth } from "@/hooks/useAuth";
 import {
   provisioningData,
@@ -128,11 +134,11 @@ export function StudentProvisioningScreen({
   const isUniversity = organizationType === "university";
 
   return (
-    <AdminShell title={effectiveMode === "jamb" ? "JAMB accounts" : "Learners"} eyebrow={effectiveMode === "jamb" ? "Provider guidance" : "Learners & provisioning"}>
+    <AdminShell title={effectiveMode === "jamb" ? "JAMB accounts" : "Students"} eyebrow={effectiveMode === "jamb" ? "Provider guidance" : "Students & provisioning"}>
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         {isUniversity ? (
           <View style={{ padding: Spacing.xl, gap: Spacing.sm }}>
-            <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Learner accounts are not created here</Text>
+            <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Student accounts are not created here</Text>
             <Text style={[styles.lede, { color: colors.textMuted }]}>University administrators use programme and curriculum intelligence. Student account provisioning is available to secondary schools and JAMB guidance providers only.</Text>
           </View>
         ) : null}
@@ -155,7 +161,7 @@ export function StudentProvisioningScreen({
                   { color: tab === t ? colors.text : colors.textMuted },
                 ]}
               >
-                {t === "roster" ? "Learners" : "Add students"}
+                {t === "roster" ? "Students" : "Add students"}
               </Text>
             </TouchableOpacity>
           ))}
@@ -198,7 +204,7 @@ function RosterTab() {
         setData(r);
         setMergeCandidates(candidates.filter((c) => c.status !== "confirmed" && c.status !== "dismissed"));
       })
-      .catch((e) => setError(e?.message ?? "Could not load learners."))
+      .catch((e) => setError(e?.message ?? "Could not load students."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -240,7 +246,7 @@ function RosterTab() {
       setDeleteConfirmOpen(false);
       load();
     } catch (e) {
-      setError((e as Error)?.message ?? "Could not delete the selected learner accounts.");
+      setError((e as Error)?.message ?? "Could not delete the selected student accounts.");
     } finally {
       setDeleteBusy(false);
     }
@@ -254,8 +260,8 @@ function RosterTab() {
       const result = await provisioningData.requestConsent("progress");
       setConsentRequestMessage(
         result.queued
-          ? `Consent request sent to ${result.queued} claimed learner${result.queued === 1 ? "" : "s"}. They decide what to share.`
-          : "There are no new claimed learners to contact. Existing sharing stays unchanged.",
+          ? `Consent request sent to ${result.queued} claimed student${result.queued === 1 ? "" : "s"}. They decide what to share.`
+          : "There are no new claimed students to contact. Existing sharing stays unchanged.",
       );
     } catch (e) {
       setConsentRequestMessage((e as Error)?.message ?? "Could not send consent requests.");
@@ -317,7 +323,7 @@ function RosterTab() {
       <Text style={[styles.privacyNote, { color: colors.textMuted }]}>
         You only see students who are provisioned by your school (until they claim
         their account) or who have chosen to share their progress. Everyone else
-        is counted in aggregate but stays private. For under-18 learners, follow
+        is counted in aggregate but stays private. For under-18 students, follow
         the guardian/school safeguarding and consent rules applicable in Nigeria
         and your state; only add records you are authorised to handle.
       </Text>
@@ -334,8 +340,8 @@ function RosterTab() {
 
       {deletableStudents.length ? (
       <Text style={[styles.privacyNote, { color: colors.textMuted }]}>
-          Select a school-managed learner to remove a wrong account. Deletion is
-          available only before guidance is completed and before the learner claims
+          Select a school-managed student to remove a wrong account. Deletion is
+          available only before guidance is completed and before the student claims
           the account; claimed or guided accounts are protected by the server.
         </Text>
       ) : null}
@@ -431,7 +437,7 @@ function RosterTab() {
                   onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide learner</Text>
+                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide student</Text>
                 </TouchableOpacity>
               ) : null}
               {s.provenance === "provisioned" && s.claimState === "unclaimed" ? (
@@ -449,7 +455,7 @@ function RosterTab() {
       <Modal visible={deleteConfirmOpen} transparent animationType="fade" onRequestClose={() => setDeleteConfirmOpen(false)}>
         <View style={styles.modalBackdrop}>
           <View style={[styles.confirmCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Delete learner accounts?</Text>
+            <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Delete student accounts?</Text>
             <Text style={[styles.lede, { color: colors.textMuted }]}>This permanently removes {selectedDeleteIds.length} unclaimed, unguided school-created account{selectedDeleteIds.length === 1 ? "" : "s"} and invalidates its claim code. Claimed or guided accounts cannot be deleted.</Text>
             <View style={styles.cardActions}>
               <SecondaryButton label="Cancel" onPress={() => setDeleteConfirmOpen(false)} />
@@ -592,6 +598,7 @@ function MergeCandidatesPanel({
 
 function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "jamb" }) {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [stage, setStage] = useState<AddStage>("import");
   const [busy, setBusy] = useState(false);
   const [uploadMenuOpen, setUploadMenuOpen] = useState(false);
@@ -600,9 +607,55 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
   const [drafts, setDrafts] = useState<ProvisionDraft[]>([]);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [generated, setGenerated] = useState<GeneratedStudent[]>([]);
+  const [resumeHydrated, setResumeHydrated] = useState(false);
+  const [localDraftsHydrated, setLocalDraftsHydrated] = useState(false);
   const defaultStudentType: ProvisioningStudentType = initialMode === "jamb" ? "jamb" : "ss1";
   const stageOptions = initialMode === "jamb" ? JAMB_STAGES : SECONDARY_STAGES;
   const showStream = initialMode === "school";
+
+  useEffect(() => {
+    if (!user?.id) {
+      setResumeHydrated(true);
+      return;
+    }
+    getAdminTask(user.id).then((task) => {
+      if (task?.href === "/(admin)/students" && task.stage && ["import", "review", "done"].includes(task.stage)) {
+        setStage(task.stage as AddStage);
+      }
+    }).finally(() => setResumeHydrated(true));
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || !resumeHydrated) return;
+    void saveAdminTask({
+      href: "/(admin)/students",
+      label: "Student account creation and roster",
+      stage,
+      tab: "add",
+    }, user.id);
+  }, [resumeHydrated, stage, user?.id]);
+
+  useEffect(() => {
+    if (!user?.id) {
+      setLocalDraftsHydrated(true);
+      return;
+    }
+    getAdminProvisioningDrafts(user.id).then((localDrafts) => {
+      if (!localDrafts.length) return;
+      setDrafts((current) => {
+        const currentIds = new Set(current.map((draft) => draft.id));
+        return [...localDrafts.filter((draft) => !currentIds.has(draft.id)), ...current];
+      });
+    }).finally(() => setLocalDraftsHydrated(true));
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || !localDraftsHydrated) return;
+    void saveAdminProvisioningDrafts(
+      drafts.filter((draft) => isLocalDraftId(draft.id)),
+      user.id,
+    );
+  }, [drafts, localDraftsHydrated, user?.id]);
 
   // Load any existing (previously staged) drafts on entry.
   useEffect(() => {
@@ -650,7 +703,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
     try {
       const staged = await provisioningData.createDrafts({ images });
       if (!staged.length) {
-        setError("No learner names could be read from that file. Try a clearer image or add students manually.");
+        setError("No student names could be read from that file. Try a clearer image or add students manually.");
         return;
       }
       const normalized: ProvisionDraft[] = staged.map((draft) => ({
@@ -701,7 +754,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
       })));
       const staged = await provisioningData.createDrafts({ images });
       if (!staged.length) {
-        setError("No learner names could be read from that document. Try another file or add students manually.");
+        setError("No student names could be read from that document. Try another file or add students manually.");
         return;
       }
       setDrafts((prev) => prev.concat(staged.map((draft) => ({
@@ -777,7 +830,10 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
       );
       const selectedDrafts = drafts.filter((d) => selectedOriginalIds.has(d.id));
       if (showStream && selectedDrafts.some((d) => !d.stream)) {
-        throw new Error("Choose a stream for every selected learner before creating accounts.");
+        throw new Error("Choose a stream for every selected student before creating accounts.");
+      }
+      if (showStream && selectedDrafts.some((d) => d.guardianConsent && !(d.guardianName ?? "").trim())) {
+        throw new Error("Add the guardian name for each row marked as consent recorded.");
       }
       if (localSelected.length) {
         const staged = await provisioningData.createDrafts({
@@ -908,7 +964,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
             Correct any unclear names, tick the students you want to create
             accounts for, then create. Ticked rows with a name become accounts.
           </Text>
-           <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each learner below." : "JAMB accounts use the JAMB learner type and do not have a secondary-school stream."}</Text>
+           <Text style={[styles.cardHint, { color: colors.textMuted }]}>{showStream ? "Choose the class and stream separately for each student below." : "JAMB accounts use the JAMB student type and do not have a secondary-school stream."}</Text>
 
           {drafts.map((d) => (
             <View
@@ -966,6 +1022,44 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                     commitDraft(updated);
                   }}
                 /> : null}
+                {showStream ? (
+                  <View style={{ gap: Spacing.xs }}>
+                    <TouchableOpacity
+                      activeOpacity={0.75}
+                      onPress={() => {
+                        const updated = { ...d, guardianConsent: !d.guardianConsent };
+                        patchDraft(d.id, { guardianConsent: updated.guardianConsent });
+                        void commitDraft(updated);
+                      }}
+                      style={{ flexDirection: "row", alignItems: "center", gap: Spacing.sm, minHeight: 36 }}
+                    >
+                      <View
+                        style={[
+                          styles.checkbox,
+                          {
+                            borderColor: colors.border,
+                            backgroundColor: d.guardianConsent ? colors.text : "transparent",
+                          },
+                        ]}
+                      >
+                        {d.guardianConsent ? <Text style={[styles.checkmark, CompassFonts.displayBold]}>✓</Text> : null}
+                      </View>
+                      <Text style={[styles.cardHint, { color: colors.text }]}>Guardian consent recorded</Text>
+                    </TouchableOpacity>
+                    {d.guardianConsent ? (
+                      <TextInput
+                        value={d.guardianName ?? ""}
+                        onChangeText={(guardianName) => patchDraft(d.id, { guardianName })}
+                        onBlur={() => void commitDraft({ ...d, guardianName: d.guardianName ?? "" })}
+                        placeholder="Guardian name"
+                        placeholderTextColor={colors.textMuted}
+                        style={[styles.inputSmall, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg, maxWidth: undefined }]}
+                      />
+                    ) : (
+                      <Text style={[styles.cardHint, { color: colors.textMuted }]}>Account creation does not imply consent.</Text>
+                    )}
+                  </View>
+                ) : null}
               </View>
               {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Needs review</Text> : null}
             </View>
@@ -1056,7 +1150,7 @@ function GeneratedCards({
       <Text style={[styles.lede, { color: colors.textMuted }]}>
         Give each student their claim code — printed on a card, or shared by email
         or WhatsApp. They redeem it in the app to own their account. Codes are
-        single-use; you can reissue a lost one from the learner list.
+        single-use; you can reissue a lost one from the student list.
       </Text>
 
       {generated.map((g) => (
@@ -1090,7 +1184,7 @@ function GeneratedCards({
             {copied === g.userId ? "Copied!" : "Tap the code to copy"}
           </Text>
            {!g.guidanceComplete ? (
-             <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this learner before printing a report.</Text>
+             <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this student before printing a report.</Text>
            ) : null}
           <View style={styles.cardActions}>
             <TouchableOpacity
@@ -1116,7 +1210,7 @@ function GeneratedCards({
                 onPress={() => router.push(`/(admin)/students/${encodeURIComponent(g.userId)}/guidance?student_class=${encodeURIComponent(g.studentClass ?? "")}&stream=${encodeURIComponent(g.stream ?? "")}` as never)}
                 style={[styles.miniBtn, { borderColor: colors.border }]}
               >
-                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide learner</Text>
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide student</Text>
               </TouchableOpacity>
             ) : null}
             {g.guidanceComplete ? (
