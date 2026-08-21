@@ -1,5 +1,7 @@
 import { Stack, useRouter } from "expo-router";
 import { ScreenErrorBoundary } from "../../../src/components/ScreenErrorBoundary";
+// The crash message names the destination, so it uses the shared nav label.
+import { WORLD_NAV } from "../../../src/lib/worldNav";
 
 // My World is a nested stack: the index (personal page / live gateway), then any
 // sub-routes pushed on top (e.g. the legacy game profile). The ReferenceShell
@@ -8,7 +10,7 @@ export default function MyWorldStack() {
   const router = useRouter();
   return (
     <ScreenErrorBoundary
-      screenName="My World"
+      screenName={WORLD_NAV.label}
       onGoHome={() => router.replace("/(tabs)/myworld")}
     >
       <Stack screenOptions={{ headerShown: false }} />

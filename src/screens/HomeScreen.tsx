@@ -26,6 +26,8 @@ import IslandGlobe, { DEFAULT_ISLAND_PINS } from '@/components/artwork/IslandGlo
 import { useResponsive } from '@/hooks/useResponsive';
 import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
 import { resolveTrackContext } from '@/lib/trackContext';
+// Home links to the fourth destination; it must call it whatever the nav calls it.
+import { WORLD_NAV } from '@/lib/worldNav';
 import {
   GRID_GAP,
   WebCard,
@@ -472,7 +474,7 @@ export default function HomeScreen() {
           <WebRow>
             <WebCol weight={2}>
               <WebCard title="Saved guidance" accentBar accentColor={colors.accentRole.action}>
-                <WebListRow icon="WORLD" title="My World" sub="Saved programmes, domains, roles, and notes" onPress={() => go('/(tabs)/myworld')} />
+                <WebListRow icon="WORLD" title={WORLD_NAV.label} sub="Saved programmes, domains, roles, and notes" onPress={() => go('/(tabs)/myworld')} />
                 <View style={[styles.webDiscussionCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
                   <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }, CompassFonts.data]}>NEXT GUIDANCE STEP</Text>
                   <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>Compare programmes, universities, and admission requirements in Explore.</Text>
@@ -491,7 +493,7 @@ export default function HomeScreen() {
               </WebCard>
               <WebCard title="Signals" accentBar accentColor={colors.accentRole.success}>
                 <WebListRow icon="MAP" title="Explore guidance" sub="Programmes, universities, domains, and roles" onPress={() => go('/(tabs)/explore')} />
-                <WebListRow icon="WORLD" title="My World" sub="Saved programmes, domains, roles, and notes" badge="Saved" badgeColor={accentColor} onPress={() => go('/(tabs)/myworld')} />
+                <WebListRow icon="WORLD" title={WORLD_NAV.label} sub="Saved programmes, domains, roles, and notes" badge={WORLD_NAV.label === 'Saved' ? undefined : 'Saved'} badgeColor={accentColor} onPress={() => go('/(tabs)/myworld')} />
               </WebCard>
             </WebCol>
           </WebRow>
@@ -527,7 +529,7 @@ export default function HomeScreen() {
               <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
                 {[
                   { emoji: 'MAP', label: 'Explore Pathways', sub: 'Browse programmes, roles, and pathways', route: '/(tabs)/explore' },
-                  { emoji: 'WORLD', label: 'My World', sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
+                  { emoji: 'WORLD', label: WORLD_NAV.label, sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
                 ].map((item) => (
                   <WebListRow
                     key={item.label}
@@ -688,7 +690,7 @@ export default function HomeScreen() {
           <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
           <QuickAction iconLabel="MAP" label="Explore guidance" sub="Browse programmes, universities, domains, and roles" color={accentColor} onPress={() => go(continueHref)} />
           <QuickAction iconLabel="MAP" label="Explore Pathways" sub="Browse programmes, roles, and pathways" color={colors.accentRole.success} onPress={() => go('/(tabs)/explore')} />
-          <QuickAction iconLabel="WORLD" label="My World" sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} />
+          <QuickAction iconLabel="WORLD" label={WORLD_NAV.label} sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

@@ -78,7 +78,7 @@
   "typography": {
     "families": {
       "display": "Bricolage Grotesque",
-      "body": "Hanken Grotesk",
+      "body": "Inter",
       "data": "Spline Sans Mono"
     },
     "weights": { "display": [600, 700, 800], "body": [400, 500, 600, 700], "data": [400, 500] },
@@ -88,11 +88,11 @@
       { "name": "Display/Title",   "family": "Bricolage Grotesque", "style": "Bold",      "size": 26 },
       { "name": "Display/Section", "family": "Bricolage Grotesque", "style": "SemiBold",  "size": 22 },
       { "name": "Display/Eyebrow", "family": "Bricolage Grotesque", "style": "SemiBold",  "size": 11, "letterSpacing": 1.2, "caps": true },
-      { "name": "Body/LG",         "family": "Hanken Grotesk", "style": "Regular",  "size": 15 },
-      { "name": "Body/MD",         "family": "Hanken Grotesk", "style": "Regular",  "size": 13 },
-      { "name": "Body/SM",         "family": "Hanken Grotesk", "style": "Regular",  "size": 11 },
-      { "name": "Body/Label",      "family": "Hanken Grotesk", "style": "SemiBold", "size": 11 },
-      { "name": "Body/Emphasis",   "family": "Hanken Grotesk", "style": "SemiBold", "size": 13 },
+      { "name": "Body/LG",         "family": "Inter", "style": "Regular",  "size": 15 },
+      { "name": "Body/MD",         "family": "Inter", "style": "Regular",  "size": 13 },
+      { "name": "Body/SM",         "family": "Inter", "style": "Regular",  "size": 11 },
+      { "name": "Body/Label",      "family": "Inter", "style": "SemiBold", "size": 11 },
+      { "name": "Body/Emphasis",   "family": "Inter", "style": "SemiBold", "size": 13 },
       { "name": "Data/Hero",       "family": "Spline Sans Mono", "style": "Medium",  "size": 22 },
       { "name": "Data/Value",      "family": "Spline Sans Mono", "style": "Regular", "size": 15 },
       { "name": "Data/Stamp",      "family": "Spline Sans Mono", "style": "Regular", "size": 9 }
