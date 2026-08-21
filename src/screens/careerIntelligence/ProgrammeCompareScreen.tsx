@@ -518,7 +518,7 @@ const styles = StyleSheet.create({
   actionBtnText: {
     color: "#fff",
     fontSize: FontSize.sm,
-    fontFamily: "HankenGrotesk_600SemiBold",
+    fontFamily: "Inter_600SemiBold",
   },
   actionLink: { fontSize: FontSize.sm },
 });
