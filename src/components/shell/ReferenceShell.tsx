@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Modal,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -25,6 +24,7 @@ import { careerData } from '@/lib/careerData';
 import { WORLD_NAV } from '@/lib/worldNav';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
 import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
+import { useSidebarNav } from '@/hooks/useResponsive';
 import type { CareerSearchResult, SearchScope } from '@/types/career';
 
 type NavId =
@@ -198,7 +198,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const activeItem = primaryNav.find(item => item.id === activeId) ?? primaryNav[0];
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const reduced = useReducedMotion();
-  const isWide = Platform.OS === 'web' && width >= 1100;
+  // 1100 was not a defined breakpoint at all, and useSidebarNav() -- which
+  // returns exactly this intent -- already existed but went unused here. The
+  // design system puts the left sidebar on the Desktop tier (1025px+), so the
+  // threshold drops from 1100 to 1025.
+  const isWide = useSidebarNav();
 
   // Load the user's real search history when the overlay opens. Empty until
   // they have actually searched -- the overlay hides the section in that case.
