@@ -30,6 +30,7 @@ import {
   Modal,
   TextInput,
   Pressable,
+  Linking,
 } from "react-native";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import {
@@ -61,6 +62,7 @@ import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
+  resource: { icon: "🔗", label: "Resource" },
   programme: { icon: "🎓", label: "Programme" },
   school: { icon: "🏫", label: "School" },
   domain: { icon: "🧭", label: "Domain" },
@@ -83,6 +85,7 @@ const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
   { type: "opportunity", title: "Opportunities" },
   { type: "organisation", title: "Employers" },
   { type: "elite_pathway", title: "Pathways" },
+  { type: "resource", title: "Saved learning" },
 ];
 
 const UNCATEGORISED = "Uncategorised";
@@ -687,6 +690,8 @@ function SavedItemRow({
       router.push("/(tabs)/explore/admission" as never);
     else if (item.entityType === "subgroup")
       router.push("/(tabs)/explore/domains" as never);
+    else if (item.entityType === "resource")
+      void Linking.openURL(item.entityId).catch(() => {});
     // comparison / opportunity / organisation have no live detail route yet.
   };
 
