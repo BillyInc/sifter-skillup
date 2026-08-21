@@ -165,13 +165,6 @@ function DomainBody({
     </View>
   );
 
-  let otherRoles: DomainRoleSummary[] = [];
-  if (subgroups.length) {
-    otherRoles = roles.filter(
-      (r) => !subgroups.some((sg) => sg.id === r.subgroupId),
-    );
-  }
-
   // ── Section positions for nav scrolling ──────────────────────
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
@@ -281,8 +274,7 @@ function DomainBody({
       {/* Roles, grouped by sub-cluster */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("roles", e.nativeEvent.layout.y)} />
-        {roles.length ? (
-          subgroups.length ? (
+        {roles.length && subgroups.length ? (
             <View style={{ gap: Spacing.md }}>
               <SectionLabel>Roles in this field</SectionLabel>
               {subgroups.map((sg, i) => {
@@ -303,23 +295,7 @@ function DomainBody({
                   </RoleClusterSection>
                 );
               })}
-              {otherRoles.length ? (
-                <View style={{ gap: Spacing.sm }}>
-                  <Text style={[styles.otherLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                    Other roles
-                  </Text>
-                  <View style={styles.roleList}>
-                    {otherRoles.map(renderRoleCard)}
-                  </View>
-                </View>
-              ) : null}
             </View>
-          ) : (
-            <View style={{ gap: Spacing.sm }}>
-              <SectionLabel>Roles</SectionLabel>
-              <View style={styles.roleList}>{roles.map(renderRoleCard)}</View>
-            </View>
-          )
         ) : null}
       </View>
 

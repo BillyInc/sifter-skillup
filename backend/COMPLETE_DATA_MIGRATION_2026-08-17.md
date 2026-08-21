@@ -147,8 +147,10 @@ Apply these after the career registry exists:
 5. `backend/migration_ss3_secondary_starting_point_patch.sql`
 6. `backend/migration_provisioning_guidance_variants.sql`
 7. `backend/migration_guidance_report_paths.sql`
-8. `backend/migration_student_consent_requests.sql`
-9. `backend/migration_institution_verification_proof.sql`
+8. `backend/migration_saved_resource_support.sql`
+   Adds source-backed resource URLs as a saveable `resource` item in My World.
+9. `backend/migration_student_consent_requests.sql`
+10. `backend/migration_institution_verification_proof.sql`
 
 ### 4. Current auth/account/admin patches
 

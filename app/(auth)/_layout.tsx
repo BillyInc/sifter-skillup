@@ -8,6 +8,7 @@ import { consumePendingPostAuthRedirect } from "../../src/lib/postAuthRedirect";
 import { useEffectiveAccountType, isAdminAccount, needsLegacyTypeSelection } from "../../src/lib/accountType";
 import { getEducatorProfile } from "../../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../../src/lib/adminAudience";
+import { getAdminResume } from "../../src/lib/adminResume";
 import { resolvePostAuthHref } from "../../src/lib/resumeNavigation";
 import type { EducatorProfile } from "../../src/types/institution";
 import { hasExplicitLogout } from "../../src/lib/logoutState";
@@ -28,6 +29,8 @@ export default function AuthLayout() {
   const [educatorProfile, setEducatorProfile] =
     useState<EducatorProfile | null>(null);
   const [profileHydrated, setProfileHydrated] = useState(false);
+  const [adminResumeHref, setAdminResumeHref] = useState<string | null>(null);
+  const [adminResumeHydrated, setAdminResumeHydrated] = useState(false);
   const [explicitLogoutHydrated, setExplicitLogoutHydrated] = useState(false);
   const [explicitLogout, setExplicitLogout] = useState(false);
 
@@ -35,6 +38,8 @@ export default function AuthLayout() {
     if (!user?.id) {
       setEducatorProfile(null);
       setProfileHydrated(true);
+      setAdminResumeHref(null);
+      setAdminResumeHydrated(true);
       return;
     }
 
@@ -52,6 +57,13 @@ export default function AuthLayout() {
         setProfileHydrated(true);
       },
     );
+    setAdminResumeHydrated(false);
+    getAdminResume(user.id).then((resume) => {
+      if (active) {
+        setAdminResumeHref(resume?.href ?? null);
+        setAdminResumeHydrated(true);
+      }
+    });
     return () => {
       active = false;
     };
@@ -78,7 +90,7 @@ export default function AuthLayout() {
   const authReady = !(
     loading ||
     (!user && !explicitLogoutHydrated) ||
-    (user && (!hydrated || !profileHydrated))
+    (user && (!hydrated || !profileHydrated || !adminResumeHydrated))
   );
 
   const isSignInRoute =
@@ -130,7 +142,7 @@ export default function AuthLayout() {
     accountType !== "pending" &&
     isAdminAccount(accountType)
   ) {
-    redirectHref = adminHomeForProfile(educatorProfile);
+    redirectHref = adminResumeHref ?? adminHomeForProfile(educatorProfile);
   } else if (authReady && user && user.onboarding_completed && accountType !== "pending") {
     redirectHref = pendingRedirect ?? resolvePostAuthHref(user);
   }
