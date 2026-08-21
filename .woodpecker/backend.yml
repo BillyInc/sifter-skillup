@@ -4,6 +4,19 @@ when:
   - event: [push, pull_request]
     branch: [main, develop]
 
+# The default clone runs `git submodule update --init --recursive` and
+# `git lfs fetch`. This repo has neither -- no .gitmodules, no .gitattributes,
+# nothing tracked by LFS -- and those two commands still cost ~158s of the
+# ~160s clone step, per workflow. Declaring the clone explicitly turns them
+# off. `partial` keeps the tree:0 filter the default already used.
+clone:
+  - name: clone
+    image: woodpeckerci/plugin-git
+    settings:
+      lfs: false
+      recursive: false
+      partial: true
+
 steps:
   - name: tests
     # Ships uv on top of the interpreter, replacing the setup-uv +

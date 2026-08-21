@@ -116,3 +116,54 @@ The GitHub workflows also cover deploys (`deploy-backend`, `deploy-frontend`,
 still reference `secrets.SSH_PRIVATE_KEY` and friends and are a separate piece
 of work; until they are ported or Actions is restored, dev deploys on push to
 `main` and prod deploys on `v*` tags are **not running**.
+
+## Server concurrency: why the agent runs one workflow at a time
+
+The frontend workflow failed with status `error` — not `failure` — on every
+run, while the backend passed. `error` means the workflow could not complete,
+not that a test failed, and the difference matters: nothing was wrong with the
+pipeline definition.
+
+The agent log has the cause:
+
+```
+grpc error: extend(): code: Unavailable
+  keepalive ping failed to receive ACK within timeout
+failed to extend workflow lease
+grpc error: update(): code: Unknown
+  desc = database is locked
+  desc = could not find step with uuid ... : sql: no rows in result set
+```
+
+The server stores everything in **SQLite** (`WOODPECKER_DATABASE_DRIVER:
+sqlite3`), which serialises writes. With `WOODPECKER_MAX_WORKFLOWS: "4"` the
+backend and frontend workflows ran concurrently, contended on that single
+writer, and the gRPC keepalive timed out. The agent then lost its lease
+mid-run and the workflow was abandoned.
+
+The frontend lost every time because it is the longer of the two — its `install`
+step alone takes ~5 minutes, so it holds a lease across far more contention
+than the backend's single `tests` step.
+
+**Fixed by setting `WOODPECKER_MAX_WORKFLOWS: "1"`** in
+`~/woodpecker/docker-compose.yml` on storytime. Backend and frontend now run
+sequentially. That costs wall-clock, but it is also the right call for this
+box independently: storytime runs LevelUp, its API, KYS, storytime and
+fetchit on 3.8 GB of RAM with ~1.1 GB free and 2.8 GB of swap already in use.
+
+**The durable fix is Postgres**, not lower concurrency — SQLite is the actual
+constraint and it will bite again the moment a third pipeline is added. Raising
+`MAX_WORKFLOWS` before migrating the server database will reproduce this
+exactly.
+
+## Clone: LFS and submodules are explicitly off
+
+The default clone runs `git submodule update --init --recursive` and
+`git lfs fetch`. This repo has **neither** — no `.gitmodules`, no
+`.gitattributes`, nothing tracked by LFS — yet those two commands accounted for
+~158s of a ~160s clone step, on every workflow.
+
+Both pipelines therefore declare the clone explicitly with `lfs: false` and
+`recursive: false`. `partial: true` preserves the `tree:0` filter the implicit
+clone already used. If submodules or LFS are ever introduced, these have to be
+turned back on or the checkout will be silently incomplete.
