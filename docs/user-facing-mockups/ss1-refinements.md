@@ -69,7 +69,68 @@ and component implementation. It is separate from the full text mockup in
 - Reports are SS1 Guidance Summaries, can include multiple programmes, and support print, PDF download, QR/access code and sharing.
 - Reports must never show `Under review` unless a real submission exists.
 
+## Supported Home and pathway audit
+
+The selectable account types are SS1, SS2, SS3, JAMB candidate, undergraduate
+student and educator/institution. Graduate, professional and skilled-worker
+profiles remain hidden from the account-type gate; their internal type names are
+legacy compatibility values, not active onboarding routes.
+
+The shared student Home reads the authenticated user's real saved guidance path.
+For admission users it shows saved subjects, programme choices, university and
+address, then resumes the admission/programme guidance route. For undergraduate
+students it shows the saved university and programme. For any supported student
+path with field guidance it shows the saved domain, subgroup and roles, then
+opens the first saved field or role. An educator's guidance belongs to the
+selected student and is resumed from the admin student-guidance screen, not
+mixed into the educator's personal Home.
+
+Educators also have their own account-scoped workspace resume. The last admin
+route is retained with its student, programme and query context, so returning
+after a refresh or sign-in can reopen student account creation, a student
+guidance session, Explore/admission, verification, peer comparison or another
+permitted admin task. Student guidance state and educator workspace resume are
+separate records.
+
+The Explore Pathways and Elite surfaces were audited against
+`src/screens/careerIntelligence/PathwaysHubScreen.tsx`. They are already a
+single consolidated pathway-selection layer with requirement lenses; they must
+remain available in Explore. They are not duplicated as separate Home cards.
+
+The domain detail view renders roles only beneath their mapped subgroup. A role
+without a valid subgroup is retained as a data-quality issue and is not shown as
+an `Other roles` fallback.
+
+Secondary-school provisioning records guardian consent explicitly when the owner
+has confirmed it, including the guardian name. Creating an account alone does
+not imply consent; an unchecked row remains valid and can be handled through the
+separate auditable consent workflow.
+
 ## Data boundary
 
 - Do not use demand data, market statistics, readiness scores or employment forecasts in the SS1 experience.
 - SQL files in the repository may be audited as candidate source data, but only active, validated records may be presented as live product data.
+
+## Cross-user implementation baseline
+
+The SS1 decisions are the language and state baseline for the supported routes,
+with the academic differences below:
+
+- SS1 and SS2 use O-level subject guidance and select a university before the
+  full university-specific requirements and field guidance are saved.
+- SS3 and JAMB candidates may see the published programme requirements before
+  choosing a university; subject matching uses the combined O-level and UTME
+  gates when the student asks for it.
+- Undergraduate students start with their university, then choose from that
+  university's own programme names and continue to the same programme,
+  requirements and field-guidance structure.
+- Educators use the same student-facing programme and mapping language inside a
+  student-scoped guidance session. Their saved path belongs to the selected
+  student, not the educator's personal My World.
+- The ordinary supported routes do not show Direct Entry, CCMAS discipline
+  names, a separate Employment tab, or a duplicate Admission tab.
+- A provisioned student's claim/login card remains the primary QR handoff. A
+  compiled report may include the active access code and QR only when the
+  backend returns a real, unredeemed code and the viewer is authorised; a
+  self-created account must never receive a fabricated code. Reports otherwise
+  remain account-scoped and use authenticated print/download/share actions.
