@@ -29,7 +29,6 @@ function titleish(s: string): string {
 
 const TEASER_MAX = 3;
 const FULL_INITIAL = 8;
-const PRIORITY_CUTOFF = 5;
 
 export interface DegreeSkillsProps {
   technical?: string[] | null;
@@ -71,7 +70,7 @@ export function DegreeSkills({
         style={[styles.teaser, { color: color ?? colors.textRole.muted }]}
         numberOfLines={2}
       >
-        You will start with: {preview}
+        You may study: {preview}
         {total > TEASER_MAX ? ` +${total - TEASER_MAX} more` : ""}
       </Text>
     );
@@ -95,8 +94,8 @@ export function DegreeSkills({
     <View style={styles.block}>
       <SectionLabel>What this programme helps you build</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        Start with the first outcomes, then use the rest to understand the wider
-        learning direction for this programme.
+        These are source-backed learning outcomes connected to this programme.
+        They describe the direction of study, not a promise of proficiency.
       </Text>
 
       {tech.length ? (
@@ -106,9 +105,7 @@ export function DegreeSkills({
               key={`${skill}-${i}`}
               style={[styles.row, { borderTopColor: colors.borderRole.subtle }]}
             >
-              <Text style={[styles.bullet, { color: colors.accentRole.action }]}>
-                {i < PRIORITY_CUTOFF ? "Start" : "Next"}
-              </Text>
+              <Text style={[styles.bullet, { color: colors.accentRole.action }]}>•</Text>
               <Text style={[styles.rowText, { color: colors.textRole.primary }]}>
                 {sentenceCase(skill)}
               </Text>

@@ -30,6 +30,7 @@ import {
   Modal,
   TextInput,
   Pressable,
+  Linking,
 } from "react-native";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import {
@@ -53,11 +54,15 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { withMyWorldLearningGate } from "@/lib/learningGate";
 import { featureFlags } from "@/lib/featureFlags";
+// Same source of truth as the shell nav: this screen names itself what the
+// nav calls it, so "Saved" pre-launch and "My World" once the world is live.
+import { WORLD_NAV } from "@/lib/worldNav";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
+  resource: { icon: "🔗", label: "Resource" },
   programme: { icon: "🎓", label: "Programme" },
   school: { icon: "🏫", label: "School" },
   domain: { icon: "🧭", label: "Domain" },
@@ -80,6 +85,7 @@ const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
   { type: "opportunity", title: "Opportunities" },
   { type: "organisation", title: "Employers" },
   { type: "elite_pathway", title: "Pathways" },
+  { type: "resource", title: "Saved learning" },
 ];
 
 const UNCATEGORISED = "Uncategorised";
@@ -231,7 +237,7 @@ function GuestMyWorldGate() {
   const { colors } = useTheme();
   return (
     <View style={[styles.guestGate, { backgroundColor: colors.surface.base }]}>
-      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{WORLD_NAV.eyebrow}</Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Your private space</Text>
       <Text style={[styles.bannerText, { color: colors.textRole.secondary }, CompassFonts.body]}>
         Create an account to access saved paths, notes, progress, portfolio, guild and Feed.
@@ -259,7 +265,7 @@ function PersonalPage() {
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{WORLD_NAV.eyebrow}</Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Your saved careers,{"\n"}bookmarks & notes
       </Text>
@@ -448,7 +454,7 @@ function LiveWorldHub() {
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{WORLD_NAV.eyebrow}</Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Welcome back —{"\n"}{"let\u2019s level up"}
       </Text>
@@ -684,6 +690,8 @@ function SavedItemRow({
       router.push("/(tabs)/explore/admission" as never);
     else if (item.entityType === "subgroup")
       router.push("/(tabs)/explore/domains" as never);
+    else if (item.entityType === "resource")
+      void Linking.openURL(item.entityId).catch(() => {});
     // comparison / opportunity / organisation have no live detail route yet.
   };
 

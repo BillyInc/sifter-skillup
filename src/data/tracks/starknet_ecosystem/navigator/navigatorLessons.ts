@@ -8765,7 +8765,7 @@ Managing a multi-chain portfolio means maintaining a position register that trac
 // ─────────────────────────────────────────────────────────────
 // AGGREGATE SIMULATIONS — Lab Level (15 total)
 // Placed AFTER all lessons, BEFORE bossMode.
-// Draws randomly — learner does not know which lesson is tested.
+// Draws randomly — student does not know which lesson is tested.
 // ─────────────────────────────────────────────────────────────
 
 export const LAB8_AGGREGATE_SIMULATIONS = {

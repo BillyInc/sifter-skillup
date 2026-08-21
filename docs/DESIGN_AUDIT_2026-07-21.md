@@ -15,7 +15,7 @@ The two docs were written minutes apart (Jul 17) and disagree on visual language
 - **DESIGN_PROMPT**: cobalt #3B3AC4 wayfinding, Bricolage Grotesque display, editorial photography, route-line motif.
 - **REDESIGN_BRIEF** (+ your reference screenshots): theme-agnostic semantic tokens, calm operational UI, one sans, no decoration.
 
-The implemented theme follows the BRIEF (Hanken-only; Bricolage removed; blue accent `#1F5EFF`). **Working interpretation (flag if wrong):** BRIEF wins on visual chrome; DESIGN_PROMPT is authoritative for everything else — screen inventory, search anatomy, data realism, states, layout DNA, personas, motion restraint. Route-line as *information* (stepper/stations in onboarding + pathways) survives; route-line as *decoration* does not.
+The implemented theme follows the BRIEF (one sans only — now **Inter**, was Hanken Grotesk at the time of this audit; Bricolage removed; blue accent `#1F5EFF`). **Working interpretation (flag if wrong):** BRIEF wins on visual chrome; DESIGN_PROMPT is authoritative for everything else — screen inventory, search anatomy, data realism, states, layout DNA, personas, motion restraint. Route-line as *information* (stepper/stations in onboarding + pathways) survives; route-line as *decoration* does not.
 
 ## 2. Audit vs FIGMA_DESIGN_PROMPT.md, section by section
 

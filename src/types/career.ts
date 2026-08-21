@@ -125,6 +125,8 @@ export interface Programme {
   discipline: string;
   qualification?: string; // B.Sc, NCE, ND, HND, ...
   durationYears?: number;
+  /** Source-backed plain-language programme overview, when the catalogue has one. */
+  overview?: string | null;
   /**
    * What this degree teaches. Resolved server-side by following
    * programme_mapping to the JAMB names' CCMAS skills profile, and unioned when
@@ -301,7 +303,8 @@ export type SavedEntityType =
   | "comparison"
   | "opportunity"
   | "organisation"
-  | "elite_pathway";
+  | "elite_pathway"
+  | "resource";
 
 /** What a note can be attached to: any saveable entity, or a global quick note
  *  written from the NotesFab with no entity context. */
@@ -528,7 +531,7 @@ export interface ToolGroups {
   common: ToolV2[];
 }
 
-/** A source-backed method or concept. This is not proof that a learner has
+/** A source-backed method or concept. This is not proof that a student has
  * demonstrated competence in it. */
 export interface ComputationalMethodEvidence {
   name: string;
@@ -553,6 +556,7 @@ export interface SubgroupV2 extends SourceBackedFields {
   methodEvidence?: ComputationalMethodEvidence[];
   tools: ToolGroups;
   certifications: CertificationV2[]; // specialization certs
+  resources?: CareerLearningResource[];
 }
 
 export interface DomainRoleSummary {
@@ -562,6 +566,7 @@ export interface DomainRoleSummary {
   alsoKnownAs?: string[];
   subgroupId?: string | null;
   eliteStatus?: string;
+  resources?: CareerLearningResource[];
 }
 
 /** A domain's common ("foundation") skill, shown with how prevalent it is across the
@@ -596,6 +601,7 @@ export interface DomainV2 extends SourceBackedFields {
   domainBridgeSkills?: { name: string; covered?: boolean }[];
   subgroups: SubgroupV2[];
   roles: DomainRoleSummary[];
+  resources?: CareerLearningResource[];
 }
 
 export interface DomainRoleV2 extends SourceBackedFields {
@@ -630,6 +636,7 @@ export interface DomainRoleV2 extends SourceBackedFields {
   coveredSkills?: string[];
   roleBridgeSkills?: { name: string; covered?: boolean }[];
   careerLadder?: string[];
+  resources?: CareerLearningResource[];
 }
 
 /** A programme→domain→role readiness row (from programme_role_score). */
@@ -898,17 +905,52 @@ export interface DomainV2Enriched extends DomainV2 {
   gatewayCertifications: CertificationV2Enriched[];
   roleHintCertifications: CertificationV2Enriched[];
   subgroups: SubgroupV2Enriched[];
+  resources?: CareerLearningResource[];
 }
 
 export interface SubgroupV2Enriched extends SubgroupV2 {
   clusterSkillUris?: Record<string, string>;
   certifications: CertificationV2Enriched[];
   tools: ToolGroupsEnriched;
+  resources?: CareerLearningResource[];
 }
 
 export interface ToolGroupsEnriched {
   distinctive: ToolV2Enriched[];
   common: ToolV2Enriched[];
+}
+
+/** Clickable learning, competency, professional-body, tool and exam resource. */
+export interface CareerLearningResource {
+  id: string;
+  domainId?: string | null;
+  subgroupId?: string | null;
+  roleId?: string | null;
+  resourceType:
+    | "domain_overview"
+    | "role_reference"
+    | "skill_reference"
+    | "skill_learning"
+    | "competency_reference"
+    | "certification_exam"
+    | "professional_body"
+    | "tool_learning";
+  targetName: string;
+  provider: string;
+  region: "nigeria" | "global" | "global_proxy";
+  accessType: "free" | "paid" | "mixed" | "dynamic";
+  delivery?: string | null;
+  url: string;
+  price?: number | null;
+  currency?: string | null;
+  pricePeriod?: string | null;
+  priceAsOf?: string | null;
+  priceSource?: string | null;
+  sourceUrl?: string | null;
+  description?: string | null;
+  sourceConfidence?: SourceConfidence;
+  dataState?: SourceDataState | "limited" | "dynamic";
+  sourceProvenance?: Record<string, unknown>;
 }
 
 // ── Mapping feedback (expert review) ──────────────────────────

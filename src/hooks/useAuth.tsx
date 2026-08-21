@@ -547,7 +547,7 @@ function _normalise(raw: any): UserProfile {
 
   return {
     id: raw.id ?? '',
-    username: raw.username ?? 'Learner',
+    username: raw.username ?? 'Student',
     avatar_url: raw.avatar_url ?? null,
     auth_provider: raw.auth_provider ?? 'guest',
     account_type: raw.account_type,

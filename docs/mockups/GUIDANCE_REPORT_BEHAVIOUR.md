@@ -17,7 +17,7 @@ The same rule applies to sub-groups and roles.
 
 ## Selection contract
 
-The current guidance path is saved per learner account. It contains:
+The current guidance path is saved per student account. It contains:
 
 - student type, class, stream, school or tutorial-centre context;
 - selected O-level subjects and, where relevant, UTME subjects;
@@ -36,7 +36,7 @@ snapshot so a later rename does not make an old report unreadable.
 Sections are conditional, but no selected information is removed to force a
 page count:
 
-1. **Path header**: learner name, student type/class/stream, school or centre,
+1. **Path header**: student name, student type/class/stream, school or centre,
    date, and Sifter LevelUp watermark.
 2. **What you selected**: the exact discovery door and selected subjects.
 3. **Programme and university**: the university-specific programme name and
@@ -46,9 +46,9 @@ page count:
    unsupported score claims.
 5. **Selected domain map**: each selected domain, its relationship to the
    programme (direct, functional, or adjacent), and its explanation.
-6. **Selected sub-groups**: only sub-groups the learner selected, with each
+6. **Selected sub-groups**: only sub-groups the student selected, with each
    sub-group's own description, skills, tools, and certifications.
-7. **Selected roles**: only roles the learner selected, with role-specific
+7. **Selected roles**: only roles the student selected, with role-specific
    skills, tools, certifications, and related context. Role skills are not
    interchangeable with domain or subgroup skills. Role tools and
    certifications must come from role-owned records when those records exist.
@@ -59,7 +59,7 @@ page count:
 
 ## Length and readability
 
-The report may be longer than a single page when the learner selected several
+The report may be longer than a single page when the student selected several
 branches. Length is controlled by hierarchy and progressive detail, not by
 dropping information. Each selected entity gets one clearly labelled block;
 repeated programme and domain metadata is shown once and referenced thereafter.
@@ -69,7 +69,7 @@ table dump.
 
 ## Bookmarking and printing
 
-Bookmarking is independent from printing. A signed-in learner can print the
+Bookmarking is independent from printing. A signed-in student can print the
 current confirmed path without bookmarking first. Saving a domain, subgroup, or
 role is a separate action and does not automatically add it to the report.
 The report action must use the current route/path context and must not redirect
@@ -82,16 +82,16 @@ report was saved.
 ## Educator and admin reports
 
 An educator guidance session uses the same selection contract with a separate
-learner ID and creator/access context. The report contains the learner's school
+student ID and creator/access context. The report contains the student's school
 or tutorial-centre name when available, applies the same selected-branch rule,
-and is only printable when the administrator has access to that learner.
+and is only printable when the administrator has access to that student.
 Admin reports use the same student-facing language and source-backed content;
 they do not substitute national aggregates or admin-only metrics for the
-learner's actual guidance path.
+student's actual guidance path.
 
 ## Surface states
 
-- **No confirmed path**: explain that the learner must choose a programme and
+- **No confirmed path**: explain that the student must choose a programme and
   university before printing.
 - **Programme confirmed, no domain selected**: show the programme and
   requirements; explain that domain mapping can be added from Explore.

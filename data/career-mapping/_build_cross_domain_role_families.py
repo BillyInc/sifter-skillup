@@ -14,6 +14,8 @@ import os
 import re
 from collections import Counter, defaultdict
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
 
@@ -108,9 +110,7 @@ def family_from_uri(uri, role_keys, role_by_key, meta, registry):
 
 def main():
     roles = load("role_library_v3_cleaned.json")
-    overlay_path = os.path.join(HERE, "emerging_role_overlays.json")
-    if os.path.exists(overlay_path):
-        roles.extend(load("emerging_role_overlays.json").get("roles") or [])
+    roles.extend(load_overlay_roles())
     role_by_key = {}
     for role in roles:
         domain_id = text(role.get("domain_id"))

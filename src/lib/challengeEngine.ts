@@ -61,7 +61,7 @@ export const challengeEngine = {
   /** Get badge label for challenge stage. */
   stageLabel(stage: number): string {
     const STAGES = ['', 'Beginner', 'Junior', 'Associate', 'Specialist', 'Senior', 'Lead', 'Director', 'Expert'];
-    return STAGES[stage] ?? 'Learner';
+    return STAGES[stage] ?? 'Student';
   },
 
   /** Check if current user needs to accept (status=open, not yet accepted). */

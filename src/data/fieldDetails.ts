@@ -610,7 +610,7 @@ const registry: FieldDetail[] = [
       { id: 'instructional-designer', name: 'Instructional Designer', type: 'SPECIFIC', worldThemeId: 'default', worldLabel: '🎓 Design Academy', tagline: 'Engineer learning that actually works', description: 'Learning analysis, course design, storyboarding, ADDIE/SAM models. Portfolio of 3+ experiences essential.', status: 'coming_soon', navigateTo: 'World' },
       { id: 'elearning-developer', name: 'eLearning Developer', type: 'SPECIFIC', worldThemeId: 'code-citadel', worldLabel: '💻 Digital Dojo', tagline: 'Build interactive courses at scale', description: 'Articulate Storyline/Rise, Adobe Captivate, HTML5 interactives, SCORM/xAPI, LMS deployment.', status: 'coming_soon', navigateTo: 'World' },
       { id: 'corporate-trainer', name: 'Corporate Trainer', type: 'SPECIFIC', worldThemeId: 'default', worldLabel: '🎤 Training Theatre', tagline: 'Develop people who develop businesses', description: 'Facilitation, workshop design, coaching, needs analysis, learning measurement.', status: 'coming_soon', navigateTo: 'World' },
-      { id: 'edtech-pm', name: 'EdTech Product Manager', type: 'SPECIFIC', worldThemeId: 'design-district', worldLabel: '🏫 EdTech Bridge', tagline: 'Build products that teach the world', description: 'Curriculum-product alignment, learner analytics, LMS strategy, engagement mechanics.', status: 'coming_soon', navigateTo: 'World' },
+      { id: 'edtech-pm', name: 'EdTech Product Manager', type: 'SPECIFIC', worldThemeId: 'design-district', worldLabel: '🏫 EdTech Bridge', tagline: 'Build products that teach the world', description: 'Curriculum-product alignment, student analytics, LMS strategy, engagement mechanics.', status: 'coming_soon', navigateTo: 'World' },
     ],
   },
 

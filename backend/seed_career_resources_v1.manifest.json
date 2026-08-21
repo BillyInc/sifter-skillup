@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "storage": "partitioned_sql_transactions",
+  "source_population": "data/career-mapping/learning_resource_population.manifest.json",
+  "resource_rows": 160914,
+  "batch_size": 500,
+  "batches": 322,
+  "max_part_bytes": 8388608,
+  "parts": [
+    {
+      "file": "seed_career_resources_v1_parts/part-001.sql",
+      "part": 1,
+      "row_count": 15500,
+      "bytes": 8270817,
+      "sha256": "3fc0e354d2b6f93db0d9edef39a4c8a5258e2d686ffe848131f682db5536df74"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-002.sql",
+      "part": 2,
+      "row_count": 15000,
+      "bytes": 8307985,
+      "sha256": "b68db9d496290f9413744cb69245d7a85fb562c201f1dea1c6a5a68420b68d6e"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-003.sql",
+      "part": 3,
+      "row_count": 14000,
+      "bytes": 8112773,
+      "sha256": "e33af7d412498e568d3c1a4780272c0e372302c1b9251c9761149414ff477c92"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-004.sql",
+      "part": 4,
+      "row_count": 14000,
+      "bytes": 8270623,
+      "sha256": "787ca77171937184193f96c1bde5c409e9f0519dcb6fa82335b4caf7539f3d1c"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-005.sql",
+      "part": 5,
+      "row_count": 13500,
+      "bytes": 8312328,
+      "sha256": "fada91d238da8def562817990f72721e3d4f6f829eee0dcd500855cb13a6a0d0"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-006.sql",
+      "part": 6,
+      "row_count": 13500,
+      "bytes": 8289867,
+      "sha256": "eb83152d491ced246e71a3119e30f552f5dd592f8b861874ac0e41deeda3a9ce"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-007.sql",
+      "part": 7,
+      "row_count": 14000,
+      "bytes": 8232681,
+      "sha256": "9045beb4294db56e581561b901ac30031ec6cf7bea32b8fd81c861a65e97cc66"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-008.sql",
+      "part": 8,
+      "row_count": 13500,
+      "bytes": 8094605,
+      "sha256": "d18df2650154f5b12311aa9cccfc8c9f761d1abec4cb96970833c95def9f106c"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-009.sql",
+      "part": 9,
+      "row_count": 14000,
+      "bytes": 8375739,
+      "sha256": "3d57945247bc2db745c41427c41398f99bc110a1253bfcd80b0b63463bfc86ac"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-010.sql",
+      "part": 10,
+      "row_count": 14000,
+      "bytes": 8181893,
+      "sha256": "39c42f46d1c8f3f64b432956f78553dfd64940360d97160f84185b7b67aad202"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-011.sql",
+      "part": 11,
+      "row_count": 14000,
+      "bytes": 8196870,
+      "sha256": "3d25215b661516b90912f2cf6dd8dbfa9c013a4751a25949b2102d7d4bed1583"
+    },
+    {
+      "file": "seed_career_resources_v1_parts/part-012.sql",
+      "part": 12,
+      "row_count": 5914,
+      "bytes": 3491057,
+      "sha256": "300bc7c2c3e1dbc35ab397e229e560e6f0d38900b1dfbff6ff75d1d36c279d9e"
+    }
+  ]
+}

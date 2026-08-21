@@ -103,7 +103,7 @@ export const DB = {
       .insert([
         {
           id: userId,
-          username: meta?.username || 'Learner',
+          username: meta?.username || 'Student',
           avatar_url: meta?.avatar_url || null,
           auth_provider: meta?.auth_provider || 'email',
           points: 1000,

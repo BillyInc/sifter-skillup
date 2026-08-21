@@ -65,6 +65,7 @@ Create **`development`** and **`production`** (add a required reviewer on produc
 | Var | dev | prod |
 |-----|-----|------|
 | `EXPO_PUBLIC_API_URL` | `https://api.dev.levelup.com.ng` | `https://api.levelup.com.ng` |
+| `EMAIL_FROM` | `LevelUp (dev) <noreply@hello.levelup.com.ng>` | `LevelUp <noreply@hello.levelup.com.ng>` |
 
 ### 5. `ENV_FILE` contents (backend `.env`, per env)
 Required keys (full list in `backend/config.py`):
@@ -76,7 +77,8 @@ CELERY_BROKER_URL=redis://localhost:6379/12  # prod: /13
 CELERY_RESULT_BACKEND=redis://localhost:6379/12  # prod: /13
 PRIVY_APP_ID=...  PRIVY_APP_SECRET=...  PRIVY_VERIFICATION_KEY=...
 RESEND_API_KEY=re_...       # signup verification email; without it signup 502s
-EMAIL_FROM=LevelUp <onboarding@resend.dev>    # see "Resend sender" below
+EMAIL_FROM=LevelUp (dev) <noreply@hello.levelup.com.ng>   # prod: drop the "(dev)"
+                                              # see "Resend sender" below
 ALLOWED_ORIGINS=https://dev.levelup.com.ng   # prod: https://levelup.com.ng
 API_BASE_URL=https://api.dev.levelup.com.ng  # prod: https://api.levelup.com.ng
 WEB_DASHBOARD_URL=https://dev.levelup.com.ng # prod: https://levelup.com.ng
@@ -87,17 +89,88 @@ Optional integrations as needed: `ANTHROPIC_API_KEY`, `FCM_SERVER_KEY`, `AIRTABL
 
 ### Resend sender
 
-No custom domain is verified in Resend yet. Until one is, the account can only
-send from the shared `onboarding@resend.dev` sender, and **only to the Resend
-account owner's own address** -- mail to any other recipient is rejected. That
-is fine for development, but real users cannot receive a signup code.
+**`hello.levelup.com.ng` is verified** (Resend, region `eu-west-1`, since
+2026-08-20). Sending and receiving are both enabled and all four DNS records
+report `verified`. Real users can receive signup codes; `EMAIL_FROM` should be
+the value in §5, not the old `onboarding@resend.dev` sandbox sender.
 
-To send to real users, add `levelup.com.ng` under Resend > Domains, publish the
-DKIM/SPF records it generates, and once it shows Verified switch `EMAIL_FROM`
-to `LevelUp <noreply@levelup.com.ng>`.
+For context on why that sandbox sender was a launch blocker: with no verified
+domain Resend permits only `onboarding@resend.dev`, and that sender delivers
+*only* to the Resend account owner's own address -- every other recipient is
+rejected outright, which `email_delivery.py` surfaces as a signup 502.
+
+#### Why a subdomain and not the root
+
+The verified domain is **`hello.levelup.com.ng`**, not `levelup.com.ng`, for two
+reasons that would both bite later:
+
+1. **The root MX must stay free.** Resend is a sending API, not a mailbox host
+   -- it gives you no inbox at `@levelup.com.ng`. If we ever want real mailboxes
+   (Google Workspace, Zoho, WhoGoHost cPanel mail), that provider needs the root
+   MX. Verifying Resend on the root would put the two in conflict.
+2. **The root SPF is already spoken for.** `levelup.com.ng` currently publishes
+   WhoGoHost's shared-hosting default,
+   `v=spf1 +a +mx +include:relay.mailchannels.net +include:spf.antispamcloud.com ~all`.
+   Editing it risks breaking whatever WhoGoHost sends on our behalf; a subdomain
+   gets its own clean SPF and leaves the root alone.
+
+#### DNS records (live at WhoGoHost, all verified)
+
+Hosts are written the way WhoGoHost's editor wants them -- **relative**, with
+the zone `levelup.com.ng` appended automatically. Pasting a fully-qualified name
+here produces `resend._domainkey.hello.levelup.com.ng.levelup.com.ng`, which
+fails verification with no useful error. This is the single most likely thing to
+go wrong if these ever need re-entering.
+
+| Purpose | Type | Host | Value |
+|---------|------|------|-------|
+| DKIM | TXT | `resend._domainkey.hello` | `p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCgjI2OjXH5FuINLRz3byGFARG9FbYrV/COb9Qq/vmECpGgqP98VMDojBIGDc+gmOqK6mYeyh3yzw2pBAkiWFLCCEnuKzk3XgAXnMTB4AGkBBKk2x6j0TzrTtb3COpVU5lSb0bH2x2qac83IrEbgSCghxbSr+0zCqA7KbdAnZEXQIDAQAB` |
+| SPF | TXT | `send.hello` | `v=spf1 include:amazonses.com ~all` |
+| Return-Path | MX (prio 0) | `send.hello` | `feedback-smtp.eu-west-1.amazonses.com` |
+| Receiving | MX (prio 0) | `hello` | `inbound-smtp.eu-west-1.amazonaws.com` |
+
+Resend's setup screen asks for MX priority **10**; what is actually published at
+WhoGoHost is **0**, and the domain verifies anyway. Priority only breaks ties
+between multiple MX hosts and each of these names has exactly one, so the value
+is cosmetic here. Recorded as-published so a future `dig` does not look like
+drift.
+
+Note the SPF TXT sits at **`send.hello`**, not at `hello` -- it authorises the
+Return-Path (bounce) domain, which is where SPF is actually evaluated. DKIM is
+what authenticates the visible `From:`.
+
+Verify from a shell after any DNS change:
+
+```bash
+dig +short TXT resend._domainkey.hello.levelup.com.ng
+dig +short TXT send.hello.levelup.com.ng
+dig +short MX  send.hello.levelup.com.ng
+dig +short MX  hello.levelup.com.ng
+```
+
+#### Receiving is enabled
+
+The `hello` MX means inbound mail to `@hello.levelup.com.ng` reaches Resend.
+Resend is not a mailbox host -- there is no inbox to log into. Inbound mail is
+delivered to a webhook, so anything sent there is dropped unless a webhook is
+configured to consume it. If we want a replyable address, either add that
+webhook or point `Reply-To:` at a real mailbox on another provider.
+
+#### Known defect: mail to `@levelup.com.ng` is black-holed
+
+Separate from the above, and worth fixing whoever owns DNS. The root still
+carries WhoGoHost's default self-pointing `MX 0 levelup.com.ng`, and the root A
+record now resolves to `52.18.195.224` -- the app server, which runs nginx and
+no mail daemon. Anything addressed to `@levelup.com.ng` today goes nowhere.
+Verifying the Resend subdomain does not fix this; it only avoids making it
+worse. Fix it by pointing the root MX at a real mailbox provider, or by removing
+it so senders get a clean rejection instead of silence.
+
+#### Secrets
 
 `EMAIL_FROM` is not a secret and is set directly in each `.env`.
-`RESEND_API_KEY` is; it is never committed.
+`RESEND_API_KEY` is; generate it in the Resend dashboard, put it straight into
+the server `.env`, and never commit it.
 
 ### 6. Server prerequisites (already true for KYS, verify)
 `ubuntu` has passwordless `sudo` (systemctl/nginx/certbot); `nginx`, `certbot` (+`python3-certbot-nginx`),

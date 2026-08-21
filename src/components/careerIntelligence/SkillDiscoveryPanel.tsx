@@ -116,8 +116,8 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
 
   const audienceCopy = useMemo(() => {
     if (adminType === "university") return "Map skills to undergraduate curriculum domains, subgroups, roles and credentials.";
-    if (adminType === "tutorial_centre" || adminType === "jamb_cafe") return "Find the skills, tools and credentials to discuss in a JAMB learner session.";
-    if (adminType === "secondary_school") return "Use a learner's skills to guide the next subject and career step.";
+    if (adminType === "tutorial_centre" || adminType === "jamb_cafe") return "Find the skills, tools and credentials to discuss in a JAMB student session.";
+    if (adminType === "secondary_school") return "Use a student's skills to guide the next subject and career step.";
     if (userType === "skilled_worker" || userType === "professional" || userType === "graduate") return "Map what you know to adjacent fields and the competencies that would strengthen each route.";
     return "Search skills, tools, frameworks or certifications and see what they can unlock.";
   }, [adminType, userType]);
@@ -153,7 +153,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
         <View style={{ gap: Spacing.md }}>
           {isAdmin ? (
             <View style={{ gap: Spacing.xs }}>
-              <SectionLabel>Guiding learner type</SectionLabel>
+              <SectionLabel>Guiding student type</SectionLabel>
               <View style={{ flexDirection: "row", gap: Spacing.xs, flexWrap: "wrap" }}>
                 {(adminAudience?.learnerTypes ?? []).map((item) => (
                   <TouchableOpacity key={item} onPress={() => setAdminLearnerType(item)} style={{ borderWidth: 1, borderColor: adminLearnerType === item ? colors.accentRole.action : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, backgroundColor: adminLearnerType === item ? colors.accentRole.action : colors.surface.raised }}>

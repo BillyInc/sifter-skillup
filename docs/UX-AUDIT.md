@@ -15,19 +15,50 @@ The audit was written before any redesign work; some findings have since been
 acted on. Findings are amended in place when investigation contradicts the
 original wording — H3 was materially wrong as first written, and says so.
 
+"Open in PR #n" means the fix is written and under review but is **not** on the
+branch yet — the behaviour described in the finding is still what runs today.
+"Fixed" means the change is in the working tree.
+
 | Finding | State | Where |
 |---|---|---|
 | C1. Global search returns nothing | **Fixed** | #97 |
 | C2. Fabricated user data in search overlay | **Fixed** | #97 |
 | H1. Accessibility largely absent | **Partly fixed** — app shell closed; rest concentrated in legacy simulators | #101 |
+| H1a. Controls below a 44 px touch target | **Open in PR #114** | #114 |
+| H1b. Three light-mode tokens below WCAG AA | **Open in PR #114** | #114 |
 | H2. Design tokens leak (1,401 hex literals) | Open — reframed as a dark-mode consistency risk, not a broken rollout | — |
 | H3. Competing breakpoints | Open — **finding corrected**; the token set exists, 13 sites bypass it | — |
 | H4. `Opportunities` / `Jobs` mismatch | Open — **needs a product naming decision**, not a code change | — |
 | M1. Thin loading states | Open | — |
 | M2. Duplicate destinations | Open | — |
 
+H1a and H1b were not in the original audit; they were found while working
+through the rest of H1 and are recorded here as part of it, at H1's severity.
+
 Separately, the primary action colour moved from blue to orange (#99), with
 contrast and hue-collision pinned by `__tests__/paletteContrast.test.ts`.
+
+Two further changes have shipped since the audit that were not findings in it,
+recorded here so the doc does not describe a product that no longer runs:
+
+- **Typography is now Inter.** `src/theme/fonts.ts` loaded Hanken Grotesk; it
+  now loads `@expo-google-fonts/inter` at 400/500/600/700 with the same role
+  mapping (`display`/`displayBold`/`displaySemi`/`body`/`bodyMedium`/
+  `bodySemibold`/`bodyBold`). Spline Sans Mono is untouched as the mono/data
+  face. This closes the gap between the brief, which asks for Inter-style
+  typography, and the running app.
+- **The fourth destination is labelled `Saved` before launch.**
+  `src/components/shell/ReferenceShell.tsx` now derives that nav entry from a
+  flag-aware `WORLD_NAV`: `Saved` with a `bookmark` glyph while
+  `featureFlags.myWorldLive` is off (the default — the flag reads
+  `EXPO_PUBLIC_MY_WORLD_LIVE === "true"`), reverting to `My World` with
+  `book-open` when it is on, because with the flag on the screen becomes
+  Tracks · Portfolio · Guild and "Saved" would be inaccurate. This is a rename,
+  not a new destination: the route `/(tabs)/myworld`, the `myworld` `NavId` and
+  the screen are unchanged, and that screen already was the saved-items surface,
+  backed end-to-end by `SaveButton` → `careerData` →
+  `GET`/`POST`/`DELETE /api/career/saved`. It does not resolve M2, which is
+  about `/world` vs `/myworld` and `/guild` vs `/community/guild`.
 
 ---
 
@@ -188,6 +219,32 @@ animation components honour it (`StaggerReveal`, `SharedElement`,
 `SkeletonCrossfade`, `CelebrationBurst`, `SaveButton`, the shell). §18's
 reduced-motion requirement is already met.
 
+#### H1a. Controls below a 44 px touch target — *open in PR #114*
+
+The brief asks for adequate touch target size. There is no shared minimum in the
+code: `src/components/ui/index.tsx` exports no touch-target constant, and the
+mobile tab bar row in `ReferenceShell.tsx:753` is `minHeight: 42`.
+
+PR #114 (`fix/a11y-contrast-and-touch-targets`, open, not merged) adds a
+`TOUCH_TARGET_MIN = 44` export to `src/components/ui/index.tsx`, gives
+`SifterButton` a `minHeight` from it, and raises the tab bar off 42. Until that
+merges, none of it is on this branch and the 42 px bar is what ships.
+
+#### H1b. Three light-mode tokens below WCAG AA — *open in PR #114*
+
+`__tests__/paletteContrast.test.ts` pins the orange primary (see Status), but
+three light-mode text roles in `src/theme/index.tsx` are still below AA against
+the light surface:
+
+| Token | Value | Ratio on `#FFFFFF` |
+|---|---|---|
+| `textRole.muted` | `#7C8490` | 3.78:1 |
+| `textRole.placeholder` | `#9AA1AA` | 2.61:1 |
+| `accentRole.success` | `#159A63` | 3.60:1 |
+
+PR #114 fixes all three. As above: verified absent from the working tree, so
+these are the values running today.
+
 ### H2. Design tokens leak — 1,401 raw hex colours
 
 `src/theme/index.tsx` exports a real token system (`Spacing`, `Radius`, `Shadow`,
@@ -280,6 +337,10 @@ carve-out for simulation surfaces rather than a silent exception.
 
 ## Blocked
 
+> **No longer blocked — resolved, kept for the record.** Both halves of this
+> item have since been answered. The text below is the original finding; the
+> resolution follows it.
+
 **The reference mockups do not exist on disk.** §2A, §2B, deliverable #3, and
 Phases 4–5 all depend on "supplied mockups". `~/Downloads` contains only the
 brief itself — no images, no Figma export, no archive of screens.
@@ -289,3 +350,46 @@ detailed enough to proceed without them. But "compare against the supplied
 references" (Phase 5) cannot be performed, and any mockups produced will be
 derived from the written brief plus the existing design system rather than from
 the product owner's visual work.
+
+### Resolution
+
+**The mockups arrived.** 12 PNGs are in
+`design/mockups-20260814T165448Z-1-001/`, committed by peterpsam. Phase 5
+("compare against the supplied references") is therefore performable. One
+caveat that matters more than their absence did: **the sheets contradict each
+other** — some label the mobile tab "Opportunities" + "Saved", others "Jobs" +
+"My World"; onboarding is 2-step in some and 4-step in others; three separate
+design-system panels give different values for success, background and radius.
+The sheet titled *"FINAL UI CONCEPTS — based on the selected design
+direction"* (`file_00000000bc60….png`) is the one to prefer. Per the brief,
+their example content — match %, cut-offs, salaries — is visual reference only
+and must not enter the product as fact.
+
+**Screens now exist in Figma**, so "any mockups produced will be derived from
+the written brief" is out of date. File key `Pz3BxiBHSv9juAuKAYjfwq`
+([open](https://www.figma.com/design/Pz3BxiBHSv9juAuKAYjfwq)) carries the
+design system generated from `src/theme/index.tsx` — 94 variables across 5
+collections, 9 text styles, 4 shadow styles, 5 component sets / 29 variants —
+plus three screens assembled from those component instances:
+
+| Screen | Content, and where it came from |
+| --- | --- |
+| `Explore (mobile)` | The real first 6 of 35 clusters, with their actual domain counts |
+| `Domain detail (mobile)` | D049 Automotive Engineering — description verbatim, 3 real sub-groups, 5 real roles with tiers |
+| `Explore (desktop)` | 1440×1024: sidebar, search + filters toolbar, 3×3 grid of the first 9 real clusters each listing its real domain names, context panel |
+
+Every value is from `GET /api/career/domains` on the dev API (35 clusters, 160
+domains) — not from the mockups. That is why these screens carry no match
+scores and no demand chips even though the sheets draw both: the brief forbids
+reproducing mockup example data as fact, which is the same rule behind the
+demand-band suppression in PR #105.
+
+Two things these screens are honest about rather than idealising: the nav's
+fourth destination reads **Saved**, matching the flag-aware `WORLD_NAV` that
+actually ships, and the desktop screen is a genuine desktop layout — multi-
+column grid plus a comparison panel — rather than a stretched phone, per §8's
+requirement that desktop use persistent navigation and wider content.
+
+`Explore (desktop)` is the only screen with no mobile counterpart in the
+mockups, so its layout is derived from the written direction rather than
+compared against a sheet.
