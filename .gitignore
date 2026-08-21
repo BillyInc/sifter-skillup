@@ -1,6 +1,12 @@
 node_modules/
 .expo/
 dist/
+
+# Jest coverage output. `--coverage` is how CI runs the suite, so anyone who
+# reproduces CI locally generates this; without the ignore it shows up in
+# `git status` and gets committed by accident (PR #108 carries 113 such files,
+# which is why its diff reads as 114 files for a one-file change).
+coverage/
 *.jks
 *.p8
 *.p12
@@ -13,6 +19,11 @@ web-build/
 .env
 .env.local
 backend/.env
+# Timestamped .env copies. These are full secret files -- an unignored
+# backup is one `git add -A` away from being committed.
+.env.bak*
+*/.env.bak*
+backend/.env.bak*
 
 # Python
 __pycache__/

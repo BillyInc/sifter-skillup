@@ -1654,7 +1654,7 @@
      "flags": [
       "FLAG-B"
      ],
-     "disputed": {
+      "disputed": {
       "nuc_structure_table": {
        "units": 2,
        "lh": 30
@@ -1665,7 +1665,7 @@
       },
       "primary_used": "nuc_structure_table",
       "note": "NUC PDF self-conflict on ICL 101 units & LH. Structure-table value kept as primary; content-section value retained here.",
-      "needs_owner_decision": false
+        "needs_owner_decision": true
      },
      "skills_learned": [
       "acquire basic knowledge of Islamic law generally",
@@ -2092,9 +2092,12 @@
       },
       "primary_used": "nuc_structure_table",
       "note": "CRITICAL: NUC PDF assigns two DIFFERENT courses to code ICL 304 (generic 'Enterprise Appreciation' in structure table vs 'Islamic Family Law' in content section). Structure-table kept as primary; owner must confirm true course identity.",
-      "needs_owner_decision": true
-     },
-     "skills_learned": [
+        "needs_owner_decision": true
+      },
+      "mapping_title": "Islamic Family Law",
+      "mapping_source_preference": "nuc_content_section",
+      "mapping_note": "For curriculum/domain evidence only, use the P13/P14 title and content because the content section supplies the complete Islamic Family Law outcomes and contents. Keep the P12 title conflict visible for display/source review; this does not resolve the NUC contradiction.",
+      "skills_learned": [
       "understand the nature, sources and principles governing Islamic family relations, including marriage, divorce and custody of children",
       "appreciate rules and principles of Islamic law governing pre-marital, marital and post-marital relationships; and",
       "identify the rights of children under Islamic law\" [LEARNING OUTCOMES FOR \"ENTERPRISE APPRECIATION\" (TABLE VERSION): NOT FOUND IN DOCUMENT]"
@@ -3242,7 +3245,7 @@
    "FLAG-F (ENT 211 = LH15/PH45)",
    "FLAG-G (ICL 301 confirmed)",
    "FLAG-D PPL 501/502 (=45/45, corroborated)",
-   "FLAG-D JIL 501/502 PH omission (=45)"
+   "FLAG-D JIL 501/502 PH omission (=45); LH remains disputed (60 vs 45)"
   ],
   "needs_owner_decision": [
    "FLAG-B (ICL 101 units/LH)",

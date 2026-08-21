@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
-import ProgrammeOverviewScreen from "@/screens/careerIntelligence/ProgrammeOverviewScreen";
+import ProgrammeDetailRefinedScreen from "@/screens/careerIntelligence/ProgrammeDetailRefinedScreen";
 
 export default function ProgrammeRoute() {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  return <ProgrammeOverviewScreen programmeId={String(id)} />;
+  const { id, school_id, user_type } = useLocalSearchParams<{ id: string; school_id?: string; user_type?: string }>();
+  return <ProgrammeDetailRefinedScreen programmeId={String(id)} initialSchoolId={school_id ? String(school_id) : undefined} userType={user_type ? String(user_type) : undefined} />;
 }

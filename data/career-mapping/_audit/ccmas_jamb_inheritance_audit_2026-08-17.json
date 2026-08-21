@@ -1,25 +1,25 @@
 {
   "schema_version": 1,
-  "decision": "All 416 active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, course-scoped partial CCMAS, or separately evidenced external curriculum. The active domain links match the saved canonical scope artifact.",
+  "decision": "All 420 active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, course-scoped partial CCMAS, or separately evidenced external curriculum. The active domain links match the saved canonical scope artifact.",
   "mapping_contract": {
     "single_ccmas_full_curriculum": "A_exact and C_reclassified rows inherit one reviewed CCMAS programme's domain links.",
-    "partial_curriculum_scope_review_required": "B_granular rows expose only domains anchored by their recorded CCMAS course slice; a full-parent fan-out is not proof.",
+    "partial_curriculum_scope": "B_granular rows expose only domains anchored by their recorded CCMAS course slice; a full-parent fan-out is not proof.",
     "combined_ccmas_curriculum": "Blend rows inherit the primary CCMAS curriculum plus each reviewed supporting component, with domain links unioned by strongest supported tier.",
     "external_sources_required": "D_custom rows use separately reviewed external curriculum evidence and do not inherit an unscoped CCMAS curriculum."
   },
   "counts": {
-    "programme_mapping_rows": 416,
-    "unique_jamb_names": 416,
+    "programme_mapping_rows": 420,
+    "unique_jamb_names": 420,
     "explicit_secondary_declarations": 28,
-    "stored_jamb_skills_names": 416,
-    "stored_jamb_domain_names": 416,
+    "stored_jamb_skills_names": 420,
+    "stored_jamb_domain_names": 420,
     "stored_domain_count": 168
   },
   "inheritance_categories": {
-    "partial_curriculum_scope_review_required": 272,
-    "single_ccmas_full_curriculum": 111,
+    "partial_curriculum_scope": 273,
+    "single_ccmas_full_curriculum": 113,
     "combined_ccmas_curriculum": 28,
-    "external_sources_required": 5
+    "external_sources_required": 6
   },
   "unresolved_ccmas_components": [],
   "stale_jamb_skills_names": [],
@@ -30,16 +30,16 @@
   "domain_alignment_audit": {
     "contract": "Exact and combined JAMB domain links must equal the union of their resolved CCMAS component links; partial and external rows cannot inherit unsupported links.",
     "summary": {
-      "partial_curriculum_scope_review_required:matches_derived_domain_set": 272,
-      "single_ccmas_full_curriculum:matches_derived_domain_set": 111,
+      "partial_curriculum_scope:matches_derived_domain_set": 273,
+      "single_ccmas_full_curriculum:matches_derived_domain_set": 113,
       "combined_ccmas_curriculum:matches_derived_domain_set": 28,
-      "external_sources_required:matches_derived_domain_set": 5
+      "external_sources_required:matches_derived_domain_set": 6
     },
     "match_type_mismatches": {},
     "rows": [
       {
         "jamb_name": "Civil Law",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -49,7 +49,7 @@
       },
       {
         "jamb_name": "Islamic Law/Sharia Law",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -61,15 +61,15 @@
         "jamb_name": "Common and Islamic Law",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Public and International Law",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -81,15 +81,15 @@
         "jamb_name": "Criminology and Security Studies (printed under Law faculty block)",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Common Law",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -99,7 +99,7 @@
       },
       {
         "jamb_name": "Criminology and Penology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -109,7 +109,7 @@
       },
       {
         "jamb_name": "Criminology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -121,8 +121,8 @@
         "jamb_name": "Criminology and Security Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -131,15 +131,15 @@
         "jamb_name": "Demography and Social Statistics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Demography and Statistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -149,7 +149,7 @@
       },
       {
         "jamb_name": "Demography and Social Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -159,7 +159,7 @@
       },
       {
         "jamb_name": "Population Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -209,7 +209,7 @@
       },
       {
         "jamb_name": "Industrial Relations / Industrial and Labour Relations",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -219,7 +219,7 @@
       },
       {
         "jamb_name": "Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -241,15 +241,15 @@
         "jamb_name": "International Relations",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "International Relations and Diplomacy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -259,7 +259,7 @@
       },
       {
         "jamb_name": "International Relations and Diplomatic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -269,7 +269,7 @@
       },
       {
         "jamb_name": "International Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -279,7 +279,7 @@
       },
       {
         "jamb_name": "International Studies and Diplomacy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -299,7 +299,7 @@
       },
       {
         "jamb_name": "International Relationship & Strategic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -329,7 +329,7 @@
       },
       {
         "jamb_name": "Policy and Strategic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -361,8 +361,8 @@
         "jamb_name": "Political Science",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -399,7 +399,7 @@
       },
       {
         "jamb_name": "Political and Administrative Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -451,8 +451,8 @@
         "jamb_name": "Peace Studies and Conflict Resolution",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -469,7 +469,7 @@
       },
       {
         "jamb_name": "Peace and Conflict Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -481,15 +481,15 @@
         "jamb_name": "Psychology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Public Administration",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -499,7 +499,7 @@
       },
       {
         "jamb_name": "Public Administration and Local Govt",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -509,7 +509,7 @@
       },
       {
         "jamb_name": "Public Administration and Policy Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -541,8 +541,8 @@
         "jamb_name": "Social Work",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 13,
-        "ccmas_derived_link_count": 13,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -559,7 +559,7 @@
       },
       {
         "jamb_name": "Banking and Finance",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 15,
         "ccmas_derived_link_count": 15,
@@ -571,8 +571,8 @@
         "jamb_name": "Business Administration",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 19,
-        "ccmas_derived_link_count": 19,
+        "stored_link_count": 17,
+        "ccmas_derived_link_count": 17,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -581,8 +581,8 @@
         "jamb_name": "Marketing",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 15,
-        "ccmas_derived_link_count": 15,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -591,15 +591,15 @@
         "jamb_name": "Entrepreneurship",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 20,
-        "ccmas_derived_link_count": 20,
+        "stored_link_count": 14,
+        "ccmas_derived_link_count": 14,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Business Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 17,
         "ccmas_derived_link_count": 17,
@@ -611,15 +611,15 @@
         "jamb_name": "Taxation",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 16,
-        "ccmas_derived_link_count": 16,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Industrial Relations and Personnel Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -629,7 +629,7 @@
       },
       {
         "jamb_name": "Hotel and Tourism Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -641,8 +641,8 @@
         "jamb_name": "Insurance",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 16,
-        "ccmas_derived_link_count": 16,
+        "stored_link_count": 12,
+        "ccmas_derived_link_count": 12,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -651,15 +651,15 @@
         "jamb_name": "Procurement Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 17,
-        "ccmas_derived_link_count": 17,
+        "stored_link_count": 12,
+        "ccmas_derived_link_count": 12,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Finance",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 15,
         "ccmas_derived_link_count": 15,
@@ -679,7 +679,7 @@
       },
       {
         "jamb_name": "Procurement",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -689,7 +689,7 @@
       },
       {
         "jamb_name": "Secretarial Administration",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -699,7 +699,7 @@
       },
       {
         "jamb_name": "Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 17,
         "ccmas_derived_link_count": 17,
@@ -709,7 +709,7 @@
       },
       {
         "jamb_name": "Human Resources Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -721,8 +721,8 @@
         "jamb_name": "Social Standards",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -731,15 +731,15 @@
         "jamb_name": "Project Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 16,
-        "ccmas_derived_link_count": 16,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Local Government Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -749,7 +749,7 @@
       },
       {
         "jamb_name": "Accounting and Finance",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 15,
         "ccmas_derived_link_count": 15,
@@ -759,7 +759,7 @@
       },
       {
         "jamb_name": "Cooperative and Rural Development",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 16,
         "ccmas_derived_link_count": 16,
@@ -771,15 +771,15 @@
         "jamb_name": "Logistics and Supply Chain Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 17,
-        "ccmas_derived_link_count": 17,
+        "stored_link_count": 14,
+        "ccmas_derived_link_count": 14,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Development and Communication Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -789,7 +789,7 @@
       },
       {
         "jamb_name": "Transport and Logistics Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -799,7 +799,7 @@
       },
       {
         "jamb_name": "Insurance and Actuarial Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -809,7 +809,7 @@
       },
       {
         "jamb_name": "Office and Information Technology / Information Resource Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -819,7 +819,7 @@
       },
       {
         "jamb_name": "Accountancy and Forensic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -829,7 +829,7 @@
       },
       {
         "jamb_name": "Finance and Investment",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 15,
         "ccmas_derived_link_count": 15,
@@ -839,7 +839,7 @@
       },
       {
         "jamb_name": "Securities and Investment",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 14,
         "ccmas_derived_link_count": 14,
@@ -849,7 +849,7 @@
       },
       {
         "jamb_name": "Management Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 17,
         "ccmas_derived_link_count": 17,
@@ -859,7 +859,7 @@
       },
       {
         "jamb_name": "Entrepreneurship and Innovation",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -871,15 +871,15 @@
         "jamb_name": "Transport Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 15,
-        "ccmas_derived_link_count": 15,
+        "stored_link_count": 12,
+        "ccmas_derived_link_count": 12,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Tourism Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -891,15 +891,15 @@
         "jamb_name": "Employment and Human Resource Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 20,
-        "ccmas_derived_link_count": 20,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Accounting and Data Analytics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -909,7 +909,7 @@
       },
       {
         "jamb_name": "Finance and Financial Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 15,
         "ccmas_derived_link_count": 15,
@@ -919,7 +919,7 @@
       },
       {
         "jamb_name": "Agribusiness and Economics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 13,
         "ccmas_derived_link_count": 13,
@@ -929,7 +929,7 @@
       },
       {
         "jamb_name": "Cooperative Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 16,
         "ccmas_derived_link_count": 16,
@@ -939,7 +939,7 @@
       },
       {
         "jamb_name": "Cooperative Economics and Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 16,
         "ccmas_derived_link_count": 16,
@@ -949,7 +949,7 @@
       },
       {
         "jamb_name": "Social Innovation and Entrepreneurship",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -959,7 +959,7 @@
       },
       {
         "jamb_name": "Entrepreneurship and Business Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -969,7 +969,7 @@
       },
       {
         "jamb_name": "Transport and Tourism",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -981,15 +981,15 @@
         "jamb_name": "Aviation Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 21,
-        "ccmas_derived_link_count": 21,
+        "stored_link_count": 15,
+        "ccmas_derived_link_count": 15,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Aviation Security",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 14,
         "ccmas_derived_link_count": 14,
@@ -999,7 +999,7 @@
       },
       {
         "jamb_name": "Personnel Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1009,7 +1009,7 @@
       },
       {
         "jamb_name": "Industrial Relations and Human Resources Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1019,7 +1019,7 @@
       },
       {
         "jamb_name": "International Relations and Strategic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1029,7 +1029,7 @@
       },
       {
         "jamb_name": "Marketing and Consumer Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 11,
         "ccmas_derived_link_count": 11,
@@ -1041,8 +1041,8 @@
         "jamb_name": "Computer Science",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1051,8 +1051,8 @@
         "jamb_name": "Chemistry",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1061,8 +1061,8 @@
         "jamb_name": "Microbiology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1071,8 +1071,8 @@
         "jamb_name": "Mathematics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
+        "stored_link_count": 3,
+        "ccmas_derived_link_count": 3,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1081,8 +1081,8 @@
         "jamb_name": "PHYSICS",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1091,15 +1091,15 @@
         "jamb_name": "BIOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "CYBER SECURITY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1111,8 +1111,8 @@
         "jamb_name": "Statistics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1121,8 +1121,8 @@
         "jamb_name": "Software Engineering",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 13,
+        "ccmas_derived_link_count": 13,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1131,8 +1131,8 @@
         "jamb_name": "PHYSICS WITH ELECTRONICS",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1151,8 +1151,8 @@
         "jamb_name": "INFORMATION TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1161,8 +1161,8 @@
         "jamb_name": "Zoology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1189,7 +1189,7 @@
       },
       {
         "jamb_name": "Plant Science and Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1221,8 +1221,8 @@
         "jamb_name": "Biotechnology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1261,8 +1261,8 @@
         "jamb_name": "FORENSIC SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -1281,15 +1281,15 @@
         "jamb_name": "INFORMATION AND COMMUNICATION TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Animal and Environmental Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1299,7 +1299,7 @@
       },
       {
         "jamb_name": "Geophysics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1311,15 +1311,15 @@
         "jamb_name": "Industrial Physics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -1339,7 +1339,7 @@
       },
       {
         "jamb_name": "Pure and Industrial Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1349,7 +1349,7 @@
       },
       {
         "jamb_name": "APPLIED BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -1361,15 +1361,15 @@
         "jamb_name": "METEOROLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Geology and Mining",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1379,7 +1379,7 @@
       },
       {
         "jamb_name": "Mathematics with Computer Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1389,7 +1389,7 @@
       },
       {
         "jamb_name": "Applied Microbiology and Brewing / Applied Microbiology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1399,7 +1399,7 @@
       },
       {
         "jamb_name": "Pure and Applied Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1409,7 +1409,7 @@
       },
       {
         "jamb_name": "Plant Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1419,7 +1419,7 @@
       },
       {
         "jamb_name": "Plant Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1429,7 +1429,7 @@
       },
       {
         "jamb_name": "Genetics and Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1439,7 +1439,7 @@
       },
       {
         "jamb_name": "Pure and Applied Mathematics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -1449,7 +1449,7 @@
       },
       {
         "jamb_name": "Computer Science and Information Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1459,7 +1459,7 @@
       },
       {
         "jamb_name": "BIOCHEMISTRY AND MOLECULAR BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1469,7 +1469,7 @@
       },
       {
         "jamb_name": "INFORMATION AND COMMUNICATION SCIENCE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1479,7 +1479,7 @@
       },
       {
         "jamb_name": "COMPUTER SCIENCE WITH ECONOMICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1489,7 +1489,7 @@
       },
       {
         "jamb_name": "COMPUTER SCIENCE AND MATHEMATICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1499,7 +1499,7 @@
       },
       {
         "jamb_name": "COMPUTER WITH STATISTICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -1509,7 +1509,7 @@
       },
       {
         "jamb_name": "METEOROLOGY AND CLIMATE CHANGE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -1519,7 +1519,7 @@
       },
       {
         "jamb_name": "Pure Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1529,7 +1529,7 @@
       },
       {
         "jamb_name": "Applied Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1539,7 +1539,7 @@
       },
       {
         "jamb_name": "Biostatistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -1549,7 +1549,7 @@
       },
       {
         "jamb_name": "Statistics and Data Sciences",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -1559,7 +1559,7 @@
       },
       {
         "jamb_name": "Data Science and Analytics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -1579,7 +1579,7 @@
       },
       {
         "jamb_name": "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -1589,7 +1589,7 @@
       },
       {
         "jamb_name": "MANAGEMENT INFORMATION SYSTEM",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1599,7 +1599,7 @@
       },
       {
         "jamb_name": "INFORMATION SYSTEMS AND TECHNOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1609,7 +1609,7 @@
       },
       {
         "jamb_name": "CYBER SECURITY SCIENCE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1619,7 +1619,7 @@
       },
       {
         "jamb_name": "PURE AND APPLIED BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -1629,7 +1629,7 @@
       },
       {
         "jamb_name": "APPLIED BIOLOGY AND BIOTECHNOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1639,7 +1639,7 @@
       },
       {
         "jamb_name": "MARINE BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1649,7 +1649,7 @@
       },
       {
         "jamb_name": "Physics Electronics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1659,7 +1659,7 @@
       },
       {
         "jamb_name": "Physics/Industrial Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1669,7 +1669,7 @@
       },
       {
         "jamb_name": "Applied Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1679,7 +1679,7 @@
       },
       {
         "jamb_name": "Applied Biochemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -1689,7 +1689,7 @@
       },
       {
         "jamb_name": "Chemistry and Industrial Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1699,7 +1699,7 @@
       },
       {
         "jamb_name": "Applied Geology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1709,7 +1709,7 @@
       },
       {
         "jamb_name": "Plant Biology and Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1719,7 +1719,7 @@
       },
       {
         "jamb_name": "Applied Zoology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -1729,7 +1729,7 @@
       },
       {
         "jamb_name": "Molecular Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1739,7 +1739,7 @@
       },
       {
         "jamb_name": "Mathematics and Economics / Mathematics with Economics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 13,
         "ccmas_derived_link_count": 13,
@@ -1749,7 +1749,7 @@
       },
       {
         "jamb_name": "Computer Science and Information Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1759,7 +1759,7 @@
       },
       {
         "jamb_name": "BIOTECHNOLOGY AND MOLECULAR BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1769,7 +1769,7 @@
       },
       {
         "jamb_name": "DATA MANAGEMENT",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -1779,7 +1779,7 @@
       },
       {
         "jamb_name": "LIBRARY AND INFORMATION TECHNOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -1789,7 +1789,7 @@
       },
       {
         "jamb_name": "INFORMATION AND MEDIA TECHNOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -1799,7 +1799,7 @@
       },
       {
         "jamb_name": "MATHEMATICAL SCIENCES",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -1809,7 +1809,7 @@
       },
       {
         "jamb_name": "COMPUTER SCIENCE WITH MATHEMATICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1819,7 +1819,7 @@
       },
       {
         "jamb_name": "ELECTRONICS AND COMPUTER TECHNOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1829,7 +1829,7 @@
       },
       {
         "jamb_name": "ELECTRONICS AND COMPUTER SYSTEMS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -1839,7 +1839,7 @@
       },
       {
         "jamb_name": "HUMAN BIOLOGY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1849,7 +1849,7 @@
       },
       {
         "jamb_name": "APPLIED BOTANY",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -1859,7 +1859,7 @@
       },
       {
         "jamb_name": "APPLIED BIOLOGY AND GENETICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -1869,7 +1869,7 @@
       },
       {
         "jamb_name": "CELL BIOLOGY & GENETICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -1879,7 +1879,7 @@
       },
       {
         "jamb_name": "ENGINEERING PHYSICS",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1889,7 +1889,7 @@
       },
       {
         "jamb_name": "MARINE BIOLOGY & FISHERIES",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1899,7 +1899,7 @@
       },
       {
         "jamb_name": "METEOROLOGY AND CLIMATE SCIENCE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -1909,7 +1909,7 @@
       },
       {
         "jamb_name": "Physics and Computer Electronic",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -1919,7 +1919,7 @@
       },
       {
         "jamb_name": "Physics with Solar Energy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1929,7 +1929,7 @@
       },
       {
         "jamb_name": "Physics and Energy Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1939,7 +1939,7 @@
       },
       {
         "jamb_name": "Physics with Computational Modeling",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1949,7 +1949,7 @@
       },
       {
         "jamb_name": "Physics/Astrology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1959,7 +1959,7 @@
       },
       {
         "jamb_name": "Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -1969,7 +1969,7 @@
       },
       {
         "jamb_name": "Physics and Applied Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1979,7 +1979,7 @@
       },
       {
         "jamb_name": "Pure and Applied Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1989,7 +1989,7 @@
       },
       {
         "jamb_name": "Pure Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -1999,7 +1999,7 @@
       },
       {
         "jamb_name": "Pure and Industrial Physics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2009,7 +2009,7 @@
       },
       {
         "jamb_name": "Industrial Physics with Renewable Energy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2019,7 +2019,7 @@
       },
       {
         "jamb_name": "Industrial Physics with Applied Geophysics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2029,7 +2029,7 @@
       },
       {
         "jamb_name": "Industrial Physics with Electronics and IT Application",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -2039,7 +2039,7 @@
       },
       {
         "jamb_name": "Industrial Mathematics and Computer Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2049,7 +2049,7 @@
       },
       {
         "jamb_name": "Industrial Mathematics /Applied Statistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2059,7 +2059,7 @@
       },
       {
         "jamb_name": "Applied Mathematics with Statistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2069,7 +2069,7 @@
       },
       {
         "jamb_name": "Applied Statistics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2079,7 +2079,7 @@
       },
       {
         "jamb_name": "Industral Mathematics/Computer",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2089,7 +2089,7 @@
       },
       {
         "jamb_name": "Industrial Chemistry and Chemical Entrepreneurship",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 14,
         "ccmas_derived_link_count": 14,
@@ -2099,7 +2099,7 @@
       },
       {
         "jamb_name": "Industrial and Environmental Chemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2111,15 +2111,15 @@
         "jamb_name": "Brewing Science and Technology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Geological Sciences",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2129,7 +2129,7 @@
       },
       {
         "jamb_name": "Geology and Mineral Sciences",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2139,7 +2139,7 @@
       },
       {
         "jamb_name": "Geology and Geophysics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2149,7 +2149,7 @@
       },
       {
         "jamb_name": "Geology and Applied Geophysics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2159,7 +2159,7 @@
       },
       {
         "jamb_name": "Geology and Petroleum Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2169,7 +2169,7 @@
       },
       {
         "jamb_name": "Geology and Mineral Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2179,7 +2179,7 @@
       },
       {
         "jamb_name": "Marine Geology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2189,7 +2189,7 @@
       },
       {
         "jamb_name": "Statistics with Demography",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2199,7 +2199,7 @@
       },
       {
         "jamb_name": "Digital Entrepreneurship",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 12,
         "ccmas_derived_link_count": 12,
@@ -2209,7 +2209,7 @@
       },
       {
         "jamb_name": "Botany and Ecological Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2219,7 +2219,7 @@
       },
       {
         "jamb_name": "Plant Science and Forestry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2229,7 +2229,7 @@
       },
       {
         "jamb_name": "Plant Science and Microbiology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2239,7 +2239,7 @@
       },
       {
         "jamb_name": "Biotechnology and Food Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2249,7 +2249,7 @@
       },
       {
         "jamb_name": "Zoology and Aquaculture",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -2259,7 +2259,7 @@
       },
       {
         "jamb_name": "Animal Biology and Environment",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2269,7 +2269,7 @@
       },
       {
         "jamb_name": "Conservation Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -2279,7 +2279,7 @@
       },
       {
         "jamb_name": "Conservation and Environmental Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -2289,7 +2289,7 @@
       },
       {
         "jamb_name": "Environmental Biology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -2299,7 +2299,7 @@
       },
       {
         "jamb_name": "Environmental Biology and Fisheries",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 11,
         "ccmas_derived_link_count": 11,
@@ -2309,7 +2309,7 @@
       },
       {
         "jamb_name": "Marine Science and Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2319,7 +2319,7 @@
       },
       {
         "jamb_name": "Aviation Business",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 14,
         "ccmas_derived_link_count": 14,
@@ -2329,7 +2329,7 @@
       },
       {
         "jamb_name": "Microbiology and Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2339,7 +2339,7 @@
       },
       {
         "jamb_name": "Microbiology/Parasitology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2349,7 +2349,7 @@
       },
       {
         "jamb_name": "Biology/Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2359,7 +2359,7 @@
       },
       {
         "jamb_name": "Microbiology and Industrial Biotechnology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2369,7 +2369,7 @@
       },
       {
         "jamb_name": "Industrial Microbiology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2379,7 +2379,7 @@
       },
       {
         "jamb_name": "Environmental Chemistry and Toxicology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2389,7 +2389,7 @@
       },
       {
         "jamb_name": "Computer, Information and Communication Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2399,7 +2399,7 @@
       },
       {
         "jamb_name": "Computer Science and Informatics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2409,7 +2409,7 @@
       },
       {
         "jamb_name": "Computing and Artificial Intelligence",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -2419,7 +2419,7 @@
       },
       {
         "jamb_name": "Computer with Electronics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2429,7 +2429,7 @@
       },
       {
         "jamb_name": "Software Engineering and Digital Entrepreneurship",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2439,7 +2439,7 @@
       },
       {
         "jamb_name": "Robotics (Artificial Intelligence)",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -2449,7 +2449,7 @@
       },
       {
         "jamb_name": "Anatomy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2469,7 +2469,7 @@
       },
       {
         "jamb_name": "Medical Biochemistry",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -2491,15 +2491,15 @@
         "jamb_name": "Human Nutrition and Dietetics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Medical Laboratory Technology/Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2519,7 +2519,7 @@
       },
       {
         "jamb_name": "Public Health Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2529,7 +2529,7 @@
       },
       {
         "jamb_name": "Medicine and Surgery (Human Medicine)",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2541,8 +2541,8 @@
         "jamb_name": "Physiotherapy",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -2551,8 +2551,8 @@
         "jamb_name": "Pharmacology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -2561,15 +2561,15 @@
         "jamb_name": "Radiography",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Agriculture",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2579,7 +2579,7 @@
       },
       {
         "jamb_name": "Horticulture",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2589,7 +2589,7 @@
       },
       {
         "jamb_name": "Fisheries",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2599,7 +2599,7 @@
       },
       {
         "jamb_name": "Agronomy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2609,7 +2609,7 @@
       },
       {
         "jamb_name": "Animal Production",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2621,15 +2621,15 @@
         "jamb_name": "Animal Science",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Animal Breeding and Genetics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -2639,7 +2639,7 @@
       },
       {
         "jamb_name": "Crop Production",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -2669,7 +2669,7 @@
       },
       {
         "jamb_name": "Family, Nutrition and Consumer Sciences",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2679,7 +2679,7 @@
       },
       {
         "jamb_name": "Food Science with Business",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2709,7 +2709,7 @@
       },
       {
         "jamb_name": "Plant Breeding and Seed Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2719,7 +2719,7 @@
       },
       {
         "jamb_name": "Home Economics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -2729,7 +2729,7 @@
       },
       {
         "jamb_name": "Hotel Management & Tourism",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -2739,7 +2739,7 @@
       },
       {
         "jamb_name": "Home Science, Nutrition and Dietetics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2749,7 +2749,7 @@
       },
       {
         "jamb_name": "Home Science & Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2759,7 +2759,7 @@
       },
       {
         "jamb_name": "Arabic Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2769,7 +2769,7 @@
       },
       {
         "jamb_name": "Arabic Language and Literature Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2781,15 +2781,15 @@
         "jamb_name": "Archaeology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Classical Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -2799,7 +2799,7 @@
       },
       {
         "jamb_name": "Christian Religious",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -2809,7 +2809,7 @@
       },
       {
         "jamb_name": "Christian Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -2829,7 +2829,7 @@
       },
       {
         "jamb_name": "Linguistics/Edo",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -2839,7 +2839,7 @@
       },
       {
         "jamb_name": "English and Literary Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2849,7 +2849,7 @@
       },
       {
         "jamb_name": "English Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2859,7 +2859,7 @@
       },
       {
         "jamb_name": "Literature in English",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2879,7 +2879,17 @@
       },
       {
         "jamb_name": "Portuguese/English",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
+        "status": "matches_derived_domain_set",
+        "stored_link_count": 1,
+        "ccmas_derived_link_count": 1,
+        "unexpected_stored_domain_ids": [],
+        "missing_ccmas_derived_domain_ids": [],
+        "match_type_mismatch_domain_ids": []
+      },
+      {
+        "jamb_name": "German",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -2888,28 +2898,18 @@
         "match_type_mismatch_domain_ids": []
       },
       {
-        "jamb_name": "German",
-        "inheritance_type": "partial_curriculum_scope_review_required",
-        "status": "matches_derived_domain_set",
-        "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
-        "unexpected_stored_domain_ids": [],
-        "missing_ccmas_derived_domain_ids": [],
-        "match_type_mismatch_domain_ids": []
-      },
-      {
         "jamb_name": "French and German/Russian",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
+        "stored_link_count": 1,
+        "ccmas_derived_link_count": 1,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "International Studies and",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -2919,7 +2919,7 @@
       },
       {
         "jamb_name": "History",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2941,15 +2941,15 @@
         "jamb_name": "Economics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 15,
-        "ccmas_derived_link_count": 15,
+        "stored_link_count": 13,
+        "ccmas_derived_link_count": 13,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "African and Asian Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -2969,7 +2969,7 @@
       },
       {
         "jamb_name": "Kanuri",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -2979,7 +2979,7 @@
       },
       {
         "jamb_name": "Russian with French/German",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -2989,7 +2989,7 @@
       },
       {
         "jamb_name": "Mass Communication",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3001,15 +3001,15 @@
         "jamb_name": "Music",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Peace Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3039,7 +3039,7 @@
       },
       {
         "jamb_name": "Theology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3049,7 +3049,7 @@
       },
       {
         "jamb_name": "Yoruba",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -3059,7 +3059,7 @@
       },
       {
         "jamb_name": "Fulfulde",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3069,7 +3069,7 @@
       },
       {
         "jamb_name": "Efik-Ibibio",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3079,7 +3079,7 @@
       },
       {
         "jamb_name": "Communication Arts",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3101,8 +3101,8 @@
         "jamb_name": "Sociology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3111,8 +3111,8 @@
         "jamb_name": "Building",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3121,15 +3121,15 @@
         "jamb_name": "Civil Engineering",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Computer and Information Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -3139,7 +3139,7 @@
       },
       {
         "jamb_name": "Polymer and Textile Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3149,7 +3149,7 @@
       },
       {
         "jamb_name": "Water Resources and Environmental Engr",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -3169,7 +3169,7 @@
       },
       {
         "jamb_name": "Gas Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3191,15 +3191,15 @@
         "jamb_name": "Food Engineering",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Food Science and Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3209,7 +3209,7 @@
       },
       {
         "jamb_name": "Food Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3221,8 +3221,8 @@
         "jamb_name": "Architecture",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3231,8 +3231,8 @@
         "jamb_name": "Quantity Surveying",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3251,8 +3251,8 @@
         "jamb_name": "Urban and Regional Planning",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3261,8 +3261,8 @@
         "jamb_name": "Industrial Design",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
+        "stored_link_count": 2,
+        "ccmas_derived_link_count": 2,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3271,15 +3271,15 @@
         "jamb_name": "Estate Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Hotel Management and Tourism",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -3289,7 +3289,7 @@
       },
       {
         "jamb_name": "Home Economics and Food Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3299,7 +3299,7 @@
       },
       {
         "jamb_name": "Building Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3309,7 +3309,7 @@
       },
       {
         "jamb_name": "Chemical Sciences",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3319,7 +3319,7 @@
       },
       {
         "jamb_name": "Electronics",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3331,8 +3331,8 @@
         "jamb_name": "Environmental Health Science",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3341,15 +3341,15 @@
         "jamb_name": "Environmental Management",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Environmental Science and Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -3361,8 +3361,8 @@
         "jamb_name": "Environmental Standards",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3371,15 +3371,15 @@
         "jamb_name": "FISHERIES AND AQUACULTURE",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Food Science & Nutrition",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -3389,7 +3389,7 @@
       },
       {
         "jamb_name": "Food Science and Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -3419,7 +3419,7 @@
       },
       {
         "jamb_name": "HOME SCIENCE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3429,7 +3429,7 @@
       },
       {
         "jamb_name": "INFORMATION AND MEDIA SCIENCE",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3439,7 +3439,7 @@
       },
       {
         "jamb_name": "INFORMATION SCIENCE AND MEDIA STUDIES",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3449,7 +3449,7 @@
       },
       {
         "jamb_name": "Information and Media Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3461,8 +3461,8 @@
         "jamb_name": "Islamic Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3471,15 +3471,15 @@
         "jamb_name": "Optometry",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Public Relations and Advertising",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3489,7 +3489,7 @@
       },
       {
         "jamb_name": "Strategic Communication",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3499,7 +3499,7 @@
       },
       {
         "jamb_name": "Supply Chain Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 13,
         "ccmas_derived_link_count": 13,
@@ -3511,15 +3511,15 @@
         "jamb_name": "Surveying and Geoinformatics",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Textile Science and Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3529,7 +3529,7 @@
       },
       {
         "jamb_name": "Film and Video Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -3571,8 +3571,8 @@
         "jamb_name": "Ecology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3581,8 +3581,8 @@
         "jamb_name": "Applied Ecology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3591,8 +3591,8 @@
         "jamb_name": "Ecology and Environmental Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3601,8 +3601,8 @@
         "jamb_name": "Parasitology and Entomology",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3611,8 +3611,8 @@
         "jamb_name": "BIOINFORMATICS",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
+        "stored_link_count": 9,
+        "ccmas_derived_link_count": 9,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3631,8 +3631,8 @@
         "jamb_name": "BIOLOGICAL SCIENCE(S)",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3641,8 +3641,8 @@
         "jamb_name": "Applied and Renewable Energy",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3651,8 +3651,8 @@
         "jamb_name": "Energy Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3671,8 +3671,8 @@
         "jamb_name": "Electrons",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3691,8 +3691,8 @@
         "jamb_name": "COMMUNICATIONS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3701,8 +3701,8 @@
         "jamb_name": "COMMUNICATION AND WIRELESS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3711,8 +3711,8 @@
         "jamb_name": "TELECOMMUNICATION AND WIRELESS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3721,8 +3721,8 @@
         "jamb_name": "TELECOMMUNICATION SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3731,8 +3731,8 @@
         "jamb_name": "TELECOMMUNICATION MANAGEMENT",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3761,8 +3761,8 @@
         "jamb_name": "NATURAL AND ENVIRONMENTAL SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 7,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3771,8 +3771,18 @@
         "jamb_name": "ANTHROPOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 11,
+        "ccmas_derived_link_count": 11,
+        "unexpected_stored_domain_ids": [],
+        "missing_ccmas_derived_domain_ids": [],
+        "match_type_mismatch_domain_ids": []
+      },
+      {
+        "jamb_name": "Anthropology",
+        "inheritance_type": "external_sources_required",
+        "status": "matches_derived_domain_set",
+        "stored_link_count": 2,
+        "ccmas_derived_link_count": 2,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3781,15 +3791,15 @@
         "jamb_name": "ARCHEAOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
+        "stored_link_count": 6,
+        "ccmas_derived_link_count": 6,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Vocational Education",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3798,18 +3808,48 @@
         "match_type_mismatch_domain_ids": []
       },
       {
+        "jamb_name": "LIBRARY SCIENCE",
+        "inheritance_type": "partial_curriculum_scope",
+        "status": "matches_derived_domain_set",
+        "stored_link_count": 4,
+        "ccmas_derived_link_count": 4,
+        "unexpected_stored_domain_ids": [],
+        "missing_ccmas_derived_domain_ids": [],
+        "match_type_mismatch_domain_ids": []
+      },
+      {
+        "jamb_name": "LIBRARY AND INFORMATION SCIENCE",
+        "inheritance_type": "single_ccmas_full_curriculum",
+        "status": "matches_derived_domain_set",
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
+        "unexpected_stored_domain_ids": [],
+        "missing_ccmas_derived_domain_ids": [],
+        "match_type_mismatch_domain_ids": []
+      },
+      {
+        "jamb_name": "Meteorology",
+        "inheritance_type": "single_ccmas_full_curriculum",
+        "status": "matches_derived_domain_set",
+        "stored_link_count": 5,
+        "ccmas_derived_link_count": 5,
+        "unexpected_stored_domain_ids": [],
+        "missing_ccmas_derived_domain_ids": [],
+        "match_type_mismatch_domain_ids": []
+      },
+      {
         "jamb_name": "Technology Education",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
+        "stored_link_count": 8,
+        "ccmas_derived_link_count": 8,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Home Economics and Hotel Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -3819,7 +3859,7 @@
       },
       {
         "jamb_name": "Teacher Education",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3829,7 +3869,7 @@
       },
       {
         "jamb_name": "Library Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -3849,7 +3889,7 @@
       },
       {
         "jamb_name": "Education and Business Administration",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -3861,8 +3901,8 @@
         "jamb_name": "Business Education",
         "inheritance_type": "single_ccmas_full_curriculum",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
+        "stored_link_count": 10,
+        "ccmas_derived_link_count": 10,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
@@ -3879,7 +3919,7 @@
       },
       {
         "jamb_name": "Nursing/Nursing Science",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -3889,7 +3929,7 @@
       },
       {
         "jamb_name": "Pharmacy",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3899,7 +3939,7 @@
       },
       {
         "jamb_name": "Physiology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3909,7 +3949,7 @@
       },
       {
         "jamb_name": "Electrical Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 11,
         "ccmas_derived_link_count": 11,
@@ -3919,7 +3959,7 @@
       },
       {
         "jamb_name": "Electrical/Electronic Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -3929,7 +3969,7 @@
       },
       {
         "jamb_name": "Electronics Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 9,
         "ccmas_derived_link_count": 9,
@@ -3939,7 +3979,7 @@
       },
       {
         "jamb_name": "Mechanical Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -3949,7 +3989,7 @@
       },
       {
         "jamb_name": "Chemical Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -3959,7 +3999,7 @@
       },
       {
         "jamb_name": "Biomedical Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 11,
         "ccmas_derived_link_count": 11,
@@ -3969,7 +4009,7 @@
       },
       {
         "jamb_name": "Mechatronics Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -3979,7 +4019,7 @@
       },
       {
         "jamb_name": "Agricultural Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3989,7 +4029,7 @@
       },
       {
         "jamb_name": "Agricultural and Bio-Resources Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -3999,7 +4039,7 @@
       },
       {
         "jamb_name": "Production Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -4009,7 +4049,7 @@
       },
       {
         "jamb_name": "ICT Engineering",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 4,
         "ccmas_derived_link_count": 4,
@@ -4019,7 +4059,7 @@
       },
       {
         "jamb_name": "Communication Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -4029,7 +4069,7 @@
       },
       {
         "jamb_name": "Land Surveying",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -4039,7 +4079,7 @@
       },
       {
         "jamb_name": "Drama/Dramatic Arts/Performing Arts",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -4049,7 +4089,7 @@
       },
       {
         "jamb_name": "Fine Art/Fine and Applied Arts",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 1,
         "ccmas_derived_link_count": 1,
@@ -4059,7 +4099,7 @@
       },
       {
         "jamb_name": "Hausa",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -4069,7 +4109,7 @@
       },
       {
         "jamb_name": "Igbo",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -4079,17 +4119,17 @@
       },
       {
         "jamb_name": "Modern Language and Translation",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
-        "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
+        "stored_link_count": 2,
+        "ccmas_derived_link_count": 2,
         "unexpected_stored_domain_ids": [],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Geography and Environmental Studies",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -4099,7 +4139,7 @@
       },
       {
         "jamb_name": "Crop Protection",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 6,
         "ccmas_derived_link_count": 6,
@@ -4109,7 +4149,7 @@
       },
       {
         "jamb_name": "Animal Physiology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 8,
         "ccmas_derived_link_count": 8,
@@ -4119,7 +4159,7 @@
       },
       {
         "jamb_name": "Livestock Production Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -4129,7 +4169,7 @@
       },
       {
         "jamb_name": "Pasture & Range Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 2,
         "ccmas_derived_link_count": 2,
@@ -4139,7 +4179,7 @@
       },
       {
         "jamb_name": "Farm Management & Agric. Extension",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 5,
         "ccmas_derived_link_count": 5,
@@ -4149,7 +4189,7 @@
       },
       {
         "jamb_name": "Eco-Tourism and Wildlife Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -4159,7 +4199,7 @@
       },
       {
         "jamb_name": "Environmental Management and Technology",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 7,
         "ccmas_derived_link_count": 7,
@@ -4169,7 +4209,7 @@
       },
       {
         "jamb_name": "Statistics Education",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 3,
         "ccmas_derived_link_count": 3,
@@ -4189,7 +4229,7 @@
       },
       {
         "jamb_name": "Transport Planning and Management",
-        "inheritance_type": "partial_curriculum_scope_review_required",
+        "inheritance_type": "partial_curriculum_scope",
         "status": "matches_derived_domain_set",
         "stored_link_count": 10,
         "ccmas_derived_link_count": 10,
@@ -4215,17 +4255,17 @@
     "source_rows": 439,
     "enrichment_rows": 296,
     "source_unique_normalized_names": 415,
-    "mapping_rows_checked": 416,
-    "mapping_rows_with_source_row": 416,
+    "mapping_rows_checked": 420,
+    "mapping_rows_with_source_row": 420,
     "mapping_rows_missing_source_row": 0,
     "field_presence_counts": {
-      "institutions": 416,
-      "utme_subjects": 416,
-      "olevel_requirement": 248,
-      "direct_entry": 242
+      "institutions": 420,
+      "utme_subjects": 420,
+      "olevel_requirement": 252,
+      "direct_entry": 246
     },
-    "rows_with_shared_or_blank_requirement_notes": 82,
-    "mapping_rows_with_enrichment_overlay": 293,
+    "rows_with_shared_or_blank_requirement_notes": 83,
+    "mapping_rows_with_enrichment_overlay": 297,
     "normalized_name_collisions": [
       {
         "normalized_name": "hotelmanagementandtourism",
@@ -11147,6 +11187,25 @@
         "status": "source_row_found"
       },
       {
+        "jamb_name": "Anthropology",
+        "source_row_count": 2,
+        "enrichment_row_count": 1,
+        "source_files": [
+          "arts_hum_offerings.json",
+          "enrich/arts_hum__anthropology.json",
+          "sciences_offerings.json"
+        ],
+        "source_fields_present": {
+          "institutions": true,
+          "utme_subjects": true,
+          "olevel_requirement": true,
+          "direct_entry": true
+        },
+        "shared_or_blank_requirement_note": false,
+        "source_notes": [],
+        "status": "source_row_found"
+      },
+      {
         "jamb_name": "ARCHEAOLOGY",
         "source_row_count": 1,
         "enrichment_row_count": 0,
@@ -11170,6 +11229,67 @@
         "source_files": [
           "education_offerings.json",
           "enrich/education__vocational_education.json"
+        ],
+        "source_fields_present": {
+          "institutions": true,
+          "utme_subjects": true,
+          "olevel_requirement": true,
+          "direct_entry": true
+        },
+        "shared_or_blank_requirement_note": false,
+        "source_notes": [],
+        "status": "source_row_found"
+      },
+      {
+        "jamb_name": "LIBRARY SCIENCE",
+        "source_row_count": 2,
+        "enrichment_row_count": 1,
+        "source_files": [
+          "education_offerings.json",
+          "enrich/education__library_science.json",
+          "social_management_offerings.json"
+        ],
+        "source_fields_present": {
+          "institutions": true,
+          "utme_subjects": true,
+          "olevel_requirement": true,
+          "direct_entry": true
+        },
+        "shared_or_blank_requirement_note": false,
+        "source_notes": [],
+        "status": "source_row_found"
+      },
+      {
+        "jamb_name": "LIBRARY AND INFORMATION SCIENCE",
+        "source_row_count": 3,
+        "enrichment_row_count": 2,
+        "source_files": [
+          "education_offerings.json",
+          "enrich/education__library_and_information_science.json",
+          "enrich/social_management__library_and_information_science.json",
+          "sciences_offerings.json",
+          "social_management_offerings.json"
+        ],
+        "source_fields_present": {
+          "institutions": true,
+          "utme_subjects": true,
+          "olevel_requirement": true,
+          "direct_entry": true
+        },
+        "shared_or_blank_requirement_note": true,
+        "source_notes": [
+          "shared/blank in source"
+        ],
+        "status": "source_row_found"
+      },
+      {
+        "jamb_name": "Meteorology",
+        "source_row_count": 2,
+        "enrichment_row_count": 1,
+        "source_files": [
+          "engineering_offerings.json",
+          "enrich/engineering__meteorology.json",
+          "sciences_offerings.json"
         ],
         "source_fields_present": {
           "institutions": true,
@@ -11896,13 +12016,14 @@
   },
   "ccmas_resolution_audit": {
     "rows_without_declared_ccmas_discipline": 50,
-    "rows_with_declared_ccmas_discipline": 366,
+    "rows_with_declared_ccmas_discipline": 370,
     "resolution_methods": {
       "global_unique_code": 30,
       "faculty_disambiguated_code": 15,
       "discipline_and_unique_code": 222,
-      "external_enrichment": 6,
-      "explicit_discipline_and_name": 172
+      "external_enrichment": 7,
+      "explicit_discipline_name_and_code": 141,
+      "explicit_discipline_and_name": 34
     },
     "unresolved_components": 0,
     "decision": "Rows without ccmas_discipline are accepted only when the CCMAS code is globally unique, faculty-disambiguated, explicitly named, or a reviewed external enrichment row."
@@ -11910,9 +12031,9 @@
   "canonical_artifact": {
     "path": "career-mapping\\_audit\\jamb_ccmas_inheritance_canonical_2026-08-17.json",
     "status_counts": {
-      "ready_partial": 272,
-      "ready": 139,
-      "ready_external": 5
+      "ready_partial": 273,
+      "ready": 141,
+      "ready_external": 6
     }
   },
   "legacy_domain_map_backup": "career-mapping\\_audit\\jamb_domain_map_legacy_2026-08-17.json",

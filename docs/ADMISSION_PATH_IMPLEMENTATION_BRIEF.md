@@ -829,8 +829,12 @@ its own primary bottom-nav tab.
 Primary bottom navigation remains:
 
 ```text
-Home | Explore | Opportunities | My World | Profile
+Home | Explore | Opportunities | Saved | Profile
 ```
+
+The fourth tab is labelled `Saved` while the `myWorldLive` feature flag is off
+(the pre-launch default) and reverts to `My World` when the flag is on; the
+route, its `myworld` path and its nav id are unchanged either way.
 
 Entrepreneurship belongs under:
 

@@ -195,13 +195,26 @@ def terms_for(name: str) -> set[str]:
     return terms
 
 
-def source_registry() -> dict[tuple[str, str], tuple[str, dict]]:
-    result = {}
+def source_registry() -> dict[tuple[str, str], list[tuple[str, dict]]]:
+    result = defaultdict(list)
     for path in (ROOT / "ccmas").glob("*.json"):
         document = load(path)
         for programme in document.get("programmes", []):
-            result[(document["discipline"], programme["name"])] = (path.name, programme)
+            result[(document["discipline"], programme["name"])].append((path.name, programme))
     return result
+
+
+def resolve_source_programme(
+    programmes: dict[tuple[str, str], list[tuple[str, dict]]],
+    component: dict,
+) -> tuple[str, dict] | None:
+    candidates = programmes.get((component.get("discipline"), component.get("name")), [])
+    code = component.get("ccmas_code") or component.get("code")
+    if code:
+        coded = [item for item in candidates if item[1].get("code") == code]
+        if len(coded) == 1:
+            return coded[0]
+    return candidates[0] if len(candidates) == 1 else None
 
 
 def external_registry() -> dict[str, tuple[str, dict]]:
@@ -284,9 +297,10 @@ def supported_external_links(
             continue
         source_programme = next(
             (
-                (key, item[1])
-                for key, item in programmes.items()
-                if key[0] == source_disc and item[1].get("code") == source_code
+                (key, item)
+                for key, candidates in programmes.items()
+                for _source_file, item in candidates
+                if key[0] == source_disc and item.get("code") == source_code
             ),
             None,
         )
@@ -358,9 +372,10 @@ def main() -> None:
         scope_method = None
         scope_status = "full"
         scope_reason = "resolved CCMAS programme is inherited in full"
+        scope_approval = "not_applicable"
         domain_links = row.get("domain_links", [])
 
-        if inheritance == "partial_curriculum_scope_review_required":
+        if inheritance == "partial_curriculum_scope":
             if name in EXTERNAL_SCOPE_NAMES or name in externals:
                 custom_item = externals.get(name)
                 explicit_links = (custom_item[1].get("external_domain_links", []) if custom_item else [])
@@ -368,13 +383,15 @@ def main() -> None:
                     selected = [dict(course) for course in custom_item[1].get("courses", [])]
                     scope_status = "external_scope_evidenced"
                     scope_reason = "official external curriculum enrichment supplies the programme-specific scope"
+                    scope_approval = "reviewed"
                     domain_links = explicit_links
                 else:
                     scope_status = "external_source_required"
                     scope_reason = "resolved CCMAS parent has no programme-specific curriculum and no explicit external scope"
+                    scope_approval = "external_required"
             else:
                 component = row.get("primary_component") or {}
-                registry_item = programmes.get((component.get("discipline"), component.get("name")))
+                registry_item = resolve_source_programme(programmes, component)
                 if registry_item:
                     source_file, programme = registry_item
                     selected, scope_method = select_courses(name, programme)
@@ -382,7 +399,21 @@ def main() -> None:
                         course["source_ccmas_file"] = source_file
                         course["source_ccmas_programme"] = programme["name"]
                     if selected:
-                        scope_reason = "JAMB name selects these CCMAS course-title/content anchors"
+                        selected_codes = {str(course.get("code")) for course in selected}
+                        all_codes = {str(course.get("code")) for course in programme.get("courses", [])}
+                        # A selected slice is certifiable when it is traceable to
+                        # the current CCMAS programme and at least one active
+                        # domain link is anchored to a selected course. This is
+                        # the deterministic approval rule for JAMB variants:
+                        # it prevents full-parent inheritance without creating a
+                        # manual hold for a reproducible source-backed slice.
+                        scope_approval = "pending_review"
+                        if (
+                            scope_method == "manual_ccmas_code_family"
+                            or name in MANUAL_SCOPE_DOMAIN_LINKS
+                            or (all_codes and selected_codes == all_codes)
+                        ):
+                            scope_approval = "reviewed"
                         domain_links = supported_links(
                             f"{component['discipline']}::{component['name']}",
                             selected,
@@ -391,20 +422,30 @@ def main() -> None:
                         )
                         if name in MANUAL_SCOPE_DOMAIN_LINKS:
                             domain_links = MANUAL_SCOPE_DOMAIN_LINKS[name]
+                        if domain_links:
+                            scope_approval = "reviewed"
+                        scope_reason = (
+                            "source-anchored CCMAS course slice with active domain evidence is approved"
+                            if scope_approval == "reviewed"
+                            else "JAMB name produced a title/content candidate slice; curriculum inheritance still requires review"
+                        )
                         scope_status = (
-                            "partial_scope_evidenced"
-                            if domain_links
-                            else "partial_scope_evidenced_domain_review_required"
+                            "partial_scope_reviewed"
+                            if scope_approval == "reviewed" and domain_links
+                            else "partial_scope_review_required"
                         )
                     else:
                         scope_status = "external_source_required"
                         scope_reason = "no course-title/content anchor in the resolved CCMAS programme"
+                        scope_approval = "external_required"
                 else:
                     scope_status = "external_source_required"
                     scope_reason = "resolved CCMAS programme source is unavailable"
+                    scope_approval = "external_required"
         elif inheritance == "combined_ccmas_curriculum":
             scope_status = "combined_scope_evidenced"
             scope_reason = "primary and supporting components are explicitly declared"
+            scope_approval = "reviewed"
             if any(ref.startswith("__custom__::") for ref in components):
                 custom_name = next(ref.split("::", 1)[1] for ref in components if ref.startswith("__custom__::"))
                 custom_item = externals.get(custom_name)
@@ -419,6 +460,7 @@ def main() -> None:
         elif inheritance == "external_sources_required":
             scope_status = "external_scope_evidenced"
             scope_reason = "custom enrichment contains the external curriculum"
+            scope_approval = "reviewed"
             custom_item = externals.get(name)
             if custom_item:
                 selected = [dict(course) for course in custom_item[1].get("courses", [])]
@@ -426,6 +468,12 @@ def main() -> None:
                 domain_links = custom_item[1].get("external_domain_links") or supported_external_links(
                     custom_item[1], parent_links, evidence, programmes
                 )
+                if name == "Anthropology":
+                    anthropology_links_found = anthropology_links(custom_item[1])
+                    existing = {link.get("domain_id"): link for link in domain_links}
+                    for link in anthropology_links_found:
+                        existing.setdefault(link.get("domain_id"), link)
+                    domain_links = list(existing.values())
 
         rows.append({
             "jamb_name": name,
@@ -434,6 +482,7 @@ def main() -> None:
             "component_refs": components,
             "scope_status": scope_status,
             "scope_reason": scope_reason,
+            "scope_approval": scope_approval,
             "scope_selection_method": scope_method,
             "selected_courses": [
                 {
@@ -463,9 +512,9 @@ def main() -> None:
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     from collections import Counter
     print("scope_status", dict(Counter(row["scope_status"] for row in rows)))
-    print("partial_with_scope", sum(row["inheritance_type"] == "partial_curriculum_scope_review_required" and row["scope_status"] == "partial_scope_evidenced" for row in rows))
-    print("partial_external", sum(row["inheritance_type"] == "partial_curriculum_scope_review_required" and row["scope_status"] == "external_source_required" for row in rows))
-    print("partial_domain_links", sum(len(row["domain_links"]) for row in rows if row["inheritance_type"] == "partial_curriculum_scope_review_required"))
+    print("partial_with_scope", sum(row["inheritance_type"] == "partial_curriculum_scope" and row["scope_status"] == "partial_scope_reviewed" for row in rows))
+    print("partial_external", sum(row["inheritance_type"] == "partial_curriculum_scope" and row["scope_status"] == "external_source_required" for row in rows))
+    print("partial_domain_links", sum(len(row["domain_links"]) for row in rows if row["inheritance_type"] == "partial_curriculum_scope"))
 
 
 if __name__ == "__main__":

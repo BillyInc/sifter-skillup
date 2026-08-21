@@ -10,7 +10,16 @@ Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant fi
 
 ### Frontend (React Native / Expo)
 ```bash
-npm install              # install dependencies
+# This project is pnpm, NOT npm. package.json pins
+# "packageManager": "pnpm@10.33.0", pnpm-lock.yaml is the tracked lockfile,
+# and CI installs with `pnpm install --frozen-lockfile`.
+#
+# Running `npm install` here looks fine locally — node_modules ends up correct,
+# tsc and jest both pass — but it writes a stray package-lock.json and leaves
+# pnpm-lock.yaml stale, so CI dies with ERR_PNPM_OUTDATED_LOCKFILE before a
+# single test runs. Add and remove dependencies with pnpm.
+pnpm install             # install dependencies
+pnpm add <pkg>           # add a dependency (updates pnpm-lock.yaml)
 npx expo start           # dev server (Expo Go or dev client)
 npx expo start --android # Android emulator
 npx expo start --ios     # iOS simulator
@@ -56,10 +65,22 @@ docker-compose up -d   # starts api, celery worker, celery beat, redis
 
 ## Architecture
 
-### Frontend (`App.tsx`, `src/`)
-- **Expo SDK 51**, React Native 0.74, TypeScript strict mode
+### Frontend (`app/`, `src/`)
+- **Expo SDK 55**, React Native 0.76.7, React 19.2, TypeScript strict mode
 - Path alias: `@/*` maps to `src/*`
-- Navigation: `@react-navigation/bottom-tabs` with 5 tabs — Map (home), Skills, Portfolio, Profile, GitHub
+- Navigation: **expo-router** (file-based) — routes live under `app/`, not in a
+  navigator config. `@react-navigation/bottom-tabs` is NOT a dependency.
+  `app/(tabs)/` currently holds: community, explore, feed, fields, guild, home,
+  map, myworld, opportunities, portfolio, profile, settings, skills, streaks.
+  Which of these are surfaced in the visible tab bar is decided by
+  `MOBILE_NAV` / `PRIMARY_NAV` in `src/components/shell/ReferenceShell.tsx`,
+  not by the presence of a route directory.
+- The `myworld` destination is labelled **Saved** pre-launch, via the
+  flag-aware `WORLD_NAV`; it becomes **My World** when
+  `featureFlags.myWorldLive` (`EXPO_PUBLIC_MY_WORLD_LIVE`) is on. The route,
+  path and NavId stay `myworld` in both cases.
+- UI typeface is **Inter** (`@expo-google-fonts/inter`, weights 400/500/600/700)
+  with Spline Sans Mono for data/monospace — see `src/theme/fonts.ts`.
 - Auth state managed via `src/hooks/useAuth` (React Context), token stored in SecureStore (migrated from AsyncStorage)
 - API client in `src/lib/api.ts` — all requests go through FastAPI backend, uses `EXPO_PUBLIC_API_URL` env var
 - Reanimated plugin must be last in `babel.config.js` plugins array
@@ -336,6 +357,43 @@ around reality. The full brief in `docs/` is authoritative for the complete
 design rationale and detailed examples; this section is the operational
 checklist Claude Code must follow automatically.
 
+## JAMB Subject SQL Pipeline
+
+The JAMB subject data is split between matchable picker rows and a complete
+typed rule-record layer. SQL files are generated from
+`data/career-mapping/`; they are not automatically executed in Supabase.
+
+Apply the schema in this dependency order:
+
+1. `backend/migration_career_base_registry.sql`
+2. `backend/migration_subject_catalog.sql`
+3. `backend/migration_career_pilot.sql`
+4. `backend/migration_subject_rule_records.sql`
+5. `backend/migration_student_pipeline_live.sql`
+
+Then apply the subject data in this order:
+
+1. `backend/seed_subject_catalog.sql`
+2. `backend/seed_career_pilot.sql`
+3. `backend/seed_subject_rule_records.sql`
+4. `backend/seed_subject_options.sql`
+
+Current generated coverage is 46 catalog subjects, 420 JAMB programme names,
+9,130 unique university offerings, 740 national matcher options, 7,246 option
+items, and 1,260 typed requirement records. The typed records preserve
+conditions, cross-references, direct-entry requirements, source variants, and
+14 explicitly source-missing layers. Only directly matchable records become
+subject-picker options; missing source text must never be guessed.
+
+`seed_subject_options.sql` is a replacement transaction for the two national
+matcher tables. It is not an ordinary additive seed and requires a backup or
+controlled deployment on an existing Supabase project.
+
+After applying the SQL, verify the counts and foreign-key checks in
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. A successful local generator
+run does not prove that Supabase has been updated; the SQL editor results are
+the deployment proof.
+
 ## Career Resource SQL Migration
 
 This repository does not use monolithic career-resource JSON or SQL files.
@@ -373,12 +431,15 @@ errors.
 ### Apply to Supabase
 
 1. Apply `backend/migration_career_resources_v1.sql` once.
-2. Apply every file in `backend/seed_career_resources_v1_parts/` in numeric
+2. Apply `backend/migration_saved_resource_support.sql` after the `saved_items`
+   table exists. It only permits canonical resource URLs to be stored as
+   `resource` items; it does not invent or seed resource links.
+3. Apply every file in `backend/seed_career_resources_v1_parts/` in numeric
    order, from `part-001.sql` through the final numbered part.
-3. Keep each part's `BEGIN;` and `COMMIT;` transaction intact.
-4. Do not paste JSON into Supabase. JSON is a build/audit input; the backend
+4. Keep each part's `BEGIN;` and `COMMIT;` transaction intact.
+5. Do not paste JSON into Supabase. JSON is a build/audit input; the backend
    reads the seeded `skillup_dev.career_learning_resources` table.
-5. Verify the final row count and orphan foreign-key checks using the queries
+6. Verify the final row count and orphan foreign-key checks using the queries
    in `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
 
 ### Git workflow for this migration

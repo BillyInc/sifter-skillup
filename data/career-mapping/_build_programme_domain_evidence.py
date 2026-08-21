@@ -66,6 +66,87 @@ EXTRA_ANCHORS = {
     "D159": ["credit", "loans", "borrower", "financial statements", "risk", "lending"],
 }
 
+REVIEW_SOURCE_STATES = {
+    "source_missing",
+    "extraction_gap",
+    "table_omitted",
+    "programme_conflict",
+}
+
+# These conflicts were checked against the original NUC CCMAS PDFs.  The
+# structured layer keeps the original discrepancy for audit/display, but the
+# curriculum identity used for mapping is now explicit and therefore no
+# longer blocks a downstream domain link.
+RECONCILED_COURSE_CONFLICTS = {
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 202"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 204"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 209"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 210"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 215"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 216"),
+    ("Administration and Management", "Finance / Banking and Finance", "FIN 217"),
+    # The source reuses TAX 311 for two different titles; course_identity
+    # keeps the two curriculum concepts separate.
+    ("Administration and Management", "Taxation", "TAX 311"),
+    ("Administration and Management", "Taxation", "TAX 411"),
+    ("Administration and Management", "Taxation", "TAX 421"),
+    # HEM/HAE and VPM/VCH code variants are retained as source aliases.
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)", "HEM 302"),
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)", "HEM 401"),
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)", "HEM 402"),
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)", "HEM 403"),
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)", "HEM 404"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)", "HEM 302"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)", "HEM 401"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)", "HEM 402"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)", "HEM 403"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)", "HEM 404"),
+    ("Veterinary Medicine", "Veterinary Medicine", "VPM 508"),
+    ("Veterinary Medicine", "Veterinary Medicine", "VCH 501"),
+    ("Veterinary Medicine", "Veterinary Medicine", "VCH 502"),
+    # LIS P12 table identities are retained; P13/P14 content reverses or
+    # reuses several codes, so title-based aliases are used for evidence.
+    ("Social Sciences", "Library and Information Science", "LIS 211"),
+    ("Social Sciences", "Library and Information Science", "LIS 212"),
+    ("Social Sciences", "Library and Information Science", "LIS 322"),
+    ("Social Sciences", "Library and Information Science", "LIS 418"),
+    ("Social Sciences", "Library and Information Science", "LIS 424"),
+}
+
+RECONCILED_PROGRAMME_CONFLICTS = {
+    ("Medicine and Dentistry", "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)"),
+    ("Medicine and Dentistry", "Bachelor of Dental Surgery (BDS/BChD)"),
+    ("Veterinary Medicine", "Veterinary Medicine"),
+}
+
+
+def course_source_review_required(
+    discipline: str, programme_name: str, course: dict
+) -> bool:
+    """Return only source issues that can change the mapping identity.
+
+    Unit/contact-hour differences and a reconciled source alias remain visible
+    in the JSON audit, but they do not make an otherwise source-backed course
+    unusable for curriculum/domain evidence.
+    """
+    if course.get("mapping_excluded"):
+        return False
+    state = course.get("source_state")
+    if state in REVIEW_SOURCE_STATES:
+        return True
+    if state == "source_conflict":
+        return (discipline, programme_name, course.get("code")) not in RECONCILED_COURSE_CONFLICTS
+    return False
+
+
+def programme_source_review_required(discipline: str, programme_name: str, programme: dict) -> bool:
+    state = programme.get("source_state")
+    if state in REVIEW_SOURCE_STATES:
+        return True
+    if state == "source_conflict":
+        return (discipline, programme_name) not in RECONCILED_PROGRAMME_CONFLICTS
+    return False
+
 
 def text_tokens(value: str) -> set[str]:
     return {token for token in re.findall(r"[a-z][a-z0-9]+", value.lower()) if len(token) > 2 and token not in STOP}
@@ -97,7 +178,25 @@ def main() -> None:
 
     for programme_key, value in mapping.items():
         programme = programmes[programme_key]
+        discipline, programme_name = programme_key.split("::", 1)
         courses = programme.get("courses", [])
+        programme_source_flags = []
+        if programme_source_review_required(discipline, programme_name, programme):
+            programme_source_flags.append({
+                "source_state": programme.get("source_state"),
+                "source_reference": programme.get("source_reference"),
+            })
+        for item in programme.get("source_omitted_courses", []) or []:
+            # A course explicitly omitted from the P12 programme table is
+            # retained in the audit, but it is not part of the active
+            # curriculum evidence set and must not block unrelated anchors.
+            if item.get("source_state") in REVIEW_SOURCE_STATES and item.get("source_state") != "table_omitted":
+                programme_source_flags.append({
+                    "code": item.get("code"),
+                    "title": item.get("title"),
+                    "source_state": item.get("source_state"),
+                    "source_reference": item.get("source_reference"),
+                })
         for link in value.get("links", []):
             domain_id = link["domain_id"]
             domain = meta[domain_id]
@@ -111,12 +210,20 @@ def main() -> None:
             )
             anchor_phrases = [phrase.lower().strip() for phrase in anchor_phrases if isinstance(phrase, str) and len(phrase.strip()) > 2]
             course_anchors = []
+            source_flagged_courses = []
             for course in courses:
                 title = as_text(course.get("title", ""))
-                haystack = " ".join([title, as_text(course.get("content_summary", "")), *[as_text(item) for item in course.get("skills_learned", [])]]).lower()
+                mapping_title = as_text(course.get("mapping_title", ""))
+                course_identity = as_text(course.get("course_identity", "")) or "::".join(filter(None, [as_text(course.get("code", "")), title]))
+                haystack = " ".join([title, mapping_title, as_text(course.get("content_summary", "")), *[as_text(item) for item in course.get("skills_learned", [])]]).lower()
                 matched = sorted({phrase for phrase in anchor_phrases if phrase in haystack})
                 if matched:
-                    course_anchors.append({"title": title, "matched_anchors": matched[:12]})
+                    item = {"title": title, "mapping_title": mapping_title or None, "code": course.get("code"), "course_identity": course_identity, "matched_anchors": matched[:12]}
+                    if course_source_review_required(discipline, programme_name, course):
+                        item["source_flags"] = list(course.get("flags") or [])
+                        item["source_state"] = course.get("source_state")
+                        source_flagged_courses.append(item)
+                    course_anchors.append(item)
 
             if len(course_anchors) >= 2:
                 quality = "strong"
@@ -139,7 +246,10 @@ def main() -> None:
                 "course_anchor_quality": quality,
                 "course_anchor_count": len(course_anchors),
                 "course_anchors": course_anchors[:12],
-                "review_required": quality == "weak" or (link.get("match_type") == "direct" and quality != "strong"),
+                "source_review_required": bool(source_flagged_courses or programme_source_flags),
+                "source_flagged_courses": source_flagged_courses[:12],
+                "programme_source_flags": programme_source_flags[:12],
+                "review_required": quality == "weak" or (link.get("match_type") == "direct" and quality != "strong") or bool(source_flagged_courses or programme_source_flags),
             }
 
     OUTPUT_PATH.write_text(json.dumps(evidence, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

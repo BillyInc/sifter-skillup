@@ -1,8 +1,10 @@
 # Career Intelligence — Migration & Seed Runbook
 
 Single source of truth for standing up the career-intelligence schema + data on
-Supabase (schema `skillup_dev`). Everything is idempotent (uuid5 ids + `ON
-CONFLICT` / `IF NOT EXISTS`), so every file is safe to re-run.
+Supabase (schema `skillup_dev`). Additive migrations are safe to re-run. The
+subject-option seed is a deliberate replacement transaction: it deletes and
+rebuilds the national matcher rows, so treat it as a controlled refresh on an
+existing database.
 
 The Supabase REST keys in `.env` cannot run DDL — use the **Supabase Dashboard →
 SQL Editor** (paste + run each file) or **psql** with the DB connection string
@@ -24,6 +26,7 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 | 3 | `backend/migration_career_base_registry.sql` | Stable base career registry: `schools`, `programmes`. | #0 |
 | 4 | `backend/migration_career_pilot.sql` | JAMB programme registry, JAMB↔programme mapping, school programme offerings, textual subject requirements. | #3 |
 | 5 | `backend/migration_career_v2.sql` | Drops the empty pre-sweep taxonomy tables and recreates the post-sweep shape: `domains`, `domain_subgroups`, `domain_roles`, `domain_tools`, `domain_certifications`, `programme_domain` (incl. `in_demand_score`, `elite_flag`), `programme_role_score`, `jamb_programme_domain`, `domain_overlap`; user tables `saved_items`, `user_notes` (+`category`,`entity_label`), `opportunity_subscriptions`; `mapping_feedback`, `enrichment_version`; **`institution_members`**; demand tables `domain_demand_metrics`, `role_demand_metrics`. | #3 and #4 |
+| 5a | `backend/migration_saved_resource_support.sql` | Adds `resource` as a saveable My World entity. Resource identity is its canonical URL; no resource is fabricated when no URL exists. | After #5 |
 | 6 | `backend/migration_admission_intelligence.sql` | Phase 8 admission tables: `national_jamb_floor`, `programme_school_cutoff`, `school_aggregate_formula`, `course_competitiveness`, `admission_snapshot_version`. | #5 |
 | 7 | `backend/migration_enrichment_v1.sql` | Phase 9 enrichment **columns** (additive) on `domain_certifications`, `domains`/`domain_subgroups`/`domain_roles`, and `domain_tools`. | #5 and #6 |
 | 8 | `backend/migration_market_intelligence_v1.sql` | Source registry, market metric provenance, posting windows, value/demand bands and volume x value quadrants. | #5 |
@@ -53,6 +56,23 @@ testing login or finishing onboarding with the updated backend.
 | 14 | `backend/seed_career_pilot.sql` | programmes, schools, `jamb_programmes`, `programme_mapping`, `school_programmes`, `programme_subject_requirements` | migrations #4 |
 | 15 | `backend/seed_career_v2.sql` | 168 domains · 278 sub-groups · 4,092 roles · 7,393 tools · 508 certs · 2,528 programme→domain · 70,560 readiness · 5,573 JAMB→domain · 4,112 overlap. **Gitignored (~39 MB)** — regenerate with `python data/career-mapping/_gen_career_seed.py`. | #14 |
 | 16 | `backend/seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | #14 and #15 |
+
+## Subject-pipeline deployment order
+
+On a fresh database, apply `backend/migration_subject_catalog.sql` before
+`backend/migration_career_pilot.sql`. Apply
+`backend/migration_subject_rule_records.sql` after the career pilot migration
+and before the subject seeds. Then run the data files in this order:
+
+1. `backend/seed_subject_catalog.sql`
+2. `backend/seed_career_pilot.sql`
+3. `backend/seed_subject_rule_records.sql`
+4. `backend/seed_subject_options.sql`
+
+The current generated subject counts are 46 catalog subjects, 740 national
+matcher options, 7,246 option items, and 1,260 typed rule records. The
+subject-option seed intentionally deletes and rebuilds only the two national
+matcher tables; back up an existing production database before running it.
 
 ## Smoke test (after A + B)
 
