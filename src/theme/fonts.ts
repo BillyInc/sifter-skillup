@@ -5,14 +5,14 @@
  * packages are installed, and degrades gracefully to the system stack otherwise
  * — so the app never blocks on fonts that aren't present yet.
  *
- *   Sans : Hanken Grotesk    (all UI text, titles, section labels)
+ *   Sans : Inter             (all UI text, titles, section labels)
  *   Data : Spline Sans Mono  (scores, cut-offs, salary, %, freshness)
  *
- * Legacy display roles intentionally map to Hanken so existing call sites keep
+ * Legacy display roles intentionally map to Inter so existing call sites keep
  * working without carrying the old Bricolage display voice into the redesign.
  *
  * To activate the real faces:
- *   npm i @expo-google-fonts/hanken-grotesk \
+ *   npm i @expo-google-fonts/inter \
  *         @expo-google-fonts/spline-sans-mono
  * then set COMPASS_FONTS_AVAILABLE = true below. The font *names* used across the
  * app never change — only the underlying file binding does.
@@ -48,13 +48,13 @@ const _SYS_MONO = Platform.select({
  */
 export const Fonts = COMPASS_FONTS_AVAILABLE
   ? {
-      display:      { fontFamily: 'HankenGrotesk_600SemiBold' },
-      displayBold:  { fontFamily: 'HankenGrotesk_700Bold' },
-      displaySemi:  { fontFamily: 'HankenGrotesk_600SemiBold' },
-      body:         { fontFamily: 'HankenGrotesk_400Regular' },
-      bodyMedium:   { fontFamily: 'HankenGrotesk_500Medium' },
-      bodySemibold: { fontFamily: 'HankenGrotesk_600SemiBold' },
-      bodyBold:     { fontFamily: 'HankenGrotesk_700Bold' },
+      display:      { fontFamily: 'Inter_600SemiBold' },
+      displayBold:  { fontFamily: 'Inter_700Bold' },
+      displaySemi:  { fontFamily: 'Inter_600SemiBold' },
+      body:         { fontFamily: 'Inter_400Regular' },
+      bodyMedium:   { fontFamily: 'Inter_500Medium' },
+      bodySemibold: { fontFamily: 'Inter_600SemiBold' },
+      bodyBold:     { fontFamily: 'Inter_700Bold' },
       data:         { fontFamily: 'SplineSansMono_400Regular' },
       dataMedium:   { fontFamily: 'SplineSansMono_500Medium' },
       emoji:        _SYS ? { fontFamily: _SYS } : {},
@@ -89,16 +89,16 @@ export function useCompassFonts(): boolean {
       try {
         // Dynamically imported so the bundle doesn't hard-depend on packages that
         // may not be installed. Guarded by COMPASS_FONTS_AVAILABLE.
-        const [Font, hanken, spline] = await Promise.all([
+        const [Font, inter, spline] = await Promise.all([
           import('expo-font'),
-          import('@expo-google-fonts/hanken-grotesk' as string),
+          import('@expo-google-fonts/inter' as string),
           import('@expo-google-fonts/spline-sans-mono' as string),
         ]);
         await Font.loadAsync({
-          HankenGrotesk_400Regular: hanken.HankenGrotesk_400Regular,
-          HankenGrotesk_500Medium: hanken.HankenGrotesk_500Medium,
-          HankenGrotesk_600SemiBold: hanken.HankenGrotesk_600SemiBold,
-          HankenGrotesk_700Bold: hanken.HankenGrotesk_700Bold,
+          Inter_400Regular: inter.Inter_400Regular,
+          Inter_500Medium: inter.Inter_500Medium,
+          Inter_600SemiBold: inter.Inter_600SemiBold,
+          Inter_700Bold: inter.Inter_700Bold,
           SplineSansMono_400Regular: spline.SplineSansMono_400Regular,
           SplineSansMono_500Medium: spline.SplineSansMono_500Medium,
         });

@@ -235,7 +235,7 @@ class TestDelivery:
 
     def test_sends_the_expected_resend_payload(self, monkeypatch):
         monkeypatch.setattr(settings, "RESEND_API_KEY", "re_test_key")
-        monkeypatch.setattr(settings, "EMAIL_FROM", "LevelUp <noreply@levelup.com.ng>")
+        monkeypatch.setattr(settings, "EMAIL_FROM", "LevelUp <noreply@hello.levelup.com.ng>")
         captured = {}
 
         async def fake_post(payload):
@@ -244,12 +244,48 @@ class TestDelivery:
         monkeypatch.setattr(email_delivery, "_post", fake_post)
         run(email_delivery.send_verification_code("x@example.com", "654321"))
 
-        assert captured["from"] == "LevelUp <noreply@levelup.com.ng>"
+        assert captured["from"] == "LevelUp <noreply@hello.levelup.com.ng>"
         assert captured["to"] == ["x@example.com"]
         assert "654321" in captured["html"]
         # Text part sent alongside HTML: some clients render text only, and
         # having both improves deliverability.
         assert "654321" in captured["text"]
+
+    def test_default_sender_uses_the_verified_domain(self, monkeypatch):
+        """The EMAIL_FROM fallback must sit on a domain verified in Resend.
+
+        Resend rejects any send whose From: is on an unverified domain, so a
+        wrong default fails closed -- and only in production, as a signup 502,
+        because every local .env sets EMAIL_FROM explicitly and masks it. The
+        default previously pointed at the bare root levelup.com.ng, which is
+        deliberately NOT verified: the root MX is reserved for a mailbox
+        provider and its SPF belongs to WhoGoHost. Only the subdomain
+        hello.levelup.com.ng is verified (see DEPLOY-SETUP.md).
+
+        Reloading the module is the point of this test -- the class body calls
+        os.getenv at import time, so the default cannot be observed any other
+        way.
+        """
+        import importlib
+
+        import config as config_module
+
+        monkeypatch.delenv("EMAIL_FROM", raising=False)
+        # load_dotenv() at module scope would repopulate EMAIL_FROM from a
+        # local .env and re-mask the default, which is exactly the failure this
+        # test exists to catch.
+        monkeypatch.setattr(config_module, "load_dotenv", lambda *a, **k: None)
+        try:
+            reloaded = importlib.reload(config_module)
+            default_sender = reloaded.Settings.EMAIL_FROM
+        finally:
+            # Leave the imported module as the rest of the suite found it.
+            importlib.reload(config_module)
+
+        assert default_sender.endswith("@hello.levelup.com.ng>"), (
+            f"EMAIL_FROM default is {default_sender!r}; it must be on the "
+            "verified sending subdomain hello.levelup.com.ng"
+        )
 
     def test_provider_rejection_raises(self, monkeypatch):
         monkeypatch.setattr(settings, "RESEND_API_KEY", "re_test_key")

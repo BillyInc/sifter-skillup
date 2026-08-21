@@ -10,7 +10,16 @@ Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant fi
 
 ### Frontend (React Native / Expo)
 ```bash
-npm install              # install dependencies
+# This project is pnpm, NOT npm. package.json pins
+# "packageManager": "pnpm@10.33.0", pnpm-lock.yaml is the tracked lockfile,
+# and CI installs with `pnpm install --frozen-lockfile`.
+#
+# Running `npm install` here looks fine locally — node_modules ends up correct,
+# tsc and jest both pass — but it writes a stray package-lock.json and leaves
+# pnpm-lock.yaml stale, so CI dies with ERR_PNPM_OUTDATED_LOCKFILE before a
+# single test runs. Add and remove dependencies with pnpm.
+pnpm install             # install dependencies
+pnpm add <pkg>           # add a dependency (updates pnpm-lock.yaml)
 npx expo start           # dev server (Expo Go or dev client)
 npx expo start --android # Android emulator
 npx expo start --ios     # iOS simulator
@@ -56,10 +65,22 @@ docker-compose up -d   # starts api, celery worker, celery beat, redis
 
 ## Architecture
 
-### Frontend (`App.tsx`, `src/`)
-- **Expo SDK 51**, React Native 0.74, TypeScript strict mode
+### Frontend (`app/`, `src/`)
+- **Expo SDK 55**, React Native 0.76.7, React 19.2, TypeScript strict mode
 - Path alias: `@/*` maps to `src/*`
-- Navigation: `@react-navigation/bottom-tabs` with 5 tabs — Map (home), Skills, Portfolio, Profile, GitHub
+- Navigation: **expo-router** (file-based) — routes live under `app/`, not in a
+  navigator config. `@react-navigation/bottom-tabs` is NOT a dependency.
+  `app/(tabs)/` currently holds: community, explore, feed, fields, guild, home,
+  map, myworld, opportunities, portfolio, profile, settings, skills, streaks.
+  Which of these are surfaced in the visible tab bar is decided by
+  `MOBILE_NAV` / `PRIMARY_NAV` in `src/components/shell/ReferenceShell.tsx`,
+  not by the presence of a route directory.
+- The `myworld` destination is labelled **Saved** pre-launch, via the
+  flag-aware `WORLD_NAV`; it becomes **My World** when
+  `featureFlags.myWorldLive` (`EXPO_PUBLIC_MY_WORLD_LIVE`) is on. The route,
+  path and NavId stay `myworld` in both cases.
+- UI typeface is **Inter** (`@expo-google-fonts/inter`, weights 400/500/600/700)
+  with Spline Sans Mono for data/monospace — see `src/theme/fonts.ts`.
 - Auth state managed via `src/hooks/useAuth` (React Context), token stored in SecureStore (migrated from AsyncStorage)
 - API client in `src/lib/api.ts` — all requests go through FastAPI backend, uses `EXPO_PUBLIC_API_URL` env var
 - Reanimated plugin must be last in `babel.config.js` plugins array
