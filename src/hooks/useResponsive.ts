@@ -3,20 +3,25 @@
  *
  * Desktop-first: levelup.com.ng is the primary product.
  *
- * Breakpoints:
- *   ≥1280px  wide desktop   → 3+ columns, sidebar visible
- *   ≥1024px  desktop        → 2–3 columns, sidebar visible
- *   ≥768px   tablet/smlap   → 2 columns, collapsed nav
- *   ≥375px   mobile         → 1 column, bottom tabs
- *   <375px   small mobile   → 1 column, compact
+ * The tiers come from the design system's own breakpoint panel
+ * (design/mockups-20260814T165448Z-1-001, "RESPONSIVE BREAKPOINTS"):
+ *
+ *   Mobile        360–767px    1 column,     bottom nav
+ *   Tablet        768–1024px   2 columns,    bottom or side nav
+ *   Desktop       1025–1439px  3 columns,    left sidebar
+ *   Wide desktop  1440px+      3–4 columns,  left sidebar
+ *
+ * Two values moved to match that spec: `wide` was 1280 (spec says 1440) and
+ * `mobile` was 375 (spec says 360). `desktop` is 1025 rather than 1024 because
+ * the spec's tablet tier is inclusive of 1024.
  */
 import { Platform, useWindowDimensions } from "react-native";
 
 export const BREAKPOINTS = {
-  wide: 1280,
-  desktop: 1024,
+  wide: 1440,
+  desktop: 1025,
   tablet: 768,
-  mobile: 375,
+  mobile: 360,
 } as const;
 
 export interface ResponsiveInfo {
@@ -45,7 +50,7 @@ export function useResponsive(): ResponsiveInfo {
   const isDesktop = width >= BREAKPOINTS.desktop;
   const isWide = width >= BREAKPOINTS.wide;
 
-  const columns = isWide ? 4 : isDesktop ? 3 : isTablet ? 2 : 1 as 1 | 2 | 3 | 4;
+  const columns: 1 | 2 | 3 | 4 = isWide ? 4 : isDesktop ? 3 : isTablet ? 2 : 1;
 
   return {
     width,
