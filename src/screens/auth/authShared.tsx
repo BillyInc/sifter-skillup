@@ -2,7 +2,7 @@
  * Shared building blocks for the auth flow (Welcome / Login / Signup / Forgot).
  *
  * Visual grammar (BRIEF-wins-on-chrome):
- *   - CompassFonts (Hanken Grotesk) for all text
+ *   - CompassFonts (Inter) for all text
  *   - Semantic tokens: surface.raised, textRole.*, borderRole.*, accentRole.*
  *   - Hairline borders, one accent per screen (Brand.primary for CTA only)
  *   - 4px grid spacing
