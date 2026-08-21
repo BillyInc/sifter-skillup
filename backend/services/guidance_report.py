@@ -1,8 +1,8 @@
-"""Resolve a learner's selected guidance branches for report rendering.
+"""Resolve a Student's selected guidance branches for report rendering.
 
 The resolver is intentionally selection-driven. It fetches the detailed source
 records for selected IDs only; it never treats the complete domain catalogue as
-the learner's chosen path.
+the Student's chosen path.
 """
 from __future__ import annotations
 
@@ -65,6 +65,21 @@ def resolve_guidance_report_context(
     university = path.get("university") if isinstance(path.get("university"), dict) else {}
     requirements = path.get("requirements") if isinstance(path.get("requirements"), dict) else {}
 
+    # A provisioned student may still have a live one-time claim code. Keep it
+    # attached to the selected path only for the printable handoff output; do
+    # not invent an access code for a self-created account or expose revoked /
+    # already-redeemed codes.
+    access_code = None
+    try:
+        claim_rows = svc.table("claim_codes").select("code").eq(
+            "student_id", user.get("id")
+        ).is_("redeemed_at", "null").is_("revoked_at", "null").order(
+            "created_at", desc=True
+        ).limit(1).execute().data or []
+        access_code = (claim_rows[0] or {}).get("code") if claim_rows else None
+    except Exception:
+        access_code = None
+
     # Fill missing academic/subject context from the persisted onboarding record.
     try:
         start = svc.table("student_starting_points").select("*").eq(
@@ -105,7 +120,7 @@ def resolve_guidance_report_context(
     subgroup_choices = _selected_items(path, "subgroups")
     role_choices = _selected_items(path, "roles")
     # Direct subgroup/role selections still belong to a domain. Resolve those
-    # parents even when the learner did not select the domain header itself.
+    # parents even when the Student did not select the domain header itself.
     inferred_domain_choices = list(domain_choices)
     known_domain_keys = {
         str(item.get("id") or item.get("domainId") or item.get("domainKey"))
@@ -225,8 +240,10 @@ def resolve_guidance_report_context(
         "subjects": subjects,
         "discoveryDoor": path.get("discoveryDoor"),
         "programme": programme,
+        "programmes": path.get("programmes") if isinstance(path.get("programmes"), list) else [],
         "university": university,
         "requirements": requirements,
+        "accessCode": access_code,
         "domains": domains,
         "selectedCounts": {
             "domains": len(domains),

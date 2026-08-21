@@ -22,7 +22,7 @@ import { RouteIntegrityGuard } from '../src/components/RouteIntegrityGuard';
 import LegalAcceptanceGate from '../src/components/LegalAcceptanceGate';
 
 export default function RootLayout() {
-  // COMPASS font gate - waits for Hanken Grotesk + Spline Sans Mono to load.
+  // COMPASS font gate - waits for Inter + Spline Sans Mono to load.
   const fontsReady = useCompassFonts();
   if (!fontsReady) return null;
 

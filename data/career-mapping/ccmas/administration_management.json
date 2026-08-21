@@ -3227,10 +3227,12 @@
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [
-      "FIN 102 learning outcomes and contents NOT FOUND in source document; title not shown."
-     ],
-     "skills_learned": []
+      "flags": [
+       "FIN 102 learning outcomes and contents NOT FOUND in source document; title not shown."
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table p.235; no corresponding P13/P14 entry found",
+      "skills_learned": []
     },
     {
      "level": 200,
@@ -3276,15 +3278,17 @@
     },
     {
      "level": 200,
-     "code": "FIN 202",
+      "code": "FIN 202",
      "title": "Principles of Insurance",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "Table codes FIN 201-205 do not match LO section codes; codes reproduced from LO section as found."
-     ],
+      "flags": [
+       "Table codes FIN 201-205 do not match LO section codes; codes reproduced from LO section as found."
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "explain the nature and functions of insurance",
       "discuss some classifications of risk",
@@ -3299,13 +3303,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 204",
+      "code": "FIN 204",
      "title": "Quantitative Analysis",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "identify and use various criteria for solving problems in different decision situations",
       "discuss the decision tree and solve problems involving the general decision tree and the secretary problem",
@@ -3320,13 +3326,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 209",
+      "code": "FIN 209",
      "title": "Elements of Banking",
      "units": 3,
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "describe the concepts of banking and the financial system",
       "explain the principles of banking",
@@ -3340,13 +3348,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 210",
+      "code": "FIN 210",
      "title": "Banking Methods and Process",
      "units": 3,
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "explain the concept and role of banking",
       "distinguish between banks and moneylenders",
@@ -3364,13 +3374,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 215",
+      "code": "FIN 215",
      "title": "Applications of Computers in Fin/Banking",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "apply critical thinking and analytical skills in financial decision making and problem solving",
       "understand and apply financial principles to prepare financial statements",
@@ -3384,13 +3396,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 216",
+      "code": "FIN 216",
      "title": "Fundamentals of Deposit Insurance",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "discuss deposit insurance scheme in Nigeria",
       "explain the concept of deposit insurance system and the concept of financial safety",
@@ -3405,13 +3419,15 @@
     },
     {
      "level": 200,
-     "code": "FIN 217",
+      "code": "FIN 217",
      "title": "Law of Banking",
      "units": 3,
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [],
+      "flags": [],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Finance P12 table pp.234-235 versus P13/P14 pp.239-242",
      "skills_learned": [
       "comprehend the essential ingredients of banking law",
       "understand the way regulations impact corporate governance and how to handle instruments in the money and capital markets",
@@ -4604,10 +4620,12 @@
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [
-      "Marked BUA 200* in source: present in LO section but absent from course table per source note."
-     ],
-     "skills_learned": [
+      "flags": [
+       "Marked BUA 200* in source: present in LO section but absent from course table per source note."
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Business Administration P12 pp.133-134 and P13/P14 pp.139-140",
+      "skills_learned": [
       "create and interpret financial statements",
       "create and interpret cash flow statements",
       "evaluate investments in working capital and long-term assets",
@@ -19002,15 +19020,17 @@
     },
     {
      "level": 300,
-     "code": "PIM 310",
+      "code": "PIM 310",
      "title": "Management Information Systems",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "in LO section only, not in course table"
-     ],
+      "flags": [
+       "in LO section only, not in course table"
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Petroleum Information Management P12/P13/P14 pp.439-457",
      "skills_learned": [
       "explain the General systems theory",
       "characteristics of systems",
@@ -19023,15 +19043,17 @@
     },
     {
      "level": 300,
-     "code": "PIM 312",
+      "code": "PIM 312",
      "title": "Globalisation, the Knowledge Economy, Publishing & Information Trade",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "in LO section only, not in course table"
-     ],
+      "flags": [
+       "in LO section only, not in course table"
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Petroleum Information Management P12/P13/P14 pp.439-457",
      "skills_learned": [
       "discuss the economies, trends and implications",
       "analyse pillars of knowledge economy, knowledge",
@@ -19202,15 +19224,17 @@
     },
     {
      "level": 400,
-     "code": "PIM 412",
+      "code": "PIM 412",
      "title": "Planning and Financing Information Technology",
      "units": 2,
      "status": "C",
      "lh": 15,
      "ph": null,
-     "flags": [
-      "in LO section only, not in course table"
-     ],
+      "flags": [
+       "in LO section only, not in course table"
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Petroleum Information Management P12/P13/P14 pp.439-457",
      "skills_learned": [
       "explain the funding of information systems and technology",
       "state types of budgetary policies",
@@ -19222,15 +19246,17 @@
     },
     {
      "level": 400,
-     "code": "PIM 413",
+      "code": "PIM 413",
      "title": "The Future of the Digital Economy",
      "units": 2,
      "status": "C",
      "lh": 15,
      "ph": null,
-     "flags": [
-      "in LO section only, not in course table"
-     ],
+      "flags": [
+       "in LO section only, not in course table"
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Petroleum Information Management P12/P13/P14 pp.439-457",
      "skills_learned": [
       "explain the characteristics of the “old economy”",
       "List the characteristics of the “new economy”, (digital economy)",
@@ -19242,15 +19268,17 @@
     },
     {
      "level": 400,
-     "code": "PIM 414",
+      "code": "PIM 414",
      "title": "Business Data Analytics",
      "units": 2,
      "status": "C",
      "lh": 15,
      "ph": null,
-     "flags": [
-      "in LO section only, not in course table"
-     ],
+      "flags": [
+       "in LO section only, not in course table"
+      ],
+      "source_state": "content_only",
+      "source_reference": "Administration-and-Management.pdf, Petroleum Information Management P12/P13/P14 pp.439-457",
      "skills_learned": [
       "explain the concept of linked data",
       "learn the more hidden relationship in data",
@@ -20369,11 +20397,13 @@
      "status": "C",
      "lh": null,
      "ph": null,
-     "flags": [
-      "no title in source",
-      "no learning outcomes or course contents in source"
-     ],
-     "skills_learned": []
+      "flags": [
+       "no title in source",
+       "no learning outcomes or course contents in source"
+      ],
+      "source_state": "source_missing",
+      "source_reference": "Administration-and-Management.pdf, Procurement Management P12/P13/P14 pp.466-480",
+      "skills_learned": []
     },
     {
      "level": 400,
@@ -24423,15 +24453,17 @@
     {
      "level": 100,
      "code": "ACC 101",
-     "title": null,
-     "units": 3,
-     "status": "C",
-     "lh": null,
-     "ph": null,
-     "flags": [
-      "no title in source",
-      "100L duplicate table variant exists in source"
-     ],
+      "title": "Financial Accounting I",
+      "units": 3,
+      "status": "C",
+      "lh": 30,
+      "ph": 45,
+      "flags": [
+       "title and P13/P14 content cross-referenced from the Accounting programme",
+       "100L duplicate table variant exists in source"
+      ],
+      "source_state": "content_cross_reference",
+      "source_reference": "Administration-and-Management.pdf, Taxation 100L table and Accounting P13/P14 (ACC 101)",
      "skills_learned": [
       "understand the concepts of accounting and identify the users of accounting information",
       "understand the various forms of business organizations",
@@ -24445,15 +24477,17 @@
     {
      "level": 100,
      "code": "ACC 102",
-     "title": null,
-     "units": 3,
-     "status": "C",
-     "lh": null,
-     "ph": null,
-     "flags": [
-      "no title in source",
-      "100L duplicate table variant exists in source"
-     ],
+      "title": "Financial Accounting II",
+      "units": 3,
+      "status": "C",
+      "lh": 30,
+      "ph": 45,
+      "flags": [
+       "title and P13/P14 content cross-referenced from the Accounting programme",
+       "100L duplicate table variant exists in source"
+      ],
+      "source_state": "content_cross_reference",
+      "source_reference": "Administration-and-Management.pdf, Taxation 100L table and Accounting P13/P14 (ACC 102)",
      "skills_learned": [
       "understand financial statements of a sole trader",
       "understand financial statements of limited liability companies",
@@ -24660,16 +24694,19 @@
     },
     {
      "level": 300,
-     "code": "TAX 311",
-     "title": "Revenue Law and practice",
+      "code": "TAX 311",
+      "title": "Revenue Law and practice",
+      "course_identity": "TAX 311::Revenue Law and practice",
      "units": 3,
      "status": "C",
      "lh": 45,
      "ph": null,
-     "flags": [
-      "TAX 311 code used for two different courses in source"
-     ],
-     "skills_learned": [
+      "flags": [
+       "TAX 311 code used for two different courses in source"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Taxation P12 p.570 and P13/P14 pp.564-580; duplicate TAX 311 entries",
+      "skills_learned": [
       "state the differences between tax and other public charges, nature and objects of tax",
       "Interpret the general principles of taxation including sources and interpretation of tax law",
       "identify forms of taxation and legal framework of taxation in Nigeria",
@@ -24757,16 +24794,19 @@
     },
     {
      "level": 300,
-     "code": "TAX 311",
-     "title": "Entrepreneurship in Taxation",
+      "code": "TAX 311",
+      "title": "Entrepreneurship in Taxation",
+      "course_identity": "TAX 311::Entrepreneurship in Taxation",
      "units": 2,
      "status": "C",
      "lh": 30,
      "ph": null,
-     "flags": [
-      "TAX 311 code used for two different courses in source"
-     ],
-     "skills_learned": [
+      "flags": [
+       "TAX 311 code used for two different courses in source"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Taxation P12 p.570 and P13/P14 pp.564-580; duplicate TAX 311 entries",
+      "skills_learned": [
       "state the differences between tax and other public charges, nature and objects of tax",
       "Interpret the general principles of taxation including sources and interpretation of tax law",
       "identify forms of taxation and legal framework of taxation in Nigeria",
@@ -24869,10 +24909,12 @@
      "status": "C",
      "lh": null,
      "ph": 270,
-     "flags": [
-      "title combined for TAX 411/421 in source (6 Units C: PH 270)"
-     ],
-     "skills_learned": [
+      "flags": [
+       "title combined for TAX 411/421 in source (6 Units C: PH 270)"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Taxation P12/P13/P14 pp.564-580; TAX 411/421 project is combined in source",
+      "skills_learned": [
       "carry out project work comprising an original study of a current local accounting or management problems;",
       "choose or select a researchable topic and state clearly the problem associated with it;",
       "identify the research questions from the stated problem and draw specific objectives;",
@@ -24943,10 +24985,12 @@
      "status": "C",
      "lh": null,
      "ph": 270,
-     "flags": [
-      "title combined for TAX 411/421 in source (6 Units C: PH 270)"
-     ],
-     "skills_learned": [
+      "flags": [
+       "title combined for TAX 411/421 in source (6 Units C: PH 270)"
+      ],
+      "source_state": "source_conflict",
+      "source_reference": "Administration-and-Management.pdf, Taxation P12/P13/P14 pp.564-580; TAX 411/421 project is combined in source",
+      "skills_learned": [
       "carry out project work comprising an original study of a current local accounting or management problems;",
       "choose or select a researchable topic and state clearly the problem associated with it;",
       "identify the research questions from the stated problem and draw specific objectives;",

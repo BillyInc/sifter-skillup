@@ -1,0 +1,78 @@
+{
+  "African and Asian Studies": {
+    "utme_subjects": "Igbo and two (2) subjects from Arts and Social Sciences.",
+    "source_file": "Arts _ Humanities.pdf",
+    "source_page": 77
+  },
+  "Archaeology": {
+    "utme_subjects": "Any two (2) subjects from Arts, Social Sciences and one of History, Religious Studies, Government and Geography.",
+    "source_file": "Arts _ Humanities.pdf",
+    "source_page": 8
+  },
+  "BIOLOGICAL SCIENCE(S)": {
+    "utme_subjects": "Biology, Chemistry and Physics or Mathematics.",
+    "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Chemistry, Biology and any other Science subject.",
+    "source_file": "Sciences.pdf",
+    "source_page": 18
+  },
+  "COMPUTER SCIENCE WITH MATHEMATICS": {
+    "utme_subjects": "Mathematics, Physics and any one (1) of Chemistry, Economics and Biology.",
+    "source_file": "Sciences.pdf",
+    "source_page": 214
+  },
+  "COMPUTER WITH STATISTICS": {
+    "utme_subjects": "Mathematics, Physics and any one (1) of Chemistry, Economics and Biology.",
+    "source_file": "Sciences.pdf",
+    "source_page": 214
+  },
+  "English Studies": {
+    "utme_subjects": "Literature in English, one other Arts subject and another Arts or Social Science subject.",
+    "source_file": "Arts _ Humanities.pdf",
+    "source_page": 28
+  },
+  "Horticulture": {
+    "utme_subjects": "Chemistry, Biology/Agricultural Science and one (1) of Mathematics, Geography, Economics or Physics.",
+    "source_file": "Agriculture.pdf",
+    "source_page": 76
+  },
+  "METEOROLOGY AND CLIMATE CHANGE": {
+    "utme_subjects": "Mathematics, Physics, Chemistry or Geography.",
+    "source_file": "Sciences.pdf",
+    "source_page": 230
+  },
+  "METEOROLOGY AND CLIMATE SCIENCE": {
+    "utme_subjects": "Mathematics, Physics, Chemistry or Geography.",
+    "source_file": "Sciences.pdf",
+    "source_page": 230
+  },
+  "PHYSICS WITH ELECTRONICS": {
+    "utme_subjects": "Physics, Mathematics and Chemistry or Biology.",
+    "source_file": "Sciences.pdf",
+    "source_page": 43
+  },
+  "Physiotherapy": {
+    "utme_subjects": "Physics, Chemistry and Biology.",
+    "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+    "source_file": "Medica_Pharmaceutical Health Science.pdf",
+    "source_page": 19
+  },
+  "Social Work": {
+    "utme_subjects": "Mathematics, Economics/Geography and any other subject.",
+    "olevel_requirement": "Five (5) SSC credit passes including English Language and Mathematics.",
+    "source_file": "Social Management Science.pdf",
+    "source_page": 97
+  },
+  "Criminology": {
+    "clear_fields": ["utme_subjects"],
+    "add_institutions": ["SALEM"],
+    "add_institution_waivers": [
+      {
+        "institution": "SALEM",
+        "note": "UTME SUBJECTS: SALEM for Criminology requires Government and any two (2) of Economics, Geography and Literature in English.",
+        "source_file": "Social Management Science.pdf",
+        "source_page": 48,
+        "source_label": "Social Management Science.pdf:p48:special-consideration"
+      }
+    ]
+  }
+}

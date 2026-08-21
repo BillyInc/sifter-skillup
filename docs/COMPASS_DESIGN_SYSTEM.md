@@ -66,18 +66,24 @@ wayfinding + current-state only, kept chromatically clear of every semantic.
 
 ### 1.2 Typography
 
-Not the AI-default trio. Loaded via `expo-font` (`@expo-google-fonts/*`).
+Loaded via `expo-font` (`@expo-google-fonts/*`).
 
 | Role | Family | Use |
 |------|--------|-----|
 | Display | **Bricolage Grotesque** | Screen titles, hero numerals, eyebrows |
-| Body | **Hanken Grotesk** | All UI text, labels, body (deliberately *not* Inter) |
+| Body | **Inter** | All UI text, labels, body |
 | Data | **Spline Sans Mono** | JAMB scores, cut-offs, salary, %, every freshness stamp |
+
+The body face was Hanken Grotesk in the first COMPASS pass. It is now **Inter**:
+Inter is the agreed design direction recorded in the *Mandatory Sifter LevelUp
+Design & Implementation Brief* section of the repo's `CLAUDE.md`, and the Figma
+design library already uses Inter — so the shipped app and the design source now
+name the same face. The monospace/data face is unchanged: still Spline Sans Mono.
 
 Type scale (unchanged sizes — the *faces* carry the change):
 `xs 9 · sm 11 · md 13 · lg 15 · xl 17 · xxl 19 · xxxl 22 · display 26 · hero 30`
 
-Weights: Bricolage 600/700/800 for display; Hanken 400/500/600/700 for body;
+Weights: Bricolage 600/700/800 for display; Inter 400/500/600/700 for body;
 Spline 400/500 for data. Data face always tabular, letter-spacing `0`.
 
 ### 1.3 Signature — **The Route Line**
@@ -139,7 +145,7 @@ freshness**. Stale data must *look* stale.
 ```
 ┌──────────────────┐
 │ 240              │ ← value (Spline Sans Mono, xxxl)
-│ JAMB aggregate   │ ← label (Hanken 600, sm)
+│ JAMB aggregate   │ ← label (Inter 600, sm)
 │ ▲ 12 vs 2024     │ ← delta (semantic color + arrow)
 │ 2025 · indicative│ ← scope + freshness (mono, muted, xs)
 └──────────────────┘

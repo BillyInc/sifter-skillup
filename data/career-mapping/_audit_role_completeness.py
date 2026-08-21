@@ -5,6 +5,8 @@ import json
 import os
 from collections import Counter, defaultdict
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 AUDIT = os.path.join(HERE, "_audit")
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
@@ -19,7 +21,7 @@ def text(value):
     return "" if value is None else str(value).strip()
 
 
-def source_flags(entry):
+def source_flags(entry, role):
     esco = entry.get("esco") or {}
     onet = entry.get("onet") or {}
     tools = entry.get("tools") or []
@@ -30,12 +32,19 @@ def source_flags(entry):
     # A framework signal is distinct from the global ESCO/O*NET baseline. Do
     # not count the generated Nigerian context metadata as a role framework.
     framework = bool(provenance) and not provenance_sources.issubset({"global_esco", "global_onet"})
+    role_source = text(role.get("source")).lower()
+    role_has_esco = role_source in {"esco", "esco/onet"} and bool(
+        role.get("esco_code") or role.get("essential_skills") or role.get("description")
+    )
+    role_has_onet = role_source == "onet" and bool(role.get("onet_score") or role.get("description"))
+    role_has_framework = role_source not in {"", "unknown", "esco", "esco/onet", "onet"}
+    role_has_skills = bool(role.get("essential_skills") or role.get("optional_skills"))
     return {
-        "esco": bool(esco.get("occupation_uris")),
+        "esco": bool(esco.get("occupation_uris")) or role_has_esco,
         "onet_tools": onet_tools,
-        "onet_competencies": bool(onet.get("essential_skills")),
-        "esco_skills": bool(esco.get("essential_skills") or esco.get("optional_skills")),
-        "framework": framework or framework_tools,
+        "onet_competencies": bool(onet.get("essential_skills")) or role_has_onet,
+        "esco_skills": bool(esco.get("essential_skills") or esco.get("optional_skills")) or role_has_esco,
+        "framework": framework or framework_tools or role_has_framework,
         "any": bool(
             tools
             or framework
@@ -43,6 +52,10 @@ def source_flags(entry):
             or esco.get("occupation_uris")
             or esco.get("essential_skills")
             or esco.get("optional_skills")
+            or role_has_esco
+            or role_has_onet
+            or role_has_framework
+            or (role_source and role_has_skills)
         ),
     }
 
@@ -53,9 +66,7 @@ def pct(numerator, denominator):
 
 def main():
     roles = load("role_library_v3_cleaned.json")
-    overlay_path = os.path.join(HERE, "emerging_role_overlays.json")
-    if os.path.exists(overlay_path):
-        roles.extend(load("emerging_role_overlays.json").get("roles") or [])
+    roles.extend(load_overlay_roles())
     role_tools = load("role_tools.json")
     meta = load("domain_meta.json")
     structure = load("domain_structure.json")
@@ -65,7 +76,7 @@ def main():
         key = f"{text(role.get('domain_id'))}|{text(role.get('role_name'))}"
         keyed[key] = role
 
-    flags_by_key = {key: source_flags(role_tools.get(key, {})) for key in keyed}
+    flags_by_key = {key: source_flags(role_tools.get(key, {}), role) for key, role in keyed.items()}
     source_counts = Counter(text(role.get("source")) or "unknown" for role in keyed.values())
 
     domain_rows = []

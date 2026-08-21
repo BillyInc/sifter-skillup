@@ -1,0 +1,37 @@
+{
+  "sql_regeneration_allowed": true,
+  "checks": {
+    "domain_denominator_reconciled": true,
+    "all_assigned_body_ids_are_catalogued": true,
+    "all_assigned_body_ids_have_source_audit_evidence": true,
+    "all_assigned_body_ids_have_source_audit_or_supplemental_evidence": true,
+    "supplemental_direct_page_review_complete": true,
+    "all_domain_review_rows_are_structural_only": true,
+    "no_unsourced_roles": true,
+    "mechanical_resource_validation": true,
+    "all_visible_domains_have_role_resources": true,
+    "all_visible_domains_have_learning_resources": true,
+    "all_visible_domains_have_competency_resources": true,
+    "all_visible_domains_have_certification_resources": true
+  },
+  "counts": {
+    "visible_domains": 160,
+    "domain_meta_non_excluded": 160,
+    "assigned_body_ids": 129,
+    "body_catalog_ids": 151,
+    "body_web_records_reviewed": 129,
+    "assigned_body_ids_with_source_audit_evidence": 129,
+    "assigned_body_ids_pending_supplemental_review": 0,
+    "catalog_body_ids_unassigned_to_visible_domain": 22,
+    "domains_requiring_review": 49,
+    "roles_without_source_signal": 0,
+    "resource_rows": 160914,
+    "resource_validation_errors": 0
+  },
+  "blocked_reason": "All source and mechanical checks passed. Review the generated population before seeding.",
+  "informational_open_items": {
+    "assigned_body_ids_pending_supplemental_review": 0,
+    "assigned_body_ids_reviewed_with_source_exception": 8,
+    "note": "All assigned IDs have a recorded review disposition. Exceptions remain visible so an unavailable, maintenance, secondary-only, or unsafe destination is not represented as a clean direct-page verification."
+  }
+}

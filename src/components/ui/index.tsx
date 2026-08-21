@@ -150,6 +150,13 @@ export function PressableCard({
   );
 }
 
+/**
+ * Minimum tappable edge, in px. 44 is Apple's HIG figure; Material asks for 48
+ * and WCAG 2.5.5 (AAA) also says 44. Exported so other controls can reference
+ * the same number instead of each re-deciding it.
+ */
+export const TOUCH_TARGET_MIN = 44;
+
 // ─── SifterButton ──────────────────────────────────────────────────────────────
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'destructive' | 'success' | 'track';
@@ -216,6 +223,15 @@ export function SifterButton({
           borderRadius: Radius.md,
           paddingVertical: size === 'sm' ? 7 : size === 'lg' ? 11 : 9,
           paddingHorizontal: size === 'sm' ? 12 : 16,
+          // The padding above yields ~34px at size 'md' (9 + 9 + a 13px line),
+          // under the 44pt iOS / 48dp Material minimum. 54 other places in this
+          // codebase already set a 44+ minimum; the shared button did not, so
+          // all 48 of its call sites shipped an undersized target.
+          //
+          // This applies to every size on purpose. A small button is visually
+          // smaller — narrower text, tighter horizontal padding — but the area
+          // a finger has to hit does not get to shrink with it.
+          minHeight: TOUCH_TARGET_MIN,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',

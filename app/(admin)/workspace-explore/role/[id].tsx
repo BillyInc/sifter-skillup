@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
-import RoleDetailScreen from "@/screens/careerIntelligence/RoleDetailScreen";
+import AdminCareerDetailScreen from "@/screens/admin/AdminCareerDetailScreen";
 
 export default function AdminRoleRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  return <RoleDetailScreen roleId={String(id)} />;
+  return <AdminCareerDetailScreen entity="role" id={String(id)} />;
 }

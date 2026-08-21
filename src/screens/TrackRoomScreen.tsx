@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity,
-  SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions,
-  ActivityIndicator,
+  SafeAreaView, KeyboardAvoidingView, Platform, ActivityIndicator,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from '@/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -20,8 +20,8 @@ interface TrackRoomScreenProps {
 export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenProps) {
   const { colors } = useTheme();
   const { user } = useAuth();
-  const { width } = useWindowDimensions();
-  const isWebWide = Platform.OS === 'web' && width >= 768;
+  const { width, isWeb, isMobile } = useResponsive();
+  const isWebWide = isWeb && !isMobile;
 
   const trackName = route?.params?.trackName ?? 'Track';
   const roomId = route?.params?.roomId;
@@ -180,7 +180,7 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
           {[
             'Share the lesson or lab you are working on.',
             'Ask clear questions when blocked.',
-            'Help other learners with context, not just answers.',
+            'Help other students with context, not just answers.',
             'Keep the room free of spam.',
           ].map(g => (
             <Text key={g} style={[styles.guidelineText, { color: colors.textSoft }]}>{g}</Text>

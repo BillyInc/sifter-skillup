@@ -30,16 +30,18 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const subjectContext =
     `subjects=${encodeURIComponent(subjects)}` +
     `&olevel_subjects=${encodeURIComponent(olevelSubjects)}` +
-    `&stream=${encodeURIComponent(profile.stream ?? "")}`;
+    `&stream=${encodeURIComponent(profile.stream ?? "")}` +
+    `&user_type=${encodeURIComponent(profile.userType ?? "")}` +
+    `&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
 
   if (profile.userType === "senior_secondary") {
     if (profile.exploreIntent?.includes("have_programme") && programme) {
       return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}`;
     }
     if (olevelSubjects) {
-      return `/(tabs)/explore/admission?mode=subjects&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`;
+      return `/(tabs)/explore/admission?mode=subjects&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}&user_type=senior_secondary&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
     }
-    return "/(tabs)/explore/admission?mode=subjects&exam_type=olevel";
+    return "/(tabs)/explore/admission?mode=subjects&exam_type=olevel&user_type=senior_secondary";
   }
 
   if (profile.userType === "jamb" || profile.userType === "ss3_secondary") {
@@ -55,7 +57,11 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
           : "";
       return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}${schoolContext}`;
     }
-    return "/(tabs)/explore/admission?mode=programme";
+    return `/(tabs)/explore/admission?mode=programme&user_type=${encodeURIComponent(profile.userType)}`;
+  }
+
+  if (profile.userType === "student" && profile.preferredSchoolId) {
+    return `/(tabs)/explore/admission?mode=school&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? profile.schoolName ?? "")}&programme=${encodeURIComponent(programme)}&user_type=student`;
   }
 
   return "/(tabs)/home";

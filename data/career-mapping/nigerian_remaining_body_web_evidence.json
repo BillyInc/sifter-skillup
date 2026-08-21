@@ -1,0 +1,4577 @@
+{
+  "schema_version": "1.1.0",
+  "purpose": "Supplemental direct and alternate official-page evidence checkpoint for Nigerian body IDs assigned to visible domains.",
+  "scope": {
+    "visible_domains": 160,
+    "distinct_nigerian_body_ids": 129,
+    "remaining_body_ids_reviewed": 85,
+    "remaining_body_ids_with_verified_source": 85,
+    "remaining_body_ids_needing_follow_up": 0,
+    "assigned_body_ids_pending_supplemental_review": 0,
+    "catalog_body_ids_unassigned_to_visible_domain": 16,
+    "sql_regeneration": "allowed_after_seed_gate"
+  },
+  "quality_rule": "A source can populate skills, competencies or credentials only to the extent it explicitly names them. Association membership is not automatically a licence; regulator context is not automatically an individual certificate.",
+  "reviewed_on": "2026-08-17",
+  "review_method": "Each of the 85 assigned IDs was checked against its catalog URL. Where the original page failed, an official current page, official alternate domain, official portal, or government corroboration was reviewed and recorded. Page health and evidence strength are preserved as status values.",
+  "status_counts": {
+    "official_domain_unavailable_secondary_evidence": 2,
+    "official_page_maintenance": 1,
+    "official_page_reachable_no_extractable_text": 5,
+    "verified_direct_page": 45,
+    "verified_official_alternate_page": 32
+  },
+  "records": [
+    {
+      "body_id": "ng_aaai",
+      "name": "Association for the Advancement of Artificial Intelligence, Nigeria Chapter",
+      "url": "https://aaai.org.ng/",
+      "catalog_url": "https://aaai.org.ng/",
+      "evidence_class": "professional_association_and_sector_skills_context",
+      "skills": [
+        "AI engineering and ethics",
+        "robotics",
+        "cybersecurity",
+        "digital forensics",
+        "fintech",
+        "IoT",
+        "data analytics"
+      ],
+      "competencies": [
+        "continuous professional development",
+        "AI-enabled threat detection",
+        "cyber risk governance",
+        "responsible AI and digital innovation"
+      ],
+      "certifications": [
+        "NCS membership and professional recognition"
+      ],
+      "note": "NCS describes itself as the umbrella body for Nigerian IT professionals and interest groups.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D003"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://aaai.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_anan",
+      "name": "Association of National Accountants of Nigeria",
+      "url": "https://anan.org.ng/",
+      "catalog_url": "https://anan.org.ng/",
+      "evidence_class": "professional_exam_and_competency_framework",
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "note": "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D015",
+        "D060",
+        "D084",
+        "D158"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://anan.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_apcon",
+      "name": "Advertising Practitioners Council of Nigeria / ARCON",
+      "url": "https://advertcouncil.gov.ng/_professional_practice.php",
+      "evidence_class": "statutory_regulator",
+      "skills": [
+        "advertising strategy",
+        "marketing communication",
+        "advertisement production",
+        "media and brand communication"
+      ],
+      "competencies": [
+        "apply advertising standards",
+        "solve marketing-communication problems",
+        "meet professional ethics and registration requirements"
+      ],
+      "certifications": [
+        "ARCON/APCON Professional Diploma in Advertising",
+        "ARCON registration"
+      ],
+      "note": "The official practice page states that the council sets knowledge and skill standards, conducts examinations, registers practitioners and regulates advertising practice.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D042",
+        "D044",
+        "D070"
+      ]
+    },
+    {
+      "body_id": "ng_apctcim",
+      "name": "Association of Practitioners of Traditional, Complementary and Integrative Medicine",
+      "url": "https://apctcim.org.ng/e-library",
+      "evidence_class": "professional_association_and_ethics_context",
+      "skills": [
+        "traditional medicine practice",
+        "integrative and complementary medicine",
+        "practice documentation",
+        "professional ethics"
+      ],
+      "competencies": [
+        "follow a professional code of ethics",
+        "document practice and training",
+        "understand proposed regulatory pathways"
+      ],
+      "certifications": [
+        "Association membership and CPD-provider signals; no statutory licence inferred"
+      ],
+      "note": "The e-library publishes constitutions, ethics/practice materials, proposed regulatory-board materials and NSQF references; it is not treated as proof of a national licence.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D126"
+      ]
+    },
+    {
+      "body_id": "ng_apfpn",
+      "name": "Association of Professional Fashion Practitioners of Nigeria",
+      "url": "https://apfpn.org/about-us/",
+      "catalog_url": "https://apfpn.org/about-us/",
+      "evidence_class": "sector_skills_council_and_professional_association",
+      "skills": [
+        "fashion design",
+        "garment production",
+        "styling and image work",
+        "fashion entrepreneurship",
+        "quality and value-chain practice"
+      ],
+      "competencies": [
+        "develop and present designs",
+        "work with fashion production processes",
+        "build a professional portfolio and business",
+        "meet sector practice expectations"
+      ],
+      "certifications": [
+        "FADAN membership categories",
+        "sector-skills qualifications require the applicable NSQ or training provider"
+      ],
+      "note": "The Nigerian Fashion Council identifies itself as an NBTE-inaugurated sector skills council for the fashion value chain.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D160"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://apfpn.org/about-us/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_aphpn",
+      "name": "Association of Public Health Physicians of Nigeria",
+      "url": "https://aphpn-ng.net/",
+      "catalog_url": "https://aphpn-ng.net/",
+      "evidence_class": "government_public_health_context",
+      "skills": [
+        "population health",
+        "health promotion",
+        "disease prevention",
+        "health programme coordination",
+        "health data"
+      ],
+      "competencies": [
+        "plan public-health interventions",
+        "interpret population evidence",
+        "coordinate community health programmes",
+        "work within health policy and ethics"
+      ],
+      "certifications": [
+        "Profession-specific health registration must be verified against the relevant council"
+      ],
+      "note": "The Nigerian health regulator directory and NPHCDA are used for public-health and primary-health-care context; professional licences remain council-specific. The catalog domain is currently suspended, but the official search result still identifies the association and its public-health physician remit. Do not present the suspended URL as a live learning destination.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D026"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://aphpn-ng.net/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_arcn",
+      "name": "Agricultural Research Council of Nigeria",
+      "url": "https://arcn.gov.ng/",
+      "catalog_url": "https://arcn.gov.ng/",
+      "evidence_class": "government_agriculture_and_food_systems_context",
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "note": "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D047",
+        "D118"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://arcn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_arcon",
+      "name": "Architects Registration Council of Nigeria",
+      "url": "https://arconigeria.gov.ng/",
+      "catalog_url": "https://arconigeria.gov.ng/",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D021",
+        "D080"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://arconigeria.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_bpp",
+      "name": "Bureau of Public Procurement",
+      "url": "https://bpp.gov.ng/downloads/",
+      "catalog_url": "https://bpp.gov.ng/",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository. The catalog homepage returned an internal error; the official BPP downloads and procurement-certification pages were reviewed instead.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D036"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://bpp.gov.ng/downloads/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_casson",
+      "name": "Counselling Association of Nigeria",
+      "url": "https://www.cassonnigeria.org/",
+      "catalog_url": "https://casson.org.ng/",
+      "evidence_class": "professional_association_context",
+      "skills": [
+        "case work",
+        "community development",
+        "support planning",
+        "advocacy",
+        "safeguarding"
+      ],
+      "competencies": [
+        "assess social needs",
+        "coordinate support",
+        "work ethically with vulnerable people",
+        "maintain professional records"
+      ],
+      "certifications": [
+        "Professional registration details require direct council or institute document confirmation"
+      ],
+      "note": "The Nigerian Institute of Social Workers is used as the local professional reference for social-work role naming in the repository. The catalog domain returned an internal error; the current official CASSON domain was reviewed.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D128"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.cassonnigeria.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cbn",
+      "name": "Central Bank of Nigeria",
+      "url": "https://www.cbn.gov.ng/",
+      "catalog_url": "https://www.cbn.gov.ng/",
+      "evidence_class": "statutory_professional_body_and_competency_framework",
+      "skills": [
+        "banking",
+        "credit and loan processing",
+        "financial accounting",
+        "business finance",
+        "quantitative techniques",
+        "e-payments"
+      ],
+      "competencies": [
+        "meet banking knowledge and skill standards",
+        "apply ethics and professionalism",
+        "process and document loans",
+        "work with payment systems"
+      ],
+      "certifications": [
+        "Certificate in Banking (CIB)",
+        "Associateship of the Chartered Institute of Bankers (ACIB)",
+        "specialised e-payment and microfinance certifications"
+      ],
+      "note": "CIBN is the Nigerian banking profession body and is appointed under the banking competency framework to accredit training and certification.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D011",
+        "D012",
+        "D013",
+        "D014",
+        "D060",
+        "D061",
+        "D062",
+        "D158"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.cbn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_chprbn",
+      "name": "Community Health Practitioners Registration Board of Nigeria",
+      "url": "https://app.chprbn.gov.ng/",
+      "catalog_url": "https://chprbn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D068",
+        "D124"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://app.chprbn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cia",
+      "name": "Chartered Institute of Administration",
+      "url": "https://www.cia.org.ng/downloads/ACIA_PROFESSIONAL_QUALIFYING_COURSE_BROCHURE_GRADUATE_REGULAR.pdf",
+      "catalog_url": "https://cia.org.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D028",
+        "D038",
+        "D045",
+        "D081"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.cia.org.ng/downloads/ACIA_PROFESSIONAL_QUALIFYING_COURSE_BROCHURE_GRADUATE_REGULAR.pdf",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cibn",
+      "name": "Chartered Institute of Bankers of Nigeria",
+      "url": "https://portal.cibng.org/cb_prof_exam.asp",
+      "catalog_url": "https://www.cibng.org/",
+      "evidence_class": "statutory_professional_body_and_competency_framework",
+      "skills": [
+        "banking",
+        "credit and loan processing",
+        "financial accounting",
+        "business finance",
+        "quantitative techniques",
+        "e-payments"
+      ],
+      "competencies": [
+        "meet banking knowledge and skill standards",
+        "apply ethics and professionalism",
+        "process and document loans",
+        "work with payment systems"
+      ],
+      "certifications": [
+        "Certificate in Banking (CIB)",
+        "Associateship of the Chartered Institute of Bankers (ACIB)",
+        "specialised e-payment and microfinance certifications"
+      ],
+      "note": "CIBN is the Nigerian banking profession body and is appointed under the banking competency framework to accredit training and certification.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D060",
+        "D158",
+        "D159"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://portal.cibng.org/cb_prof_exam.asp",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_ciin",
+      "name": "Chartered Insurance Institute of Nigeria",
+      "url": "https://ciinigeria.org/",
+      "catalog_url": "https://ciinigeria.org/",
+      "evidence_class": "professional_exam_and_competency_framework",
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "note": "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D014",
+        "D060",
+        "D061",
+        "D158"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://ciinigeria.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cilt",
+      "name": "Chartered Institute of Logistics and Transport Nigeria",
+      "url": "https://ciltnigeria.org/",
+      "catalog_url": "https://ciltnigeria.org/",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D034",
+        "D035",
+        "D164"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://ciltnigeria.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cipm",
+      "name": "Chartered Institute of Personnel Management of Nigeria",
+      "url": "https://cipmnigeria.org/wp-content/uploads/2023/12/CIPM-BoK-and-Competency-Framework-2023.pdf",
+      "secondary_url": "https://oldwebsite.cipmnigeria.org/Practitioner-Licence",
+      "evidence_class": "statutory_professional_regulator_and_competency_framework",
+      "skills": [
+        "human-resource management",
+        "strategic HR processes",
+        "labour-law advisory",
+        "people management"
+      ],
+      "competencies": [
+        "apply HR knowledge and competence",
+        "advise on policy and compliance",
+        "maintain professional practice through re-certification"
+      ],
+      "certifications": [
+        "Human Resource Practitioner Licence (HRPL)",
+        "CIPM professional membership and re-certification"
+      ],
+      "note": "CIPM identifies itself as Nigeria's HR regulatory body and describes the HRPL as a time-bound practice licence backed by knowledge, competencies and skills.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D029",
+        "D032",
+        "D130",
+        "D081",
+        "D082",
+        "D084",
+        "D085"
+      ]
+    },
+    {
+      "body_id": "ng_cipsmn",
+      "name": "Chartered Institute of Purchasing and Supply Management of Nigeria",
+      "url": "https://www.cipsmn.org.ng/about",
+      "catalog_url": "https://www.cipsmn.org.ng/about",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D034",
+        "D036"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.cipsmn.org.ng/about",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cis",
+      "name": "Chartered Institute of Stockbrokers",
+      "url": "https://cisinigeria.org/professional/",
+      "evidence_class": "statutory_professional_body_and_exam_framework",
+      "skills": [
+        "financial accounting",
+        "financial markets",
+        "quantitative analysis",
+        "equity and fixed-income valuation",
+        "portfolio management"
+      ],
+      "competencies": [
+        "analyse securities and investments",
+        "apply regulation and professional ethics",
+        "value and manage portfolios"
+      ],
+      "certifications": [
+        "Chartered Stockbroker",
+        "CIS professional examination levels"
+      ],
+      "note": "The official professional page names the current examination subjects and states that practice requires CIS Associate or Fellow status.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D060",
+        "D062",
+        "D158"
+      ]
+    },
+    {
+      "body_id": "ng_citn",
+      "name": "Chartered Institute of Taxation of Nigeria",
+      "url": "https://portal.citn.org/getting-started/",
+      "catalog_url": "https://citn.org/",
+      "evidence_class": "professional_exam_and_competency_framework",
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "note": "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D015",
+        "D060",
+        "D157",
+        "D158"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://portal.citn.org/getting-started/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cle",
+      "name": "Council of Legal Education Nigeria",
+      "url": "https://www.lawschool.gov.ng/",
+      "catalog_url": "https://www.counciloflegaleducationnigeria.org/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership. The catalog domain was unavailable; the current official Nigerian Law School/Council of Legal Education site and accreditation notice were reviewed.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D037"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.lawschool.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_corbon",
+      "name": "Council of Registered Builders of Nigeria",
+      "url": "https://www.corbon.gov.ng/aboutUs",
+      "catalog_url": "https://www.corbon.gov.ng/aboutUs",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D052",
+        "D093",
+        "D097",
+        "D099",
+        "D100",
+        "D101",
+        "D102",
+        "D146"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.corbon.gov.ng/aboutUs",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_coren",
+      "name": "Council for the Regulation of Engineering in Nigeria",
+      "url": "https://coren.gov.ng/guidelines-for-registration-of-engineers/",
+      "catalog_url": "https://coren.gov.ng/",
+      "evidence_class": "engineering_professional_and_specialisation_context",
+      "skills": [
+        "AI",
+        "big data",
+        "blockchain",
+        "biomedical engineering",
+        "clean energy",
+        "IoT",
+        "machine learning",
+        "robotics",
+        "telecommunications"
+      ],
+      "competencies": [
+        "engineering safety and reliability",
+        "interoperability",
+        "standards-based engineering practice",
+        "emerging-technology application"
+      ],
+      "certifications": [
+        "structured professional certification categories listed by the council"
+      ],
+      "note": "The council lists professional categories from engineer to craftsman and describes structured certification and standards.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D006",
+        "D008",
+        "D016",
+        "D017",
+        "D018",
+        "D019",
+        "D020",
+        "D022",
+        "D027",
+        "D049",
+        "D050",
+        "D052",
+        "D055",
+        "D059",
+        "D069",
+        "D072",
+        "D074",
+        "D076",
+        "D093",
+        "D095",
+        "D097",
+        "D098",
+        "D109",
+        "D110",
+        "D113",
+        "D116",
+        "D117",
+        "D131",
+        "D132",
+        "D134",
+        "D135",
+        "D136",
+        "D137",
+        "D138",
+        "D140",
+        "D146",
+        "D147",
+        "D148",
+        "D156",
+        "D164",
+        "D166"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://coren.gov.ng/guidelines-for-registration-of-engineers/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_cpn",
+      "name": "Computer Professionals Registration Council of Nigeria",
+      "url": "https://www.cpn.gov.ng/metro/?show=38",
+      "catalog_url": "https://www.cpn.gov.ng/",
+      "evidence_class": "professional_regulator_and_exam_framework",
+      "skills": [
+        "computer systems and programming",
+        "software packages",
+        "multimedia document production",
+        "networks and computer security",
+        "web design",
+        "database management",
+        "data protection and backup"
+      ],
+      "competencies": [
+        "develop and document software",
+        "design and query databases",
+        "configure and secure networks",
+        "protect and recover data"
+      ],
+      "certifications": [
+        "Computer Literacy Examination (CLE)",
+        "Computer Foundation Examination (CFE)",
+        "Computer Professional Examination (CPE)"
+      ],
+      "note": "The CPN examination is a route into recognised IT professional practice in Nigeria.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D001",
+        "D002",
+        "D003",
+        "D004",
+        "D005",
+        "D006",
+        "D007",
+        "D009",
+        "D010",
+        "D012",
+        "D033",
+        "D044",
+        "D056",
+        "D057",
+        "D094",
+        "D139",
+        "D140",
+        "D141",
+        "D142",
+        "D143",
+        "D147",
+        "D166",
+        "D167",
+        "D168"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.cpn.gov.ng/metro/?show=38",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_crffn",
+      "name": "Council for the Regulation of Freight Forwarding in Nigeria",
+      "url": "https://crffn.gov.ng/",
+      "catalog_url": "https://crffn.gov.ng/",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository.",
+      "status": "official_page_reachable_no_extractable_text",
+      "domains_using_body": [
+        "D034",
+        "D035",
+        "D079"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_no_text",
+        "review_url": "https://crffn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_dsn",
+      "name": "Data Science Nigeria",
+      "url": "https://www.datasciencenigeria.org/",
+      "catalog_url": "https://www.datasciencenigeria.org/",
+      "evidence_class": "professional_association_and_sector_skills_context",
+      "skills": [
+        "AI engineering and ethics",
+        "robotics",
+        "cybersecurity",
+        "digital forensics",
+        "fintech",
+        "IoT",
+        "data analytics"
+      ],
+      "competencies": [
+        "continuous professional development",
+        "AI-enabled threat detection",
+        "cyber risk governance",
+        "responsible AI and digital innovation"
+      ],
+      "certifications": [
+        "NCS membership and professional recognition"
+      ],
+      "note": "NCS describes itself as the umbrella body for Nigerian IT professionals and interest groups.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D003",
+        "D009",
+        "D010"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.datasciencenigeria.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_dtrbn",
+      "name": "Dental Therapists Registration Board of Nigeria",
+      "url": "https://dthbn.gov.ng/about-us-3/",
+      "evidence_class": "statutory_health_regulator",
+      "skills": [
+        "dental therapy",
+        "oral-health support",
+        "preventive dental care",
+        "patient communication"
+      ],
+      "competencies": [
+        "work within registered dental-therapy scope",
+        "follow clinical and professional standards",
+        "support safe oral-health care"
+      ],
+      "certifications": [
+        "Board registration and examination route requires direct document verification"
+      ],
+      "note": "The Board's official page names registration, renewable licences, standards of knowledge and skill, examinations, certificates, accredited institutions and CPD.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D067"
+      ]
+    },
+    {
+      "body_id": "ng_efn",
+      "name": "Esports Federation of Nigeria",
+      "url": "https://esportsfederationofnigeria.com/",
+      "evidence_class": "sector_association_context",
+      "skills": [
+        "competitive gaming",
+        "team coordination",
+        "event operations",
+        "digital content and streaming"
+      ],
+      "competencies": [
+        "organise competitions",
+        "support players and teams",
+        "manage digital events and media"
+      ],
+      "certifications": [
+        "No national professional licence inferred"
+      ],
+      "note": "Federation context supports esports role and event vocabulary; credentials must come from a named competition, training provider or federation programme.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D168"
+      ]
+    },
+    {
+      "body_id": "ng_ehocon",
+      "name": "Environmental Health Officers Registration Council of Nigeria (repository ID; official site uses EHCON/EHORECON naming)",
+      "url": "https://ehcon.gov.ng/department-of-registration-and-licensing/",
+      "evidence_class": "statutory_health_regulator",
+      "skills": [
+        "environmental health inspection",
+        "public sanitation",
+        "health-risk control",
+        "environmental monitoring"
+      ],
+      "competencies": [
+        "register and license environmental-health practitioners",
+        "apply environmental-health standards",
+        "work across specialist, officer, technician and assistant levels"
+      ],
+      "certifications": [
+        "Environmental Health practitioner registration/licence"
+      ],
+      "note": "The official registration/licensing page describes registration and licensing of Environmental Health Specialists, Consultants, Officers, Technicians and Assistants. The repository body ID should be reconciled with the official EHCON/EHORECON spelling.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D074"
+      ]
+    },
+    {
+      "body_id": "ng_esvarbon",
+      "name": "Estate Surveyors and Valuers Registration Board of Nigeria",
+      "url": "https://www.esvarbon.gov.ng/",
+      "catalog_url": "https://www.esvarbon.gov.ng/",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D051"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.esvarbon.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_fadan",
+      "name": "Fashion Designers Association of Nigeria",
+      "url": "https://fadan.ng/registration/",
+      "catalog_url": "https://fadan.ng/registration/",
+      "evidence_class": "sector_skills_council_and_professional_association",
+      "skills": [
+        "fashion design",
+        "garment production",
+        "styling and image work",
+        "fashion entrepreneurship",
+        "quality and value-chain practice"
+      ],
+      "competencies": [
+        "develop and present designs",
+        "work with fashion production processes",
+        "build a professional portfolio and business",
+        "meet sector practice expectations"
+      ],
+      "certifications": [
+        "FADAN membership categories",
+        "sector-skills qualifications require the applicable NSQ or training provider"
+      ],
+      "note": "The Nigerian Fashion Council identifies itself as an NBTE-inaugurated sector skills council for the fashion value chain.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D075",
+        "D103",
+        "D105",
+        "D106",
+        "D111",
+        "D133",
+        "D160"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://fadan.ng/registration/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_fan",
+      "name": "Forestry Association of Nigeria",
+      "url": "https://fan.org.ng/",
+      "catalog_url": "https://fan.org.ng/",
+      "evidence_class": "government_agriculture_and_food_systems_context",
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "note": "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments. The catalog domain did not provide a reliable direct page during review. Forestry context was corroborated through an official Federal Ministry of Information reference and sector-university references; body-specific credentials remain unclaimed.",
+      "status": "official_domain_unavailable_secondary_evidence",
+      "domains_using_body": [
+        "D121"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "secondary_or_government_corroboration",
+        "review_url": "https://fan.org.ng/",
+        "catalog_url_safe": false,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_fashion_council",
+      "name": "Nigerian Fashion Council",
+      "url": "https://nigerianfashioncouncil.org/",
+      "catalog_url": "https://nigerianfashioncouncil.org/",
+      "evidence_class": "sector_skills_council_and_professional_association",
+      "skills": [
+        "fashion design",
+        "garment production",
+        "styling and image work",
+        "fashion entrepreneurship",
+        "quality and value-chain practice"
+      ],
+      "competencies": [
+        "develop and present designs",
+        "work with fashion production processes",
+        "build a professional portfolio and business",
+        "meet sector practice expectations"
+      ],
+      "certifications": [
+        "FADAN membership categories",
+        "sector-skills qualifications require the applicable NSQ or training provider"
+      ],
+      "note": "The Nigerian Fashion Council identifies itself as an NBTE-inaugurated sector skills council for the fashion value chain.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D075",
+        "D106",
+        "D111",
+        "D160"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nigerianfashioncouncil.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_fintechngr",
+      "name": "FinTech Association of Nigeria",
+      "url": "https://fintechng.org/portal_1/members",
+      "secondary_url": "https://fintechng.org/vacancy/dlp/",
+      "evidence_class": "sector_association_and_training_context",
+      "skills": [
+        "digital finance",
+        "payments",
+        "blockchain",
+        "AI and cybersecurity",
+        "data and innovation"
+      ],
+      "competencies": [
+        "work across regulators and fintech stakeholders",
+        "design or operate digital-finance solutions",
+        "apply data, risk and compliance thinking"
+      ],
+      "certifications": [
+        "Fintech Certification Program with CIBN and FSI",
+        "FintechNGR membership certificate"
+      ],
+      "note": "FintechNGR describes DigiQuip/DigiStuds training and a certification programme; it is a sector association, not the statutory regulator for banking or securities.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D012"
+      ]
+    },
+    {
+      "body_id": "ng_fison",
+      "name": "Fisheries Society of Nigeria",
+      "url": "https://www.fison.org.ng/pages/membership.html",
+      "evidence_class": "professional_association_context",
+      "skills": [
+        "fish biology",
+        "fisheries science",
+        "aquaculture",
+        "fisheries research"
+      ],
+      "competencies": [
+        "participate in fisheries research and practice",
+        "apply sector knowledge",
+        "continue professional development and collaboration"
+      ],
+      "certifications": [
+        "FISON membership; no statutory practice licence inferred"
+      ],
+      "note": "FISON describes membership, research access, conferences and professional development for fisheries practitioners and students.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D120"
+      ]
+    },
+    {
+      "body_id": "ng_fmacce",
+      "name": "Federal Ministry of Arts, Culture and the Creative Economy",
+      "url": "https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece",
+      "catalog_url": "https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece",
+      "evidence_class": "government_creative_sector_context",
+      "skills": [
+        "creative production",
+        "entertainment operations",
+        "gaming and interactive media",
+        "cultural and creative entrepreneurship"
+      ],
+      "competencies": [
+        "create and manage creative work",
+        "work across production and distribution",
+        "understand creative-sector enterprise"
+      ],
+      "certifications": [
+        "No professional credential is inferred from the ministry pages."
+      ],
+      "note": "The ministry provides Nigerian creative-economy, entertainment and gaming sector context; it is not a professional licensing body.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D042",
+        "D044",
+        "D070",
+        "D080",
+        "D089",
+        "D104",
+        "D105",
+        "D133",
+        "D139",
+        "D150",
+        "D152",
+        "D153",
+        "D167",
+        "D168"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_fman",
+      "name": "Federal Ministry of Agriculture and Food Security",
+      "url": "https://agriculture.gov.ng/structure/",
+      "catalog_url": "https://agriculture.gov.ng/structure/",
+      "evidence_class": "government_agriculture_and_food_systems_context",
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "note": "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D047",
+        "D118",
+        "D119",
+        "D120",
+        "D121"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://agriculture.gov.ng/structure/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_fmhds",
+      "name": "Federal Ministry of Humanitarian Affairs and Poverty Reduction",
+      "url": "https://fmhds.gov.ng/",
+      "evidence_class": "government_humanitarian_context",
+      "skills": [
+        "humanitarian policy",
+        "disaster mitigation",
+        "preparedness and response",
+        "social protection coordination"
+      ],
+      "competencies": [
+        "coordinate humanitarian interventions",
+        "plan disaster response",
+        "support inclusive social-protection programmes"
+      ],
+      "certifications": [
+        "No professional credential inferred from the ministry mandate"
+      ],
+      "note": "This is a government mandate source for humanitarian roles and competencies, not a professional licensing body.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D161"
+      ]
+    },
+    {
+      "body_id": "ng_health_ministry",
+      "name": "Federal Ministry of Health and Social Welfare health regulatory bodies",
+      "url": "https://health.gov.ng/hospital-services/",
+      "catalog_url": "https://health.gov.ng/hospital-services/",
+      "evidence_class": "government_public_health_context",
+      "skills": [
+        "population health",
+        "health promotion",
+        "disease prevention",
+        "health programme coordination",
+        "health data"
+      ],
+      "competencies": [
+        "plan public-health interventions",
+        "interpret population evidence",
+        "coordinate community health programmes",
+        "work within health policy and ethics"
+      ],
+      "certifications": [
+        "Profession-specific health registration must be verified against the relevant council"
+      ],
+      "note": "The Nigerian health regulator directory and NPHCDA are used for public-health and primary-health-care context; professional licences remain council-specific.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D026",
+        "D057",
+        "D064",
+        "D068",
+        "D124",
+        "D126",
+        "D165"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://health.gov.ng/hospital-services/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_hrrbn",
+      "name": "Health Records Registration Board of Nigeria",
+      "url": "https://hrimboard.org/server/regulations/EXAMINATIONS%20RULES%2006.03.2025.pdf",
+      "secondary_url": "https://placng.org/lawsofnigeria/print.php?sn=155",
+      "evidence_class": "statutory_health_information_regulator",
+      "skills": [
+        "health records management",
+        "health information systems",
+        "clinical data administration",
+        "professional ethics"
+      ],
+      "competencies": [
+        "pass or be exempted from Board examinations",
+        "maintain health information standards",
+        "work under professional ethics and registration rules"
+      ],
+      "certifications": [
+        "Board registration after examination or exemption"
+      ],
+      "note": "The examination rules and establishing Act identify registration standards, Board examinations and professional ethics for health-records and information managers.",
+      "status": "verified_official_or_statutory_source",
+      "domains_using_body": [
+        "D068",
+        "D125"
+      ]
+    },
+    {
+      "body_id": "ng_ican",
+      "name": "Institute of Chartered Accountants of Nigeria",
+      "url": "https://icanig.org/ican/students/faqs.php",
+      "catalog_url": "https://www.ican.org.ng/",
+      "evidence_class": "professional_exam_and_competency_framework",
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "note": "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D015",
+        "D060",
+        "D084",
+        "D157",
+        "D158"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://icanig.org/ican/students/faqs.php",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_icen",
+      "name": "Institute of Chartered Economists of Nigeria",
+      "url": "https://icennig.org.ng/about/",
+      "secondary_url": "https://charteredeconomist.org/curriculum/",
+      "evidence_class": "professional_body_and_exam_framework",
+      "skills": [
+        "microeconomics",
+        "macroeconomics",
+        "econometrics",
+        "financial institutions and markets",
+        "economic policy"
+      ],
+      "competencies": [
+        "analyse economic and financial problems",
+        "apply quantitative and policy reasoning",
+        "complete professional examinations and practical training"
+      ],
+      "certifications": [
+        "Associate Chartered Economist",
+        "Fellow Chartered Economist",
+        "professional economics examination routes"
+      ],
+      "note": "ICEN and its curriculum pages name professional examinations, specialization gateways and registration/membership progression.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D063"
+      ]
+    },
+    {
+      "body_id": "ng_iepn",
+      "name": "Institute of Environmental Practitioners of Nigeria",
+      "url": "https://iepn.gov.ng/membership-and-practitioner-licensure-guidelines/",
+      "secondary_url": "https://iepn.gov.ng/wp-content/uploads/2025/09/Guidelines-for-Registration-and-Licensing-IEPN-Ver-1.pdf",
+      "evidence_class": "professional_licensing_and_competency_framework",
+      "skills": [
+        "environmental management",
+        "sustainability practice",
+        "environmental and social impact assessment",
+        "GHG accounting",
+        "climate-risk assessment"
+      ],
+      "competencies": [
+        "evaluate and recommend environmental solutions",
+        "pass proficiency tests",
+        "certify reports within licensed practice areas",
+        "maintain CPD and ethics obligations"
+      ],
+      "certifications": [
+        "IEPN membership and practice licence",
+        "practitioner seal"
+      ],
+      "note": "IEPN explicitly describes proficiency testing, practice-area licences, CPD, code of ethics and licence/seal issuance.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D020",
+        "D074"
+      ]
+    },
+    {
+      "body_id": "ng_imo",
+      "name": "Nigerian Institution of Marine Engineers and Naval Architects (NIMENA)",
+      "url": "https://nimena.org.ng/home.html",
+      "secondary_url": "https://nimena.org.ng/NM/documents/NIBECON%202023%20CONFERENCE%20TECHNICAL%20PAPERS.pdf",
+      "evidence_class": "professional_association_and_maritime_standards_context",
+      "skills": [
+        "marine engineering",
+        "naval architecture",
+        "maritime safety",
+        "seafarer training"
+      ],
+      "competencies": [
+        "support maritime engineering practice",
+        "promote STCW-aligned training",
+        "apply maritime codes and standards"
+      ],
+      "certifications": [
+        "Professional membership; statutory seafarer certificates are issued through NIMASA"
+      ],
+      "note": "The source uses NIMENA as the current official name matching the repository's older 'marine engineers' label; do not treat association membership as NIMASA certification.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D076"
+      ]
+    },
+    {
+      "body_id": "ng_itf",
+      "name": "Industrial Training Fund",
+      "url": "https://www.itf.gov.ng/about/",
+      "secondary_url": "https://itf.gov.ng/skill_centres/istc-ikeja.html",
+      "evidence_class": "government_skills_regulator_and_certifier",
+      "skills": [
+        "industrial and commercial skills",
+        "technical and entrepreneurial development",
+        "vocational trade practice",
+        "training standards"
+      ],
+      "competencies": [
+        "acquire and demonstrate vocational skills",
+        "meet training standards",
+        "complete apprenticeship or SIWES routes",
+        "perform trade work to assessed outcomes"
+      ],
+      "certifications": [
+        "ITF Certificate of Competence",
+        "SUPA skills certification"
+      ],
+      "note": "ITF states that it sets training standards, evaluates and certifies vocational skills; its ISTC page names Auto Mechanic Works, electrical, machining and process-control certificate routes.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D040",
+        "D091",
+        "D094",
+        "D096",
+        "D103",
+        "D107",
+        "D114",
+        "D115"
+      ]
+    },
+    {
+      "body_id": "ng_lrcn",
+      "name": "Librarians Registration Council of Nigeria",
+      "url": "https://lrcn.gov.ng/",
+      "catalog_url": "https://lrcn.gov.ng/",
+      "evidence_class": "professional_association_and_profession_standards_context",
+      "skills": [
+        "library and information services",
+        "knowledge management",
+        "information literacy",
+        "digital library systems",
+        "research support",
+        "professional communication"
+      ],
+      "competencies": [
+        "manage information resources",
+        "support users' information needs",
+        "apply professional standards",
+        "communicate and lead knowledge services"
+      ],
+      "certifications": [
+        "LRCN registration context",
+        "NLA membership categories"
+      ],
+      "note": "NLA supports capacity building and standards for education and certification of librarians, archivists and information scientists. The catalog domain was unavailable. Registration context was corroborated by government/NLA material, but no live official LRCN page was available for direct extraction.",
+      "status": "official_domain_unavailable_secondary_evidence",
+      "domains_using_body": [
+        "D073"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "secondary_or_government_corroboration",
+        "review_url": "https://lrcn.gov.ng/",
+        "catalog_url_safe": false,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_mdcn",
+      "name": "Medical and Dental Council of Nigeria",
+      "url": "https://www.mdcn.gov.ng/",
+      "catalog_url": "https://www.mdcn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D023",
+        "D067",
+        "D068",
+        "D137"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.mdcn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_mlscn",
+      "name": "Medical Laboratory Science Council of Nigeria",
+      "url": "https://mlscn.gov.ng/about/mandate",
+      "secondary_url": "https://hub.mlscn.gov.ng/",
+      "evidence_class": "statutory_health_regulator",
+      "skills": [
+        "medical laboratory science",
+        "diagnostic laboratory practice",
+        "reagent and chemical control",
+        "laboratory quality"
+      ],
+      "competencies": [
+        "meet Council knowledge and skill standards",
+        "pass required examinations",
+        "maintain registration and CPD",
+        "operate approved laboratories"
+      ],
+      "certifications": [
+        "MLSCN registration for scientists, technicians and assistants",
+        "Council examinations"
+      ],
+      "note": "MLSCN's mandate explicitly covers standards, separate registers, examinations, institution accreditation and laboratory/reagent regulation.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D027",
+        "D068",
+        "D122",
+        "D138"
+      ]
+    },
+    {
+      "body_id": "ng_mrtb",
+      "name": "Medical Rehabilitation Therapists Board of Nigeria",
+      "url": "https://www.mrtb.gov.ng/en/Registration",
+      "catalog_url": "https://mrtb.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D068",
+        "D154"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.mrtb.gov.ng/en/Registration",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nabteb",
+      "name": "National Business and Technical Examinations Board",
+      "url": "https://nabteb.gov.ng/",
+      "catalog_url": "https://nabteb.gov.ng/",
+      "evidence_class": "national_skills_and_occupational_standard",
+      "skills": [
+        "occupational performance",
+        "recognition of prior learning",
+        "technical trade practice",
+        "progression through qualification levels"
+      ],
+      "competencies": [
+        "perform defined occupational outcomes",
+        "demonstrate practical competence against NOS",
+        "progress through NSQ levels"
+      ],
+      "certifications": [
+        "National Skills Qualifications (NSQ)",
+        "National Occupational Standards (NOS) aligned awards"
+      ],
+      "note": "NSQF defines skills, knowledge, understanding and competencies regardless of where learning occurred.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D040"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nabteb.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nadc",
+      "name": "National Automotive Design and Development Council",
+      "url": "https://naddc.gov.ng/",
+      "secondary_url": "https://naddc.gov.ng/naddc-about-us/",
+      "evidence_class": "government_automotive_sector_and_skills_context",
+      "skills": [
+        "automotive design",
+        "vehicle and component development",
+        "CAD/CAE",
+        "CNG and EV conversion",
+        "automotive manufacturing"
+      ],
+      "competencies": [
+        "design and analyse automotive components",
+        "support assembly and component standards",
+        "use SolidWorks and Midas NFX",
+        "work within CNG workshop accreditation"
+      ],
+      "certifications": [
+        "NADDC CNG conversion workshop accreditation; no individual professional licence inferred"
+      ],
+      "note": "NADDC describes technical-skills development, automotive training centres, CAD/CAE capacity building and licensed CNG conversion workshops.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D049",
+        "D095",
+        "D131",
+        "D166"
+      ]
+    },
+    {
+      "body_id": "ng_naec",
+      "name": "Nigeria Atomic Energy Commission",
+      "url": "https://nigatom.gov.ng/mtcd/",
+      "secondary_url": "https://nigatom.gov.ng/",
+      "evidence_class": "government_nuclear_training_context",
+      "skills": [
+        "nuclear science and technology",
+        "radiation and nuclear safety",
+        "engineering and scientific research",
+        "manpower development"
+      ],
+      "competencies": [
+        "complete nuclear training and capacity development",
+        "apply safety culture",
+        "work with nuclear research and infrastructure programmes"
+      ],
+      "certifications": [
+        "NAEC/IAEA training signals; no standalone individual licence inferred"
+      ],
+      "note": "NAEC's manpower directorate coordinates education and training and identifies nuclear scientists, engineers and technicians; licensing remains NNRA-specific.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D135"
+      ]
+    },
+    {
+      "body_id": "ng_naege",
+      "name": "Nigerian Association for Engineering Geology and the Environment",
+      "url": "https://www.naege.org/",
+      "secondary_url": "https://naege.org/wp-content/uploads/2023/08/NAEGE-Constitution.pdf",
+      "evidence_class": "professional_association_and_standards_context",
+      "skills": [
+        "engineering geology",
+        "environmental science",
+        "geotechnical assessment",
+        "natural-hazard assessment",
+        "resource management"
+      ],
+      "competencies": [
+        "conduct applied geological and environmental work",
+        "apply technical guidelines and standards",
+        "support impact assessment and resource management"
+      ],
+      "certifications": [
+        "NAEGE membership and professional development; no statutory licence inferred"
+      ],
+      "note": "NAEGE identifies engineering geology, environmental practice, research, standards, training and professional-development areas.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D020"
+      ]
+    },
+    {
+      "body_id": "ng_nafdac",
+      "name": "National Agency for Food and Drug Administration and Control",
+      "url": "https://nafdac.gov.ng/laws-and-regulations/",
+      "catalog_url": "https://nafdac.gov.ng/",
+      "evidence_class": "statutory_professional_regulator_and_practice_licence",
+      "skills": [
+        "food science and technology",
+        "food safety",
+        "food premises inspection",
+        "food processing and quality",
+        "continuing professional development"
+      ],
+      "competencies": [
+        "apply food-scientific knowledge safely",
+        "meet professional registration requirements",
+        "support food business compliance",
+        "maintain competence through CPD"
+      ],
+      "certifications": [
+        "Certified Food Scientist of Nigeria (CFSN)",
+        "annual practice licence",
+        "food business premises licence"
+      ],
+      "note": "NiCFoST regulates the practice and profession of Food Science and Technology in Nigeria.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D048",
+        "D126"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nafdac.gov.ng/laws-and-regulations/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nafm",
+      "name": "Nigerian Academy of Facility Managers",
+      "url": "https://www.nafm.org.ng/register-grade",
+      "evidence_class": "professional_association_and_membership_framework",
+      "skills": [
+        "facility management",
+        "building maintenance",
+        "operations coordination",
+        "asset and service management"
+      ],
+      "competencies": [
+        "complete facility-management modules",
+        "manage maintenance and building services",
+        "progress through evidence-based membership grades"
+      ],
+      "certifications": [
+        "NAFM membership grades and module completion"
+      ],
+      "note": "NAFM's grade table specifies relevant qualifications and module requirements for associate through fellow membership.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D146"
+      ]
+    },
+    {
+      "body_id": "ng_nagaff",
+      "name": "National Association of Government Approved Freight Forwarders",
+      "url": "https://nagaff.com/about-us/",
+      "catalog_url": "https://nagaff.org/",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D079"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nagaff.com/about-us/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_naicom",
+      "name": "National Insurance Commission",
+      "url": "https://licensing.naicom.gov.ng/",
+      "secondary_url": "https://portal.naicom.gov.ng/",
+      "evidence_class": "statutory_insurance_regulator",
+      "skills": [
+        "insurance operations",
+        "underwriting",
+        "claims and broking",
+        "insurance compliance"
+      ],
+      "competencies": [
+        "work within insurance licensing rules",
+        "understand insurer, broker and loss-adjuster obligations",
+        "apply prudential and policyholder-protection standards"
+      ],
+      "certifications": [
+        "NAICOM licence and regulated operator approvals"
+      ],
+      "note": "NAICOM's licensing portal separates insurers, agents, brokers, loss adjusters and other regulated participants; it is not a general individual skill certificate.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D061"
+      ]
+    },
+    {
+      "body_id": "ng_nanta",
+      "name": "National Association of Nigerian Travel Agencies",
+      "url": "https://nanta.org.ng/",
+      "catalog_url": "https://nanta.org.ng/",
+      "evidence_class": "government_sector_registration_and_certification_context",
+      "skills": [
+        "hospitality operations",
+        "travel and tourism service",
+        "operator compliance",
+        "customer service",
+        "sector administration"
+      ],
+      "competencies": [
+        "work within tourism and hospitality compliance requirements",
+        "provide professional visitor services",
+        "maintain verifiable sector identity"
+      ],
+      "certifications": [
+        "RIVAC verifiable professional identity and certificate"
+      ],
+      "note": "NIHOTOUR's portal describes registration, identification, verification, accreditation and certification for Nigerian hospitality, travel and tourism personnel and operators.",
+      "status": "official_page_reachable_no_extractable_text",
+      "domains_using_body": [
+        "D053",
+        "D083"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_no_text",
+        "review_url": "https://nanta.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_nape",
+      "name": "Nigerian Association of Petroleum Explorationists",
+      "url": "https://nape.org.ng/",
+      "catalog_url": "https://nape.org.ng/",
+      "evidence_class": "statutory_energy_regulatory_context",
+      "skills": [
+        "petroleum operations",
+        "process and facility safety",
+        "regulatory compliance",
+        "environmental management",
+        "technical reporting"
+      ],
+      "competencies": [
+        "work within petroleum regulations",
+        "manage operational risk",
+        "document compliance and technical activity"
+      ],
+      "certifications": [
+        "Sector credentials must be linked to the issuing body; do not infer a licence from the regulator homepage"
+      ],
+      "note": "NUPRC and NMDPRA are the Nigerian regulatory context sources for upstream and midstream/downstream petroleum operations in the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D054"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nape.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nas",
+      "name": "Nigerian Academy of Science",
+      "url": "https://nas.org.ng/",
+      "catalog_url": "https://nas.org.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D041",
+        "D047",
+        "D063",
+        "D078",
+        "D142",
+        "D145",
+        "D155"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nas.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_naseni",
+      "name": "National Agency for Science and Engineering Infrastructure",
+      "url": "https://naseni.gov.ng/futuremakers/",
+      "catalog_url": "https://naseni.gov.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D019",
+        "D140",
+        "D141",
+        "D155"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://naseni.gov.ng/futuremakers/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nasow",
+      "name": "Nigerian Association of Social Workers",
+      "url": "https://www.nasow.org/membership/joinrenew",
+      "catalog_url": "https://nasow.org.ng/",
+      "evidence_class": "professional_association_context",
+      "skills": [
+        "case work",
+        "community development",
+        "support planning",
+        "advocacy",
+        "safeguarding"
+      ],
+      "competencies": [
+        "assess social needs",
+        "coordinate support",
+        "work ethically with vulnerable people",
+        "maintain professional records"
+      ],
+      "certifications": [
+        "Professional registration details require direct council or institute document confirmation"
+      ],
+      "note": "The Nigerian Institute of Social Workers is used as the local professional reference for social-work role naming in the repository.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D046",
+        "D128",
+        "D161"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.nasow.org/membership/joinrenew",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nasrda",
+      "name": "National Space Research and Development Agency",
+      "url": "https://nasrda.gov.ng/mandate/",
+      "catalog_url": "https://nasrda.gov.ng/",
+      "evidence_class": "government_science_and_engineering_context",
+      "skills": [
+        "space science",
+        "space systems engineering",
+        "satellite systems",
+        "remote sensing",
+        "astronomy",
+        "ICT for space applications"
+      ],
+      "competencies": [
+        "design or analyse space systems",
+        "use scientific and engineering methods",
+        "work with satellite and remote-sensing systems"
+      ],
+      "certifications": [
+        "No Nigerian professional licence is inferred from NASRDA pages; use academic and engineering regulators separately."
+      ],
+      "note": "NASRDA has institutes and departments covering space science, space engineering, satellite systems and related technology development.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D059",
+        "D132"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nasrda.gov.ng/mandate/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nba",
+      "name": "Nigerian Bar Association",
+      "url": "https://nigerianbar.org.ng/",
+      "catalog_url": "https://nigerianbar.org.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "official_page_reachable_no_extractable_text",
+      "domains_using_body": [
+        "D037",
+        "D038",
+        "D143",
+        "D149",
+        "D151",
+        "D162",
+        "D163"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_no_text",
+        "review_url": "https://nigerianbar.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_nbc",
+      "name": "National Broadcasting Commission",
+      "url": "https://www.nbc.gov.ng/",
+      "catalog_url": "https://www.nbc.gov.ng/",
+      "evidence_class": "professional_association_and_ethics_framework",
+      "skills": [
+        "fact checking",
+        "news reporting",
+        "source confidentiality",
+        "interviewing and information gathering",
+        "copyright-aware publishing"
+      ],
+      "competencies": [
+        "separate facts from commentary",
+        "verify information",
+        "protect confidential sources",
+        "report fairly and in the public interest"
+      ],
+      "certifications": [
+        "NUJ membership and professional registration signals; no statutory licence inferred"
+      ],
+      "note": "NUJ's code requires truth, accuracy, fairness, privacy, confidentiality, public interest and copyright-aware practice. The official catalog domain was reachable but displayed a maintenance notice; no competency or credential claims were extracted from it.",
+      "status": "official_page_maintenance",
+      "domains_using_body": [
+        "D042",
+        "D043",
+        "D070"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_maintenance",
+        "review_url": "https://www.nbc.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_nbte",
+      "name": "National Board for Technical Education",
+      "url": "https://web.nbte.gov.ng/downloads",
+      "catalog_url": "https://web.nbte.gov.ng/downloads",
+      "evidence_class": "national_skills_and_occupational_standard",
+      "skills": [
+        "occupational performance",
+        "recognition of prior learning",
+        "technical trade practice",
+        "progression through qualification levels"
+      ],
+      "competencies": [
+        "perform defined occupational outcomes",
+        "demonstrate practical competence against NOS",
+        "progress through NSQ levels"
+      ],
+      "certifications": [
+        "National Skills Qualifications (NSQ)",
+        "National Occupational Standards (NOS) aligned awards"
+      ],
+      "note": "NSQF defines skills, knowledge, understanding and competencies regardless of where learning occurred.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D039",
+        "D040",
+        "D058",
+        "D075",
+        "D081",
+        "D087",
+        "D088",
+        "D090",
+        "D091",
+        "D092",
+        "D093",
+        "D094",
+        "D095",
+        "D096",
+        "D097",
+        "D098",
+        "D099",
+        "D100",
+        "D101",
+        "D102",
+        "D103",
+        "D104",
+        "D105",
+        "D106",
+        "D107",
+        "D108",
+        "D109",
+        "D111",
+        "D112",
+        "D113",
+        "D114",
+        "D115",
+        "D116",
+        "D118",
+        "D120",
+        "D125",
+        "D139"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://web.nbte.gov.ng/downloads",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_ncaa",
+      "name": "Nigerian Civil Aviation Authority",
+      "url": "https://ncaa.gov.ng/documents/regulations/statement-of-compliance-templates/personnel-licensing/",
+      "secondary_url": "https://ncaa.gov.ng/media/f40hyhkc/nig-cars-part-2-personnel-licensing.pdf",
+      "evidence_class": "statutory_aviation_regulator_and_personnel_licensing",
+      "skills": [
+        "flight operations",
+        "aircraft maintenance",
+        "air-traffic control",
+        "aviation safety and security"
+      ],
+      "competencies": [
+        "meet personnel licensing requirements",
+        "demonstrate aviation competence",
+        "follow ICAO-aligned safety and operating standards"
+      ],
+      "certifications": [
+        "NCAA personnel licences, ratings, authorisations and certificates"
+      ],
+      "note": "NCAA's personnel-licensing regulations list pilots, instructors, engineers, dispatchers, controllers, cabin crew and related aviation personnel.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D069",
+        "D136"
+      ]
+    },
+    {
+      "body_id": "ng_ncc",
+      "name": "Nigerian Communications Commission",
+      "url": "https://ncc.gov.ng/sites/default/files/2024-11/Documents/3-5ghz-spectrum/Spectrum-3.5GHz_Spectrum_Information_Memorandum_Final.pdf",
+      "secondary_url": "https://fr.ncc.gov.ng/industrie/licence/processus-de-demande-de-licence",
+      "evidence_class": "statutory_telecommunications_regulator",
+      "skills": [
+        "telecommunications networks",
+        "spectrum management",
+        "broadband services",
+        "equipment type approval"
+      ],
+      "competencies": [
+        "operate within communications licensing",
+        "manage spectrum and numbering obligations",
+        "meet type-approval and service-quality requirements"
+      ],
+      "certifications": [
+        "NCC service, spectrum and equipment approvals/licences"
+      ],
+      "note": "NCC's licensing materials establish the regulator, licence categories, spectrum obligations and equipment type approval; they do not create an individual telecom professional certificate.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D001",
+        "D004",
+        "D005",
+        "D006",
+        "D008"
+      ]
+    },
+    {
+      "body_id": "ng_ncce",
+      "name": "National Commission for Colleges of Education",
+      "url": "https://ncce.gov.ng/Home/ActsAndFunctions",
+      "secondary_url": "https://ncce.gov.ng/Departments/Details?deptId=f8b80830-e127-4832-8ac3-f9989433ec0c",
+      "evidence_class": "statutory_teacher_education_regulator",
+      "skills": [
+        "teacher education",
+        "curriculum development",
+        "assessment",
+        "classroom and subject preparation"
+      ],
+      "competencies": [
+        "meet NCE minimum standards",
+        "design and assess teacher-education programmes",
+        "apply accreditation and curriculum benchmarks"
+      ],
+      "certifications": [
+        "NCE programme and institution accreditation; national certification routes with relevant ministries"
+      ],
+      "note": "NCCE lays down minimum standards, accredits certificates, develops curricula and reviews assessment methods for Colleges of Education.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D039",
+        "D127"
+      ]
+    },
+    {
+      "body_id": "ng_nccopyright",
+      "name": "Nigerian Copyright Commission",
+      "url": "https://copyright.gov.ng/",
+      "catalog_url": "https://copyright.gov.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D042",
+        "D070",
+        "D153",
+        "D163"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://copyright.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_ncg",
+      "name": "National Gallery of Art Nigeria",
+      "url": "https://nga.gov.ng/",
+      "secondary_url": "https://nga.gov.ng/nga-in-house-professional-capacity-building-workshop/",
+      "evidence_class": "government_creative_arts_context",
+      "skills": [
+        "visual arts",
+        "art education",
+        "gallery management",
+        "art business",
+        "cultural preservation"
+      ],
+      "competencies": [
+        "develop and present artistic work",
+        "manage gallery and cultural programmes",
+        "apply art-business and public-education practice"
+      ],
+      "certifications": [
+        "No individual professional licence inferred"
+      ],
+      "note": "NGA provides national visual-arts and gallery-sector context and has published professional capacity-building material; it is not treated as a licensing body.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D152"
+      ]
+    },
+    {
+      "body_id": "ng_ncmm",
+      "name": "National Commission for Museums and Monuments",
+      "url": "https://museum.ng/functions-of-ncmm/",
+      "evidence_class": "government_heritage_and_museum_context",
+      "skills": [
+        "collection documentation",
+        "conservation and preservation",
+        "museum management",
+        "archaeological and ethnographic research",
+        "public interpretation"
+      ],
+      "competencies": [
+        "document and preserve cultural property",
+        "conduct heritage research",
+        "interpret and present collections",
+        "apply museum standards"
+      ],
+      "certifications": [
+        "No individual professional licence inferred"
+      ],
+      "note": "NCMM's official functions name collection, documentation, conservation, preservation, research, museum development and professional standards.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D152"
+      ]
+    },
+    {
+      "body_id": "ng_ncs",
+      "name": "Nigeria Computer Society",
+      "url": "https://www.ncs.org.ng/",
+      "catalog_url": "https://www.ncs.org.ng/",
+      "evidence_class": "professional_regulator_and_exam_framework",
+      "skills": [
+        "computer systems and programming",
+        "software packages",
+        "multimedia document production",
+        "networks and computer security",
+        "web design",
+        "database management",
+        "data protection and backup"
+      ],
+      "competencies": [
+        "develop and document software",
+        "design and query databases",
+        "configure and secure networks",
+        "protect and recover data"
+      ],
+      "certifications": [
+        "Computer Literacy Examination (CLE)",
+        "Computer Foundation Examination (CFE)",
+        "Computer Professional Examination (CPE)"
+      ],
+      "note": "The CPN examination is a route into recognised IT professional practice in Nigeria.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D001",
+        "D002",
+        "D003",
+        "D007",
+        "D009",
+        "D139",
+        "D140"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.ncs.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_ndpc",
+      "name": "Nigeria Data Protection Commission",
+      "url": "https://ndpc.gov.ng/",
+      "catalog_url": "https://ndpc.gov.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D001",
+        "D002",
+        "D004",
+        "D005",
+        "D038",
+        "D056",
+        "D057"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://ndpc.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nema",
+      "name": "National Emergency Management Agency",
+      "url": "https://nema.gov.ng/",
+      "catalog_url": "https://nema.gov.ng/",
+      "evidence_class": "government_emergency_management_context",
+      "skills": [
+        "emergency preparedness",
+        "incident coordination",
+        "humanitarian logistics",
+        "evacuation and relief operations",
+        "disaster recovery"
+      ],
+      "competencies": [
+        "coordinate multi-agency response",
+        "allocate resources during emergencies",
+        "support evacuation and recovery",
+        "communicate under pressure"
+      ],
+      "certifications": [
+        "No statutory professional credential is inferred from the NEMA homepage; training credentials require source-specific confirmation."
+      ],
+      "note": "NEMA is the Nigerian national emergency-management source for preparedness, response, relief and recovery coordination.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D161"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nema.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nerdc",
+      "name": "Nigerian Educational Research and Development Council",
+      "url": "https://nerdc.gov.ng/",
+      "secondary_url": "https://nerdc.org.ng/CurriculumStructure.aspx",
+      "evidence_class": "government_curriculum_and_education_context",
+      "skills": [
+        "curriculum development",
+        "educational research",
+        "language development",
+        "textbook and learning-resource quality"
+      ],
+      "competencies": [
+        "develop and review Nigerian curricula",
+        "support curriculum implementation",
+        "assess and quality-assure instructional resources"
+      ],
+      "certifications": [
+        "No individual professional licence inferred"
+      ],
+      "note": "NERDC publishes Basic and Senior Secondary curricula, subject structures, implementation guidance and resource-quality processes.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D039",
+        "D127"
+      ]
+    },
+    {
+      "body_id": "ng_nesoc",
+      "name": "Nigerian Economic Society",
+      "url": "https://www.nigerianeconomicsociety.org/",
+      "secondary_url": "https://nigerianeconomicsociety.org.ng/nes-constitution",
+      "evidence_class": "professional_association_and_research_context",
+      "skills": [
+        "economic analysis",
+        "economic research",
+        "policy communication",
+        "social and economic problem analysis"
+      ],
+      "competencies": [
+        "conduct and communicate economic research",
+        "mentor early-career economists",
+        "contribute evidence to policy discussions"
+      ],
+      "certifications": [
+        "NES membership and fellowship; no statutory practice licence inferred"
+      ],
+      "note": "NES describes professional research, mentoring, conferences, publications and policy contributions; the Constitution defines membership eligibility.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D063"
+      ]
+    },
+    {
+      "body_id": "ng_nesrea",
+      "name": "National Environmental Standards and Regulations Enforcement Agency",
+      "url": "https://nesrea.gov.ng/",
+      "catalog_url": "https://nesrea.gov.ng/",
+      "evidence_class": "government_agriculture_and_food_systems_context",
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "note": "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D020",
+        "D074",
+        "D121",
+        "D144"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nesrea.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nff",
+      "name": "Nigeria Football Federation",
+      "url": "https://thenff.com/",
+      "catalog_url": "https://thenff.com/",
+      "evidence_class": "government_and_sports_sector_context",
+      "skills": [
+        "sports administration",
+        "event operations",
+        "athlete support",
+        "governance",
+        "safety and safeguarding"
+      ],
+      "competencies": [
+        "organise sporting programmes",
+        "support athlete and event operations",
+        "apply governance and safeguarding expectations"
+      ],
+      "certifications": [
+        "No general sports-management licence inferred"
+      ],
+      "note": "The repository uses Nigerian sports bodies as local terminology and sector context; specific coaching or management credentials require the issuing federation or institute.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D071"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://thenff.com/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nfvcb",
+      "name": "National Film and Video Censors Board",
+      "url": "https://nfvcb.gov.ng/",
+      "secondary_url": "https://nfvcb.gov.ng/forms/downloadable/NFVCB%20Regulations%202008.pdf",
+      "evidence_class": "statutory_film_regulator",
+      "skills": [
+        "film production compliance",
+        "content classification",
+        "distribution licensing",
+        "responsible storytelling"
+      ],
+      "competencies": [
+        "submit films for classification",
+        "apply rating and content rules",
+        "operate licensed distribution or exhibition outlets"
+      ],
+      "certifications": [
+        "NFVCB film classification and distributor/exhibitor licences"
+      ],
+      "note": "NFVCB requires classification before distribution or exhibition and publishes licensing and rating categories.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D042",
+        "D070"
+      ]
+    },
+    {
+      "body_id": "ng_ngsa",
+      "name": "Nigerian Geological Survey Agency",
+      "url": "https://ngsa.gov.ng/geological-mapping/",
+      "secondary_url": "https://ngsa.gov.ng/about-us/",
+      "evidence_class": "government_geoscience_context",
+      "skills": [
+        "geological mapping",
+        "sedimentology",
+        "stratigraphy",
+        "paleontology",
+        "remote sensing and photo interpretation"
+      ],
+      "competencies": [
+        "produce and interpret geological maps",
+        "apply geoscience research",
+        "support mineral resources, planning and infrastructure decisions"
+      ],
+      "certifications": [
+        "No individual professional licence inferred"
+      ],
+      "note": "NGSA's mapping page names geological and geospatial services and the agency's national geoscience-information role.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D022",
+        "D072"
+      ]
+    },
+    {
+      "body_id": "ng_nia",
+      "name": "Nigerian Institute of Architects",
+      "url": "https://www.nia.ng/membership-requirements/",
+      "secondary_url": "https://arconigeria.gov.ng/education-guidelines/",
+      "evidence_class": "professional_architecture_body_and_regulator_context",
+      "skills": [
+        "architectural design",
+        "building and planning communication",
+        "professional practice",
+        "construction documentation"
+      ],
+      "competencies": [
+        "complete approved practical experience",
+        "pass Professional Practice Competence Examination",
+        "meet architectural registration requirements"
+      ],
+      "certifications": [
+        "NIA membership",
+        "ARCON registration and PPCE route"
+      ],
+      "note": "NIA membership requirements and ARCON education guidance distinguish professional membership from statutory registration and name the competence exam.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D021",
+        "D080"
+      ]
+    },
+    {
+      "body_id": "ng_nias",
+      "name": "Nigerian Institute of Animal Science",
+      "url": "https://nias.gov.ng/wp-content/uploads/2023/09/ANIMAL-SCIENCE-PRACTICE-REGULATION.pdf",
+      "secondary_url": "https://nias.gov.ng/wp-content/uploads/2024/09/GUIDELINES-FOR-THE-2024-RAS-EXAMINATIONS-3.pdf",
+      "evidence_class": "statutory_animal_science_regulator_and_exam_framework",
+      "skills": [
+        "animal science",
+        "animal husbandry",
+        "livestock production",
+        "animal nutrition and production systems"
+      ],
+      "competencies": [
+        "meet resource-verified education requirements",
+        "pass GAS/RAS examinations",
+        "complete continuing professional education",
+        "practice under Institute registration"
+      ],
+      "certifications": [
+        "Graduate Animal Scientist (GAS)",
+        "Registered Animal Scientist (RAS)",
+        "NIAS membership certificate"
+      ],
+      "note": "NIAS regulations control animal-science practice and the examination guidelines define GAS/RAS progression and continuing education.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D119"
+      ]
+    },
+    {
+      "body_id": "ng_nicfost",
+      "name": "Nigerian Council of Food Science and Technology",
+      "url": "https://nicfost.gov.ng/about-us/",
+      "catalog_url": "https://nicfost.gov.ng/about-us/",
+      "evidence_class": "statutory_professional_regulator_and_practice_licence",
+      "skills": [
+        "food science and technology",
+        "food safety",
+        "food premises inspection",
+        "food processing and quality",
+        "continuing professional development"
+      ],
+      "competencies": [
+        "apply food-scientific knowledge safely",
+        "meet professional registration requirements",
+        "support food business compliance",
+        "maintain competence through CPD"
+      ],
+      "certifications": [
+        "Certified Food Scientist of Nigeria (CFSN)",
+        "annual practice licence",
+        "food business premises licence"
+      ],
+      "note": "NiCFoST regulates the practice and profession of Food Science and Technology in Nigeria.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D048"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nicfost.gov.ng/about-us/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_niesv",
+      "name": "Nigerian Institution of Estate Surveyors and Valuers / ESVARBON",
+      "url": "https://www.esvarbon.gov.ng/",
+      "secondary_url": "https://www.niesv.org.ng/",
+      "evidence_class": "statutory_estate_profession_regulator_and_association",
+      "skills": [
+        "land and building valuation",
+        "property management",
+        "property development",
+        "plant and machinery valuation"
+      ],
+      "competencies": [
+        "meet qualifying examination and practical-experience requirements",
+        "apply valuation and landed-profession standards",
+        "maintain registration and firm compliance"
+      ],
+      "certifications": [
+        "ESVARBON registration",
+        "NIESV membership and professional grades"
+      ],
+      "note": "ESVARBON regulates and registers the profession; NIESV provides professional services, membership and development context.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D051"
+      ]
+    },
+    {
+      "body_id": "ng_nihotour",
+      "name": "National Institute for Hospitality and Tourism",
+      "url": "https://rivac.nihotour.gov.ng/",
+      "catalog_url": "https://nihotour.gov.ng/",
+      "evidence_class": "government_sector_registration_and_certification_context",
+      "skills": [
+        "hospitality operations",
+        "travel and tourism service",
+        "operator compliance",
+        "customer service",
+        "sector administration"
+      ],
+      "competencies": [
+        "work within tourism and hospitality compliance requirements",
+        "provide professional visitor services",
+        "maintain verifiable sector identity"
+      ],
+      "certifications": [
+        "RIVAC verifiable professional identity and certificate"
+      ],
+      "note": "NIHOTOUR's portal describes registration, identification, verification, accreditation and certification for Nigerian hospitality, travel and tourism personnel and operators.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D053",
+        "D083",
+        "D092"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://rivac.nihotour.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nihsa",
+      "name": "Nigeria Hydrological Services Agency",
+      "url": "https://nihsa.gov.ng/",
+      "catalog_url": "https://nihsa.gov.ng/",
+      "evidence_class": "government_meteorology_and_climate_context",
+      "skills": [
+        "weather observation",
+        "forecasting",
+        "climate data interpretation",
+        "meteorological communication",
+        "applied climate services"
+      ],
+      "competencies": [
+        "interpret meteorological evidence",
+        "communicate forecasts",
+        "apply climate information to operational decisions"
+      ],
+      "certifications": [
+        "No independent professional credential inferred from this page"
+      ],
+      "note": "NiMet is the Nigerian meteorological source for weather and climate-service context used by the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D144"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nihsa.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_niia",
+      "name": "Nigerian Institute of International Affairs",
+      "url": "https://niia.gov.ng/",
+      "catalog_url": "https://niia.gov.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D149"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://niia.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nila",
+      "name": "Nigerian Immigration Lawyers Association",
+      "url": "https://nila.ng/about-us/",
+      "catalog_url": "https://nila.ng/about-us/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D162"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nila.ng/about-us/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nim",
+      "name": "Nigerian Institute of Management",
+      "url": "https://nim.ng/about-us/",
+      "catalog_url": "https://managementnigeria.org/",
+      "evidence_class": "government_management_development_body",
+      "skills": [
+        "management",
+        "leadership",
+        "entrepreneurship and business development",
+        "finance and accounting",
+        "research and consultancy",
+        "ICT"
+      ],
+      "competencies": [
+        "act ethically",
+        "lead teams and organisations",
+        "apply management standards",
+        "develop and evaluate business practice"
+      ],
+      "certifications": [
+        "CMD professional training and certification renewal signals; exact credential names require programme-level verification"
+      ],
+      "note": "CMD is the operational arm of the Nigerian Council for Management Development and supports management training, consultancy, research and education.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D028",
+        "D029",
+        "D030",
+        "D031",
+        "D032",
+        "D033",
+        "D045",
+        "D082",
+        "D085",
+        "D130"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nim.ng/about-us/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nimasa",
+      "name": "Nigerian Maritime Administration and Safety Agency",
+      "url": "https://nimasa.gov.ng/what-we-do/seafarer-qualifications-certification/qualification-and-training/",
+      "secondary_url": "https://nimasa.gov.ng/wp-content/uploads/2019/08/CERTIFICATE-OF-COMPETENCY-REQD-TABLE-ENGINE.pdf",
+      "evidence_class": "statutory_maritime_regulator_and_competency_certifier",
+      "skills": [
+        "navigation and marine engineering",
+        "basic safety",
+        "fire prevention and firefighting",
+        "survival craft",
+        "ship security"
+      ],
+      "competencies": [
+        "demonstrate STCW competencies",
+        "complete sea time and approved training",
+        "pass COC/COP examinations",
+        "maintain medical and ancillary certificates"
+      ],
+      "certifications": [
+        "Certificate of Competency (COC)",
+        "Certificate of Proficiency (COP)",
+        "GMDSS and other maritime endorsements"
+      ],
+      "note": "NIMASA directly names maritime role tracks, competency examinations, sea-time requirements and ancillary certificates.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D076",
+        "D134"
+      ]
+    },
+    {
+      "body_id": "ng_nimet",
+      "name": "Nigerian Meteorological Agency",
+      "url": "https://nimet.gov.ng/foi",
+      "catalog_url": "https://nimet.gov.ng/foi",
+      "evidence_class": "government_meteorology_and_climate_context",
+      "skills": [
+        "weather observation",
+        "forecasting",
+        "climate data interpretation",
+        "meteorological communication",
+        "applied climate services"
+      ],
+      "competencies": [
+        "interpret meteorological evidence",
+        "communicate forecasts",
+        "apply climate information to operational decisions"
+      ],
+      "certifications": [
+        "No independent professional credential inferred from this page"
+      ],
+      "note": "NiMet is the Nigerian meteorological source for weather and climate-service context used by the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D144"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nimet.gov.ng/foi",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nimr",
+      "name": "Nigerian Institute of Medical Research",
+      "url": "https://nimr.gov.ng/",
+      "catalog_url": "https://nimr.gov.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D041",
+        "D142",
+        "D145"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nimr.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_niob",
+      "name": "Nigerian Institute of Building",
+      "url": "https://niobnat.org/",
+      "catalog_url": "https://niob.com.ng/",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D052",
+        "D146"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://niobnat.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nipc",
+      "name": "Nigerian Institute of Public Relations",
+      "url": "https://niprng.org.ng/",
+      "catalog_url": "https://niprng.org.ng/",
+      "evidence_class": "professional_association_and_ethics_framework",
+      "skills": [
+        "fact checking",
+        "news reporting",
+        "source confidentiality",
+        "interviewing and information gathering",
+        "copyright-aware publishing"
+      ],
+      "competencies": [
+        "separate facts from commentary",
+        "verify information",
+        "protect confidential sources",
+        "report fairly and in the public interest"
+      ],
+      "certifications": [
+        "NUJ membership and professional registration signals; no statutory licence inferred"
+      ],
+      "note": "NUJ's code requires truth, accuracy, fairness, privacy, confidentiality, public interest and copyright-aware practice.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D043",
+        "D065"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://niprng.org.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nis_service",
+      "name": "Nigeria Immigration Service",
+      "url": "https://immigration.gov.ng/",
+      "catalog_url": "https://immigration.gov.ng/",
+      "evidence_class": "professional_and_regulatory_legal_context",
+      "skills": [
+        "legal research",
+        "case analysis",
+        "drafting",
+        "negotiation",
+        "regulatory interpretation",
+        "client and matter management"
+      ],
+      "competencies": [
+        "apply Nigerian law",
+        "analyse and communicate legal issues",
+        "protect client confidentiality",
+        "work within professional conduct rules"
+      ],
+      "certifications": [
+        "Nigerian call-to-bar and practice context",
+        "specialist association membership where source-backed"
+      ],
+      "note": "The repository uses the NBA and specialised Nigerian bodies for local legal, immigration and IP terminology; a legal practice licence must be distinguished from an association membership.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D077",
+        "D129",
+        "D162"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://immigration.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_niser",
+      "name": "Nigerian Institute of Social and Economic Research",
+      "url": "https://niser.gov.ng/",
+      "catalog_url": "https://niser.gov.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D078"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://niser.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nislt",
+      "name": "Nigerian Institute of Science Laboratory Technology",
+      "url": "https://nislt.gov.ng/",
+      "catalog_url": "https://nislt.gov.ng/",
+      "evidence_class": "statutory_professional_regulator_and_practice_licence",
+      "skills": [
+        "food science and technology",
+        "food safety",
+        "food premises inspection",
+        "food processing and quality",
+        "continuing professional development"
+      ],
+      "competencies": [
+        "apply food-scientific knowledge safely",
+        "meet professional registration requirements",
+        "support food business compliance",
+        "maintain competence through CPD"
+      ],
+      "certifications": [
+        "Certified Food Scientist of Nigeria (CFSN)",
+        "annual practice licence",
+        "food business premises licence"
+      ],
+      "note": "NiCFoST regulates the practice and profession of Food Science and Technology in Nigeria.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D048",
+        "D122"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nislt.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_niss",
+      "name": "Nigeria Institute of Soil Science",
+      "url": "https://niss.gov.ng/",
+      "catalog_url": "https://niss.gov.ng/",
+      "evidence_class": "government_agriculture_and_food_systems_context",
+      "skills": [
+        "crop and livestock production",
+        "fisheries and aquaculture",
+        "agribusiness",
+        "extension services",
+        "rural development",
+        "food and nutrition safety"
+      ],
+      "competencies": [
+        "support commodity value chains",
+        "apply agricultural science in production",
+        "work with farmers and communities",
+        "manage food-security and rural-development programmes"
+      ],
+      "certifications": [
+        "No single ministry credential is inferred; profession-specific councils and qualifications remain separate."
+      ],
+      "note": "The ministry lists agriculture, fisheries, veterinary services, animal husbandry, agribusiness, rural development, climate, extension, food reserve and nutrition/safety departments. The current official NISS page is Nigeria Institute of Soil Science, not National Institute for Security Studies; the soil-science identity and registration route were verified.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D047"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://niss.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nitda",
+      "name": "National Information Technology Development Agency",
+      "url": "https://nitda.gov.ng/",
+      "catalog_url": "https://nitda.gov.ng/",
+      "evidence_class": "professional_regulator_and_exam_framework",
+      "skills": [
+        "computer systems and programming",
+        "software packages",
+        "multimedia document production",
+        "networks and computer security",
+        "web design",
+        "database management",
+        "data protection and backup"
+      ],
+      "competencies": [
+        "develop and document software",
+        "design and query databases",
+        "configure and secure networks",
+        "protect and recover data"
+      ],
+      "certifications": [
+        "Computer Literacy Examination (CLE)",
+        "Computer Foundation Examination (CFE)",
+        "Computer Professional Examination (CPE)"
+      ],
+      "note": "The CPN examination is a route into recognised IT professional practice in Nigeria.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D001",
+        "D002",
+        "D003",
+        "D004",
+        "D005",
+        "D006",
+        "D007",
+        "D008",
+        "D009",
+        "D010",
+        "D056",
+        "D058",
+        "D059",
+        "D141",
+        "D167"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nitda.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nitt",
+      "name": "Nigerian Institute of Transport Technology",
+      "url": "https://nitt.gov.ng/",
+      "catalog_url": "https://nitt.gov.ng/",
+      "evidence_class": "professional_association_and_procurement_context",
+      "skills": [
+        "procurement planning",
+        "sourcing",
+        "supplier management",
+        "contract administration",
+        "inventory and supply coordination"
+      ],
+      "competencies": [
+        "run fair procurement processes",
+        "evaluate suppliers",
+        "manage commercial risk",
+        "maintain procurement records"
+      ],
+      "certifications": [
+        "Professional membership and certification details require programme-level source confirmation"
+      ],
+      "note": "CIPSMN is the Nigerian professional reference for purchasing and supply-management terminology used in the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D035",
+        "D115",
+        "D117",
+        "D164"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nitt.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nla",
+      "name": "Nigerian Library Association",
+      "url": "https://nla.org.ng/about/objective",
+      "catalog_url": "https://nla.org.ng/about/objective",
+      "evidence_class": "professional_association_and_profession_standards_context",
+      "skills": [
+        "library and information services",
+        "knowledge management",
+        "information literacy",
+        "digital library systems",
+        "research support",
+        "professional communication"
+      ],
+      "competencies": [
+        "manage information resources",
+        "support users' information needs",
+        "apply professional standards",
+        "communicate and lead knowledge services"
+      ],
+      "certifications": [
+        "LRCN registration context",
+        "NLA membership categories"
+      ],
+      "note": "NLA supports capacity building and standards for education and certification of librarians, archivists and information scientists. The original catalog URL currently resolves to unrelated gambling content and is unsafe. It was replaced with the current official Nigerian Library Association domain.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D073"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nla.org.ng/about/objective",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nma",
+      "name": "Nigerian Medical Association",
+      "url": "https://thenma.ng/",
+      "secondary_url": "https://mdcn.gov.ng/sub-page/education/what-you-should-know-about-mdcn-cpd-activity",
+      "evidence_class": "professional_medical_association_and_regulatory_context",
+      "skills": [
+        "clinical medicine",
+        "patient and community health",
+        "medical ethics",
+        "continuing professional development"
+      ],
+      "competencies": [
+        "maintain clinical knowledge and skills",
+        "follow professional ethics",
+        "participate in CPD and regulated practice"
+      ],
+      "certifications": [
+        "NMA membership; medical licence and registration are MDCN-specific"
+      ],
+      "note": "NMA is the peak professional body for Nigerian doctors; MDCN supplies the regulatory CPD and practice context.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D023"
+      ]
+    },
+    {
+      "body_id": "ng_nmcn",
+      "name": "Nursing and Midwifery Council of Nigeria",
+      "url": "https://www.nmcn.gov.ng/",
+      "catalog_url": "https://www.nmcn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D024",
+        "D068"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.nmcn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nmdpra",
+      "name": "Nigerian Midstream and Downstream Petroleum Regulatory Authority",
+      "url": "https://www.nmdpra.gov.ng/",
+      "catalog_url": "https://www.nmdpra.gov.ng/",
+      "evidence_class": "statutory_energy_regulatory_context",
+      "skills": [
+        "petroleum operations",
+        "process and facility safety",
+        "regulatory compliance",
+        "environmental management",
+        "technical reporting"
+      ],
+      "competencies": [
+        "work within petroleum regulations",
+        "manage operational risk",
+        "document compliance and technical activity"
+      ],
+      "certifications": [
+        "Sector credentials must be linked to the issuing body; do not infer a licence from the regulator homepage"
+      ],
+      "note": "NUPRC and NMDPRA are the Nigerian regulatory context sources for upstream and midstream/downstream petroleum operations in the repository.",
+      "status": "official_page_reachable_no_extractable_text",
+      "domains_using_body": [
+        "D054",
+        "D148"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_no_text",
+        "review_url": "https://www.nmdpra.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_nnmda",
+      "name": "Nigeria Natural Medicine Development Agency",
+      "url": "https://nnmda.gov.ng/nnmda-skill-certification-traditional-medicine/",
+      "secondary_url": "https://nnmda.gov.ng/wp-content/uploads/2023/01/NNMDA-Establishment-Act-20192.pdf",
+      "evidence_class": "government_research_and_skill_certification_context",
+      "skills": [
+        "medicinal-plant identification",
+        "traditional medicine formulation",
+        "product safety and quality",
+        "documentation and research"
+      ],
+      "competencies": [
+        "identify medicinal plants",
+        "prepare basic formulations",
+        "dispense traditional medicinal products",
+        "assess and document traditional therapies"
+      ],
+      "certifications": [
+        "National Skill Qualification route for Traditional Medicine Practice"
+      ],
+      "note": "NNMDA describes a competency-based skill-certification initiative and its statutory research, documentation, safety and training mandate.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D126"
+      ]
+    },
+    {
+      "body_id": "ng_nnra",
+      "name": "Nigerian Nuclear Regulatory Authority",
+      "url": "https://nnra.gov.ng/",
+      "catalog_url": "https://nnra.gov.ng/",
+      "evidence_class": "statutory_nuclear_and_radiation_regulator",
+      "skills": [
+        "radiation protection",
+        "dose monitoring",
+        "radiological surveys",
+        "quality assurance",
+        "emergency response",
+        "radioactive-waste safety"
+      ],
+      "competencies": [
+        "control exposure",
+        "maintain safety records",
+        "interpret licence conditions",
+        "respond to incidents",
+        "train workers in radiation safety"
+      ],
+      "certifications": [
+        "NNRA-accredited radiation-protection course and RSO accreditation requirements"
+      ],
+      "note": "NNRA registers, licences, inspects and enforces nuclear safety and radiological protection in Nigeria.",
+      "status": "official_page_reachable_no_extractable_text",
+      "domains_using_body": [
+        "D123",
+        "D135",
+        "D137"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page_no_text",
+        "review_url": "https://nnra.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed_with_exception"
+      }
+    },
+    {
+      "body_id": "ng_npa",
+      "name": "Nigerian Psychological Association",
+      "url": "https://www.npafct.org/",
+      "catalog_url": "https://www.npafct.org/",
+      "evidence_class": "professional_association_and_psychology_practice_context",
+      "skills": [
+        "psychological assessment",
+        "psychosocial service delivery",
+        "research",
+        "training",
+        "mental-health support"
+      ],
+      "competencies": [
+        "apply psychological knowledge responsibly",
+        "work within qualification and practice requirements",
+        "support psychosocial wellbeing",
+        "maintain professional development"
+      ],
+      "certifications": [
+        "NPA membership progression",
+        "clinical psychology practice-licence context requires the relevant practice body"
+      ],
+      "note": "NPA describes psychology development, training, research and psychosocial service delivery as its professional mission.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D064",
+        "D145",
+        "D154",
+        "D165"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.npafct.org/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nphcda",
+      "name": "National Primary Health Care Development Agency",
+      "url": "https://nphcda.gov.ng/",
+      "catalog_url": "https://nphcda.gov.ng/",
+      "evidence_class": "government_public_health_context",
+      "skills": [
+        "population health",
+        "health promotion",
+        "disease prevention",
+        "health programme coordination",
+        "health data"
+      ],
+      "competencies": [
+        "plan public-health interventions",
+        "interpret population evidence",
+        "coordinate community health programmes",
+        "work within health policy and ethics"
+      ],
+      "certifications": [
+        "Profession-specific health registration must be verified against the relevant council"
+      ],
+      "note": "The Nigerian health regulator directory and NPHCDA are used for public-health and primary-health-care context; professional licences remain council-specific.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D026"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://nphcda.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nsc",
+      "name": "Nigeria Society of Criminology",
+      "url": "https://nigeriansocietyofcriminology.org/",
+      "secondary_url": "https://icpnigeria.com.ng/about.html",
+      "evidence_class": "professional_association_context",
+      "skills": [
+        "criminological research",
+        "crime analysis",
+        "justice and social policy analysis",
+        "evidence-informed prevention"
+      ],
+      "competencies": [
+        "analyse crime and justice problems",
+        "conduct social research",
+        "communicate evidence for prevention and policy"
+      ],
+      "certifications": [
+        "Institute of Criminology and Penology registration/membership",
+        "Certificates of Proficiency; no statutory professional licence inferred"
+      ],
+      "note": "The repository's association URL did not return a first-party page in this search pass. The Nigerian Institute of Criminology and Penology publishes criminology and penology practice standards, a practitioner register and Certificates of Proficiency. That is treated as professional-institute evidence, not a government licence.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D143",
+        "D151"
+      ]
+    },
+    {
+      "body_id": "ng_nscdc",
+      "name": "Nigeria Security and Civil Defence Corps",
+      "url": "https://nscdc.gov.ng/about-nscdc/",
+      "evidence_class": "government_security_and_emergency_context",
+      "skills": [
+        "civil protection",
+        "security operations",
+        "crisis management",
+        "disaster response",
+        "critical-infrastructure protection"
+      ],
+      "competencies": [
+        "support public safety",
+        "respond to emergencies",
+        "protect critical infrastructure",
+        "coordinate security operations"
+      ],
+      "certifications": [
+        "Recruitment and internal training routes; no general public professional certificate inferred"
+      ],
+      "note": "The official Corps page states protection of critical national infrastructure, community safety and emergency response; the audit keeps this as government security context rather than a civilian professional licence.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D077",
+        "D129"
+      ]
+    },
+    {
+      "body_id": "ng_nsche",
+      "name": "Nigerian Society of Chemical Engineers",
+      "url": "https://www.nsche.org/Default",
+      "secondary_url": "https://www.nsche.org/img/slides/eNewsLetter_32819_NSChE%20VOL%208%20No%202%20EDITION%2C%20NOVEMBER%202025%20TO%20FEBRUARY%202026.pdf",
+      "evidence_class": "professional_engineering_association",
+      "skills": [
+        "chemical engineering",
+        "process design",
+        "industrialisation",
+        "process safety",
+        "engineering ethics"
+      ],
+      "competencies": [
+        "apply chemical-engineering principles",
+        "update technical knowledge",
+        "work to professional ethics and standards",
+        "support industrial processes"
+      ],
+      "certifications": [
+        "NSChE membership and professional development; COREN registration remains statutory"
+      ],
+      "note": "NSChE describes training, professional development, industrialisation and engineering standards; it does not replace COREN registration.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D055",
+        "D110"
+      ]
+    },
+    {
+      "body_id": "ng_nscr",
+      "name": "National Commission for Refugees, Migrants and Internally Displaced Persons",
+      "url": "https://ncfrmi.gov.ng/",
+      "secondary_url": "https://www.refworld.org/sites/default/files/2024-02/fgn_official_gazette_ncfrmi_act_2022_004_1.pdf",
+      "evidence_class": "government_humanitarian_and_migration_context",
+      "skills": [
+        "refugee and migration support",
+        "displacement coordination",
+        "protection and durable solutions",
+        "humanitarian programme management"
+      ],
+      "competencies": [
+        "coordinate assistance and protection",
+        "support displacement camps and durable solutions",
+        "work with legal and humanitarian frameworks"
+      ],
+      "certifications": [
+        "No individual professional licence inferred"
+      ],
+      "note": "The Commission's Act and ministry strategy establish humanitarian, refugee, migrant and IDP context; role credentials remain programme-specific.",
+      "status": "verified_statutory_or_government_source",
+      "domains_using_body": [
+        "D161"
+      ]
+    },
+    {
+      "body_id": "ng_nse",
+      "name": "Nigerian Society of Engineers",
+      "url": "https://nse.org.ng/membership/membership-requirements-criteria/",
+      "secondary_url": "https://coren.gov.ng/guidelines-for-registration-of-engineers/",
+      "evidence_class": "professional_engineering_association_and_regulatory_context",
+      "skills": [
+        "engineering practice",
+        "technical problem solving",
+        "engineering project delivery",
+        "professional ethics and standards"
+      ],
+      "competencies": [
+        "meet accredited education and practical experience requirements",
+        "maintain professional development",
+        "pass professional registration assessments"
+      ],
+      "certifications": [
+        "NSE membership grades",
+        "COREN registration and practising licence"
+      ],
+      "note": "NSE defines membership grades and professional development; COREN defines registration, CPD points, professional competency profile and examination.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D016",
+        "D017",
+        "D018",
+        "D019",
+        "D022",
+        "D049",
+        "D050"
+      ]
+    },
+    {
+      "body_id": "ng_nso",
+      "name": "National Sports Commission",
+      "url": "https://sports.gov.ng/resources/Federal-Ministry-of-Sports-Development-Strategic-Plan-2024.pdf",
+      "catalog_url": "https://sports.gov.ng/",
+      "evidence_class": "government_and_sports_sector_context",
+      "skills": [
+        "sports administration",
+        "event operations",
+        "athlete support",
+        "governance",
+        "safety and safeguarding"
+      ],
+      "competencies": [
+        "organise sporting programmes",
+        "support athlete and event operations",
+        "apply governance and safeguarding expectations"
+      ],
+      "certifications": [
+        "No general sports-management licence inferred"
+      ],
+      "note": "The repository uses Nigerian sports bodies as local terminology and sector context; specific coaching or management credentials require the issuing federation or institute.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D071",
+        "D168"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://sports.gov.ng/resources/Federal-Ministry-of-Sports-Development-Strategic-Plan-2024.pdf",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nucc",
+      "name": "National Universities Commission",
+      "url": "https://www.nuc.edu.ng/",
+      "catalog_url": "https://www.nuc.edu.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D039",
+        "D041",
+        "D058"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.nuc.edu.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nuj",
+      "name": "Nigeria Union of Journalists",
+      "url": "https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/",
+      "catalog_url": "https://www.nuj.org.ng/",
+      "evidence_class": "professional_association_and_ethics_framework",
+      "skills": [
+        "fact checking",
+        "news reporting",
+        "source confidentiality",
+        "interviewing and information gathering",
+        "copyright-aware publishing"
+      ],
+      "competencies": [
+        "separate facts from commentary",
+        "verify information",
+        "protect confidential sources",
+        "report fairly and in the public interest"
+      ],
+      "certifications": [
+        "NUJ membership and professional registration signals; no statutory licence inferred"
+      ],
+      "note": "NUJ's code requires truth, accuracy, fairness, privacy, confidentiality, public interest and copyright-aware practice.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D042",
+        "D043",
+        "D065",
+        "D070",
+        "D153"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_nuprc",
+      "name": "Nigerian Upstream Petroleum Regulatory Commission",
+      "url": "https://www.nuprc.gov.ng/",
+      "catalog_url": "https://www.nuprc.gov.ng/",
+      "evidence_class": "statutory_energy_regulatory_context",
+      "skills": [
+        "petroleum operations",
+        "process and facility safety",
+        "regulatory compliance",
+        "environmental management",
+        "technical reporting"
+      ],
+      "competencies": [
+        "work within petroleum regulations",
+        "manage operational risk",
+        "document compliance and technical activity"
+      ],
+      "certifications": [
+        "Sector credentials must be linked to the issuing body; do not infer a licence from the regulator homepage"
+      ],
+      "note": "NUPRC and NMDPRA are the Nigerian regulatory context sources for upstream and midstream/downstream petroleum operations in the repository.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D054",
+        "D148"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.nuprc.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_ossn",
+      "name": "Occupational Safety Society of Nigeria",
+      "url": "https://ossnigeria.org/",
+      "evidence_class": "professional_safety_association_and_training_context",
+      "skills": [
+        "occupational safety and health",
+        "risk and accident control",
+        "HSE policy and procedure",
+        "safety training"
+      ],
+      "competencies": [
+        "design HSE policies",
+        "control workplace risk",
+        "deliver safety training",
+        "promote safety management systems"
+      ],
+      "certifications": [
+        "OSSN HSE course and membership signals; no statutory licence inferred"
+      ],
+      "note": "OSSN describes HSE training, curriculum development and safety-policy services; the page does not establish a national statutory licence.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D074"
+      ]
+    },
+    {
+      "body_id": "ng_pcn",
+      "name": "Pharmacists Council of Nigeria",
+      "url": "https://pcn.gov.ng/registrations/",
+      "catalog_url": "https://www.pcn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D025",
+        "D068"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://pcn.gov.ng/registrations/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_psn",
+      "name": "Pharmaceutical Society of Nigeria",
+      "url": "https://psnnational.org/?Itemid=437",
+      "secondary_url": "https://psnnational.org/?page_id=3040",
+      "evidence_class": "professional_pharmacy_association_and_ethics_context",
+      "skills": [
+        "pharmaceutical care",
+        "safe medicine use",
+        "pharmacy education",
+        "professional ethics and discipline"
+      ],
+      "competencies": [
+        "apply Good Pharmacy Practice",
+        "support safe medicine use",
+        "maintain professional ethics and CPD",
+        "work within PCN registration and licensing"
+      ],
+      "certifications": [
+        "PSN membership and fellowship; pharmacist registration/licence is PCN-specific"
+      ],
+      "note": "PSN describes pharmacy education, ethics, CPD and practice standards; PCN remains the regulator for practitioner and pharmacy-business licensing.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D025"
+      ]
+    },
+    {
+      "body_id": "ng_riman",
+      "name": "Risk Management Association of Nigeria",
+      "url": "https://www.rimson.org/membership/plans/",
+      "catalog_url": "https://riman.org/",
+      "evidence_class": "professional_exam_and_competency_framework",
+      "skills": [
+        "financial accounting",
+        "financial reporting",
+        "audit and assurance",
+        "taxation",
+        "financial management",
+        "management accounting"
+      ],
+      "competencies": [
+        "analyse complex business cases",
+        "exercise professional judgement",
+        "communicate solutions",
+        "apply ethics and professionalism"
+      ],
+      "certifications": [
+        "ICAN ACA professional accountancy qualification"
+      ],
+      "note": "ICAN's professional syllabus is organised into Foundation, Skills and Professional levels and states learning outcomes and competences.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D011",
+        "D013",
+        "D060",
+        "D158",
+        "D159"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://www.rimson.org/membership/plans/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_rmrdc",
+      "name": "Raw Materials Research and Development Council",
+      "url": "https://rmrdc.gov.ng/departments",
+      "catalog_url": "https://rmrdc.gov.ng/",
+      "evidence_class": "professional_academy_and_research_context",
+      "skills": [
+        "research design",
+        "evidence review",
+        "scientific communication",
+        "data analysis",
+        "laboratory or field methods"
+      ],
+      "competencies": [
+        "formulate research questions",
+        "evaluate evidence",
+        "document and communicate findings",
+        "work ethically in research"
+      ],
+      "certifications": [
+        "No general research practice licence inferred"
+      ],
+      "note": "The Nigerian Academy of Science and linked national research bodies provide Nigerian research and science-sector context.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D109",
+        "D110",
+        "D112",
+        "D113",
+        "D155"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://rmrdc.gov.ng/departments",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_rrbn",
+      "name": "Radiographers Registration Board of Nigeria",
+      "url": "https://portal.rrbn.gov.ng/",
+      "catalog_url": "https://rrbn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_official_alternate_page",
+      "domains_using_body": [
+        "D123"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "official_alternate_or_search_page",
+        "review_url": "https://portal.rrbn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_sec",
+      "name": "Securities and Exchange Commission Nigeria",
+      "url": "https://sec.gov.ng/about/resources/checklists/individual-registration-requirements-for-each-cmo/",
+      "secondary_url": "https://sec.gov.ng/wp-content/uploads/2024/06/SEC-NG-Updated-SLA-2024-Final.pdf",
+      "evidence_class": "statutory_capital_markets_regulator",
+      "skills": [
+        "securities markets",
+        "brokerage and dealing",
+        "investment advisory",
+        "market compliance and governance"
+      ],
+      "competencies": [
+        "meet capital-market operator registration requirements",
+        "apply SEC rules and ISA obligations",
+        "maintain compliance controls and relevant experience"
+      ],
+      "certifications": [
+        "SEC operator registration and approvals; individual professional qualifications remain role-specific"
+      ],
+      "note": "SEC's checklists identify operator categories, application requirements, governance, compliance and renewal obligations; they are not generic skill certificates.",
+      "status": "verified_official_source",
+      "domains_using_body": [
+        "D011",
+        "D012",
+        "D013",
+        "D014",
+        "D060",
+        "D062",
+        "D158",
+        "D159"
+      ]
+    },
+    {
+      "body_id": "ng_surcon",
+      "name": "Surveyors Council of Nigeria",
+      "url": "https://www.surcon.gov.ng/",
+      "catalog_url": "https://www.surcon.gov.ng/",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D072",
+        "D156"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.surcon.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_toprec",
+      "name": "Town Planners Registration Council of Nigeria",
+      "url": "https://www.toprec.gov.ng/",
+      "catalog_url": "https://www.toprec.gov.ng/",
+      "evidence_class": "national_occupational_standard_and_trade_regulator",
+      "skills": [
+        "masonry",
+        "electrical installation",
+        "carpentry and joinery",
+        "painting and decoration",
+        "plumbing"
+      ],
+      "competencies": [
+        "perform construction work to defined occupational standards",
+        "apply safe building-trade methods",
+        "demonstrate practical trade competence"
+      ],
+      "certifications": [
+        "NOS/NSQ routes for construction trades"
+      ],
+      "note": "CORBON publishes National Occupational Standards for Nigerian building trades to address construction skills gaps.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D164"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://www.toprec.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_trcn",
+      "name": "Teachers Registration Council of Nigeria",
+      "url": "https://trcn.gov.ng/",
+      "catalog_url": "https://trcn.gov.ng/",
+      "evidence_class": "statutory_education_regulator_and_competency_framework",
+      "skills": [
+        "pedagogy",
+        "literacy",
+        "numeracy",
+        "ICT for teaching",
+        "safeguarding",
+        "professional communication"
+      ],
+      "competencies": [
+        "plan and deliver learning",
+        "assess learner progress",
+        "communicate professionally",
+        "protect learners",
+        "meet professional conduct standards"
+      ],
+      "certifications": [
+        "TRCN registration and licence",
+        "Professional Qualifying Examination (PQE)",
+        "MCPD routes"
+      ],
+      "note": "TRCN establishes teacher standards, approves qualifications, registers and licenses teachers, and administers the Professional Qualifying Examination.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D039",
+        "D127"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://trcn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    },
+    {
+      "body_id": "ng_vcn",
+      "name": "Veterinary Council of Nigeria",
+      "url": "https://vcn.gov.ng/",
+      "catalog_url": "https://vcn.gov.ng/",
+      "evidence_class": "government_health_regulatory_context",
+      "skills": [
+        "health service quality",
+        "health policy",
+        "health security",
+        "population health"
+      ],
+      "competencies": [
+        "work within regulated health practice",
+        "support quality and patient safety",
+        "understand health-system governance"
+      ],
+      "certifications": [
+        "No profession-specific credential is inferred from this ministry page; the relevant council must supply it."
+      ],
+      "note": "The ministry identifies Nigerian health regulatory bodies and its mandate includes health policy, quality services and regulation of institutions and professionals.",
+      "status": "verified_direct_page",
+      "domains_using_body": [
+        "D066",
+        "D090",
+        "D119"
+      ],
+      "supplemental_review": {
+        "reviewed_on": "2026-08-17",
+        "review_kind": "direct_catalog_page",
+        "review_url": "https://vcn.gov.ng/",
+        "catalog_url_safe": true,
+        "disposition": "reviewed"
+      }
+    }
+  ],
+  "assigned_body_ids_pending_supplemental_review": [],
+  "catalog_body_ids_unassigned_to_visible_domain": [
+    "ng_iccon",
+    "ng_ipan",
+    "ng_nafdac2",
+    "ng_nasc",
+    "ng_ncsc",
+    "ng_nhrc",
+    "ng_nib",
+    "ng_nic",
+    "ng_nieee",
+    "ng_nimasa2",
+    "ng_nip",
+    "ng_niqs",
+    "ng_nitp",
+    "ng_nnlc",
+    "ng_odorbn",
+    "ng_qsrbn"
+  ]
+}

@@ -1,6 +1,8 @@
 /**
  * Sifter LevelUp — Sidebar (Web)
- * Shown on web when width >= 768px. Tab bar hidden.
+ * Shown on web from the Tablet tier up (BREAKPOINTS.tablet, 768px). Tab bar
+ * hidden. The design system allows a side nav from Tablet, so this stays at
+ * 768 rather than moving to the Desktop tier.
  * Navigation-aware: highlights active route.
  * Exports useSidebar() hook for layout decisions.
  *
@@ -10,10 +12,10 @@
  */
 
 import React, { useRef, useEffect, useState } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   View, Text, StyleSheet, TouchableOpacity, Animated,
-  Platform, useWindowDimensions,
-} from 'react-native';
+  } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import {
   useTheme, Radius, FontSize, FontWeight, Shadow,
@@ -24,8 +26,8 @@ import { streakEngine }  from '../lib/StreakEngine';
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useSidebar() {
-  const { width } = useWindowDimensions();
-  const showSidebar = Platform.OS === 'web' && width >= 768;
+  const { isWeb, isMobile } = useResponsive();
+  const showSidebar = isWeb && !isMobile;
   return { showSidebar, sidebarWidth: 210 };
 }
 

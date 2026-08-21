@@ -6,7 +6,7 @@ import { adminNav, type Nav } from "@/lib/adminNav";
 import type { AdminAudience } from "@/lib/adminAudience";
 
 const WORKFLOW_STEPS: readonly string[] = [
-  "Start with the learner's subjects or programme idea.",
+  "Start with the student's subjects or programme idea.",
   "Compare universities that offer the relevant programme.",
   "Explain requirements and connected domains together.",
 ];
@@ -24,11 +24,11 @@ export function AdminExploreIntro({
   return (
     <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.eyebrow, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
-        {advisory ? "LEARNER GUIDANCE" : "UNIVERSITY PLANNING"}
+        {advisory ? "STUDENT GUIDANCE" : "UNIVERSITY PLANNING"}
       </Text>
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>
         {advisory
-          ? "Search the programme and university catalogue with a learner. Use the results to explain subject fit, requirements and connected career domains."
+          ? "Search the programme and university catalogue with a student. Use the results to explain subject fit, requirements and connected career domains."
           : "Search the shared programme and domain catalogue. Use the planning actions below for your institution's programme mix, domain reach and peer view."}
       </Text>
 

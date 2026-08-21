@@ -1,0 +1,1727 @@
+{
+  "generatedAt": "2026-08-18",
+  "scope": {
+    "source": [
+      "backend\\seed_career_pilot.sql",
+      "backend\\seed_subject_options.sql",
+      "backend\\seed_subject_catalog.sql"
+    ],
+    "note": "Repository seed audit only; live database must be refreshed separately."
+  },
+  "counts": {
+    "jambProgrammes": 420,
+    "requirements": 420,
+    "schools": 862,
+    "universityOfferings": 9129,
+    "subjectCatalogue": 46,
+    "structuredOptions": 540,
+    "utmeOptions": 373,
+    "olevelOptions": 167,
+    "programmesWithUtmeAndOlevel": 166,
+    "universityRequirementExceptions": 3883,
+    "structuredUniversitySubjectOptions": 2030,
+    "structuredUniversitySubjectItems": 12209
+  },
+  "proof": {
+    "structuredOptionsWithKnownJambProgramme": 540,
+    "structuredOptionsWithKnownRequirement": 540,
+    "structuredProgrammesWithUniversityOffering": 374,
+    "combinedSameJambProgrammeRows": 166,
+    "allUniversityOfferingPairsHaveKnownSchoolAndProgramme": true,
+    "allUniversityExceptionsHaveKnownOfferingAndProgramme": true,
+    "allParsedUniversityExceptionsHaveStructuredOptions": true,
+    "allStructuredUniversityOptionsReparseOrInheritFromVerifiedRule": true,
+    "ambiguousUniversityExceptionsRemainReviewOnly": true,
+    "nationalAndUniversityRequirementsAreStoredSeparately": true
+  },
+  "layerChecks": {
+    "utmeCatalogueCodes": 25,
+    "olevelCatalogueCodes": 46,
+    "technicalTradeCodesExcludedFromUtme": 21,
+    "syntheticOptionSemantics": {
+      "checked": 540,
+      "passed": 540,
+      "failed": []
+    },
+    "businessAdministration": {
+      "jambProgrammeId": "9d9c8373-bd9f-5382-b799-f9269ea0b1f9",
+      "utmeRequired": [
+        "ECON",
+        "MATH"
+      ],
+      "utmeAlternatives": [
+        "ACC",
+        "AGR",
+        "ARA",
+        "ART",
+        "BIO",
+        "CHEM",
+        "COMM",
+        "CRS",
+        "CSC",
+        "ENG",
+        "FRE",
+        "GEO",
+        "GOV",
+        "HAU",
+        "HEC",
+        "HIS",
+        "IGB",
+        "IRS",
+        "LIT",
+        "MUS",
+        "PHE",
+        "PHY",
+        "YOR"
+      ]
+    },
+    "universityOfferingRowsWithRemarks": 2666,
+    "universityRequirementExceptionTypes": {
+      "direct_entry": 1041,
+      "general": 2191,
+      "olevel": 286,
+      "utme": 365
+    },
+    "structuredUniversityOptionExamTypes": {
+      "olevel": 1260,
+      "utme": 770
+    },
+    "structuredUniversityOptionScopes": {
+      "full": 872,
+      "partial": 1158
+    },
+    "localRuleParser": {
+      "checked": 2030,
+      "passed": 2030,
+      "inheritedCrossReferences": 79,
+      "failed": []
+    }
+  },
+  "combinedRows": [
+    {
+      "jambProgrammeId": "017ce18b-858a-54ec-a868-66509b88f6df",
+      "jambName": "Geology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 73
+    },
+    {
+      "jambProgrammeId": "03bde484-1a4f-55ea-af1c-0ac16bb8ba7e",
+      "jambName": "Industrial Physics with Renewable Energy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "048d999f-f7f1-5c44-8d18-813004795148",
+      "jambName": "Industrial Design",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 37
+    },
+    {
+      "jambProgrammeId": "0627f036-0764-5887-9ab9-0034c603e994",
+      "jambName": "Marketing and Consumer Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "0688b7cf-2931-5dc0-b838-9ddc007cac86",
+      "jambName": "Applied and Renewable Energy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "07b484fb-7bbf-5328-8816-cb64c81622ae",
+      "jambName": "Religious Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 88
+    },
+    {
+      "jambProgrammeId": "089fa0c0-3cbe-56c0-9643-ee97a37fb0b7",
+      "jambName": "French",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 54
+    },
+    {
+      "jambProgrammeId": "0aaa3ea3-a1bf-5b78-b3f4-573eec035450",
+      "jambName": "Statistics Education",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "0b8752d4-c056-58cd-aebd-01571f7458c0",
+      "jambName": "Land Surveying",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "0c00cddc-253c-5812-873f-b4283752434d",
+      "jambName": "Pure and Industrial Physics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "0f6edcb0-1c1c-5881-a00c-419e0cdd213a",
+      "jambName": "Botany",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 53
+    },
+    {
+      "jambProgrammeId": "109066d5-bcec-54c8-a6db-8542a03f14e7",
+      "jambName": "Drama/Dramatic Arts/Performing Arts",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 63
+    },
+    {
+      "jambProgrammeId": "110f0f00-248d-548f-96af-729032651e11",
+      "jambName": "Urban and Regional Planning",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 64
+    },
+    {
+      "jambProgrammeId": "124d812e-66b5-5d59-a5bd-9c61785759ee",
+      "jambName": "Optometry",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 18
+    },
+    {
+      "jambProgrammeId": "1265cd38-2c64-5b82-b83d-889289fe5777",
+      "jambName": "Igbo",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 16
+    },
+    {
+      "jambProgrammeId": "13c3de5e-8b09-5013-8a2d-95e089661af1",
+      "jambName": "Electronics Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "140a7d02-4cff-5c38-b809-8e5433ca6e5f",
+      "jambName": "Industrial Chemistry",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 35
+    },
+    {
+      "jambProgrammeId": "15ad2afd-ab3e-5174-a6e6-64960d49bbd2",
+      "jambName": "Demography and Statistics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "16d44842-938a-53df-ac52-5c7cb4c84827",
+      "jambName": "Procurement",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 8
+    },
+    {
+      "jambProgrammeId": "1ff950fd-bd82-5844-8b39-9a4da052d231",
+      "jambName": "BIOLOGICAL SCIENCE(S)",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 26
+    },
+    {
+      "jambProgrammeId": "1fff991c-b9cb-51bb-bf59-fc8e00083981",
+      "jambName": "Estate Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 93
+    },
+    {
+      "jambProgrammeId": "20f85750-d855-57fa-bd13-4447d7099a29",
+      "jambName": "International Relations and Strategic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "234fbf45-219c-5a51-9ecd-3a80e12083b5",
+      "jambName": "Agriculture",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 154
+    },
+    {
+      "jambProgrammeId": "265e08d0-c76a-5667-a596-b2ee306d36bc",
+      "jambName": "Fisheries",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 54
+    },
+    {
+      "jambProgrammeId": "27c22e14-58a2-5363-b533-f47801bf4027",
+      "jambName": "Economics and Statistics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "2831bdda-80f0-50f8-9073-3aa6d255707e",
+      "jambName": "Accounting and Data Analytics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "29deab1a-45b0-509d-a2c5-f21ca587d280",
+      "jambName": "Anthropology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "2b7b1a52-eab8-5c10-9413-fe0aac2696d1",
+      "jambName": "Family, Nutrition and Consumer Sciences",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "2c1ad6fa-5eb5-5e24-bf51-1596d87ab5c7",
+      "jambName": "Animal Physiology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "2e97d5be-cbf4-581a-adfa-ff8a636bb9a6",
+      "jambName": "LIBRARY SCIENCE",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 7
+    },
+    {
+      "jambProgrammeId": "3257cd37-6e05-53e9-af4e-4b8723217c36",
+      "jambName": "Social Innovation and Entrepreneurship",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "35a6b7be-ba97-56d8-aa30-a2361f45f865",
+      "jambName": "Production Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "35f1a5c5-9e87-5211-85cc-73bed5f1ccb0",
+      "jambName": "Common Law",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "362a787f-ec66-52cf-a53a-3e90e1947117",
+      "jambName": "Medical Rehabilitation",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 162
+    },
+    {
+      "jambProgrammeId": "3797ef76-1301-5a1d-aaaf-1ae7d30a5935",
+      "jambName": "Physiology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 62
+    },
+    {
+      "jambProgrammeId": "383a6acd-59eb-5e70-a172-34f91de5e2ce",
+      "jambName": "Philosophy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 64
+    },
+    {
+      "jambProgrammeId": "3907a528-c363-5c0e-accc-07084897c689",
+      "jambName": "Management Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "3aa7533c-a108-5031-8eeb-f77400ae1740",
+      "jambName": "Communication Arts",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 23
+    },
+    {
+      "jambProgrammeId": "3e390e0b-2452-52e3-90d3-9be42da6b6fc",
+      "jambName": "Architecture",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 90
+    },
+    {
+      "jambProgrammeId": "3eb75911-c3cc-5ab5-999f-d1b9994d9c6c",
+      "jambName": "Entrepreneurship",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 23
+    },
+    {
+      "jambProgrammeId": "3fe6b8a0-a5f2-5ef5-9074-7e76b04f4218",
+      "jambName": "Transport and Tourism",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "4103d200-61b2-50bb-8e61-62bd3d94bdcd",
+      "jambName": "History and International Relations",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "4119bc13-ce2f-51d4-a7df-51692e9fdba5",
+      "jambName": "International Studies and Diplomacy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "435815d0-d421-561f-a0d4-616cae25aff1",
+      "jambName": "Biomedical Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 12
+    },
+    {
+      "jambProgrammeId": "43622845-9a30-5366-a941-b5c823ba1449",
+      "jambName": "International and Comparative Politics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "43b26494-3d2c-54e9-a81f-17e13b168777",
+      "jambName": "International Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 9
+    },
+    {
+      "jambProgrammeId": "490fc48c-943a-5139-bea6-88d84a992129",
+      "jambName": "Anatomy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 83
+    },
+    {
+      "jambProgrammeId": "4a9ed3b4-1be3-5827-bb76-32b2a74697bb",
+      "jambName": "MATHEMATICAL SCIENCES",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "4b0e8d62-6287-5ae5-a79b-1aa3f88216f5",
+      "jambName": "Zoology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 66
+    },
+    {
+      "jambProgrammeId": "4cd5c77d-0f13-5812-8d32-d38ae4c2a063",
+      "jambName": "Population Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "4da6000c-aa50-5e86-85ef-f548d6f1888e",
+      "jambName": "Transport and Logistics Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "4e00a01c-bd61-5516-b382-8b88f2f68d83",
+      "jambName": "Agronomy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 11
+    },
+    {
+      "jambProgrammeId": "4e4e5155-628e-56e5-b04e-267ca0986fff",
+      "jambName": "Agribusiness and Economics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "518671cb-1922-5919-9c8e-3128482c501a",
+      "jambName": "International Relationship & Strategic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "575f02e4-7559-5afd-a4af-94d9d9e8489f",
+      "jambName": "Accountancy and Forensic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "588d0963-e251-5f60-9009-640a069361b1",
+      "jambName": "Industrial Physics with Applied Geophysics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "5e4428c5-9417-5d43-8c8c-896d2d2d9266",
+      "jambName": "Mathematics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 174
+    },
+    {
+      "jambProgrammeId": "620a6de4-a88d-5e82-842d-46c2e1a35462",
+      "jambName": "ENGINEERING PHYSICS",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "6434f9f4-0658-5b87-91c7-f5eccbf02cc8",
+      "jambName": "Criminology and Penology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "649cf22c-50a0-5328-8ce4-19c582fb9616",
+      "jambName": "Quantity Surveying",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 75
+    },
+    {
+      "jambProgrammeId": "66bf5d0f-7dd7-580e-9a1e-a42ffcd89cb4",
+      "jambName": "Statistics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 134
+    },
+    {
+      "jambProgrammeId": "68422656-cac7-5817-bf9d-011d1bea03f8",
+      "jambName": "Water Resources and Environmental Engr",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 28
+    },
+    {
+      "jambProgrammeId": "68604374-fc17-5739-8049-80ec9aaf8941",
+      "jambName": "Surveying and Geoinformatics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "6a979a79-1591-52fd-a2d5-7abe9bad0dfa",
+      "jambName": "Christian Religious",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 51
+    },
+    {
+      "jambProgrammeId": "6bc0b104-f7b2-556a-acb6-33d148b48263",
+      "jambName": "Supply Chain Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "6c159134-c3c5-5103-a110-031231bbfaee",
+      "jambName": "Mechanical Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 95
+    },
+    {
+      "jambProgrammeId": "70598e3b-6f76-53f1-9ceb-fe642f4a67b3",
+      "jambName": "Soil Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 30
+    },
+    {
+      "jambProgrammeId": "70c78f48-2d19-5ac9-bb74-aba51dbddcb0",
+      "jambName": "Human Nutrition and Dietetics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 34
+    },
+    {
+      "jambProgrammeId": "719a838d-f11f-5fc0-b698-cabea8a830f7",
+      "jambName": "PURE AND APPLIED BIOLOGY",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "733fb92a-6d77-57b6-b044-06102a212849",
+      "jambName": "Social Work",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 18
+    },
+    {
+      "jambProgrammeId": "7346a339-adac-53dd-bb7c-125c576ce43a",
+      "jambName": "History and International Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "741a0349-529e-56fc-a0a0-476c8beb47d5",
+      "jambName": "Archaeology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 8
+    },
+    {
+      "jambProgrammeId": "7493e43d-840e-53d8-abdc-edfc478ff965",
+      "jambName": "Applied Geophysics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 24
+    },
+    {
+      "jambProgrammeId": "75a08919-7e31-51d3-96ff-4e860021cad8",
+      "jambName": "Islamic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "75a81972-d736-5672-8bcb-7763f31a649e",
+      "jambName": "Insurance and Actuarial Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "75a92ff7-fc8d-5e68-8294-048d7c411f42",
+      "jambName": "Mechatronics Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 39
+    },
+    {
+      "jambProgrammeId": "76172528-25f0-5679-9066-b7f654d183fd",
+      "jambName": "Industrial Physics with Electronics and IT Application",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "76c513ab-eed3-5bc2-93b5-1455179f384c",
+      "jambName": "Cooperative Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "7772a87b-f143-59f8-adf2-37e42a6be114",
+      "jambName": "Petroleum and Gas Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 16
+    },
+    {
+      "jambProgrammeId": "77e38dc8-85dc-588c-a0b9-6ccc33c716a0",
+      "jambName": "MARINE BIOLOGY & FISHERIES",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "79229f15-fd7e-5841-a0cd-a8f6bca9a937",
+      "jambName": "Pharmacology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 103
+    },
+    {
+      "jambProgrammeId": "7c315987-8a4b-570b-b390-3a3e8aa47395",
+      "jambName": "Brewing Science and Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "7cc8cb7b-c778-52e8-8203-a1cba35e5eba",
+      "jambName": "Chemistry",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 188
+    },
+    {
+      "jambProgrammeId": "7cef5ba5-b16e-5ad6-a2e1-3614a6b3cc74",
+      "jambName": "Actuarial Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 19
+    },
+    {
+      "jambProgrammeId": "7dc419ab-b6e8-5407-9b63-917f1bc25c7e",
+      "jambName": "Accounting and Finance",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 8
+    },
+    {
+      "jambProgrammeId": "86001f77-8aee-598a-8b20-91dd8f271021",
+      "jambName": "Procurement Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 13
+    },
+    {
+      "jambProgrammeId": "86a02f6b-b048-58a5-a9f2-9417bea81ac3",
+      "jambName": "Hotel and Tourism Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 11
+    },
+    {
+      "jambProgrammeId": "8946e57a-9d62-55c4-8c2b-201b93cde1d4",
+      "jambName": "Plant Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 11
+    },
+    {
+      "jambProgrammeId": "8a773366-6767-54d9-bd33-0394d7060c0e",
+      "jambName": "Insurance",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 13
+    },
+    {
+      "jambProgrammeId": "8a8d5472-6d30-55e3-93c5-c2e576dc754a",
+      "jambName": "OPERATIONS RESEARCH",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "8b467170-937f-5e01-bcf7-701dcfc9fa08",
+      "jambName": "English and Literary Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 44
+    },
+    {
+      "jambProgrammeId": "8e28c942-a329-5fc6-aaed-2eb339c34723",
+      "jambName": "METEOROLOGY",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "92805802-fe71-598d-8940-922f3f8d8274",
+      "jambName": "Dentistry and Dental Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 34
+    },
+    {
+      "jambProgrammeId": "933d3bcc-fa7b-580b-8fdb-06715cfad66e",
+      "jambName": "Marketing",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 40
+    },
+    {
+      "jambProgrammeId": "9501d815-2a13-50b7-9f25-18d5898d8c51",
+      "jambName": "Public Administration and Policy Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "95470556-be8e-524a-84c9-c18631726722",
+      "jambName": "Microbiology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 181
+    },
+    {
+      "jambProgrammeId": "989c553b-2448-5aca-bb08-7f68b3e4b0ec",
+      "jambName": "Radiography",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 60
+    },
+    {
+      "jambProgrammeId": "9d060c3f-cf58-554b-92a6-b317388d21cf",
+      "jambName": "Medicine and Surgery (Human Medicine)",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 107
+    },
+    {
+      "jambProgrammeId": "9d9c8373-bd9f-5382-b799-f9269ea0b1f9",
+      "jambName": "Business Administration",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 59
+    },
+    {
+      "jambProgrammeId": "9f5b16dc-5db1-5559-afb5-b3fe5c8c6503",
+      "jambName": "Public Administration",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 115
+    },
+    {
+      "jambProgrammeId": "a019e508-bd9e-5657-92fd-9ca3c5438230",
+      "jambName": "Applied Biochemistry",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "a8b52c1d-c5d3-5c87-b49a-a84f46cc4bb6",
+      "jambName": "Pure and Applied Mathematics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "a9230b88-f2f8-5064-a096-7c5724098b8c",
+      "jambName": "Fulfulde",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "a99bb266-a6cc-5ac0-9eb8-2b5a569df536",
+      "jambName": "BIOINFORMATICS",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "ad5bcea3-81e3-51e3-ad48-77cd76939863",
+      "jambName": "Electrical/Electronic Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 87
+    },
+    {
+      "jambProgrammeId": "ada49ee2-b09b-514c-95b8-1b0abc52100f",
+      "jambName": "Arabic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 42
+    },
+    {
+      "jambProgrammeId": "afd63dfc-3d69-5259-afee-f6be7749916e",
+      "jambName": "Civil Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 117
+    },
+    {
+      "jambProgrammeId": "b18d0841-69d4-52d7-b271-a34800d593dc",
+      "jambName": "Kanuri",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 3
+    },
+    {
+      "jambProgrammeId": "b1ad7931-2328-5191-8727-d1af3e46802c",
+      "jambName": "Psychology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 60
+    },
+    {
+      "jambProgrammeId": "b3dd106a-a82c-5f97-a02a-3a6e41258172",
+      "jambName": "International Relations",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 65
+    },
+    {
+      "jambProgrammeId": "b8022db8-d5bc-5d1a-bedc-ecf5b8edeb17",
+      "jambName": "Entrepreneurship and Business Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "b89b4a99-f75d-5a3a-b4ee-82f886c33896",
+      "jambName": "COMPUTER SCIENCE AND MATHEMATICS",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 8
+    },
+    {
+      "jambProgrammeId": "ba5512eb-56af-5b4d-b3cc-4732caed424b",
+      "jambName": "Criminology and Security Studies (printed under Law faculty block)",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "bb3a4631-728f-5640-83f6-63247ecfd460",
+      "jambName": "Yoruba",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 17
+    },
+    {
+      "jambProgrammeId": "bccd652c-5530-5aaa-b64c-1a8a69d435bc",
+      "jambName": "Demography and Social Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "bdedc35f-6a08-5ca7-9398-f8818c464155",
+      "jambName": "Industrial Mathematics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 33
+    },
+    {
+      "jambProgrammeId": "c27c161e-a0ab-5723-be1a-70fad99fcb0b",
+      "jambName": "Food Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 10
+    },
+    {
+      "jambProgrammeId": "c32f0818-9755-5cfe-b6ce-ca3016646aff",
+      "jambName": "Political Science and Conflict",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 12
+    },
+    {
+      "jambProgrammeId": "c3535582-ad0b-56a5-bd8c-d67720ff4eb2",
+      "jambName": "Entrepreneurship and Innovation",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "c37db9e9-75cf-5d42-9b95-185e7b856bdf",
+      "jambName": "Applied Microbiology and Brewing / Applied Microbiology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "c42ad1f9-31b4-506d-86f0-5c7c94279f84",
+      "jambName": "Electrical Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 21
+    },
+    {
+      "jambProgrammeId": "c4b7c032-1249-5ba3-944f-317e7f02690f",
+      "jambName": "BIOLOGY",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 154
+    },
+    {
+      "jambProgrammeId": "c504e05f-3a01-55ee-a11b-50286626cd14",
+      "jambName": "Peace and Development Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "c69b966a-60a9-5a22-b344-9c78910d305f",
+      "jambName": "Animal Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 20
+    },
+    {
+      "jambProgrammeId": "c7871137-5bb0-5580-a7e6-31dd1eebe067",
+      "jambName": "Communication Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "c7f26eb8-056b-5d5f-841d-228767ebdb4d",
+      "jambName": "Demography and Social Statistics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 6
+    },
+    {
+      "jambProgrammeId": "c84f1324-ed9a-59ea-81f9-7726165f5a70",
+      "jambName": "Biochemistry",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 8
+    },
+    {
+      "jambProgrammeId": "c86f37a2-3e51-57e2-81ec-a20ff1550352",
+      "jambName": "Creative Arts",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 85
+    },
+    {
+      "jambProgrammeId": "c88080a9-c3ac-51fb-bc31-dbfcf480a2b1",
+      "jambName": "Mass Communication",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 21
+    },
+    {
+      "jambProgrammeId": "c9007caf-5604-5c6e-a888-7fa30a4fb352",
+      "jambName": "Animal Production",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 30
+    },
+    {
+      "jambProgrammeId": "ca10e121-a671-55c1-a998-b8f1b6d3ce91",
+      "jambName": "Economics and Development Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "d1b158d7-db2c-5a04-b5b8-a27b3cb99977",
+      "jambName": "Library Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 10
+    },
+    {
+      "jambProgrammeId": "d2ebe062-bb9b-5f54-89b0-93c3acee9533",
+      "jambName": "Nursing/Nursing Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 154
+    },
+    {
+      "jambProgrammeId": "d3fafd50-ed55-551f-a405-2036e5705ff8",
+      "jambName": "Information and Media Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "d4bedf22-550a-579f-96ab-f8608b84ac46",
+      "jambName": "Textile Science and Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "d56482a6-7894-53b9-92e6-99e4c8104249",
+      "jambName": "LIBRARY AND INFORMATION SCIENCE",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 46
+    },
+    {
+      "jambProgrammeId": "d7f3bd76-ad8e-51dd-b7af-e6d869419425",
+      "jambName": "Meteorology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 11
+    },
+    {
+      "jambProgrammeId": "d8b9c988-1628-581f-9005-88d62cd51ecc",
+      "jambName": "Hausa",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 23
+    },
+    {
+      "jambProgrammeId": "d90d594c-a36c-5e87-ac8d-6c73f6484d53",
+      "jambName": "Business Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 33
+    },
+    {
+      "jambProgrammeId": "da292745-0c62-5c84-8821-3db6f435e769",
+      "jambName": "Social Standards",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 6
+    },
+    {
+      "jambProgrammeId": "dab16a1a-6223-548a-b436-81a7d4b0518a",
+      "jambName": "Economics with/and Operation Research",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "dbba960a-4095-56ba-9129-35c1f03ce14e",
+      "jambName": "Geography and Environmental Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "dbdf0ff8-0f04-5fb5-a46e-dbcbeb17ae29",
+      "jambName": "Medical Laboratory Technology/Science",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 133
+    },
+    {
+      "jambProgrammeId": "dc71ec95-5a55-5fbf-bc8f-c09a3db94655",
+      "jambName": "Chemical Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 54
+    },
+    {
+      "jambProgrammeId": "dd3a192d-2f3c-5d55-a02b-8e6defa765c8",
+      "jambName": "Logistics and Supply Chain Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "dd82309d-15eb-5962-a05d-c8e1cee20070",
+      "jambName": "Music",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 28
+    },
+    {
+      "jambProgrammeId": "dded0db6-693b-5897-932d-5077b47b7faf",
+      "jambName": "Aviation Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "de87def3-6795-569c-a00d-5c9645a77769",
+      "jambName": "International Relations and Diplomacy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 14
+    },
+    {
+      "jambProgrammeId": "df1fda0b-cf8e-51be-abbe-cb811270afe1",
+      "jambName": "Cooperative and Rural Development",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "e37d8e5a-c28c-5502-b4ef-7a13ce70ef34",
+      "jambName": "Food Science and Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 6
+    },
+    {
+      "jambProgrammeId": "e4812436-25f9-5b9c-98b0-ffe17fe5afdd",
+      "jambName": "Public Administration and Local Govt",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "e4f014bf-fa71-5620-860f-2e62618ef1c9",
+      "jambName": "Peace Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 1
+    },
+    {
+      "jambProgrammeId": "e581ff17-e172-52ac-8642-bedd894b8920",
+      "jambName": "Local Government Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "e5fc1bb0-45a9-5551-ad53-b3cb017a7359",
+      "jambName": "Software Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 113
+    },
+    {
+      "jambProgrammeId": "e7d23cec-6601-5983-8283-b77a84c3cb6e",
+      "jambName": "Pharmacy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 37
+    },
+    {
+      "jambProgrammeId": "e85441a8-6047-515f-ab09-0bc916842d8d",
+      "jambName": "Project Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 5
+    },
+    {
+      "jambProgrammeId": "e862265a-0131-5eda-b3fd-a0b337886f2b",
+      "jambName": "Polymer and Textile Engineering",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 16
+    },
+    {
+      "jambProgrammeId": "ee683b39-d76a-5d87-8b1c-3e26be989641",
+      "jambName": "Environmental Management and Technology",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "f027f627-b4a8-5795-a941-15dc007c9bc3",
+      "jambName": "History",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 77
+    },
+    {
+      "jambProgrammeId": "f430a8d2-ae24-5062-b7dc-df11bfdf79bf",
+      "jambName": "Industrial Relations / Industrial and Labour Relations",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 4
+    },
+    {
+      "jambProgrammeId": "f569eabc-4313-5f21-a84b-2119384c6a07",
+      "jambName": "Physiotherapy",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 35
+    },
+    {
+      "jambProgrammeId": "f7fa1d49-ad1d-5896-b79f-9777e2034bab",
+      "jambName": "Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 7
+    },
+    {
+      "jambProgrammeId": "faf84645-b905-5881-9210-20c95570e7aa",
+      "jambName": "Tourism Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "fcd27b2f-7245-53fe-a4f4-75b64fc1b664",
+      "jambName": "Economics",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 204
+    },
+    {
+      "jambProgrammeId": "fce43e6d-3f63-5873-a173-b086f821b983",
+      "jambName": "Transport Management",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    },
+    {
+      "jambProgrammeId": "fea3cdad-c88b-5eb0-9088-fc4b3956d56b",
+      "jambName": "International Relations and Diplomatic Studies",
+      "utmeOptionCount": 1,
+      "olevelOptionCount": 1,
+      "universityOfferingCount": 2
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "263caa64-7fdb-5266-9619-0beff16285bc",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "76cedca6-14f1-5aeb-870a-2a1553171856",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "44c8db06-2298-5b20-aa74-51f7d5594267",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "178c7acc-538e-50cc-82af-e7baabd3d306",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "14d9f88a-ebba-5bf6-9c91-319853d6539f",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "afa1676c-c297-5bee-9478-df90c83f3ca7",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "8688eaa9-b499-5fe8-9f1b-3df234e67a23",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "a40486de-d811-5f30-9d47-ca8a68fa14d5",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "07a0e8ab-76ee-54f9-ad06-ec455582c3c3",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "dc5bceb3-90e2-5cba-8f38-6c2be10fb25d",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "46518626-32fd-53e8-b7e4-3d5d87515b25",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "609b9268-1133-5ded-8c13-b2a444b6250b",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "5f8aa83b-45a8-5df8-9ade-51eb05097c89",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "1e42b397-2b2b-547b-9d45-4a8ebaf35624",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "fdf7b338-10e6-5815-b6af-d53657ab18ca",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "76c5c1b2-9141-57d3-95f9-87133ab08792",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "a0bf8885-0ced-5fb9-90d3-29101fd9cef4",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "b87e5f0d-c392-5eb0-ba10-10d7102851f4",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "77101cdc-aee4-5d55-bd7e-000e80eef95c",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "026e9799-15cb-51b5-9887-37d31bed9161",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "2410d3e6-ac98-5d5d-b095-e53ca33b15fb",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "96f7edea-decb-591a-b5e8-faaf8ca41f32",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "feeb19a9-beba-567b-910d-f2527fd36749",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "ecf3131e-27d9-524b-9f61-3affd36542e7",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "05a1ff90-4411-5bf4-bcdc-a04291724124",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "1036bcbc-f5a5-5fd6-87f2-44be42eb6499",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "8c3fad97-08f0-5f4d-a8f1-589e89a93d3f",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "66685f85-f83d-5d17-921b-70918d47c613",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "cef05155-5187-56be-8eb9-0f9bb401464b",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "f010bad2-31f4-56e5-9ad6-b311d65fde2c",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "0090ef8b-16d7-5e35-94b5-cedc9892dec0",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "bf8c9580-e0b5-5c63-9b03-a35140ae1141",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "0edfe2b9-2611-53c4-8a55-82f0b7f912bb",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "e85d5937-0060-58f8-9f2c-19b2f4ede3df",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "e2f71368-1148-5d2d-be1b-8cb8a0d97121",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "5f4eb2a9-537b-539e-9da5-e4358efa2b12",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "2b1a89f4-48ef-5fb1-8fee-9a4dc7066a27",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "b1343376-8805-5de3-b571-3c89812cd969",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "3eeaf1fd-e7eb-57f5-8f05-327ca1cc3949",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "0d4dcb64-1fc3-510a-b6e3-9c659fb43531",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "9fe9bfff-8d37-5005-b6c0-85c1a44cb8b3",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "925d6db4-7682-58e8-8a1b-d9a1d59330a9",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 1
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "06d03394-0795-5052-a1e5-31165b634978",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "61cfb0f4-faca-5278-bf46-25836be57db0",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "4efefafa-313c-5d89-b292-6554d16f4ad9",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "efc30075-07d7-5762-903a-67203522ece5",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "918130b5-478d-5b8a-a127-9119844f8431",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "59d9956d-91c9-51c5-840b-f3391ffd8135",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "5533c74c-9f04-553a-aca2-0c552007002a",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "01078ac3-161c-590c-9b5a-545cfb565d23",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "07a7ebb8-5e4f-5d77-8f87-5912faf6266f",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "5259f367-09a7-59ca-a671-f7d075c168f9",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "8d41e802-a74f-59fb-8cad-eac0159d38dd",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 4
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "55c7cbfd-8252-5ebc-b3f7-b3b253c3e533",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "9e40d9f4-8f3d-5742-9ef6-6f41b48aae3c",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "02c3db09-e9a0-54c3-8d03-a2a76ffa882e",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "0401b704-aeb6-5a1d-82f3-074074948926",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 3
+    },
+    {
+      "code": "declared_minimum_above_structured_minimum",
+      "optionId": "3faebd8b-5541-5313-9127-be6f22c4a075",
+      "examType": "olevel",
+      "declaredMinimum": 5,
+      "structuredMinimum": 2
+    },
+    {
+      "code": "structured_option_requirement_not_marked_parsed",
+      "optionId": "77101cdc-aee4-5d55-bd7e-000e80eef95c",
+      "requirementId": "6ca753b2-2af1-5437-ae76-8d7f533e57d8",
+      "parseStatus": "needs_review"
+    }
+  ],
+  "subjectNames": {
+    "ENG": "English Language",
+    "MATH": "Mathematics",
+    "CIV": "Civic Education",
+    "PHY": "Physics",
+    "CHEM": "Chemistry",
+    "BIO": "Biology",
+    "AGR": "Agricultural Science",
+    "FMATH": "Further Mathematics",
+    "HSC": "Health Science",
+    "PHE": "Physical and Health Education",
+    "ANH": "Animal Husbandry",
+    "FSN": "Food and Nutrition",
+    "CSC": "Computer Studies",
+    "ECON": "Economics",
+    "COMM": "Commerce",
+    "ACC": "Principles of Accounts",
+    "MKT": "Marketing",
+    "INS": "Insurance",
+    "OFP": "Office Practice",
+    "STORE": "Store Management",
+    "BMETHOD": "Business Methods",
+    "STAT": "Statistics",
+    "GOV": "Government",
+    "LIT": "Literature in English",
+    "GEO": "Geography",
+    "HIS": "History",
+    "CRS": "Christian Religious Studies",
+    "IRS": "Islamic Religious Studies",
+    "SOS": "Social Studies",
+    "YOR": "Yoruba",
+    "HAU": "Hausa",
+    "IGB": "Igbo",
+    "FRE": "French",
+    "ARA": "Arabic",
+    "MUS": "Music",
+    "ART": "Fine Art",
+    "HEC": "Home Economics",
+    "TD": "Technical Drawing",
+    "BLD": "Building Construction",
+    "WWK": "Woodwork",
+    "MWK": "Metalwork",
+    "ELEC": "Basic Electricity",
+    "AUTO": "Auto Mechanics",
+    "GMT": "Garment Making",
+    "CAT": "Catering Craft Practice",
+    "TOU": "Tourism"
+  }
+}

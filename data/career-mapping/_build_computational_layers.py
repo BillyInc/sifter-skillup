@@ -11,6 +11,8 @@ import json
 import os
 from collections import Counter
 
+from _role_overlay_loader import load_overlay_roles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = os.path.join(HERE, "computational_layer_manifest.json")
 ROLES = os.path.join(HERE, "role_library_v3_cleaned.json")
@@ -100,6 +102,7 @@ def repository_learning_evidence(requested):
 def main():
     manifest = load(MANIFEST)
     roles = load(ROLES)
+    roles.extend(load_overlay_roles())
     role_tools = load(ROLE_TOOLS)
     layers = load(LAYERS)
     esco_skill_catalog = load_esco_skill_catalog()

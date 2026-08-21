@@ -16,6 +16,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parent.parent
 OVERLAY_PATH = HERE / "nigerian_global_professional_overlays.json"
+THIN_OVERLAY_PATH = HERE / "nigerian_thin_domain_overlays.json"
 
 SOURCE_EXTRACT_HINTS = {
     "ng_myjobmag": (
@@ -48,12 +49,18 @@ CONTEXT_LABELS = {
 
 
 def _load_overlay():
-    try:
-        with OVERLAY_PATH.open(encoding="utf-8") as handle:
-            value = json.load(handle)
-    except (OSError, ValueError):
-        return {"sources": [], "profiles": []}
-    return value if isinstance(value, dict) else {"sources": [], "profiles": []}
+    merged = {"sources": [], "profiles": []}
+    for path in (OVERLAY_PATH, THIN_OVERLAY_PATH):
+        try:
+            with path.open(encoding="utf-8") as handle:
+                value = json.load(handle)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(value, dict):
+            continue
+        merged["sources"].extend(value.get("sources") or [])
+        merged["profiles"].extend(value.get("profiles") or [])
+    return merged
 
 
 OVERLAY = _load_overlay()

@@ -8,7 +8,7 @@ export default function LocalLegalNotice({ audience }: { audience: Audience }) {
   const { colors } = useTheme();
   const text = audience === "student"
     ? "Your class, stream, school and subject choices are used to personalise guidance. They do not determine admission or eligibility. If you are under 18, involve a parent, guardian, school or counsellor before sharing personal or academic information."
-    : "Only submit learner or institution information you are authorised to handle. For minors, follow the guardian, school safeguarding and data-protection rules applicable in Nigeria and your state; verification does not by itself unlock individual student data.";
+    : "Only submit student or institution information you are authorised to handle. For minors, follow the guardian, school safeguarding and data-protection rules applicable in Nigeria and your state; verification does not by itself unlock individual student data.";
   return (
     <View style={[styles.box, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.label, { color: colors.textRole.muted }]}>DATA USE NOTICE</Text>

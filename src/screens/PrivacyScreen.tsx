@@ -42,7 +42,7 @@ const SECTIONS = [
   },
   {
     title: 'Minors and guardians',
-    body: 'Senior-secondary users may be minors. We minimise grades and identity data, explain roster visibility, and require the appropriate guardian, student or school consent before consent-gated sharing. Child-rights protections can vary by Nigerian state, so schools must follow the law and safeguarding rules applicable to their learners and location.',
+    body: 'Senior-secondary users may be minors. We minimise grades and identity data, explain roster visibility, and require the appropriate guardian, student or school consent before consent-gated sharing. Child-rights protections can vary by Nigerian state, so schools must follow the law and safeguarding rules applicable to their students and location.',
   },
   {
     title: 'International users',
