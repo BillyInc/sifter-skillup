@@ -174,9 +174,12 @@ CREATE TABLE IF NOT EXISTS skillup_dev.programme_subject_option_items (
                      CHECK (requirement_role IN ('required', 'one_of', 'recommended')),
     group_key       TEXT, -- one_of group, e.g. "science_elective"
     min_from_group  SMALLINT,
+    distinct_group_key TEXT, -- groups in this scope must use different subjects
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE(option_id, subject_id, requirement_role, group_key)
 );
+ALTER TABLE skillup_dev.programme_subject_option_items
+    ADD COLUMN IF NOT EXISTS distinct_group_key TEXT;
 CREATE INDEX IF NOT EXISTS idx_subject_option_items_option
     ON skillup_dev.programme_subject_option_items(option_id);
 CREATE INDEX IF NOT EXISTS idx_subject_option_items_subject
@@ -248,6 +251,23 @@ CREATE INDEX IF NOT EXISTS idx_pathway_choices_domain_role
     WHERE domain_key IS NOT NULL;
 
 -- ── 7. Read views for live routes ───────────────────────────
+--
+-- Two of these definitions drifted behind later migrations and, applied
+-- verbatim to a database that already had them, failed with
+-- `42P16: cannot drop columns from view`. Postgres refusing is the only
+-- reason the drift never silently reverted anything. They are reconciled
+-- below so this file is safe to replay on a fresh OR an existing database,
+-- in any order relative to the two migrations named:
+--
+--   v_jamb_programme_details      + skills_technical / skills_transferable /
+--                                 skills_components, from
+--                                 migration_jamb_skills_view.sql.
+--                                 CREATE OR REPLACE may only APPEND columns,
+--                                 so they must stay at the END of the list.
+--   v_cutoffs_by_jamb_programme   - postutme_cutoff, from
+--                                 migration_remove_postutme_from_cutoff_view.sql.
+--
+-- If you change either view, change it in BOTH files or the drift returns.
 
 CREATE OR REPLACE VIEW skillup_dev.v_jamb_programme_details AS
 SELECT
@@ -263,7 +283,12 @@ SELECT
     p.discipline,
     pm.mapping_type,
     pm.mapping_note,
-    pm.confidence
+    pm.confidence,
+    -- Appended, not inserted next to is_blend: reordering a view column is
+    -- rejected with "cannot change name of view column".
+    jp.skills_technical,
+    jp.skills_transferable,
+    jp.skills_components
 FROM skillup_dev.jamb_programmes jp
 LEFT JOIN skillup_dev.programme_mapping pm ON pm.jamb_programme_id = jp.id
 LEFT JOIN skillup_dev.programmes p ON p.id = pm.programme_id;
@@ -305,7 +330,13 @@ JOIN skillup_dev.jamb_programme_domain jpd
 JOIN skillup_dev.domains d ON d.id = jpd.domain_id;
 ALTER VIEW skillup_dev.v_jamb_programme_domain_paths SET (security_invoker = true);
 
-CREATE OR REPLACE VIEW skillup_dev.v_cutoffs_by_jamb_programme AS
+-- Dropped and recreated rather than CREATE OR REPLACE: a database that ran an
+-- OLDER copy of this file has the view WITH postutme_cutoff, and replacing it
+-- would be a column drop, which Postgres rejects (42P16). This mirrors what
+-- migration_remove_postutme_from_cutoff_view.sql does, for the same reason.
+-- Nothing depends on this view, so the drop is safe.
+DROP VIEW IF EXISTS skillup_dev.v_cutoffs_by_jamb_programme;
+CREATE VIEW skillup_dev.v_cutoffs_by_jamb_programme AS
 SELECT
     psc.id,
     COALESCE(psc.jamb_programme_id, pm.jamb_programme_id) AS jamb_programme_id,
@@ -318,7 +349,10 @@ SELECT
     psc.year,
     psc.aggregate_cutoff,
     psc.jamb_cutoff,
-    psc.postutme_cutoff,
+    -- postutme_cutoff intentionally omitted (UI-suppressed: not displayed).
+    -- The base-table column stays for data preservation, but the API reads
+    -- this view with select("*"), so omitting it here is what guarantees it
+    -- can never reach a payload.
     psc.form,
     psc.source_url,
     psc.verified_at,

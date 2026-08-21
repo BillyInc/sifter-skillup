@@ -103,7 +103,10 @@ export interface GuidanceReportPath {
     subjects?: { olevel?: string[]; utme?: string[] };
     discoveryDoor?: string;
     programme?: Record<string, unknown>;
+    /** Saved programme/university choices; `programme` remains the active one. */
+    programmes?: Record<string, unknown>[];
     university?: Record<string, unknown>;
+    universityRequirements?: Record<string, unknown>;
     requirements?: Record<string, unknown>;
     domains?: Record<string, unknown>[];
     subgroups?: Record<string, unknown>[];
@@ -120,6 +123,22 @@ export interface SubjectCatalogItem {
   aliases: string[];
   category?: string | null;
   streamTags: string[];
+}
+
+export interface UniversityRequirementException {
+  examType?: "utme" | "olevel" | "direct_entry" | "general" | string;
+  text?: string | null;
+  sourceFile?: string | null;
+  sourceLabel?: string | null;
+  parseStatus?: "parsed" | "needs_review" | "not_subject_rule" | string;
+}
+
+export interface UniversityStructuredSubjectRule {
+  examType?: "utme" | "olevel" | string;
+  scope?: "full" | "partial" | string;
+  text?: string | null;
+  minimumRequired?: number | null;
+  conditionText?: string | null;
 }
 
 export interface JambProgrammeSuggestion {
@@ -144,6 +163,15 @@ export interface JambProgrammeSuggestion {
     city?: string | null;
     state?: string | null;
     country?: string | null;
+    universityUtmeSubjects?: string | null;
+    universityOlevelRequirement?: string | null;
+    universityDirectEntry?: string | null;
+    universityNote?: string | null;
+    universityRequirementExceptions?: UniversityRequirementException[];
+    universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
+    universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
+    universityEligibilityStatus?: string;
+    hasUniversityException?: boolean;
   }[];
   /**
    * What this degree teaches — derived from the CCMAS course learning
@@ -183,6 +211,8 @@ export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
   matchedSubjectCount: number;
   matchedSubjects: string[];
   missingSubjects?: string[];
+  minimumRequired?: number;
+  minimumGap?: number;
   olevelMatchedSubjectCount?: number;
   olevelMatchedSubjects?: string[];
   olevelMissingSubjects?: string[];
@@ -215,6 +245,15 @@ export interface JambProgrammeSchool {
   jambCutoff?: number | null;
   form?: "UTME" | "DE" | null;
   sourceUrl?: string | null;
+  universityUtmeSubjects?: string | null;
+  universityOlevelRequirement?: string | null;
+  universityDirectEntry?: string | null;
+  universityNote?: string | null;
+  universityRequirementExceptions?: UniversityRequirementException[];
+  universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
+  universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
+  universityEligibilityStatus?: string;
+  hasUniversityException?: boolean;
 }
 
 /** A university in the admission registry (school typeahead result). */
@@ -248,6 +287,15 @@ export interface SchoolProgrammeOffering {
   utmeSubjects?: string | null;
   olevelRequirement?: string | null;
   directEntry?: string | null;
+  universityUtmeSubjects?: string | null;
+  universityOlevelRequirement?: string | null;
+  universityDirectEntry?: string | null;
+  universityNote?: string | null;
+  universityRequirementExceptions?: UniversityRequirementException[];
+  universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
+  universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
+  universityEligibilityStatus?: string;
+  hasUniversityException?: boolean;
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
   skillsCount?: number | null;

@@ -41,6 +41,12 @@ import {
 import { AdminShell } from "./AdminShell";
 import LocalLegalNotice from "@/components/LocalLegalNotice";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import {
+  getAdminProvisioningDrafts,
+  getAdminTask,
+  saveAdminProvisioningDrafts,
+  saveAdminTask,
+} from "@/lib/adminResume";
 import { useAuth } from "@/hooks/useAuth";
 import {
   provisioningData,
@@ -592,6 +598,7 @@ function MergeCandidatesPanel({
 
 function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "jamb" }) {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const [stage, setStage] = useState<AddStage>("import");
   const [busy, setBusy] = useState(false);
   const [uploadMenuOpen, setUploadMenuOpen] = useState(false);
@@ -600,9 +607,55 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
   const [drafts, setDrafts] = useState<ProvisionDraft[]>([]);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [generated, setGenerated] = useState<GeneratedStudent[]>([]);
+  const [resumeHydrated, setResumeHydrated] = useState(false);
+  const [localDraftsHydrated, setLocalDraftsHydrated] = useState(false);
   const defaultStudentType: ProvisioningStudentType = initialMode === "jamb" ? "jamb" : "ss1";
   const stageOptions = initialMode === "jamb" ? JAMB_STAGES : SECONDARY_STAGES;
   const showStream = initialMode === "school";
+
+  useEffect(() => {
+    if (!user?.id) {
+      setResumeHydrated(true);
+      return;
+    }
+    getAdminTask(user.id).then((task) => {
+      if (task?.href === "/(admin)/students" && task.stage && ["import", "review", "done"].includes(task.stage)) {
+        setStage(task.stage as AddStage);
+      }
+    }).finally(() => setResumeHydrated(true));
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || !resumeHydrated) return;
+    void saveAdminTask({
+      href: "/(admin)/students",
+      label: "Student account creation and roster",
+      stage,
+      tab: "add",
+    }, user.id);
+  }, [resumeHydrated, stage, user?.id]);
+
+  useEffect(() => {
+    if (!user?.id) {
+      setLocalDraftsHydrated(true);
+      return;
+    }
+    getAdminProvisioningDrafts(user.id).then((localDrafts) => {
+      if (!localDrafts.length) return;
+      setDrafts((current) => {
+        const currentIds = new Set(current.map((draft) => draft.id));
+        return [...localDrafts.filter((draft) => !currentIds.has(draft.id)), ...current];
+      });
+    }).finally(() => setLocalDraftsHydrated(true));
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || !localDraftsHydrated) return;
+    void saveAdminProvisioningDrafts(
+      drafts.filter((draft) => isLocalDraftId(draft.id)),
+      user.id,
+    );
+  }, [drafts, localDraftsHydrated, user?.id]);
 
   // Load any existing (previously staged) drafts on entry.
   useEffect(() => {
@@ -778,6 +831,9 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
       const selectedDrafts = drafts.filter((d) => selectedOriginalIds.has(d.id));
       if (showStream && selectedDrafts.some((d) => !d.stream)) {
         throw new Error("Choose a stream for every selected student before creating accounts.");
+      }
+      if (showStream && selectedDrafts.some((d) => d.guardianConsent && !(d.guardianName ?? "").trim())) {
+        throw new Error("Add the guardian name for each row marked as consent recorded.");
       }
       if (localSelected.length) {
         const staged = await provisioningData.createDrafts({
@@ -966,6 +1022,44 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                     commitDraft(updated);
                   }}
                 /> : null}
+                {showStream ? (
+                  <View style={{ gap: Spacing.xs }}>
+                    <TouchableOpacity
+                      activeOpacity={0.75}
+                      onPress={() => {
+                        const updated = { ...d, guardianConsent: !d.guardianConsent };
+                        patchDraft(d.id, { guardianConsent: updated.guardianConsent });
+                        void commitDraft(updated);
+                      }}
+                      style={{ flexDirection: "row", alignItems: "center", gap: Spacing.sm, minHeight: 36 }}
+                    >
+                      <View
+                        style={[
+                          styles.checkbox,
+                          {
+                            borderColor: colors.border,
+                            backgroundColor: d.guardianConsent ? colors.text : "transparent",
+                          },
+                        ]}
+                      >
+                        {d.guardianConsent ? <Text style={[styles.checkmark, CompassFonts.displayBold]}>✓</Text> : null}
+                      </View>
+                      <Text style={[styles.cardHint, { color: colors.text }]}>Guardian consent recorded</Text>
+                    </TouchableOpacity>
+                    {d.guardianConsent ? (
+                      <TextInput
+                        value={d.guardianName ?? ""}
+                        onChangeText={(guardianName) => patchDraft(d.id, { guardianName })}
+                        onBlur={() => void commitDraft({ ...d, guardianName: d.guardianName ?? "" })}
+                        placeholder="Guardian name"
+                        placeholderTextColor={colors.textMuted}
+                        style={[styles.inputSmall, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg, maxWidth: undefined }]}
+                      />
+                    ) : (
+                      <Text style={[styles.cardHint, { color: colors.textMuted }]}>Account creation does not imply consent.</Text>
+                    )}
+                  </View>
+                ) : null}
               </View>
               {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Needs review</Text> : null}
             </View>

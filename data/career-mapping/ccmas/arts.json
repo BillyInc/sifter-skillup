@@ -14664,7 +14664,8 @@
   },
   {
    "code": "FRE",
-   "name": "Modern European Languages B.A",
+   "name": "Modern European Languages B.A (French)",
+   "source_aliases": ["Modern European Languages B.A"],
    "qualification": "B.Sc",
    "duration_years": 4,
    "objectives": [],
@@ -15289,7 +15290,8 @@
   },
   {
    "code": "GER",
-   "name": "Modern European Languages B.A",
+   "name": "Modern European Languages B.A (German)",
+   "source_aliases": ["Modern European Languages B.A"],
    "qualification": "B.Sc",
    "duration_years": 4,
    "objectives": [],

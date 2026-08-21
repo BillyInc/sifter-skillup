@@ -272,7 +272,7 @@ def main() -> None:
     inheritance_counts = Counter(row.get("inheritance_type") for row in canonical_rows.values())
     partial_rows = sorted(
         name for name, row in canonical_rows.items()
-        if row.get("inheritance_type") == "partial_curriculum_scope_review_required"
+        if row.get("inheritance_type") == "partial_curriculum_scope"
     )
     external_rows = sorted(
         name for name, row in canonical_rows.items()

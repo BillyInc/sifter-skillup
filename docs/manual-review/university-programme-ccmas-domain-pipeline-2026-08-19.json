@@ -1,0 +1,4289 @@
+{
+  "audit": "university_offering_to_jamb_ccmas_domain_pipeline",
+  "generated_from": [
+    "backend/seed_career_pilot.sql",
+    "data/career-mapping/programme_mapping.json",
+    "data/career-mapping/ccmas/*.json",
+    "data/career-mapping/_audit/jamb_ccmas_inheritance_canonical_2026-08-17.json",
+    "data/career-mapping/jamb_domain_map.json"
+  ],
+  "contract": {
+    "chain": "school_programmes -> jamb_programmes -> programme_mapping -> CCMAS components -> canonical domain links",
+    "source_review_boundary": "review_required rows remain visible as unresolved source interpretation; they are not counted as approved chain links",
+    "demand_data_used": false
+  },
+  "summary": {
+    "university_offerings": 9130,
+    "unique_university_programme_pairs": 9130,
+    "university_programme_names": 420,
+    "canonical_jamb_names": 420,
+    "ccmas_registry_programmes": 237,
+    "offerings_with_ready_chain": 9130,
+    "offerings_with_review_required_chain": 0,
+    "name_status_counts": {
+      "ready_partial": 273,
+      "ready": 141,
+      "ready_external": 6
+    },
+    "offering_status_counts": {
+      "ready_partial": 3780,
+      "ready": 5230,
+      "ready_external": 120
+    },
+    "name_inheritance_counts": {
+      "partial_curriculum_scope": 273,
+      "single_ccmas_full_curriculum": 113,
+      "combined_ccmas_curriculum": 28,
+      "external_sources_required": 6
+    },
+    "offering_inheritance_counts": {
+      "partial_curriculum_scope": 3780,
+      "single_ccmas_full_curriculum": 4793,
+      "combined_ccmas_curriculum": 437,
+      "external_sources_required": 120
+    },
+    "broken_offerings": 0,
+    "missing_canonical_rows": 0,
+    "missing_ccmas_components": 0,
+    "domain_link_mismatches": 0,
+    "programme_mapping_names_without_offerings": 0
+  },
+  "structural_errors": {
+    "broken_offerings": [],
+    "missing_canonical_rows": [],
+    "missing_ccmas_components": [],
+    "domain_link_mismatches": []
+  },
+  "review_required_names": [],
+  "offering_counts_by_jamb_name": {
+    "ANTHROPOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "APPLIED BIOLOGY": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 10
+    },
+    "APPLIED BIOLOGY AND BIOTECHNOLOGY": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "APPLIED BIOLOGY AND GENETICS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 10
+    },
+    "APPLIED BOTANY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 3
+    },
+    "ARCHEAOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Archaeology"
+      ],
+      "domain_link_count": 6
+    },
+    "Accountancy and Forensic Studies": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Accounting"
+      ],
+      "domain_link_count": 5
+    },
+    "Accounting and Data Analytics": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Accounting"
+      ],
+      "domain_link_count": 12
+    },
+    "Accounting and Finance": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Finance / Banking and Finance"
+      ],
+      "domain_link_count": 15
+    },
+    "Actuarial Science": {
+      "offerings": 19,
+      "schools": 19,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Actuarial Science"
+      ],
+      "domain_link_count": 15
+    },
+    "African and Asian Studies": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::History/History and Diplomatic Studies"
+      ],
+      "domain_link_count": 2
+    },
+    "Agribusiness and Economics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Economics"
+      ],
+      "domain_link_count": 13
+    },
+    "Agricultural Engineering": {
+      "offerings": 35,
+      "schools": 35,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::AGRICULTURAL AND BIOSYSTEMS ENGINEERING"
+      ],
+      "domain_link_count": 6
+    },
+    "Agricultural and Bio-Resources Engineering": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::AGRICULTURAL AND BIOSYSTEMS ENGINEERING"
+      ],
+      "domain_link_count": 6
+    },
+    "Agriculture": {
+      "offerings": 154,
+      "schools": 154,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::B. Agriculture"
+      ],
+      "domain_link_count": 7
+    },
+    "Agronomy": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Crop Science"
+      ],
+      "domain_link_count": 4
+    },
+    "Anatomy": {
+      "offerings": 83,
+      "schools": 83,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Basic Medical Sciences::Human Anatomy"
+      ],
+      "domain_link_count": 5
+    },
+    "Animal Biology and Environment": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 7
+    },
+    "Animal Breeding and Genetics": {
+      "offerings": 19,
+      "schools": 19,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Animal Physiology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Animal Production": {
+      "offerings": 30,
+      "schools": 30,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Animal Science": {
+      "offerings": 20,
+      "schools": 20,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Animal and Environmental Biology": {
+      "offerings": 48,
+      "schools": 48,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 7
+    },
+    "Anthropology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::Anthropology"
+      ],
+      "domain_link_count": 2
+    },
+    "Applied Biochemistry": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biochemistry"
+      ],
+      "domain_link_count": 3
+    },
+    "Applied Chemistry": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 7
+    },
+    "Applied Ecology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "Applied Geology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Applied Geophysics": {
+      "offerings": 24,
+      "schools": 24,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Applied Geophysics"
+      ],
+      "domain_link_count": 8
+    },
+    "Applied Mathematics with Statistics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Applied Microbiology and Brewing / Applied Microbiology": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Microbiology"
+      ],
+      "domain_link_count": 7
+    },
+    "Applied Physics": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Applied Statistics": {
+      "offerings": 9,
+      "schools": 9,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Applied Zoology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 3
+    },
+    "Applied and Renewable Energy": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 7
+    },
+    "Arabic Language and Literature Studies": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Arabic"
+      ],
+      "domain_link_count": 4
+    },
+    "Arabic Studies": {
+      "offerings": 42,
+      "schools": 42,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Arabic"
+      ],
+      "domain_link_count": 4
+    },
+    "Archaeology": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Archaeology"
+      ],
+      "domain_link_count": 6
+    },
+    "Architecture": {
+      "offerings": 90,
+      "schools": 90,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Architecture::Architecture"
+      ],
+      "domain_link_count": 8
+    },
+    "Aviation Business": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Aviation Management"
+      ],
+      "domain_link_count": 14
+    },
+    "Aviation Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Aviation Management"
+      ],
+      "domain_link_count": 15
+    },
+    "Aviation Security": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Aviation Management"
+      ],
+      "domain_link_count": 14
+    },
+    "BIOCHEMISTRY AND MOLECULAR BIOLOGY": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biochemistry"
+      ],
+      "domain_link_count": 9
+    },
+    "BIOINFORMATICS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 9
+    },
+    "BIOLOGICAL SCIENCE(S)": {
+      "offerings": 26,
+      "schools": 26,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "BIOLOGY": {
+      "offerings": 154,
+      "schools": 154,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "BIOTECHNOLOGY AND MOLECULAR BIOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Banking and Finance": {
+      "offerings": 57,
+      "schools": 57,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Finance / Banking and Finance"
+      ],
+      "domain_link_count": 15
+    },
+    "Biochemistry": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biochemistry"
+      ],
+      "domain_link_count": 11
+    },
+    "Biology/Biotechnology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Biomedical Engineering": {
+      "offerings": 12,
+      "schools": 12,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::BIOMEDICAL ENGINEERING"
+      ],
+      "domain_link_count": 11
+    },
+    "Biostatistics": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Biotechnology": {
+      "offerings": 53,
+      "schools": 53,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 9
+    },
+    "Biotechnology and Food Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Botany": {
+      "offerings": 53,
+      "schools": 53,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 7
+    },
+    "Botany and Ecological Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 4
+    },
+    "Brewing Science and Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Brewing Science and Technology"
+      ],
+      "domain_link_count": 5
+    },
+    "Building": {
+      "offerings": 84,
+      "schools": 84,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Building"
+      ],
+      "domain_link_count": 6
+    },
+    "Building Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Building"
+      ],
+      "domain_link_count": 6
+    },
+    "Business Administration": {
+      "offerings": 59,
+      "schools": 59,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Business Administration"
+      ],
+      "domain_link_count": 17
+    },
+    "Business Education": {
+      "offerings": 104,
+      "schools": 104,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Education::Business Education"
+      ],
+      "domain_link_count": 10
+    },
+    "Business Management": {
+      "offerings": 33,
+      "schools": 33,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Business Administration"
+      ],
+      "domain_link_count": 17
+    },
+    "CELL BIOLOGY & GENETICS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 9
+    },
+    "COMMUNICATION AND DIGITAL MEDIA STUDIES": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "COMMUNICATION AND WIRELESS TECHNOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "COMMUNICATIONS TECHNOLOGY": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "COMPUTER SCIENCE AND MATHEMATICS": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "COMPUTER SCIENCE WITH ECONOMICS": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "COMPUTER SCIENCE WITH MATHEMATICS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "COMPUTER WITH STATISTICS": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "CYBER SECURITY": {
+      "offerings": 120,
+      "schools": 120,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Cybersecurity"
+      ],
+      "domain_link_count": 9
+    },
+    "CYBER SECURITY SCIENCE": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Cybersecurity"
+      ],
+      "domain_link_count": 9
+    },
+    "Chemical Engineering": {
+      "offerings": 54,
+      "schools": 54,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::CHEMICAL ENGINEERING"
+      ],
+      "domain_link_count": 8
+    },
+    "Chemical Sciences": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 7
+    },
+    "Chemistry": {
+      "offerings": 188,
+      "schools": 188,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 8
+    },
+    "Chemistry and Industrial Chemistry": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Chemistry"
+      ],
+      "domain_link_count": 8
+    },
+    "Christian Religious": {
+      "offerings": 51,
+      "schools": 51,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Christian Religious Studies"
+      ],
+      "domain_link_count": 1
+    },
+    "Christian Studies": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Christian Religious Studies"
+      ],
+      "domain_link_count": 1
+    },
+    "Civil Engineering": {
+      "offerings": 117,
+      "schools": 117,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::CIVIL ENGINEERING"
+      ],
+      "domain_link_count": 8
+    },
+    "Civil Law": {
+      "offerings": 118,
+      "schools": 118,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Law::Law"
+      ],
+      "domain_link_count": 1
+    },
+    "Classical Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Classics"
+      ],
+      "domain_link_count": 1
+    },
+    "Common Law": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Law::Law"
+      ],
+      "domain_link_count": 5
+    },
+    "Common and Islamic Law": {
+      "offerings": 13,
+      "schools": 13,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Law::Common and Islamic Law"
+      ],
+      "domain_link_count": 5
+    },
+    "Communication Arts": {
+      "offerings": 23,
+      "schools": 23,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::MASS COMMUNICATION — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "Communication Technology": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 3
+    },
+    "Computer Science": {
+      "offerings": 258,
+      "schools": 258,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Computer Science and Informatics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Computer Science and Information Science": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Computer Science and Information Technology": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Technology"
+      ],
+      "domain_link_count": 6
+    },
+    "Computer and Information Science": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Computer with Electronics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Computer, Information and Communication Science": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information and Communication Technology"
+      ],
+      "domain_link_count": 8
+    },
+    "Computing and Artificial Intelligence": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 1
+    },
+    "Conservation Biology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 9
+    },
+    "Conservation and Environmental Biology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 10
+    },
+    "Cooperative Economics and Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Co-operative and Rural Development"
+      ],
+      "domain_link_count": 16
+    },
+    "Cooperative Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Co-operative and Rural Development"
+      ],
+      "domain_link_count": 16
+    },
+    "Cooperative and Rural Development": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Co-operative and Rural Development"
+      ],
+      "domain_link_count": 16
+    },
+    "Creative Arts": {
+      "offerings": 85,
+      "schools": 85,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Arts::Theatre Arts",
+        "Arts::Film Production",
+        "Arts::Music"
+      ],
+      "domain_link_count": 13
+    },
+    "Criminology": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Criminology and Security Studies"
+      ],
+      "domain_link_count": 7
+    },
+    "Criminology and Penology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Criminology and Security Studies"
+      ],
+      "domain_link_count": 7
+    },
+    "Criminology and Security Studies": {
+      "offerings": 96,
+      "schools": 96,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Criminology and Security Studies"
+      ],
+      "domain_link_count": 8
+    },
+    "Criminology and Security Studies (printed under Law faculty block)": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Criminology and Security Studies"
+      ],
+      "domain_link_count": 8
+    },
+    "Crop Production": {
+      "offerings": 32,
+      "schools": 32,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Crop Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Crop Protection": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Crop Science"
+      ],
+      "domain_link_count": 6
+    },
+    "Crop Science": {
+      "offerings": 26,
+      "schools": 26,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Agricultural Science::Crop Science"
+      ],
+      "domain_link_count": 9
+    },
+    "DATA MANAGEMENT": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Data Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Data Science": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Data Science"
+      ],
+      "domain_link_count": 6
+    },
+    "Data Science and Analytics": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Data Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Demography and Social Statistics": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Demography and Social Statistics"
+      ],
+      "domain_link_count": 9
+    },
+    "Demography and Social Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Demography and Social Statistics"
+      ],
+      "domain_link_count": 8
+    },
+    "Demography and Statistics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Demography and Social Statistics"
+      ],
+      "domain_link_count": 8
+    },
+    "Dentistry and Dental Technology": {
+      "offerings": 34,
+      "schools": 34,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Medicine and Dentistry::Bachelor of Dental Surgery (BDS/BChD)",
+        "Allied Health Sciences::Dental Technology"
+      ],
+      "domain_link_count": 20
+    },
+    "Development and Communication Studies": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Development Studies"
+      ],
+      "domain_link_count": 7
+    },
+    "Digital Entrepreneurship": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 12
+    },
+    "Drama/Dramatic Arts/Performing Arts": {
+      "offerings": 63,
+      "schools": 63,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Theatre Arts"
+      ],
+      "domain_link_count": 5
+    },
+    "ELECTRONICS AND COMMUNICATIONS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::ELECTRONIC ENGINEERING"
+      ],
+      "domain_link_count": 9
+    },
+    "ELECTRONICS AND COMPUTER SYSTEMS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "ELECTRONICS AND COMPUTER TECHNOLOGY": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "ENGINEERING PHYSICS": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Earth Science": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Eco-Tourism and Wildlife Management": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Forest Resources and Wildlife Management"
+      ],
+      "domain_link_count": 7
+    },
+    "Ecology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "Ecology and Environmental Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "Economics": {
+      "offerings": 204,
+      "schools": 204,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Economics"
+      ],
+      "domain_link_count": 13
+    },
+    "Economics and Development Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Economics",
+        "Social Sciences::Development Studies"
+      ],
+      "domain_link_count": 21
+    },
+    "Economics and Statistics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Economics",
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 19
+    },
+    "Economics with/and Operation Research": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Economics",
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 18
+    },
+    "Education and Business Administration": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Business Education"
+      ],
+      "domain_link_count": 5
+    },
+    "Efik-Ibibio": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Efik"
+      ],
+      "domain_link_count": 3
+    },
+    "Electrical Engineering": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::ELECTRICAL ENGINEERING"
+      ],
+      "domain_link_count": 11
+    },
+    "Electrical/Electronic Engineering": {
+      "offerings": 87,
+      "schools": 87,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::ELECTRICAL AND ELECTRONIC ENGINEERING"
+      ],
+      "domain_link_count": 7
+    },
+    "Electronics": {
+      "offerings": 9,
+      "schools": 9,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics with Electronics"
+      ],
+      "domain_link_count": 6
+    },
+    "Electronics Engineering": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::ELECTRONIC ENGINEERING"
+      ],
+      "domain_link_count": 9
+    },
+    "Electrons": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Physics with Electronics"
+      ],
+      "domain_link_count": 10
+    },
+    "Employment and Human Resource Management": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 11
+    },
+    "Energy Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 7
+    },
+    "Energy and Petroleum Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Petroleum Chemistry"
+      ],
+      "domain_link_count": 9
+    },
+    "English Studies": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::English Language and Literature"
+      ],
+      "domain_link_count": 5
+    },
+    "English and Literary Studies": {
+      "offerings": 44,
+      "schools": 44,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::English Language and Literature"
+      ],
+      "domain_link_count": 5
+    },
+    "Entrepreneurship": {
+      "offerings": 23,
+      "schools": 23,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 14
+    },
+    "Entrepreneurship and Business Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 12
+    },
+    "Entrepreneurship and Innovation": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 12
+    },
+    "Environmental Biology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 10
+    },
+    "Environmental Biology and Fisheries": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 11
+    },
+    "Environmental Chemistry and Toxicology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 7
+    },
+    "Environmental Health Science": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Environmental Health Science"
+      ],
+      "domain_link_count": 11
+    },
+    "Environmental Management": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Environmental Management"
+      ],
+      "domain_link_count": 7
+    },
+    "Environmental Management and Technology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Environmental Management"
+      ],
+      "domain_link_count": 7
+    },
+    "Environmental Management and Toxicology": {
+      "offerings": 51,
+      "schools": 51,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Environmental Management and Toxicology"
+      ],
+      "domain_link_count": 10
+    },
+    "Environmental Science and Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Allied Health Sciences::Environmental Health Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Environmental Standards": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::ENVIRONMENTAL STANDARDS"
+      ],
+      "domain_link_count": 10
+    },
+    "Estate Management": {
+      "offerings": 93,
+      "schools": 93,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Estate management"
+      ],
+      "domain_link_count": 7
+    },
+    "FISHERIES AND AQUACULTURE": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Agricultural Science::Fisheries and Aquaculture"
+      ],
+      "domain_link_count": 8
+    },
+    "FORENSIC SCIENCE": {
+      "offerings": 20,
+      "schools": 20,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Forensic Science"
+      ],
+      "domain_link_count": 6
+    },
+    "Family, Nutrition and Consumer Sciences": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 4
+    },
+    "Farm Management & Agric. Extension": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Agricultural Extension"
+      ],
+      "domain_link_count": 5
+    },
+    "Film and Video Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::FILM & MULTIMEDIA — P12, P13, P14"
+      ],
+      "domain_link_count": 2
+    },
+    "Finance": {
+      "offerings": 9,
+      "schools": 9,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Finance / Banking and Finance"
+      ],
+      "domain_link_count": 15
+    },
+    "Finance and Financial Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Finance / Banking and Finance"
+      ],
+      "domain_link_count": 15
+    },
+    "Finance and Investment": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Finance / Banking and Finance"
+      ],
+      "domain_link_count": 15
+    },
+    "Fine Art/Fine and Applied Arts": {
+      "offerings": 20,
+      "schools": 20,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Fine and Applied Arts"
+      ],
+      "domain_link_count": 1
+    },
+    "Fisheries": {
+      "offerings": 54,
+      "schools": 54,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Fisheries and Aquaculture"
+      ],
+      "domain_link_count": 6
+    },
+    "Food Engineering": {
+      "offerings": 10,
+      "schools": 10,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::FOOD ENGINEERING"
+      ],
+      "domain_link_count": 8
+    },
+    "Food Science & Nutrition": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::B.Sc./B.Tech Food Science and Technology"
+      ],
+      "domain_link_count": 5
+    },
+    "Food Science and Engineering": {
+      "offerings": 19,
+      "schools": 19,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::FOOD SCIENCE AND TECHNOLOGY"
+      ],
+      "domain_link_count": 7
+    },
+    "Food Science and Technology": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::B.Sc./B.Tech Food Science and Technology"
+      ],
+      "domain_link_count": 5
+    },
+    "Food Science with Business": {
+      "offerings": 27,
+      "schools": 27,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::B.Sc./B.Tech Food Science and Technology"
+      ],
+      "domain_link_count": 5
+    },
+    "Food Technology": {
+      "offerings": 27,
+      "schools": 27,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::FOOD SCIENCE AND TECHNOLOGY"
+      ],
+      "domain_link_count": 7
+    },
+    "Forestry and Fisheries": {
+      "offerings": 36,
+      "schools": 36,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Agricultural Science::Forest Resources and Wildlife Management",
+        "Agricultural Science::Fisheries and Aquaculture"
+      ],
+      "domain_link_count": 16
+    },
+    "Forestry, Wildlife & Fisheries": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Agricultural Science::Forest Resources and Wildlife Management",
+        "Agricultural Science::Fisheries and Aquaculture"
+      ],
+      "domain_link_count": 16
+    },
+    "French": {
+      "offerings": 54,
+      "schools": 54,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::French"
+      ],
+      "domain_link_count": 2
+    },
+    "French and German/Russian": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Modern European Languages B.A (French)"
+      ],
+      "domain_link_count": 1
+    },
+    "Fulfulde": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Linguistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Gas Engineering": {
+      "offerings": 14,
+      "schools": 14,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::NATURAL GAS ENGINEERING"
+      ],
+      "domain_link_count": 7
+    },
+    "Genetics and Biotechnology": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Geography": {
+      "offerings": 26,
+      "schools": 26,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Geography"
+      ],
+      "domain_link_count": 8
+    },
+    "Geography and Environmental Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Geography",
+        "Environmental Sciences::Environmental Management"
+      ],
+      "domain_link_count": 10
+    },
+    "Geography and Environmental Studies": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Geography"
+      ],
+      "domain_link_count": 8
+    },
+    "Geography and Geosciences": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Geography",
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 10
+    },
+    "Geological Sciences": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 5
+    },
+    "Geology": {
+      "offerings": 73,
+      "schools": 73,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Geology and Applied Geophysics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Applied Geophysics"
+      ],
+      "domain_link_count": 7
+    },
+    "Geology and Geophysics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Applied Geophysics"
+      ],
+      "domain_link_count": 7
+    },
+    "Geology and Mineral Science": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Geology and Mineral Sciences": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Geology and Mining": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Geology and Petroleum Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "Geophysics": {
+      "offerings": 16,
+      "schools": 16,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Applied Geophysics"
+      ],
+      "domain_link_count": 6
+    },
+    "Geoscience": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Geology"
+      ],
+      "domain_link_count": 6
+    },
+    "German": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Modern European Languages B.A (German)"
+      ],
+      "domain_link_count": 2
+    },
+    "Government and Public Administration": {
+      "offerings": 13,
+      "schools": 13,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 23
+    },
+    "HOME SCIENCE": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 4
+    },
+    "HUMAN BIOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 9
+    },
+    "Hausa": {
+      "offerings": 23,
+      "schools": 23,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Hausa"
+      ],
+      "domain_link_count": 2
+    },
+    "History": {
+      "offerings": 77,
+      "schools": 77,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::History/History and Diplomatic Studies"
+      ],
+      "domain_link_count": 4
+    },
+    "History and International Relations": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::International Relations",
+        "Arts::History/History and Diplomatic Studies"
+      ],
+      "domain_link_count": 15
+    },
+    "History and International Studies": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::International Relations",
+        "Arts::History/History and Diplomatic Studies"
+      ],
+      "domain_link_count": 15
+    },
+    "History and Strategic Studies": {
+      "offerings": 25,
+      "schools": 25,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Arts::History/History and Diplomatic Studies",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 15
+    },
+    "Home Economics": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 6
+    },
+    "Home Economics and Food Management": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 6
+    },
+    "Home Economics and Hotel Management": {
+      "offerings": 200,
+      "schools": 200,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Home Economics"
+      ],
+      "domain_link_count": 4
+    },
+    "Home Science & Management": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 4
+    },
+    "Home Science, Nutrition and Dietetics": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Family and Consumer Sciences"
+      ],
+      "domain_link_count": 4
+    },
+    "Horticulture": {
+      "offerings": 16,
+      "schools": 16,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Horticulture and Landscape Management"
+      ],
+      "domain_link_count": 5
+    },
+    "Hotel Management & Tourism": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Hospitality and Tourism Management"
+      ],
+      "domain_link_count": 9
+    },
+    "Hotel Management and Tourism": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Hospitality and Tourism Management"
+      ],
+      "domain_link_count": 9
+    },
+    "Hotel and Tourism Management": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Hospitality and Tourism Management"
+      ],
+      "domain_link_count": 9
+    },
+    "Human Nutrition and Dietetics": {
+      "offerings": 34,
+      "schools": 34,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Human Nutrition and Dietetics"
+      ],
+      "domain_link_count": 7
+    },
+    "Human Resources Management": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 8
+    },
+    "ICT Engineering": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::INFORMATION AND COMMUNICATION ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "INFORMATION AND COMMUNICATION SCIENCE": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information and Communication Technology"
+      ],
+      "domain_link_count": 6
+    },
+    "INFORMATION AND COMMUNICATION TECHNOLOGY": {
+      "offerings": 41,
+      "schools": 41,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Information and Communication Technology"
+      ],
+      "domain_link_count": 8
+    },
+    "INFORMATION AND MEDIA SCIENCE": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "INFORMATION AND MEDIA TECHNOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Technology"
+      ],
+      "domain_link_count": 2
+    },
+    "INFORMATION SCIENCE": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Information Systems"
+      ],
+      "domain_link_count": 9
+    },
+    "INFORMATION SCIENCE AND MEDIA STUDIES": {
+      "offerings": 36,
+      "schools": 36,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "INFORMATION SYSTEMS": {
+      "offerings": 23,
+      "schools": 23,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Information Systems"
+      ],
+      "domain_link_count": 9
+    },
+    "INFORMATION SYSTEMS AND TECHNOLOGY": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Systems"
+      ],
+      "domain_link_count": 6
+    },
+    "INFORMATION TECHNOLOGY": {
+      "offerings": 69,
+      "schools": 69,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Information Technology"
+      ],
+      "domain_link_count": 10
+    },
+    "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Technology"
+      ],
+      "domain_link_count": 1
+    },
+    "Igbo": {
+      "offerings": 16,
+      "schools": 16,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Igbo"
+      ],
+      "domain_link_count": 2
+    },
+    "Industral Mathematics/Computer": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 5
+    },
+    "Industrial Chemistry": {
+      "offerings": 35,
+      "schools": 35,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Industrial Chemistry"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Chemistry and Chemical Entrepreneurship": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 14
+    },
+    "Industrial Design": {
+      "offerings": 37,
+      "schools": 37,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Industrial Design"
+      ],
+      "domain_link_count": 2
+    },
+    "Industrial Mathematics": {
+      "offerings": 33,
+      "schools": 33,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 5
+    },
+    "Industrial Mathematics /Applied Statistics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 4
+    },
+    "Industrial Mathematics and Computer Science": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 5
+    },
+    "Industrial Microbiology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Microbiology"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Physics": {
+      "offerings": 12,
+      "schools": 12,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 10
+    },
+    "Industrial Physics with Applied Geophysics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Applied Geophysics"
+      ],
+      "domain_link_count": 7
+    },
+    "Industrial Physics with Electronics and IT Application": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 10
+    },
+    "Industrial Physics with Renewable Energy": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Relations / Industrial and Labour Relations": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Relations and Human Resources Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Relations and Personnel Management": {
+      "offerings": 14,
+      "schools": 14,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 8
+    },
+    "Industrial and Environmental Chemistry": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 8
+    },
+    "Information and Media Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::INFORMATION AND MEDIA STUDIES — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "Insurance": {
+      "offerings": 13,
+      "schools": 13,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Insurance"
+      ],
+      "domain_link_count": 12
+    },
+    "Insurance and Actuarial Science": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Insurance"
+      ],
+      "domain_link_count": 12
+    },
+    "Intelligence and Security Studies": {
+      "offerings": 40,
+      "schools": 40,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::Intelligence and Security Studies"
+      ],
+      "domain_link_count": 7
+    },
+    "International Relations": {
+      "offerings": 65,
+      "schools": 65,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 7
+    },
+    "International Relations and Diplomacy": {
+      "offerings": 14,
+      "schools": 14,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 6
+    },
+    "International Relations and Diplomatic Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 6
+    },
+    "International Relations and Strategic Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 6
+    },
+    "International Relationship & Strategic Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 6
+    },
+    "International Studies": {
+      "offerings": 9,
+      "schools": 9,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 5
+    },
+    "International Studies and": {
+      "offerings": 94,
+      "schools": 94,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 5
+    },
+    "International Studies and Diplomacy": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 5
+    },
+    "International and Comparative Politics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::International Relations",
+        "Social Sciences::Political Science"
+      ],
+      "domain_link_count": 13
+    },
+    "Islamic Law/Sharia Law": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Law::Common and Islamic Law"
+      ],
+      "domain_link_count": 3
+    },
+    "Islamic Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Islamic Studies"
+      ],
+      "domain_link_count": 4
+    },
+    "Kanuri": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Linguistics"
+      ],
+      "domain_link_count": 4
+    },
+    "LIBRARY AND INFORMATION SCIENCE": {
+      "offerings": 46,
+      "schools": 46,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Library and Information Science"
+      ],
+      "domain_link_count": 5
+    },
+    "LIBRARY AND INFORMATION TECHNOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Technology"
+      ],
+      "domain_link_count": 1
+    },
+    "LIBRARY SCIENCE": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Library and Information Science"
+      ],
+      "domain_link_count": 4
+    },
+    "Land Surveying": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Surveying and Geoinformatics"
+      ],
+      "domain_link_count": 3
+    },
+    "Library Science": {
+      "offerings": 10,
+      "schools": 10,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Library and Information Science"
+      ],
+      "domain_link_count": 2
+    },
+    "Library and Information Science": {
+      "offerings": 212,
+      "schools": 212,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Education::Library and Information Science"
+      ],
+      "domain_link_count": 3
+    },
+    "Linguistics": {
+      "offerings": 92,
+      "schools": 92,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Linguistics"
+      ],
+      "domain_link_count": 6
+    },
+    "Linguistics/Edo": {
+      "offerings": 110,
+      "schools": 110,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Linguistics"
+      ],
+      "domain_link_count": 3
+    },
+    "Literature in English": {
+      "offerings": 24,
+      "schools": 24,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::English Language and Literature"
+      ],
+      "domain_link_count": 5
+    },
+    "Livestock Production Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Local Government Studies": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Local Government and Development Studies"
+      ],
+      "domain_link_count": 10
+    },
+    "Logistics and Supply Chain Management": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Logistics and Supply Chain Management"
+      ],
+      "domain_link_count": 14
+    },
+    "MANAGEMENT INFORMATION SYSTEM": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Information Systems"
+      ],
+      "domain_link_count": 6
+    },
+    "MARINE BIOLOGY": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 6
+    },
+    "MARINE BIOLOGY & FISHERIES": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 6
+    },
+    "MATHEMATICAL SCIENCES": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Mathematics"
+      ],
+      "domain_link_count": 2
+    },
+    "METEOROLOGY": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Meteorology"
+      ],
+      "domain_link_count": 5
+    },
+    "METEOROLOGY AND CLIMATE CHANGE": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Meteorology"
+      ],
+      "domain_link_count": 5
+    },
+    "METEOROLOGY AND CLIMATE SCIENCE": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Meteorology"
+      ],
+      "domain_link_count": 3
+    },
+    "Management": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Business Administration"
+      ],
+      "domain_link_count": 17
+    },
+    "Management Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Business Administration"
+      ],
+      "domain_link_count": 17
+    },
+    "Marine Geology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Marine Science": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Marine Science and Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Marketing": {
+      "offerings": 40,
+      "schools": 40,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Marketing"
+      ],
+      "domain_link_count": 11
+    },
+    "Marketing and Consumer Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Marketing"
+      ],
+      "domain_link_count": 11
+    },
+    "Mass Communication": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::MASS COMMUNICATION — P12, P13, P14"
+      ],
+      "domain_link_count": 4
+    },
+    "Mathematics": {
+      "offerings": 174,
+      "schools": 174,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Mathematics"
+      ],
+      "domain_link_count": 3
+    },
+    "Mathematics and Economics / Mathematics with Economics": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Economics"
+      ],
+      "domain_link_count": 13
+    },
+    "Mathematics with Computer Science": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Mechanical Engineering": {
+      "offerings": 95,
+      "schools": 95,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::MECHANICAL ENGINEERING"
+      ],
+      "domain_link_count": 10
+    },
+    "Mechatronics Engineering": {
+      "offerings": 39,
+      "schools": 39,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::MECHATRONICS ENGINEERING"
+      ],
+      "domain_link_count": 3
+    },
+    "Medical Biochemistry": {
+      "offerings": 19,
+      "schools": 19,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biochemistry"
+      ],
+      "domain_link_count": 3
+    },
+    "Medical Laboratory Technology/Science": {
+      "offerings": 133,
+      "schools": 133,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Allied Health Sciences::Medical Laboratory Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Medical Rehabilitation": {
+      "offerings": 162,
+      "schools": 162,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Physiotherapy",
+        "Allied Health Sciences::Occupational Therapy"
+      ],
+      "domain_link_count": 13
+    },
+    "Medicine and Surgery (Human Medicine)": {
+      "offerings": 107,
+      "schools": 107,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Medicine and Dentistry::Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)"
+      ],
+      "domain_link_count": 8
+    },
+    "Meteorology": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Meteorology"
+      ],
+      "domain_link_count": 5
+    },
+    "Microbiology": {
+      "offerings": 181,
+      "schools": 181,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Microbiology"
+      ],
+      "domain_link_count": 9
+    },
+    "Microbiology and Biotechnology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Microbiology and Industrial Biotechnology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Microbiology/Parasitology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Microbiology"
+      ],
+      "domain_link_count": 7
+    },
+    "Modern Language and Translation": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Modern European Languages B.A (German)"
+      ],
+      "domain_link_count": 2
+    },
+    "Molecular Biology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 9
+    },
+    "Music": {
+      "offerings": 28,
+      "schools": 28,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Music"
+      ],
+      "domain_link_count": 5
+    },
+    "NATURAL AND ENVIRONMENTAL SCIENCE": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Environmental Management"
+      ],
+      "domain_link_count": 7
+    },
+    "Nursing/Nursing Science": {
+      "offerings": 154,
+      "schools": 154,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Allied Health Sciences::Nursing Sciences"
+      ],
+      "domain_link_count": 8
+    },
+    "OCEANOGRAPHY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Marine Science"
+      ],
+      "domain_link_count": 8
+    },
+    "OPERATIONS RESEARCH": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Industrial Mathematics"
+      ],
+      "domain_link_count": 5
+    },
+    "Office and Information Technology / Information Resource Management": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Information Resource Management"
+      ],
+      "domain_link_count": 9
+    },
+    "Optometry": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Optometry"
+      ],
+      "domain_link_count": 9
+    },
+    "PHYSICS": {
+      "offerings": 147,
+      "schools": 147,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 7
+    },
+    "PHYSICS WITH ELECTRONICS": {
+      "offerings": 85,
+      "schools": 85,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Physics with Electronics"
+      ],
+      "domain_link_count": 10
+    },
+    "PURE AND APPLIED BIOLOGY": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biology"
+      ],
+      "domain_link_count": 10
+    },
+    "Parasitology and Entomology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 7
+    },
+    "Pasture & Range Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Animal Science"
+      ],
+      "domain_link_count": 2
+    },
+    "Peace Strategic and Conflict Resolution": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Peace Studies and Conflict Resolution",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Peace Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 3
+    },
+    "Peace Studies and Conflict Resolution": {
+      "offerings": 30,
+      "schools": 30,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 6
+    },
+    "Peace and Conflict Studies": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 3
+    },
+    "Peace and Development Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Development Studies",
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 14
+    },
+    "Personnel Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Employment and Human Resource Management"
+      ],
+      "domain_link_count": 7
+    },
+    "Petroleum Chemistry": {
+      "offerings": 10,
+      "schools": 10,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Petroleum Chemistry"
+      ],
+      "domain_link_count": 9
+    },
+    "Petroleum and Gas Engineering": {
+      "offerings": 16,
+      "schools": 16,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::PETROLEUM AND GAS ENGINEERING"
+      ],
+      "domain_link_count": 5
+    },
+    "Pharmacology": {
+      "offerings": 103,
+      "schools": 103,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Pharmacology"
+      ],
+      "domain_link_count": 10
+    },
+    "Pharmacy": {
+      "offerings": 37,
+      "schools": 37,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Pharmacy and Pharmaceutical Sciences::Bachelor of Pharmacy"
+      ],
+      "domain_link_count": 6
+    },
+    "Philosophy": {
+      "offerings": 64,
+      "schools": 64,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Philosophy"
+      ],
+      "domain_link_count": 3
+    },
+    "Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)": {
+      "offerings": 60,
+      "schools": 60,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 10
+    },
+    "Physics Electronics": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics with Electronics"
+      ],
+      "domain_link_count": 8
+    },
+    "Physics and Applied Physics": {
+      "offerings": 10,
+      "schools": 10,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Physics and Computer Electronic": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics with Electronics"
+      ],
+      "domain_link_count": 8
+    },
+    "Physics and Energy Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Physics with Computational Modeling": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Physics with Solar Energy": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Physics/Astrology": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Physics/Industrial Physics": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 8
+    },
+    "Physiology": {
+      "offerings": 62,
+      "schools": 62,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Basic Medical Sciences::Physiology"
+      ],
+      "domain_link_count": 6
+    },
+    "Physiotherapy": {
+      "offerings": 35,
+      "schools": 35,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Physiotherapy"
+      ],
+      "domain_link_count": 5
+    },
+    "Plant Biology": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 7
+    },
+    "Plant Biology and Biotechnology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Plant Breeding and Seed Technology": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Agricultural Science::Crop Science"
+      ],
+      "domain_link_count": 6
+    },
+    "Plant Science": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 7
+    },
+    "Plant Science and Biotechnology": {
+      "offerings": 44,
+      "schools": 44,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Biotechnology"
+      ],
+      "domain_link_count": 8
+    },
+    "Plant Science and Forestry": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Botany"
+      ],
+      "domain_link_count": 7
+    },
+    "Plant Science and Microbiology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Microbiology"
+      ],
+      "domain_link_count": 8
+    },
+    "Policy and Administrative Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 23
+    },
+    "Policy and Strategic Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Political Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Political Science": {
+      "offerings": 137,
+      "schools": 137,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science"
+      ],
+      "domain_link_count": 8
+    },
+    "Political Science / International Law and Diplomacy": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and Conflict": {
+      "offerings": 12,
+      "schools": 12,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and Conflict Resolution": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::Peace Studies and Conflict Resolution"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and Defence Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and Diplomacy": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and International Relations": {
+      "offerings": 10,
+      "schools": 10,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and International Studies": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Social Sciences::International Relations"
+      ],
+      "domain_link_count": 13
+    },
+    "Political Science and Public Administration": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Political Science",
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 23
+    },
+    "Political and Administrative Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Political Science"
+      ],
+      "domain_link_count": 7
+    },
+    "Polymer and Textile Engineering": {
+      "offerings": 16,
+      "schools": 16,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::MATERIALS ENGINEERING"
+      ],
+      "domain_link_count": 7
+    },
+    "Population Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Demography and Social Statistics"
+      ],
+      "domain_link_count": 8
+    },
+    "Portuguese/English": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Modern European Languages B.A (French)"
+      ],
+      "domain_link_count": 1
+    },
+    "Procurement": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Procurement Management"
+      ],
+      "domain_link_count": 10
+    },
+    "Procurement Management": {
+      "offerings": 13,
+      "schools": 13,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Procurement Management"
+      ],
+      "domain_link_count": 12
+    },
+    "Production Engineering": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::INDUSTRIAL AND PRODUCTION ENGINEERING"
+      ],
+      "domain_link_count": 7
+    },
+    "Project Management": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Project Management"
+      ],
+      "domain_link_count": 8
+    },
+    "Psychology": {
+      "offerings": 60,
+      "schools": 60,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Psychology"
+      ],
+      "domain_link_count": 10
+    },
+    "Public Administration": {
+      "offerings": 115,
+      "schools": 115,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 5
+    },
+    "Public Administration and Local Govt": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 5
+    },
+    "Public Administration and Policy Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Public Administration"
+      ],
+      "domain_link_count": 5
+    },
+    "Public Health Technology": {
+      "offerings": 122,
+      "schools": 122,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Allied Health Sciences::Public Health"
+      ],
+      "domain_link_count": 4
+    },
+    "Public Relations and Advertising": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::PUBLIC RELATIONS — P12, P13, P14"
+      ],
+      "domain_link_count": 3
+    },
+    "Public and International Law": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Law::Law"
+      ],
+      "domain_link_count": 4
+    },
+    "Pure Chemistry": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 7
+    },
+    "Pure Physics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Pure and Applied Chemistry": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Chemistry"
+      ],
+      "domain_link_count": 7
+    },
+    "Pure and Applied Mathematics": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Mathematics"
+      ],
+      "domain_link_count": 2
+    },
+    "Pure and Applied Physics": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Physics"
+      ],
+      "domain_link_count": 6
+    },
+    "Pure and Industrial Chemistry": {
+      "offerings": 7,
+      "schools": 7,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Chemistry"
+      ],
+      "domain_link_count": 8
+    },
+    "Pure and Industrial Physics": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Industrial Physics"
+      ],
+      "domain_link_count": 8
+    },
+    "Quantity Surveying": {
+      "offerings": 75,
+      "schools": 75,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Quantity Surveying"
+      ],
+      "domain_link_count": 7
+    },
+    "Radiography": {
+      "offerings": 60,
+      "schools": 60,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Allied Health Sciences::Radiography"
+      ],
+      "domain_link_count": 11
+    },
+    "Religious Studies": {
+      "offerings": 88,
+      "schools": 88,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Arts::Religious Studies"
+      ],
+      "domain_link_count": 6
+    },
+    "Robotics (Artificial Intelligence)": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Computer Science"
+      ],
+      "domain_link_count": 1
+    },
+    "Russian with French/German": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Modern European Languages (Russian)"
+      ],
+      "domain_link_count": 2
+    },
+    "Science Laboratory Technology": {
+      "offerings": 44,
+      "schools": 44,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Science Laboratory Technology"
+      ],
+      "domain_link_count": 7
+    },
+    "Secretarial Administration": {
+      "offerings": 8,
+      "schools": 8,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Office and Information Management"
+      ],
+      "domain_link_count": 5
+    },
+    "Securities and Investment": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Securities and Investments Management"
+      ],
+      "domain_link_count": 14
+    },
+    "Social Innovation and Entrepreneurship": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Entrepreneurship"
+      ],
+      "domain_link_count": 12
+    },
+    "Social Justice": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::Social Justice"
+      ],
+      "domain_link_count": 10
+    },
+    "Social Standards": {
+      "offerings": 6,
+      "schools": 6,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Social Standards"
+      ],
+      "domain_link_count": 9
+    },
+    "Social Work": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Social Work"
+      ],
+      "domain_link_count": 10
+    },
+    "Sociology": {
+      "offerings": 106,
+      "schools": 106,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Social Sciences::Sociology"
+      ],
+      "domain_link_count": 7
+    },
+    "Sociology and Anthroplogy": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Sociology",
+        "__custom__::Anthropology"
+      ],
+      "domain_link_count": 2
+    },
+    "Sociology and Social Studies": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "combined_ccmas_curriculum",
+      "component_refs": [
+        "Social Sciences::Sociology",
+        "Social Sciences::Development Studies"
+      ],
+      "domain_link_count": 17
+    },
+    "Software Engineering": {
+      "offerings": 113,
+      "schools": 113,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Computing::Software Engineering"
+      ],
+      "domain_link_count": 13
+    },
+    "Software Engineering and Digital Entrepreneurship": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Software Engineering"
+      ],
+      "domain_link_count": 5
+    },
+    "Soil Science": {
+      "offerings": 30,
+      "schools": 30,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Agricultural Science::Soil Science"
+      ],
+      "domain_link_count": 9
+    },
+    "Sport Management (Education)": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::Sport Management (Education)"
+      ],
+      "domain_link_count": 4
+    },
+    "Sport Science": {
+      "offerings": 21,
+      "schools": 21,
+      "mapping_status": "ready_external",
+      "inheritance_type": "external_sources_required",
+      "component_refs": [
+        "__custom__::Sport Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Statistics": {
+      "offerings": 134,
+      "schools": 134,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Statistics"
+      ],
+      "domain_link_count": 4
+    },
+    "Statistics Education": {
+      "offerings": 4,
+      "schools": 4,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Mathematics"
+      ],
+      "domain_link_count": 3
+    },
+    "Statistics and Data Sciences": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Computing::Data Science"
+      ],
+      "domain_link_count": 5
+    },
+    "Statistics with Demography": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Social Sciences::Demography and Social Statistics"
+      ],
+      "domain_link_count": 8
+    },
+    "Strategic Communication": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Communication and Media Studies::STRATEGIC COMMUNICATION — P12, P13, P14"
+      ],
+      "domain_link_count": 3
+    },
+    "Supply Chain Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Logistics and Supply Chain Management"
+      ],
+      "domain_link_count": 13
+    },
+    "Surveying and Geoinformatics": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Surveying and Geoinformatics"
+      ],
+      "domain_link_count": 5
+    },
+    "Systems Engineering": {
+      "offerings": 66,
+      "schools": 66,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::SYSTEMS ENGINEERING"
+      ],
+      "domain_link_count": 6
+    },
+    "TELECOMMUNICATION AND WIRELESS TECHNOLOGY": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "TELECOMMUNICATION MANAGEMENT": {
+      "offerings": 5,
+      "schools": 5,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "TELECOMMUNICATION SCIENCE": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Engineering::TELECOMMUNICATIONS ENGINEERING"
+      ],
+      "domain_link_count": 4
+    },
+    "Taxation": {
+      "offerings": 18,
+      "schools": 18,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Taxation"
+      ],
+      "domain_link_count": 11
+    },
+    "Teacher Education": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Primary Education"
+      ],
+      "domain_link_count": 3
+    },
+    "Technology Education": {
+      "offerings": 36,
+      "schools": 36,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Education::Technology Education"
+      ],
+      "domain_link_count": 8
+    },
+    "Textile Science and Technology": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Environmental Sciences::Clothing and Textile Design"
+      ],
+      "domain_link_count": 3
+    },
+    "Theology": {
+      "offerings": 11,
+      "schools": 11,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::Christian Theology"
+      ],
+      "domain_link_count": 3
+    },
+    "Tourism Studies": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Hospitality and Tourism Management"
+      ],
+      "domain_link_count": 9
+    },
+    "Transport Management": {
+      "offerings": 2,
+      "schools": 2,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Administration and Management::Transport Management"
+      ],
+      "domain_link_count": 12
+    },
+    "Transport Planning and Management": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Hospitality and Tourism Management"
+      ],
+      "domain_link_count": 10
+    },
+    "Transport and Logistics Management": {
+      "offerings": 3,
+      "schools": 3,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Transport Management"
+      ],
+      "domain_link_count": 12
+    },
+    "Transport and Tourism": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Administration and Management::Transport Management"
+      ],
+      "domain_link_count": 12
+    },
+    "Urban and Regional Planning": {
+      "offerings": 64,
+      "schools": 64,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Environmental Sciences::Urban and Regional Planning"
+      ],
+      "domain_link_count": 6
+    },
+    "Vocational Education": {
+      "offerings": 63,
+      "schools": 63,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Education::Technology Education"
+      ],
+      "domain_link_count": 6
+    },
+    "Water Resources and Environmental Engr": {
+      "offerings": 28,
+      "schools": 28,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Engineering::WATER RESOURCES ENGINEERING"
+      ],
+      "domain_link_count": 1
+    },
+    "Yoruba": {
+      "offerings": 17,
+      "schools": 17,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Arts::African Languages and Literature Yoruba"
+      ],
+      "domain_link_count": 1
+    },
+    "Zoology": {
+      "offerings": 66,
+      "schools": 66,
+      "mapping_status": "ready",
+      "inheritance_type": "single_ccmas_full_curriculum",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 7
+    },
+    "Zoology and Aquaculture": {
+      "offerings": 1,
+      "schools": 1,
+      "mapping_status": "ready_partial",
+      "inheritance_type": "partial_curriculum_scope",
+      "component_refs": [
+        "Sciences::Zoology"
+      ],
+      "domain_link_count": 3
+    }
+  }
+}

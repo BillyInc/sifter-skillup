@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
   applyBtnText: {
     color: "#fff",
     fontSize: FontSize.sm,
-    fontFamily: "HankenGrotesk_600SemiBold",
+    fontFamily: "Inter_600SemiBold",
   },
 
   // ── Desktop layout ────────────────────────────────────────
