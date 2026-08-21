@@ -45,7 +45,11 @@ function AdminProgramme({ programme }: { programme: Programme }) {
     <>
       <Text style={[styles.title, CompassFonts.displayBold, { color: colors.textRole.primary }]}>{programme.name}</Text>
       <Text style={[styles.caption, { color: colors.textRole.secondary }]}>Canonical programme record used to connect university teaching outcomes to the career taxonomy.</Text>
-      <Provenance value={programme} />
+      {/* No <Provenance /> here. Programme carries neither sourceConfidence nor
+          dataState — /api/career/programmes/{id} does not emit them, unlike the
+          domain and role payloads — so the call could only ever render null,
+          and tsc rejected it outright (TS2559, no properties in common).
+          Restore it if and when the endpoint starts returning provenance. */}
       <View style={styles.card}>
         <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>What the university programme teaches</Text>
         <Chips items={programme.skillsTechnical ?? []} label="Technical learning outcomes" />
