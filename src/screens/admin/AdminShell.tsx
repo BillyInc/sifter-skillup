@@ -12,7 +12,7 @@
  * and routes to the consent-gated /(admin)/students page, which adminData
  * returns as `locked` (never coming_soon). Chrome uses theme tokens only.
  */
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   View,
   Text,
@@ -24,7 +24,7 @@ import {
   Modal,
   useWindowDimensions,
 } from "react-native";
-import { useRouter, usePathname } from "expo-router";
+import { useRouter, usePathname, useGlobalSearchParams } from "expo-router";
 import {
   useTheme,
   Spacing,
@@ -43,9 +43,23 @@ import {
   type AdminAudience,
 } from "@/lib/adminAudience";
 import type { EducatorProfile } from "../../types/institution";
+import { clearAdminResume, saveAdminResume } from "@/lib/adminResume";
 
 const SIDEBAR_WIDTH = 232;
 const WIDE_BREAKPOINT = 900;
+
+function adminResumeLabel(path: string) {
+  if (path.includes("/students/")) return "Student guidance";
+  if (path === "/students" || path.endsWith("/students")) return "Student account creation and roster";
+  if (path.includes("/peers")) return "Peer comparison";
+  if (path.includes("/workspace-explore/admission")) return "Admission guidance";
+  if (path.includes("/workspace-explore")) return "Explore programmes and fields";
+  if (path.includes("/verify")) return "Verification";
+  if (path.includes("/skills-gap")) return "Programme skills review";
+  if (path.includes("/reports")) return "Reports";
+  if (path.includes("/guidance")) return "Guidance workspace";
+  return "Admin workspace";
+}
 
 // Keyed on `dashboard` because every audience has it. This was keyed on
 // `domainIntelligence`, which §5.2 merged away — a nav helper rename broke
@@ -104,6 +118,7 @@ export function AdminShell({
   const { width } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useGlobalSearchParams<Record<string, string | string[]>>();
   const { user, signOut, deleteAccount } = useAuth();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [accountAction, setAccountAction] = useState<"sign-out" | "delete" | null>(null);
@@ -124,6 +139,20 @@ export function AdminShell({
   const homeKey = audience === "university" ? "dashboard" : "explore";
   const homeSegment =
     audience === "university" ? "dashboard" : ADMIN_EXPLORE_SEGMENT;
+  const resumeQuery = useMemo(
+    () => Object.entries(searchParams ?? {})
+      .flatMap(([key, value]) => (Array.isArray(value) ? value.map((item) => [key, item] as const) : [[key, value] as const]))
+      .filter(([, value]) => value !== undefined && value !== null && value !== "")
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+      .join("&"),
+    [searchParams],
+  );
+
+  useEffect(() => {
+    if (!user?.id || !pathname) return;
+    const href = `/(admin)${pathname}${resumeQuery ? `?${resumeQuery}` : ""}`;
+    void saveAdminResume({ href, label: adminResumeLabel(pathname) }, user.id);
+  }, [pathname, resumeQuery, user?.id]);
 
   useEffect(() => {
     let active = true;
@@ -178,6 +207,7 @@ export function AdminShell({
     try {
       await deleteAccount();
     } finally {
+      await clearAdminResume(user?.id);
       router.replace("/(auth)/sign-in" as never);
     }
   };
