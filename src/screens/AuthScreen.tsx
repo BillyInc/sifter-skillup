@@ -59,7 +59,8 @@ export default function AuthScreen() {
   const resp = useResponsive();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
-  const [mode, setMode] = useState<Mode>("welcome");
+  // This screen is the login form only. The shared auth entry lives at `/`.
+  const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [schoolCode, setSchoolCode] = useState(() => {
@@ -135,7 +136,7 @@ export default function AuthScreen() {
     setError("");
     resetLoginFields();
     setShowSignupGuard(false);
-    setMode("welcome");
+    router.replace("/" as any);
   };
 
   const handleGuest = async () => {

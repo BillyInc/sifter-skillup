@@ -66,16 +66,29 @@ const SECTIONS = [
   },
 ];
 
-interface Props { onClose?: () => void; }
+interface Props {
+  onClose?: () => void;
+  onReadToEnd?: () => void;
+}
 
-export default function PrivacyScreen({ onClose }: Props) {
+export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
   const { colors } = useTheme();
   const resp = useResponsive();
 
   // ── Section positions for nav scrolling ──────────────────────
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState(SECTIONS[0].title);
+  const [readToEnd, setReadToEnd] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+
+  const handleScroll = useCallback((event: any) => {
+    if (readToEnd) return;
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 32) {
+      setReadToEnd(true);
+      onReadToEnd?.();
+    }
+  }, [onReadToEnd, readToEnd]);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -195,6 +208,7 @@ export default function PrivacyScreen({ onClose }: Props) {
             contentContainerStyle={styles.body}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
+            onScroll={handleScroll}
           >
             {content}
           </ScrollView>
@@ -207,7 +221,7 @@ export default function PrivacyScreen({ onClose }: Props) {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
       {header}
-      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} scrollEventThrottle={16} onScroll={handleScroll}>
         {content}
       </ScrollView>
     </SafeAreaView>

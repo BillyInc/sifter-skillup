@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ActivityIndicator,
-  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,16 +21,14 @@ import {
   FontSize,
   FontWeight,
   Radius,
-  Shadow,
   Spacing,
   useTheme,
   webContainer,
+  INTRO_SEEN_KEY,
 } from "../src/theme";
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 import { IntroCarousel } from "../src/components/brand/IntroCarousel";
 import { hasExplicitLogout } from "../src/lib/logoutState";
-import TermsScreen from "../src/screens/TermsScreen";
-import PrivacyScreen from "../src/screens/PrivacyScreen";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -44,11 +42,10 @@ export default function LandingPage() {
   const [guestBusy, setGuestBusy] = useState(false);
   const [guestError, setGuestError] = useState<string | null>(null);
   const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
-  const [legalPage, setLegalPage] = useState<"terms" | "privacy" | null>(null);
 
   useEffect(() => {
-    hasExplicitLogout()
-      .then((loggedOut) => setIntroState(loggedOut ? "logged_out" : "show"))
+    Promise.all([hasExplicitLogout(), AsyncStorage.getItem(INTRO_SEEN_KEY)])
+      .then(([loggedOut, introSeen]) => setIntroState(loggedOut ? "logged_out" : introSeen === "1" ? "done" : "show"))
       .catch(() => setIntroState("show"));
   }, []);
 
@@ -160,26 +157,6 @@ export default function LandingPage() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.grid}>
-        {[
-          ["Students", "Continue career discovery, explore domains, and compare role signals."],
-          ["Universities", "Explore programme-to-domain mappings and curriculum pathways."],
-          ["Schools & tutorials", "Guide SS students outward across universities and roles."],
-        ].map(([title, body]) => (
-          <View
-            key={title}
-            style={[
-              styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border },
-              Shadow.xs,
-            ]}
-          >
-            <Text style={[styles.cardTitle, { color: colors.text }]}>{title}</Text>
-            <Text style={[styles.cardBody, { color: colors.textMuted }]}>{body}</Text>
-          </View>
-        ))}
-      </View>
-
       <TouchableOpacity
         onPress={handleGuest}
         disabled={guestBusy}
@@ -189,18 +166,20 @@ export default function LandingPage() {
           {guestBusy ? "Opening guest mode..." : "Browse as guest"}
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          AsyncStorage.removeItem(INTRO_SEEN_KEY).catch(() => {});
+          setIntroState("show");
+        }}
+        style={styles.viewIntro}
+      >
+        <Text style={[styles.browseText, { color: colors.textMuted }]}>View intro again</Text>
+      </TouchableOpacity>
       {guestError ? (
         <Text style={[styles.errorText, { color: colors.red }]}>
           {guestError}
         </Text>
       ) : null}
-      <View style={styles.legalLinks}>
-        <TouchableOpacity onPress={() => setLegalPage("terms")}><Text style={[styles.legalLink, { color: colors.textMuted }]}>Terms</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setLegalPage("privacy")}><Text style={[styles.legalLink, { color: colors.textMuted }]}>Privacy</Text></TouchableOpacity>
-      </View>
-      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
-        {legalPage === "terms" ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}
-      </Modal>
     </ScrollView>
   );
 }
@@ -249,19 +228,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   secondaryText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
-  card: {
-    flex: 1,
-    minWidth: 220,
-    borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.lg,
-    gap: Spacing.xs,
-  },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
-  cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   browse: { alignSelf: "center", padding: Spacing.sm },
   browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  viewIntro: { alignSelf: "center", padding: Spacing.xs },
   errorText: {
     alignSelf: "center",
     maxWidth: 420,
@@ -269,6 +238,4 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     fontWeight: FontWeight.bold,
   },
-  legalLinks: { flexDirection: "row", justifyContent: "center", gap: Spacing.lg, paddingTop: Spacing.sm },
-  legalLink: { fontSize: FontSize.xs, textDecorationLine: "underline", fontWeight: "700" },
 });
