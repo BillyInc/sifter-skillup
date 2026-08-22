@@ -22,12 +22,16 @@ import { careerData, type GuidanceReportPath, type JambProgrammeRequirements, ty
 import { useExploreNav } from "@/lib/exploreNav";
 import { awardLine } from "@/lib/programmeAward";
 import { requirementFallbackText, sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
-import { comingSoon, type DataState, type DomainLink, type Programme } from "@/types/career";
+import { comingSoon, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 
 export interface ProgrammeDetailRefinedScreenProps {
   programmeId: string;
+  /** A JAMB identity selected from admission matching. When present, do not
+   * resolve through the broader canonical programme because that can merge
+   * several distinct JAMB names and their teaching profiles. */
+  jambProgrammeId?: string;
   initialSchoolId?: string;
   userType?: string;
 }
@@ -93,7 +97,7 @@ function appendProgrammeChoice(
   };
 }
 
-export default function ProgrammeDetailRefinedScreen({ programmeId, initialSchoolId, userType }: ProgrammeDetailRefinedScreenProps) {
+export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType }: ProgrammeDetailRefinedScreenProps) {
   const router = useRouter();
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
@@ -108,6 +112,51 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, initialSchoo
   useEffect(() => {
     let active = true;
     void (async () => {
+      if (jambProgrammeId) {
+        const [detail, domainState, schoolRows] = await Promise.all([
+          careerData.getJambProgramme(jambProgrammeId),
+          careerData.getJambProgrammeDomains(jambProgrammeId),
+          careerData.getJambProgrammeSchools(jambProgrammeId),
+        ]);
+        if (!active) return;
+        if (detail.status !== "real" || !detail.data) {
+          setState(comingSoon(detail.meta?.notice ?? "Programme details are not available yet."));
+          return;
+        }
+        const variant = detail.data;
+        const variantDomains = domainState.status === "real" && domainState.data
+          ? domainState.data.domains
+          : [];
+        const variantProgramme: Programme = {
+          id: jambProgrammeId,
+          name: variant.jambName || variant.studentName || "Programme",
+          displayName: variant.studentName || variant.jambName,
+          studentName: variant.studentName || variant.jambName,
+          studentNames: [variant.studentName || variant.jambName].filter(Boolean) as string[],
+          institutionType: "university",
+          discipline: variant.jambFaculty || "",
+          qualification: variant.degreeType || undefined,
+          // A JAMB variant must use its own source-backed skills profile. Do
+          // not borrow the canonical programme description, which may be an
+          // aggregate of several JAMB identities.
+          overview: null,
+          skillsTechnical: variant.skillsTechnical,
+          skillsTransferable: variant.skillsTransferable,
+          skillsCount: variant.skillsCount,
+          domains: variantDomains,
+        };
+        setState(real(variantProgramme, detail.meta));
+        setRequirements(variant.requirements ?? null);
+        const nextSchools = schoolRows.status === "real" || schoolRows.status === "fallback"
+          ? schoolRows.data ?? []
+          : [];
+        setSchools(nextSchools);
+        if (initialSchoolId && nextSchools.some((school) => school.schoolId === initialSchoolId)) {
+          setSelectedSchoolId(initialSchoolId);
+        }
+        return;
+      }
+
       const result = await careerData.getProgramme(programmeId);
       if (!active) return;
       setState(result);
@@ -128,9 +177,10 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, initialSchoo
       }
     })();
     return () => { active = false; };
-  }, [initialSchoolId, programmeId]);
+  }, [initialSchoolId, jambProgrammeId, programmeId]);
 
   const programme = state.data;
+  const activeProgrammeId = jambProgrammeId || programmeId;
   const programmeName = programme?.studentName ?? programme?.studentNames?.[0] ?? programme?.name ?? "Programme name unavailable";
   const visibleSchools = useMemo(
     () => schools.filter((school) => !school.form || school.form.toUpperCase() === "UTME"),
@@ -146,7 +196,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, initialSchoo
       const current = await careerData.getGuidancePath();
       const existingPath = current.status === "real" && current.data ? current.data.path : {};
       const nextPath = appendProgrammeChoice(existingPath, {
-        programme: { id: programmeId, name: school.studentName ?? school.jambName ?? programmeName, sourceName: school.jambName ?? programmeName },
+        programme: { id: activeProgrammeId, name: school.studentName ?? school.jambName ?? programmeName, sourceName: school.jambName ?? programmeName },
         university: { id: school.schoolId, name: school.schoolName, address: school.address ?? null },
         requirements: (requirements ?? {}) as Record<string, unknown>,
         universityRequirements: {
@@ -194,7 +244,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, initialSchoo
     <DetailScaffold
       eyebrow="PROGRAMME"
       title={programmeName}
-      save={{ entityType: "programme", entityId: programmeId }}
+      save={{ entityType: "programme", entityId: activeProgrammeId }}
       pdf
       pdfPath="/api/student/report.html"
       state={state.status === "real" ? state : { ...state, data: state.data ?? PLACEHOLDER }}
@@ -266,6 +316,10 @@ function ProgrammeDetailBody({
     { label: "UTME subjects", icon: "edit-3" as const, field: "utme_subjects" as RequirementField, value: requirements?.utmeSubjects },
     { label: "O-Level requirements", icon: "book" as const, field: "olevel_requirement" as RequirementField, value: requirements?.olevelRequirement },
   ];
+  const universityRequirementCards = selectedSchool ? [
+    { label: "This university's UTME subjects", icon: "edit-3" as const, field: "utme_subjects" as RequirementField, value: selectedSchool.universityUtmeSubjects },
+    { label: "This university's O-level requirements", icon: "book" as const, field: "olevel_requirement" as RequirementField, value: selectedSchool.universityOlevelRequirement },
+  ] : [];
   const orderedDomains = [...(data.domains ?? [])].sort(
     (a, b) => relationshipOrder(a.matchType) - relationshipOrder(b.matchType),
   );
@@ -315,22 +369,55 @@ function ProgrammeDetailBody({
 
       {tab === "requirements" ? (
         <View style={styles.section}>
-          <SectionLabel>Requirements</SectionLabel>
-          {selectedSchool ? (
-            <Text style={[styles.body, { color: colors.textRole.secondary }]}>These are the published requirements for {selectedSchool.schoolName}. Check the university&apos;s current admission notice before applying.</Text>
-          ) : (
-            <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose a university first to see its exact programme requirements.</Text>
-          )}
-          {(!earlySecondary || selectedSchool) ? requirementCards.map((card) => (
+          <SectionLabel>National programme requirements</SectionLabel>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>These requirements belong to the selected JAMB programme and apply before a university adds its own conditions.</Text>
+          {requirementCards.map((card) => (
             <View key={card.field} style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
               <View style={styles.requirementTitle}>
                 <Feather name={card.icon} size={14} color={colors.accentRole.action} />
                 <Text style={[styles.label, { color: colors.textRole.primary }]}>{card.label}</Text>
               </View>
-              <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayRequirement(card.field, selectedSchool && card.field === "utme_subjects" ? selectedSchool.universityUtmeSubjects ?? card.value : selectedSchool && card.field === "olevel_requirement" ? selectedSchool.universityOlevelRequirement ?? card.value : card.value)}</Text>
+              <Text style={[styles.body, { color: colors.textRole.secondary }]}>{displayRequirement(card.field, card.value)}</Text>
             </View>
-          )) : <Text style={[styles.body, { color: colors.textRole.muted }]}>Choose a university to see its full O-level and UTME requirements.</Text>}
-          {!earlySecondary || selectedSchool ? <DataSourceBadge verification="inferred" source="JAMB brochure" style={{ alignSelf: "flex-start" }} /> : null}
+          ))}
+          <DataSourceBadge verification="inferred" source="JAMB brochure" style={{ alignSelf: "flex-start" }} />
+
+          {selectedSchool ? (
+            <View style={[styles.block, { marginTop: Spacing.md }]}>
+              <SectionLabel>This university&apos;s requirements</SectionLabel>
+              <Text style={[styles.body, { color: colors.textRole.secondary }]}>
+                These details belong only to {selectedSchool.schoolName}. They do not replace the national programme requirements above.
+              </Text>
+              {universityRequirementCards.map((card) => (
+                <View key={card.field} style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
+                  <View style={styles.requirementTitle}>
+                    <Feather name={card.icon} size={14} color={colors.accentRole.action} />
+                    <Text style={[styles.label, { color: colors.textRole.primary }]}>{card.label}</Text>
+                  </View>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>
+                    {card.value ? displayRequirement(card.field, card.value) : "No additional university-specific requirement is recorded."}
+                  </Text>
+                </View>
+              ))}
+              {selectedSchool.universityNote ? (
+                <View style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
+                  <Text style={[styles.label, { color: colors.textRole.primary }]}>Additional university note</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{selectedSchool.universityNote}</Text>
+                </View>
+              ) : null}
+              {selectedSchool.address ? (
+                <View style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
+                  <Text style={[styles.label, { color: colors.textRole.primary }]}>University address</Text>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>{selectedSchool.address}</Text>
+                </View>
+              ) : null}
+              {selectedSchool.hasUniversityException ? (
+                <Text style={[styles.body, { color: colors.textRole.muted }]}>Some university-specific wording may still need confirmation. Check the university&apos;s current admission notice before applying.</Text>
+              ) : null}
+            </View>
+          ) : (
+            <Text style={[styles.body, { color: colors.textRole.muted }]}>Choose a university offering to see its local requirements, notes and address.</Text>
+          )}
         </View>
       ) : null}
 

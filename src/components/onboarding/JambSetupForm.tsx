@@ -301,9 +301,9 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            Universities may use different official names for a similar
-            programme. We will show each university&apos;s name and requirements so
-            you can tell the options apart.
+            We will show universities offering this exact programme identity.
+            If a different JAMB programme name appears, it will be shown as a
+            separate programme with its own universities and requirements.
           </Text>
         </View>
       ) : null}

@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.sm * 1.5,
   },
   divider: { height: 1, width: "100%" },
+  analyticsHint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5, paddingLeft: 30, paddingRight: 8 },
   fine: {
     fontSize: FontSize.xs,
     textAlign: "center",

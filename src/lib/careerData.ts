@@ -274,8 +274,8 @@ export interface SchoolFaculty {
 
 /**
  * A course as a specific university lists it — the enrolled student's entry
- * point. `jambName` is the name THAT school uses, never the CCMAS canonical
- * name.
+ * point. `jambName` is the national identity used to group the university
+ * offering; a genuinely different JAMB name is a separate result.
  */
 export interface SchoolProgrammeOffering {
   schoolId: string;
