@@ -703,9 +703,10 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 direct = direct.ilike("jamb_name", f"%{q.strip()}%")
             res = direct.order("jamb_name").limit(min(limit, 80)).execute()
         items = [_jamb_detail_out(r) for r in (res.data or [])]
-        # Keep the JAMB programme identity separate from school-specific
-        # offerings, but expose enough context in typeahead to explain why a
-        # search such as "Nursing" can lead to different names by university.
+        # Keep each JAMB programme identity as its own result. The attached
+        # rows are university offerings for that exact identity; a genuinely
+        # different JAMB name must have a different jamb_programme_id and will
+        # therefore appear as a separate result rather than a nested variant.
         try:
             jamb_ids = [item["jambProgrammeId"] for item in items if item.get("jambProgrammeId")]
             # A typeahead page can contain many JAMB IDs and a single database
@@ -1759,11 +1760,12 @@ def _attach_school_context(
 ) -> list[dict]:
     """Attach every university offering to subject-match rows.
 
-    Subject matching produces a national JAMB-programme result. That is not a
-    university admission decision, but hiding the offering list until after a
-    programme is opened makes the result difficult to evaluate. Return the
-    actual offering names; the frontend may preview them, while the user still
-    picks a specific university before guidance is finalized.
+    Subject matching produces one national JAMB-programme result per
+    jamb_programme_id. That is not a university admission decision, but hiding
+    the offering list until after a programme is opened makes the result
+    difficult to evaluate. Return the universities attached to that exact
+    identity; the frontend may preview them, while the user still picks a
+    specific university before guidance is finalized.
     """
     ids = [item.get("jambProgrammeId") for item in items if item.get("jambProgrammeId")]
     if not ids:
