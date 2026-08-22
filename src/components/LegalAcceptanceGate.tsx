@@ -145,9 +145,11 @@ export default function LegalAcceptanceGate() {
           </View>
         </View>
       </Modal>
-      <Modal visible={page !== null} animationType="slide" onRequestClose={() => setPage(null)}>
+      <Modal visible={page !== null} animationType="slide" onRequestClose={() => {}}>
         {page === "terms" ? (
           <TermsScreen
+            requireExplicitConfirmation
+            confirmLabel="I have read the Terms & Conditions"
             onClose={() => setPage(null)}
             onReadToEnd={() => {
               setTermsRead(true);
@@ -156,6 +158,8 @@ export default function LegalAcceptanceGate() {
           />
         ) : (
           <PrivacyScreen
+            requireExplicitConfirmation
+            confirmLabel="I have read the Privacy Policy"
             onClose={() => setPage(null)}
             onReadToEnd={() => {
               setPrivacyRead(true);
