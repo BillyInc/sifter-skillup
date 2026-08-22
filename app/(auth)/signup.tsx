@@ -10,7 +10,7 @@
  * The pre-account acceptance is stored locally until signup records it against
  * the new account; later legal-version changes are enforced account-side.
  */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -35,7 +35,6 @@ import TermsScreen from "../../src/screens/TermsScreen";
 import PrivacyScreen from "../../src/screens/PrivacyScreen";
 import {
   clearLegalAcceptance,
-  getLegalAcceptance,
   saveLegalAcceptance,
   TERMS_VERSION,
   PRIVACY_VERSION,
@@ -49,19 +48,22 @@ export const TERMS_ACCEPTED_KEY = "@sifter_legal_acceptance_v2";
 function CheckRow({
   checked,
   onToggle,
+  disabled = false,
   children,
 }: {
   checked: boolean;
   onToggle: () => void;
+  disabled?: boolean;
   children: React.ReactNode;
 }) {
   const { colors } = useTheme();
   return (
     <Pressable
       onPress={onToggle}
+      disabled={disabled}
       style={styles.checkRow}
       accessibilityRole="checkbox"
-      accessibilityState={{ checked }}
+      accessibilityState={{ checked, disabled }}
     >
       <View
         style={[
@@ -74,7 +76,7 @@ function CheckRow({
       >
         {checked ? <Text style={styles.tick}>✓</Text> : null}
       </View>
-      <Text style={[styles.checkLabel, { color: colors.textSoft }]}>
+      <Text style={[styles.checkLabel, { color: colors.textSoft, opacity: disabled ? 0.55 : 1 }]}>
         {children}
       </Text>
     </Pressable>
@@ -87,11 +89,29 @@ export default function SignUpPage() {
   const [accepted, setAccepted] = useState(false);
   const [terms, setTerms] = useState(false);
   const [analytics, setAnalytics] = useState(false);
+  const [termsRead, setTermsRead] = useState(false);
+  const [privacyRead, setPrivacyRead] = useState(false);
   const [legalPage, setLegalPage] = useState<"terms" | "privacy" | null>(null);
 
   useFocusEffect(
     useCallback(() => {
+      // A pre-account acceptance belongs only to the current signup attempt.
+      // Never let a prior user, browser session, refresh or abandoned attempt
+      // bypass this gate for a new account.
+      setAccepted(false);
+      setTerms(false);
+      setAnalytics(false);
+      setTermsRead(false);
+      setPrivacyRead(false);
+      setLegalPage(null);
+      setLoading(true);
+      let active = true;
+      void clearLegalAcceptance().finally(() => {
+        if (active) setLoading(false);
+      });
+
       return () => {
+        active = false;
         // Consent not yet attached to an account must not survive leaving
         // signup and become implicit acceptance for another person.
         void clearLegalAcceptance();
@@ -99,24 +119,22 @@ export default function SignUpPage() {
     }, []),
   );
 
-  useEffect(() => {
-    let active = true;
-    getLegalAcceptance()
-      .then((value) => {
-        if (active) {
-          setAccepted(Boolean(value));
-          setLoading(false);
-        }
-      })
-      .catch(() => {
-        if (active) setLoading(false);
-      });
-  }, []);
-
   const onContinue = async () => {
-    if (!terms) return;
+    if (!terms || !termsRead || !privacyRead) return;
     await saveLegalAcceptance(analytics).catch(() => {});
     setAccepted(true);
+  };
+
+  const openOrAcceptAgreement = () => {
+    if (!termsRead) {
+      setLegalPage("terms");
+      return;
+    }
+    if (!privacyRead) {
+      setLegalPage("privacy");
+      return;
+    }
+    setTerms((value) => !value);
   };
 
   if (loading) {
@@ -151,7 +169,7 @@ export default function SignUpPage() {
           { backgroundColor: colors.card, borderColor: colors.border },
         ]}
       >
-        <CheckRow checked={terms} onToggle={() => setTerms((v) => !v)}>
+        <CheckRow checked={terms} onToggle={openOrAcceptAgreement}>
           I agree to the{" "}
           <Text style={{ color: Brand.primaryDeep, fontWeight: "800" }}>
             Terms & Conditions
@@ -163,25 +181,43 @@ export default function SignUpPage() {
           . <Text style={{ color: colors.red }}>(required)</Text>
         </CheckRow>
 
-        <View style={[styles.divider, { backgroundColor: colors.border }]} />
-
-        <CheckRow
-          checked={analytics}
-          onToggle={() => setAnalytics((v) => !v)}
-        >
-          Help improve Sifter by sharing anonymous usage analytics.{" "}
-          <Text style={{ color: colors.textMuted }}>(optional)</Text>
-        </CheckRow>
+        {terms ? (
+          <>
+            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <CheckRow
+              checked={analytics}
+              onToggle={() => setAnalytics((v) => !v)}
+            >
+              Help improve Sifter by sharing anonymous usage analytics.{" "}
+              <Text style={{ color: colors.textMuted }}>(optional)</Text>
+            </CheckRow>
+            <Text style={[styles.analyticsHint, { color: colors.textMuted }]}>
+              This helps us understand which screens are useful and where people get stuck. It is kept separate from your required account consent and is optional.
+            </Text>
+          </>
+        ) : null}
       </View>
 
       <View style={styles.legalLinks}>
         <TouchableOpacity onPress={() => setLegalPage("terms")}>
-          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>Read Terms & Conditions</Text>
+          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>
+            {termsRead ? "✓ Terms read" : "Read Terms & Conditions"}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setLegalPage("privacy")}>
-          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>Read Privacy Policy</Text>
+          <Text style={[styles.legalLink, { color: Brand.primaryDeep }]}>
+            {privacyRead ? "✓ Privacy Policy read" : "Read Privacy Policy"}
+          </Text>
         </TouchableOpacity>
       </View>
+
+      <Text style={[styles.readHint, { color: colors.textMuted }]}>
+        {terms
+          ? "Required terms accepted. Analytics is optional."
+          : termsRead && privacyRead
+            ? "Both documents read. Tap the agreement line to accept."
+            : "Tap the agreement line to read the Terms and Privacy Policy."}
+      </Text>
 
       <SifterButton
         label="Continue →"
@@ -190,14 +226,30 @@ export default function SignUpPage() {
         color={Brand.primary}
         size="lg"
         fullWidth
-        disabled={!terms}
+        disabled={!terms || !termsRead || !privacyRead}
       />
 
       <Text style={[styles.fine, { color: colors.textMuted }]}>
         Terms {TERMS_VERSION} · Privacy {PRIVACY_VERSION}. You can change your analytics choice any time in Settings.
       </Text>
       <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
-        {legalPage === "terms" ? <TermsScreen onClose={() => setLegalPage(null)} /> : <PrivacyScreen onClose={() => setLegalPage(null)} />}
+        {legalPage === "terms" ? (
+          <TermsScreen
+            onClose={() => setLegalPage(null)}
+            onReadToEnd={() => {
+              setTermsRead(true);
+              setLegalPage("privacy");
+            }}
+          />
+        ) : (
+          <PrivacyScreen
+            onClose={() => setLegalPage(null)}
+            onReadToEnd={() => {
+              setPrivacyRead(true);
+              setLegalPage(null);
+            }}
+          />
+        )}
       </Modal>
     </ScrollView>
   );
@@ -252,4 +304,5 @@ const styles = StyleSheet.create({
   },
   legalLinks: { flexDirection: "row", justifyContent: "center", gap: Spacing.lg, flexWrap: "wrap" },
   legalLink: { fontSize: FontSize.xs, fontWeight: "800" },
+  readHint: { fontSize: FontSize.xs, textAlign: "center", lineHeight: FontSize.xs * 1.5 },
 });

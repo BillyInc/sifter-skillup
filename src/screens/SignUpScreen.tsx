@@ -258,11 +258,15 @@ export default function SignUpScreen() {
           date_of_birth: isoDob,
           email_code: emailCode.trim(),
       };
+      let needsOnboarding = true;
       if (isDevAccount) {
         // Dev presets normally authenticate seeded accounts. If a fixture is
         // absent from a fresh database, fall back to creating that fixture.
         try {
           await signInEmail(email.trim(), password);
+          // This is a login to an existing fixture, not account creation.
+          // AuthLayout will send a completed fixture to its own destination.
+          needsOnboarding = false;
         } catch {
           await signUpEmail(email.trim(), password, profile);
         }
@@ -280,7 +284,9 @@ export default function SignUpScreen() {
           // code from My school without losing the new account.
         }
       }
-      router.replace("/(auth)/onboarding");
+      if (needsOnboarding) {
+        router.replace("/(auth)/onboarding");
+      }
     } catch (e: any) {
       setError(friendlySignupError(e, "We could not create your account. Please try again."));
     } finally {
@@ -301,7 +307,7 @@ export default function SignUpScreen() {
       </TouchableOpacity>
 
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Create your account
+        {isDevAccount ? "Use a dev account" : "Create your account"}
       </Text>
 
       <ErrorNote message={error} />

@@ -22,6 +22,7 @@ import {
   Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -62,6 +63,7 @@ const SLIDES: Slide[] = [
 ];
 
 export function IntroCarousel({ onDone }: { onDone: () => void }) {
+  const router = useRouter();
   const { colors, isDark } = useTheme();
   const [index, setIndex] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
@@ -72,6 +74,11 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
     AsyncStorage.setItem(INTRO_SEEN_KEY, "1").catch(() => {});
     onDone();
   }, [onDone]);
+
+  const goToLogin = useCallback(() => {
+    AsyncStorage.setItem(INTRO_SEEN_KEY, "1").catch(() => {});
+    router.replace("/(auth)/sign-in" as never);
+  }, [router]);
 
   const goNext = useCallback(() => {
     if (isLast) {
@@ -193,7 +200,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
           fullWidth
         />
         {isLast ? (
-          <TouchableOpacity style={styles.signIn} onPress={finish} hitSlop={8}>
+          <TouchableOpacity style={styles.signIn} onPress={goToLogin} hitSlop={8}>
             <Text style={[styles.signInText, { color: colors.textRole.secondary }, CompassFonts.body]}>
               I already have an account
             </Text>
