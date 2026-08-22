@@ -57,8 +57,9 @@ import {
  *                  name disambiguation: your school's list uses your school's
  *                  names.
  *  - "programme" — ENROLLING and you know the course. Search the name and see
- *                  every variation of it, because universities list the same
- *                  course under different names.
+ *                  universities offering that exact programme identity. A
+ *                  genuinely different JAMB identity is a separate result,
+ *                  not a variant nested under this one.
  *  - "subjects"  — ENROLLING and you don't. Enter your strongest subjects.
  */
 type Mode = "school" | "programme" | "subjects";
@@ -369,6 +370,34 @@ export default function AdmissionBrowseScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, query, schoolQuery]);
 
+  const chooseSchool = async (school: AdmissionSchool) => {
+    setChosenSchool(school);
+    setSelected(null);
+    setOfferings([]);
+    setLoading(true);
+    try {
+      const state = await careerData.getSchoolProgrammes(school.id);
+      setOfferings(state.status === "real" && state.data ? state.data : []);
+      setNotice(state.meta?.notice ?? null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Undergraduate onboarding already resolved the university. Reopen that
+  // context directly instead of sending the student back to a generic Home or
+  // requiring the university search a second time.
+  useEffect(() => {
+    if (initialMode !== "school" || !initialSchoolId || chosenSchool) return;
+    void chooseSchool({
+      id: initialSchoolId,
+      name: initialSchoolName || "Selected university",
+      institutionType: "university",
+    });
+    // The route parameters are the persisted onboarding checkpoint here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (isAdminExplore && !learnerAudience) {
     return (
       <ScrollView
@@ -428,34 +457,6 @@ export default function AdmissionBrowseScreen() {
       </ScrollView>
     );
   }
-
-  const chooseSchool = async (school: AdmissionSchool) => {
-    setChosenSchool(school);
-    setSelected(null);
-    setOfferings([]);
-    setLoading(true);
-    try {
-      const state = await careerData.getSchoolProgrammes(school.id);
-      setOfferings(state.status === "real" && state.data ? state.data : []);
-      setNotice(state.meta?.notice ?? null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Undergraduate onboarding already resolved the university. Reopen that
-  // context directly instead of sending the student back to a generic Home or
-  // requiring the university search a second time.
-  useEffect(() => {
-    if (initialMode !== "school" || !initialSchoolId || chosenSchool) return;
-    void chooseSchool({
-      id: initialSchoolId,
-      name: initialSchoolName || "Selected university",
-      institutionType: "university",
-    });
-    // The route parameters are the persisted onboarding checkpoint here.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   /** An offering from your own school routes into the same detail flow. */
   const chooseOffering = async (offering: SchoolProgrammeOffering) => {
@@ -943,11 +944,11 @@ export default function AdmissionBrowseScreen() {
               </Text>
               {item.schoolOfferings?.length ? (
                 <View style={styles.matchLines}>
-                  <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>University offerings</Text>
+                  <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>Universities offering this programme</Text>
                   {item.schoolOfferings.slice(0, 2).map((offering) => (
                     <View key={`${offering.schoolName}-${offering.programmeName}`} style={styles.matchLines}>
                       <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
-                        {offering.schoolName}: {offering.studentName ?? offering.programmeName}
+                        {offering.schoolName}
                       </Text>
                       {offering.address || offering.city || offering.state ? (
                         <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
@@ -1007,10 +1008,7 @@ export default function AdmissionBrowseScreen() {
             transferable={selected.skillsTransferable}
           />
 
-          {!earlySecondary || selectedAdmissionSchool ? <>
-          <Text style={[styles.section, { color: colors.textSoft }]}>
-            {selectedAdmissionSchool ? `Requirements for ${selectedAdmissionSchool.schoolName}` : "Published programme requirements"}
-          </Text>
+          <Text style={[styles.section, { color: colors.textSoft }]}>National programme requirements</Text>
           {programmeDetail?.requirements ? (
             <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
               <Text style={[styles.requirementLabel, { color: colors.text }]}>UTME subjects</Text>
@@ -1030,8 +1028,37 @@ export default function AdmissionBrowseScreen() {
           ) : (
             <Text style={[styles.hint, { color: colors.textMuted }]}>The published requirement text is not available for this programme yet. We will still show the universities that list it.</Text>
           )}
-          </> : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>Choose a university to see its full O-level and UTME requirements.</Text>
+          {selectedAdmissionSchool ? (
+            <View style={{ gap: Spacing.sm }}>
+              <Text style={[styles.section, { color: colors.textSoft }]}>This university&apos;s requirements</Text>
+              <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+                <Text style={[styles.requirementLabel, { color: colors.text }]}>University</Text>
+                <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.schoolName}</Text>
+                {selectedAdmissionSchool.address ? (
+                  <>
+                    <Text style={[styles.requirementLabel, { color: colors.text }]}>Address</Text>
+                    <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.address}</Text>
+                  </>
+                ) : null}
+                <Text style={[styles.requirementLabel, { color: colors.text }]}>UTME subjects</Text>
+                <Text style={[styles.requirementText, { color: colors.textSoft }]}>
+                  {selectedAdmissionSchool.universityUtmeSubjects || "No additional university-specific UTME requirement is recorded."}
+                </Text>
+                <Text style={[styles.requirementLabel, { color: colors.text }]}>O-level requirements</Text>
+                <Text style={[styles.requirementText, { color: colors.textSoft }]}>
+                  {selectedAdmissionSchool.universityOlevelRequirement || "No additional university-specific O-level requirement is recorded."}
+                </Text>
+                {selectedAdmissionSchool.universityNote ? (
+                  <>
+                    <Text style={[styles.requirementLabel, { color: colors.text }]}>Additional university note</Text>
+                    <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.universityNote}</Text>
+                  </>
+                ) : null}
+                <Text style={[styles.cardMeta, { color: colors.textMuted }]}>University-specific data remains separate from the national programme requirement.</Text>
+              </View>
+            </View>
+          ) : (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>Choose a university offering to see its exact local requirements and address.</Text>
           )}
 
           <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme</Text>
@@ -1093,16 +1120,6 @@ export default function AdmissionBrowseScreen() {
             >
               <Text style={styles.actionText}>Continue to field guidance</Text>
             </TouchableOpacity>
-          ) : null}
-
-          {selectedAdmissionSchool?.hasUniversityException ? (
-            <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}55` }]}>
-              <Text style={[styles.noticeText, { color: Brand.primaryDeep }]}>University-specific note for {selectedAdmissionSchool.schoolName}</Text>
-              <Text style={[styles.requirementText, { color: colors.text }]}>
-                {selectedAdmissionSchool.universityNote || "This university has additional or differently worded requirements. Review its current admission notice before applying."}
-              </Text>
-              <Text style={[styles.cardMeta, { color: colors.textMuted }]}>This note applies to this university only. The national programme requirement above remains separate.</Text>
-            </View>
           ) : null}
 
            <Text style={[styles.section, { color: colors.textSoft }]}>Fields connected to this programme</Text>
