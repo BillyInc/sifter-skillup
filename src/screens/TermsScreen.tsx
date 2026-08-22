@@ -27,16 +27,29 @@ const SECTIONS = [
   ['Governing law', 'These terms are governed by the laws of the Federal Republic of Nigeria, except where mandatory consumer protections in another jurisdiction apply.'],
 ];
 
-interface Props { onClose?: () => void; }
+interface Props {
+  onClose?: () => void;
+  onReadToEnd?: () => void;
+}
 
-export default function TermsScreen({ onClose }: Props) {
+export default function TermsScreen({ onClose, onReadToEnd }: Props) {
   const { colors } = useTheme();
   const resp = useResponsive();
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState('0');
+  const [readToEnd, setReadToEnd] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+
+  const handleScroll = useCallback((event: any) => {
+    if (readToEnd) return;
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 32) {
+      setReadToEnd(true);
+      onReadToEnd?.();
+    }
+  }, [onReadToEnd, readToEnd]);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -142,13 +155,14 @@ export default function TermsScreen({ onClose }: Props) {
             style={styles.mainScroll}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
+            onScroll={handleScroll}
             contentContainerStyle={styles.body}
           >
             {content}
           </ScrollView>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} scrollEventThrottle={16} onScroll={handleScroll}>
           {content}
         </ScrollView>
       )}
