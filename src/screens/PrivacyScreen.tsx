@@ -69,9 +69,16 @@ const SECTIONS = [
 interface Props {
   onClose?: () => void;
   onReadToEnd?: () => void;
+  requireExplicitConfirmation?: boolean;
+  confirmLabel?: string;
 }
 
-export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
+export default function PrivacyScreen({
+  onClose,
+  onReadToEnd,
+  requireExplicitConfirmation = false,
+  confirmLabel = 'I have read the Privacy Policy',
+}: Props) {
   const { colors } = useTheme();
   const resp = useResponsive();
 
@@ -79,6 +86,7 @@ export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState(SECTIONS[0].title);
   const [readToEnd, setReadToEnd] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   const handleScroll = useCallback((event: any) => {
@@ -86,8 +94,14 @@ export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
     if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 32) {
       setReadToEnd(true);
-      onReadToEnd?.();
+      if (!requireExplicitConfirmation) onReadToEnd?.();
     }
+  }, [onReadToEnd, readToEnd, requireExplicitConfirmation]);
+
+  const confirmRead = useCallback(() => {
+    if (!readToEnd) return;
+    setConfirmed(true);
+    onReadToEnd?.();
   }, [onReadToEnd, readToEnd]);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
@@ -113,7 +127,7 @@ export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
         <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Privacy policy</Text>
         <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Nigeria-first privacy with global user-rights support.</Text>
       </View>
-      {onClose ? (
+      {onClose && (!requireExplicitConfirmation || confirmed) ? (
         <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
         </TouchableOpacity>
@@ -154,6 +168,15 @@ export default function PrivacyScreen({ onClose, onReadToEnd }: Props) {
       <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:privacy@sifter.app')}>
         <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email privacy@sifter.app</Text>
       </TouchableOpacity>
+      {requireExplicitConfirmation && readToEnd && !confirmed ? (
+        <TouchableOpacity
+          style={[styles.confirmBtn, { backgroundColor: colors.accentRole.action }]}
+          onPress={confirmRead}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.confirmBtnText, CompassFonts.bodyBold]}>{confirmLabel}</Text>
+        </TouchableOpacity>
+      ) : null}
       <View style={{ height: 40 }} />
     </>
   );
@@ -291,6 +314,16 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
   },
   emailBtnText: {
+    color: '#fff',
+    fontSize: FontSize.sm,
+  },
+  confirmBtn: {
+    borderRadius: Radius.lg,
+    paddingVertical: Spacing.md,
+    alignItems: 'center',
+    marginTop: Spacing.sm,
+  },
+  confirmBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
   },

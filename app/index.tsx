@@ -29,6 +29,7 @@ import {
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 import { IntroCarousel } from "../src/components/brand/IntroCarousel";
 import { hasExplicitLogout } from "../src/lib/logoutState";
+import AuthScreen from "../src/screens/AuthScreen";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -106,82 +107,17 @@ export default function LandingPage() {
   }
 
   if (!user && introState === "logged_out") {
-    return <Redirect href="/(auth)/sign-in" />;
+    return <AuthScreen initialMode="welcome" />;
   }
 
   if (signedInHref) {
     return <Redirect href={signedInHref as any} />;
   }
 
-  const handleGuest = async () => {
-    if (guestBusy) return;
-    setGuestError(null);
-    setGuestBusy(true);
-    try {
-      await signInGuest();
-    } catch (e: any) {
-      setGuestError(e?.message || "Could not open guest mode.");
-    } finally {
-      setGuestBusy(false);
-    }
-  };
-
-  return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
-      contentContainerStyle={[styles.scroll, webContainer as object]}
-    >
-      <View style={styles.hero}>
-        <LevelUpLogo size={112} animated />
-        <Text style={[styles.title, { color: colors.text }]}>Sifter LevelUp</Text>
-        <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Career paths for students, programme intelligence for universities,
-          and practical guidance tools for schools and tutorial centres.
-        </Text>
-      </View>
-
-      <View style={styles.actions}>
-        <TouchableOpacity
-          onPress={() => router.replace("/(auth)/sign-in" as any)}
-          style={[styles.primaryBtn, { backgroundColor: Brand.primary }]}
-        >
-          <Text style={styles.primaryText}>Sign in</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => router.replace("/(auth)/signup" as any)}
-          style={[styles.secondaryBtn, { borderColor: colors.border }]}
-        >
-          <Text style={[styles.secondaryText, { color: colors.text }]}>
-            Create account
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity
-        onPress={handleGuest}
-        disabled={guestBusy}
-        style={styles.browse}
-      >
-        <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-          {guestBusy ? "Opening guest mode..." : "Browse as guest"}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          AsyncStorage.removeItem(INTRO_SEEN_KEY).catch(() => {});
-          setIntroState("show");
-        }}
-        style={styles.viewIntro}
-      >
-        <Text style={[styles.browseText, { color: colors.textMuted }]}>View intro again</Text>
-      </TouchableOpacity>
-      {guestError ? (
-        <Text style={[styles.errorText, { color: colors.red }]}>
-          {guestError}
-        </Text>
-      ) : null}
-    </ScrollView>
-  );
+  // There is one public auth entry point. The old centred landing page with
+  // audience copy duplicated this flow and made browser back navigation land
+  // in a different auth experience.
+  return <AuthScreen initialMode="welcome" />;
 }
 
 const styles = StyleSheet.create({

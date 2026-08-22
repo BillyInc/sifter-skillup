@@ -34,7 +34,6 @@ export const minikitConfig = {
       `${ROOT_URL}/screenshots/skills-screen.png`,
       `${ROOT_URL}/screenshots/community.png`,
     ],
-    iconUrl: `${ROOT_URL}/icon.png`,
     splashImageUrl: `${ROOT_URL}/splash.png`,
     splashBackgroundColor: '#0a0a0a',
     homeUrl: ROOT_URL,

@@ -40,6 +40,7 @@ import {
   PRIVACY_VERSION,
 } from "../../src/lib/legal";
 import { useFocusEffect } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 // Storage keys — analytics stays opt-IN and is read by the analytics layer.
 // Acceptance is stored as versioned JSON and on the authenticated account.
@@ -84,6 +85,7 @@ function CheckRow({
 }
 
 export default function SignUpPage() {
+  const router = useRouter();
   const { colors } = useTheme();
   const [loading, setLoading] = useState(true);
   const [accepted, setAccepted] = useState(false);
@@ -155,6 +157,9 @@ export default function SignUpPage() {
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
+      <TouchableOpacity onPress={() => router.replace("/")} style={styles.back} hitSlop={8}>
+        <Text style={[styles.backText, { color: Brand.primaryDeep }]}>← Back to sign in or create account</Text>
+      </TouchableOpacity>
       <Text style={[styles.title, { color: colors.text }]}>
         Before you begin
       </Text>
@@ -232,9 +237,11 @@ export default function SignUpPage() {
       <Text style={[styles.fine, { color: colors.textMuted }]}>
         Terms {TERMS_VERSION} · Privacy {PRIVACY_VERSION}. You can change your analytics choice any time in Settings.
       </Text>
-      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
+      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => {}}>
         {legalPage === "terms" ? (
           <TermsScreen
+            requireExplicitConfirmation
+            confirmLabel="I have read the Terms & Conditions"
             onClose={() => setLegalPage(null)}
             onReadToEnd={() => {
               setTermsRead(true);
@@ -243,6 +250,8 @@ export default function SignUpPage() {
           />
         ) : (
           <PrivacyScreen
+            requireExplicitConfirmation
+            confirmLabel="I have read the Privacy Policy"
             onClose={() => setLegalPage(null)}
             onReadToEnd={() => {
               setPrivacyRead(true);
@@ -257,6 +266,8 @@ export default function SignUpPage() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
+  back: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  backText: { fontSize: FontSize.sm, fontWeight: "800" },
   scroll: {
     flexGrow: 1,
     padding: Spacing.xl,
