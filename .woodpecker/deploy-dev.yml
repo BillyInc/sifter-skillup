@@ -124,11 +124,18 @@ steps:
       - export SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
       # .env is excluded: it is seeded once and never overwritten, exactly as
       # the GitHub workflow does. --delete would otherwise remove it.
+      #
+      # celerybeat-schedule* is globbed, not exact: beat keeps its state in a
+      # SQLite db with -shm/-wal sidecars, and an exact match preserves the db
+      # while --delete removes the sidecars. That leaves the schedule
+      # inconsistent across the restart below -- lost last-run timestamps, a
+      # periodic task that re-fires or slips. Verified against the live box
+      # with a --dry-run: both sidecars were on the delete list.
       - |
         rsync -az --delete \
           --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
           --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
-          --exclude 'celerybeat-schedule' \
+          --exclude 'celerybeat-schedule*' \
           -e "$SSH" \
           backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend/"
       - |
