@@ -167,3 +167,90 @@ Both pipelines therefore declare the clone explicitly with `lfs: false` and
 `recursive: false`. `partial: true` preserves the `tree:0` filter the implicit
 clone already used. If submodules or LFS are ever introduced, these have to be
 turned back on or the checkout will be silently incomplete.
+
+## Deploy (dev)
+
+`.woodpecker/deploy-dev.yml` ports `deploy-backend.yml` + `deploy-frontend.yml`.
+It runs on push to `main` and `depends_on: [backend, frontend]`, so it deploys
+only what passed CI and skips entirely if either fails.
+
+> `depends_on` is what sequences this, **not** `WOODPECKER_MAX_WORKFLOWS=1`.
+> That setting caps concurrency; it does not order workflows.
+
+### Secrets to add (repo settings in the Woodpecker UI)
+
+| secret | value |
+|---|---|
+| `ssh_private_key` | the storytime deploy key (`~/.ssh/storytime_rsa`) |
+| `server_host` | `52.18.195.224` |
+| `server_user` | `ubuntu` |
+| `expo_public_privy_app_id` | same value as the GitHub secret |
+| `expo_public_privy_web_client_id` | same |
+| `expo_public_privy_native_client_id` | same |
+
+The three `EXPO_PUBLIC_*` values are compiled into the shipped web bundle and
+are public by design. `ssh_private_key` is not — add it yourself; nothing in
+this repo should ever read or print it.
+
+No `ENV_FILE` secret is needed for dev: the server's `.env` already exists and
+the deploy never overwrites it.
+
+### The web build has a memory preflight, and it can refuse to run
+
+`expo export --platform web` wants ~1.5–2 GB. The agent runs on storytime,
+which also serves levelup.com.ng, its API, KYS, storytime and fetchit on
+3.8 GB. **An OOM here does not merely fail the build — the kernel picks a
+victim, and that can be a live service.**
+
+So `build-web` reads the host's real `MemAvailable` from `/proc/meminfo` and
+**aborts with a clear message below 1800 MB** rather than starting a build that
+could take something down. `NODE_OPTIONS=--max-old-space-size=1536` then caps
+V8 below what the host can supply, so V8 fails its own allocation instead of
+the kernel choosing for it.
+
+If that preflight starts failing routinely, the answer is a build host with
+headroom — not raising the threshold.
+
+### Not ported
+
+Prod (`v*` tags) stays on GitHub Actions. It needs the `production` approval
+gate and an `ENV_FILE` secret that does not exist in either system yet, so
+porting it would produce a deploy that fails at the first tag. `codeql` and
+`cert-expiry` are also still Actions-only.
+
+### Web is NOT deployed from here — it builds on EAS
+
+`expo export --platform web` wants ~1.5–2 GB. The agent runs on storytime,
+which also serves levelup.com.ng, its API, KYS, storytime and fetchit on
+3.8 GB. An OOM there does not merely fail a build — the kernel picks a victim,
+and that can be a live service. Paying that on every push to `main` is the
+wrong trade, so the web build moved off the box entirely:
+
+- `.eas/workflows/deploy-web.yml` — push to `main` → `type: deploy`, `prod: true`
+- `.eas/workflows/preview-web.yml` — per-PR preview URL, `prod: false`
+
+Both run on **EAS runners**. Worth knowing why this is a `type: deploy` job and
+not `eas deploy` in a shell step: **`eas deploy` only uploads** — the export
+still runs wherever you invoke the CLI, so it would not have moved the build at
+all. Only the EAS job type does that.
+
+The PR previews also replace the Netlify deploy previews being decommissioned.
+
+#### One-time setup this needs
+
+1. **EAS environment variables** (`eas env:create --environment production`):
+   `EXPO_PUBLIC_API_URL=https://api.dev.levelup.com.ng`, plus
+   `EXPO_PUBLIC_PRIVY_APP_ID`, `EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID`,
+   `EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID`. These are compiled into the shipped
+   bundle and are public by design — but they must **exist**, or the build
+   silently ships an app that cannot reach the API or authenticate.
+2. **DNS cutover:** `dev.levelup.com.ng` becomes a CNAME to the EAS Hosting
+   domain instead of an A record to `52.18.195.224`. Add it as a custom domain
+   in EAS Hosting first, then switch DNS.
+   **`api.dev.levelup.com.ng` does not move** — nginx keeps serving the API.
+3. `eas.json` `cli.version` was `>= 10.0.0`, which predates EAS Workflows.
+   Raised to `>= 16.0.0`.
+
+Until the DNS cutover, `~/levelup-frontend/` on storytime keeps serving the
+last manually-built bundle. Nothing breaks by merging this; the EAS deploy just
+publishes to a URL nobody is pointed at yet.

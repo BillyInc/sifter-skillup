@@ -1,0 +1,107 @@
+# Deploy backend (dev) — ports deploy-backend.yml to Woodpecker.
+#
+# GitHub Actions cannot run these: the account's jobs are refused with "recent
+# account payments have failed or your spending limit needs to be increased",
+# which is why every check went red with zero steps executed. Woodpecker is not
+# subject to that, so CI/CD lives here now.
+#
+# BACKEND ONLY, on purpose. The web bundle is NOT built here: `expo export
+# --platform web` wants ~1.5-2GB, and this agent runs on storytime, which also
+# serves levelup.com.ng, its API, KYS, storytime and fetchit on 3.8GB. An OOM
+# here does not merely fail a build -- the kernel picks a victim, and that can
+# be a live service. Paying for that on every push to main is the wrong trade.
+# Web builds belong on EAS, whose runners are not this box. See
+# .eas/workflows/deploy-web.yml.
+#
+# Dev only. Prod (tag `v*`) is deliberately NOT ported — it needs the
+# `production` approval gate and an ENV_FILE secret that does not exist yet.
+
+when:
+  - event: push
+    branch: main
+
+# Only deploy what passed. Woodpecker runs each .woodpecker/ file as its own
+# workflow, in parallel by default; depends_on makes this one wait for both and
+# skip entirely if either fails. Do NOT rely on WOODPECKER_MAX_WORKFLOWS=1 for
+# ordering -- that caps concurrency, it does not sequence workflows.
+depends_on:
+  - backend
+  - frontend
+
+variables:
+  # alpine + the two binaries the deploy needs; no marketplace action exists
+  # here, so the ssh plumbing is explicit.
+  - &deploy_image 'alpine:3.20'
+
+steps:
+  - name: deploy-backend
+    image: *deploy_image
+    environment:
+      SSH_KEY:
+        from_secret: ssh_private_key
+      SERVER_HOST:
+        from_secret: server_host
+      SERVER_USER:
+        from_secret: server_user
+    commands:
+      - apk add --no-cache openssh-client rsync >/dev/null
+      # umask before the key is written, not after: a world-readable private
+      # key for even one instruction is a leak, and ssh refuses it anyway.
+      - umask 077
+      - mkdir -p ~/.ssh
+      - printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+      - chmod 600 ~/.ssh/deploy_key
+      # Trust-on-first-use per run, matching the GitHub workflow. A pinned
+      # host key would be stronger but needs another secret.
+      - ssh-keyscan -H "$SERVER_HOST" > ~/.ssh/known_hosts 2>/dev/null
+      - export SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+      # .env is excluded: it is seeded once and never overwritten, exactly as
+      # the GitHub workflow does. --delete would otherwise remove it.
+      - |
+        rsync -az --delete \
+          --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
+          --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
+          --exclude 'celerybeat-schedule' \
+          -e "$SSH" \
+          backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend/"
+      - |
+        $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+        set -euo pipefail
+        cd ~/levelup-backend
+        chmod 600 .env
+        # Shared box (KYS lives here too): refuse to start if :8000 is already
+        # owned by something that is not our unit.
+        if ! systemctl is-active --quiet levelup-backend; then
+          if ss -ltnH 'sport = :8000' | grep -q .; then
+            echo "port 8000 already in use by another service -- aborting." >&2
+            exit 1
+          fi
+        fi
+        command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
+        export PATH="$HOME/.local/bin:$PATH"
+        uv sync --no-dev
+        mkdir -p logs
+        sudo cp systemd/levelup-*.service /etc/systemd/system/
+        sudo systemctl daemon-reload
+        sudo systemctl enable levelup-backend levelup-celery-worker levelup-celery-beat
+        sudo systemctl reload-or-restart levelup-backend
+        sudo systemctl restart levelup-celery-worker levelup-celery-beat
+        EOSSH
+      # Health check is the deploy's only proof. `uv sync` failing aborts above
+      # before any restart, so the old process keeps serving; a NEW process that
+      # starts and then fails its check leaves the service down, and recovery is
+      # manual -- re-run the previous green commit.
+      - |
+        $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+        set -euo pipefail
+        for i in $(seq 1 15); do
+          if curl -sf --max-time 5 http://127.0.0.1:8000/health >/dev/null; then
+            echo "health OK (attempt $i)"; exit 0
+          fi
+          echo "health attempt $i failed -- retrying in 4s"; sleep 4
+        done
+        echo "health check FAILED" >&2
+        sudo systemctl status --no-pager levelup-backend || true
+        sudo journalctl -u levelup-backend -n 40 --no-pager || true
+        exit 1
+        EOSSH
