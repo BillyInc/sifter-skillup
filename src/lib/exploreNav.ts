@@ -40,23 +40,55 @@ export type ExploreNav = ReturnType<typeof makeExploreNav>;
 export function makeExploreNav(base: string) {
   return {
     base,
-    programme(router: Nav, programmeId: string) {
-      router.push(`${base}/programme/${programmeId}` as never);
+    programme(router: Nav, programmeId: string, context?: { jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string; focused?: boolean }) {
+      const query = [
+        context?.jambProgrammeId ? `jamb_programme_id=${encodeURIComponent(context.jambProgrammeId)}` : "",
+        context?.schoolId ? `school_id=${encodeURIComponent(context.schoolId)}` : "",
+        context?.userType ? `user_type=${encodeURIComponent(context.userType)}` : "",
+        context?.guidanceStudentId ? `guidance_student_id=${encodeURIComponent(context.guidanceStudentId)}` : "",
+        context?.focused ? "focus=guidance" : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never);
+    },
+    guided(router: Nav, context?: { programmeId?: string; jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string }) {
+      const query = [
+        "guided=1",
+        "focus=guidance",
+        context?.programmeId ? `programme_id=${encodeURIComponent(context.programmeId)}` : "",
+        context?.jambProgrammeId ? `jamb_programme_id=${encodeURIComponent(context.jambProgrammeId)}` : "",
+        context?.schoolId ? `school_id=${encodeURIComponent(context.schoolId)}` : "",
+        context?.userType ? `user_type=${encodeURIComponent(context.userType)}` : "",
+        context?.guidanceStudentId ? `guidance_student_id=${encodeURIComponent(context.guidanceStudentId)}` : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/pathways?${query}` as never);
     },
     compare(router: Nav, programmeIds: string[] = []) {
       const ids = programmeIds.slice(0, 4).map(encodeURIComponent).join(",");
       router.push(`${base}/compare${ids ? `?ids=${ids}` : ""}` as never);
     },
-    role(router: Nav, roleId: string, guidanceStudentId?: string) {
-      const query = guidanceStudentId ? `?guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "";
-      router.push(`${base}/role/${roleId}${query}` as never);
+    role(router: Nav, roleId: string, guidanceStudentId?: string, focused?: boolean) {
+      const query = [
+        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
+        focused ? "focus=guidance" : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/role/${roleId}${query ? `?${query}` : ""}` as never);
     },
     domains(router: Nav) {
       router.push(`${base}/domains` as never);
     },
-    domain(router: Nav, domainId: string, guidanceStudentId?: string) {
-      const query = guidanceStudentId ? `?guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "";
-      router.push(`${base}/domain/${domainId}${query}` as never);
+    domain(router: Nav, domainId: string, guidanceStudentId?: string, focused?: boolean) {
+      const query = [
+        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
+        focused ? "focus=guidance" : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/domain/${domainId}${query ? `?${query}` : ""}` as never);
+    },
+    subgroup(router: Nav, domainId: string, subgroupId: string, guidanceStudentId?: string, focused?: boolean) {
+      const query = [
+        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
+        focused ? "focus=guidance" : "",
+      ].filter(Boolean).join("&");
+      router.push(`${base}/domain/${encodeURIComponent(domainId)}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
     },
 
     // ─── Phase 7: elite pathways & special flows ────────────────
@@ -82,10 +114,11 @@ export function makeExploreNav(base: string) {
     charterships(router: Nav) {
       router.push(`${base}/pathways/credentials` as never);
     },
-    entrepreneurship(router: Nav, context?: { programmeName?: string; domainId?: string }) {
+    entrepreneurship(router: Nav, context?: { programmeName?: string; domainId?: string; focused?: boolean }) {
       const query = [
         context?.programmeName ? `programme_name=${encodeURIComponent(context.programmeName)}` : "",
         context?.domainId ? `domain_id=${encodeURIComponent(context.domainId)}` : "",
+        context?.focused ? "focus=guidance" : "",
       ].filter(Boolean).join("&");
       router.push(`${base}/pathways/entrepreneurship${query ? `?${query}` : ""}` as never);
     },

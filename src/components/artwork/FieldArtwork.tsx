@@ -432,7 +432,7 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
 // ─── GENERIC / DEFAULT ─────────────────────────────────────────────────────────
 // Pulsing orbs for any field without specific artwork
 
-export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }: {
+export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '✦' }: {
   size?: number; color?: string; emoji?: string;
 }) {
   const DIM = size;
@@ -578,7 +578,7 @@ const EMOJIS: Record<string, string> = {
   'legal-compliance':       '⚖️',
   'human-resources':        '👥',
   'real-estate':            '🏘️',
-  'renewable-energy':       '⚡',
+  'renewable-energy':       '✦',
   'education-technology':   '📚',
   'digital-marketing':      '📣',
   'sales-revenue':          '💰',
@@ -597,7 +597,7 @@ const EMOJIS: Record<string, string> = {
 };
 
 export const fieldColor = (id: string) => getFieldColor(id) || COLORS[id] || '#6366F1';
-export const fieldEmoji = (id: string) => getFieldIcon(id) || EMOJIS[id] || '⚡';
+export const fieldEmoji = (id: string) => getFieldIcon(id) || EMOJIS[id] || '✦';
 
 // ─── Shared styles ─────────────────────────────────────────────────────────────
 

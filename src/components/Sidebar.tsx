@@ -41,7 +41,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { routeName: 'Home',    label: 'Home',    emoji: '○',  activeEmoji: '⚡' },
+  { routeName: 'Home',    label: 'Home',    emoji: '○',  activeEmoji: '●' },
   { routeName: 'Feed',   label: 'Feed',     emoji: '📰', activeEmoji: '📰' },
   { routeName: 'Profile', label: 'Profile', emoji: '👤', activeEmoji: '👤' },
 ];

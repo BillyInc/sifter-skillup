@@ -7,7 +7,7 @@
  * which is why it could not be reused; every other Explore route is a thin
  * wrapper over a screen in src/screens.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -24,7 +24,7 @@ import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
 import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { DegreeSkills, GuidanceReportButton, invalidateGuidancePathCache } from "@/components/careerIntelligence";
-import { LiveSubjectMultiSelect } from "@/components/onboarding/LiveSubjectMultiSelect";
+import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
@@ -65,6 +65,28 @@ import {
 type Mode = "school" | "programme" | "subjects";
 type Candidate = JambProgrammeSuggestion | SubjectProgrammeMatch;
 type SubjectMatchStatus = "idle" | "loading" | "real" | "unavailable";
+
+type GuidanceResumeSnapshot = {
+  status?: "in_progress" | "complete";
+  stage?: "context" | "subjects" | "programmes" | "university" | "fields";
+  mode?: Mode;
+  query?: string;
+  schoolQuery?: string;
+  subjectText?: string;
+  olevelSubjectText?: string;
+  subjectExamType?: "utme" | "olevel" | "combined";
+  contextClass?: string;
+  stream?: string;
+  candidates?: Candidate[];
+  selected?: Candidate | null;
+  schools?: JambProgrammeSchool[];
+  selectedAdmissionSchool?: JambProgrammeSchool | null;
+  domains?: JambDomainResult | null;
+  programmeDetail?: JambProgrammeDetail | null;
+  selectedSubjectMatch?: SubjectProgrammeMatch | null;
+  chosenSchool?: AdmissionSchool | null;
+  offerings?: SchoolProgrammeOffering[];
+};
 
 function candidateDisplayName(candidate: Candidate): string {
   return candidate.studentName || candidate.jambName || "Programme";
@@ -154,6 +176,9 @@ export default function AdmissionBrowseScreen() {
     guidance_student_id?: string | string[];
     user_type?: string | string[];
     programme?: string | string[];
+    journey?: string | string[];
+    focus?: string | string[];
+    resume?: string | string[];
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -192,7 +217,9 @@ export default function AdmissionBrowseScreen() {
   const [notice, setNotice] = useState<string | null>(null);
   const [selectedSubjectMatch, setSelectedSubjectMatch] = useState<SubjectProgrammeMatch | null>(null);
   const [subjectMatchStatus, setSubjectMatchStatus] = useState<SubjectMatchStatus>("idle");
+  const [subjectMatchAttempted, setSubjectMatchAttempted] = useState(false);
   const [programmeDetail, setProgrammeDetail] = useState<JambProgrammeDetail | null>(null);
+  const selectedSubjectDetails: SubjectProgrammeMatch | null = selected && "matchedSubjectCount" in selected ? selected : null;
 
   // School-first (enrolled) state.
   const [schoolQuery, setSchoolQuery] = useState("");
@@ -202,6 +229,10 @@ export default function AdmissionBrowseScreen() {
   const initialSchoolName = readParam(params.school_name);
   const [offerings, setOfferings] = useState<SchoolProgrammeOffering[]>([]);
   const [courseFilter, setCourseFilter] = useState(readParam(params.programme));
+  const [resumeHydrated, setResumeHydrated] = useState(!guidanceStudentId);
+  const [guidanceComplete, setGuidanceComplete] = useState(false);
+  const guidanceCompleteRef = useRef(false);
+  const finalizingGuidanceRef = useRef(false);
 
   useEffect(() => {
     if (earlySecondary && subjectExamType !== "olevel") setSubjectExamType("olevel");
@@ -215,20 +246,37 @@ export default function AdmissionBrowseScreen() {
     () => olevelSubjectText.split(",").map((s) => s.trim()).filter(Boolean),
     [olevelSubjectText],
   );
+  const subjectLimitExceeded =
+    subjectExamType === "utme"
+      ? subjects.length > 4
+      : subjectExamType === "olevel"
+        ? olevelSubjects.length > MAX_OLEVEL_SUBJECTS
+        : subjects.length > 4 || olevelSubjects.length > MAX_OLEVEL_SUBJECTS;
   const hasSubjectContext =
     subjectExamType === "utme"
-      ? subjects.length >= 4
+      ? subjects.length === 4
       : subjectExamType === "olevel"
-        ? olevelSubjects.length >= 5
-        : subjects.length >= 4 && olevelSubjects.length >= 5;
-  const canMatchSubjects =
-    subjectExamType === "utme"
-      ? subjects.length >= 4
-      : subjectExamType === "olevel"
-        ? olevelSubjects.length >= 5
-        : subjects.length >= 4 && olevelSubjects.length >= 5;
+        ? olevelSubjects.length >= 5 && olevelSubjects.length <= MAX_OLEVEL_SUBJECTS
+        : subjects.length === 4 && olevelSubjects.length >= 5 && olevelSubjects.length <= MAX_OLEVEL_SUBJECTS;
+  const canMatchSubjects = hasSubjectContext && !subjectLimitExceeded;
+  const guidedSubjectDiscovery =
+    readParam(params.journey) === "guided_subject_discovery" &&
+    initialMode === "subjects" &&
+    hasSubjectContext;
+  const [showSubjectEditor, setShowSubjectEditor] = useState(!guidedSubjectDiscovery);
+  const showAdmissionEditor = !guidedSubjectDiscovery || showSubjectEditor;
+
+  const markAdminGuidanceInProgress = () => {
+    if (!guidanceStudentId) return;
+    guidanceCompleteRef.current = false;
+    setGuidanceComplete(false);
+  };
 
   const updateSubjectSelection = (next: string[], kind: "utme" | "olevel") => {
+    if (guidanceStudentId) {
+      guidanceCompleteRef.current = false;
+      setGuidanceComplete(false);
+    }
     if (kind === "utme") setSubjectText(next.join(", "));
     else setOlevelSubjectText(next.join(", "));
     // A previous match is no longer valid after the subject set changes.
@@ -236,8 +284,21 @@ export default function AdmissionBrowseScreen() {
     // the selection is below the minimum gate.
     setCandidates([]);
     setSelected(null);
+    setSubjectMatchAttempted(false);
     setNotice(null);
   };
+
+  useEffect(() => {
+    if (!subjectLimitExceeded) return;
+    setCandidates([]);
+    setSelected(null);
+    setSubjectMatchAttempted(false);
+    setNotice(
+      subjectExamType === "utme"
+        ? "UTME uses exactly 4 subjects. Remove the extra subject before continuing."
+        : `Choose no more than ${MAX_OLEVEL_SUBJECTS} O-level subjects for this check. Remove the extras before continuing.`,
+    );
+  }, [olevelSubjects.length, subjectExamType, subjectLimitExceeded, subjects.length]);
 
   // The organisation type owns the student context. Providers are JAMB-only,
   // universities are undergraduate-only, and only secondary schools have
@@ -259,15 +320,59 @@ export default function AdmissionBrowseScreen() {
     }
   }, [adminType, isAdminExplore, learnerAudience, contextClass, stream]);
 
+  // Administrator guidance is account-scoped. Rehydrate the last checkpoint
+  // for this specific student before running any initial search so returning to
+  // a roster row restores the same stage, subjects and selected records.
   useEffect(() => {
-    if (initialMode === "subjects" && canMatchSubjects) {
+    if (!guidanceStudentId) {
+      setResumeHydrated(true);
+      return;
+    }
+    let active = true;
+    provisioningData.getGuidancePath(guidanceStudentId).then((saved) => {
+      if (!active) return;
+      const path = saved?.path ?? {};
+      const resume = (path.resume ?? {}) as GuidanceResumeSnapshot;
+      const hasCompletedPath = Boolean(
+        (path.programme as Record<string, unknown> | undefined)?.name &&
+        (path.university as Record<string, unknown> | undefined)?.name,
+      );
+      if (resume.mode) setMode(resume.mode);
+      if (resume.query !== undefined) setQuery(resume.query);
+      if (resume.schoolQuery !== undefined) setSchoolQuery(resume.schoolQuery);
+      if (resume.subjectText !== undefined) setSubjectText(resume.subjectText);
+      if (resume.olevelSubjectText !== undefined) setOlevelSubjectText(resume.olevelSubjectText);
+      if (resume.subjectExamType) setSubjectExamType(resume.subjectExamType);
+      if (resume.contextClass !== undefined) setContextClass(resume.contextClass);
+      if (resume.stream !== undefined) setStream(resume.stream);
+      if (resume.candidates) setCandidates(resume.candidates);
+      if (resume.selected !== undefined) setSelected(resume.selected);
+      if (resume.schools) setSchools(resume.schools);
+      if (resume.selectedAdmissionSchool !== undefined) setSelectedAdmissionSchool(resume.selectedAdmissionSchool);
+      if (resume.domains !== undefined) setDomains(resume.domains);
+      if (resume.programmeDetail !== undefined) setProgrammeDetail(resume.programmeDetail);
+      if (resume.selectedSubjectMatch !== undefined) setSelectedSubjectMatch(resume.selectedSubjectMatch);
+      if (resume.chosenSchool !== undefined) setChosenSchool(resume.chosenSchool);
+      if (resume.offerings) setOfferings(resume.offerings);
+      guidanceCompleteRef.current = hasCompletedPath;
+      setGuidanceComplete(hasCompletedPath);
+    }).catch(() => undefined).finally(() => {
+      if (active) setResumeHydrated(true);
+    });
+    return () => { active = false; };
+  }, [guidanceStudentId]);
+
+  useEffect(() => {
+    if (!resumeHydrated) return;
+    if (candidates.length || selected) return;
+    if (mode === "subjects" && canMatchSubjects) {
       void runSubjectMatch();
-    } else if (initialMode === "programme" && query.trim().length >= 2) {
+    } else if (mode === "programme" && query.trim().length >= 2) {
       void runProgrammeSearch(query);
     }
-    // Initial route hydration only.
+    // Initial route/checkpoint hydration only.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [resumeHydrated]);
 
   const runProgrammeSearch = async (term = query) => {
     const q = term.trim();
@@ -289,6 +394,16 @@ export default function AdmissionBrowseScreen() {
   };
 
   const runSubjectMatch = async () => {
+    if (subjectLimitExceeded) {
+      setCandidates([]);
+      setSubjectMatchAttempted(false);
+      setNotice(
+        subjectExamType === "utme"
+          ? "UTME uses exactly 4 subjects. Remove the extra subject before continuing."
+          : `Choose no more than ${MAX_OLEVEL_SUBJECTS} O-level subjects for this check. Remove the extras before continuing.`,
+      );
+      return;
+    }
     if (subjectExamType === "olevel" && olevelSubjects.length < 5) {
       setCandidates([]);
       setNotice("Choose at least five O-level subjects before checking programme fit.");
@@ -305,6 +420,7 @@ export default function AdmissionBrowseScreen() {
       return;
     }
     setLoading(true);
+    setSubjectMatchAttempted(true);
     setNotice(null);
     setSelected(null);
     try {
@@ -316,12 +432,16 @@ export default function AdmissionBrowseScreen() {
           olevelSubjects,
         },
       );
-      setCandidates((state.status === "real" || state.status === "fallback") && state.data ? state.data : []);
+      const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];
+      setCandidates(nextCandidates);
       setNotice(
-        state.status === "fallback"
+        nextCandidates.length === 0 && (state.status === "real" || state.status === "fallback")
+          ? "No programmes match this subject combination yet. Try a different valid combination, or use programme search if you already have a programme in mind."
+          : state.status === "fallback"
           ? "We found possible programmes from the published requirement text. Confirm each university's current requirements before deciding."
           : state.meta?.notice ?? null,
       );
+      if (guidedSubjectDiscovery) setShowSubjectEditor(false);
     } finally {
       setLoading(false);
     }
@@ -371,6 +491,7 @@ export default function AdmissionBrowseScreen() {
   }, [mode, query, schoolQuery]);
 
   const chooseSchool = async (school: AdmissionSchool) => {
+    markAdminGuidanceInProgress();
     setChosenSchool(school);
     setSelected(null);
     setOfferings([]);
@@ -397,6 +518,84 @@ export default function AdmissionBrowseScreen() {
     // The route parameters are the persisted onboarding checkpoint here.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Save the unfinished state to this student's account, not only to the
+  // administrator's device. The debounce keeps typing/searching responsive
+  // while still making a refresh or a later roster visit resumable.
+  useEffect(() => {
+    if (
+      !guidanceStudentId ||
+      !resumeHydrated ||
+      guidanceComplete ||
+      guidanceCompleteRef.current ||
+      finalizingGuidanceRef.current
+    ) return;
+    const timer = setTimeout(() => {
+      const stage: GuidanceResumeSnapshot["stage"] = selectedAdmissionSchool || domains
+        ? "fields"
+        : selected
+          ? "university"
+          : candidates.length
+            ? "programmes"
+            : mode === "subjects"
+              ? "subjects"
+              : "context";
+      const resume: GuidanceResumeSnapshot = {
+        status: "in_progress",
+        stage,
+        mode,
+        query,
+        schoolQuery,
+        subjectText,
+        olevelSubjectText,
+        subjectExamType,
+        contextClass,
+        stream,
+        candidates: candidates.slice(0, 80),
+        selected,
+        schools,
+        selectedAdmissionSchool,
+        domains,
+        programmeDetail,
+        selectedSubjectMatch,
+        chosenSchool,
+        offerings,
+      };
+      void provisioningData.saveGuidancePath(guidanceStudentId, {
+        academicContext: {
+          class: contextClass || undefined,
+          stream: stream || undefined,
+        },
+        subjects: { olevel: olevelSubjects, utme: subjects },
+        discoveryDoor: mode,
+        resume,
+      }).catch(() => undefined);
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [
+    guidanceStudentId,
+    resumeHydrated,
+    guidanceComplete,
+    mode,
+    query,
+    schoolQuery,
+    subjectText,
+    olevelSubjectText,
+    subjectExamType,
+    contextClass,
+    stream,
+    candidates,
+    selected,
+    schools,
+    selectedAdmissionSchool,
+    domains,
+    programmeDetail,
+    selectedSubjectMatch,
+    chosenSchool,
+    offerings,
+    olevelSubjects,
+    subjects,
+  ]);
 
   if (isAdminExplore && !learnerAudience) {
     return (
@@ -473,6 +672,7 @@ export default function AdmissionBrowseScreen() {
   };
 
   const selectCandidate = async (candidate: Candidate) => {
+    markAdminGuidanceInProgress();
     setSelected(candidate);
     setSchools([]);
     setSelectedAdmissionSchool(null);
@@ -568,10 +768,11 @@ export default function AdmissionBrowseScreen() {
       );
       return;
     }
+    if (guidanceStudentId) finalizingGuidanceRef.current = true;
     setSelectedAdmissionSchool(school);
-    const domainState = await careerData.getJambProgrammeDomains(id);
-    setDomains(domainState.status === "real" && domainState.data ? domainState.data : null);
     try {
+      const domainState = await careerData.getJambProgrammeDomains(id);
+      setDomains(domainState.status === "real" && domainState.data ? domainState.data : null);
       const selectedPath = {
         academicContext: {
           userType: userType || (isAdminExplore
@@ -610,9 +811,15 @@ export default function AdmissionBrowseScreen() {
       };
       if (guidanceStudentId) {
         const currentPath = await provisioningData.getGuidancePath(guidanceStudentId);
+        const nextPath = appendProgrammeChoice(currentPath?.path ?? {}, selectedPath);
+        nextPath.resume = {
+          ...(nextPath.resume ?? {}),
+          status: "complete",
+          stage: "fields",
+        };
         await provisioningData.saveGuidancePath(
           guidanceStudentId,
-          appendProgrammeChoice(currentPath?.path ?? {}, selectedPath),
+          nextPath,
         );
         invalidateGuidancePathCache();
       } else {
@@ -644,8 +851,14 @@ export default function AdmissionBrowseScreen() {
         await refreshUser();
         await clearOnboardingDraft(user?.id);
       }
+      if (guidanceStudentId) {
+        guidanceCompleteRef.current = true;
+        setGuidanceComplete(true);
+      }
     } catch {
       // Do not block browsing if profile finalization is temporarily unavailable.
+    } finally {
+      if (guidanceStudentId) finalizingGuidanceRef.current = false;
     }
   };
 
@@ -656,16 +869,55 @@ export default function AdmissionBrowseScreen() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>ADMISSION PATH</Text>
-       <Text style={[styles.title, { color: colors.text }]}>{earlySecondary ? "Plan subjects and programmes" : "Find a programme, university or subject plan"}</Text>
+      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : "ADMISSION PATH"}
+      </Text>
+      <Text style={[styles.title, { color: colors.text }]}>
+        {guidedSubjectDiscovery
+          ? earlySecondary
+            ? "Programmes to explore from your subjects"
+            : "Options from your subject plan"
+          : earlySecondary
+            ? "Plan subjects and programmes"
+            : "Find a programme, university or subject plan"}
+      </Text>
 
-       <View style={styles.modeRow}>
-         {showSchoolMode ? <ModeButton label="My university" active={mode === "school"} onPress={() => setMode("school")} /> : null}
-        <ModeButton label="Programme" active={mode === "programme"} onPress={() => setMode("programme")} />
-        <ModeButton label="Subjects" active={mode === "subjects"} onPress={() => setMode("subjects")} />
-      </View>
+      {guidedSubjectDiscovery ? (
+        <View style={[styles.subjectPlanCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={styles.subjectPlanHeader}>
+            <View style={{ flex: 1, gap: Spacing.xs }}>
+              <Text style={[styles.section, { color: colors.text }]}>Your subject plan</Text>
+              <Text style={[styles.hint, { color: colors.textMuted }]}>These subjects are a starting point for exploring programmes. They are not an admission decision.</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setShowSubjectEditor(true)}
+              accessibilityRole="button"
+              style={styles.changeSubjectsButton}
+            >
+              <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]}>Change</Text>
+            </TouchableOpacity>
+          </View>
+          {olevelSubjects.length ? (
+            <Text style={[styles.subjectPlanText, { color: colors.text }]}>
+              O-level: {olevelSubjects.join(", ")}
+            </Text>
+          ) : null}
+          {subjects.length ? (
+            <Text style={[styles.subjectPlanText, { color: colors.text }]}>
+              UTME: {subjects.join(", ")}
+            </Text>
+          ) : null}
+        </View>
+      ) : null}
 
-      {mode === "school" ? (
+       {showAdmissionEditor ? <View style={styles.modeRow}>
+         {showSchoolMode ? <ModeButton label="My university" active={mode === "school"} onPress={() => { markAdminGuidanceInProgress(); setMode("school"); }} /> : null}
+        <ModeButton label="Programme" active={mode === "programme"} onPress={() => { markAdminGuidanceInProgress(); setMode("programme"); }} />
+        <ModeButton label="Subjects" active={mode === "subjects"} onPress={() => { markAdminGuidanceInProgress(); setMode("subjects"); }} />
+      </View> : null}
+
+      {showAdmissionEditor ? (
+        mode === "school" ? (
         <View style={styles.panel}>
           <Text style={[styles.label, { color: colors.textSoft }]}>
             Your university
@@ -674,6 +926,7 @@ export default function AdmissionBrowseScreen() {
             <TextInput
               value={schoolQuery}
               onChangeText={(value) => {
+                markAdminGuidanceInProgress();
                 setSchoolQuery(value);
                 setChosenSchool(null);
                 setOfferings([]);
@@ -780,13 +1033,6 @@ export default function AdmissionBrowseScreen() {
                           >
                             {o.jambName}
                           </Text>
-                          <DegreeSkills
-                            technical={o.skillsTechnical}
-                            transferable={o.skillsTransferable}
-                            total={o.skillsCount}
-                            variant="teaser"
-                            color={active ? colors.textInverse : undefined}
-                          />
                           {o.hasUniversityException ? (
                             <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
                               University-specific admission note available
@@ -811,6 +1057,7 @@ export default function AdmissionBrowseScreen() {
             <TextInput
               value={query}
               onChangeText={(value) => {
+                markAdminGuidanceInProgress();
                 setQuery(value);
                 setSelected(null);
               }}
@@ -839,18 +1086,21 @@ export default function AdmissionBrowseScreen() {
           <Text style={[styles.label, { color: colors.textSoft }]}>What do you want to check?</Text>
           {!earlySecondary ? <View style={styles.modeRow}>
             <ModeButton label="UTME subjects" active={subjectExamType === "utme"} onPress={() => {
+              markAdminGuidanceInProgress();
               setSubjectExamType("utme");
               setCandidates([]);
               setSelected(null);
               setNotice(null);
             }} />
             <ModeButton label="O-level subjects" active={subjectExamType === "olevel"} onPress={() => {
+              markAdminGuidanceInProgress();
               setSubjectExamType("olevel");
               setCandidates([]);
               setSelected(null);
               setNotice(null);
             }} />
             <ModeButton label="Both" active={subjectExamType === "combined"} onPress={() => {
+              markAdminGuidanceInProgress();
               setSubjectExamType("combined");
               setCandidates([]);
               setSelected(null);
@@ -883,12 +1133,12 @@ export default function AdmissionBrowseScreen() {
               value={olevelSubjects}
               onChange={(next) => updateSubjectSelection(next, "olevel")}
               minSelected={5}
-              maxSelected={12}
+               maxSelected={MAX_OLEVEL_SUBJECTS}
               showSearch={false}
               helperText={
                 subjectExamType === "olevel"
-                  ? "Choose at least 5 O-level subjects for early programme guidance. UTME requirements appear after you open a programme."
-                  : "Choose at least 5 O-level subjects so the result can show whether the programme requirement is satisfied or has gaps."
+                   ? `Choose 5 to ${MAX_OLEVEL_SUBJECTS} O-level subjects for early programme guidance. UTME requirements appear after you open a programme.`
+                   : `Choose 5 to ${MAX_OLEVEL_SUBJECTS} O-level subjects so the result can show whether the programme requirement is satisfied or has gaps.`
               }
             />
           ) : null}
@@ -905,7 +1155,7 @@ export default function AdmissionBrowseScreen() {
               },
             ]}
           >
-            <Text style={styles.actionText}>Match programmes</Text>
+            <Text style={styles.actionText}>Continue</Text>
           </TouchableOpacity>
           {stream ? (
             <Text style={[styles.hint, { color: colors.textMuted }]}>
@@ -913,7 +1163,8 @@ export default function AdmissionBrowseScreen() {
             </Text>
           ) : null}
         </View>
-      )}
+      )
+      ) : null}
 
       {notice ? (
         <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}44` }]}>
@@ -922,6 +1173,12 @@ export default function AdmissionBrowseScreen() {
       ) : null}
 
       {loading ? <ActivityIndicator color={Brand.primary} /> : null}
+
+      {mode === "subjects" && !loading && subjectMatchAttempted && !candidates.length && !subjectLimitExceeded ? (
+        <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+          <Text style={[styles.noticeText, { color: colors.text }]}>No programme matches were found for these subjects. You can adjust the subjects and try again.</Text>
+        </View>
+      ) : null}
 
       <View style={styles.results}>
         {candidates.map((item) => {
@@ -977,13 +1234,6 @@ export default function AdmissionBrowseScreen() {
                   "Computer Engineering" — CCMAS is the mapping substrate, not
                   a fact about their course. What they want to know is what it
                   teaches. */}
-              <DegreeSkills
-                technical={item.skillsTechnical}
-                transferable={item.skillsTransferable}
-                total={item.skillsCount}
-                variant="teaser"
-                color={active ? colors.textInverse : undefined}
-              />
               {"matchedSubjectCount" in item ? (
                 <View style={styles.matchLines}>
                   <Text style={[styles.cardMeta, { color: active ? colors.textInverse : colors.textMuted }]}>
@@ -1003,67 +1253,23 @@ export default function AdmissionBrowseScreen() {
 
       {selected ? (
         <View style={styles.detail}>
-          <DegreeSkills
-            technical={selected.skillsTechnical}
-            transferable={selected.skillsTransferable}
-          />
-
-          <Text style={[styles.section, { color: colors.textSoft }]}>National programme requirements</Text>
-          {programmeDetail?.requirements ? (
-            <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-              <Text style={[styles.requirementLabel, { color: colors.text }]}>UTME subjects</Text>
-              <Text style={[styles.requirementText, { color: colors.textSoft }]}>
-                {programmeDetail.requirements.utmeSubjects || "Not listed in the available brochure data."}
-              </Text>
-              <Text style={[styles.requirementLabel, { color: colors.text }]}>O-level credits</Text>
-              <Text style={[styles.requirementText, { color: colors.textSoft }]}>
-                {programmeDetail.requirements.olevelRequirement || "Not listed in the available brochure data."}
-              </Text>
-              {programmeDetail.requirements.variesByInstitution ? (
-                <Text style={[styles.requirementText, { color: colors.textMuted }]}>
-                  Universities may add or phrase requirements differently. Review the selected university&apos;s current admission notice before applying.
-                </Text>
-              ) : null}
-            </View>
-          ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>The published requirement text is not available for this programme yet. We will still show the universities that list it.</Text>
-          )}
-          {selectedAdmissionSchool ? (
-            <View style={{ gap: Spacing.sm }}>
-              <Text style={[styles.section, { color: colors.textSoft }]}>This university&apos;s requirements</Text>
-              <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-                <Text style={[styles.requirementLabel, { color: colors.text }]}>University</Text>
-                <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.schoolName}</Text>
-                {selectedAdmissionSchool.address ? (
-                  <>
-                    <Text style={[styles.requirementLabel, { color: colors.text }]}>Address</Text>
-                    <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.address}</Text>
-                  </>
-                ) : null}
-                <Text style={[styles.requirementLabel, { color: colors.text }]}>UTME subjects</Text>
-                <Text style={[styles.requirementText, { color: colors.textSoft }]}>
-                  {selectedAdmissionSchool.universityUtmeSubjects || "No additional university-specific UTME requirement is recorded."}
-                </Text>
-                <Text style={[styles.requirementLabel, { color: colors.text }]}>O-level requirements</Text>
-                <Text style={[styles.requirementText, { color: colors.textSoft }]}>
-                  {selectedAdmissionSchool.universityOlevelRequirement || "No additional university-specific O-level requirement is recorded."}
-                </Text>
-                {selectedAdmissionSchool.universityNote ? (
-                  <>
-                    <Text style={[styles.requirementLabel, { color: colors.text }]}>Additional university note</Text>
-                    <Text style={[styles.requirementText, { color: colors.textSoft }]}>{selectedAdmissionSchool.universityNote}</Text>
-                  </>
-                ) : null}
-                <Text style={[styles.cardMeta, { color: colors.textMuted }]}>University-specific data remains separate from the national programme requirement.</Text>
-              </View>
-            </View>
-          ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>Choose a university offering to see its exact local requirements and address.</Text>
-          )}
-
+          <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+            <Text style={[styles.section, { color: colors.text }]}>What this programme is about</Text>
+            <Text style={[styles.requirementText, { color: colors.textSoft }]}>
+              {`${candidateDisplayName(selected)} is a programme option from your selected subjects. Open the programme overview to see what the programme teaches.`}
+            </Text>
+          </View>
+          <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+            <Text style={[styles.section, { color: colors.text }]}>Why this programme appeared</Text>
+            <Text style={[styles.requirementText, { color: colors.textSoft }]}>Matched subjects: {selectedSubjectDetails?.matchedSubjects?.length ? selectedSubjectDetails.matchedSubjects.join(", ") : "The available programme rule matched this selection."}</Text>
+            {selectedSubjectDetails?.olevelMatchedSubjects?.length ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>O-level subjects checked: {selectedSubjectDetails.olevelMatchedSubjects.join(", ")}</Text> : null}
+          </View>
+          {!selectedAdmissionSchool ? (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>Choose a university to open the university-aware programme overview. National and university-specific requirements will appear there, not before the university is selected.</Text>
+          ) : null}
           <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme</Text>
           <Text style={[styles.hint, { color: colors.textMuted }]}>
-            Choose a university before career-domain mapping starts.
+            Choose a university to open its programme overview. National and university-specific requirements are shown there after the university is selected.
           </Text>
           {hasSubjectContext ? (
             <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
@@ -1113,53 +1319,20 @@ export default function AdmissionBrowseScreen() {
             <Text style={[styles.hint, { color: colors.textMuted }]}>No university admission rows are available yet.</Text>
           )}
 
-          {selectedAdmissionSchool && domains?.domains?.length ? (
+          {selectedAdmissionSchool ? (
             <TouchableOpacity
-              onPress={() => exploreNav.domain(router, domains.domains[0].domainId, guidanceStudentId)}
+              onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
+                jambProgrammeId: selected.jambProgrammeId || selected.id,
+               schoolId: selectedAdmissionSchool.schoolId,
+               userType: userType || undefined,
+                focused: readParam(params.focus) === "guidance" || readParam(params.journey) === "guided_subject_discovery",
+             })}
               style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
             >
-              <Text style={styles.actionText}>Continue to field guidance</Text>
+              <Text style={styles.actionText}>Continue</Text>
             </TouchableOpacity>
           ) : null}
 
-           <Text style={[styles.section, { color: colors.textSoft }]}>Fields connected to this programme</Text>
-          {domains?.domains?.length ? (
-            domains.domains.map((domain) => (
-              <View key={domain.domainId} style={{ gap: Spacing.xs }}>
-                <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => exploreNav.domain(router, domain.domainId, guidanceStudentId)}
-                style={[styles.infoRow, { backgroundColor: colors.card, borderColor: colors.border }]}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.infoTitle, { color: colors.text }]}>{domain.domainName}</Text>
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    {domainRelationshipLabel(domain.matchType)}
-                  </Text>
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    {domainRelationshipCopy(domain.matchType)}
-                  </Text>
-                </View>
-                <Text style={[styles.chevron, { color: colors.textMuted }]}>Open</Text>
-              </TouchableOpacity>
-                <GuidanceReportButton
-                selection={{
-                  kind: "domains",
-                  id: domain.domainId,
-                  name: domain.domainName,
-                  matchType: domain.matchType,
-                }}
-                targetStudentId={guidanceStudentId || undefined}
-                />
-              </View>
-            ))
-          ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>
-              {selectedAdmissionSchool
-                ? "No domain paths yet."
-                : "Choose a university above to unlock programme-to-domain mapping."}
-            </Text>
-          )}
         </View>
        ) : null}
        <CareerDisclaimer variant="footer" />
@@ -1221,6 +1394,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
+  subjectPlanCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  subjectPlanHeader: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.md },
+  changeSubjectsButton: { paddingVertical: Spacing.xs, paddingHorizontal: Spacing.sm },
+  subjectPlanText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   modeText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   panel: { gap: Spacing.sm },
   label: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },

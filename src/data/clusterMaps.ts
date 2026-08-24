@@ -58,7 +58,7 @@ export const CLUSTER_ICONS: Record<string, FeatherIconName> = {
   "Advanced Science & Engineering": "hexagon",
   "Community Health & Paramedical": "activity",
   "Defence & Military": "shield",
-  "Energy & Resources": "zap",
+  "Energy & Resources": "activity",
   "High-Performance Engineering": "target",
   "Advanced Manufacturing": "settings",
   "Real Estate & Construction": "home",

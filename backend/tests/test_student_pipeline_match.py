@@ -50,6 +50,30 @@ class _FakeSvc:
         self._tables = tables
 
     def table(self, name):
+        if name == "subject_catalog" and name not in self._tables:
+            subjects = {}
+            for item in self._tables.get("programme_subject_option_items", []):
+                catalog = item.get("subject_catalog") or {}
+                if catalog.get("name"):
+                    subjects[catalog["name"]] = {
+                        "name": catalog["name"],
+                        "code": catalog.get("code"),
+                    }
+            return _FakeQuery(list(subjects.values()))
+        if name == "programme_subject_rule_records" and name not in self._tables:
+            # Existing matcher fixtures predate the deployment-authority gate;
+            # synthesize the matching typed rows unless a test explicitly
+            # supplies an empty/stale authority table.
+            return _FakeQuery([
+                {
+                    "jamb_programme_id": option.get("jamb_programme_id"),
+                    "requirement_id": option.get("requirement_id"),
+                    "exam_type": option.get("exam_type"),
+                    "rule_status": "matchable",
+                    "source_text": option.get("source_text"),
+                }
+                for option in self._tables.get("programme_subject_options", [])
+            ])
         return _FakeQuery(self._tables.get(name, []))
 
 
@@ -115,7 +139,10 @@ def test_required_and_one_of_matches_are_deduped(monkeypatch):
                 "jamb_programme_id": "jp1",
                 "exam_type": "utme",
                 "option_label": "A",
-                "min_required": 3,
+                # Mathematics is required and the group contributes one more
+                # distinct subject; the duplicate Mathematics item must not
+                # inflate this fixture to an impossible three-subject rule.
+                "min_required": 2,
                 "source_text": "Mathematics and any one of Physics, Chemistry",
             }
         ],
@@ -283,6 +310,130 @@ def test_text_fallback_respects_requested_exam_layer(monkeypatch):
 
     assert spr._match_text_requirements({"woodwork"}, limit=10, exam_type="utme") == []
     assert spr._match_text_requirements({"woodwork"}, limit=10, exam_type="olevel")
+
+
+def test_incomplete_structured_option_cannot_match_missing_named_olevel_subject(monkeypatch):
+    # Regression for stale SQL that marked an option parsed but omitted a
+    # named subject from programme_subject_option_items. The source text says
+    # Economics is required; English + Mathematics alone must not pass.
+    tables = {
+        "programme_subject_options": [
+            {
+                "id": "opt1",
+                "jamb_programme_id": "jp1",
+                "exam_type": "olevel",
+                "option_label": "5 credit passes",
+                "min_required": 5,
+                "source_text": "Five credit passes to include English Language, Mathematics and Economics plus any other two subjects.",
+            }
+        ],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+        ],
+        "subject_catalog": [
+            {"name": "English Language", "code": "ENG"},
+            {"name": "Mathematics", "code": "MATH"},
+            {"name": "Economics", "code": "ECON"},
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"english language", "mathematics", "agricultural science", "animal husbandry", "arabic"},
+        limit=10,
+        exam_type="olevel",
+    )
+    assert out == []
+
+
+def test_stale_options_without_typed_rule_authority_cannot_match(monkeypatch):
+    tables = {
+        "programme_subject_options": [
+            {
+                "id": "opt1",
+                "jamb_programme_id": "jp1",
+                "requirement_id": "req1",
+                "exam_type": "utme",
+                "option_label": "A",
+                "min_required": 2,
+                "source_text": "Physics and Mathematics",
+            }
+        ],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "Physics"),
+            _item("opt1", "required", "Mathematics"),
+        ],
+        "programme_subject_rule_records": [],
+        "subject_catalog": [
+            {"name": "Physics", "code": "PHY"},
+            {"name": "Mathematics", "code": "MATH"},
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_structured_subject_options(
+        {"physics", "mathematics"}, limit=10, exam_type="utme"
+    ) == []
+
+
+def test_subject_match_does_not_fallback_to_shared_text(monkeypatch):
+    # Text overlap is useful for programme-detail reading, not for an exact
+    # subject-match result. This prevents a common word such as English from
+    # producing unrelated programmes when structured data is unavailable.
+    monkeypatch.setattr(spr, "_match_structured_subject_options", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        spr,
+        "_match_text_requirements",
+        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("text fallback must not run")),
+    )
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics, Chemistry",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry, Biology",
+            exam_type="combined",
+        )
+    )
+    assert result.data["status"] == "real"
+    assert result.data["data"] == []
+    assert "exact structured subject match" in result.data["meta"]["notice"]
+
+
+def test_combined_match_keeps_utme_result_and_reports_olevel_gap(monkeypatch):
+    def fake_structured(selected, limit, exam_type="utme", require_full=True):
+        if exam_type == "utme":
+            return [{
+                "jambProgrammeId": "jp1",
+                "matchedSubjectCount": 4,
+                "matchedSubjects": ["Use of English", "Mathematics", "Physics", "Chemistry"],
+                "missingSubjects": [],
+                "requirementText": "Use of English, Mathematics, Physics and Chemistry",
+            }]
+        return [{
+            "jambProgrammeId": "jp1",
+            "matchedSubjectCount": 4,
+            "matchedSubjects": ["English Language", "Mathematics", "Physics", "Chemistry"],
+            "missingSubjects": ["Biology"],
+            "requirementText": "Five credits including English Language, Mathematics, Physics, Chemistry and Biology",
+        }]
+
+    monkeypatch.setattr(spr, "_match_structured_subject_options", fake_structured)
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *_args: items)
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="Use of English, Mathematics, Physics, Chemistry",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry, Economics",
+            exam_type="combined",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    row = result.data["data"][0]
+    assert row["jambProgrammeId"] == "jp1"
+    assert row["eligibilityStatus"] == "utme_match_olevel_gap"
+    assert row["olevelMissingSubjects"] == ["Biology"]
 
 
 def test_invalid_subject_exam_mode_does_not_default_to_utme():

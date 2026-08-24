@@ -211,7 +211,7 @@ function defaultIcon(type: SearchResultType): string {
     case "role": return "briefcase";
     case "university": return "building";
     case "scholarship": return "award";
-    case "opportunity": return "zap";
+    case "opportunity": return "star";
     case "admin": return "shield";
   }
 }

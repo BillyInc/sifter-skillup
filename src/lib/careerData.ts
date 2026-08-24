@@ -112,6 +112,8 @@ export interface GuidanceReportPath {
     subgroups?: Record<string, unknown>[];
     roles?: Record<string, unknown>[];
     notes?: string[];
+    /** Administrator-only checkpoint for reopening an unfinished student flow. */
+    resume?: Record<string, unknown>;
   };
   updatedAt?: string;
 }

@@ -49,11 +49,12 @@ export interface RoleDetailScreenProps {
 }
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[] }>();
   const roleKey = props.roleId ?? String(params.id ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
+  const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
 
   const [state, setState] = useState<DataState<DomainRoleV2>>(() =>
     comingSoon<DomainRoleV2>("Loading role details..."),
@@ -73,7 +74,8 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
     <DetailScaffold
       eyebrow="ROLE"
       title={state.data?.name ?? "Role"}
-      save={{ entityType: "role", entityId: roleKey }}
+      backLabel={targetStudentId ? "Back to student guidance" : "Back to smaller area"}
+      save={focusedGuidance ? undefined : { entityType: "role", entityId: roleKey }}
       reportSelection={{
         kind: "roles",
         id: roleKey,
@@ -87,7 +89,7 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
       pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       state={state}
     >
-      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} />}
+      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />}
     </DetailScaffold>
   );
 }
@@ -96,10 +98,12 @@ function RoleBody({
   role,
   roleKey,
   targetStudentId,
+  focusedGuidance,
 }: {
   role: DomainRoleV2;
   roleKey: string;
   targetStudentId?: string;
+  focusedGuidance: boolean;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -227,7 +231,7 @@ function RoleBody({
 
       {/* 4 — Routes into this role */}
       <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
-      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} targetStudentId={targetStudentId} />
+      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />
 
       {/* 5 — Related roles from career ladder */}
       <View onLayout={(e) => onSectionLayout("related", e.nativeEvent.layout.y)} />
@@ -242,7 +246,7 @@ function RoleBody({
                 colors={colors}
                 onPress={() => {
                   const slug = `${roleKey.split("|")[0]}|${name.toLowerCase()}`;
-                  exploreNav.role(router, slug, targetStudentId);
+                  exploreNav.role(router, slug, targetStudentId, focusedGuidance);
                 }}
               />
             ))}
@@ -336,12 +340,14 @@ function RouteIntoSection({
   router,
   colors,
   targetStudentId,
+  focusedGuidance,
 }: {
   appearsIn: DomainRoleV2["appearsIn"];
   careerLadder?: string[];
   router: ReturnType<typeof useRouter>;
   colors: ColorPalette;
   targetStudentId?: string;
+  focusedGuidance: boolean;
 }) {
   const exploreNav = useExploreNav();
   const hasLadder = careerLadder?.length;
@@ -365,7 +371,7 @@ function RouteIntoSection({
           {appearsIn.map((a) => (
             <TouchableOpacity
               key={a.domainId}
-              onPress={() => exploreNav.domain(router, a.domainId, targetStudentId)}
+              onPress={() => exploreNav.domain(router, a.domainId, targetStudentId, focusedGuidance)}
               style={[
                 styles.domainChip,
                 {

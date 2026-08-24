@@ -136,7 +136,7 @@ function buildOverviewContext(): TrackContext {
     tagline: 'Choose a live track and step into its world.',
     description: 'Browse your active islands, track options, guilds, streaks, and portfolio from one reference-style dashboard.',
     color: '#111111',
-    emoji: '⚡',
+    emoji: '✦',
     artFieldId: 'crypto',
     continueHref: '/fields',
     continueLabel: 'Explore Tracks',
@@ -285,7 +285,7 @@ export function resolveTrackContext(
   const trackTheme = getTrackVisualTheme(fallbackTrack.id, fallbackTrack.fieldId, trackName);
   const fallbackTheme = FALLBACK_FIELD_THEME[fallbackTrack.fieldId];
   const color = field?.color ?? fallbackTheme?.color ?? '#111111';
-  const emoji = field?.emoji ?? fallbackTheme?.emoji ?? '⚡';
+  const emoji = field?.emoji ?? fallbackTheme?.emoji ?? '✦';
 
   return {
     mode: 'track',

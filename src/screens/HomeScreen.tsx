@@ -350,7 +350,7 @@ export default function HomeScreen() {
             right={(
               <TouchableOpacity
                 onPress={() => go('/(tabs)/profile')}
-                style={[styles.webBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+                style={[styles.webActionBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
                 <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
               </TouchableOpacity>
@@ -571,7 +571,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             onPress={() => go('/(tabs)/profile')}
             activeOpacity={0.85}
-            style={[styles.mobileBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+            style={[styles.mobileActionBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
             <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>
               {trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
   greeting: { fontSize: FontSize.sm, marginBottom: 2 },
   headline: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.15 },
   mobileHeaderSub: { fontSize: FontSize.sm, lineHeight: 18, marginTop: 6, maxWidth: 280 },
-  mobileBoltBtn: { borderWidth: 1, borderRadius: Radius.md, paddingVertical: 8, paddingHorizontal: 14 },
+  mobileActionBtn: { borderWidth: 1, borderRadius: Radius.md, paddingVertical: 8, paddingHorizontal: 14 },
 
   editorialHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.lg },
   heroRouteCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg, gap: Spacing.md },
@@ -728,7 +728,7 @@ const styles = StyleSheet.create({
 
   referenceBadgeWrap: { alignSelf: 'flex-start', marginBottom: 10 },
 
-  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderRadius: 8, paddingVertical: 6, paddingHorizontal: 10, borderWidth: 1 },
+  webActionBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderRadius: 8, paddingVertical: 6, paddingHorizontal: 10, borderWidth: 1 },
   webBoltLabel: { fontSize: 11, maxWidth: 180 },
 
   webProgressCard: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
