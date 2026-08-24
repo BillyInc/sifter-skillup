@@ -6,6 +6,142 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sifter LevelUp is a Duolingo-style learning app for crypto literacy and quant finance. It has two main parts: a React Native/Expo mobile frontend and a FastAPI Python backend, backed by Supabase (Postgres) with Celery/Redis for background jobs.
 
+## SUPABASE APPLY-NOW CONTRACT — READ BEFORE TESTING ADMIN, MATCHING, OR REPORTS
+
+This is the visible deployment order Claude must follow when the task involves
+Supabase, subject matching, school provisioning, account deletion, guidance
+resume, or report printing. The configured REST keys cannot run DDL: use the
+Supabase Dashboard SQL Editor or `psql` with the project database connection
+string. The complete explanation and verification queries are in
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md` and
+`backend/MIGRATION_RUNBOOK.md`.
+
+### Existing Supabase project: apply missing items only
+
+The current project is not assumed to be fully migrated. First inspect the
+schema and counts. Do not blindly rerun a destructive taxonomy migration on a
+populated database. For the current student/admin test goal, the required
+missing surfaces are commonly these:
+
+1. `backend/migration_school_identity.sql` — `schools.address`, `city`,
+   `state`, `country`, and unique school affiliation codes.
+2. `backend/migration_guidance_report_paths.sql` — durable student/admin
+   guidance checkpoints used by report generation.
+3. `backend/migration_goal_apply_now.sql` and, if still absent, the current
+   additive auth/account patches listed in the complete migration runbook —
+   account-type selection, provisioning, claim-code and deletion support,
+   including `account_deletion_cooldowns`.
+4. `backend/migration_institution_team_access.sql` and
+   `backend/migration_institution_verification_proof.sql` when team or proof
+   flows are being tested.
+5. `backend/migration_subject_rule_records.sql` — typed national subject-rule
+   authority table. This must exist before the subject seeds.
+
+Then run the subject data in this exact order:
+
+```text
+backend/seed_subject_catalog.sql
+backend/seed_career_pilot.sql
+backend/seed_subject_rule_records.sql
+backend/seed_subject_options.sql
+```
+
+`seed_subject_options.sql` is a replacement seed for the national matcher
+tables; back up the affected tables first. The API intentionally fails closed
+when `programme_subject_rule_records` is empty or does not agree with the
+option seed. Do not call that state a passing matcher test.
+
+### Fresh or explicitly approved staging database: full order
+
+Apply the following groups in order, keeping each SQL file's transaction
+intact:
+
+```text
+# 1. Base application
+supabase-schema.sql
+backend/migration_v2.sql
+backend/migration_v2_atomic.sql
+backend/migration_auth_profile.sql
+backend/migration_fcm_device_tokens.sql
+backend/migration_v2_offline_idempotency.sql
+backend/migration_v2_offline_streak.sql
+
+# 2. Career, subject, admission, and resource schema
+backend/migration_career_base_registry.sql
+backend/migration_subject_catalog.sql
+backend/migration_career_pilot.sql
+backend/migration_subject_rule_records.sql
+backend/migration_career_v2.sql       # staging/empty rebuild only
+backend/migration_admission_intelligence.sql
+backend/migration_enrichment_v1.sql
+backend/migration_market_intelligence_v1.sql
+backend/migration_role_tools.sql
+backend/migration_role_detail_enrichment.sql
+backend/migration_source_backed_career_layers.sql
+backend/migration_career_resources_v1.sql
+
+# 3. Provisioning, onboarding, guidance, and institution access
+backend/migration_provisioning.sql
+backend/migration_school_identity.sql
+backend/migration_institution_team_access.sql
+backend/migration_student_pipeline_live.sql
+backend/migration_ss3_secondary_starting_point_patch.sql
+backend/migration_provisioning_guidance_variants.sql
+backend/migration_guidance_report_paths.sql
+backend/migration_saved_resource_support.sql
+backend/migration_student_consent_requests.sql
+backend/migration_institution_verification_proof.sql
+
+# 4. Current auth/account/admin patches
+backend/migration_goal_apply_now.sql
+backend/migration_pending_account_type_patch.sql
+backend/migration_signup_auth_apply_now_patch.sql
+backend/migration_auth_onboarding_security_patch.sql
+backend/migration_account_lifecycle_patch.sql
+backend/migration_admin_access_grant.sql
+backend/migration_internal_staff.sql
+backend/migration_feedback_storage.sql
+backend/migration_user_feedback.sql
+
+# 5. Data seeds
+backend/seed_subject_catalog.sql
+backend/seed_career_pilot.sql
+backend/seed_subject_rule_records.sql
+backend/seed_subject_options.sql
+backend/seed_career_v2.sql
+backend/seed_phase8_9_enrichment.sql
+backend/seed_career_resources_v1_parts/part-001.sql ... final part
+backend/patch_subject_catalog_streams.sql
+```
+
+Do not run `backend/migration_career_intelligence.sql`; it is superseded.
+After the subject seeds, run the exhaustive matcher audit:
+
+```text
+backend/.venv/Scripts/python.exe data/career-mapping/_audit_subject_match_exhaustive.py
+```
+
+Only after the audit reports zero oracle mismatches should Claude run the live
+school-owner → school code → student provisioning → SS1 guidance → report →
+claim-code test. Record the post-seed table counts and any remaining blocker
+instead of silently substituting mock data.
+
+### Current-database preflight (read-only)
+
+When the user says to test against the database as it currently exists, run this
+before the E2E flow. It never applies SQL or changes rows:
+
+```text
+cd backend
+.venv\\Scripts\\python.exe _supabase_preflight.py
+```
+
+Use the JSON gates directly. `overall: blocked` means test the available paths
+and report the exact blocked gates; it does not authorize bypassing the missing
+schema with fabricated rows. In particular, `matcher: blocked` is expected
+when `programme_subject_rule_records` is empty, and must be reported as no
+personalized subject matches rather than as zero valid programmes.
+
 ## Commands
 
 ### Frontend (React Native / Expo)
@@ -70,8 +206,11 @@ docker-compose up -d   # starts api, celery worker, celery beat, redis
 - Path alias: `@/*` maps to `src/*`
 - Navigation: **expo-router** (file-based) — routes live under `app/`, not in a
   navigator config. `@react-navigation/bottom-tabs` is NOT a dependency.
-  `app/(tabs)/` currently holds: community, explore, feed, fields, guild, home,
-  map, myworld, opportunities, portfolio, profile, settings, skills, streaks.
+  `app/(tabs)/` currently holds the active destinations plus retained legacy
+  learning routes: explore, feed, fields, guild, home, map, myworld,
+  opportunities, portfolio, profile, settings, skills, and streaks. The old
+  community route files are retired; stale `/community` browser entries are
+  repaired by `RouteIntegrityGuard`.
   Which of these are surfaced in the visible tab bar is decided by
   `MOBILE_NAV` / `PRIMARY_NAV` in `src/components/shell/ReferenceShell.tsx`,
   not by the presence of a route directory.
@@ -379,7 +518,7 @@ Then apply the subject data in this order:
 4. `backend/seed_subject_options.sql`
 
 Current generated coverage is 46 catalog subjects, 420 JAMB programme names,
-9,130 unique university offerings, 740 national matcher options, 7,246 option
+9,130 unique university offerings, 596 national matcher options, 7,793 option
 items, and 1,260 typed requirement records. The typed records preserve
 conditions, cross-references, direct-entry requirements, source variants, and
 14 explicitly source-missing layers. Only directly matchable records become
@@ -388,6 +527,15 @@ subject-picker options; missing source text must never be guessed.
 `seed_subject_options.sql` is a replacement transaction for the two national
 matcher tables. It is not an ordinary additive seed and requires a backup or
 controlled deployment on an existing Supabase project.
+
+After regenerating `seed_subject_options.sql`, run
+`python data/career-mapping/_audit_subject_option_seed.py`. The audit checks
+option capacity, named-source subject coverage, option-item foreign-key codes,
+and that every emitted programme and requirement ID exists in the prerequisite
+career seed, and that every option agrees with a matchable typed rule record.
+A passing generator run alone is not sufficient. The runtime matcher also
+fails closed when the typed rule layer is absent or stale, so both replacement
+subject seeds must be deployed together.
 
 After applying the SQL, verify the counts and foreign-key checks in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. A successful local generator
