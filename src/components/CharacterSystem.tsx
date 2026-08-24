@@ -1,11 +1,10 @@
 /**
  * Sifter LevelUp — Character System
  * SVG-composed worker character across 8 XP stages.
- * Track-specific desk tools, idle animation, The Bolt celebratory character.
+ * Track-specific desk tools and idle animation.
  *
  * Exports:
  *   <WorkerCharacter stage={3} trackId="quant" size={160} animate />
- *   <TheBolt size={120} animate />
  *   <DeskScene stage={4} trackId="crypto" />
  */
 
@@ -32,11 +31,6 @@ export interface WorkerCharacterProps {
   size?: number;            // render width/height
   animate?: boolean;        // idle float animation
   mood?: 'neutral' | 'happy' | 'focused' | 'celebrating';
-}
-
-export interface TheBoltProps {
-  size?: number;
-  animate?: boolean;        // celebration burst
 }
 
 export interface DeskSceneProps {
@@ -354,110 +348,6 @@ export function WorkerCharacter({
   );
 }
 
-// ─── The Bolt ─────────────────────────────────────────────────────────────────
-// Celebratory lightning bolt mascot — shown on lesson complete, lab complete,
-// and stage-up events.
-
-export function TheBolt({ size = 100, animate = true }: TheBoltProps) {
-  const scaleAnim  = useRef(new Animated.Value(animate ? 0 : 1)).current;
-  const rotateAnim = useRef(new Animated.Value(0)).current;
-  const glowAnim   = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (!animate) return;
-
-    // Burst entrance
-    Animated.parallel([
-      Animated.spring(scaleAnim, { toValue: 1, ...AnimPreset.spring }),
-      Animated.timing(glowAnim, { toValue: 1, duration: 400, useNativeDriver: true }),
-    ]).start(() => {
-      // Idle wobble
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(rotateAnim, { toValue: 1,  duration: 1200, useNativeDriver: true }),
-          Animated.timing(rotateAnim, { toValue: -1, duration: 1200, useNativeDriver: true }),
-          Animated.timing(rotateAnim, { toValue: 0,  duration: 600,  useNativeDriver: true }),
-        ])
-      ).start();
-    });
-  }, [animate]);
-
-  const rotate = rotateAnim.interpolate({
-    inputRange: [-1, 1],
-    outputRange: ['-8deg', '8deg'],
-  });
-
-  const s = size;
-
-  return (
-    <Animated.View
-      style={[
-        {
-          transform: [{ scale: scaleAnim }, { rotate }],
-        },
-        animate && {
-          shadowColor: '#f59e0b',
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: glowAnim as any,
-          shadowRadius: 20,
-        },
-      ]}
-    >
-      <Svg width={s} height={s} viewBox="0 0 100 100">
-        <Defs>
-          <LinearGradient id="boltGrad" x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#fde68a" />
-            <Stop offset="1" stopColor="#f59e0b" />
-          </LinearGradient>
-          <LinearGradient id="boltGlow" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor="#fbbf24" stopOpacity="0.3" />
-            <Stop offset="1" stopColor="#f59e0b" stopOpacity="0.05" />
-          </LinearGradient>
-        </Defs>
-
-        {/* Glow circle */}
-        <Circle cx="50" cy="50" r="46" fill="url(#boltGlow)" />
-
-        {/* Bold lightning bolt */}
-        <Path
-          d="M 58 8 L 28 52 L 46 52 L 36 92 L 72 42 L 54 42 Z"
-          fill="url(#boltGrad)"
-          stroke="#f59e0b"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-
-        {/* Shine highlight */}
-        <Path
-          d="M 55 12 L 38 48 L 50 46"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeOpacity="0.55"
-        />
-
-        {/* Eyes on the bolt */}
-        <Circle cx="46" cy="38" r="3.5" fill="#1e293b" />
-        <Circle cx="56" cy="38" r="3.5" fill="#1e293b" />
-        <Circle cx="47.2" cy="36.8" r="1.2" fill="#fff" />
-        <Circle cx="57.2" cy="36.8" r="1.2" fill="#fff" />
-
-        {/* Smile */}
-        <Path
-          d="M 43 43 Q 51 49 59 43"
-          stroke="#1e293b" strokeWidth="2" fill="none"
-          strokeLinecap="round"
-        />
-
-        {/* Sparkle stars */}
-        <SvgText x="12" y="22" fontSize="11">✨</SvgText>
-        <SvgText x="74" y="30" fontSize="9">⭐</SvgText>
-        <SvgText x="8" y="68" fontSize="8">✦</SvgText>
-      </Svg>
-    </Animated.View>
-  );
-}
 
 // ─── Desk Scene ───────────────────────────────────────────────────────────────
 // Full desk + worker composite — used on ProfileScreen and HomeScreen.

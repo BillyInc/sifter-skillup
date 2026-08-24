@@ -10,7 +10,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
+import { useGlobalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { FontSize, CompassFonts, Radius, Spacing, useTheme } from '@/theme';
@@ -171,7 +171,11 @@ function NavList({
 export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useLocalSearchParams<{ trackId?: string | string[]; trackName?: string | string[] }>();
+  // This shell sits above the nested Explore stack. Use global params so a
+  // focus marker added by a programme/domain/subgroup/role route reaches the
+  // shell and hides the complete app navigation chrome, not only the current
+  // Explore screen's controls.
+  const params = useGlobalSearchParams<{ trackId?: string | string[]; trackName?: string | string[]; journey?: string | string[]; focus?: string | string[]; guided?: string | string[] }>();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { colors, isDark, toggle } = useTheme();
@@ -203,6 +207,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   // design system puts the left sidebar on the Desktop tier (1025px+), so the
   // threshold drops from 1100 to 1025.
   const isWide = useSidebarNav();
+  const focusedGuidance = (Array.isArray(params.journey) ? params.journey[0] : params.journey) === 'guided_subject_discovery'
+    || (Array.isArray(params.focus) ? params.focus[0] : params.focus) === 'guidance'
+    || (Array.isArray(params.guided) ? params.guided[0] : params.guided) === '1';
 
   // Load the user's real search history when the overlay opens. Empty until
   // they have actually searched -- the overlay hides the section in that case.
@@ -282,7 +289,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
-      {isWide && (
+      {!focusedGuidance && isWide && (
         <View
           style={[
             styles.sidebar,
@@ -327,6 +334,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         <View
           style={[
             styles.topbar,
+            focusedGuidance && styles.focusTopbar,
             {
               paddingTop: Math.max(insets.top, Spacing.md),
               backgroundColor: colors.surface.raised,
@@ -335,7 +343,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           ]}
         >
           <View style={styles.topbarLeft}>
-            {!isWide && (
+            {!isWide && !focusedGuidance && (
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setDrawerOpen(true)}
@@ -349,12 +357,22 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             )}
 
             <View>
-              <Text style={[styles.pageEyebrow, { color: colors.textRole.muted }]}>{pageMeta.eyebrow}</Text>
-              <Text style={[styles.pageTitle, { color: colors.textRole.primary }]}>{pageMeta.title}</Text>
+              <Text style={[styles.pageEyebrow, { color: colors.textRole.muted }]}>{focusedGuidance ? 'Sifter guidance' : pageMeta.eyebrow}</Text>
+              <Text style={[styles.pageTitle, { color: colors.textRole.primary }]}>{focusedGuidance ? 'Choose your next step' : pageMeta.title}</Text>
             </View>
           </View>
 
           <View style={styles.topbarActions}>
+            {focusedGuidance ? (
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)/home' as any))}
+                style={[styles.focusExitButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}
+              >
+                <Text style={[styles.focusExitText, { color: colors.textRole.primary }]}>Exit guidance</Text>
+              </TouchableOpacity>
+            ) : null}
+            {!focusedGuidance ? <>
             {isWide && (
               <View style={styles.searchWrap}>
                 <SearchBar
@@ -399,12 +417,13 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             >
               <Feather name="user" size={15} color={colors.textRole.inverse} />
             </TouchableOpacity>
+            </> : null}
           </View>
         </View>
 
-        <View style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
+        <View style={[styles.content, !isWide && !focusedGuidance && { paddingBottom: 18 }]}>{children}</View>
 
-        {!isWide && (() => {
+        {!isWide && !focusedGuidance && (() => {
           const DOT_W = 16;
           const DOT_H = 3;
           return (
@@ -676,6 +695,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
   },
+  focusTopbar: {
+    minHeight: 62,
+  },
   topbarLeft: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -697,6 +719,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  focusExitButton: {
+    minHeight: TOUCH_TARGET_MIN,
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  focusExitText: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
   },
   searchWrap: {
     position: 'relative',

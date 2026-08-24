@@ -19,6 +19,7 @@ import { JambSetupForm } from "@/components/onboarding/JambSetupForm";
 import { CurrentStudentSetupForm } from "@/components/onboarding/CurrentStudentSetupForm";
 import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
 import { studentAccountApi } from "@/lib/provisioningData";
+import { setPendingPostAuthRedirect } from "@/lib/postAuthRedirect";
 
 function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
@@ -32,23 +33,24 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
     `&olevel_subjects=${encodeURIComponent(olevelSubjects)}` +
     `&stream=${encodeURIComponent(profile.stream ?? "")}` +
     `&user_type=${encodeURIComponent(profile.userType ?? "")}` +
-    `&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
+    `&class_name=${encodeURIComponent(profile.ssClass ?? "")}` +
+    "&focus=guidance";
 
   if (profile.userType === "senior_secondary") {
     if (profile.exploreIntent?.includes("have_programme") && programme) {
       return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}`;
     }
     if (olevelSubjects) {
-      return `/(tabs)/explore/admission?mode=subjects&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}&user_type=senior_secondary&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
+      return `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}&user_type=senior_secondary&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
     }
-    return "/(tabs)/explore/admission?mode=subjects&exam_type=olevel&user_type=senior_secondary";
+      return "/(tabs)/explore/admission?mode=subjects&focus=guidance&exam_type=olevel&user_type=senior_secondary";
   }
 
   if (profile.userType === "jamb" || profile.userType === "ss3_secondary") {
     if (profile.ssDoor === "unsure") {
       return subjects
-        ? `/(tabs)/explore/admission?mode=subjects&${subjectContext}`
-        : "/(tabs)/explore/admission?mode=subjects";
+        ? `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&${subjectContext}`
+        : "/(tabs)/explore/admission?mode=subjects&focus=guidance";
     }
     if (programme) {
       const schoolContext =
@@ -57,11 +59,11 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
           : "";
       return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}${schoolContext}`;
     }
-    return `/(tabs)/explore/admission?mode=programme&user_type=${encodeURIComponent(profile.userType)}`;
+    return `/(tabs)/explore/admission?mode=programme&focus=guidance&user_type=${encodeURIComponent(profile.userType)}`;
   }
 
   if (profile.userType === "student" && profile.preferredSchoolId) {
-    return `/(tabs)/explore/admission?mode=school&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? profile.schoolName ?? "")}&programme=${encodeURIComponent(programme)}&user_type=student`;
+      return `/(tabs)/explore/admission?mode=school&focus=guidance&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? profile.schoolName ?? "")}&programme=${encodeURIComponent(programme)}&user_type=student`;
   }
 
   return "/(tabs)/home";
@@ -105,6 +107,7 @@ export default function OnboardingFlow({
   });
   const [finishing, setFinishing] = useState(false);
   const [schoolCode, setSchoolCode] = useState("");
+  const [schoolCodeOpen, setSchoolCodeOpen] = useState(Boolean(initialProfile?.schoolCode));
   const [schoolCodeBusy, setSchoolCodeBusy] = useState(false);
   const [schoolCodeMessage, setSchoolCodeMessage] = useState<string | null>(null);
   const draftLoaded = useRef(false);
@@ -120,6 +123,7 @@ export default function OnboardingFlow({
           const draftUserType = savedProfile.userType ?? initialPersona;
           if (!initialPersona || draftUserType === initialPersona) {
             setSchoolCode(savedProfile.schoolCode ?? "");
+            setSchoolCodeOpen(Boolean(savedProfile.schoolCode));
             setProfile((prev) => ({
               ...prev,
               ...(initialProfile ?? {}),
@@ -168,6 +172,10 @@ export default function OnboardingFlow({
       // programme/university decision may continue in Discovery and must not
       // keep the account trapped behind the onboarding guard.
       await API.completeOnboarding({ account_type: "student" });
+      // AuthLayout sees the completed account during refreshUser and may
+      // redirect immediately. Queue the journey destination first so that
+      // completing onboarding never falls back to generic Home.
+      setPendingPostAuthRedirect(nextHrefForStartingPoint(full), user?.id);
       await refreshUser();
       if (!needsAdmissionResolution(full)) {
         await clearOnboardingDraft(user?.id);
@@ -222,24 +230,47 @@ export default function OnboardingFlow({
       ) : null}
       <Stepper step={step} total={1} />
 
-      <View style={[styles.schoolCodeCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-        <Text style={[styles.schoolCodeTitle, { color: colors.textRole.primary }]}>Have a school code?</Text>
-        <Text style={[styles.schoolCodeHint, { color: colors.textRole.muted }]}>Enter it now or leave this for later. It only links your account to the school; it does not expose your progress.</Text>
-        <View style={styles.schoolCodeRow}>
-          <TextInput
-            value={schoolCode}
-            onChangeText={(value) => { const next = value.toUpperCase(); setSchoolCode(next); patch({ schoolCode: next }); setSchoolCodeMessage(null); }}
-            autoCapitalize="characters"
-            placeholder="SCHOOL-XXXXXXXX"
-            placeholderTextColor={colors.textRole.muted}
-            style={[styles.schoolCodeInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
-          />
-          <TouchableOpacity onPress={linkSchool} disabled={schoolCodeBusy} style={[styles.schoolCodeButton, { backgroundColor: colors.textRole.primary, opacity: schoolCodeBusy ? 0.6 : 1 }]}>
-            {schoolCodeBusy ? <ActivityIndicator color={colors.surface.inverse} /> : <Text style={{ color: colors.surface.inverse, fontWeight: "800" }}>Link</Text>}
-          </TouchableOpacity>
+      {schoolCodeOpen ? (
+        <View style={[styles.schoolCodeCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <View style={styles.schoolCodeHeader}>
+            <View style={{ flex: 1, gap: Spacing.xs }}>
+              <Text style={[styles.schoolCodeTitle, { color: colors.textRole.primary }]}>Have a school code?</Text>
+              <Text style={[styles.schoolCodeHint, { color: colors.textRole.muted }]}>Enter it now or leave this for later. It only links your account to the school; it does not expose your progress.</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setSchoolCodeOpen(false)}
+              accessibilityRole="button"
+              accessibilityLabel="Hide school code"
+              hitSlop={8}
+            >
+              <Text style={[styles.schoolCodeClose, { color: colors.textRole.muted }]}>×</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.schoolCodeRow}>
+            <TextInput
+              value={schoolCode}
+              onChangeText={(value) => { const next = value.toUpperCase(); setSchoolCode(next); patch({ schoolCode: next }); setSchoolCodeMessage(null); }}
+              autoCapitalize="characters"
+              placeholder="SCHOOL-XXXXXXXX"
+              placeholderTextColor={colors.textRole.muted}
+              style={[styles.schoolCodeInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
+            />
+            <TouchableOpacity onPress={linkSchool} disabled={schoolCodeBusy} style={[styles.schoolCodeButton, { backgroundColor: colors.textRole.primary, opacity: schoolCodeBusy ? 0.6 : 1 }]}>
+              {schoolCodeBusy ? <ActivityIndicator color={colors.surface.inverse} /> : <Text style={{ color: colors.surface.inverse, fontWeight: "800" }}>Link</Text>}
+            </TouchableOpacity>
+          </View>
+          {schoolCodeMessage ? <Text style={[styles.schoolCodeHint, { color: colors.accentRole.success }]}>{schoolCodeMessage}</Text> : null}
         </View>
-        {schoolCodeMessage ? <Text style={[styles.schoolCodeHint, { color: colors.accentRole.success }]}>{schoolCodeMessage}</Text> : null}
-      </View>
+      ) : (
+        <TouchableOpacity
+          onPress={() => setSchoolCodeOpen(true)}
+          accessibilityRole="button"
+          style={[styles.schoolCodeCollapsed, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}
+        >
+          <Text style={[styles.schoolCodeCollapsedText, { color: colors.textRole.secondary }]}>Have a school code? Add it (optional)</Text>
+          <Text style={[styles.schoolCodeReveal, { color: colors.accentRole.action }]}>Show</Text>
+        </TouchableOpacity>
+      )}
 
       <View>
         {profile.userType === "senior_secondary" ? (
@@ -274,8 +305,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   schoolCodeCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  schoolCodeHeader: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
   schoolCodeTitle: { fontSize: FontSize.md, fontWeight: "800" },
   schoolCodeHint: { fontSize: FontSize.xs, lineHeight: 17 },
+  schoolCodeClose: { fontSize: 24, lineHeight: 24 },
+  schoolCodeCollapsed: { borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  schoolCodeCollapsedText: { fontSize: FontSize.sm, fontWeight: "700" },
+  schoolCodeReveal: { fontSize: FontSize.sm, fontWeight: "800" },
   schoolCodeRow: { flexDirection: "row", gap: Spacing.sm, alignItems: "center" },
   schoolCodeInput: { flex: 1, minHeight: 46, borderWidth: 1, borderRadius: Radius.sm, paddingHorizontal: Spacing.md },
   schoolCodeButton: { minHeight: 46, minWidth: 72, borderRadius: Radius.sm, alignItems: "center", justifyContent: "center" },

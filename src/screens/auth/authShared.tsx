@@ -222,8 +222,7 @@ export function AuthField({
            autoComplete={autoComplete}
            onFocus={() => setFocused(true)}
            onBlur={() => setFocused(false)}
-           accessibilityState={{ focused }}
-        />
+         />
         {value ? (
           <TouchableOpacity
             accessibilityRole="button"

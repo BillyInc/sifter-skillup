@@ -6,7 +6,7 @@
  *   SifterCard        — primary card shell (all variants)
  *   SifterButton      — primary / ghost / danger / track-coloured
  *   Badge             — pill badges (level, track, status, XP)
- *   LevelBadge        — the ⚡ LVL24 gold badge from Stitch header
+ *   LevelBadge        — the level badge from Stitch header
  *   ProgressBar       — animated fill bar (XP, lesson, track progress)
  *   StatChip          — icon + number + label grid cell
  *   StatGrid          — 2x2 or 2x1 grid of StatChips
@@ -294,7 +294,7 @@ export function Badge({ label, variant = 'default', color, icon, size = 'md' }: 
 }
 
 // ─── LevelBadge ────────────────────────────────────────────────────────────────
-// The gold ⚡ LVL24 badge from the Stitch header
+// The gold level badge from the Stitch header
 
 interface LevelBadgeProps {
   level: number;
@@ -329,7 +329,7 @@ export function LevelBadge({ level, style }: LevelBadgeProps) {
       },
       style,
     ]}>
-      <Text style={{ fontSize: FontSize.xs }}>⚡</Text>
+      <Text style={{ fontSize: FontSize.xs }}>✦</Text>
       <Text style={{
         fontSize: FontSize.sm,
         fontWeight: FontWeight.black,

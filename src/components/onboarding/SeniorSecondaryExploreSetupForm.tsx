@@ -9,7 +9,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
-import { LiveSubjectMultiSelect } from "./LiveSubjectMultiSelect";
+import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "./LiveSubjectMultiSelect";
 import { SelectField, type ChoiceOption } from "./primitives";
 import {
   STREAM_OPTIONS,
@@ -151,7 +151,7 @@ export function SeniorSecondaryExploreSetupForm({
             value={value.olevelSubjects}
             onChange={(v) => onChange({ olevelSubjects: v as string[] })}
             fixedSubjects={["English Language", "Mathematics"]}
-            maxSelected={12}
+            maxSelected={MAX_OLEVEL_SUBJECTS}
             minSelected={5}
             showSearch={false}
             helperText="English Language and Mathematics are shown first. Choose at least 3 more subjects. These choices help us suggest programmes, but each programme will still show its own exact requirements."
@@ -165,7 +165,7 @@ export function SeniorSecondaryExploreSetupForm({
       ) : null}
 
       <SifterButton
-        label="Continue guidance"
+        label="Continue"
         onPress={onContinue}
         disabled={
           !ssClass ||

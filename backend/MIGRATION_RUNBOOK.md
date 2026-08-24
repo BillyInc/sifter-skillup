@@ -69,10 +69,14 @@ and before the subject seeds. Then run the data files in this order:
 3. `backend/seed_subject_rule_records.sql`
 4. `backend/seed_subject_options.sql`
 
-The current generated subject counts are 46 catalog subjects, 740 national
-matcher options, 7,246 option items, and 1,260 typed rule records. The
+The current generated subject counts are 46 catalog subjects, 596 national
+matcher options, 7,793 option items, and 1,260 typed rule records. The
 subject-option seed intentionally deletes and rebuilds only the two national
 matcher tables; back up an existing production database before running it.
+The API will not trust an option row until the corresponding typed rule record
+is present and has the same programme, requirement, exam layer, and source
+text. Apply `seed_subject_rule_records.sql` before
+`seed_subject_options.sql`.
 
 ## Smoke test (after A + B)
 

@@ -70,8 +70,11 @@ docker-compose up -d   # starts api, celery worker, celery beat, redis
 - Path alias: `@/*` maps to `src/*`
 - Navigation: **expo-router** (file-based) — routes live under `app/`, not in a
   navigator config. `@react-navigation/bottom-tabs` is NOT a dependency.
-  `app/(tabs)/` currently holds: community, explore, feed, fields, guild, home,
-  map, myworld, opportunities, portfolio, profile, settings, skills, streaks.
+  `app/(tabs)/` currently holds the active destinations plus retained legacy
+  learning routes: explore, feed, fields, guild, home, map, myworld,
+  opportunities, portfolio, profile, settings, skills, and streaks. The old
+  community route files are retired; stale `/community` browser entries are
+  repaired by `RouteIntegrityGuard`.
   Which of these are surfaced in the visible tab bar is decided by
   `MOBILE_NAV` / `PRIMARY_NAV` in `src/components/shell/ReferenceShell.tsx`,
   not by the presence of a route directory.
@@ -379,7 +382,7 @@ Then apply the subject data in this order:
 4. `backend/seed_subject_options.sql`
 
 Current generated coverage is 46 catalog subjects, 420 JAMB programme names,
-9,130 unique university offerings, 740 national matcher options, 7,246 option
+9,130 unique university offerings, 596 national matcher options, 7,793 option
 items, and 1,260 typed requirement records. The typed records preserve
 conditions, cross-references, direct-entry requirements, source variants, and
 14 explicitly source-missing layers. Only directly matchable records become
@@ -388,6 +391,15 @@ subject-picker options; missing source text must never be guessed.
 `seed_subject_options.sql` is a replacement transaction for the two national
 matcher tables. It is not an ordinary additive seed and requires a backup or
 controlled deployment on an existing Supabase project.
+
+After regenerating `seed_subject_options.sql`, run
+`python data/career-mapping/_audit_subject_option_seed.py`. The audit checks
+option capacity, named-source subject coverage, option-item foreign-key codes,
+and that every emitted programme and requirement ID exists in the prerequisite
+career seed, and that every option agrees with a matchable typed rule record.
+A passing generator run alone is not sufficient. The runtime matcher also
+fails closed when the typed rule layer is absent or stale, so both replacement
+subject seeds must be deployed together.
 
 After applying the SQL, verify the counts and foreign-key checks in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. A successful local generator

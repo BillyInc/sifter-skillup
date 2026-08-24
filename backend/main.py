@@ -537,9 +537,23 @@ async def auth_signup(body: dict, request: Request):
             )
         except Exception as exc:
             # The cooldown table is introduced by the lifecycle migration. A
-            # pre-migration dev database must not make ordinary signup fail.
+            # pre-migration dev database must still enforce the cooldown saved
+            # on the deleted user row itself.
             log.warning("Signup cooldown lookup skipped", error=str(exc))
             cooldown = []
+            try:
+                cooldown = (
+                    db.get_service_client().table("users")
+                    .select("deletion_cooldown_until")
+                    .eq("deleted_device_id", device_id)
+                    .gt("deletion_cooldown_until", datetime.now().isoformat())
+                    .limit(1).execute().data or []
+                )
+            except Exception as fallback_exc:
+                # Very old schemas may not have either lifecycle surface. The
+                # migration remains the durable fix; keep this compatibility
+                # path non-fatal for those databases.
+                log.warning("Signup user-row cooldown lookup skipped", error=str(fallback_exc))
         if cooldown:
             raise HTTPException(status_code=429, detail="This device must wait before creating another account.")
     try:

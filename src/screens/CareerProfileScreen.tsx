@@ -417,7 +417,7 @@ export default function CareerProfileScreen() {
               {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
             </Text>
             <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              {accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}
+              {accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}
             </Text>
             <View style={styles.modalActions}>
               <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
