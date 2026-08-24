@@ -222,7 +222,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
             {/* Loading */}
             {loading && (
               <View style={styles.loadingRow}>
-                <Text style={styles.boltSpin}>⚡</Text>
+                <Text style={styles.sparkleSpin}>✦</Text>
                 <Text style={[styles.loadingText, { color: colors.textMuted }]}>Thinking…</Text>
               </View>
             )}
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
 
   errorText:        { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   loadingRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md },
-  boltSpin:         { fontSize: 20 },
+  sparkleSpin:      { fontSize: 20 },
   loadingText:      { fontSize: FontSize.sm },
 
   resultBlock:      { gap: Spacing.md },

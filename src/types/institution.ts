@@ -228,6 +228,7 @@ export interface RosterStudent {
   visible: boolean;
   hasConsent: boolean;
   guidanceComplete?: boolean;
+  studentType?: ProvisioningStudentType | null;
 }
 
 /** The roster payload: visible rows + the counts that make the aggregate-only

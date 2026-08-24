@@ -1,4 +1,4 @@
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
+import { useGlobalSearchParams, usePathname, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "../hooks/useAuth";
@@ -30,7 +30,10 @@ function isPath(prefix: string, pathname: string | null) {
  */
 export function RouteIntegrityGuard() {
   const pathname = usePathname();
-  const params = useLocalSearchParams<{ from?: string | string[] }>();
+  // The guard is mounted above nested route groups. Global params ensure a
+  // restored/deep-linked compatibility route cannot bypass the redirect just
+  // because its query string belongs to a child stack.
+  const params = useGlobalSearchParams<{ from?: string | string[] }>();
   const router = useRouter();
   const { user, loading, signOut } = useAuth();
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);

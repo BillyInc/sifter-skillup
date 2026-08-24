@@ -90,7 +90,7 @@ export default function StreaksScreen() {
     const streak = status?.streak ?? 0;
     return [
       { days: 7,  reward: 'Freeze Shield', icon: 'shield' as const, done: streak >= 7 },
-      { days: 14, reward: 'XP Boost x2',   icon: 'zap' as const,    done: streak >= 14 },
+      { days: 14, reward: 'XP Boost x2',   icon: 'star' as const,   done: streak >= 14 },
       { days: 30, reward: 'Rare Badge',     icon: 'award' as const,  done: streak >= 30 },
       { days: 60, reward: 'Elite Status',   icon: 'star' as const,   done: streak >= 60 },
     ];

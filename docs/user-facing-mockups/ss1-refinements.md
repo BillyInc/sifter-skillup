@@ -24,9 +24,12 @@ and component implementation. It is separate from the full text mockup in
 ## Programme-first behavior
 
 - Programme search begins as soon as the query is useful enough to search.
-- After selecting a programme, the student continues directly into guidance.
+- After selecting a programme, the student continues directly into its university
+  offerings; after selecting a university, `Continue` opens the university-aware
+  programme page and then the field guidance flow.
 - Do not route the student to Home or general Explore at that point.
-- The primary action is `Continue guidance`.
+- Use the simple primary action label `Continue`; the current screen and selected
+  item provide the context.
 - A student may add another programme later through an explicit action.
 
 ## Programme detail
@@ -40,10 +43,63 @@ and component implementation. It is separate from the full text mockup in
 ## Guidance hierarchy
 
 - The programme page shows only a short `Where this can lead` preview.
-- `Continue to field guidance` opens the full domain -> subgroup -> role flow.
+- After the university-aware programme page, `Continue` opens the full domain ->
+  subgroup -> role flow.
 - Do not create a separate Employment tab; it duplicates the career hierarchy.
 - Roles belong under subgroups. Unassigned roles are data-quality issues and should not appear as a flat SS1 list.
 - Direct, functional and adjacent describe mapping distance, not student ability.
+
+## Latest flow corrections (2026-08-22)
+
+- Do not show or activate a `Continue` action before the student has selected a
+  university. Selecting a programme only opens the university offerings for
+  that single JAMB programme.
+- Selecting a university moves the student into the programme page, where the
+  selected university, programme overview and university-specific requirements
+  are shown. It must not open the first domain automatically.
+- Keep `What this programme helps you build` on the programme page only when it
+  describes the programme itself. Do not use that section to describe a domain.
+- Domain guidance owns the domain's build/skills explanation. It should appear
+  in the domain detail after the programme-to-domain connection is opened.
+  `Build / Entrepreneurship` is a separate domain tab or clearly equivalent
+  action, parallel to the programme's build/entrepreneurship surface. It must
+  answer the domain-specific question, `What can I build in this domain?`,
+  using only real domain-backed data and truthful actions.
+- Every domain must expose the Build / Entrepreneurship entry consistently;
+  it must not be a hidden or programme-only feature. The domain Overview and
+  Skills content explain the field and its foundations, while the Build /
+  Entrepreneurship tab explains possible things to create, offer or develop
+  within that field.
+- A domain detail must not show a flat list of roles. Its order is domain
+  overview, domain skills/competencies/resources, then mapped subgroups. Roles
+  appear inside the relevant subgroup/roles card because roles belong to
+  subgroups.
+- Overview and Skills must render different content. Changing between them
+  must replace the visible section, not leave the same programme/domain panel
+  in place under two labels.
+- In guided discovery, the Explore shell is only the route host. The active
+  guidance journey is a focused full-screen flow with all global navigation
+  hidden until the user exits guidance; only guidance wayfinding and actions
+  remain visible.
+
+## Audit goals added during the continuation review (2026-08-24)
+
+- [x] Treat guidance focus as a shell-wide state: hide the sidebar, mobile
+  navigation, search, theme/profile actions and Explore floating actions, not
+  merely the Explore navigation item.
+- [x] Preserve the focused state through nested programme, domain, subgroup and
+  role routes by reading global route parameters in the outer shells.
+- [x] Keep administrator guidance student-scoped when a university is changed
+  or a domain is opened from the programme page.
+- [x] Retire the old community route files and repair stale browser entries
+  through the route integrity guard.
+- [x] Remove the legacy celebratory bolt artwork/fallback from active product
+  UI; retained learning content may still contain ordinary instructional
+  references to lightning or Starknet.
+- [ ] Verify the focused transitions in a running browser session and verify
+  account-deletion cooldown behavior after the additive lifecycle migration is
+  applied to the target Supabase schema. Local tests cannot prove either live
+  deployment state.
 
 ## Admission information
 
@@ -64,7 +120,7 @@ and component implementation. It is separate from the full text mockup in
 
 - Saving shows an inline `Saved to My World` confirmation; there is no separate saved-path screen.
 - My World stores the full structured context: school, stream, subjects, programmes, universities, domain, subgroup, role, resources and reports.
-- Home's primary action is `Continue guidance`.
+- Home's primary action is `Continue`.
 - Comparison is optional and only appears after the student saves multiple programmes.
 - Reports are SS1 Guidance Summaries, can include multiple programmes, and support print, PDF download, QR/access code and sharing.
 - Reports must never show `Under review` unless a real submission exists.

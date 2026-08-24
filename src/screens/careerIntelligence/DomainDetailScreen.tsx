@@ -31,7 +31,6 @@ import {
   comingSoon,
   type DataState,
   type DomainV2,
-  type DomainRoleSummary,
 } from "@/types/career";
 import {
   DetailScaffold,
@@ -40,21 +39,19 @@ import {
   ToolGroupsBlock,
   CertPlacementList,
   LearningResourcesBlock,
-  RoleClusterSection,
-  RoleCard,
   NotesWidget,
   RouteLine,
   MappingFeedbackButton,
   SectionLabel,
-  GuidanceReportButton,
 } from "@/components/careerIntelligence";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
   { key: "skills", label: "Skills" },
+  { key: "build", label: "Build / Entrepreneurship" },
   { key: "tools", label: "Tools" },
   { key: "certs", label: "Certifications" },
-  { key: "roles", label: "Roles" },
+  { key: "subgroups", label: "Subgroups" },
 ] as const;
 
 /** Estimated chrome offset from scroll top to body content start. */
@@ -66,11 +63,13 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
+  const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
+  const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
 
   const [state, setState] = useState<DataState<DomainV2>>(() =>
     comingSoon<DomainV2>("Loading domain details..."),
@@ -90,14 +89,16 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
     <DetailScaffold
       eyebrow="DOMAIN"
       title={state.data?.name ?? "Domain"}
-      save={{ entityType: "domain", entityId: domainKey }}
+      backLabel={targetStudentId ? "Back to student guidance" : "Back to programme"}
+      save={focusedGuidance ? undefined : { entityType: "domain", entityId: domainKey }}
       reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
       targetStudentId={targetStudentId}
       pdf
       pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       state={state}
+      scrollRef={scrollRef}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} scrollRef={scrollRef} />}
     </DetailScaffold>
   );
 }
@@ -113,10 +114,14 @@ function DomainBody({
   domain,
   domainKey,
   targetStudentId,
+  focusedGuidance,
+  scrollRef: outerScrollRef,
 }: {
   domain: DomainV2;
   domainKey: string;
   targetStudentId?: string;
+  focusedGuidance: boolean;
+  scrollRef: React.RefObject<ScrollView | null>;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -124,8 +129,8 @@ function DomainBody({
   const resp = useResponsive();
 
   const cluster = domain.cluster ?? domain.clusters?.[0];
-  const roles = domain.roles ?? [];
   const subgroups = domain.subgroups ?? [];
+  const roleCount = domain.roleCount ?? domain.roles?.length ?? 0;
   const clusterColor = getClusterColor(cluster ?? "");
 
   const isDesktop = resp.isDesktop && resp.isWeb;
@@ -136,59 +141,31 @@ function DomainBody({
   // domain rendered "Match · 0%" — claiming >=50% coverage and 0% coverage in
   // the same badge. Both props are optional now, and the badge renders nothing
   // when there is nothing to say.
-  const renderRoleCard = (role: DomainRoleSummary) => (
-    <View key={role.key} style={styles.roleItem}>
-      <RoleCard
-        id={role.key}
-        name={role.name}
-        alsoKnownAs={role.alsoKnownAs}
-        eliteFlag={isElite(role.eliteStatus)}
-        domainId={domainKey}
-        onPress={() => exploreNav.role(router, role.key, targetStudentId)}
-      />
-      <GuidanceReportButton
-        selection={{
-          kind: "roles",
-          id: role.key,
-          name: role.name,
-          domainId: domainKey,
-          domainName: domain.name,
-          ...(role.subgroupId
-            ? {
-                subgroupId: role.subgroupId,
-                subgroupName: subgroups.find((item) => item.id === role.subgroupId)?.name,
-              }
-            : {}),
-        }}
-        targetStudentId={targetStudentId}
-      />
-    </View>
-  );
-
   // ── Section positions for nav scrolling ──────────────────────
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
-  const scrollRef = useRef<ScrollView>(null);
+  const desktopScrollRef = useRef<ScrollView>(null);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
       sectionY.current[key] = CHROME_OFFSET + y;
     }
-  }, []);
+  }, [isDesktop, outerScrollRef]);
 
   const scrollTo = useCallback((key: string) => {
     const y = sectionY.current[key];
     if (y !== undefined) {
-      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+      (isDesktop ? desktopScrollRef : outerScrollRef).current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
     }
     setActiveSection(key);
-  }, []);
+  }, [isDesktop, outerScrollRef]);
 
   // ── Desktop layout: section nav + content side-by-side ───────
   const content = (
     <>
       {/* Hero section */}
       <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
         <View style={[styles.heroIconWrap, clusterColor ? { backgroundColor: clusterColor + "15" } : undefined]}>
           <DomainIcon cluster={cluster} size={36} />
         </View>
@@ -225,10 +202,40 @@ function DomainBody({
         stations={[
           { state: "you", label: "Foundations" },
           { state: "bridge", label: cluster ?? "This field" },
-          { state: "target", label: `${roles.length || ""} roles`.trim() },
+          { state: "target", label: `${roleCount || ""} roles`.trim() },
         ]}
         edges={["solid", "dashed"]}
       />
+
+      {/* Domain-owned build surface. This is separate from programme skills:
+          it answers what someone can create or develop within this field. */}
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        <View onLayout={(e) => onSectionLayout("build", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>What can you build in this domain?</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
+            Explore source-backed build and entrepreneurship guidance for this field.
+          </Text>
+          {domain.domainBridgeSkills?.length ? (
+            <View style={styles.bridgeList}>
+              <Text style={[styles.bridgeLabel, { color: colors.textRole.muted }]}>Domain foundations</Text>
+              <View style={styles.bridgeChips}>
+                {domain.domainBridgeSkills.map((item) => (
+                  <View key={item.name} style={[styles.bridgeChip, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+                    <Text style={[styles.bridgeChipText, { color: colors.textRole.secondary }]}>{item.name}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
+          <TouchableOpacity
+            onPress={() => exploreNav.entrepreneurship(router, { domainId: domainKey, focused: focusedGuidance })}
+            style={[styles.buildButton, { borderColor: colors.accentRole.action }]}
+          >
+            <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build / Entrepreneurship</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
       {/* Foundation skills */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
@@ -271,32 +278,25 @@ function DomainBody({
         compact
       />
 
-      {/* Roles, grouped by sub-cluster */}
+      {/* Subgroups are the next level. Roles are intentionally not rendered as
+          a flat list on the domain page; they belong to subgroup/role cards. */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("roles", e.nativeEvent.layout.y)} />
-        {roles.length && subgroups.length ? (
-            <View style={{ gap: Spacing.md }}>
-              <SectionLabel>Roles in this field</SectionLabel>
-              {subgroups.map((sg, i) => {
-                const sgRoles = roles.filter((r) => r.subgroupId === sg.id);
-                if (!sgRoles.length) return null;
-                return (
-                  <RoleClusterSection
-                    key={sg.id}
-                    subgroup={sg}
-                    domainId={domainKey}
-                    domainName={domain.name}
-                    targetStudentId={targetStudentId}
-                    defaultOpen={i === 0}
-                  >
-                    <View style={styles.roleList}>
-                      {sgRoles.map(renderRoleCard)}
-                    </View>
-                  </RoleClusterSection>
-                );
-              })}
-            </View>
-        ) : null}
+        <View onLayout={(e) => onSectionLayout("subgroups", e.nativeEvent.layout.y)} />
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>Subgroups in this domain</SectionLabel>
+          {subgroups.length ? subgroups.map((sg) => (
+            <TouchableOpacity
+              key={sg.id}
+              activeOpacity={0.8}
+              onPress={() => exploreNav.subgroup(router, domainKey, sg.id, targetStudentId, focusedGuidance)}
+              style={[styles.subgroupCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+            >
+              <Text style={[styles.subgroupTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{sg.name}</Text>
+              {sg.description ? <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{sg.description}</Text> : null}
+              <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Open subgroup and roles →</Text>
+            </TouchableOpacity>
+          )) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Subgroups are not available for this domain yet.</Text>}
+        </View>
       </View>
 
       {/* Notes stay in Career Intelligence; learning actions belong in My World. */}
@@ -317,7 +317,7 @@ function DomainBody({
             {SECTIONS.map((s) => (
               <TouchableOpacity
                 key={s.key}
-                onPress={() => scrollTo(s.key)}
+               onPress={() => scrollTo(s.key)}
                 style={[
                   styles.navItem,
                   activeSection === s.key && { backgroundColor: colors.surface.subtle },
@@ -348,7 +348,7 @@ function DomainBody({
           </View>
         </View>
         <ScrollView
-          ref={scrollRef}
+           ref={desktopScrollRef}
           style={styles.mainScroll}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
@@ -364,6 +364,21 @@ function DomainBody({
   // Mobile / tablet: single column
   return (
     <View style={{ gap: Spacing.lg }}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.mobileSectionNav}>
+        {SECTIONS.map((s) => (
+          <TouchableOpacity
+            key={s.key}
+            onPress={() => {
+              const y = sectionY.current[s.key];
+              if (y !== undefined) outerScrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+              setActiveSection(s.key);
+            }}
+            style={[styles.mobileSectionTab, { borderColor: activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: activeSection === s.key ? colors.surface.subtle : colors.surface.raised }]}
+          >
+            <Text style={[styles.navLabel, { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary }, CompassFonts.bodyMedium]}>{s.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
       {content}
     </View>
   );
@@ -443,8 +458,28 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: Spacing.lg,
   },
-  roleList: { gap: Spacing.sm },
-  roleItem: { gap: Spacing.xs },
+  guidanceNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  bridgeList: { gap: Spacing.xs },
+  bridgeLabel: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.5 },
+  bridgeChips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
+  bridgeChip: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 5 },
+  bridgeChipText: { fontSize: FontSize.xs },
+  buildButton: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
+  },
+  buildButtonText: { fontSize: FontSize.sm, fontWeight: "800" },
+  subgroupCard: {
+    gap: Spacing.xs,
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+  },
+  subgroupTitle: { fontSize: FontSize.md },
+  linkText: { fontSize: FontSize.sm, fontWeight: "800", marginTop: Spacing.xs },
   otherLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.5,
@@ -488,6 +523,8 @@ const styles = StyleSheet.create({
   navLabel: {
     fontSize: FontSize.sm,
   },
+  mobileSectionNav: { gap: Spacing.xs, paddingVertical: 2 },
+  mobileSectionTab: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   mainScroll: {
     flex: 1,
   },

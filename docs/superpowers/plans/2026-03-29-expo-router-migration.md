@@ -97,7 +97,6 @@ git commit -m "feat: add expo-router dependency"
   [
     "expo-notifications",
     {
-      "icon": "./assets/icon.png",
       "color": "#6366f1"
     }
   ]

@@ -28,6 +28,9 @@ from services.report_gen import ReportContext, build_report_docx, build_report_h
 router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 
 _SCHEMA = "skillup_dev"
+MAX_EARLY_OLEVEL_SUBJECTS = 6
+MAX_UTME_SUBJECTS = 4
+_SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -1404,6 +1407,11 @@ async def programmes_by_subjects(
     # valid matches behind the old 40/80-item cap.
     limit: int = Query(2000),
 ):
+    global _SUBJECT_MATCH_AUTHORITY_STATE
+    _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
+    # FastAPI supplies a plain int during request handling, while direct
+    # callers/tests see the Query object used as the default.
+    match_limit = limit if isinstance(limit, int) else 2000
     exam = (exam_type or "combined").strip().lower()
     if exam not in {"utme", "olevel", "combined"}:
         return ResponseModel(
@@ -1426,12 +1434,23 @@ async def programmes_by_subjects(
                 "Choose at least five O-level subjects before checking programme fit.",
             )
         )
+    if exam == "olevel" and len(olevel_norm) > MAX_EARLY_OLEVEL_SUBJECTS:
+        return ResponseModel(
+            data=_real(
+                [],
+                f"Choose no more than {MAX_EARLY_OLEVEL_SUBJECTS} O-level subjects for this check. Remove the extras before continuing.",
+            )
+        )
     if exam == "combined" and len(utme_norm) < 4:
         return ResponseModel(
             data=_real(
                 [],
                 "Choose Use of English and three other UTME subjects before matching programmes.",
             )
+        )
+    if exam == "combined" and len(utme_norm) > MAX_UTME_SUBJECTS:
+        return ResponseModel(
+            data=_real([], "UTME uses exactly 4 subjects. Remove the extra subject before continuing.")
         )
     if exam == "utme" and utme_norm and len(utme_norm) < 4:
         return ResponseModel(
@@ -1440,6 +1459,10 @@ async def programmes_by_subjects(
                 "Choose Use of English and three other UTME subjects before matching programmes.",
             )
         )
+    if exam == "utme" and len(utme_norm) > MAX_UTME_SUBJECTS:
+        return ResponseModel(
+            data=_real([], "UTME uses exactly 4 subjects. Remove the extra subject before continuing.")
+        )
     if exam == "combined" and len(olevel_norm) < 5:
         return ResponseModel(
             data=_real(
@@ -1447,25 +1470,32 @@ async def programmes_by_subjects(
                 "Choose at least five O-level subjects so we can check the programme requirement, not only the UTME gate.",
             )
         )
+    if exam == "combined" and len(olevel_norm) > MAX_EARLY_OLEVEL_SUBJECTS:
+        return ResponseModel(
+            data=_real(
+                [],
+                f"Choose no more than {MAX_EARLY_OLEVEL_SUBJECTS} O-level subjects for this check. Remove the extras before continuing.",
+            )
+        )
 
     try:
         if exam == "olevel":
             structured = _match_structured_subject_options(
                 olevel_norm,
-                limit=min(limit, 2000),
+                limit=min(match_limit, 2000),
                 exam_type="olevel",
                 require_full=True,
             )
         elif utme_norm and olevel_norm:
             utme_matches = _match_structured_subject_options(
                 utme_norm,
-                limit=2000,
+                limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
             olevel_matches = _match_structured_subject_options(
                 olevel_norm,
-                limit=400,
+                limit=min(match_limit, 400),
                 exam_type="olevel",
                 require_full=False,
             )
@@ -1494,23 +1524,33 @@ async def programmes_by_subjects(
                         "eligibilityStatus": "utme_match_olevel_unparsed",
                         "matchBasis": "combined",
                     })
-            structured = structured[: min(limit, 2000)]
+            structured = structured[: min(match_limit, 2000)]
         else:
             structured = _match_structured_subject_options(
                 utme_norm,
-                limit=min(limit, 2000),
+                limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
+        if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
+            return ResponseModel(
+                data=_coming_soon(
+                    "Subject matching data is not fully deployed yet. Apply the current subject rule and option seeds before matching programmes."
+                )
+            )
         if structured:
             return ResponseModel(data=_real(_attach_school_context(structured, utme_norm, olevel_norm)))
-        fallback = _match_text_requirements(
-            selected_norm,
-            limit=min(limit, 2000),
-            exam_type=exam,
+
+        # A subject-match result is an eligibility-shaped surface.  Do not turn
+        # a shared word in an unparsed brochure sentence into a programme match:
+        # "English Language" alone must not make every five-credit programme a
+        # result.  Unparsed source text remains available on programme detail,
+        # where it is labelled as source text and review status.
+        notice = (
+            "No exact structured subject match was found. Some brochure requirements "
+            "still need review and are not shown as matches here."
         )
-        notice = "Some requirements need review, so these are possible matches from the published requirement text. Confirm the programme details before deciding."
-        return ResponseModel(data=_fallback(_attach_school_context(fallback, utme_norm, olevel_norm), notice))
+        return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Subject-to-programme matching is temporarily unavailable."))
@@ -1522,17 +1562,97 @@ def _match_structured_subject_options(
     exam_type: str = "utme",
     require_full: bool = True,
 ) -> list[dict]:
+    global _SUBJECT_MATCH_AUTHORITY_STATE
     svc = _svc()
     options = (
         svc.table("programme_subject_options")
-        .select("id, jamb_programme_id, exam_type, option_label, min_required, source_text")
+        .select("id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text")
         .eq("exam_type", exam_type)
         .limit(2000)
         .execute()
     )
     option_rows = options.data or []
     if not option_rows:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
+    # The typed rule layer is the deployment authority for the national
+    # matcher. An older database may still contain option rows from a previous
+    # parser run; accepting them without the corresponding current rule record
+    # can reintroduce a programme/subject mismatch. Fail closed until the two
+    # generated seeds have been applied together.
+    try:
+        typed_rule_rows = (
+            svc.table("programme_subject_rule_records")
+            .select("jamb_programme_id, requirement_id, exam_type, rule_status, source_text")
+            .in_("jamb_programme_id", list({row.get("jamb_programme_id") for row in option_rows if row.get("jamb_programme_id")}))
+            .eq("exam_type", exam_type)
+            .limit(2000)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("typed subject rule authority unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    typed_by_programme = {
+        (str(row.get("jamb_programme_id")), str(row.get("exam_type"))): row
+        for row in typed_rule_rows
+    }
+    if not typed_by_programme:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+
+    def source_fingerprint(value: Any) -> str:
+        text = re.sub(r"\s+", " ", str(value or "")).strip()
+        # The option generator records a resolved cross-reference in the
+        # executable source text; the typed record retains the original source
+        # sentence. Compare the shared source portion, not that annotation.
+        return re.sub(r"\s+\[resolved:\s*as in [^\]]+\]\s*$", "", text, flags=re.I)
+
+    trusted_options = []
+    for option in option_rows:
+        typed = typed_by_programme.get((str(option.get("jamb_programme_id")), exam_type))
+        if not typed or typed.get("rule_status") not in {"matchable", "cross_reference"}:
+            continue
+        if str(option.get("requirement_id") or "") != str(typed.get("requirement_id") or ""):
+            continue
+        if source_fingerprint(option.get("source_text")) != source_fingerprint(typed.get("source_text")):
+            continue
+        trusted_options.append(option)
+    option_rows = trusted_options
+    if not option_rows:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    # The seed is generated from the brochure parser, but old environments may
+    # still contain an option row whose item list predates a parser correction.
+    # Keep the matcher safe in that state by comparing each option's source text
+    # with the canonical subject catalogue.  An explicitly named subject that
+    # is absent from the option items means the option is incomplete and cannot
+    # be treated as an exact match.
+    try:
+        catalog_rows = (
+            svc.table("subject_catalog")
+            .select("name, code")
+            .limit(300)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        # An unavailable catalogue must make the option review stricter,
+        # never broader. The generated SQL remains the primary source.
+        log.warning("subject option completeness check unavailable", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if not catalog_rows:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
+    catalog_subjects = [
+        {
+            "name": row.get("name") or "",
+            "norm": _normalise_subject(row.get("name") or ""),
+        }
+        for row in catalog_rows
+        if _normalise_subject(row.get("name") or "")
+    ]
     option_ids = [r["id"] for r in option_rows]
     item_rows = (
         svc.table("programme_subject_option_items")
@@ -1558,6 +1678,36 @@ def _match_structured_subject_options(
             if i.get("requirement_role") == "required"
         ]
         required = [s for s in required if s["norm"]]
+        item_subject_norms = {
+            _normalise_subject((i.get("subject_catalog") or {}).get("name") or "")
+            for i in items
+        }
+        source_norm = _normalise_subject(opt.get("source_text") or "")
+        source_subjects = [
+            subject
+            for subject in catalog_subjects
+            if subject["norm"]
+            and re.search(rf"(?<![a-z0-9]){re.escape(subject['norm'])}(?![a-z0-9])", source_norm)
+        ]
+        # Prefer the longest catalogue names when a catalogue contains both a
+        # short label and its expanded form.  This keeps the evidence list
+        # stable without changing the actual matching rules.
+        source_subjects = [
+            subject
+            for subject in source_subjects
+            if not any(
+                other["norm"] != subject["norm"]
+                and subject["norm"] in other["norm"]
+                for other in source_subjects
+            )
+        ]
+        unrepresented_source_subjects = [
+            subject["name"]
+            for subject in source_subjects
+            if subject["norm"] not in item_subject_norms
+        ]
+        if unrepresented_source_subjects:
+            continue
         missing_required = [s["name"] for s in required if s["norm"] not in selected_norm]
         min_required = int(opt.get("min_required") or 0)
         # UTME options describe the named JAMB combination itself (the UI also
@@ -1582,6 +1732,13 @@ def _match_structured_subject_options(
             group_min[key] = int(i.get("min_from_group") or 1)
             if i.get("distinct_group_key"):
                 group_distinct[key] = str(i["distinct_group_key"])
+        # A stale or hand-edited SQL seed can retain only the named items while
+        # leaving the option's credit/combination minimum unchanged. Such a row
+        # is not an exact rule and must never match in either full or partial
+        # mode. Use one minimum per group, not one per item row.
+        represented_capacity = len(required) + sum(group_min.values())
+        if min_required and represented_capacity < min_required:
+            continue
         failed_group = False
         missing_groups: list[str] = []
         distinct_scopes: dict[str, list[tuple[str, list[dict]]]] = {}
@@ -1627,11 +1784,21 @@ def _match_structured_subject_options(
         # (normalized names, mirroring _match_text_requirements' `hits`),
         # plus the selected subjects that satisfied each one_of group.
         matched_subjects = [s["name"] for s in required if s["norm"] in selected_norm]
+        matched_subjects.extend(
+            subject["name"]
+            for subject in source_subjects
+            if subject["norm"] in selected_norm
+        )
         for names in grouped.values():
             matched_subjects.extend(n["name"] for n in names if n["norm"] in selected_norm)
         matched_subjects = list(dict.fromkeys(matched_subjects))
         matched_count = len(matched_subjects)
         missing_subjects = list(dict.fromkeys([*missing_required, *missing_groups]))
+        missing_subjects.extend(
+            subject
+            for subject in unrepresented_source_subjects
+            if _normalise_subject(subject) not in selected_norm
+        )
         if minimum_gap:
             missing_subjects.append(
                 f"{minimum_gap} more {exam_type.upper()} subject{'s' if minimum_gap != 1 else ''}"

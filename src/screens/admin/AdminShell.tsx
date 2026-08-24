@@ -139,6 +139,10 @@ export function AdminShell({
   const homeKey = audience === "university" ? "dashboard" : "explore";
   const homeSegment =
     audience === "university" ? "dashboard" : ADMIN_EXPLORE_SEGMENT;
+  const readParam = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
+  const focusedGuidance = readParam(searchParams?.guided) === "1"
+    || readParam(searchParams?.focus) === "guidance"
+    || readParam(searchParams?.journey) === "guided_subject_discovery";
   const resumeQuery = useMemo(
     () => Object.entries(searchParams ?? {})
       .flatMap(([key, value]) => (Array.isArray(value) ? value.map((item) => [key, item] as const) : [[key, value] as const]))
@@ -242,7 +246,7 @@ export function AdminShell({
   return (
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {/* Persistent sidebar (wide only) */}
-      {wide ? (
+      {wide && !focusedGuidance ? (
         <View
           style={[
             styles.sidebar,
@@ -262,7 +266,7 @@ export function AdminShell({
             { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle },
           ]}
         >
-          {!wide ? (
+          {!wide && !focusedGuidance ? (
             <TouchableOpacity
               onPress={() => setDrawerOpen(true)}
               hitSlop={10}
@@ -281,7 +285,7 @@ export function AdminShell({
               accessibilityLabel="Go back"
             >
               <Text style={[styles.backText, CompassFonts.bodySemibold, { color: colors.text }]}>
-                Back
+                {focusedGuidance ? "Exit guidance" : "Back"}
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -299,7 +303,7 @@ export function AdminShell({
               style={[styles.title, CompassFonts.bodySemibold, { color: colors.text }]}
               numberOfLines={1}
             >
-              {title}
+            {focusedGuidance ? "Guidance workspace" : title}
             </Text>
           </View>
 
@@ -321,7 +325,7 @@ export function AdminShell({
             </Text>
             <Text style={[styles.modalBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
               {accountAction === "delete"
-                ? "Your account will be marked for deletion and the recovery policy will apply."
+                ? "Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends."
                 : "You will need to sign in again to continue."}
             </Text>
             <View style={styles.modalActions}>
