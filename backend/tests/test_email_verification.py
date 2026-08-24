@@ -43,10 +43,14 @@ class FakeRedis:
         self.hashes.pop(key, None)
         self.expiries.pop(key, None)
 
-    async def hset(self, key, mapping=None):
-        self.hashes.setdefault(key, {}).update(
-            {k: str(v) for k, v in (mapping or {}).items()}
-        )
+    async def hset(self, key, field=None, value=None, mapping=None):
+        if mapping is not None:
+            values = mapping
+        elif field is not None:
+            values = {field: value}
+        else:
+            values = {}
+        self.hashes.setdefault(key, {}).update({k: str(v) for k, v in values.items()})
 
     async def hgetall(self, key):
         return dict(self.hashes.get(key, {}))

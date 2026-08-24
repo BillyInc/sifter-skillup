@@ -69,10 +69,31 @@ and before the subject seeds. Then run the data files in this order:
 3. `backend/seed_subject_rule_records.sql`
 4. `backend/seed_subject_options.sql`
 
-The current generated subject counts are 46 catalog subjects, 740 national
-matcher options, 7,246 option items, and 1,260 typed rule records. The
+The current generated subject counts are 46 catalog subjects, 596 national
+matcher options, 7,793 option items, and 1,260 typed rule records. The
 subject-option seed intentionally deletes and rebuilds only the two national
 matcher tables; back up an existing production database before running it.
+The API will not trust an option row until the corresponding typed rule record
+is present and has the same programme, requirement, exam layer, and source
+text. Apply `seed_subject_rule_records.sql` before
+`seed_subject_options.sql`.
+
+### Exhaustive subject-matcher audit
+
+Run the generated-seed audit from the backend virtual environment after both
+subject seeds are applied:
+
+```
+cd backend
+.venv\\Scripts\\python.exe ..\\data\\career-mapping\\_audit_subject_match_exhaustive.py
+```
+
+It exercises every emitted option, its required/group-removal mutations, and
+compares the runtime matcher with an independent option-item oracle. A passing
+run reports the catalogue, option, typed-rule and negative-case counts and
+must report zero oracle mismatches. This is separate from the live deployment
+check: a database with zero `programme_subject_rule_records` must remain
+fail-closed and is not ready for subject matching.
 
 ## Smoke test (after A + B)
 

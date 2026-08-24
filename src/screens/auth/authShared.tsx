@@ -181,13 +181,14 @@ export function AuthField({
 }) {
   const { colors } = useTheme();
   const [hidden, setHidden] = useState(!!secure);
+  const [focused, setFocused] = useState(false);
 
   return (
     <View style={styles.fieldGroup}>
       <Text
         style={[
           styles.label,
-          { color: colors.textRole.secondary },
+          { color: focused ? colors.accentRole.action : colors.textRole.secondary },
           CompassFonts.bodyBold,
         ]}
       >
@@ -197,8 +198,9 @@ export function AuthField({
         style={[
           styles.inputWrap,
           {
-            backgroundColor: colors.surface.subtle,
-            borderColor: colors.borderRole.subtle,
+            backgroundColor: focused ? colors.surface.raised : colors.surface.subtle,
+            borderColor: focused ? colors.accentRole.action : colors.borderRole.subtle,
+            borderWidth: focused ? 2 : 1,
           },
         ]}
       >
@@ -218,7 +220,9 @@ export function AuthField({
            autoCorrect={false}
            autoFocus={autoFocus}
            autoComplete={autoComplete}
-        />
+           onFocus={() => setFocused(true)}
+           onBlur={() => setFocused(false)}
+         />
         {value ? (
           <TouchableOpacity
             accessibilityRole="button"
@@ -240,7 +244,11 @@ export function AuthField({
           </TouchableOpacity>
         ) : null}
       </View>
-      {hint ? (
+      {focused ? (
+        <Text style={[styles.readyHint, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
+          Ready to type
+        </Text>
+      ) : hint ? (
         <Text
           style={[
             styles.hint,
@@ -386,6 +394,7 @@ const styles = StyleSheet.create({
   clearBtn: { paddingHorizontal: Spacing.xs, paddingVertical: 8 },
   clearText: { fontSize: FontSize.xs, fontWeight: "700" },
   hint: { fontSize: FontSize.xs, marginTop: 2 },
+  readyHint: { fontSize: FontSize.xs, marginTop: 2, fontWeight: "700" },
   legal: {
     fontSize: FontSize.xs,
     lineHeight: 17,

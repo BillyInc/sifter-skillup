@@ -156,22 +156,22 @@ function nextStartingPointAction(
 
   if ((p.userType === "student" || p.userType === "graduate") && programmeId) {
     return {
-      label: "Continue to career mapping",
-      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`,
+      label: "Continue",
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?focus=guidance`,
     };
   }
 
   if (isAdmissionUser && hasProgramme && hasSchool && programmeId) {
     return {
-      label: p.userType === "senior_secondary" || p.userType === "ss3_secondary" ? "Continue guidance" : "Continue to career mapping",
-      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?school_id=${encodeURIComponent(schoolId)}&user_type=${encodeURIComponent(p.userType)}&class_name=${encodeURIComponent(p.ssClass ?? "")}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      label: "Continue",
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?focus=guidance&school_id=${encodeURIComponent(schoolId)}&user_type=${encodeURIComponent(p.userType)}&class_name=${encodeURIComponent(p.ssClass ?? "")}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
     };
   }
 
   if (isAdmissionUser && hasProgramme) {
     return {
       label: "Choose university",
-      href: `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programmeName || programmeId || "")}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      href: `/(tabs)/explore/admission?mode=programme&focus=guidance&q=${encodeURIComponent(programmeName || programmeId || "")}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
     };
   }
 
@@ -180,9 +180,10 @@ function nextStartingPointAction(
     : p.jambSubjects?.length ? p.jambSubjects : p.olevelSubjects;
   const subjectExamType = p.userType === "senior_secondary" || !p.jambSubjects?.length ? "olevel" : "utme";
   if (isAdmissionUser && subjects?.length) {
+    const subjectParam = subjectExamType === "olevel" ? "olevel_subjects" : "subjects";
     return {
-      label: "Match programmes",
-      href: `/(tabs)/explore/admission?mode=subjects&subjects=${encodeURIComponent(subjects.join(","))}&exam_type=${subjectExamType}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      label: "Continue",
+      href: `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&${subjectParam}=${encodeURIComponent(subjects.join(","))}&exam_type=${subjectExamType}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
     };
   }
 
@@ -191,10 +192,10 @@ function nextStartingPointAction(
   const roleId = recordText(savedRole, "key", "id", "roleKey");
   const domainId = recordText(savedDomain, "id", "domainId", "domainKey");
   if (roleId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}` };
+    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}?focus=guidance` };
   }
   if (domainId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}` };
+    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}?focus=guidance` };
   }
 
   return {
@@ -385,7 +386,7 @@ export default function CareerHomeScreen() {
           ) : null}
           <TouchableOpacity activeOpacity={0.7} onPress={() => nextAction && router.push(nextAction.href as any)}>
             <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-              {earlySecondary ? "Continue guidance" : "Open saved guidance"}
+              {earlySecondary ? "Continue" : "Open saved guidance"}
             </Text>
           </TouchableOpacity>
         </View>

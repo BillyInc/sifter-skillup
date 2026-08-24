@@ -298,7 +298,7 @@ export default function SignUpScreen() {
     <AuthScaffold>
       <TouchableOpacity
         style={styles.back}
-        onPress={() => router.replace("/(auth)/sign-in")}
+        onPress={() => router.replace("/")}
         hitSlop={8}
       >
         <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>

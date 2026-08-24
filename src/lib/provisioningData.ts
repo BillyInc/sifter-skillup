@@ -9,7 +9,9 @@
  * screens never see wire shapes.
  *
  * PRIVACY: subjects/grades passed to generate() are transient inputs to the
- * mapping — they are sent, used server-side inline, and never stored.
+ * account-creation mapping. An admin-guided student's selected subjects may
+ * additionally be retained in that student's private resume checkpoint so
+ * the administrator can reopen the same unfinished flow.
  */
 import { request } from "./api";
 import { API_BASE } from "./config";
@@ -188,6 +190,7 @@ interface WireRosterStudent {
   visible: boolean;
   has_consent: boolean;
   guidance_complete?: boolean;
+  student_type?: ProvisioningStudentType | null;
 }
 interface WireRoster {
   students: WireRosterStudent[];
@@ -252,6 +255,7 @@ const toRosterStudent = (w: WireRosterStudent): RosterStudent => ({
   visible: w.visible,
   hasConsent: w.has_consent,
   guidanceComplete: Boolean(w.guidance_complete),
+  studentType: w.student_type,
 });
 const toConsentRequest = (w: WireConsentRequest): StudentConsentRequest => ({
   id: w.id,

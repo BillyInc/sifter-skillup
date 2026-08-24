@@ -15,6 +15,7 @@ import {
   type NativeScrollEvent,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
   Spacing,
@@ -34,6 +35,8 @@ import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceRe
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
   title: string;
+  /** Visible contextual back label; the browser/router history remains the source of truth. */
+  backLabel?: string;
   /** When provided, a Save bookmark action appears in the header. */
   save?: { entityType: SavedEntityType; entityId: string; label?: string };
   /** Show the "Save as PDF" action. */
@@ -55,7 +58,7 @@ export interface DetailScaffoldProps<T> {
   /** Show the career-guidance disclaimer at the foot of the body. Default true. */
   disclaimer?: boolean;
   /** External ref to the inner ScrollView (for section nav scroll-to). */
-  scrollRef?: RefObject<ScrollView>;
+  scrollRef?: RefObject<ScrollView | null>;
   /** Scroll event handler (for section nav active tracking). */
   onScroll?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
@@ -63,6 +66,7 @@ export interface DetailScaffoldProps<T> {
 export function DetailScaffold<T>({
   eyebrow,
   title,
+  backLabel = "Back",
   save,
   pdf,
   pdfTitle,
@@ -104,8 +108,9 @@ export function DetailScaffold<T>({
       >
         <View style={styles.breadcrumbRow}>
           <TouchableOpacity onPress={goBack} hitSlop={10} style={styles.back}>
+            <Feather name="arrow-left" size={15} color={colors.textRole.secondary} />
             <Text style={[styles.backText, { color: colors.textRole.secondary }]}>
-              Explore
+              {backLabel}
             </Text>
           </TouchableOpacity>
           <Text style={[styles.crumbSep, { color: colors.textRole.muted }]}>/</Text>

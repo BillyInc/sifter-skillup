@@ -331,7 +331,7 @@ export default function ProfileScreen() {
           <View style={styles.modalOverlay}>
             <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
               <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}</Text>
-              <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}</Text>
+              <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}</Text>
               <View style={styles.modalActions}>
                 <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text></TouchableOpacity>
                 <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}><Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text></TouchableOpacity>
@@ -475,7 +475,7 @@ export default function ProfileScreen() {
               {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
             </Text>
             <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              {accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}
+              {accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}
             </Text>
             <View style={styles.modalActions}>
               <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>

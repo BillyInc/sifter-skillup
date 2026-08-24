@@ -426,15 +426,25 @@ function RosterTab() {
                     : "Claimed"}
               </Text>
               {s.guidanceComplete ? (
+                <>
+                  <TouchableOpacity
+                    onPress={() => provisioningData.openReportHtml(s.userId)}
+                    style={[styles.miniBtn, { borderColor: colors.border }]}
+                  >
+                    <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
+                  </TouchableOpacity>
+                  {s.visible && (s.provenance === "provisioned" || s.hasConsent) ? (
+                    <TouchableOpacity
+                      onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&student_type=${encodeURIComponent(s.studentType ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
+                      style={[styles.miniBtn, { borderColor: colors.border }]}
+                    >
+                      <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Review guidance</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </>
+              ) : s.visible && (s.provenance === "provisioned" || s.hasConsent) ? (
                 <TouchableOpacity
-                  onPress={() => provisioningData.openReportHtml(s.userId)}
-                  style={[styles.miniBtn, { borderColor: colors.border }]}
-                >
-                  <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
-                </TouchableOpacity>
-              ) : s.provenance === "provisioned" ? (
-                <TouchableOpacity
-                  onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
+                  onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&student_type=${encodeURIComponent(s.studentType ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
                   style={[styles.miniBtn, { borderColor: colors.border }]}
                 >
                   <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Guide student</Text>
