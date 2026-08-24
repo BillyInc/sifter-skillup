@@ -16,6 +16,38 @@ string. The complete explanation and verification queries are in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md` and
 `backend/MIGRATION_RUNBOOK.md`.
 
+### MANDATORY APPLY BEHAVIOUR
+
+When the user asks Claude to seed, migrate, update, or prepare Supabase, this
+section is an execution instruction, not a reading list. Claude must actually
+apply every missing SQL file in the applicable order above, then verify the
+result. Do not merely report the filenames, generate a plan, or say that the
+schema is ready. Do not proceed to the E2E test until the required migrations
+and seeds have been executed successfully.
+
+For an existing project, Claude must:
+
+1. Run the read-only preflight and use its table/column counts to identify what
+   is already applied.
+2. Apply each missing migration in dependency order, one file at a time, using
+   the Supabase Dashboard SQL Editor or `psql` with the configured project
+   connection. Keep each file's transaction intact and wait for a successful
+   result before applying the next file.
+3. Apply the data seeds only after their schema tables exist, in the exact seed
+   order listed below. A seed that reports an error is not applied; stop and
+   report the file and database error instead of continuing as if it succeeded.
+4. Re-run the preflight, record the post-apply counts, and run the exhaustive
+   matcher audit. Only then run provisioning, guidance, report, or claim-code
+   tests.
+
+If Claude cannot reach the SQL Editor or does not have a usable `psql`
+connection, it must say that application is blocked and give the exact next
+command/file to run. It must not claim that SQL was applied, must not treat a
+REST-only check as DDL execution, and must not fabricate rows to bypass a
+missing migration. For a populated production project, apply only files proven
+missing by preflight; never use a destructive rebuild or the staging-only
+`migration_career_v2.sql` without explicit approval.
+
 ### Existing Supabase project: apply missing items only
 
 The current project is not assumed to be fully migrated. First inspect the
