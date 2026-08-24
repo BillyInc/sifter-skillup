@@ -78,6 +78,23 @@ is present and has the same programme, requirement, exam layer, and source
 text. Apply `seed_subject_rule_records.sql` before
 `seed_subject_options.sql`.
 
+### Exhaustive subject-matcher audit
+
+Run the generated-seed audit from the backend virtual environment after both
+subject seeds are applied:
+
+```
+cd backend
+.venv\\Scripts\\python.exe ..\\data\\career-mapping\\_audit_subject_match_exhaustive.py
+```
+
+It exercises every emitted option, its required/group-removal mutations, and
+compares the runtime matcher with an independent option-item oracle. A passing
+run reports the catalogue, option, typed-rule and negative-case counts and
+must report zero oracle mismatches. This is separate from the live deployment
+check: a database with zero `programme_subject_rule_records` must remain
+fail-closed and is not ready for subject matching.
+
 ## Smoke test (after A + B)
 
 ```
