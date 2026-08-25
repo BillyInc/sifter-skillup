@@ -164,6 +164,11 @@ jest.mock('expo-router', () => ({
   useRouter: () => ({ push: jest.fn(), replace: jest.fn(), back: jest.fn() }),
   usePathname: () => '/',
   useLocalSearchParams: () => ({}),
+  // ReferenceShell reads GLOBAL params, not local: it needs the track context
+  // from wherever the user is in the tree, not just the current screen's own
+  // route. Stubbing only useLocalSearchParams makes the shell throw
+  // "useGlobalSearchParams is not a function" the moment it renders.
+  useGlobalSearchParams: () => ({}),
   useFocusEffect: (cb: any) => { cb && cb(); },
   Link: ({ children }: any) => children,
   Stack: { Screen: () => null },
