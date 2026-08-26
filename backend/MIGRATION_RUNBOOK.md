@@ -16,9 +16,14 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 
 ## Current career refresh since the last push (2026-08-26)
 
-The only new SQL artifact in the current worktree is:
+The current preview SQL is transported in compressed, ordered parts:
 
-`backend/seed_career_v2_preview_2026-08-25.sql`
+`backend/seed_career_v2_preview_2026-08-25_parts_gz/`
+
+The local generator output remains
+`backend/seed_career_v2_preview_2026-08-25.sql`; the compressed parts exist so
+the generated artifact can pass repository file-size limits. Each `.sql.gz`
+part is below 41 MB compressed and contains complete SQL statements in order.
 
 This is a development preview seed, not a migration and not the production
 seed. It exists so the corrected subgroup labels and the current Nigerian
@@ -47,7 +52,22 @@ schema files in this order before the preview seed:
 12. `backend/migration_career_resources_v1.sql` when resource data is being
     used
 13. `backend/migration_saved_resource_support.sql` after `saved_items` exists
-14. `backend/seed_career_v2_preview_2026-08-25.sql`
+14. Decompressed preview SQL parts in
+    `backend/seed_career_v2_preview_2026-08-25_parts_gz/`, in numeric order
+
+The `.sql.gz` files are not executable by Supabase. Before applying the
+preview, decompress/reassemble them from the repository root:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-25.sql
+```
+
+Then pass the decompressed SQL file to `psql`, or decompress and run each
+numbered part separately in the Supabase SQL Editor. Do not paste the `.gz`
+bytes into Supabase. Each part is a complete transaction and must be applied
+in numeric order.
 
 The preview must not be run before `migration_source_backed_career_layers.sql`:
 its domain, subgroup, role and tool inserts use the source-confidence,
