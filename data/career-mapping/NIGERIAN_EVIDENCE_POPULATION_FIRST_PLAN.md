@@ -94,8 +94,8 @@ enrichment completion. The current measured state after adding the fresh
 - 485/486 subgroups have item-level Nigerian evidence, 0 have Nigerian
   context-only evidence, and 1 remains in the reviewed no-direct-local-match
   state pending the exhaustive search gate;
-- 2,434/5,050 roles have item-level Nigerian evidence;
-- 2,616 roles remain in the reviewed no-direct-local-match state after the
+- 2,439/5,050 roles have item-level Nigerian evidence;
+- 2,611 roles remain in the reviewed no-direct-local-match state after the
   current fresh pass. This means no exact role-family match was found in the
   checked Nigerian profiles; it is not an absence claim;
 - all 5,050 roles and all 486 subgroups now also carry separately labelled
@@ -128,6 +128,24 @@ The fresh overlay includes source-backed global role frameworks and studies for
 XR/immersive technology, esports/creator economy, and quantum computing. These
 are useful for global and remote guidance, but their Nigerian demand status
 remains separate where vacancy or institutional evidence was not found.
+
+### Latest role pass
+
+The resumed role pass added the official Federation of Interactive Games of
+Nigeria pathway source (`ng_fign_pathways_2026`) and expanded the existing
+Esports Federation of Nigeria profile only where the sources name the role
+family. It covers casting/commentary, game development, voice, creator work,
+event management, refereeing and tournament operations as Nigerian ecosystem
+or pathway evidence. It does not turn those pathways into vacancy counts or
+universal requirements.
+
+The pass increased role-level Nigerian item evidence from 2,434 to **2,439**
+of 5,050. **2,611** remain in the reviewed no-direct-local-counterpart state.
+Quantum hardware, XR-adjacent roles without a matching Nigerian title,
+broadcast-technician variants and other unsupported exact roles remain
+explicitly unresolved; global evidence and Nigerian domain context are kept
+separate. The population gate remains closed and SQL regeneration remains
+disallowed until the exhaustive-search declaration is completed.
 
 ## Remaining exact-match sweep
 

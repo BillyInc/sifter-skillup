@@ -506,7 +506,14 @@ emit("jamb_programme_domain", ["id","jamb_name","domain_id","match_type"], R["ja
 emit("domain_overlap", ["id","domain_id_a","domain_id_b","overlap_score","shared_skills"], R["domain_overlap"])
 
 out += ["COMMIT;"]
-open(SEED_OUTPUT_PATH, "w", encoding="utf-8").write("\n".join(out))
+# Stream the generated statements instead of joining the full seed into one
+# giant in-memory string. The career seed is intentionally large enough that
+# the join can exceed the available process memory even when the rows are
+# valid.
+with open(SEED_OUTPUT_PATH, "w", encoding="utf-8") as seed_file:
+    for line in out:
+        seed_file.write(line)
+        seed_file.write("\n")
 
 print(f"{SEED_OUTPUT_PATH} generated:")
 for t in ["domains","domain_subgroups","domain_roles","domain_tools","domain_certifications","computational_role_subgroup_links","computational_method_evidence","career_role_families","career_role_family_domains","career_role_family_aliases","career_role_family_members","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:

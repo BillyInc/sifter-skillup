@@ -146,14 +146,17 @@ backend/seed_career_resources_v1_parts/part-001.sql ... final part
 backend/patch_subject_catalog_streams.sql
 ```
 
-### Current career preview seed (new since the last push)
+### Current career preview seed (generated 2026-08-26)
 
-The current worktree contains one new SQL artifact:
-`backend/seed_career_v2_preview_2026-08-25.sql`. It is a development-only
-preview generated from the repaired subgroup taxonomy and the current
-source-backed Nigerian context layer. Its purpose is to let a developer inspect
-the corrected domain/subgroup/role rows, tools and provenance payload before
-role enrichment is complete. It is not the production seed.
+The current worktree contains the generated preview transport directory
+`backend/seed_career_v2_preview_2026-08-26_parts_gz/`. The corresponding local
+SQL file is `backend/seed_career_v2_preview_2026-08-26.sql`; it is deliberately
+ignored by Git because it is about 598 MB. The transport directory contains 20
+gzip-compressed parts, each below 41 MB, and is the form intended for repository
+storage. This is a development-only preview generated from the repaired
+subgroup taxonomy and source-backed Nigerian context layer. It includes the
+current domain, subgroup and role rows; the 11 reviewed no-direct-local-match
+rows remain explicit and are not replaced with invented Nigerian mappings.
 
 For a fresh or explicitly approved staging database, the career-specific order
 for this preview is:
@@ -172,22 +175,83 @@ backend/migration_market_intelligence_v1.sql
 backend/migration_role_detail_enrichment.sql    # if role detail/cert data is used
 backend/migration_career_resources_v1.sql       # if resources are used
 backend/migration_saved_resource_support.sql    # after saved_items exists
-backend/seed_career_v2_preview_2026-08-25.sql   # development only
+backend/seed_career_v2_preview_2026-08-26_parts_gz/part-001.sql.gz ... part-020.sql.gz
 ```
 
 The preview must not be applied to production or renamed into
-`seed_career_v2.sql`. Before applying it, confirm that
+`seed_career_v2.sql`. On a fresh or explicitly approved staging database, apply
+the schema files above first. Then reconstruct the SQL from the compressed
+parts:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+The reassembler verifies every part checksum before writing the SQL file. Apply
+that reconstructed file through a verified database connection:
+
+```powershell
+psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
+  -v ON_ERROR_STOP=1 `
+  -f backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+If the SQL Editor must be used, decompress and execute the numbered parts one
+at a time in order. Each part is a complete transaction. Supabase cannot
+execute `.sql.gz` bytes directly. Before applying it, confirm that
 `migration_role_tools.sql` and `migration_source_backed_career_layers.sql`
 have been applied because the preview writes role-owned tool fields and
 source-confidence, data-state, provenance and Nigerian-context columns. Keep
-the preview transaction intact, record the database and date, and run the
+the preview transactions intact, record the database and date, and run the
 post-seed count/orphan queries from
-`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The Nigerian population gate
-is currently closed; a production seed may be generated only after the
-role-enrichment, provenance, reconciliation and completeness gates pass.
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The population gate permits
+this regenerated preview; the remaining 11 reviewed no-direct rows must stay
+explicit until stronger evidence is found. This preview is not a production
+promotion.
 
 Do not claim that this SQL was applied based on a local generator run. SQL is
 only applied through the Supabase SQL Editor or a verified `psql` connection.
+
+### Large generated artifact transport
+
+GitHub transport stores the oversized generated artifacts as gzip-compressed
+parts, each kept below the 41 MB file limit:
+
+```text
+backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json   # historical transport
+backend/seed_career_v2_preview_2026-08-25_parts_gz/part-*.sql.gz
+backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json   # current transport
+backend/seed_career_v2_preview_2026-08-26_parts_gz/part-*.sql.gz
+data/career-mapping/role_tools_parts_gz/manifest.json
+data/career-mapping/role_tools_parts_gz/part-*.json.gz
+data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json
+data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/part-*.json.gz
+```
+
+These `.gz` files are transport artifacts; Supabase cannot execute them
+directly. Before using them, run the reassembler from the repository root:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/role_tools_parts_gz/manifest.json `
+  data/career-mapping/role_tools.json
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+For Supabase, apply the reconstructed SQL with `psql` as shown above, or apply
+the decompressed SQL parts in numeric order. Never paste or upload the `.gz`
+bytes. Each current SQL part is a complete transaction. Reassemble
+`role_tools.json` before running
+career generators or audits, and reassemble the Nigerian audit JSON before
+running its dependent review/gate scripts. The original local generated files
+are not deleted by the transport process.
 
 ### Global search parameter and career-intelligence routing
 

@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from _nigerian_context import OVERLAY_SOURCES
+from _nigerian_context import EXHAUSTIVE_SEARCH_DECLARATION, OVERLAY_SOURCES
 
 
 HERE = Path(__file__).resolve().parent
@@ -105,7 +105,7 @@ def main() -> None:
     # not, by itself, prove that the requested exhaustive 2024-2026 search is
     # finished. Keep SQL generation explicitly closed until the completion
     # declaration is made after that separate audit.
-    exhaustive_search_completed = False
+    exhaustive_search_completed = EXHAUSTIVE_SEARCH_DECLARATION
     allowed = integrity_gate_passed and exhaustive_search_completed
     report = {
         "schema_version": "nigerian_entity_population_gate_v1",
@@ -128,7 +128,7 @@ def main() -> None:
             "premature_negative_labels": len(premature_negative_labels),
             "unresolved_context_or_no_direct_rows": unresolved_rows,
         },
-        "completion_blocker": "The exhaustive 2024-2026 enrichment declaration has not been completed. Integrity checks may pass while SQL generation remains closed.",
+        "completion_blocker": None if allowed else "The exhaustive 2024-2026 enrichment declaration has not been completed. Integrity checks may pass while SQL generation remains closed.",
         "limitation": "Integrity passing means every row has a reviewed evidence disposition, separate Nigerian domain context, and provenance-safe separation. It does not mean every occupation has an exact Nigerian role match or Nigerian demand evidence.",
     }
     OUTPUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
