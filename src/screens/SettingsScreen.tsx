@@ -274,7 +274,7 @@ export default function SettingsScreen() {
             </Text>
             <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {accountAction === 'delete'
-                ? 'Your account will be marked for deletion according to the recovery policy.'
+                ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.'
                 : 'You will need to log in again to continue.'}
             </Text>
             <View style={styles.modalActions}>

@@ -7,7 +7,7 @@
  * surfaces a brief transient "Saving comes online soon" hint and does NOT claim
  * the item was saved.
  */
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -51,10 +51,25 @@ export function SaveButton({
   const isGuest = !user || user.auth_provider === "guest";
   const reduced = useReducedMotion();
   const [saved, setSaved] = useState(initialSaved);
+  const [savedItemId, setSavedItemId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scale = useSharedValue(1);
+
+  useEffect(() => {
+    if (isGuest) return;
+    let active = true;
+    void careerData.getSavedItems().then((result) => {
+      if (!active || result.status !== "real" || !result.data) return;
+      const match = result.data.find((item) => item.entityType === entityType && item.entityId === entityId);
+      setSaved(Boolean(match));
+      setSavedItemId(match?.id ?? null);
+    });
+    return () => {
+      active = false;
+    };
+  }, [entityId, entityType, isGuest]);
 
   const pop = useCallback(() => {
     if (reduced) return;
@@ -85,13 +100,18 @@ export function SaveButton({
     setBusy(true);
     setHint(null);
     try {
+      if (saved && !savedItemId) {
+        showHint("Could not identify this saved item yet. Try again.");
+        return;
+      }
       const result = saved
-        ? await careerData.removeSavedItem(entityId)
+        ? await careerData.removeSavedItem(savedItemId as string)
         : await careerData.saveItem(entityType, entityId, label);
 
       if (result.status === "real") {
         const next = !saved;
         setSaved(next);
+        setSavedItemId(next && result.data && "id" in result.data ? result.data.id : null);
         onChange?.(next);
       } else {
         showHint(result.meta?.notice ?? "Saving comes online soon");
@@ -114,6 +134,7 @@ export function SaveButton({
           activeOpacity={0.7}
           accessibilityRole="button"
           accessibilityLabel={saved ? "Remove from saved" : "Save item"}
+          accessibilityState={{ busy, selected: saved }}
           style={[
             styles.btn,
             compact ? styles.btnCompact : styles.btnFull,

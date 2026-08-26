@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "canonical_role_keys": 5154,
+ "canonical_role_keys": 5166,
  "role_source_counts": {
   "esco": 4725,
   "wef": 27,
@@ -8,6 +8,16 @@
   "ESCO/O*NET": 53,
   "QT Framework": 12,
   "TESDA PSF Game Development": 2,
+  "Microsoft, Ubisoft and TESDA game-development frameworks": 1,
+  "Ubisoft and ScreenSkills games career frameworks": 1,
+  "SkillsFuture and Ubisoft game-development frameworks": 1,
+  "Microsoft, Ubisoft and Nigerian game-developer vacancy evidence": 1,
+  "SkillsFuture and Philippine game-development technical-design frameworks": 1,
+  "Microsoft and ScreenSkills games career frameworks": 2,
+  "Microsoft, Ubisoft and ScreenSkills games career frameworks": 2,
+  "Microsoft, Ubisoft and SkillsFuture game-production frameworks": 1,
+  "Microsoft, SkillsFuture and Nigerian game-development vacancy evidence": 1,
+  "Microsoft and Ubisoft quality-assurance frameworks": 1,
   "Jobs for the Future XR framework": 6,
   "ARM RoboticsCareer": 3,
   "Skills England Robotics Engineer": 1,
@@ -23,24 +33,24 @@
   "onet_tools": 4236,
   "onet_competencies": 4200,
   "esco_skills": 4735,
-  "framework": 548,
-  "any": 5154
+  "framework": 560,
+  "any": 5166
  },
  "domains_evaluated": 160,
  "empty_domains": [],
- "thin_domain_count": 49,
+ "thin_domain_count": 35,
  "spotlight": {
   "D139": {
    "domain_id": "D139",
    "domain_name": "Game Design",
-   "roles": 29,
+   "roles": 41,
    "esco": 27,
    "onet_tools": 23,
    "onet_competencies": 22,
    "esco_skills": 27,
-   "framework": 2,
-   "any": 29,
-   "structure_roles": 29,
+   "framework": 14,
+   "any": 41,
+   "structure_roles": 41,
    "subgroups": 3
   },
   "D140": {
@@ -134,7 +144,7 @@
    "framework": 2,
    "any": 37,
    "structure_roles": 37,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D002",
@@ -147,7 +157,7 @@
    "framework": 4,
    "any": 25,
    "structure_roles": 25,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D003",
@@ -160,7 +170,7 @@
    "framework": 1,
    "any": 5,
    "structure_roles": 5,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D004",
@@ -173,7 +183,7 @@
    "framework": 5,
    "any": 16,
    "structure_roles": 16,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D005",
@@ -212,7 +222,7 @@
    "framework": 1,
    "any": 26,
    "structure_roles": 26,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D008",
@@ -230,14 +240,14 @@
   {
    "domain_id": "D139",
    "domain_name": "Game Design",
-   "roles": 29,
+   "roles": 41,
    "esco": 27,
    "onet_tools": 23,
    "onet_competencies": 22,
    "esco_skills": 27,
-   "framework": 2,
-   "any": 29,
-   "structure_roles": 29,
+   "framework": 14,
+   "any": 41,
+   "structure_roles": 41,
    "subgroups": 3
   },
   {
@@ -524,7 +534,7 @@
    "framework": 0,
    "any": 18,
    "structure_roles": 18,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D074",
@@ -627,7 +637,7 @@
    "esco_skills": 12,
    "framework": 14,
    "any": 20,
-   "structure_roles": 20,
+   "structure_roles": 22,
    "subgroups": 6
   },
   {
@@ -1004,8 +1014,8 @@
    "esco_skills": 39,
    "framework": 0,
    "any": 43,
-   "structure_roles": 43,
-   "subgroups": 0
+   "structure_roles": 45,
+   "subgroups": 2
   },
   {
    "domain_id": "D078",
@@ -1018,7 +1028,7 @@
    "framework": 0,
    "any": 24,
    "structure_roles": 24,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D042",
@@ -1421,7 +1431,7 @@
    "framework": 0,
    "any": 25,
    "structure_roles": 25,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D057",
@@ -1512,7 +1522,7 @@
    "framework": 4,
    "any": 14,
    "structure_roles": 14,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D085",
@@ -1551,7 +1561,7 @@
    "framework": 1,
    "any": 7,
    "structure_roles": 7,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D092",
@@ -1707,7 +1717,7 @@
    "framework": 1,
    "any": 14,
    "structure_roles": 14,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D106",
@@ -1914,8 +1924,8 @@
    "esco_skills": 3,
    "framework": 10,
    "any": 11,
-   "structure_roles": 11,
-   "subgroups": 0
+   "structure_roles": 12,
+   "subgroups": 2
   },
   {
    "domain_id": "D124",
@@ -1954,7 +1964,7 @@
    "framework": 4,
    "any": 11,
    "structure_roles": 11,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D127",
@@ -2006,7 +2016,7 @@
    "framework": 7,
    "any": 8,
    "structure_roles": 8,
-   "subgroups": 0
+   "subgroups": 2
   },
   {
    "domain_id": "D133",
@@ -2110,7 +2120,7 @@
    "framework": 0,
    "any": 36,
    "structure_roles": 36,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D144",
@@ -2123,7 +2133,7 @@
    "framework": 1,
    "any": 5,
    "structure_roles": 5,
-   "subgroups": 0
+   "subgroups": 1
   },
   {
    "domain_id": "D145",
@@ -2205,6 +2215,76 @@
   }
  ],
  "subgroups": [
+  {
+   "domain_id": "D001",
+   "domain_name": "Software Engineering",
+   "subgroup_id": "25",
+   "label": "Software Development & Systems Engineering",
+   "roles": 37,
+   "structure_roles": 37,
+   "esco": 28,
+   "onet_tools": 28,
+   "onet_competencies": 27,
+   "esco_skills": 28,
+   "framework": 2,
+   "any": 37
+  },
+  {
+   "domain_id": "D002",
+   "domain_name": "Data Engineering",
+   "subgroup_id": "25",
+   "label": "Data Platform & Pipeline Engineering",
+   "roles": 25,
+   "structure_roles": 25,
+   "esco": 21,
+   "onet_tools": 19,
+   "onet_competencies": 19,
+   "esco_skills": 21,
+   "framework": 4,
+   "any": 25
+  },
+  {
+   "domain_id": "D003",
+   "domain_name": "Artificial Intelligence",
+   "subgroup_id": "25",
+   "label": "Machine Learning & Computational Intelligence",
+   "roles": 5,
+   "structure_roles": 5,
+   "esco": 4,
+   "onet_tools": 4,
+   "onet_competencies": 2,
+   "esco_skills": 4,
+   "framework": 1,
+   "any": 5
+  },
+  {
+   "domain_id": "D004",
+   "domain_name": "Cybersecurity",
+   "subgroup_id": "12",
+   "label": "Cybersecurity Leadership & Governance",
+   "roles": 2,
+   "structure_roles": 2,
+   "esco": 2,
+   "onet_tools": 1,
+   "onet_competencies": 1,
+   "esco_skills": 2,
+   "framework": 1,
+   "any": 2
+  },
+  {
+   "domain_id": "D004",
+   "domain_name": "Cybersecurity",
+   "subgroup_id": "25",
+   "label": "Cyber Defence & Security Engineering",
+   "roles": 11,
+   "structure_roles": 11,
+   "esco": 9,
+   "onet_tools": 10,
+   "onet_competencies": 8,
+   "esco_skills": 9,
+   "framework": 1,
+   "any": 11
+  },
   {
    "domain_id": "D005",
    "domain_name": "Cloud Computing",
@@ -2290,6 +2370,34 @@
    "any": 1
   },
   {
+   "domain_id": "D007",
+   "domain_name": "UI/UX Design",
+   "subgroup_id": "21",
+   "label": "Visual, Interaction & Motion Design",
+   "roles": 15,
+   "structure_roles": 15,
+   "esco": 13,
+   "onet_tools": 11,
+   "onet_competencies": 12,
+   "esco_skills": 13,
+   "framework": 1,
+   "any": 15
+  },
+  {
+   "domain_id": "D007",
+   "domain_name": "UI/UX Design",
+   "subgroup_id": "25",
+   "label": "Product & Interaction Design",
+   "roles": 11,
+   "structure_roles": 11,
+   "esco": 11,
+   "onet_tools": 10,
+   "onet_competencies": 9,
+   "esco_skills": 11,
+   "framework": 0,
+   "any": 11
+  },
+  {
    "domain_id": "D008",
    "domain_name": "Telecommunications",
    "subgroup_id": "13",
@@ -2350,42 +2458,42 @@
    "domain_name": "Game Design",
    "subgroup_id": "21",
    "label": "Game Art & Animation",
-   "roles": 14,
-   "structure_roles": 14,
+   "roles": 22,
+   "structure_roles": 22,
    "esco": 14,
    "onet_tools": 11,
    "onet_competencies": 11,
    "esco_skills": 14,
-   "framework": 0,
-   "any": 14
+   "framework": 8,
+   "any": 22
   },
   {
    "domain_id": "D139",
    "domain_name": "Game Design",
    "subgroup_id": "25",
    "label": "Gameplay Programming",
-   "roles": 9,
-   "structure_roles": 9,
+   "roles": 12,
+   "structure_roles": 12,
    "esco": 9,
    "onet_tools": 8,
    "onet_competencies": 7,
    "esco_skills": 9,
-   "framework": 0,
-   "any": 9
+   "framework": 3,
+   "any": 12
   },
   {
    "domain_id": "D139",
    "domain_name": "Game Design",
    "subgroup_id": "26",
    "label": "Creative Direction",
-   "roles": 6,
-   "structure_roles": 6,
+   "roles": 7,
+   "structure_roles": 7,
    "esco": 4,
    "onet_tools": 4,
    "onet_competencies": 4,
    "esco_skills": 4,
-   "framework": 2,
-   "any": 6
+   "framework": 3,
+   "any": 7
   },
   {
    "domain_id": "D140",
@@ -3046,6 +3154,20 @@
    "any": 5
   },
   {
+   "domain_id": "D072",
+   "domain_name": "Geospatial Science",
+   "subgroup_id": "21",
+   "label": "Geospatial Data & Spatial Analysis",
+   "roles": 18,
+   "structure_roles": 18,
+   "esco": 18,
+   "onet_tools": 17,
+   "onet_competencies": 17,
+   "esco_skills": 18,
+   "framework": 0,
+   "any": 18
+  },
+  {
    "domain_id": "D074",
    "domain_name": "Occupational Health, Safety",
    "subgroup_id": "21",
@@ -3387,7 +3509,7 @@
    "subgroup_id": "22",
    "label": "Licensed Pharmacists",
    "roles": 10,
-   "structure_roles": 10,
+   "structure_roles": 12,
    "esco": 4,
    "onet_tools": 6,
    "onet_competencies": 6,
@@ -4654,6 +4776,62 @@
    "esco_skills": 4,
    "framework": 0,
    "any": 4
+  },
+  {
+   "domain_id": "D041",
+   "domain_name": "Scientific Research",
+   "subgroup_id": "21",
+   "label": "Computational & Quantitative Science",
+   "roles": 32,
+   "structure_roles": 34,
+   "esco": 28,
+   "onet_tools": 27,
+   "onet_competencies": 27,
+   "esco_skills": 28,
+   "framework": 0,
+   "any": 32
+  },
+  {
+   "domain_id": "D041",
+   "domain_name": "Scientific Research",
+   "subgroup_id": "31",
+   "label": "Laboratory & Field Technicians",
+   "roles": 11,
+   "structure_roles": 11,
+   "esco": 11,
+   "onet_tools": 11,
+   "onet_competencies": 11,
+   "esco_skills": 11,
+   "framework": 0,
+   "any": 11
+  },
+  {
+   "domain_id": "D078",
+   "domain_name": "Social Sciences",
+   "subgroup_id": "21",
+   "label": "Computational Social Science & Quantitative Methods",
+   "roles": 4,
+   "structure_roles": 4,
+   "esco": 4,
+   "onet_tools": 4,
+   "onet_competencies": 4,
+   "esco_skills": 4,
+   "framework": 0,
+   "any": 4
+  },
+  {
+   "domain_id": "D078",
+   "domain_name": "Social Sciences",
+   "subgroup_id": "26",
+   "label": "Social & Economic Research",
+   "roles": 20,
+   "structure_roles": 20,
+   "esco": 20,
+   "onet_tools": 18,
+   "onet_competencies": 18,
+   "esco_skills": 20,
+   "framework": 0,
+   "any": 20
   },
   {
    "domain_id": "D042",
@@ -6280,6 +6458,20 @@
    "any": 29
   },
   {
+   "domain_id": "D056",
+   "domain_name": "Blockchain",
+   "subgroup_id": "25",
+   "label": "Blockchain Software & Protocols",
+   "roles": 25,
+   "structure_roles": 25,
+   "esco": 25,
+   "onet_tools": 21,
+   "onet_competencies": 18,
+   "esco_skills": 25,
+   "framework": 0,
+   "any": 25
+  },
+  {
    "domain_id": "D057",
    "domain_name": "Digital Health",
    "subgroup_id": "13",
@@ -6502,6 +6694,62 @@
    "esco_skills": 7,
    "framework": 0,
    "any": 7
+  },
+  {
+   "domain_id": "D084",
+   "domain_name": "Payroll, Bookkeeping",
+   "subgroup_id": "33",
+   "label": "Business and administration associate professionals",
+   "roles": 1,
+   "structure_roles": 1,
+   "esco": 1,
+   "onet_tools": 1,
+   "onet_competencies": 1,
+   "esco_skills": 1,
+   "framework": 1,
+   "any": 1
+  },
+  {
+   "domain_id": "D084",
+   "domain_name": "Payroll, Bookkeeping",
+   "subgroup_id": "43",
+   "label": "Numerical and material recording clerks",
+   "roles": 10,
+   "structure_roles": 10,
+   "esco": 10,
+   "onet_tools": 10,
+   "onet_competencies": 10,
+   "esco_skills": 10,
+   "framework": 0,
+   "any": 10
+  },
+  {
+   "domain_id": "D091",
+   "domain_name": "Driving Instruction",
+   "subgroup_id": "23",
+   "label": "Teaching professionals",
+   "roles": 1,
+   "structure_roles": 1,
+   "esco": 1,
+   "onet_tools": 0,
+   "onet_competencies": 0,
+   "esco_skills": 1,
+   "framework": 1,
+   "any": 1
+  },
+  {
+   "domain_id": "D091",
+   "domain_name": "Driving Instruction",
+   "subgroup_id": "51",
+   "label": "Personal service workers",
+   "roles": 6,
+   "structure_roles": 6,
+   "esco": 6,
+   "onet_tools": 0,
+   "onet_competencies": 0,
+   "esco_skills": 6,
+   "framework": 0,
+   "any": 6
   },
   {
    "domain_id": "D092",
@@ -6880,6 +7128,20 @@
    "esco_skills": 1,
    "framework": 1,
    "any": 1
+  },
+  {
+   "domain_id": "D105",
+   "domain_name": "Handicraft, Basketry, Textile Craft",
+   "subgroup_id": "73",
+   "label": "Handicraft and printing workers",
+   "roles": 14,
+   "structure_roles": 14,
+   "esco": 14,
+   "onet_tools": 8,
+   "onet_competencies": 8,
+   "esco_skills": 14,
+   "framework": 1,
+   "any": 14
   },
   {
    "domain_id": "D107",
@@ -7596,6 +7858,34 @@
    "any": 13
   },
   {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "subgroup_id": "22",
+   "label": "Health professionals",
+   "roles": 1,
+   "structure_roles": 1,
+   "esco": 1,
+   "onet_tools": 1,
+   "onet_competencies": 1,
+   "esco_skills": 1,
+   "framework": 1,
+   "any": 1
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "subgroup_id": "32",
+   "label": "Health associate professionals",
+   "roles": 9,
+   "structure_roles": 10,
+   "esco": 2,
+   "onet_tools": 3,
+   "onet_competencies": 3,
+   "esco_skills": 2,
+   "framework": 8,
+   "any": 9
+  },
+  {
    "domain_id": "D125",
    "domain_name": "Medical Secretarial",
    "subgroup_id": "32",
@@ -7636,6 +7926,34 @@
    "esco_skills": 3,
    "framework": 0,
    "any": 4
+  },
+  {
+   "domain_id": "D126",
+   "domain_name": "Complementary, Alternative",
+   "subgroup_id": "22",
+   "label": "Health professionals",
+   "roles": 7,
+   "structure_roles": 7,
+   "esco": 6,
+   "onet_tools": 6,
+   "onet_competencies": 7,
+   "esco_skills": 6,
+   "framework": 1,
+   "any": 7
+  },
+  {
+   "domain_id": "D126",
+   "domain_name": "Complementary, Alternative",
+   "subgroup_id": "32",
+   "label": "Health associate professionals",
+   "roles": 3,
+   "structure_roles": 3,
+   "esco": 3,
+   "onet_tools": 2,
+   "onet_competencies": 2,
+   "esco_skills": 3,
+   "framework": 2,
+   "any": 3
   },
   {
    "domain_id": "D127",
@@ -7790,6 +8108,34 @@
    "esco_skills": 12,
    "framework": 0,
    "any": 12
+  },
+  {
+   "domain_id": "D132",
+   "domain_name": "Space Science, Exploration",
+   "subgroup_id": "21",
+   "label": "Science and engineering professionals",
+   "roles": 3,
+   "structure_roles": 3,
+   "esco": 3,
+   "onet_tools": 2,
+   "onet_competencies": 2,
+   "esco_skills": 3,
+   "framework": 2,
+   "any": 3
+  },
+  {
+   "domain_id": "D132",
+   "domain_name": "Space Science, Exploration",
+   "subgroup_id": "31",
+   "label": "Science and engineering associate professionals",
+   "roles": 3,
+   "structure_roles": 3,
+   "esco": 3,
+   "onet_tools": 3,
+   "onet_competencies": 3,
+   "esco_skills": 3,
+   "framework": 3,
+   "any": 3
   },
   {
    "domain_id": "D133",
@@ -8252,6 +8598,34 @@
    "esco_skills": 1,
    "framework": 1,
    "any": 1
+  },
+  {
+   "domain_id": "D142",
+   "domain_name": "Bioinformatics, Computational Biology",
+   "subgroup_id": "21",
+   "label": "Computational Biology & Bioinformatics",
+   "roles": 36,
+   "structure_roles": 36,
+   "esco": 36,
+   "onet_tools": 31,
+   "onet_competencies": 30,
+   "esco_skills": 36,
+   "framework": 0,
+   "any": 36
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "subgroup_id": "21",
+   "label": "Climate Modelling & Atmospheric Science",
+   "roles": 4,
+   "structure_roles": 4,
+   "esco": 4,
+   "onet_tools": 4,
+   "onet_competencies": 4,
+   "esco_skills": 4,
+   "framework": 0,
+   "any": 4
   },
   {
    "domain_id": "D145",

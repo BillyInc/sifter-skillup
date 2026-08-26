@@ -14,9 +14,10 @@
 # PRIVACY:
 #   - Uploaded documents are NEVER stored (handled transiently in
 #     services/roster_extract.py). No documents table.
-#   - Subjects/grades are NEVER stored. They ride in the generate-call
-#     payload, seed the mapping inline, and are discarded. No academic
-#     column exists on users or student_provision_drafts.
+#   - Subjects/grades are not written to users or student_provision_drafts.
+#     Generate-call subjects remain transient; an administrator's selected
+#     subjects may be retained inside the account-scoped guidance resume
+#     checkpoint so that the same student conversation can be reopened.
 #
 # Admin routes gated by Auth.require_admin. Student-side routes
 # (claim/affiliate/consent) gated by Auth.get_current_user.
@@ -67,10 +68,16 @@ def _users():
 
 
 def _guidance_path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
-    """Keep the same report context contract for student and admin writes."""
+    """Keep report context plus the private admin resume checkpoint.
+
+    ``resume`` is deliberately stored beside the selected path rather than in
+    the user row. It lets an administrator reopen one student's unfinished
+    conversation without treating an unfinished checkpoint as a completed
+    report or exposing it to the student-side report resolver.
+    """
     allowed_single = {
         "academicContext", "subjects", "programme", "university", "requirements",
-        "discoveryDoor", "notes",
+        "discoveryDoor", "notes", "resume",
     }
     allowed_lists = {"domains", "subgroups", "roles"}
     out: dict[str, Any] = {}
@@ -303,6 +310,7 @@ class RosterStudent(BaseModel):
     visible: bool = True       # individually visible under the rule
     has_consent: bool = False
     guidance_complete: bool = False
+    student_type: Optional[str] = None
 
 
 class RosterResponse(BaseModel):
@@ -824,13 +832,13 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
             if c.get("scope") in {"progress", "full"}
         }
 
-        # User rows (name/class/provenance/claim_state) for the affiliated set.
+        # User rows (name/context/provenance/claim_state) for the affiliated set.
         # Chunk the IN() to stay within query limits.
         users_by_id: dict = {}
         for i in range(0, len(student_ids), 500):
             chunk = student_ids[i:i + 500]
             ures = _users().select(
-                "id, username, student_class, stream, provenance, claim_state, chosen_direction"
+                "id, username, student_class, stream, provenance, claim_state, chosen_direction, settings"
             ).in_("id", chunk).execute().data or []
             for u in ures:
                 users_by_id[u["id"]] = u
@@ -857,6 +865,7 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
                 visible=True,
                 has_consent=has_consent,
                 guidance_complete=bool(u.get("chosen_direction")),
+                student_type=_stored_provisioned_type(u),
             ))
 
         return ResponseModel(data=RosterResponse(
@@ -1583,7 +1592,7 @@ async def save_student_guidance_path(
     payload: dict = Body(default_factory=dict),
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Save the full selected path for one Student under admin access."""
+    """Save a selected path or an unfinished resume checkpoint for one Student."""
     school_id = _require_school(current_user)
     student = _load_school_student(user_id, school_id)
     raw_path = payload.get("path") if isinstance(payload.get("path"), dict) else {}
@@ -1615,7 +1624,7 @@ async def get_student_guidance_path(
     user_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Return the selected guidance path for a Student this admin may guide."""
+    """Return the saved guidance path/checkpoint for a Student this admin may guide."""
     school_id = _require_school(current_user)
     _load_school_student(user_id, school_id)
     try:

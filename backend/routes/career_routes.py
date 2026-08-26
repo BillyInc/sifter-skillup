@@ -128,6 +128,67 @@ def _contains_skill(values: list[str], term: str) -> bool:
     return any(needle in value.casefold() or value.casefold() in needle for value in values)
 
 
+def _guidance_evidence(context: Any) -> dict:
+    """Map checked context into safe student-facing evidence states.
+
+    This deliberately does not expose demand scores, ranks, salaries or a
+    licensing conclusion. The source-backed resolver already separates local
+    Nigerian evidence from global enrichment; remote work needs its own signal
+    and must not be inferred from either one.
+    """
+    value = context if isinstance(context, dict) else {}
+    actual = value.get("actual_enrichment") or {}
+    global_data = value.get("global_enrichment") or {}
+    local_sources = value.get("source_summaries") or []
+    local_items = sum(
+        len(actual.get(key) or [])
+        for key in ("skills", "tools", "competencies", "certifications", "regulatory_requirements")
+    )
+    global_items = sum(
+        len(global_data.get(key) or [])
+        for key in ("skills", "tools", "competencies", "certifications", "regulatory_requirements")
+    )
+
+    if local_items:
+        nigeria_state = "source_backed"
+        nigeria_explanation = "Checked Nigerian professional, sector or regulatory evidence is available for this route."
+    elif local_sources:
+        nigeria_state = "context_only"
+        nigeria_explanation = "Nigerian professional or sector context is available, but a role-level requirement is not established."
+    else:
+        nigeria_state = "not_available"
+        nigeria_explanation = "No checked Nigerian context is attached to this route yet."
+
+    if global_items:
+        global_state = "source_backed"
+        global_explanation = "Separate international occupational or professional evidence is available."
+    elif value.get("global_profile_ids"):
+        global_state = "context_only"
+        global_explanation = "A global role-family context is available; it is not a local demand or licensing claim."
+    else:
+        global_state = "not_available"
+        global_explanation = "No separate global evidence is attached to this route yet."
+
+    return {
+        "nigeria": {
+            "state": nigeria_state,
+            "explanation": nigeria_explanation,
+            "sourceCount": len(local_sources),
+        },
+        "remote": {
+            "state": "not_available",
+            "explanation": "A remote-work signal is not attached here; it must be verified separately rather than inferred from global evidence.",
+        },
+        "global": {
+            "state": global_state,
+            "explanation": global_explanation,
+        },
+        "limitations": [
+            "These signals explain evidence scope; they do not claim current vacancy volume, salary or automatic licensing.",
+        ],
+    }
+
+
 # ── Enrichment-aware row mappers (Phase 9) ────────────────────
 # Each emits the camelCase shape declared in src/types/career.ts:
 #   CertificationV2Enriched, ToolV2Enriched.
@@ -731,6 +792,7 @@ async def get_domain(domain_id: str):
                      "sourceConfidence": sg.get("source_confidence"),
                      "dataState": sg.get("data_state"),
                      "nigerianContext": sg.get("nigerian_context") or {},
+                     "guidanceEvidence": _guidance_evidence(sg.get("nigerian_context") or {}),
                      "skillSources": sg.get("skill_sources") or {},
                      "methodEvidence": methods_by_subgroup.get(sg_id, []),
                       "tools": _tool_groups(sg_tools),
@@ -747,6 +809,7 @@ async def get_domain(domain_id: str):
                 "alsoKnownAs": r.get("also_known_as") or [],
                 "subgroupId": r.get("subgroup_id"),
                 "nigerianContext": role_context_by_key.get(r.get("role_key"), {}),
+                "guidanceEvidence": _guidance_evidence(role_context_by_key.get(r.get("role_key"), {})),
                 "computationalSubgroups": computational_links_by_role.get(r.get("role_key"), []),
                 "eliteStatus": r.get("elite_status"),
                  "crossDomainFamily": (
@@ -778,6 +841,7 @@ async def get_domain(domain_id: str):
             "sourceConfidence": domain.get("source_confidence"),
             "dataState": domain.get("data_state"),
             "nigerianContext": domain.get("nigerian_context") or {},
+            "guidanceEvidence": _guidance_evidence(domain.get("nigerian_context") or {}),
             "foundationSkillSources": domain.get("foundation_skill_sources") or {},
             "roleCount": domain.get("role_count"),
             "tools": _tool_groups(domain_tools),
@@ -989,6 +1053,7 @@ async def get_role(role_id: str):
             "sourceConfidence": role.get("source_confidence"),
             "dataState": role.get("data_state"),
             "nigerianContext": role.get("nigerian_context") or {},
+            "guidanceEvidence": _guidance_evidence(role.get("nigerian_context") or {}),
             "sourceProvenance": role.get("source_provenance") or {},
             "essentialSkills": essential,
             "optionalSkills": optional,

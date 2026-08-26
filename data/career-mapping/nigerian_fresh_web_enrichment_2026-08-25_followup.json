@@ -1,0 +1,51 @@
+{
+  "schema_version": "fresh_web_enrichment_followup_v1",
+  "generated_at": "2026-08-25",
+  "purpose": "Follow-up fresh-source extraction for environmental health, allied health, journalism/media, aviation, agriculture and related transport pathways.",
+  "sources": [
+    {"id":"ng_ehcon_environmental_health","region":"nigeria","name":"Environmental Health Officers Registration Council of Nigeria registration and licensing","evidence_type":"professional_regulator","availability":"official_web","urls":["https://ehcon.gov.ng/department-of-registration-and-licensing/","https://ehcon.gov.ng/registration-procedure-for-individuals/"]},
+    {"id":"ng_chprbn_allied_health","region":"nigeria","name":"Community Health Practitioners Registration Board of Nigeria licensing portal","evidence_type":"professional_regulator","availability":"official_web","urls":["https://app.chprbn.gov.ng/"]},
+    {"id":"ng_npc_journalism","region":"nigeria","name":"Nigerian Press Council journalism ethics and training accreditation","evidence_type":"professional_standard","availability":"official_web","urls":["https://presscouncil.gov.ng/code-of-ethics/","https://presscouncil.gov.ng/about-npc/"]},
+    {"id":"ng_ncaa_aviation","region":"nigeria","name":"Nigerian Civil Aviation Authority air transport licensing and certification","evidence_type":"sector_regulator","availability":"official_web","urls":["https://datr.ncaa.gov.ng/","https://www.ncaa.gov.ng/media/24reuwnx/nigcars-part-9-air-operator-certification-and-administration.pdf"]},
+    {"id":"ng_eagriculture_agri","region":"nigeria","name":"Nigeria National e-Agriculture Portal and Federal Ministry of Agriculture context","evidence_type":"government_sector_context","availability":"official_web","urls":["https://eagriculture.gov.ng/","https://agriculture.gov.ng/"]}
+  ],
+  "profiles": [
+    {
+      "id":"ng_ehcon_environmental_health_profile","region":"nigeria","source_ids":["ng_ehcon_environmental_health"],"domain_ids":["D020","D026","D048"],
+      "role_patterns":["environmental health officer","environmental health technician","environmental health assistant","environmental health specialist","environmental health consultant"],
+      "skills":[{"name":"Environmental health, sanitation and public-health inspection","priority":"core","evidence":"EHCON registration and licensing mandate"},{"name":"Waste, sewage and environmental service practice","priority":"core","evidence":"EHCON service areas"}],
+      "competencies":[{"name":"Conduct sanitary inspection and manage regulated environmental-health services","priority":"core","evidence":"EHCON registration and licensing pages"}],
+      "certifications":[{"name":"EHCON registration and annual licence to practise","issuer":"Environmental Health Officers Registration Council of Nigeria","level":"professional","evidence":"EHCON registration and licensing mandate"}],
+      "regulatory_requirements":[{"name":"Registration and annual practice licence for listed environmental-health cadres","priority":"core","evidence":"EHCON registration and licensing mandate"}]
+    },
+    {
+      "id":"ng_chprbn_allied_health_profile","region":"nigeria","source_ids":["ng_chprbn_allied_health"],"domain_ids":["D068","D026"],
+      "role_patterns":["community health practitioner","community health officer","junior community health extension worker","community health extension worker"],
+      "skills":[{"name":"Community health practice and primary-care support","priority":"core","evidence":"CHPRBN registration portal"}],
+      "competencies":[{"name":"Maintain practitioner registration and licence records","priority":"core","evidence":"CHPRBN licensing portal"}],
+      "certifications":[{"name":"CHPRBN practitioner licence","issuer":"Community Health Practitioners Registration Board of Nigeria","level":"professional","evidence":"CHPRBN official licensing portal"}]
+    },
+    {
+      "id":"ng_npc_journalism_profile","region":"nigeria","source_ids":["ng_npc_journalism"],"domain_ids":["D042","D043"],
+      "role_patterns":["journalist","reporter","editor","news producer","photojournalist","correspondent"],
+      "skills":[{"name":"Accurate, fair and public-interest reporting","priority":"core","evidence":"Nigerian Press Council Code of Ethics"},{"name":"Research, attribution and copyright-aware publishing","priority":"core","evidence":"Nigerian Press Council Code of Ethics"}],
+      "competencies":[{"name":"Verify information and communicate responsibly under professional ethics","priority":"core","evidence":"Nigerian Press Council Code of Ethics"}],
+      "certifications":[{"name":"Accredited journalism training pathway","issuer":"Nigerian Press Council","level":"foundation_to_professional","evidence":"NPC training-programme accreditation service"}]
+    },
+    {
+      "id":"ng_ncaa_aviation_profile","region":"nigeria","source_ids":["ng_ncaa_aviation"],"domain_ids":["D069","D035","D076"],
+      "role_patterns":["air transport operator","airline operations manager","cargo agent","air freight forwarder","ground handling manager","travel agency manager","aviation maintenance engineer","air traffic service"],
+      "skills":[{"name":"Aviation safety, air-transport operations and regulatory compliance","priority":"core","evidence":"NCAA air-transport licensing and certification framework"},{"name":"Cargo, ground handling and air-freight coordination","priority":"core","evidence":"NCAA DATR allied-services authorisations"}],
+      "competencies":[{"name":"Operate within applicable Nigerian Civil Aviation Regulations and authorisations","priority":"core","evidence":"NCAA DATR portal and Part 9 regulations"}],
+      "certifications":[{"name":"Applicable NCAA licence, permit or air-operator certification","issuer":"Nigerian Civil Aviation Authority","level":"professional","evidence":"NCAA DATR portal and regulations"}],
+      "regulatory_requirements":[{"name":"Specific air-transport and allied-service authorisation is required for regulated operations","priority":"core","evidence":"NCAA DATR portal"}]
+    },
+    {
+      "id":"ng_eagriculture_agri_profile","region":"nigeria","source_ids":["ng_eagriculture_agri"],"domain_ids":["D047","D096","D120","D121"],
+      "role_patterns":["agricultural extension officer","farm manager","agricultural economist","aquaculture technician","fisheries officer","forestry officer","wildlife manager"],
+      "skills":[{"name":"Agricultural value-chain and food-security practice","priority":"core","evidence":"Federal Ministry of Agriculture and National e-Agriculture Portal"},{"name":"Digital agriculture and extension information systems","priority":"supplementary","evidence":"National e-Agriculture Portal"}],
+      "competencies":[{"name":"Connect production, market access and extension services across an agricultural value chain","priority":"core","evidence":"National e-Agriculture Portal"}],
+      "certifications":[]
+    }
+  ]
+}

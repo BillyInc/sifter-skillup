@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Linking, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from "../../theme";
 import type { CareerLearningResource } from "../../types/career";
@@ -66,6 +66,7 @@ export function LearningResourcesBlock({
 }: LearningResourcesBlockProps) {
   const { colors } = useTheme();
   const [saved, setSaved] = React.useState<Record<string, boolean>>({});
+  const [saving, setSaving] = React.useState<Record<string, boolean>>({});
   const [saveNotice, setSaveNotice] = React.useState<string | null>(null);
   const grouped = useMemo(() => {
     const unique = new Map<string, CareerLearningResource>();
@@ -81,13 +82,33 @@ export function LearningResourcesBlock({
     })).filter((group) => group.resources.length > 0);
   }, [resources]);
 
+  // Hydrate from the account-owned saved-items collection so the bookmark
+  // state survives navigation, refreshes, and the mobile/web handoff. Guests
+  // receive a locked envelope and simply retain the honest save prompt.
+  useEffect(() => {
+    let active = true;
+    void careerData.getSavedItems().then((result) => {
+      if (!active || result.status !== "real" || !result.data) return;
+      const resourceKeys = result.data
+        .filter((item) => item.entityType === "resource")
+        .reduce<Record<string, boolean>>((acc, item) => {
+          acc[item.entityId] = true;
+          return acc;
+        }, {});
+      setSaved(resourceKeys);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   if (!grouped.length) return null;
 
   return (
     <View style={[styles.container, style]}>
       <SectionLabel>{title}</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }]}>
-        Use these links to understand the field, build the most useful skills, and check professional requirements.
+        Use these links to understand the domain, build the most useful skills, and check professional requirements.
       </Text>
       {grouped.map((group) => (
         <View key={group.label} style={styles.group}>
@@ -127,18 +148,27 @@ export function LearningResourcesBlock({
                   onPress={async (event) => {
                     event.stopPropagation();
                     const key = resource.url;
-                    if (saved[key]) return;
-                    const result = await careerData.saveItem("resource", key, resourceTitle(resource));
-                    if (result.status === "real") {
-                      setSaved((current) => ({ ...current, [key]: true }));
-                      setSaveNotice("Saved to My World");
-                    } else {
-                      setSaveNotice(result.meta?.notice ?? "Sign in to save resources to My World.");
+                    if (saved[key] || saving[key]) return;
+                    setSaving((current) => ({ ...current, [key]: true }));
+                    try {
+                      const result = await careerData.saveItem("resource", key, resourceTitle(resource));
+                      if (result.status === "real") {
+                        setSaved((current) => ({ ...current, [key]: true }));
+                        setSaveNotice("Saved to My World");
+                      } else {
+                        setSaveNotice(result.meta?.notice ?? "Sign in to save resources to My World.");
+                      }
+                    } catch {
+                      setSaveNotice("Could not save this resource yet. Try again.");
+                    } finally {
+                      setSaving((current) => ({ ...current, [key]: false }));
                     }
                   }}
+                  accessibilityLabel={saved[resource.url] ? "Resource saved" : "Save resource"}
+                  accessibilityState={{ disabled: Boolean(saved[resource.url] || saving[resource.url]) }}
                   style={styles.saveButton}
                 >
-                  <Text style={[styles.saveText, { color: colors.accentRole.action }]}>{saved[resource.url] ? "Saved" : "Save"}</Text>
+                  <Text style={[styles.saveText, { color: colors.accentRole.action }]}>{saving[resource.url] ? "Saving…" : saved[resource.url] ? "Saved" : "Save"}</Text>
                 </Pressable>
               </View>
             </Pressable>

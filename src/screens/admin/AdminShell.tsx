@@ -53,7 +53,7 @@ function adminResumeLabel(path: string) {
   if (path === "/students" || path.endsWith("/students")) return "Student account creation and roster";
   if (path.includes("/peers")) return "Peer comparison";
   if (path.includes("/workspace-explore/admission")) return "Admission guidance";
-  if (path.includes("/workspace-explore")) return "Explore programmes and fields";
+  if (path.includes("/workspace-explore")) return "Explore programmes and domains";
   if (path.includes("/verify")) return "Verification";
   if (path.includes("/skills-gap")) return "Programme skills review";
   if (path.includes("/reports")) return "Reports";
@@ -139,6 +139,10 @@ export function AdminShell({
   const homeKey = audience === "university" ? "dashboard" : "explore";
   const homeSegment =
     audience === "university" ? "dashboard" : ADMIN_EXPLORE_SEGMENT;
+  const readParam = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
+  const focusedGuidance = readParam(searchParams?.guided) === "1"
+    || readParam(searchParams?.focus) === "guidance"
+    || readParam(searchParams?.journey) === "guided_subject_discovery";
   const resumeQuery = useMemo(
     () => Object.entries(searchParams ?? {})
       .flatMap(([key, value]) => (Array.isArray(value) ? value.map((item) => [key, item] as const) : [[key, value] as const]))
@@ -242,7 +246,7 @@ export function AdminShell({
   return (
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {/* Persistent sidebar (wide only) */}
-      {wide ? (
+      {wide && !focusedGuidance ? (
         <View
           style={[
             styles.sidebar,
@@ -262,7 +266,7 @@ export function AdminShell({
             { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle },
           ]}
         >
-          {!wide ? (
+          {!wide && !focusedGuidance ? (
             <TouchableOpacity
               onPress={() => setDrawerOpen(true)}
               hitSlop={10}
@@ -281,7 +285,7 @@ export function AdminShell({
               accessibilityLabel="Go back"
             >
               <Text style={[styles.backText, CompassFonts.bodySemibold, { color: colors.text }]}>
-                Back
+                {focusedGuidance ? "Exit guidance" : "Back"}
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -299,13 +303,19 @@ export function AdminShell({
               style={[styles.title, CompassFonts.bodySemibold, { color: colors.text }]}
               numberOfLines={1}
             >
-              {title}
+            {focusedGuidance ? "Guidance workspace" : title}
             </Text>
           </View>
 
           {actions ? <View style={styles.actions}>{actions}</View> : null}
         </View>
 
+        {focusedGuidance && readParam(searchParams?.guidance_student_id) ? (
+          <GuidanceContextBanner
+            studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
+            stream={readParam(searchParams?.stream)}
+          />
+        ) : null}
         <View style={{ flex: 1 }}>{children}</View>
       </View>
 
@@ -321,7 +331,7 @@ export function AdminShell({
             </Text>
             <Text style={[styles.modalBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
               {accountAction === "delete"
-                ? "Your account will be marked for deletion and the recovery policy will apply."
+                ? "Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends."
                 : "You will need to sign in again to continue."}
             </Text>
             <View style={styles.modalActions}>
@@ -335,6 +345,24 @@ export function AdminShell({
           </View>
         </View>
       </Modal>
+    </View>
+  );
+}
+
+function GuidanceContextBanner({ studentClass, stream }: { studentClass?: string; stream?: string }) {
+  const { colors } = useTheme();
+  const context = [studentClass, stream].filter(Boolean).join(" · ");
+  return (
+    <View
+      accessibilityRole="summary"
+      style={[styles.guidanceContext, { backgroundColor: colors.surface.subtle, borderBottomColor: colors.borderRole.subtle }]}
+    >
+      <View style={styles.guidanceContextCopy}>
+        <Text style={[styles.guidanceContextEyebrow, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>TARGET STUDENT GUIDANCE</Text>
+        <Text style={[styles.guidanceContextTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>This workspace is scoped to the selected student</Text>
+        <Text style={[styles.guidanceContextBody, CompassFonts.body, { color: colors.textRole.secondary }]}>Selections and reports use this student&apos;s authorised guidance path. Access and consent checks remain enforced.</Text>
+      </View>
+      {context ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>{context}</Text> : null}
     </View>
   );
 }
@@ -635,4 +663,10 @@ const styles = StyleSheet.create({
   modalActions: { flexDirection: "row", gap: Spacing.sm },
   modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: "center", justifyContent: "center", paddingHorizontal: Spacing.sm },
   modalButtonText: { fontSize: FontSize.sm, fontWeight: "800" },
+  guidanceContext: { borderBottomWidth: StyleSheet.hairlineWidth, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: Spacing.md },
+  guidanceContextCopy: { flex: 1, gap: 2 },
+  guidanceContextEyebrow: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  guidanceContextTitle: { fontSize: FontSize.sm },
+  guidanceContextBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
+  guidanceContextMeta: { fontSize: FontSize.xs, textTransform: "capitalize" },
 });

@@ -51,7 +51,7 @@ function friendlyAuthError(error: unknown, fallback: string) {
   return message;
 }
 
-export default function AuthScreen() {
+export default function AuthScreen({ initialMode = "login" }: { initialMode?: Exclude<Mode, "connecting"> }) {
   const router = useRouter();
   const params = useLocalSearchParams<{ claim?: string | string[]; school_code?: string | string[] }>();
   const { colors, isDark } = useTheme();
@@ -60,7 +60,7 @@ export default function AuthScreen() {
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   // This screen is the login form only. The shared auth entry lives at `/`.
-  const [mode, setMode] = useState<Mode>("login");
+  const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [schoolCode, setSchoolCode] = useState(() => {

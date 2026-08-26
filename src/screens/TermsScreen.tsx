@@ -9,10 +9,10 @@ import { TERMS_VERSION } from "@/lib/legal";
 
 const SECTIONS = [
   ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
-  ['What the platform does', 'We help users explore starting points, subjects, programmes, schools, domains, sub-groups, roles, skills, tools, certifications and market-intelligence signals.'],
+  ['What the platform does', 'We help users explore starting points, subjects, programmes, schools, domains, subgroups, roles, skills, tools, certifications and market-intelligence signals.'],
   ['Guidance, not a guarantee', 'Programme mappings, cut-off marks, role readiness, demand, salary and remote-work signals are guidance. They are not admission, employment, salary, migration, legal, financial or professional advice.'],
   ['Admissions and school data', 'Cut-off marks, school requirements and formulas are historical or indicative unless clearly marked otherwise. We do not guarantee admission, eligibility, scholarship access or school placement.'],
-  ['Jobs and market intelligence', 'Posting counts, salary ranges, employer lists and trend labels are estimates from available sources. Low-volume/high-value roles may be selective; high-volume roles may still have lower pay or progression limits.'],
+  ['Opportunities and market intelligence', 'Opportunity postings, salary ranges, employer lists and trend labels are estimates from available sources. Low-volume/high-value roles may be selective; high-volume roles may still have lower pay or progression limits.'],
   ['Students and minors', 'Senior-secondary students and other minors should use LevelUp with guidance from a parent, guardian, school or counsellor. Individual student visibility for institutions requires consent where applicable.'],
   ['Educators and institutions', 'Institution dashboards use aggregate intelligence. Verification does not by itself unlock individual student details. Student records, rosters and provisioning remain consent-gated.'],
   ['Guest use', 'Guests may browse limited Explore surfaces. Saving, notes, alerts, student management and institution-specific features require an account and, where relevant, acceptance of these terms.'],
@@ -30,9 +30,16 @@ const SECTIONS = [
 interface Props {
   onClose?: () => void;
   onReadToEnd?: () => void;
+  requireExplicitConfirmation?: boolean;
+  confirmLabel?: string;
 }
 
-export default function TermsScreen({ onClose, onReadToEnd }: Props) {
+export default function TermsScreen({
+  onClose,
+  onReadToEnd,
+  requireExplicitConfirmation = false,
+  confirmLabel = 'I have read the Terms & Conditions',
+}: Props) {
   const { colors } = useTheme();
   const resp = useResponsive();
   const isDesktop = resp.isDesktop && resp.isWeb;
@@ -40,6 +47,7 @@ export default function TermsScreen({ onClose, onReadToEnd }: Props) {
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState('0');
   const [readToEnd, setReadToEnd] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   const handleScroll = useCallback((event: any) => {
@@ -47,8 +55,14 @@ export default function TermsScreen({ onClose, onReadToEnd }: Props) {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
     if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 32) {
       setReadToEnd(true);
-      onReadToEnd?.();
+      if (!requireExplicitConfirmation) onReadToEnd?.();
     }
+  }, [onReadToEnd, readToEnd, requireExplicitConfirmation]);
+
+  const confirmRead = useCallback(() => {
+    if (!readToEnd) return;
+    setConfirmed(true);
+    onReadToEnd?.();
   }, [onReadToEnd, readToEnd]);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
@@ -92,6 +106,15 @@ export default function TermsScreen({ onClose, onReadToEnd }: Props) {
       <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:legal@sifter.app')}>
         <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email legal@sifter.app</Text>
       </TouchableOpacity>
+      {requireExplicitConfirmation && readToEnd && !confirmed ? (
+        <TouchableOpacity
+          style={[styles.confirmBtn, { backgroundColor: colors.accentRole.action }]}
+          onPress={confirmRead}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.confirmBtnText, CompassFonts.bodyBold]}>{confirmLabel}</Text>
+        </TouchableOpacity>
+      ) : null}
       <View style={{ height: 40 }} />
     </>
   );
@@ -104,7 +127,7 @@ export default function TermsScreen({ onClose, onReadToEnd }: Props) {
           <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Terms of service</Text>
           <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Plain-language overview of the platform rules.</Text>
         </View>
-        {onClose ? (
+        {onClose && (!requireExplicitConfirmation || confirmed) ? (
           <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
             <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
           </TouchableOpacity>
@@ -239,6 +262,16 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
   },
   emailBtnText: {
+    color: '#fff',
+    fontSize: FontSize.sm,
+  },
+  confirmBtn: {
+    borderRadius: Radius.lg,
+    paddingVertical: Spacing.md,
+    alignItems: 'center',
+    marginTop: Spacing.sm,
+  },
+  confirmBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
   },

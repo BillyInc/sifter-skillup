@@ -66,18 +66,18 @@ function ToolGroup({
 }
 
 export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
-  const distinctive = tools?.distinctive ?? [];
   const common = tools?.common ?? [];
+  const distinctive = tools?.distinctive ?? [];
   if (!distinctive.length && !common.length) return null;
 
   return (
     <View style={[styles.container, style]}>
       {title ? <SectionLabel>{title}</SectionLabel> : null}
       <Text style={styles.explanation}>
-        Learn the core tools first. The others are useful as your chosen direction develops.
+        Practise broadly used tools alongside the foundation. Domain-specific tools become more relevant after you choose a subgroup or role; all available tools remain visible.
       </Text>
-      <ToolGroup label="Core tools" tools={distinctive} prominent />
-      <ToolGroup label="Also useful" tools={common} prominent={false} />
+      <ToolGroup label="Tools used across this domain" tools={common} prominent />
+      <ToolGroup label="Tools for a chosen specialization" tools={distinctive} prominent={false} />
     </View>
   );
 }

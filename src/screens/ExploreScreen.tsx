@@ -144,7 +144,7 @@ export default function ExploreScreen({
     if (!hasSession) {
       setResults(
         locked<CareerSearchResult>(
-          "Start a guest session to search programmes, fields and roles.",
+          "Start a guest session to search programmes, domains and roles.",
         ),
       );
       return;
@@ -203,11 +203,11 @@ export default function ExploreScreen({
       </Text>
       <View style={styles.titleRow}>
         <Text style={[styles.title, { color: colors.textRole.primary }]}>
-          {heading ?? `Find your field, role\nor programme`}
+          {heading ?? `Find your domain, role\nor programme`}
         </Text>
         <InfoTooltip
-          label="Field, role, programme"
-          text="A field (domain) is an area of work. A role is a specific job within it. A programme is what you study. Search any of them — we'll show how they connect."
+          label="Domain, role, programme"
+          text="A domain is an area of work. A role is a specific path within it. A programme is what you study. Search any of them — we'll show how they connect."
         />
       </View>
 
@@ -245,7 +245,7 @@ export default function ExploreScreen({
       {/* ── Search ────────────────────────────────────────────── */}
       <CoachMark
         storageKey="explore-intro-v1"
-        text="Search a programme, field or job here — or scroll down and pick a starting point that fits where you are."
+        text="Search a programme, domain or role here — or scroll down and pick a starting point that fits where you are."
       >
         <SearchBar
           ref={searchRef}
@@ -306,7 +306,7 @@ export default function ExploreScreen({
           state={results}
           empty={isEmptyResult}
           emptyTitle={`No matches for \u201c${trimmed}\u201d`}
-          emptyBody="Try a broader term — a field, a job title, or a programme."
+          emptyBody="Try a broader term — a domain, a role title, or a programme."
         >
           {(data) => (
             <View style={styles.results}>
@@ -471,7 +471,7 @@ function ExploreIdle({
     <View style={styles.idle}>
       {/* ── Hero cluster carousel ──────────────────────────────── */}
       <View style={styles.section}>
-        <SectionLabel>Explore by field</SectionLabel>
+        <SectionLabel>Explore by domain</SectionLabel>
         {isMobile ? (
           <ScrollView
             horizontal
@@ -747,7 +747,7 @@ const DOORS = [
     key: "know",
     icon: "\uD83C\uDFAF",
     title: "I know what & where",
-    body: "Pick your programme and see the fields and jobs it unlocks.",
+    body: "Pick your programme and see the domains and roles it connects to.",
     live: true,
   },
   {

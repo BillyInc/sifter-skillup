@@ -140,10 +140,11 @@ export default function AuthLayout() {
     user &&
     user.onboarding_completed &&
     accountType !== "pending" &&
+    !isOnboardingRoute &&
     isAdminAccount(accountType)
   ) {
     redirectHref = adminResumeHref ?? adminHomeForProfile(educatorProfile);
-  } else if (authReady && user && user.onboarding_completed && accountType !== "pending") {
+  } else if (authReady && user && user.onboarding_completed && accountType !== "pending" && !isOnboardingRoute) {
     redirectHref = pendingRedirect ?? resolvePostAuthHref(user);
   }
 

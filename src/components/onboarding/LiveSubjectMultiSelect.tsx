@@ -11,6 +11,9 @@ import { careerData, type SubjectCatalogItem } from "@/lib/careerData";
 import { Brand, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import { SearchField } from "./primitives";
 
+/** Maximum O-level subjects accepted by the early programme matcher. */
+export const MAX_OLEVEL_SUBJECTS = 6;
+
 export function LiveSubjectMultiSelect({
   label,
   value,
@@ -48,6 +51,7 @@ export function LiveSubjectMultiSelect({
   const [subjects, setSubjects] = useState<SubjectCatalogItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const fixedSet = useMemo(
     () => new Set(fixedSubjects.map((s) => s.toLowerCase())),
     [fixedSubjects],
@@ -63,7 +67,9 @@ export function LiveSubjectMultiSelect({
   const countLabel =
     maxSelected <= 4
       ? `${selected.length}/${maxSelected}`
-      : `${selected.length} selected`;
+      : `${selected.length}/${maxSelected}`;
+
+  const overLimit = selected.length > maxSelected;
 
   useEffect(() => {
     if (!fixedSubjects.length) return;
@@ -105,7 +111,11 @@ export function LiveSubjectMultiSelect({
       onChange(selected.filter((s) => s.toLowerCase() !== subjectName.toLowerCase()));
       return;
     }
-    if (selected.length >= maxSelected) return;
+    if (selected.length >= maxSelected) {
+      setSelectionNotice(`You can choose up to ${maxSelected} subjects here. Remove one before adding another.`);
+      return;
+    }
+    setSelectionNotice(null);
     onChange([...selected, subjectName]);
   };
 
@@ -127,6 +137,12 @@ export function LiveSubjectMultiSelect({
         {helperText ??
           `Select at least ${minSelected}. These choices guide programme matching; they do not guarantee admission.`}
       </Text>
+      {selectionNotice ? (
+        <Text style={[styles.warning, { color: colors.accentRole.warning }]}>{selectionNotice}</Text>
+      ) : null}
+      {overLimit ? (
+        <Text style={[styles.warning, { color: colors.accentRole.warning }]}>Too many subjects selected. Remove {selected.length - maxSelected} before continuing.</Text>
+      ) : null}
       {notice ? (
         <Text style={[styles.helper, { color: colors.textMuted }]}>{notice}</Text>
       ) : null}

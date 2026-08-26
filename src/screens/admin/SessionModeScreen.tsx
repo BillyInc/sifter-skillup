@@ -124,7 +124,7 @@ export function SessionModeScreen() {
                 <TouchableOpacity
                   activeOpacity={0.82}
                   onPress={() =>
-                    router.push(`/(admin)/workspace-explore/admission?mode=subjects&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
+                    router.push(`/(admin)/workspace-explore/admission?mode=subjects&focus=guidance&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
                   }
                   style={[
                     styles.action,
@@ -142,7 +142,7 @@ export function SessionModeScreen() {
                 <TouchableOpacity
                   activeOpacity={0.82}
                   onPress={() =>
-                    router.push(`/(admin)/workspace-explore/admission?mode=programme&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
+                    router.push(`/(admin)/workspace-explore/admission?mode=programme&focus=guidance&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
                   }
                   style={[
                     styles.action,

@@ -1,0 +1,215 @@
+{
+  "schema_version": "nigerian_subgroup_family_enrichment_v1",
+  "generated_at": "2026-08-25",
+  "date_window": "2024-01-01 through 2026-08-25",
+  "purpose": "Source-scoped Nigerian evidence for unresolved subgroup families. These profiles provide item-level family context only where the cited Nigerian source supports the family; they do not create vacancy counts or universal licensing claims.",
+  "profiles": [
+    {
+      "id": "ng_finance_clerking_subgroup_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026", "ng_jobberman_current_market_2026"],
+      "domain_ids": ["D084"],
+      "subgroup_patterns": ["Numerical and material recording clerks"],
+      "skills": [{"name": "Record, reconcile and communicate financial, payroll, payment and numerical information accurately", "priority": "foundation", "evidence": "ICAN, CBN/SEC and Nigerian finance operations context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026"]}],
+      "tools": [{"name": "Bookkeeping, payroll, reconciliation, records, spreadsheet and financial-reporting workflows", "priority": "core_when_finance_applies", "evidence": "Nigerian finance operations context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026"], "limitation": "No universal Nigerian employer software stack is asserted."}],
+      "competencies": [{"name": "Maintain accurate records, check numerical information and follow the applicable financial-control and confidentiality procedures", "priority": "core", "evidence": "Nigerian accounting and finance practice context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026"]}],
+      "certifications": [{"name": "Applicable accounting-technician, bookkeeping, payroll or professional-accounting training route", "issuer": "ICAN or approved Nigerian provider", "level": "activity_specific_training_pathway", "evidence": "ICAN Nigerian professional pathway", "source_ids": ["ng_ican_syllabus_2026"], "limitation": "The appropriate credential depends on the exact clerical or accounting duty."}],
+      "regulatory_requirements": [{"name": "Verify applicable Nigerian tax, payroll, financial-control, data-protection and employer requirements for the exact activity", "priority": "required_when_activity_applies", "evidence": "Nigerian finance operations context", "source_ids": ["ng_cbn_sec_finance_operations_2025_2026"]}]
+    },
+    {
+      "id": "ng_driving_instruction_subgroup_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_frsc_driving"],
+      "domain_ids": ["D091"],
+      "subgroup_patterns": ["Teaching professionals", "Personal service workers"],
+      "skills": [{"name": "Teach safe vehicle operation, road rules, hazard awareness and practical driving technique for the selected vehicle class", "priority": "foundation", "evidence": "Federal Road Safety Corps driving and instructor context", "source_ids": ["ng_frsc_driving"]}],
+      "tools": [{"name": "Lesson-planning, vehicle-safety, practical-assessment and learner-record workflows", "priority": "core_when_instruction_applies", "evidence": "Nigerian driving-instruction context", "source_ids": ["ng_frsc_driving"], "limitation": "The required vehicle and instructor pathway depends on the vehicle class and authority."}],
+      "competencies": [{"name": "Assess a learner, demonstrate safe driving, give corrective feedback and manage practical instruction without compromising road safety", "priority": "core", "evidence": "Nigerian road-safety and driving-instruction context", "source_ids": ["ng_frsc_driving"]}],
+      "certifications": [{"name": "Applicable Nigerian driving-school or instructor approval and vehicle-class qualification", "issuer": "Relevant Nigerian road-safety authority or approved provider", "level": "activity_specific_instruction_pathway", "evidence": "FRSC driving context", "source_ids": ["ng_frsc_driving"], "limitation": "The exact approval route must be verified for the vehicle class and jurisdiction."}],
+      "regulatory_requirements": [{"name": "Verify Nigerian road-traffic, driving-school, instructor, vehicle, insurance and learner-safety requirements", "priority": "required_when_activity_applies", "evidence": "Federal Road Safety Corps context", "source_ids": ["ng_frsc_driving"]}]
+    },
+    {
+      "id": "ng_medical_imaging_subgroup_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_rrbn_2026", "ng_mdcn_mlscn_health_training_2024_2026", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D123"],
+      "subgroup_patterns": ["Health professionals", "Health associate professionals"],
+      "skills": [{"name": "Apply patient-centred imaging, radiation-safety, clinical-procedure, equipment and result-documentation practice", "priority": "foundation", "evidence": "Nigerian radiography registration and health-system guidance", "source_ids": ["ng_rrbn_2026", "ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Imaging, radiation-protection, patient-positioning, quality-control and clinical-record workflows", "priority": "core_when_imaging_applies", "evidence": "Nigerian radiography and health-system context", "source_ids": ["ng_rrbn_2026", "ng_fmoh_health_policy_2024_2026"], "limitation": "The equipment and registration route depend on the exact imaging or therapy practice."}],
+      "competencies": [{"name": "Perform or support imaging and radiation-related procedures safely, maintain patient dignity and document clinical work within the authorised scope", "priority": "core", "evidence": "Nigerian radiography and health-practice context", "source_ids": ["ng_rrbn_2026", "ng_fmoh_health_policy_2024_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian radiography, medical-imaging or radiation-practice registration and training route", "issuer": "Radiographers Registration Board of Nigeria or relevant Nigerian authority", "level": "regulated_health_practice_pathway", "evidence": "RRBN official context", "source_ids": ["ng_rrbn_2026"], "limitation": "The exact registration and scope depend on the profession and practice."}],
+      "regulatory_requirements": [{"name": "Verify Nigerian radiography, radiation-safety, patient-safety, facility and professional-registration requirements for the exact practice", "priority": "required_when_activity_applies", "evidence": "RRBN and Nigerian health guidance", "source_ids": ["ng_rrbn_2026", "ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_space_science_subgroup_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nasrda_space_2025", "ng_engineering"],
+      "domain_ids": ["D132"],
+      "subgroup_patterns": ["Science and engineering professionals", "Science and engineering associate professionals"],
+      "skills": [{"name": "Apply physics, engineering, satellite, geospatial, data and research methods to space-science or mission work", "priority": "foundation", "evidence": "NASRDA Nigerian space-science education and skills context", "source_ids": ["ng_nasrda_space_2025", "ng_engineering"]}],
+      "tools": [{"name": "Scientific-computing, geospatial, satellite, systems-engineering, observation and mission-data workflows", "priority": "core_when_space_applies", "evidence": "Nigerian space-science and engineering context", "source_ids": ["ng_nasrda_space_2025", "ng_engineering"], "limitation": "No universal Nigerian space-sector software or equipment stack is asserted."}],
+      "competencies": [{"name": "Analyse scientific or mission data, contribute to engineering or research work and communicate technical findings with appropriate uncertainty", "priority": "core", "evidence": "NASRDA Nigerian space-science context", "source_ids": ["ng_nasrda_space_2025", "ng_engineering"]}],
+      "certifications": [{"name": "Applicable Nigerian space-science, engineering, geospatial or research training pathway", "issuer": "NASRDA, university or relevant Nigerian professional body", "level": "research_and_engineering_pathway", "evidence": "NASRDA and Nigerian engineering context", "source_ids": ["ng_nasrda_space_2025", "ng_engineering"], "limitation": "This is not a universal space-sector licence."}],
+      "regulatory_requirements": [{"name": "Check applicable Nigerian space-activity, spectrum, remote-sensing, data, safety and professional-practice requirements", "priority": "required_when_activity_applies", "evidence": "NASRDA space-activity context", "source_ids": ["ng_nasrda_space_2025"]}]
+    },
+    {
+      "id": "ng_engineering_science_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_coren_engineering", "ng_coren_reforms_2026", "ng_naseni_nanotech"],
+      "domain_ids": ["D059", "D065", "D095", "D119", "D122", "D135", "D137", "D146", "D152", "D156", "D160", "D164"],
+      "subgroup_patterns": ["Science and engineering professionals", "Science and engineering associate professionals"],
+      "skills": [
+        {"name": "Apply technical analysis, design, testing, maintenance, standards and safety practice within the selected engineering or technical field", "priority": "foundation", "evidence": "COREN engineering registration and practice guidance", "source_ids": ["ng_coren_engineering", "ng_coren_reforms_2026"]},
+        {"name": "Use evidence, measurement, documentation and problem-solving to develop or improve technical systems", "priority": "core", "evidence": "COREN engineering competency and practice guidance; NASENI research and capacity context", "source_ids": ["ng_coren_engineering", "ng_naseni_nanotech"]}
+      ],
+      "tools": [
+        {"name": "Technical drawing, measurement, modelling, testing, maintenance and engineering-documentation workflows", "priority": "core_when_field_applies", "evidence": "COREN practice areas and competency requirements", "source_ids": ["ng_coren_engineering"], "limitation": "The sources support workflow categories, not one universal Nigerian software or equipment stack."}
+      ],
+      "competencies": [
+        {"name": "Plan, analyse, test, document and communicate technical work while protecting public safety and following applicable standards and ethics", "priority": "core", "evidence": "COREN professional examination and engineering practice guidance", "source_ids": ["ng_coren_engineering"]}
+      ],
+      "certifications": [
+        {"name": "COREN registration pathway where the selected engineering practice is regulated and the applicant meets the applicable requirements", "issuer": "COREN", "level": "activity_specific_professional_registration", "evidence": "COREN engineer registration guidance", "source_ids": ["ng_coren_engineering"], "limitation": "This is not a universal requirement for every science or technical occupation in the subgroup label."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Verify the exact Nigerian professional-registration, safety, environmental, standards and practice boundary for the selected technical activity", "priority": "required_when_activity_applies", "evidence": "COREN engineering regulation and practice guidance", "source_ids": ["ng_coren_engineering", "ng_coren_reforms_2026"]}
+      ]
+    },
+    {
+      "id": "ng_teacher_profession_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_trcn_standards_2026", "ng_trcn_teaching", "ng_education"],
+      "domain_ids": ["D063", "D122", "D160", "D164"],
+      "subgroup_patterns": ["Teaching professionals"],
+      "skills": [
+        {"name": "Plan instruction, explain ideas clearly, assess learning and adapt teaching to learner needs", "priority": "foundation", "evidence": "TRCN PQE curriculum and teacher standards", "source_ids": ["ng_trcn_teaching", "ng_trcn_standards_2026"]},
+        {"name": "Use literacy, numeracy, ICT, safeguarding and professional communication in teaching practice", "priority": "core", "evidence": "TRCN PQE curriculum", "source_ids": ["ng_trcn_teaching"]}
+      ],
+      "tools": [
+        {"name": "Curriculum-planning, assessment, classroom, digital-learning and learner-record workflows", "priority": "core_when_teaching_applies", "evidence": "TRCN and Federal Ministry of Education teaching resources", "source_ids": ["ng_trcn_teaching", "ng_education"], "limitation": "No universal Nigerian school platform is asserted."}
+      ],
+      "competencies": [
+        {"name": "Teach responsibly, maintain learner safety and dignity, assess progress and continue professional development", "priority": "core", "evidence": "TRCN professional standards and code of conduct", "source_ids": ["ng_trcn_standards_2026", "ng_trcn_teaching"]}
+      ],
+      "certifications": [
+        {"name": "TRCN registration and Professional Qualifying Examination route where the selected teaching role falls within the regulated teaching profession", "issuer": "Teachers Registration Council of Nigeria", "level": "professional_registration_and_exam", "evidence": "TRCN registration and PQE materials", "source_ids": ["ng_trcn_teaching"], "limitation": "The applicable qualification route depends on the teaching level and existing academic qualification."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Verify TRCN registration, licensing, qualification and school-level requirements for the exact teaching appointment", "priority": "required_when_activity_applies", "evidence": "TRCN official registration and compliance guidance", "source_ids": ["ng_trcn_standards_2026", "ng_trcn_teaching"]}
+      ]
+    },
+    {
+      "id": "ng_social_economic_research_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_niser_social_economic_research_2024_2026"],
+      "domain_ids": ["D063", "D078", "D130", "D153"],
+      "subgroup_patterns": ["Computational Social Science & Quantitative Methods", "Social & Economic Research", "Legal, social and cultural professionals", "Legal, social, cultural and related associate professionals"],
+      "skills": [
+        {"name": "Design research, choose quantitative or qualitative methods, collect evidence and analyse data", "priority": "foundation", "evidence": "NISER research methodology training", "source_ids": ["ng_niser_social_economic_research_2024_2026"]},
+        {"name": "Evaluate policies and programmes, address research ethics and communicate findings in a clear report", "priority": "core", "evidence": "NISER research methodology training", "source_ids": ["ng_niser_social_economic_research_2024_2026"]}
+      ],
+      "tools": [
+        {"name": "Survey, statistical, qualitative-analysis, data-management and research-reporting workflows", "priority": "core_when_research_applies", "evidence": "NISER research skills and competence training", "source_ids": ["ng_niser_social_economic_research_2024_2026"], "limitation": "The source supports methodology categories, not one universal research software stack."}
+      ],
+      "competencies": [
+        {"name": "Frame a defensible research question, select an appropriate method, interpret evidence and explain its limits", "priority": "core", "evidence": "NISER official research methodology training", "source_ids": ["ng_niser_social_economic_research_2024_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable research-methodology, academic, professional-development or institution-specific training route", "issuer": "NISER, university or relevant institution", "level": "research_training_pathway", "evidence": "NISER official training context", "source_ids": ["ng_niser_social_economic_research_2024_2026"], "limitation": "This is not a universal licence or hiring requirement."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Check applicable Nigerian ethics, consent, data-protection, institutional, sector and publication requirements for the research activity", "priority": "required_when_activity_applies", "evidence": "Nigerian research methodology context", "source_ids": ["ng_niser_social_economic_research_2024_2026"]}
+      ]
+    },
+    {
+      "id": "ng_administration_executive_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"],
+      "domain_ids": ["D042", "D065", "D071", "D081", "D107", "D122", "D128", "D130"],
+      "subgroup_patterns": ["Chief executives, senior officials and legislators", "Administrative and commercial managers", "Production and specialised services managers", "Business and administration professionals", "Business and administration associate professionals", "Hospitality, retail and other services managers", "Product Development Managers"],
+      "skills": [
+        {"name": "Plan work, coordinate people and resources, manage records and make decisions against organisational goals", "priority": "foundation", "evidence": "Nigerian administration and MSME-development training contexts", "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"]},
+        {"name": "Understand budgets, operations, customers, compliance, service quality and performance improvement", "priority": "core", "evidence": "CIA, NIPAS and SMEDAN Nigerian professional and enterprise contexts", "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"]}
+      ],
+      "tools": [
+        {"name": "Planning, documentation, budgeting, customer, inventory, reporting and performance-management workflows", "priority": "core_when_management_applies", "evidence": "Nigerian administration and MSME-support contexts", "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"], "limitation": "No universal Nigerian employer software stack is asserted."}
+      ],
+      "competencies": [
+        {"name": "Coordinate an organisation or service area, communicate decisions, manage risk and improve delivery within the applicable Nigerian context", "priority": "core", "evidence": "Nigerian administration and enterprise-development sources", "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable Nigerian administration, management, entrepreneurship or sector-specific professional-development route", "issuer": "Relevant Nigerian professional body or approved provider", "level": "context_specific_training_pathway", "evidence": "CIA, NIPAS and SMEDAN sources", "source_ids": ["ng_cia_public_administration", "ng_nipas_admin_2024_2025", "ng_smedan_founder_mse_2024_2026"], "limitation": "This is not a universal management credential."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Verify the exact company, tax, labour, consumer, data, financial and sector requirements for the organisation or management activity", "priority": "required_when_activity_applies", "evidence": "Nigerian administration and MSME context", "source_ids": ["ng_cia_public_administration", "ng_smedan_founder_mse_2024_2026"]}
+      ]
+    },
+    {
+      "id": "ng_hospitality_retail_sales_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nbte_nos_brochure_2026", "ng_son_food_safety", "ng_fmino_tourism", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"],
+      "domain_ids": ["D107", "D128"],
+      "subgroup_patterns": ["Hospitality, retail and other services managers", "Business and administration associate professionals", "Sales workers"],
+      "skills": [
+        {"name": "Understand customers, explain products or services, manage service quality and resolve issues professionally", "priority": "foundation", "evidence": "Nigerian hospitality, customer-service and retail training context", "source_ids": ["ng_nbte_nos_brochure_2026", "ng_fmino_tourism", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"]},
+        {"name": "Coordinate stock, transactions, schedules, teams and customer feedback in the selected service setting", "priority": "core", "evidence": "Nigerian hospitality and retail pathway context", "source_ids": ["ng_nbte_nos_brochure_2026", "ng_son_food_safety", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"]}
+      ],
+      "tools": [
+        {"name": "Point-of-sale, booking, inventory, customer-record, scheduling and service-reporting workflows", "priority": "core_when_service_applies", "evidence": "Nigerian hospitality and retail context", "source_ids": ["ng_nbte_nos_brochure_2026", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"], "limitation": "No universal Nigerian employer platform is asserted."}
+      ],
+      "competencies": [
+        {"name": "Deliver reliable, safe and customer-centred service while recording transactions, coordinating operations and escalating problems", "priority": "core", "evidence": "Nigerian hospitality and customer-service sources", "source_ids": ["ng_nbte_nos_brochure_2026", "ng_son_food_safety", "ng_fmino_tourism", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable hospitality, food-safety, customer-service, sales or management training route", "issuer": "Approved Nigerian training provider or relevant authority", "level": "activity_specific_training_pathway", "evidence": "Nigerian hospitality and retail context", "source_ids": ["ng_nbte_nos_brochure_2026", "ng_son_food_safety", "ng_fmino_tourism", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"], "limitation": "The appropriate route depends on the exact service activity."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Check applicable Nigerian food-safety, consumer, workplace, premises, licensing and sector requirements for the service activity", "priority": "required_when_activity_applies", "evidence": "Nigerian hospitality and retail context", "source_ids": ["ng_son_food_safety", "ng_fmino_tourism", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"]}
+      ]
+    },
+    {
+      "id": "ng_nbte_trades_assembly_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"],
+      "domain_ids": ["D111", "D136", "D155", "D167"],
+      "subgroup_patterns": ["Metal, machinery and related trades workers", "Tailoring & Inspection", "Food processing, wood working, garment and other craft and related trades workers", "Assemblers"],
+      "skills": [
+        {"name": "Read work instructions, select materials, use trade equipment safely and complete work to a defined specification", "priority": "foundation", "evidence": "NBTE National Occupational Standards and TVET pathways", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"]},
+        {"name": "Inspect quality, maintain the work area and document or correct defects in the selected trade process", "priority": "core", "evidence": "NBTE occupational-standard context", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"]}
+      ],
+      "tools": [
+        {"name": "Trade-specific hand tools, machines, measuring, inspection, maintenance and production workflows", "priority": "core_when_trade_applies", "evidence": "NBTE National Occupational Standards", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"], "limitation": "The required equipment depends on the selected trade and workplace."}
+      ],
+      "competencies": [
+        {"name": "Produce, assemble, repair, inspect or finish work safely and consistently within the selected Nigerian occupational standard", "priority": "core", "evidence": "NBTE National Occupational Standards", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable NBTE National Occupational Standard, National Skills Qualification or approved TVET route", "issuer": "NBTE / approved Nigerian TVET institution", "level": "national_occupational_training_pathway", "evidence": "NBTE current NOS and TVET sources", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"], "limitation": "The exact qualification depends on the selected trade."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Verify applicable Nigerian workplace-safety, product-quality, environmental, food, premises and trade requirements for the selected activity", "priority": "required_when_activity_applies", "evidence": "NBTE occupational-standard context", "source_ids": ["ng_nbte_tvets_nos_trades_2025_2026", "ng_nbte_nos_2026"]}
+      ]
+    },
+    {
+      "id": "ng_climate_meteorology_subgroup_family_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_energy_environment_2024_2026_profile"],
+      "domain_ids": ["D144"],
+      "subgroup_patterns": ["Climate Modelling & Atmospheric Science"],
+      "skills": [
+        {"name": "Interpret atmospheric, climate, environmental and geospatial evidence to understand hazards and changing conditions", "priority": "foundation", "evidence": "Nigerian climate, meteorology and environmental-sector context", "source_ids": ["ng_energy_environment_2024_2026_profile"]},
+        {"name": "Communicate uncertainty and translate climate evidence into planning, resilience or environmental decisions", "priority": "core", "evidence": "Nigerian environmental and climate-sector context", "source_ids": ["ng_energy_environment_2024_2026_profile"]}
+      ],
+      "tools": [
+        {"name": "Climate-data, geospatial, modelling, observation and environmental-reporting workflows", "priority": "core_when_climate_applies", "evidence": "Nigerian climate and environmental-sector context", "source_ids": ["ng_energy_environment_2024_2026_profile"], "limitation": "No universal Nigerian modelling software stack is asserted."}
+      ],
+      "competencies": [
+        {"name": "Analyse climate or atmospheric evidence, explain uncertainty and support safe environmental or resilience decisions", "priority": "core", "evidence": "Nigerian climate and environmental-sector context", "source_ids": ["ng_energy_environment_2024_2026_profile"]}
+      ],
+      "certifications": [],
+      "regulatory_requirements": [
+        {"name": "Check applicable Nigerian environmental, meteorological, infrastructure, public-safety and data requirements for the exact activity", "priority": "required_when_activity_applies", "evidence": "Nigerian environmental-sector context", "source_ids": ["ng_energy_environment_2024_2026_profile"]}
+      ]
+    }
+  ]
+}

@@ -209,7 +209,7 @@ export default function CareerProfileScreen() {
               </>
             ) : (
               <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>
-                {"Tell us where you\u2019re starting from so we can tailor the domains, roles and jobs we show you."}
+                {"Tell us where you\u2019re starting from so we can tailor the domains, roles and Opportunities we show you."}
               </Text>
             )}
             <TouchableOpacity
@@ -401,7 +401,7 @@ export default function CareerProfileScreen() {
               {Brand.promise}
             </Text>
             <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
-              {Brand.name} maps your discipline to the domains, roles and jobs it
+              {Brand.name} maps your discipline to the domains, roles and Opportunities it
               unlocks - local, global and remote - and shows the honest bridge to
               get there. {Brand.tagline}
             </Text>
@@ -417,7 +417,7 @@ export default function CareerProfileScreen() {
               {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
             </Text>
             <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              {accountAction === 'delete' ? 'Your account will be marked for deletion according to the recovery policy.' : 'You will need to log in again to continue.'}
+              {accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}
             </Text>
             <View style={styles.modalActions}>
               <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>

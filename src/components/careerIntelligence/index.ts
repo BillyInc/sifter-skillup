@@ -81,6 +81,8 @@ export { LearningResourcesBlock } from "./LearningResourcesBlock";
 export type { LearningResourcesBlockProps } from "./LearningResourcesBlock";
 export { MethodEvidenceBlock } from "./MethodEvidenceBlock";
 export type { MethodEvidenceBlockProps } from "./MethodEvidenceBlock";
+export { GuidanceEvidenceBlock } from "./GuidanceEvidenceBlock";
+export type { GuidanceEvidenceBlockProps } from "./GuidanceEvidenceBlock";
 export { CertPlacementList } from "./CertPlacementList";
 export type { CertPlacementListProps } from "./CertPlacementList";
 

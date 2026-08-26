@@ -381,7 +381,7 @@ export const WORLD_THEMES: Record<string, WorldTheme> = {
   'shadow-vault':           { id: 'shadow-vault',           name: 'Shadow Vault',           primaryColor: '#EF4444', secondaryColor: '#F87171', bgGradient: ['#0f0000', '#200000'], glowColor: 'rgba(239,68,68,0.4)',   particleColor: '#F87171', emoji: '🛡️' },
   'logistics-labyrinth':    { id: 'logistics-labyrinth',    name: 'Logistics Labyrinth',    primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#000d1a', '#001f40'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🔗' },
   'starknet-realm':         { id: 'starknet-realm',         name: 'Starknet Realm',         primaryColor: '#F59E0B', secondaryColor: '#FBBF24', bgGradient: ['#120b00', '#251600'], glowColor: 'rgba(245,158,11,0.38)', particleColor: '#FBBF24', emoji: '⚡' },
-  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#111111', secondaryColor: '#374151', bgGradient: ['#0a0a0a', '#111111'], glowColor: 'rgba(0,0,0,0.25)',      particleColor: '#F59E0B', emoji: '⚡' },
+  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#111111', secondaryColor: '#374151', bgGradient: ['#0a0a0a', '#111111'], glowColor: 'rgba(0,0,0,0.25)',      particleColor: '#F59E0B', emoji: '✦' },
 };
 
 export function getWorldTheme(id: string): WorldTheme {
@@ -420,7 +420,7 @@ export const XP_VALUES = {
 
 export const XP_DAILY_GOALS = {
   casual:  { label: 'Casual',  xp: 10, emoji: '🌱' },
-  regular: { label: 'Regular', xp: 20, emoji: '⚡' },
+  regular: { label: 'Regular', xp: 20, emoji: '✦' },
   intense: { label: 'Intense', xp: 30, emoji: '🔥' },
   insane:  { label: 'Insane',  xp: 50, emoji: '💎' },
 } as const;
@@ -577,7 +577,7 @@ export const Brand = {
   name: 'Sifter LevelUp',
   short: 'LevelUp',
   tagline: 'Be the best you can be.',
-  promise: 'See the domains, roles and jobs your programme unlocks — local, global, remote.',
+  promise: 'See the domains, roles and Opportunities your programme connects to — local, global, remote.',
   // Accent used across brand surfaces (logo, splash, intro). Aligned to the
   // existing gold/amber accent so it never clashes with the neutral UI.
   primary: '#F59E0B',

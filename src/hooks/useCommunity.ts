@@ -303,7 +303,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
     const { hashtags, mentions } = parseContent(params.content);
     const optimistic: Post = {
       id:          `temp_${Date.now()}`,
-      author:      { id: currentUserId, name: 'You', avatar: '⚡', track: currentUserTrack },
+      author:      { id: currentUserId, name: 'You', avatar: '👤', track: currentUserTrack },
       content:     params.content,
       reactions:   {},
       comments:    0,

@@ -82,7 +82,7 @@ function XpGapBar({
 export default function GuildLeaderboardPrompt({
   userXp,
   userRank,
-  userAvatar = '⚡',
+  userAvatar = '👤',
   guildName = 'your guild',
   aboveEntry,
   belowEntry,
