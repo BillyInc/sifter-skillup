@@ -8,7 +8,7 @@ This generated audit is the population gate. It is intentionally separate from t
 |---|---:|---:|---:|---:|
 | domain | 160 | 160 | 0 | 0 |
 | subgroup | 486 | 485 | 0 | 1 |
-| role | 5,050 | 2,434 | 0 | 2,616 |
+| role | 5,050 | 5,040 | 0 | 10 |
 
 ## Field-level review counts
 
@@ -16,9 +16,9 @@ These are fields without item-level Nigerian evidence in the current audit. A bl
 
 | Entity | Without skills | Without tools | Without competencies | Without certifications | Without regulatory requirements | Missing provenance | Manual review | With local demand signal |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| domain | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 41 |
-| subgroup | 1 | 41 | 52 | 106 | 486 | 0 | 1 | 28 |
-| role | 2,616 | 2,842 | 2,616 | 2,970 | 3,399 | 0 | 2,616 | 572 |
+| domain | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 63 |
+| subgroup | 1 | 41 | 52 | 106 | 486 | 0 | 1 | 31 |
+| role | 10 | 234 | 10 | 455 | 792 | 0 | 10 | 932 |
 
 ## Gate interpretation
 

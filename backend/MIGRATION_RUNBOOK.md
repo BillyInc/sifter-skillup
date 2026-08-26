@@ -16,16 +16,22 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 
 ## Current career refresh since the last push (2026-08-26)
 
-The only new SQL artifact in the current worktree is:
+The current preview SQL is transported in compressed, ordered parts:
 
-`backend/seed_career_v2_preview_2026-08-25.sql`
+`backend/seed_career_v2_preview_2026-08-26_parts_gz/`
+
+The local generator output remains
+`backend/seed_career_v2_preview_2026-08-26.sql`; it is ignored by Git because
+it is about 598 MB. The compressed parts exist so the generated artifact can
+pass repository file-size limits. There are 20 `.sql.gz` parts, each below
+41 MB compressed, and each contains complete SQL statements in order.
 
 This is a development preview seed, not a migration and not the production
 seed. It exists so the corrected subgroup labels and the current Nigerian
 context/provenance payload can be inspected in a controlled development
-database while role-level Nigerian enrichment is still incomplete. It contains
-all current domain, subgroup and role rows, but it is explicitly marked as
-unresolved and must not be applied to production.
+database while reviewed no-direct-local-match rows remain explicit. It contains
+all current domain, subgroup and role rows and must not be promoted to
+production.
 
 ### Correct order for the career preview
 
@@ -47,7 +53,31 @@ schema files in this order before the preview seed:
 12. `backend/migration_career_resources_v1.sql` when resource data is being
     used
 13. `backend/migration_saved_resource_support.sql` after `saved_items` exists
-14. `backend/seed_career_v2_preview_2026-08-25.sql`
+14. Decompressed preview SQL parts in
+    `backend/seed_career_v2_preview_2026-08-26_parts_gz/`, in numeric order
+
+The `.sql.gz` files are not executable by Supabase. Before applying the
+preview, decompress/reassemble them from the repository root:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+The command verifies every compressed-part checksum before writing the
+reconstructed SQL. Then pass the reconstructed file to `psql` with
+`ON_ERROR_STOP` enabled:
+
+```powershell
+psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
+  -v ON_ERROR_STOP=1 `
+  -f backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+If the SQL Editor must be used, decompress and run the numbered parts
+separately in numeric order. Each part is a complete transaction. Do not paste
+or upload `.sql.gz` bytes to Supabase.
 
 The preview must not be run before `migration_source_backed_career_layers.sql`:
 its domain, subgroup, role and tool inserts use the source-confidence,
@@ -55,11 +85,12 @@ data-state, provenance and Nigerian-context columns created by that migration.
 It must not be run before `migration_role_tools.sql` because role-scoped tool
 rows use `domain_tools.role_id` and the `scope='role'` constraint.
 
-Do not apply the preview to a populated production database. The Nigerian
-population gate currently remains closed because unresolved role evidence is
-still represented explicitly. When role enrichment is complete, regenerate a
-new production seed, rerun the provenance/reconciliation gates, and update this
-runbook rather than promoting this preview by renaming it.
+Do not apply the preview to a populated production database. The current
+population gate permits this regenerated preview, while 11 reviewed
+no-direct-local-match rows remain explicit. When a production seed is approved,
+regenerate it from the same source inputs, rerun the provenance/reconciliation
+gates, and update this runbook rather than promoting this preview by renaming
+it.
 
 ## Run in THIS order
 
@@ -109,7 +140,7 @@ testing login or finishing onboarding with the updated backend.
 | 16 | `backend/seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | #14 and #15 |
 
 The rows above describe the historical production seed path. The new
-`backend/seed_career_v2_preview_2026-08-25.sql` is the current development
+`backend/seed_career_v2_preview_2026-08-26_parts_gz/` transport is the current development
 preview and follows the dependency-critical order documented at the top of
 this runbook. Do not substitute it for `seed_career_v2.sql` in production.
 

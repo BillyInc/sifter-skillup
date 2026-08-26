@@ -64,6 +64,9 @@ data/career-mapping/_legit_subgroups.json
 data/career-mapping/*.out
 backend/seed_career_v2.sql
 backend/seed_career_pilot.sql
+# Large generated career preview SQL is reconstructed locally from the tracked
+# gzip parts; never add the monolithic output to GitHub.
+backend/seed_career_v2_preview_*.sql
 nul
 
 # Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks
