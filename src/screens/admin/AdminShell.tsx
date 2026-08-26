@@ -53,7 +53,7 @@ function adminResumeLabel(path: string) {
   if (path === "/students" || path.endsWith("/students")) return "Student account creation and roster";
   if (path.includes("/peers")) return "Peer comparison";
   if (path.includes("/workspace-explore/admission")) return "Admission guidance";
-  if (path.includes("/workspace-explore")) return "Explore programmes and fields";
+  if (path.includes("/workspace-explore")) return "Explore programmes and domains";
   if (path.includes("/verify")) return "Verification";
   if (path.includes("/skills-gap")) return "Programme skills review";
   if (path.includes("/reports")) return "Reports";
@@ -310,6 +310,12 @@ export function AdminShell({
           {actions ? <View style={styles.actions}>{actions}</View> : null}
         </View>
 
+        {focusedGuidance && readParam(searchParams?.guidance_student_id) ? (
+          <GuidanceContextBanner
+            studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
+            stream={readParam(searchParams?.stream)}
+          />
+        ) : null}
         <View style={{ flex: 1 }}>{children}</View>
       </View>
 
@@ -339,6 +345,24 @@ export function AdminShell({
           </View>
         </View>
       </Modal>
+    </View>
+  );
+}
+
+function GuidanceContextBanner({ studentClass, stream }: { studentClass?: string; stream?: string }) {
+  const { colors } = useTheme();
+  const context = [studentClass, stream].filter(Boolean).join(" · ");
+  return (
+    <View
+      accessibilityRole="summary"
+      style={[styles.guidanceContext, { backgroundColor: colors.surface.subtle, borderBottomColor: colors.borderRole.subtle }]}
+    >
+      <View style={styles.guidanceContextCopy}>
+        <Text style={[styles.guidanceContextEyebrow, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>TARGET STUDENT GUIDANCE</Text>
+        <Text style={[styles.guidanceContextTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>This workspace is scoped to the selected student</Text>
+        <Text style={[styles.guidanceContextBody, CompassFonts.body, { color: colors.textRole.secondary }]}>Selections and reports use this student&apos;s authorised guidance path. Access and consent checks remain enforced.</Text>
+      </View>
+      {context ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>{context}</Text> : null}
     </View>
   );
 }
@@ -639,4 +663,10 @@ const styles = StyleSheet.create({
   modalActions: { flexDirection: "row", gap: Spacing.sm },
   modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: "center", justifyContent: "center", paddingHorizontal: Spacing.sm },
   modalButtonText: { fontSize: FontSize.sm, fontWeight: "800" },
+  guidanceContext: { borderBottomWidth: StyleSheet.hairlineWidth, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: Spacing.md },
+  guidanceContextCopy: { flex: 1, gap: 2 },
+  guidanceContextEyebrow: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  guidanceContextTitle: { fontSize: FontSize.sm },
+  guidanceContextBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
+  guidanceContextMeta: { fontSize: FontSize.xs, textTransform: "capitalize" },
 });

@@ -19,6 +19,7 @@ import {
   SectionLabel,
   RouteLine,
   MethodEvidenceBlock,
+  GuidanceEvidenceBlock,
   LearningResourcesBlock,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
@@ -74,7 +75,7 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
     <DetailScaffold
       eyebrow="ROLE"
       title={state.data?.name ?? "Role"}
-      backLabel={targetStudentId ? "Back to student guidance" : "Back to smaller area"}
+      backLabel={targetStudentId ? "Back to student guidance" : "Back to subgroup"}
       save={focusedGuidance ? undefined : { entityType: "role", entityId: roleKey }}
       reportSelection={{
         kind: "roles",
@@ -208,14 +209,22 @@ function RoleBody({
       ) : null}
 
       <MethodEvidenceBlock methods={role.computationalMethods} title="Methods connected to this role" />
+      <GuidanceEvidenceBlock evidence={role.guidanceEvidence} />
 
       {(roleTools.length || roleCertifications.length) ? (
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>What this role needs</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Start with the role essentials, then add tools and credentials as your route becomes clearer. Nigerian, remote and global signals remain separate when the source data supports them.</Text>
           {roleTools.length ? (
             <View style={{ gap: Spacing.xs }}>
-              <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Tools used in this role</Text>
-              <ChipCloud items={roleTools.map((tool) => tool.name)} colors={colors} prominent={false} />
+              {(roleTools.filter((tool) => tool.group === "common").length) ? <>
+                <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Tools to practise early</Text>
+                <ChipCloud items={roleTools.filter((tool) => tool.group === "common").map((tool) => tool.name)} colors={colors} prominent />
+              </> : null}
+              {(roleTools.filter((tool) => tool.group !== "common").length) ? <>
+                <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Role-specific tools</Text>
+                <ChipCloud items={roleTools.filter((tool) => tool.group !== "common").map((tool) => tool.name)} colors={colors} prominent={false} />
+              </> : null}
             </View>
           ) : null}
           {roleCertifications.length ? (
@@ -258,7 +267,7 @@ function RoleBody({
       <MappingFeedbackButton
         edgeType="domain_role"
         sourceId={appearsIn[0]?.domainId ?? roleKey}
-        sourceLabel={appearsIn[0]?.domainName ?? "This field"}
+        sourceLabel={appearsIn[0]?.domainName ?? "This domain"}
         targetId={roleKey}
         targetLabel={role.name}
         compact
@@ -361,7 +370,7 @@ function RouteIntoSection({
 
       {hasDomains ? (
         <Text style={[styles.routeCaption, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
-          Reachable from {appearsIn.length} {appearsIn.length === 1 ? "field" : "fields"}
+          Reachable from {appearsIn.length} {appearsIn.length === 1 ? "domain" : "domains"}
         </Text>
       ) : null}
 

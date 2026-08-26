@@ -36,6 +36,7 @@ import {
   DetailScaffold,
   DomainIcon,
   FoundationSkillsBlock,
+  GuidanceEvidenceBlock,
   ToolGroupsBlock,
   CertPlacementList,
   LearningResourcesBlock,
@@ -103,13 +104,6 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
   );
 }
 
-/** Elite unless the status is empty or explicitly deferred. */
-function isElite(status?: string): boolean {
-  if (!status) return false;
-  const s = status.trim().toLowerCase();
-  return s.length > 0 && s !== "deferred" && s !== "none";
-}
-
 function DomainBody({
   domain,
   domainKey,
@@ -150,7 +144,7 @@ function DomainBody({
     if (sectionY.current[key] === undefined) {
       sectionY.current[key] = CHROME_OFFSET + y;
     }
-  }, [isDesktop, outerScrollRef]);
+  }, []);
 
   const scrollTo = useCallback((key: string) => {
     const y = sectionY.current[key];
@@ -188,7 +182,7 @@ function DomainBody({
               <View style={[styles.eliteChip, { backgroundColor: colors.accentRole.status + "14", borderColor: colors.accentRole.status }]}>
                 <Text style={styles.eliteGlyph}>★</Text>
                 <Text style={[styles.eliteText, { color: colors.accentRole.status }, CompassFonts.bodySemibold]}>
-                  Elite field
+                  Featured domain
                 </Text>
               </View>
             ) : null}
@@ -196,25 +190,25 @@ function DomainBody({
         </View>
       </View>
 
-      {/* Wayfinding — this field's place on the journey */}
+      {/* Wayfinding — this domain's place on the journey */}
       <RouteLine
         variant="spine"
         stations={[
           { state: "you", label: "Foundations" },
-          { state: "bridge", label: cluster ?? "This field" },
+          { state: "bridge", label: cluster ?? "This domain" },
           { state: "target", label: `${roleCount || ""} roles`.trim() },
         ]}
         edges={["solid", "dashed"]}
       />
 
       {/* Domain-owned build surface. This is separate from programme skills:
-          it answers what someone can create or develop within this field. */}
+          it answers what someone can create or develop within this domain. */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("build", e.nativeEvent.layout.y)} />
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>What can you build in this domain?</SectionLabel>
           <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
-            Explore source-backed build and entrepreneurship guidance for this field.
+            Explore source-backed build and entrepreneurship guidance for this domain.
           </Text>
           {domain.domainBridgeSkills?.length ? (
             <View style={styles.bridgeList}>
@@ -244,12 +238,14 @@ function DomainBody({
           skills={domain.foundationSkills ?? []}
           title="Skills to build first"
         />
+        <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The route keeps Nigerian, remote and global possibilities visible. A local signal does not cancel a portable skill, and a global signal does not establish a Nigerian licence or requirement.</Text>
+        <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
       </View>
 
       {/* Tools */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("tools", e.nativeEvent.layout.y)} />
-        <ToolGroupsBlock tools={domain.tools} title="Tools used in this field" />
+        <ToolGroupsBlock tools={domain.tools} title="Tools used in this domain" />
       </View>
 
       {/* Certifications */}

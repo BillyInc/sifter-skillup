@@ -45,7 +45,7 @@ interface ShellNavItem {
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
   { id: 'explore',       label: 'Explore',       icon: 'compass', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
-  { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Jobs, scholarships & windows' },
+  { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Opportunities, scholarships & windows' },
   { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld', sub: WORLD_NAV.sub },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
@@ -62,7 +62,7 @@ const SEARCH_SUGGESTIONS = ['Law', 'Engineering', 'Accounting', 'Nursing'];
 const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMap; href: string }[] = [
   { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
   { id: 'explore',       label: 'Explore', icon: 'compass', href: '/(tabs)/explore' },
-  { id: 'opportunities', label: 'Jobs',    icon: 'briefcase', href: '/(tabs)/opportunities' },
+  { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities' },
   { id: 'myworld',       label: WORLD_NAV.label, icon: WORLD_NAV.icon, href: '/(tabs)/myworld' },
   { id: 'profile',       label: 'Profile', icon: 'user', href: '/(tabs)/profile' },
 ];

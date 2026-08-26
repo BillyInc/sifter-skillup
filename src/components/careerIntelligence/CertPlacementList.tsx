@@ -1,9 +1,9 @@
 /**
  * CertPlacementList — certifications placed at their honest gate level.
  *
- *  - "Required to practise" (gateway)     — licence-to-practise; emphasised.
- *  - "Specialisation certs" (subgroup)    — cluster-specific credentials.
- *  - "Useful boosters"      (roleHint)    — nice-to-have, role-level signals.
+ *  - "Required in some regulated paths" (gateway) — verified practice gates.
+ *  - "Credentials for specialisations" (subgroup) — cluster-specific credentials.
+ *  - "Credentials that may strengthen this route" (roleHint) — role-level signals.
  *
  * Each row shows the cert name (+ body in muted text), a region chip (🇳🇬 / 🌍)
  * and the level as a tiny Badge. When ALL three groups are empty this renders a
@@ -212,7 +212,7 @@ export function CertPlacementList({
     return (
       <View style={style}>
         <Text style={[styles.none, { color: colors.textMuted }]}>
-          No formal certification required in this field.
+          No formal certification requirement is recorded for this domain.
         </Text>
       </View>
     );
@@ -220,9 +220,9 @@ export function CertPlacementList({
 
   return (
     <View style={[styles.container, style]}>
-      <CertGroup label="Required to practise" certs={g} emphasise />
-      <CertGroup label="Credentials for some specialisations" certs={s} />
-      <CertGroup label="Additional credentials linked to this field" certs={r} />
+      <CertGroup label="Required in some regulated paths" certs={g} emphasise />
+      <CertGroup label="Credentials for specialisations" certs={s} />
+      <CertGroup label="Credentials that may strengthen this route" certs={r} />
     </View>
   );
 }

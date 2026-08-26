@@ -3,8 +3,8 @@
 Domains evaluated: **160** (hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113)
 Domain/subgroup tool rows annotated: **8916**
 Medical-context tool rows removed from non-health domains: **0**
-Roles with any source signal (ESCO, O*NET or specialist framework): **5087 / 5154**
-Roles with specialist framework provenance: **468 / 5154**
+Roles with any source signal (ESCO, O*NET or specialist framework): **5099 / 5166**
+Roles with specialist framework provenance: **480 / 5166**
 
 Role evidence remains role-owned. Domain and subgroup rows are only annotated with provenance and are not populated by copying role tools or certifications.
 
@@ -142,7 +142,7 @@ Role evidence remains role-owned. Domain and subgroup rows are only annotated wi
 | D136 Aeronautical | 20 | 20 | 18 | 13 | 20 | source_backed / medium |
 | D137 Medical Physics, Radiation Therapy | 8 | 6 | 7 | 5 | 8 | source_backed / medium |
 | D138 Biomedical Engineering | 15 | 14 | 13 | 7 | 15 | source_backed / medium |
-| D139 Game Design | 29 | 27 | 23 | 2 | 29 | source_backed / medium |
+| D139 Game Design | 41 | 27 | 23 | 14 | 41 | source_backed / medium |
 | D140 Robotics Engineering, Systems Design | 20 | 15 | 15 | 14 | 20 | source_backed / medium |
 | D141 Quantum Computing, Quantum Information | 19 | 0 | 0 | 19 | 19 | source_backed / medium |
 | D142 Bioinformatics, Computational Biology | 36 | 36 | 31 | 0 | 36 | source_backed / medium |

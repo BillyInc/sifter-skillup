@@ -1,7 +1,7 @@
 /**
  * OpportunitiesScreen — the live Opportunities hub.
  *
- * Internships & jobs (local · global · remote) the user's domains/roles map to.
+ * Verified opportunities (local · global · remote) the user's domains/roles map to.
  *
  * Phase 10 redesign: editorial header, FilterChip rail, responsive card grid,
  * all legacy tokens migrated.
@@ -22,7 +22,6 @@ import {
   Radius,
   FontSize,
   CompassFonts,
-  type ColorPalette,
 } from "@/theme";
 import { careerData } from "@/lib/careerData";
 import { opportunitiesNav } from "@/lib/opportunitiesNav";
@@ -74,7 +73,7 @@ export function OpportunitiesScreen() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<OpportunityFilter>({});
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
-    comingSoon<Opportunity[]>("Internships & jobs are being populated."),
+    comingSoon<Opportunity[]>("Verified Opportunities are being populated."),
   );
 
   useEffect(() => {
@@ -104,7 +103,7 @@ export function OpportunitiesScreen() {
           Opportunities
         </Text>
         <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
-          Internships and jobs — local, global, remote
+          Verified opportunities — local, global, remote
         </Text>
       </View>
 

@@ -223,6 +223,8 @@ def resolve_guidance_report_context(
                 "id": domain.get("domain_key"),
                 "name": domain.get("name"),
                 "matchType": choice.get("matchType") or choice.get("relationship"),
+                "intent": choice.get("intent"),
+                "sequence": choice.get("sequence"),
                 "description": domain.get("description"),
                 "skills": _labels(domain.get("foundation_skills")),
                 "sourceConfidence": domain.get("source_confidence"),
