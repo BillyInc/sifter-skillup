@@ -189,6 +189,42 @@ role-enrichment, provenance, reconciliation and completeness gates pass.
 Do not claim that this SQL was applied based on a local generator run. SQL is
 only applied through the Supabase SQL Editor or a verified `psql` connection.
 
+### Large generated artifact transport
+
+GitHub transport stores the oversized generated artifacts as gzip-compressed
+parts, each kept below the 41 MB file limit:
+
+```text
+backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json
+backend/seed_career_v2_preview_2026-08-25_parts_gz/part-*.sql.gz
+data/career-mapping/role_tools_parts_gz/manifest.json
+data/career-mapping/role_tools_parts_gz/part-*.json.gz
+data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json
+data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/part-*.json.gz
+```
+
+These `.gz` files are transport artifacts; Supabase cannot execute them
+directly. Before using them, run the reassembler from the repository root:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/role_tools_parts_gz/manifest.json `
+  data/career-mapping/role_tools.json
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-25.sql
+```
+
+For Supabase, apply the decompressed SQL parts in numeric order (or use the
+reassembled SQL with `psql`); never paste or upload the `.gz` bytes. Each SQL
+part is a complete transaction. Reassemble `role_tools.json` before running
+career generators or audits, and reassemble the Nigerian audit JSON before
+running its dependent review/gate scripts. The original local generated files
+are not deleted by the transport process.
+
 ### Global search parameter and career-intelligence routing
 
 When changing `useGlobalSearchParams` or any `globalSearchParam` fix, verify

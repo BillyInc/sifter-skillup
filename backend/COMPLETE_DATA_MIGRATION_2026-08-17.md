@@ -11,9 +11,11 @@ The generated SQL has been locally regenerated and audited. It has not been
 executed against Supabase by this audit; the post-seed queries below are the
 required proof of a successful Supabase run.
 
-The current worktree also contains
-`backend/seed_career_v2_preview_2026-08-25.sql`. That file is a development
-preview of the corrected career taxonomy/context payload. It is not the
+The current worktree also contains the development preview of the corrected
+career taxonomy/context payload. Its repository transport form is the ordered,
+gzip-compressed directory
+`backend/seed_career_v2_preview_2026-08-25_parts_gz/`; the local generated
+form is `backend/seed_career_v2_preview_2026-08-25.sql`. It is not the
 production seed, and it must not be applied while the Nigerian population gate
 is closed.
 
@@ -44,6 +46,34 @@ variants.
 The resource artifacts are intentionally partitioned. The JSON parts are
 build inputs and are not read by the application at runtime. The SQL parts
 seed the `skillup_dev.career_learning_resources` table consumed by the backend.
+
+The oversized current career artifacts use the same transport rule. Their
+`.gz` parts are repository storage artifacts, not executable SQL or directly
+readable JSON inputs:
+
+- `backend/seed_career_v2_preview_2026-08-25_parts_gz/`
+- `data/career-mapping/role_tools_parts_gz/`
+- `data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/`
+
+Each compressed part is below 41 MB. Reassemble them from the repository root
+before use:
+
+```powershell
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/role_tools_parts_gz/manifest.json `
+  data/career-mapping/role_tools.json
+python data/career-mapping/split_large_artifacts.py join-json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
+  data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
+python data/career-mapping/split_large_artifacts.py join-sql `
+  backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-25.sql
+```
+
+Supabase cannot run `.gz` bytes. Apply the decompressed preview SQL in numeric
+part order, or use the reassembled file through a verified `psql` connection.
+The original local generated files remain available and are not deleted by
+this transport process.
 
 - JSON manifest: `data/career-mapping/learning_resource_population.manifest.json`
 - JSON parts: `data/career-mapping/learning_resource_population_parts/part-*.json`
