@@ -1,0 +1,1084 @@
+{
+  "schema_version": "fresh_web_enrichment_v1",
+  "generated_at": "2026-08-25",
+  "purpose": "Additive Nigerian evidence from a fresh 2024-2026 review. Domain and sector evidence supplies context; role-pattern evidence is reserved for the role families directly supported by the cited source scope.",
+  "policy": {
+    "date_window": "2024-01-01 through 2026-08-26",
+    "nigeria": "Use Nigerian government, regulator, professional-body, occupational-standard and explicitly Nigerian sector evidence for local context.",
+    "scope": "A domain or sector source does not establish that every role, tool, certificate or vacancy in that domain is Nigerian-specific.",
+    "market": "A vacancy or programme is a time-bound signal, not a universal requirement or demand ranking.",
+    "licensing": "Only a regulator, statute or explicit practice rule can support a licence or registration gate."
+  },
+  "sources": [
+    {
+      "id": "ng_fmoh_health_policy_2024_2026",
+      "region": "nigeria",
+      "name": "Federal Ministry of Health and Social Welfare hospital-services policy resources",
+      "evidence_type": "national_health_policy_and_clinical_guidance",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian health-facility, laboratory quality, biosafety, patient-safety, eye-health and oxygen-care guidance",
+      "findings": [
+        "The ministry lists a 2024 guideline on integration of medical laboratory services, a 2025 guideline on medical-laboratory quality management, and a 2026 guideline on laboratory biosafety and biosecurity.",
+        "The same policy resource lists patient-safety and care-quality guidance and an eye-health strategic plan for 2024-2028."
+      ],
+      "limitations": "These are system and practice guidance documents; they do not by themselves establish an individual licence or a vacancy for every health occupation.",
+      "urls": ["https://health.gov.ng/hospital-services-policy/"]
+    },
+    {
+      "id": "ng_fmoh_health_report_2024",
+      "region": "nigeria",
+      "name": "Federal Ministry of Health State of Health of the Nation Report 2024",
+      "evidence_type": "national_health_sector_report",
+      "availability": "official_web",
+      "published_at": "2025",
+      "scope": "Nigerian health-system workforce and service-delivery context reported for 2024",
+      "findings": ["The report describes Nigeria's primary, secondary and tertiary health-delivery levels and discusses doctors, dentists, mental-health and rehabilitation professionals in the national health system."],
+      "limitations": "The report is sector context, not a role-by-role vacancy census or universal competency specification.",
+      "urls": ["https://fmohconnect.gov.ng/wp-content/uploads/2025/05/The-State-of-Health-of-the-Nation-Report-2024.pdf"]
+    },
+    {
+      "id": "ng_nbte_nos_brochure_2026",
+      "region": "nigeria",
+      "name": "NBTE National Occupational Standards and National Skills Qualifications brochure, January 2026 edition",
+      "evidence_type": "national_occupational_standard",
+      "availability": "official_web",
+      "published_at": "2026-01",
+      "scope": "Nigerian occupational and skills pathways across agriculture, animal husbandry, engineering, construction, ICT, fashion, hospitality, health and safety",
+      "findings": ["The brochure lists Nigerian NOS/NSQ pathways including aquaculture, crop production, animal husbandry, industrial automation, solar photovoltaic systems, welding and fabrication, garment making, food and beverage service, artificial intelligence, backend web development, cloud security engineering and other trades."],
+      "limitations": "A listed NOS/NSQ is evidence that a Nigerian training standard exists; it is not proof that every employer requires it or that every canonical role maps one-to-one to the trade title.",
+      "urls": ["https://web.nbte.gov.ng/sites/default/files/2026-01/Brochure_%20Curricula_NOS_Jan26Edition.docx_.pdf"]
+    },
+    {
+      "id": "ng_nfc_creative_nos_2026",
+      "region": "nigeria",
+      "name": "Nigerian Film Corporation creative-media National Occupational Standards workshop",
+      "evidence_type": "national_occupational_standard_development",
+      "availability": "official_web",
+      "published_at": "2026-07-27",
+      "scope": "Nigerian creative-media trades including film, audio, content, photography, animation, graphics, broadcasting, gaming and immersive technologies",
+      "findings": ["The Nigerian Film Corporation reported a July 2026 critique and validation workshop intended to develop National Occupational Standards for creative-media trades, including film production, audio production, content creation, digital photography, animation, digital graphics, broadcasting, gaming and immersive technologies."],
+      "limitations": "The workshop demonstrates Nigerian standardisation activity and named trade families; it does not mean final standards or a personal certificate already exist for every listed role.",
+      "urls": ["https://von.gov.ng/nfc-promotes-skills-certification-for-creative-professionals/"]
+    },
+    {
+      "id": "ng_nipc_creative_economy_2026",
+      "region": "nigeria",
+      "name": "Nigerian Investment Promotion Commission creative-economy sector map",
+      "evidence_type": "nigerian_sector_context",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Film, music, fashion, live entertainment, digital content, animation, gaming, XR, arts and cultural tourism in Nigeria",
+      "findings": ["The NIPC sector page identifies film, music, fashion, live entertainment, digital content, animation, gaming and XR among Nigeria's creative-economy activities."],
+      "limitations": "Sector mapping shows an established Nigerian sector context; it does not establish role-level hiring volume or a required tool stack.",
+      "urls": ["https://nipc.gov.ng/sectors/creative-economy"]
+    },
+    {
+      "id": "ng_fmcide_microsoft_3mtt_2025",
+      "region": "nigeria",
+      "name": "Federal Ministry of Communications, Innovation and Digital Economy and Microsoft 3MTT workforce programme",
+      "evidence_type": "government_skills_programme",
+      "availability": "official_web",
+      "published_at": "2025-08-19",
+      "scope": "Nigerian digital-skills pathways in AI, cybersecurity, data science and software development",
+      "findings": ["The ministry described 3MTT pathways for AI, cybersecurity, data science and software development and a Microsoft-backed AI skilling programme targeting Nigerian learners."],
+      "limitations": "A government skilling programme is ecosystem and pathway evidence, not proof that every Nigerian employer requires the programme or its tools.",
+      "urls": ["https://fmcide.gov.ng/3mtt-nigeria-and-microsoft-deepen-alliance-to-build-nigerias-future-tech-workforce/"]
+    },
+    {
+      "id": "ng_ohcsf_ict_roles_2026",
+      "region": "nigeria",
+      "name": "Office of the Head of the Civil Service ICT scheme-of-service circular",
+      "evidence_type": "public_service_role_standard",
+      "availability": "official_web",
+      "published_at": "2026-05-25",
+      "scope": "Federal Nigerian public-service ICT role classification and professional benchmark context",
+      "findings": ["The 2026 circular reports review and harmonisation of federal ICT schemes of service and describes professional benchmarks involving COREN for computer engineers and CPN registration for other IT specialists in the specified public-service progression context."],
+      "limitations": "The circular applies to the stated public-service scheme and must not be rendered as a blanket private-sector licence requirement.",
+      "urls": ["https://nigeriareposit.nln.gov.ng/items/3aa219ab-fee8-4c96-a54c-5f8128041424"]
+    },
+    {
+      "id": "ng_fmafs_agriculture_nags_2025",
+      "region": "nigeria",
+      "name": "Federal Ministry of Agriculture and Food Security National Agricultural Growth Strategy 2.0",
+      "evidence_type": "national_agriculture_strategy",
+      "availability": "official_web",
+      "published_at": "2025",
+      "scope": "Nigerian agriculture, food security, agribusiness, crop and livestock production and agricultural technology context",
+      "findings": ["The strategy document describes agriculture's Nigerian economic and food-security role and references the National Agricultural Technology and Innovation Policy 2022-2027."],
+      "limitations": "A national strategy establishes sector context and priorities, not a role-specific certification or employer requirement.",
+      "urls": ["https://agriculture.gov.ng/wp-content/uploads/2025/06/FINALIZED-NAGS-2.0-ESSA-Document.pdf"]
+    },
+    {
+      "id": "ng_son_food_agriculture",
+      "region": "nigeria",
+      "name": "Standards Organisation of Nigeria food and agriculture technical committees",
+      "evidence_type": "standards_regulator_context",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian food, agriculture, animal-feed and veterinary-drug-residue standardisation",
+      "findings": ["SON lists technical committees covering animal feeds and veterinary-drug residues and antimicrobial resistance in food among Nigerian food and agriculture standards work."],
+      "limitations": "Technical-committee scope supports standards context; it is not by itself an individual certification or demand signal.",
+      "urls": ["https://son.gov.ng/technical-committees/food-agriculture/"]
+    },
+    {
+      "id": "ng_ncs_aeo_2025",
+      "region": "nigeria",
+      "name": "Nigeria Customs Service Authorised Economic Operator programme",
+      "evidence_type": "customs_trade_and_logistics_framework",
+      "availability": "official_web",
+      "published_at": "2025",
+      "scope": "Nigerian importers, exporters, customs brokers, freight forwarders, transport and logistics operators",
+      "findings": ["The AEO material describes compliance, record management, customs knowledge, risk education, secure information exchange and supply-chain security for participating trade operators; the 2025 newsletter references the Nigeria Customs Service Act 2023 legal basis and ISO 28001 for the security tier."],
+      "limitations": "AEO is an organisation/operator programme and does not make every listed control a personal certificate for every logistics or customs role.",
+      "urls": ["https://aeo.nigeriatradehub.gov.ng/landing/", "https://customs.gov.ng/wp-content/uploads/2025/07/NEWSLETTER_JUNE_2025.pdf", "https://aeo.nigeriatradehub.gov.ng/blog/aeo-general-eligibility-requirements/"]
+    },
+    {
+      "id": "ng_clmis_construction_nos",
+      "region": "nigeria",
+      "name": "Construction and Labour Market Information System Nigerian construction National Occupational Standards",
+      "evidence_type": "national_occupational_standard",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian construction trades including electrical, carpentry and joinery, masonry, painting, plumbing and tiling",
+      "findings": ["C-LMIS provides Nigerian construction National Occupational Standards across building trades, including electrical, carpentry and joinery, masonry, painting and decorating, plumbing and tiling."],
+      "limitations": "The standards support construction-trade skills and pathways; they do not establish a licence for every worker or a universal requirement for construction managers and engineers.",
+      "urls": ["https://www.clmis.corbon.gov.ng/nos"]
+    },
+    {
+      "id": "ng_son_construction_2024",
+      "region": "nigeria",
+      "name": "Standards Organisation of Nigeria building and construction conference",
+      "evidence_type": "standards_regulator_context",
+      "availability": "official_web",
+      "published_at": "2024-11-13",
+      "scope": "Nigerian building construction standards, structural integrity, materials, risk management and sustainable development",
+      "findings": ["SON reported a 2024 national conference emphasizing standards practice, structural integrity, sustainable materials and risk management in Nigeria's building and construction industry."],
+      "limitations": "Conference and standards context does not assign one tool or credential to every construction role.",
+      "urls": ["https://son.gov.ng/2024/11/13/son-organized-national-conference-on-building-construction-industry-emphasizes-standard-practices-for-sustainable-development/"]
+    },
+    {
+      "id": "ng_fmino_welding_2025",
+      "region": "nigeria",
+      "name": "Federal Government Nigerian welding, fabrication, foundry and instrumentation bootcamp",
+      "evidence_type": "government_skills_programme",
+      "availability": "official_web",
+      "published_at": "2025-05-24",
+      "scope": "Nigerian youth technical training in welding, fabrication, foundry, metallurgy, instrumentation, control and mechanical maintenance",
+      "findings": ["The Federal Government reported training 535 Nigerian youths in welding and fabrication and related metals, instrumentation, control and mechanical-maintenance areas."],
+      "limitations": "The bootcamp is a skills-development signal and not a universal certificate or evidence that every metal-trade role is currently hiring.",
+      "urls": ["https://fmino.gov.ng/fg-train-nigerian-youths-on-welding-and-fabrication-for-industrial-revolution/"]
+    },
+    {
+      "id": "ng_social_work_fm_2026",
+      "region": "nigeria",
+      "name": "Federal Government social-work professionalisation and standards context",
+      "evidence_type": "social_work_practice_context",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian social-work practice, professionalisation, standards and capacity-building context",
+      "findings": ["The Federal Government described work to strengthen social-work practice in Nigeria, including professionalisation and standards challenges under the Social Work Practitioners Act 2022 context."],
+      "limitations": "The article supports Nigerian practice context but does not establish one compulsory credential for every care, counselling or social-service role.",
+      "urls": ["https://fmino.gov.ng/fg-works-towards-strengthening-social-work-practice-in-nigeria/"]
+    },
+    {
+      "id": "ng_qsrbn_2024",
+      "region": "nigeria",
+      "name": "Quantity Surveyors Registration Board of Nigeria 2024 newsletter",
+      "evidence_type": "professional_regulator_context",
+      "availability": "official_web",
+      "published_at": "2024",
+      "scope": "Nigerian quantity-surveying practice and professional registration context",
+      "findings": ["The QSRBN newsletter supplies Nigerian quantity-surveying professional-body context and practice material."],
+      "limitations": "The newsletter supports professional context; specific registration gates must be shown only where the applicable rule is explicit.",
+      "urls": ["https://qsrbn.gov.ng/wp-content/uploads/2025/05/NEWSLETTER-2024-edition.pdf"]
+    },
+    {
+      "id": "ng_nbte_ssc_guidelines_2024",
+      "region": "nigeria",
+      "name": "NBTE Operational Guidelines for Sector Skills Councils",
+      "evidence_type": "national_skills_governance_framework",
+      "availability": "official_web",
+      "published_at": "2024-10",
+      "scope": "Nigerian sector-skills governance and occupational-standard development across ICT, engineering, transport/logistics and other sectors",
+      "findings": ["The guidelines describe sector-skills-council structures used to coordinate occupational standards, industry participation and skills development in Nigeria."],
+      "limitations": "The guidelines support skills-governance context and do not establish a credential or demand signal for an individual role.",
+      "urls": ["https://web.nbte.gov.ng/sites/default/files/2024-10/OPERATIONAL%20GUIDELINES%20FOR%20SECTOR%20SKILL%20COUNCIL.pdf"]
+    },
+    {
+      "id": "ng_npcp_procurement_2026",
+      "region": "nigeria",
+      "name": "Nigeria Procurement Certification Programme",
+      "evidence_type": "professional_certification_framework",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian public and private procurement practitioners",
+      "findings": ["The programme describes four Nigerian procurement-certification tiers and skills including communication, teamwork, time management, deadlines, ethics and risk management, with prerequisites varying by tier."],
+      "limitations": "The pathway is for procurement practice and does not apply to every purchasing, logistics, project or administrative role.",
+      "urls": ["https://npcp.ng/", "https://npcp.ng/certification-tiers-overview/"]
+    },
+    {
+      "id": "ng_pmdan_project_2026",
+      "region": "nigeria",
+      "name": "Project Managers Development Association of Nigeria",
+      "evidence_type": "professional_body_and_certification",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian project-management professional development and IPMA-aligned certification levels",
+      "findings": ["PMDAN identifies itself as Nigeria's IPMA member association, describes four certification levels and publishes project-execution and project-management learning activities."],
+      "limitations": "Professional-body certification is a pathway, not a universal employer requirement for every project-support or coordination role.",
+      "urls": ["https://pmdan.org/"]
+    },
+    {
+      "id": "ng_nimn_marketing_2026",
+      "region": "nigeria",
+      "name": "National Institute of Marketing of Nigeria",
+      "evidence_type": "professional_body_and_regulatory_context",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian marketing professional standards, training, certification and continuing development",
+      "findings": ["NIMN describes itself as the chartered regulatory body for marketing professionals in Nigeria and identifies training, certification, professional standards and ethics as part of its mandate."],
+      "limitations": "The source supports marketing-profession context; it does not establish a required certification for every marketing, sales, communications or brand role.",
+      "urls": ["https://www.nimn.com.ng/"]
+    },
+    {
+      "id": "ng_nnra_mining_radiation_2026",
+      "region": "nigeria",
+      "name": "Nigerian Nuclear Regulatory Authority radiation-safety training for mining",
+      "evidence_type": "sector_regulator_and_training",
+      "availability": "official_web",
+      "published_at": "2026-03",
+      "scope": "Nigerian solid-mineral mining and processing radiation-safety roles and adjacent technical occupations",
+      "findings": ["NNRA announced a 2026 national course for current or prospective Radiation Safety Officers in mining and mineral processing, covering NORM/TE-NORM, monitoring, dose assessment, radiation protection, handling, transport, waste management and regulatory compliance."],
+      "limitations": "This is a specialised radiation-safety pathway and does not apply to every mining or geology role.",
+      "urls": ["https://www.nnra.gov.ng/nnra/post-nnra_to_conduct_national_training_course_for_radiation_safety_officers__rso__in_the_mining_industry"]
+    },
+    {
+      "id": "ng_mdcn_medicine_2026",
+      "region": "nigeria",
+      "name": "Medical and Dental Council of Nigeria practice and registration framework",
+      "evidence_type": "professional_regulator",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian medicine, dentistry and alternative-medicine practice regulation, provisional registration and housemanship context",
+      "findings": ["MDCN describes its mandate to regulate medicine, dentistry and alternative medicine and provides provisional-registration, housemanship and practitioner-verification services."],
+      "limitations": "MDCN requirements apply to the regulated professions within its mandate, not to every health, biomedical or administrative role.",
+      "urls": ["https://mdcn.gov.ng/"]
+    },
+    {
+      "id": "ng_coren_reforms_2026",
+      "region": "nigeria",
+      "name": "COREN 2026 engineering regulation and public-safety reforms",
+      "evidence_type": "professional_regulator",
+      "availability": "official_web",
+      "published_at": "2026-06-18",
+      "scope": "Nigerian engineering practice, registration, public safety, project monitoring and anti-quackery context",
+      "findings": ["COREN's 2026 reforms emphasise qualified and registered practitioners, public safety, project monitoring and enforcement against unqualified engineering practice."],
+      "limitations": "The source supports regulated-engineering context; it is not a personal registration requirement for every technician or non-engineering role in an engineering organisation.",
+      "urls": ["https://fmino.gov.ng/coren-unveils-major-reforms-to-strengthen-engineering-regulation-public-safety-and-professional-standards/"]
+    },
+    {
+      "id": "ng_coren_clean_energy_2024_2025",
+      "region": "nigeria",
+      "name": "COREN National Clean Energy Skills Certification Scheme",
+      "evidence_type": "national_skills_certification_scheme",
+      "availability": "official_web",
+      "published_at": "2024-07",
+      "scope": "Nigerian renewable-energy and energy-efficiency skills and certification",
+      "findings": ["COREN describes itself as the national certification body for clean-energy skills and reports revalidation of competency standards in July 2024 and a 2025 partnership with NEMSA for renewable-energy and energy-efficiency certification."],
+      "limitations": "This supports clean-energy skills certification context; it is not a universal licence for every energy or electrical role.",
+      "urls": ["https://coren.gov.ng/encesce/"]
+    },
+    {
+      "id": "ng_nemsa_renewable_2026",
+      "region": "nigeria",
+      "name": "NEMSA and REAN renewable-energy safety and standards partnership",
+      "evidence_type": "energy_regulator_and_sector_context",
+      "availability": "official_web",
+      "published_at": "2026-03-16",
+      "scope": "Nigerian renewable-energy installation safety, standardisation and quality assurance",
+      "findings": ["NEMSA reported collaboration with the Renewable Energy Association of Nigeria to strengthen safety, standardisation and quality assurance and stated that installations should be carried out by certified professionals under national requirements."],
+      "limitations": "The statement concerns renewable-energy installations and does not impose one certificate on every energy-adjacent role.",
+      "urls": ["https://nemsa.gov.ng/nemsa-rean-partner-to-strengthen-safety-and-standards-in-nigerias-renewable-energy-sector/"]
+    },
+    {
+      "id": "ng_nesrea_environment_2025",
+      "region": "nigeria",
+      "name": "NESREA national environmental-regulation review",
+      "evidence_type": "environmental_regulator_context",
+      "availability": "official_web",
+      "published_at": "2025-08-15",
+      "scope": "Nigerian chemicals, waste, energy and environmental-management standards",
+      "findings": ["NESREA reported review of national environmental regulations covering chemicals and waste management and highlighted the role of industry, government, civil society and research in environmental management."],
+      "limitations": "Regulatory review supports environmental-practice context; it does not establish a certificate or a particular tool for every environmental role.",
+      "urls": ["https://nesrea.gov.ng/2025/08/15/stakeholders-conclude-review-of-three-national-environmental-regulations/"]
+    },
+    {
+      "id": "ng_nimasa_stcw_2026",
+      "region": "nigeria",
+      "name": "NIMASA seafarer education, training, certification and medical-fitness standards",
+      "evidence_type": "maritime_regulator_and_certification_standard",
+      "availability": "official_web",
+      "published_at": "2026-08",
+      "scope": "Nigerian seafarer education, assessment, certification, revalidation, endorsement and medical fitness",
+      "findings": ["NIMASA reported revised standards under Nigeria's 2025 STCW regulations, including education, training, assessment, examination, certification, revalidation, endorsement and medical-fitness requirements, with bridging courses for specified ND/HND holders."],
+      "limitations": "These standards apply to seafarer roles and do not apply to every maritime, port, logistics or naval-architecture occupation.",
+      "urls": ["https://nimasa.gov.ng/nimasa-introduces-new-standards-for-seafarers-education-training-assessment-and-examination-and-certification/"]
+    },
+    {
+      "id": "ng_cbn_recapitalization_2024_2026",
+      "region": "nigeria",
+      "name": "Central Bank of Nigeria banking-sector recapitalisation programme",
+      "evidence_type": "financial_regulator_sector_context",
+      "availability": "official_web",
+      "published_at": "2024-2025",
+      "scope": "Nigerian banking-sector capital, licensing and regulatory context through March 2026",
+      "findings": ["CBN describes the 2024 banking recapitalisation programme, including minimum paid-in capital requirements by licence category and a compliance period ending March 31, 2026."],
+      "limitations": "This is bank and licence-level regulatory context, not a skill or personal certification requirement for every banking employee.",
+      "urls": ["https://www.cbn.gov.ng/faqs/", "https://www.cbn.gov.ng/Out/2025/CCD/CBN%20UPDATE%20JUNE%202025%20EDITION.pdf"]
+    },
+    {
+      "id": "ng_ican_syllabus_2026",
+      "region": "nigeria",
+      "name": "ICAN professional syllabus 2026",
+      "evidence_type": "professional_body_competency_framework",
+      "availability": "official_web",
+      "published_at": "2026",
+      "scope": "Nigerian accountancy, audit, financial reporting, banking, insurance, tax and public-finance competency context",
+      "findings": ["The 2026 syllabus covers Nigerian financial-reporting and professional-accountancy topics including banking, insurance, taxation, financial reporting and relevant Nigerian legislation."],
+      "limitations": "A syllabus supports a professional pathway and competency map; it does not establish that every finance or banking role requires ICAN.",
+      "urls": ["https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf"]
+    },
+    {
+      "id": "ng_trcn_standards_2026",
+      "region": "nigeria",
+      "name": "Teachers Registration Council of Nigeria teacher standards and PQE",
+      "evidence_type": "professional_regulator_and_education_standard",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian teacher education, accreditation, registration, professional qualifying examination and competency assessment",
+      "findings": ["TRCN describes its responsibility for teacher-education standards, programme accreditation, qualification approval, professional registration and competency assessment; its 2026 updates include PQE results and school-accreditation policy implementation."],
+      "limitations": "TRCN applies to teaching practice within its mandate, not to every education, training, research or childcare role.",
+      "urls": ["https://trcn.gov.ng/", "https://trcn.gov.ng/policy-planning-research-development"]
+    },
+    {
+      "id": "ng_nerc_generation_2026",
+      "region": "nigeria",
+      "name": "Nigerian Electricity Regulatory Commission generation-licence requirements",
+      "evidence_type": "energy_regulator",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian on-grid, off-grid and embedded electricity-generation facilities",
+      "findings": ["NERC describes generation licences and associated environmental-impact or effluent-management documentation for specified Nigerian generation facilities."],
+      "limitations": "This is a facility/operator licence context, not a personal licence for every energy worker.",
+      "urls": ["https://nerc.gov.ng/need-help/services/generation-licence/"]
+    },
+    {
+      "id": "ng_ndpc_legal_practice_2026",
+      "region": "nigeria",
+      "name": "Nigeria Data Protection Commission legal-practice and compliance guidance",
+      "evidence_type": "data_protection_regulator_context",
+      "availability": "official_web",
+      "published_at": "2026-04-10",
+      "scope": "Nigerian legal, compliance, audit, privacy and data-protection practice",
+      "findings": ["NDPC guidance discusses accountability, data minimisation, confidentiality, records, audits and compliance returns for legal practices and organisations handling personal data; it also describes licensed Data Protection Compliance Organisations and relevant expertise areas."],
+      "limitations": "The source supports data-protection and compliance capability; it does not make every lawyer, compliance officer or IT worker a DPCO or data-protection specialist.",
+      "urls": ["https://ndpc.gov.ng/ndpc-hosts-3rd-impact-initiative-positions-compliance-audit-returns-as-key-to-corporate-risk-management/", "https://www.ndpc.gov.ng/dpco-registration-requirements/", "https://ndpc.gov.ng/wp-content/uploads/2026/02/NDPC-Journal-2026-1.pdf"]
+    },
+    {
+      "id": "ng_bpsr_public_service_reform_2025",
+      "region": "nigeria",
+      "name": "Bureau of Public Service Reforms National Strategy for Public Service Reform",
+      "evidence_type": "public_service_strategy",
+      "availability": "official_web",
+      "published_at": "2025-09",
+      "scope": "Nigerian civil-service administration, competency, performance, accountability and professionalisation",
+      "findings": ["The strategy describes a professional, results-oriented, competent, accountable and citizen-centred Nigerian public service, including merit-based recruitment, performance management, job evaluation and professionalisation of core cadres."],
+      "limitations": "A reform strategy supplies public-service capability context, not a universal qualification for every public or private-sector role.",
+      "urls": ["https://bpsr.gov.ng/wp-content/uploads/2025/09/NSPSR-Policy-Review-Document.pdf"]
+    },
+    {
+      "id": "ng_ohcsf_pasga_2025",
+      "region": "nigeria",
+      "name": "OHCSF Personnel Audit and Skills Gap Analysis project",
+      "evidence_type": "public_service_skills_analysis",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian federal civil-service skills identification, development and gap analysis",
+      "findings": ["The OHCSF PASGA portal describes a project to identify and develop the skills of Nigerian public servants and build a data-driven, globally competitive civil service."],
+      "limitations": "The portal is public-service skills context and does not establish a private-sector requirement or a single certification.",
+      "urls": ["https://skills.ohcsf.gov.ng/"]
+    },
+    {
+      "id": "ng_trcn_safeguarding_2026",
+      "region": "nigeria",
+      "name": "TRCN safeguarding resources for Nigerian schools",
+      "evidence_type": "education_safeguarding_standard",
+      "availability": "official_web",
+      "observed_at": "2026-08-25",
+      "scope": "Nigerian child protection, learner safety, violence-free schools and safeguarding practice",
+      "findings": ["TRCN provides resources on child protection, safety, security and violence-free schools and describes protocols and standards for protecting children and learners."],
+      "limitations": "Safeguarding resources support education and child-facing practice; they do not create one universal certificate for all social-service or childcare roles.",
+      "urls": ["https://trcn.gov.ng/safeguarding-resources"]
+    },
+    {
+      "id": "ng_notary_regulations_2026",
+      "region": "nigeria",
+      "name": "Nigerian Notary Public Regulations and electronic notary register",
+      "evidence_type": "legal_practice_regulation",
+      "availability": "official_web",
+      "published_at": "2026-05-21",
+      "scope": "Nigerian notarial practice, registration and digital-signature/seal context",
+      "findings": ["The 2026 notice and electronic notary information describe registration on the Electronic Notary Register and compliance with Nigerian notarial practice requirements."],
+      "limitations": "This is specific to notarial practice and does not apply to every legal, compliance or administrative role.",
+      "urls": ["https://nigeriareposit.nln.gov.ng/items/5950e201-a10f-4a2b-95a5-82c551472fae/full", "https://notary.gov.ng/resource/faq"]
+    },
+    {
+      "id": "ng_nbrda_genomics_2026",
+      "region": "nigeria",
+      "name": "NBRDA genetics, genomics and bioinformatics workshop",
+      "evidence_type": "government_research_and_skills_programme",
+      "availability": "official_web",
+      "published_at": "2026-05-17",
+      "scope": "Nigerian molecular biology, genetics, genomics, bioinformatics and public research infrastructure",
+      "findings": ["NBRDA reported a practical workshop through its Genetics, Genomics and Bioinformatics Department and connected it to Nigeria BioGenome and national genomics/bioinformatics data infrastructure goals."],
+      "limitations": "The workshop supports Nigerian research and skills context; it does not establish broad private-sector demand or a universal certificate.",
+      "urls": ["https://nbrda.gov.ng/2026/05/17/nbrda-hosts-regional-workshop-to-advance-molecular-biology-research-in-west-africa/"]
+    },
+    {
+      "id": "ng_ui_afrigene_2026",
+      "region": "nigeria",
+      "name": "University of Ibadan AFRIGENE genomics and computational-skills programme",
+      "evidence_type": "nigerian_university_research_and_training",
+      "availability": "official_web",
+      "published_at": "2026-08",
+      "scope": "Nigerian genomics, bioinformatics, computational biology, evolutionary biology and biodiversity research skills",
+      "findings": ["The University of Ibadan described AFRIGENE 2026 hands-on learning focused on computational tools and approaches for genomics, evolutionary biology and biodiversity conservation."],
+      "limitations": "University training is research and capacity-building evidence, not a role-specific vacancy or licence requirement.",
+      "urls": ["https://research.ui.edu.ng/afrigene-2026-five-days-learning-collaboration-and-genomics"]
+    },
+    {
+      "id": "ng_efn_esports_2025",
+      "region": "nigeria",
+      "name": "Esports Federation of Nigeria national esports programmes",
+      "evidence_type": "nigerian_esports_ecosystem_signal",
+      "availability": "official_web",
+      "published_at": "2025-11-20",
+      "scope": "Nigerian competitive gaming, schools and university esports, broadcasting, refereeing, tournament operations and team programmes",
+      "findings": ["The federation described a National Esports Championship, Team Nigeria programme, schools and university league, and training for referees, broadcasters and tournament officials."],
+      "limitations": "Federation programmes demonstrate ecosystem and role-family context; they do not establish national job volume or a mandatory credential.",
+      "urls": ["https://esportsfederationofnigeria.com/esports-federation-of-nigeria-announces-strategic-initiatives-to-strengthen-esports-development-nationwide/"]
+    },
+    {
+      "id": "ng_xr_lagos_2024_2026",
+      "region": "nigeria",
+      "name": "Nigerian XR and immersive-technology ecosystem signals",
+      "evidence_type": "nigerian_industry_training_and_ecosystem_signal",
+      "availability": "web_and_industry_sources",
+      "observed_at": "2026-08-25",
+      "scope": "Lagos and Nigerian AR/VR/XR training, immersive media, education, healthcare and construction use cases",
+      "findings": ["Lagos XR ecosystem sources describe skills including 360 video, Unity, Unreal Engine, event planning and team leadership; local reporting also describes VR training and Nigerian immersive-technology education and emergency-services use cases."],
+      "limitations": "These are ecosystem and training signals, not evidence of a national vacancy count or universal tool requirement.",
+      "urls": ["https://www.xrforall.org/", "https://techpoint.africa/insight/mactay-using-virtual-reality-lagos/", "https://www.futureengineeringjournal.com/uploads/archives/20250908144421_FEI-2025-4-040.1.pdf"]
+    },
+    {
+      "id": "ng_nipes_quantum_2025",
+      "region": "nigeria",
+      "name": "NIPES 2025 Nigerian quantum-computing conference contribution",
+      "evidence_type": "nigerian_research_conference_signal",
+      "availability": "nigerian_conference_pdf",
+      "published_at": "2025-04",
+      "scope": "Nigerian research and conference interest in quantum-computing architectures and future technology",
+      "findings": ["The NIPES 2025 book of abstracts includes a contribution on advances in quantum computing and scalable error-corrected quantum processors."],
+      "limitations": "This establishes Nigerian research/conference interest, not a local quantum-computing job market, employer demand, or Nigerian professional certification.",
+      "urls": ["https://nipes.org/wp-content/uploads/2025/04/NIPES-BOOK-OF-ABSTRACT-2025_Adj.pdf"]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ng_health_laboratory_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_fmoh_health_report_2024", "ng_mlscn_lab"],
+      "domain_ids": ["D027", "D068"],
+      "subgroup_patterns": ["Biomedical Scientists", "Laboratory & Field Technicians", "Medical Laboratory", "Biomedical"],
+      "role_patterns": ["medical laboratory assistant", "biotechnical technician", "scientific laboratory technician", "biochemistry technician", "bacteriology technician", "microbiologist", "biochemist", "biomedical scientist", "specialist biomedical scientist", "anatomical pathology technician", "phlebotomist", "clinical research associate"],
+      "skills": [
+        {"name": "Specimen handling, laboratory testing, quality control and result documentation", "priority": "core", "evidence": "Nigerian medical-laboratory integration and quality-management guidance"},
+        {"name": "Laboratory biosafety, biosecurity, infection prevention and patient-safety practice", "priority": "core", "evidence": "Federal Ministry of Health laboratory and patient-safety guidance"},
+        {"name": "Apply validated procedures, quality systems and traceability to clinical or research samples", "priority": "core", "evidence": "Nigerian laboratory quality guidance and MLSCN regulatory context"}
+      ],
+      "tools": [
+        {"name": "Laboratory instruments, specimen-collection supplies, quality-control materials and laboratory information systems", "priority": "core", "evidence": "Nigerian laboratory-system and quality-management context"},
+        {"name": "Biosafety equipment, personal protective equipment and documented standard operating procedures", "priority": "core", "evidence": "Federal Ministry of Health biosafety and biosecurity guidance"}
+      ],
+      "competencies": [
+        {"name": "Generate, record and communicate reliable laboratory evidence within approved procedures", "priority": "core", "evidence": "Nigerian laboratory quality-management context"},
+        {"name": "Recognise contamination, quality or safety exceptions and escalate them through the approved system", "priority": "core", "evidence": "Nigerian laboratory biosafety and patient-safety context"}
+      ],
+      "certifications": [{"name": "Applicable Medical Laboratory Science Council of Nigeria registration or approved laboratory pathway", "issuer": "MLSCN", "level": "regulated_or_professional", "evidence": "MLSCN mandate and licensing context", "limitation": "Applicability depends on the exact regulated practice; do not apply the gate to every laboratory-adjacent role."}],
+      "regulatory_requirements": [{"name": "Clinical laboratory practice must follow applicable MLSCN and Nigerian health-facility requirements", "priority": "required_when_applicable", "evidence": "MLSCN and Federal Ministry of Health sources", "limitation": "This is not a blanket licence claim for every research, food or industrial laboratory role."}]
+    },
+    {
+      "id": "ng_allied_health_rehabilitation_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_fmoh_health_report_2024", "ng_mrtb_rehabilitation"],
+      "domain_ids": ["D068"],
+      "subgroup_patterns": ["Rehabilitation & Therapy Professionals", "Allied Health", "Rehabilitation"],
+      "role_patterns": ["physiotherapist", "advanced physiotherapist", "occupational therapist", "occupational therapy assistant", "speech and language therapist", "dietitian", "audiologist", "orthoptist", "podiatrist", "respiratory therapy technician", "recreational therapist", "physiotherapy assistant", "prosthetic-orthotics technician"],
+      "skills": [
+        {"name": "Patient assessment, care planning, rehabilitation intervention and progress documentation", "priority": "core", "evidence": "Nigerian rehabilitation and health-system context"},
+        {"name": "Safe, ethical, patient-centred communication and multidisciplinary practice", "priority": "core", "evidence": "Federal Ministry of Health patient-safety and rehabilitation context"},
+        {"name": "Measure outcomes, adapt interventions and refer or escalate when a patient needs additional care", "priority": "core", "evidence": "Nigerian rehabilitation-practice context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate assessment, mobility, therapy, assistive and rehabilitation equipment", "priority": "core", "evidence": "Nigerian rehabilitation service context"},
+        {"name": "Patient records, care plans and outcome-tracking documentation", "priority": "core", "evidence": "Nigerian health-facility and patient-safety context"}
+      ],
+      "competencies": [
+        {"name": "Deliver or support safe, documented rehabilitation and recovery services within scope of practice", "priority": "core", "evidence": "Nigerian health and rehabilitation sources"},
+        {"name": "Protect confidentiality, consent and patient dignity while coordinating care", "priority": "core", "evidence": "Nigerian patient-safety and professional-practice context"}
+      ],
+      "certifications": [{"name": "Applicable Medical Rehabilitation Therapists Registration Board of Nigeria registration and licence", "issuer": "MRTB", "level": "regulated_or_professional", "evidence": "MRTB registration, licensing and CPD context", "limitation": "The relevant board and registration route depends on the exact allied-health profession."}],
+      "regulatory_requirements": [{"name": "Regulated allied-health practice must follow the applicable Nigerian board, facility and scope-of-practice rules", "priority": "required_when_applicable", "evidence": "MRTB and Federal Ministry of Health sources", "limitation": "Do not extend a rehabilitation-board requirement to unrelated health-support or wellness roles."}]
+    },
+    {
+      "id": "ng_agro_food_standards_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nbte_nos_brochure_2026", "ng_fmafs_agriculture_nags_2025", "ng_son_food_agriculture", "ng_nafdac_food"],
+      "domain_ids": ["D047", "D048", "D053"],
+      "subgroup_patterns": ["Crop Production", "Animal Husbandry", "Aquaculture", "Food Scientists & Biotechnologists", "Food Processing Technicians", "Artisan Food Crafters", "Food & Beverage Machine Operators"],
+      "role_patterns": ["agricultural technician", "agricultural scientist", "agronomist", "aquaculture biologist", "aquaculture site supervisor", "aquaculture production manager", "aquaculture quality supervisor", "animal feed nutritionist", "animal feed supervisor", "food analyst", "food technologist", "food biotechnologist", "food production operator", "food processing technician", "dairy processing technician", "food grader", "food production planner", "baker", "baking operator", "fish production operator", "fish preparation operator", "animal feed operator"],
+      "skills": [
+        {"name": "Apply crop, livestock, aquaculture or food-processing methods appropriate to the production system", "priority": "core", "evidence": "NBTE Nigerian occupational standards and national agriculture strategy"},
+        {"name": "Food hygiene, hazard control, sanitation, quality assurance and traceability where food or feed is involved", "priority": "core", "evidence": "NAFDAC food guidance and SON food/agriculture standards context"},
+        {"name": "Record production, inspection, environmental, animal-health or product-quality information", "priority": "core", "evidence": "Nigerian agriculture, food and occupational-standard context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate farm, aquaculture, animal-husbandry, processing, sampling and measurement equipment", "priority": "core", "evidence": "NBTE agriculture and agro-processing NOS/NSQ pathways"},
+        {"name": "HACCP, sanitation, batch, traceability and quality-management records", "priority": "core_when_food_or_feed_applies", "evidence": "NAFDAC food-hygiene and SON standards context"}
+      ],
+      "competencies": [
+        {"name": "Operate, monitor or improve production while protecting yield, safety, animal welfare and product quality", "priority": "core", "evidence": "Nigerian agriculture and occupational standards"},
+        {"name": "Identify hazards, deviations and environmental or quality risks and take documented corrective action", "priority": "core", "evidence": "NAFDAC and SON food/agriculture standards context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian NOS/NSQ or sector food, agriculture and compliance training pathway", "issuer": "NBTE / NAFDAC / SON / applicable sector authority", "level": "sector_training_or_compliance", "evidence": "NBTE, NAFDAC and SON sources", "limitation": "The applicable route depends on the crop, animal, food, feed, facility and exact role; this is not one universal certificate."}],
+      "regulatory_requirements": [{"name": "Food, feed, animal and regulated production activities must follow the applicable Nigerian safety, standards, registration and inspection requirements", "priority": "required_when_applicable", "evidence": "NAFDAC, SON and Federal Ministry of Agriculture sources", "limitation": "Sector or facility compliance is not automatically a personal licence for every worker."}]
+    },
+    {
+      "id": "ng_customs_logistics_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_ncs_aeo_2025", "ng_crffn_freight", "ng_nbte_nos_brochure_2026"],
+      "domain_ids": ["D035", "D079", "D034"],
+      "subgroup_patterns": ["Supply Chain & Logistics Managers", "Warehouse & Inventory", "Customs, Freight & Trade Operations", "Transportation & Fleet Operations"],
+      "role_patterns": ["import export manager", "import export specialist", "distribution manager", "forwarding manager", "international forwarding operations coordinator", "shipping agent", "customs officer", "customs and excise officer", "customs broker", "freight inspector", "marine cargo inspector", "supply chain manager", "intermodal logistics manager", "warehouse manager", "warehouse worker", "warehouse order picker", "distribution centre dispatcher", "fleet manager", "materials handler", "stevedore", "stevedore superintendent"],
+      "skills": [
+        {"name": "Plan and coordinate movement, storage, documentation and handoffs across a supply chain", "priority": "core", "evidence": "Nigerian customs, freight and occupational-standard context"},
+        {"name": "Maintain accurate commercial, cargo, customs, inventory and transport records", "priority": "core", "evidence": "Nigeria Customs AEO compliance and record-management framework"},
+        {"name": "Apply customs classification, valuation, origin, compliance, risk and secure-information practices where the role requires them", "priority": "core_when_trade_applies", "evidence": "Nigeria Customs AEO framework"}
+      ],
+      "tools": [
+        {"name": "Warehouse, inventory, transport-management, shipment-tracking and document-control systems", "priority": "core", "evidence": "Nigerian logistics and customs operator context"},
+        {"name": "Customs declaration, HS-code, valuation, origin, records and secure information-exchange workflows", "priority": "core_when_trade_applies", "evidence": "Nigeria Customs AEO framework"}
+      ],
+      "competencies": [
+        {"name": "Coordinate compliant, traceable and timely movement of goods and resolve exceptions", "priority": "core", "evidence": "Nigeria Customs and freight-forwarding context"},
+        {"name": "Recognise supply-chain, cargo-security and documentation risks and escalate them through the correct channel", "priority": "core", "evidence": "Nigeria Customs AEO and CRFFN context"}
+      ],
+      "certifications": [{"name": "Applicable freight-forwarding, customs, logistics or Nigerian NOS/NSQ pathway", "issuer": "CRFFN / Nigeria Customs Service / NBTE / applicable employer or sector body", "level": "sector_training_or_compliance", "evidence": "Nigerian customs, freight and occupational-standard sources", "limitation": "AEO is an operator programme; it is not a universal personal certificate for every logistics role."}],
+      "regulatory_requirements": [{"name": "Customs, freight-forwarding and cross-border activities must follow the applicable Nigerian customs, trade and sector rules", "priority": "required_when_applicable", "evidence": "Nigeria Customs and CRFFN sources", "limitation": "Do not present an organisation-level AEO requirement as an individual licence."}]
+    },
+    {
+      "id": "ng_construction_trades_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_clmis_construction_nos", "ng_son_construction_2024", "ng_qsrbn_2024", "ng_nbte_nos_brochure_2026"],
+      "domain_ids": ["D052", "D050", "D097"],
+      "subgroup_patterns": ["Construction & Site Managers", "Civil & Infrastructure Engineers", "Site Supervisors & Inspectors", "Building Trade Workers"],
+      "role_patterns": ["construction manager", "construction general supervisor", "construction quality manager", "construction quality inspector", "construction safety manager", "construction safety inspector", "building inspector", "civil engineer", "civil engineering technician", "quantity surveyor", "site manager", "bricklayer", "carpenter", "plumbing supervisor", "plumber", "roofing supervisor", "roofer", "tiling supervisor", "concrete finisher", "construction scaffolder", "surveying technician", "bridge inspector", "road construction supervisor", "building inspector"],
+      "skills": [
+        {"name": "Read plans, measure work, inspect materials and coordinate construction activities", "priority": "core", "evidence": "C-LMIS Nigerian construction NOS and SON construction context"},
+        {"name": "Apply site safety, quality, building-standard, environmental and documentation procedures", "priority": "core", "evidence": "SON building-construction standards context and Nigerian construction NOS"},
+        {"name": "Estimate, schedule, procure, supervise or verify work according to the exact construction role", "priority": "core_when_role_applies", "evidence": "QSRBN professional context and construction occupational standards"}
+      ],
+      "tools": [
+        {"name": "Construction measurement, inspection, surveying, drawing, estimating and site-documentation tools", "priority": "core", "evidence": "Nigerian construction NOS and quantity-surveying context"},
+        {"name": "Role-appropriate hand tools, trade equipment and personal protective equipment", "priority": "core", "evidence": "C-LMIS and NBTE construction-trade standards"}
+      ],
+      "competencies": [
+        {"name": "Deliver or inspect construction work to plan, specification, safety and quality expectations", "priority": "core", "evidence": "C-LMIS and SON construction context"},
+        {"name": "Document defects, changes, quantities, cost or safety risks and escalate them appropriately", "priority": "core", "evidence": "Nigerian construction and quantity-surveying practice context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian construction NOS/NSQ or regulated professional pathway", "issuer": "NBTE / C-LMIS-CORBON / QSRBN / COREN / applicable professional body", "level": "trade_or_professional", "evidence": "Nigerian construction standards and professional-body sources", "limitation": "Requirements vary substantially between trades, quantity surveying, engineering, inspection and management."}],
+      "regulatory_requirements": [{"name": "Construction practice must follow applicable Nigerian building, safety, standards and professional-registration requirements", "priority": "required_when_applicable", "evidence": "SON, C-LMIS, QSRBN and professional-regulator context", "limitation": "Do not apply an engineer, builder or surveyor registration gate to every construction worker."}]
+    },
+    {
+      "id": "ng_welding_metals_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_fmino_welding_2025", "ng_nbte_nos_brochure_2026", "ng_coren_engineering"],
+      "domain_ids": ["D097", "D022", "D050", "D110"],
+      "subgroup_patterns": ["Welding & Fabrication", "Metal Production & Processing", "Industrial Automation"],
+      "role_patterns": ["welder", "pipe welder", "welding coordinator", "welding engineer", "welding inspector", "structural ironworker", "sheet metal worker", "boilermaker", "blacksmith", "foundry moulder", "foundry operative", "foundry mould maker", "plasma cutting machine operator", "laser cutting machine operator", "metalworking lathe operator", "fitter and turner", "machining operator", "metallurgical engineer", "metallurgical technician", "materials engineer", "materials laboratory technician", "steel melt shop engineer", "metal production supervisor"],
+      "skills": [
+        {"name": "Read fabrication drawings, prepare materials, join or form metal and control the process safely", "priority": "core", "evidence": "NBTE welding/fabrication standards and Nigerian metals skills programme"},
+        {"name": "Inspect welds, dimensions, defects, material properties and conformity to the applicable specification", "priority": "core", "evidence": "Nigerian metals, welding and engineering context"},
+        {"name": "Apply safe hot-work, machine, chemical, lifting and workplace procedures", "priority": "core", "evidence": "Nigerian technical-skills and occupational-standard context"}
+      ],
+      "tools": [
+        {"name": "Welding, cutting, forming, machining, foundry, inspection and dimensional-measurement equipment", "priority": "core", "evidence": "NBTE and Nigerian metals skills sources"},
+        {"name": "Personal protective equipment, work permits, inspection records and quality documentation", "priority": "core", "evidence": "Nigerian industrial and engineering practice context"}
+      ],
+      "competencies": [
+        {"name": "Produce, repair or inspect metal work to drawing, process and safety requirements", "priority": "core", "evidence": "Nigerian welding/fabrication and metallurgical context"},
+        {"name": "Identify defects or unsafe conditions, record findings and initiate corrective action", "priority": "core", "evidence": "Nigerian metals and engineering context"}
+      ],
+      "certifications": [{"name": "Nigerian NOS/NSQ welding, fabrication, machining or applicable engineering pathway", "issuer": "NBTE / applicable technical body / COREN where regulated engineering practice applies", "level": "trade_or_professional", "evidence": "NBTE, Federal Government technical-skills and COREN sources", "limitation": "The certificate or registration route depends on the exact trade, level and responsibility."}],
+      "regulatory_requirements": [{"name": "Regulated engineering or industrial work must follow applicable Nigerian safety, standards and professional requirements", "priority": "required_when_applicable", "evidence": "COREN and Nigerian technical-sector sources", "limitation": "Do not convert an engineering-registration context into a blanket licence for every welder or operator."}]
+    },
+    {
+      "id": "ng_creative_media_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nfc_creative_nos_2026", "ng_nipc_creative_economy_2026", "ng_nbte_nos_brochure_2026", "ng_ncc_music_rights"],
+      "domain_ids": ["D042", "D043", "D044", "D075"],
+      "subgroup_patterns": ["Film & Video Production", "Audio & Music Production", "Broadcasting", "Journalism", "Graphic Design", "Fashion Design", "Fashion/Textile Machine"],
+      "role_patterns": ["video and motion picture director", "video and motion picture producer", "video and motion picture editor", "camera operator", "director of photography", "audio production technician", "sound operator", "sound designer", "sound editor", "podcast producer", "broadcast technician", "radio producer", "journalist", "presenter", "news anchor", "newspaper editor", "broadcast news editor", "fact checker", "photojournalist", "graphic designer", "illustrator", "web designer", "animator", "3d animator", "motion graphics designer", "digital media designer", "digital games designer", "photographer", "fashion designer", "textile designer", "textile technologist", "clothing technologist", "sewing machinist", "tailor", "garment maker", "embroidery machine operator"],
+      "skills": [
+        {"name": "Develop, produce, edit and quality-check visual, audio, written or live content for a defined audience and brief", "priority": "core", "evidence": "Nigerian Film Corporation creative-media standards activity and NIPC sector map"},
+        {"name": "Use storytelling, research, editorial judgement, design principles, production planning and collaboration appropriate to the medium", "priority": "core", "evidence": "Nigerian creative-media trade context"},
+        {"name": "Manage rights, attribution, permissions, releases and responsible publication where content is distributed", "priority": "core_when_content_applies", "evidence": "Nigerian Copyright Commission and journalism practice context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate cameras, lighting, audio, editing, design, animation, publishing or garment-production tools", "priority": "core", "evidence": "Nigerian creative-media trade families and NBTE standards"},
+        {"name": "Digital asset, version, portfolio, production and rights-management workflows", "priority": "supplementary", "evidence": "Nigerian creative-sector practice context"}
+      ],
+      "competencies": [
+        {"name": "Deliver a finished, audience-appropriate creative output to brief, deadline and quality expectations", "priority": "core", "evidence": "Nigerian creative-media sector context"},
+        {"name": "Explain creative choices, receive feedback, revise work and maintain an attributable portfolio", "priority": "core", "evidence": "Nigerian creative skills-certification context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian creative-media NOS/NSQ or portfolio-based training pathway", "issuer": "NBTE / Nigerian Film Corporation and applicable sector or training body", "level": "sector_training", "evidence": "NFC creative-media standards workshop and NBTE standards", "limitation": "The 2026 NFC activity concerns standards development; it does not yet prove a final compulsory certificate for every creative role."}],
+      "regulatory_requirements": [{"name": "Creative work must follow applicable Nigerian copyright, advertising, broadcast, publication and employment rules", "priority": "required_when_applicable", "evidence": "Nigerian Copyright Commission and sector context", "limitation": "Regulatory obligations depend on the medium and activity; they are not a universal personal licence."}]
+    },
+    {
+      "id": "ng_social_public_compliance_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_social_work_fm_2026", "ng_cia_public_administration", "ng_trcn_teaching", "ng_nbte_ssc_guidelines_2024"],
+      "domain_ids": ["D038", "D045", "D046"],
+      "subgroup_patterns": ["Social Work", "Public Administration", "Regulatory & Compliance", "Community Development", "Government Administration"],
+      "role_patterns": ["social worker", "social work assistant", "social work researcher", "clinical social worker", "hospital social worker", "family social worker", "community social worker", "community development social worker", "social work supervisor", "family support worker", "victim support officer", "housing support worker", "policy officer", "public administration manager", "civil service administrative officer", "monitoring and evaluation officer", "community development officer", "regulatory affairs manager", "compliance officer", "licensing officer", "tax compliance officer", "anti-money laundering officer", "data protection officer", "contract manager", "procurement category specialist"],
+      "skills": [
+        {"name": "Interpret policy, legislation, standards and programme requirements and apply them to documented decisions", "priority": "core", "evidence": "Nigerian public-administration, compliance and sector-professional context"},
+        {"name": "Interview, assess needs, communicate safely, refer appropriately and maintain confidential records where people-facing work applies", "priority": "core_when_social_work_applies", "evidence": "Nigerian social-work professionalisation context"},
+        {"name": "Monitor outcomes, identify risks, document evidence and escalate non-compliance or safeguarding concerns", "priority": "core", "evidence": "Nigerian social-work, public-service and compliance context"}
+      ],
+      "tools": [
+        {"name": "Case, policy, compliance, procurement, records, reporting and monitoring systems appropriate to the role", "priority": "core", "evidence": "Nigerian public-sector and professional-practice context"},
+        {"name": "Structured assessments, referral records, audit trails and evidence registers where the role requires them", "priority": "core_when_role_applies", "evidence": "Nigerian social-work and compliance context"}
+      ],
+      "competencies": [
+        {"name": "Make fair, evidence-based and explainable decisions within the applicable Nigerian policy or practice framework", "priority": "core", "evidence": "Nigerian public-administration and compliance context"},
+        {"name": "Protect confidentiality, dignity, due process and safeguarding responsibilities where applicable", "priority": "core_when_people_facing", "evidence": "Nigerian social-work professionalisation context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian professional, public-administration, teaching, compliance or sector-training pathway", "issuer": "Relevant Nigerian regulator, professional body, NBTE or employing authority", "level": "role_dependent", "evidence": "Nigerian professional and public-sector sources", "limitation": "There is no single certificate for all public, social-service and compliance roles; display only the pathway supported for the exact role."}],
+      "regulatory_requirements": [{"name": "The applicable Nigerian statute, agency rule, professional registration or public-service scheme governs regulated practice", "priority": "required_when_applicable", "evidence": "Nigerian social-work, public-administration and professional sources", "limitation": "Do not infer a licence from general public-sector or social-service context."}]
+    },
+    {
+      "id": "ng_digital_ai_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_fmcide_microsoft_3mtt_2025", "ng_ohcsf_ict_roles_2026", "ng_nbte_nos_2026", "ng_cpn_syllabus_2021"],
+      "domain_ids": ["D033", "D041", "D050", "D142"],
+      "subgroup_patterns": ["Data & Analytics", "Artificial Intelligence", "Cybersecurity", "Software & Systems", "Industrial Automation", "Computational & Life Science Research"],
+      "role_patterns": ["data engineer", "data scientist", "data analyst", "business intelligence manager", "artificial intelligence engineer", "computer scientist", "ict consultant", "ict system analyst", "ict system architect", "product manager", "product owner", "research manager", "scientific laboratory technician", "bioinformatics scientist", "bioinformatician / computational biologist", "biostatistician", "computational genomics data scientist", "automation engineer", "industrial robot controller", "plc programmer", "instrumentation and control technician", "mechatronics engineer"],
+      "skills": [
+        {"name": "Define problems, work with data or systems, build or configure solutions and validate results", "priority": "core", "evidence": "3MTT/Microsoft Nigerian digital-skills pathways and NBTE ICT standards"},
+        {"name": "Use secure, documented, reproducible and ethical practices for software, data, AI, automation or research work", "priority": "core", "evidence": "Nigerian ICT workforce and public-service ICT benchmark context"},
+        {"name": "Communicate requirements, assumptions, limitations and evidence to technical and non-technical stakeholders", "priority": "core", "evidence": "Nigerian digital-skills and occupational-standard context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate programming, data, cloud, version-control, analytics, laboratory, simulation or automation tools", "priority": "core", "evidence": "NBTE ICT/robotics standards and Nigerian digital-skills pathways"},
+        {"name": "Testing, documentation, access-control, monitoring and reproducibility workflows", "priority": "core", "evidence": "Nigerian ICT and public-service professional benchmark context"}
+      ],
+      "competencies": [
+        {"name": "Produce a working, testable and explainable technical or research output from a defined problem", "priority": "core", "evidence": "Nigerian ICT, AI, data and research workforce context"},
+        {"name": "Identify uncertainty, security, privacy, safety or model-quality risks and respond proportionately", "priority": "core", "evidence": "Nigerian ICT standards and public-service ICT context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian NOS/NSQ, CPN, COREN or employer-recognised technical pathway", "issuer": "NBTE / CPN / COREN / applicable professional or training body", "level": "role_dependent", "evidence": "NBTE, CPN and Nigerian ICT workforce sources", "limitation": "Certification and registration requirements vary by role, employer, public-service scheme and regulated engineering responsibility."}],
+      "regulatory_requirements": [{"name": "Apply Nigerian data-protection, cybersecurity, engineering and public-service rules where the role or system falls within them", "priority": "required_when_applicable", "evidence": "Nigerian ICT and public-service professional context", "limitation": "Do not render public-service benchmarks or engineering registration as a blanket requirement for all digital roles."}]
+    },
+    {
+      "id": "ng_procurement_project_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_npcp_procurement_2026", "ng_pmdan_project_2026", "ng_cipsmn_procurement"],
+      "domain_ids": ["D032", "D034", "D038", "D045"],
+      "subgroup_patterns": ["Project Management", "Procurement", "Supply Chain & Logistics Managers", "Regulatory & Compliance", "Government Administration"],
+      "role_patterns": ["procurement department manager", "procurement support officer", "procurement category specialist", "public procurement specialist", "purchasing manager", "project manager", "project support officer", "programme manager", "contract manager", "supply chain manager", "logistics analyst", "business analyst", "scrum master", "process officer"],
+      "skills": [
+        {"name": "Plan scope, deliverables, stakeholders, schedules, risks, budgets and controls appropriate to the assignment", "priority": "core", "evidence": "Nigerian project-management and procurement professional pathways"},
+        {"name": "Run transparent procurement, tendering, evaluation, contracting and supplier-management processes where procurement applies", "priority": "core_when_procurement_applies", "evidence": "Nigeria Procurement Certification Programme and Nigerian procurement bodies"},
+        {"name": "Communicate clearly, collaborate, manage deadlines, act ethically and keep an auditable record", "priority": "core", "evidence": "Nigerian procurement certification tiers and project-management context"}
+      ],
+      "tools": [
+        {"name": "Project plans, schedules, risk registers, budgets, procurement records, contract files and reporting systems", "priority": "core", "evidence": "Nigerian project and procurement practice context"},
+        {"name": "Digital tender, supplier, workflow and collaboration tools appropriate to the organisation", "priority": "supplementary", "evidence": "Nigerian procurement and public-sector digitisation context"}
+      ],
+      "competencies": [
+        {"name": "Coordinate work from initiation through delivery, monitoring, change control and close-out", "priority": "core", "evidence": "Nigerian project-management professional context"},
+        {"name": "Defend decisions with documented criteria, evidence, ethics and applicable Nigerian procurement or organisational rules", "priority": "core_when_procurement_or_public_sector_applies", "evidence": "Nigeria Procurement Certification Programme"}
+      ],
+      "certifications": [{"name": "Nigeria Procurement Certification Programme tier or project-management certification appropriate to experience", "issuer": "NPCP/BPP or PMDAN/IPMA pathway", "level": "role_dependent", "evidence": "Nigerian procurement and project-management bodies", "limitation": "The appropriate route depends on whether the role is procurement, project management, public service or general coordination."}],
+      "regulatory_requirements": [{"name": "Public procurement and regulated contracting must follow applicable Nigerian procurement law, BPP rules and organisational controls", "priority": "required_when_applicable", "evidence": "Nigerian procurement certification and public-procurement context", "limitation": "Do not apply public-procurement rules as a blanket requirement to every private-sector project role."}]
+    },
+    {
+      "id": "ng_marketing_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nimn_marketing_2026", "ng_arcon_advertising", "ng_ncc_music_rights"],
+      "domain_ids": ["D030", "D042", "D043", "D044"],
+      "subgroup_patterns": ["Marketing & Brand", "Advertising & Communications", "Creative Strategy", "Journalism", "Graphic Design"],
+      "role_patterns": ["chief marketing officer", "marketing consultant", "marketing assistant", "marketing manager", "market research analyst", "public relations manager", "public relations officer", "digital marketing manager", "brand manager", "advertising manager", "advertising specialist", "advertising media buyer", "advertising copywriter", "content marketing manager", "search engine optimisation specialist", "customer experience manager", "communication manager", "creative director", "spokesperson", "business developer"],
+      "skills": [
+        {"name": "Research audiences, understand value propositions, develop positioning and measure communication or commercial outcomes", "priority": "core", "evidence": "Nigerian marketing professional context"},
+        {"name": "Plan and deliver ethical, audience-appropriate campaigns, content, brand and stakeholder communications", "priority": "core", "evidence": "NIMN and Nigerian advertising/creative-sector context"},
+        {"name": "Use evidence, feedback and performance data to refine messages, channels and customer experience", "priority": "core", "evidence": "Nigerian marketing practice context"}
+      ],
+      "tools": [
+        {"name": "Campaign planning, customer/market research, analytics, content, design, publishing and relationship-management tools", "priority": "core", "evidence": "Nigerian marketing and creative practice context"},
+        {"name": "Role-appropriate advertising, social, search, email and measurement platforms", "priority": "supplementary", "evidence": "Nigerian marketing role context"}
+      ],
+      "competencies": [
+        {"name": "Turn research and business objectives into clear, testable communications or customer-growth actions", "priority": "core", "evidence": "Nigerian marketing professional context"},
+        {"name": "Protect accuracy, consent, attribution, brand integrity and applicable advertising or copyright obligations", "priority": "core_when_content_or_advertising_applies", "evidence": "Nigerian marketing, advertising and copyright context"}
+      ],
+      "certifications": [{"name": "Applicable National Institute of Marketing of Nigeria professional or continuing-development pathway", "issuer": "NIMN", "level": "professional_or_continuing_development", "evidence": "NIMN professional standards and certification context", "limitation": "NIMN pathway is not a universal requirement for every communications, sales or creative role."}],
+      "regulatory_requirements": [{"name": "Advertising, communications and content work must follow applicable Nigerian advertising, consumer, copyright and sector rules", "priority": "required_when_applicable", "evidence": "Nigerian advertising, marketing and copyright context", "limitation": "The applicable rule depends on the medium and activity."}]
+    },
+    {
+      "id": "ng_mining_geology_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nnra_mining_radiation_2026", "ng_coren_reforms_2026", "ng_hotnigerianjobs_metallurgical_2026"],
+      "domain_ids": ["D022", "D041", "D110"],
+      "subgroup_patterns": ["Mining & Quarrying", "Geology & Geophysics", "Environmental Science", "Metal Production & Processing"],
+      "role_patterns": ["mine manager", "mine geologist", "drilling engineer", "drilling engineer", "drill operator", "mineral processing engineer", "hydrogeologist", "petroleum engineer", "mine planning engineer", "assayer", "mineralogist", "environmental geologist", "mine surveying technician", "geophysicist", "exploration geologist", "quarry manager", "metallurgist", "geologist", "geochemist", "mine health and safety engineer", "mine safety officer", "mine mechanical engineer", "mine ventilation engineer", "radiation safety officer", "shot firer", "coal mining operative"],
+      "skills": [
+        {"name": "Apply geology, surveying, drilling, extraction, mineral processing or production methods appropriate to the operation", "priority": "core", "evidence": "Nigerian mining and technical-sector context"},
+        {"name": "Monitor occupational, environmental, radiation, explosives, equipment and community risks and document controls", "priority": "core", "evidence": "NNRA mining radiation-safety training and Nigerian engineering-regulation context"},
+        {"name": "Collect, test, interpret and report geological, mineral, production or environmental evidence", "priority": "core", "evidence": "Nigerian mining and geoscience role context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate geological, surveying, drilling, sampling, laboratory, processing, monitoring and safety equipment", "priority": "core", "evidence": "Nigerian mining and radiation-safety context"},
+        {"name": "Dose, environmental, production, incident and regulatory records", "priority": "core_when_role_applies", "evidence": "NNRA mining training context"}
+      ],
+      "competencies": [
+        {"name": "Operate or supervise technical work safely, traceably and in accordance with the applicable mine plan and controls", "priority": "core", "evidence": "Nigerian mining and engineering context"},
+        {"name": "Escalate unsafe, non-compliant or environmentally harmful conditions and support corrective action", "priority": "core", "evidence": "NNRA and COREN regulatory context"}
+      ],
+      "certifications": [{"name": "Role-specific Nigerian mining, radiation-safety, engineering or occupational-safety pathway", "issuer": "NNRA / COREN / applicable mining or technical authority", "level": "role_dependent", "evidence": "NNRA mining training and COREN regulation context", "limitation": "The NNRA course is specialised; it is not a universal mining certificate."}],
+      "regulatory_requirements": [{"name": "Mining, mineral processing, radiation, explosives and engineering activities must follow applicable Nigerian permits, safety and professional rules", "priority": "required_when_applicable", "evidence": "NNRA and COREN sources", "limitation": "The applicable regulator and permit depend on the activity and responsibility."}]
+    },
+    {
+      "id": "ng_medicine_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_mdcn_medicine_2026", "ng_fmoh_health_report_2024", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D023"],
+      "subgroup_patterns": ["Medical Practitioners", "Clinical Medicine", "Hospital Administration"],
+      "role_patterns": ["doctors", "general practitioner", "medical practitioner (hospital physician)", "specialised doctor", "pathologist", "radiation therapist", "clinical perfusion scientist", "healthcare institution manager", "clinical informatics manager"],
+      "skills": [
+        {"name": "Assess health information, make or support evidence-based clinical decisions and document care safely", "priority": "core_when_clinical", "evidence": "Nigerian health-system and medical-regulatory context"},
+        {"name": "Communicate with patients and care teams, protect dignity and confidentiality, and coordinate referral or follow-up", "priority": "core_when_patient_facing", "evidence": "Federal Ministry of Health patient-safety context"},
+        {"name": "Apply quality, safety, infection-prevention and service-management procedures appropriate to the role", "priority": "core", "evidence": "Nigerian health-facility policy context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate clinical, diagnostic, records, hospital-information and quality-improvement tools", "priority": "core", "evidence": "Nigerian health-facility context"},
+        {"name": "Approved clinical guidelines, patient records and safety-reporting workflows", "priority": "core", "evidence": "Federal Ministry of Health guidance"}
+      ],
+      "competencies": [
+        {"name": "Provide or coordinate safe, documented and patient-centred health services within the role's scope", "priority": "core", "evidence": "Nigerian health-system context"},
+        {"name": "Recognise deterioration, uncertainty or safety risks and escalate through the approved clinical or management pathway", "priority": "core", "evidence": "Nigerian patient-safety context"}
+      ],
+      "certifications": [{"name": "Applicable Medical and Dental Council of Nigeria registration and practice pathway", "issuer": "MDCN", "level": "regulated_professional", "evidence": "MDCN registration, verification and housemanship context", "limitation": "MDCN applies to medicine and dentistry within its mandate, not every health or biomedical role."}],
+      "regulatory_requirements": [{"name": "Medicine and dentistry practice must follow applicable MDCN registration, practice, ethics and facility requirements", "priority": "required_when_applicable", "evidence": "MDCN and Federal Ministry of Health sources", "limitation": "Do not extend medical registration requirements to non-medical health-support roles."}]
+    },
+    {
+      "id": "ng_energy_environment_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_coren_clean_energy_2024_2025", "ng_nemsa_renewable_2026", "ng_nerc_generation_2026", "ng_nesrea_environment_2025"],
+      "domain_ids": ["D019", "D020", "D135", "D144"],
+      "subgroup_patterns": ["Renewable Energy", "Power Generation & Distribution", "Environmental Engineering", "Waste & Water Management", "Radiation Science", "Climate & Meteorology"],
+      "role_patterns": ["solar energy technician", "solar power plant operator", "solar energy systems engineer", "renewable energy engineer", "wind energy engineer", "energy engineer", "electrical engineer", "power distribution engineer", "substation engineer", "electricity distribution technician", "water treatment systems operator", "environmental mining engineer", "biogas technician", "water plant technician", "wastewater engineer", "environmental health inspector", "industrial waste inspector", "environmental engineer", "hazardous materials inspector", "waste management supervisor", "environmental protection specialist", "sustainability specialist", "climate change analyst", "nuclear engineer", "health physicist / radiation protection officer", "medical physicist", "weather forecaster", "meteorologist", "aviation meteorologist", "climatologist", "hydrologist", "oceanographer"],
+      "skills": [
+        {"name": "Design, operate, inspect or improve energy, water, waste, environmental or radiation systems within the role's scope", "priority": "core", "evidence": "Nigerian clean-energy, environmental and regulatory context"},
+        {"name": "Apply safety, quality, environmental-impact, waste, monitoring and compliance controls", "priority": "core", "evidence": "NEMSA, NERC, NESREA and NNRA-related Nigerian practice context"},
+        {"name": "Collect measurements, assess risk, document results and communicate technical findings", "priority": "core", "evidence": "Nigerian energy and environmental practice context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate electrical, renewable-energy, water, wastewater, waste, environmental, weather or radiation-monitoring equipment", "priority": "core", "evidence": "Nigerian energy and environmental sector sources"},
+        {"name": "Permits, inspection records, environmental-management plans, safety procedures and monitoring logs", "priority": "core_when_role_applies", "evidence": "NERC, NEMSA and NESREA regulatory context"}
+      ],
+      "competencies": [
+        {"name": "Deliver safe, reliable and documented technical or environmental work to applicable Nigerian standards", "priority": "core", "evidence": "Nigerian energy and environmental regulation context"},
+        {"name": "Identify hazards, non-conformity, environmental harm or uncertainty and escalate or correct it", "priority": "core", "evidence": "NEMSA, NERC and NESREA context"}
+      ],
+      "certifications": [{"name": "Applicable COREN clean-energy, NEMSA-certified installation, environmental, radiation-safety or technical pathway", "issuer": "COREN / NEMSA / NERC / NESREA / NNRA / applicable authority", "level": "role_dependent", "evidence": "Nigerian clean-energy and environmental regulator sources", "limitation": "The applicable certification or permit depends on the system, facility, role and responsibility."}],
+      "regulatory_requirements": [{"name": "Energy, environmental, waste, water and radiation activities must follow the applicable Nigerian regulator, permit, safety and environmental requirements", "priority": "required_when_applicable", "evidence": "NERC, NEMSA, NESREA and Nigerian sector sources", "limitation": "Facility permits and professional registration are not blanket requirements for every support role."}]
+    },
+    {
+      "id": "ng_maritime_aviation_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nimasa_stcw_2026", "ng_nimasa_maritime", "ng_nbte_nos_brochure_2026"],
+      "domain_ids": ["D069", "D076", "D134", "D035"],
+      "subgroup_patterns": ["Airline & Airport Operations", "Flight Crew", "Maritime Officers", "Deck & Port Operations", "Ship Engineering", "Naval Architecture"],
+      "role_patterns": ["air traffic controller", "air traffic safety technician", "aircraft maintenance engineer", "aircraft maintenance technician", "aviation inspector", "avionics inspector", "airport operations officer", "flight operations officer", "flight instructor", "commercial pilot", "airline transport pilot", "flight attendant", "aircraft ground handling agent", "maritime pilot", "ordinary seaman", "sailor", "marine engineer", "marine chief engineer", "deck officer", "ship captain", "naval architect", "vessel traffic service operator", "ship duty engineer", "ship assistant engineer", "officer of the watch", "boatswain", "stevedore"],
+      "skills": [
+        {"name": "Follow safety-critical operating procedures, checklists, watchkeeping, maintenance or cargo-handling controls appropriate to the role", "priority": "core", "evidence": "Nigerian maritime and aviation operational context"},
+        {"name": "Communicate clearly, manage handoffs and respond to abnormal, emergency or weather conditions", "priority": "core", "evidence": "Nigerian transport and safety-critical practice context"},
+        {"name": "Maintain accurate technical, medical-fitness, voyage, flight, maintenance or incident records", "priority": "core", "evidence": "NIMASA certification and transport-sector context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate navigation, communication, flight, marine-engineering, cargo, maintenance and safety equipment", "priority": "core", "evidence": "Nigerian maritime and aviation role context"},
+        {"name": "Approved checklists, watchkeeping records, maintenance systems and emergency procedures", "priority": "core", "evidence": "NIMASA STCW-aligned framework and Nigerian transport practice"}
+      ],
+      "competencies": [
+        {"name": "Operate or support safe transport operations within defined procedures, competence and authority", "priority": "core", "evidence": "Nigerian maritime and transport standards"},
+        {"name": "Recognise hazards, loss of control, equipment faults or non-conformity and escalate without delay", "priority": "core", "evidence": "Safety-critical Nigerian transport context"}
+      ],
+      "certifications": [{"name": "Applicable NIMASA STCW certificate, maritime medical fitness or aviation authority pathway", "issuer": "NIMASA / applicable Nigerian aviation or transport authority", "level": "regulated_or_role_dependent", "evidence": "NIMASA 2025 regulations and 2026 standards", "limitation": "The certification route differs between seafarers, port roles, pilots, engineers, cabin crew and airport operations."}],
+      "regulatory_requirements": [{"name": "Safety-critical maritime and aviation work must follow the applicable Nigerian transport regulator, certification, medical and operational rules", "priority": "required_when_applicable", "evidence": "NIMASA and Nigerian transport context", "limitation": "Do not apply seafarer certification rules to every port, logistics or maritime-adjacent role."}]
+    },
+    {
+      "id": "ng_finance_banking_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_cbn_recapitalization_2024_2026", "ng_ican_syllabus_2026", "ng_cibn_banking", "ng_sec_capital_markets"],
+      "domain_ids": ["D060", "D061", "D062", "D158", "D159", "D015"],
+      "subgroup_patterns": ["Banking & Credit", "Insurance", "Trading & Capital Markets", "Corporate Finance", "Credit Analysis"],
+      "role_patterns": ["bank teller", "credit analyst", "credit adviser", "credit manager", "bank account manager", "bank manager", "loan officer", "credit risk analyst", "personal banker", "financial analyst", "insurance claims handler", "insurance underwriter", "insurance broker", "insurance claims manager", "insurance fraud investigator", "actuary", "foreign exchange trader", "securities analyst", "investment manager", "corporate investment banker", "investment adviser", "financial trader", "financial risk manager", "stock broker", "investment analyst", "investment fund manager", "asset manager", "credit analyst"],
+      "skills": [
+        {"name": "Analyse financial information, risk, transactions, customers, products or markets and document defensible decisions", "priority": "core", "evidence": "Nigerian banking, insurance, capital-market and accountancy context"},
+        {"name": "Apply financial reporting, controls, ethics, compliance, customer-protection and confidentiality procedures", "priority": "core", "evidence": "CBN, ICAN, CIBN and SEC Nigerian context"},
+        {"name": "Communicate financial information clearly and escalate fraud, conduct, credit, liquidity or regulatory risks", "priority": "core", "evidence": "Nigerian financial-sector regulatory context"}
+      ],
+      "tools": [
+        {"name": "Banking, accounting, financial-analysis, risk, claims, portfolio, trading and regulatory-reporting systems appropriate to the role", "priority": "core", "evidence": "Nigerian financial-services context"},
+        {"name": "Spreadsheets, financial models, reconciliations, audit trails and customer or transaction records", "priority": "core", "evidence": "Nigerian accountancy and financial-sector practice"}
+      ],
+      "competencies": [
+        {"name": "Process, reconcile, assess or advise on financial activity accurately and within delegated authority", "priority": "core", "evidence": "Nigerian banking, insurance and capital-market context"},
+        {"name": "Identify anomalies, conflicts, mis-selling, fraud, credit or market risk and use the approved escalation route", "priority": "core", "evidence": "Nigerian financial-regulatory context"}
+      ],
+      "certifications": [{"name": "Applicable ICAN, CIBN, SEC-sponsored individual or insurance/actuarial professional pathway", "issuer": "ICAN / CIBN / SEC / applicable Nigerian professional body", "level": "role_dependent", "evidence": "Nigerian professional-body and regulator sources", "limitation": "The applicable credential depends on the exact role and regulated activity; no single certificate covers all finance roles."}],
+      "regulatory_requirements": [{"name": "Banking, insurance, securities and investment activities must follow the applicable Nigerian regulator, licence, conduct and reporting rules", "priority": "required_when_applicable", "evidence": "CBN, SEC, CIBN and ICAN context", "limitation": "Institutional capital or licence rules do not become personal certification requirements for every employee."}]
+    },
+    {
+      "id": "ng_education_teaching_library_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_trcn_standards_2026", "ng_trcn_teaching", "ng_nbte_nos_brochure_2026", "ng_education"],
+      "domain_ids": ["D039", "D040", "D073", "D127"],
+      "subgroup_patterns": ["Higher Education", "Vocational Education", "Teacher Education", "Library & Archive", "Early Childhood Education"],
+      "role_patterns": ["primary school teacher", "secondary school teacher", "special educational needs teacher secondary school", "adult literacy teacher", "university teaching assistant", "economics lecturer", "medicine lecturer", "nursing lecturer", "business lecturer", "educational researcher", "university research assistant", "vocational teacher", "ICT trainer", "corporate trainer", "vocational education assessor", "primary school teaching assistant", "early years teaching assistant", "early years teacher", "preschool teacher", "child care coordinator", "librarian", "library assistant", "archivist", "information manager", "conservator", "collection manager"],
+      "skills": [
+        {"name": "Plan, deliver, assess and improve learning or information services for the defined learner or user group", "priority": "core", "evidence": "TRCN teacher standards and Nigerian education-sector context"},
+        {"name": "Use inclusive communication, safeguarding, classroom or user-support practice and appropriate records", "priority": "core", "evidence": "Nigerian teacher-professionalisation and education context"},
+        {"name": "Evaluate learning, research, information or programme outcomes and use evidence to improve practice", "priority": "core", "evidence": "TRCN policy, competency-assessment and Nigerian education context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate lesson, assessment, learning-management, library, archive, catalogue and digital-information tools", "priority": "core", "evidence": "Nigerian education and information-service context"},
+        {"name": "Accessible learning materials, user records, research documentation and safeguarding procedures", "priority": "core", "evidence": "Nigerian teacher and education-practice context"}
+      ],
+      "competencies": [
+        {"name": "Create a safe, inclusive and purposeful learning or information environment and respond to user needs", "priority": "core", "evidence": "Nigerian teacher and education standards context"},
+        {"name": "Assess evidence, give useful feedback, protect records and collaborate with families, colleagues or institutions", "priority": "core", "evidence": "TRCN and Nigerian education context"}
+      ],
+      "certifications": [{"name": "Applicable TRCN professional qualifying examination, registration or Nigerian NOS/NSQ pathway", "issuer": "TRCN / NBTE / applicable education or information body", "level": "role_dependent", "evidence": "TRCN and NBTE Nigerian standards", "limitation": "TRCN registration applies to teaching practice within its mandate; it does not cover every trainer, librarian, researcher or childcare role."}],
+      "regulatory_requirements": [{"name": "Teaching and regulated education practice must follow applicable Nigerian registration, accreditation, safeguarding and institutional rules", "priority": "required_when_applicable", "evidence": "TRCN and Nigerian education context", "limitation": "The applicable requirement depends on the institution, role and professional mandate."}]
+    },
+    {
+      "id": "ng_hospitality_customer_service_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nbte_nos_brochure_2026", "ng_son_food_safety", "ng_fmino_tourism", "ng_nelex_customer_service_2026"],
+      "domain_ids": ["D053", "D082", "D028", "D031", "D036"],
+      "subgroup_patterns": ["Hospitality Operations", "Food & Beverage", "Tourism & Travel", "Customer Service", "Sales & Business Development"],
+      "role_patterns": ["head chef", "chef", "industrial cook", "cook", "pastry chef", "bartender", "barista", "waiter/waitress", "restaurant manager", "hotel receptionist", "concierge", "housekeeping supervisor", "tourist guide", "tour operator manager", "travel agency manager", "event manager", "customer service representative", "hotel concierge", "hospitality establishment receptionist", "receptionist", "call centre agent", "customer contact centre supervisor", "shop assistant", "commercial sales representative", "sales assistant", "sales manager", "account manager", "key account manager", "retail manager", "business developer"],
+      "skills": [
+        {"name": "Deliver consistent guest, customer, food-service or sales experiences while understanding needs and resolving problems", "priority": "core", "evidence": "Nigerian hospitality, customer-service and occupational-standard context"},
+        {"name": "Apply hygiene, safety, service-quality, complaint-handling, sales and record-keeping procedures appropriate to the role", "priority": "core", "evidence": "NBTE food/hospitality standards and SON food/service-quality context"},
+        {"name": "Coordinate people, stock, bookings, transactions, schedules and handoffs in a reliable service operation", "priority": "core", "evidence": "Nigerian hospitality and customer-service context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate point-of-sale, booking, customer-record, food-service, inventory, scheduling and communication tools", "priority": "core", "evidence": "Nigerian hospitality and customer-service practice context"},
+        {"name": "Food-safety, sanitation, service-quality and complaint records", "priority": "core_when_food_or_service_applies", "evidence": "SON and NBTE Nigerian service standards"}
+      ],
+      "competencies": [
+        {"name": "Complete service work accurately, safely and courteously to the customer's brief and the organisation's standard", "priority": "core", "evidence": "Nigerian hospitality and customer-service context"},
+        {"name": "Recognise service failures, safety or quality issues and resolve or escalate them with clear records", "priority": "core", "evidence": "SON service-quality and Nigerian customer-service context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian NOS/NSQ, food-safety, hospitality or service-quality training pathway", "issuer": "NBTE / SON / employer or applicable sector body", "level": "sector_training", "evidence": "NBTE, SON and Nigerian hospitality sources", "limitation": "The applicable pathway depends on the role and is not a universal certification for every customer-service or sales worker."}],
+      "regulatory_requirements": [{"name": "Food, hospitality, tourism and customer-facing activities must follow the applicable Nigerian health, food-safety, consumer, employment and facility rules", "priority": "required_when_applicable", "evidence": "NAFDAC, SON and Nigerian tourism context", "limitation": "Facility and product obligations are not automatically personal licences."}]
+    },
+    {
+      "id": "ng_architecture_built_environment_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_arcon_architecture", "ng_coren_reforms_2026", "ng_son_construction_2024", "ng_qsrbn_2024"],
+      "domain_ids": ["D021", "D052", "D051"],
+      "subgroup_patterns": ["Architecture & Design", "Built Environment", "Construction & Site Managers", "Real Estate"],
+      "role_patterns": ["architect", "landscape architect", "smart city consultant", "transport planner", "urban planner", "interior architect", "architectural technologist", "building inspector", "building services engineer", "quantity surveyor", "property developer", "construction manager"],
+      "skills": [
+        {"name": "Translate client, site, building, planning, environmental and user requirements into coordinated designs or project decisions", "priority": "core", "evidence": "Nigerian architecture, construction and built-environment context"},
+        {"name": "Apply building standards, safety, accessibility, materials, documentation and professional practice controls", "priority": "core", "evidence": "ARCON, COREN and SON Nigerian context"},
+        {"name": "Coordinate consultants, authorities, contractors, cost, schedule and quality information appropriate to the role", "priority": "core", "evidence": "Nigerian built-environment professional context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate CAD/BIM, drawing, surveying, estimating, specification, site-inspection and project-documentation tools", "priority": "core", "evidence": "Nigerian architecture and construction practice context"},
+        {"name": "Building approvals, compliance records, drawings, specifications and inspection workflows", "priority": "core_when_role_applies", "evidence": "ARCON and Nigerian construction standards"}
+      ],
+      "competencies": [
+        {"name": "Produce or verify coordinated, safe and buildable design or construction information", "priority": "core", "evidence": "Nigerian architecture and construction context"},
+        {"name": "Identify conflicts, defects, unsafe work or non-compliance and document corrective action", "priority": "core", "evidence": "COREN, ARCON and SON context"}
+      ],
+      "certifications": [{"name": "Applicable ARCON PPCE/registration, COREN, QSRBN or Nigerian construction pathway", "issuer": "ARCON / COREN / QSRBN / applicable professional body", "level": "regulated_or_role_dependent", "evidence": "Nigerian architecture, engineering and quantity-surveying regulators", "limitation": "The pathway depends on the exact profession; do not apply architecture registration to every design or construction role."}],
+      "regulatory_requirements": [{"name": "Architecture, engineering, quantity surveying and construction work must follow applicable Nigerian professional registration, planning, building and safety requirements", "priority": "required_when_applicable", "evidence": "ARCON, COREN, QSRBN and SON context", "limitation": "Professional registration and building approvals are not blanket requirements for every built-environment worker."}]
+    },
+    {
+      "id": "ng_legal_data_compliance_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nba_legal_practice", "ng_ndpc_legal_practice_2026", "ng_notary_regulations_2026", "ng_sec_capital_markets"],
+      "domain_ids": ["D037", "D038", "D162", "D163"],
+      "subgroup_patterns": ["Legal Practice", "Compliance & Regulation", "Immigration Law", "Intellectual Property Law", "Corporate & Commercial Law"],
+      "role_patterns": ["legal consultant", "legal administrative assistant", "legal assistant", "lawyer", "corporate lawyer", "data protection officer", "contract manager", "regulatory affairs manager", "legislative drafter", "human rights officer", "mediator", "notary", "prosecutor", "immigration lawyer / solicitor", "immigration adviser / OISC caseworker", "patent attorney / patent agent", "trademark attorney", "IP paralegal / patent administrator"],
+      "skills": [
+        {"name": "Research, interpret and apply Nigerian law, regulation, contracts, procedure and evidence to a defined matter", "priority": "core", "evidence": "Nigerian legal-practice and regulatory context"},
+        {"name": "Draft, review, negotiate, communicate and keep accurate confidential records appropriate to the matter", "priority": "core", "evidence": "Nigerian legal and data-protection context"},
+        {"name": "Identify conflicts, deadlines, privacy, conduct, litigation or compliance risk and escalate it appropriately", "priority": "core", "evidence": "NBA, NDPC and Nigerian legal-practice context"}
+      ],
+      "tools": [
+        {"name": "Legal research, matter-management, document, contract, evidence, case and compliance-record systems", "priority": "core", "evidence": "Nigerian legal and compliance practice context"},
+        {"name": "Data-protection audits, retention, access-control and accountability records where privacy work applies", "priority": "core_when_privacy_applies", "evidence": "NDPC legal-practice and DPCO guidance"}
+      ],
+      "competencies": [
+        {"name": "Produce accurate, reasoned and properly documented legal or compliance work within authority and professional duties", "priority": "core", "evidence": "Nigerian legal-practice context"},
+        {"name": "Protect client or subject confidentiality, data rights, due process and professional integrity", "priority": "core", "evidence": "NBA and NDPC sources"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian Bar practice certificate, notarial registration, DPCO or specialist legal pathway", "issuer": "NBA / Supreme Court Electronic Notary Register / NDPC / applicable professional body", "level": "regulated_or_role_dependent", "evidence": "Nigerian legal and data-protection regulators", "limitation": "Only the specific regulated practice should receive the corresponding gate; legal-adjacent roles may need a different pathway."}],
+      "regulatory_requirements": [{"name": "Legal, notarial, immigration, intellectual-property and data-protection work must follow the applicable Nigerian statute, regulator, practice certificate and professional-conduct rules", "priority": "required_when_applicable", "evidence": "NBA, NDPC and Nigerian legal-regulation sources", "limitation": "Do not turn a legal-practice or DPCO requirement into a blanket requirement for every compliance or administrative role."}]
+    },
+    {
+      "id": "ng_public_service_safeguarding_2025_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_bpsr_public_service_reform_2025", "ng_ohcsf_pasga_2025", "ng_trcn_safeguarding_2026", "ng_social_work_fm_2026"],
+      "domain_ids": ["D045", "D046", "D128", "D127"],
+      "subgroup_patterns": ["Public Administration", "Government Administration", "Social Work", "Community Development", "Youth Services", "Early Childhood Education"],
+      "role_patterns": ["public administration manager", "civil service administrative officer", "policy officer", "monitoring and evaluation officer", "community development officer", "social services manager", "youth programme director", "youth worker", "social worker", "social work assistant", "child welfare worker", "family support worker", "child care coordinator", "early years teacher"],
+      "skills": [
+        {"name": "Translate public policy or service objectives into accountable programmes, casework, decisions and measurable outcomes", "priority": "core", "evidence": "Nigerian public-service reform and skills-analysis context"},
+        {"name": "Use ethical, inclusive, citizen- or service-user-centred communication and protect confidential records", "priority": "core", "evidence": "Nigerian public-service and social-work context"},
+        {"name": "Identify safeguarding, service-delivery, performance or governance risks and escalate them through the correct channel", "priority": "core", "evidence": "Nigerian safeguarding and public-service context"}
+      ],
+      "tools": [
+        {"name": "Policy, case, programme, performance, skills-gap, monitoring and records systems appropriate to the role", "priority": "core", "evidence": "OHCSF, BPSR and Nigerian social-service context"},
+        {"name": "Safeguarding protocols, referral records, audit trails and outcome reports where people-facing work applies", "priority": "core_when_role_applies", "evidence": "TRCN safeguarding and social-work context"}
+      ],
+      "competencies": [
+        {"name": "Deliver or coordinate evidence-based, fair and accountable public or social services within the role's authority", "priority": "core", "evidence": "Nigerian public-service reform context"},
+        {"name": "Protect dignity, safety, participation and due process for citizens, children or service users", "priority": "core_when_people_facing", "evidence": "Nigerian safeguarding and social-work context"}
+      ],
+      "certifications": [{"name": "Applicable Nigerian public-service, TRCN, social-work or sector professional pathway", "issuer": "OHCSF / TRCN / relevant Nigerian professional or employing authority", "level": "role_dependent", "evidence": "Nigerian public-service and safeguarding sources", "limitation": "There is no single certificate for all public-administration, social-service and youth roles."}],
+      "regulatory_requirements": [{"name": "Public and people-facing services must follow the applicable Nigerian public-service, safeguarding, social-work and institutional rules", "priority": "required_when_applicable", "evidence": "BPSR, OHCSF, TRCN and social-work context", "limitation": "Do not infer a professional licence from general public-service reform or safeguarding guidance."}]
+    },
+    {
+      "id": "ng_bioinformatics_genomics_2025_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nbrda_genomics_2026", "ng_ui_afrigene_2026", "ng_coren_biomedical_engineering"],
+      "domain_ids": ["D142", "D027", "D041"],
+      "subgroup_patterns": ["Bioinformatics & Computational Biology", "Computational & Life Science Research", "Biomedical Scientists"],
+      "role_patterns": ["bioinformatics scientist", "bioinformatician / computational biologist", "computational genomics data scientist", "biostatistician", "geneticist", "molecular biologist", "microbiologist", "biochemist", "clinical research associate"],
+      "skills": [
+        {"name": "Use computational, statistical and biological methods to manage, analyse and interpret genomic or life-science data", "priority": "core", "evidence": "NBRDA and University of Ibadan Nigerian genomics training"},
+        {"name": "Design reproducible workflows, document assumptions and communicate results to biological, clinical or public-health collaborators", "priority": "core", "evidence": "Nigerian genomics and bioinformatics capacity-building context"},
+        {"name": "Apply responsible data, research, laboratory and quality practices to biological datasets and samples", "priority": "core", "evidence": "Nigerian biomedical and genomics research context"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate sequence-analysis, statistical, workflow, database, programming, laboratory and high-performance-computing tools", "priority": "core", "evidence": "Nigerian genomics and computational-biology training context"},
+        {"name": "Version control, reproducible notebooks, metadata, repositories and research documentation", "priority": "core", "evidence": "Nigerian bioinformatics capacity-building context"}
+      ],
+      "competencies": [
+        {"name": "Turn biological or public-health questions into reproducible computational analyses and explain the limitations of the result", "priority": "core", "evidence": "Nigerian genomics training and research context"},
+        {"name": "Collaborate across biology, medicine, public health and computing while protecting research quality and data responsibility", "priority": "core", "evidence": "Nigerian genomics and biomedical context"}
+      ],
+      "certifications": [{"name": "Nigerian genomics, bioinformatics, biomedical-research or computational-science training pathway", "issuer": "NBRDA / Nigerian university or recognised research and training body", "level": "research_or_sector_training", "evidence": "Nigerian genomics training sources", "limitation": "No universal Nigerian professional licence or single certificate was established for every bioinformatics role."}],
+      "regulatory_requirements": [{"name": "Biomedical and genomic research must follow applicable Nigerian research ethics, biosafety, data-protection and health-sector requirements", "priority": "required_when_applicable", "evidence": "Nigerian health, research and genomics context", "limitation": "Requirements depend on the sample, data, institution and clinical or research use."}]
+    },
+    {
+      "id": "ng_xr_immersive_2024_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_xr_lagos_2024_2026", "ng_nfc_creative_nos_2026", "ng_qsrbn_2024"],
+      "domain_ids": ["D167", "D139", "D021", "D042"],
+      "subgroup_patterns": ["XR & Immersive Technology", "Game Development", "Architecture & Design", "Film & Video Production"],
+      "role_patterns": ["XR Developer / XR Software Engineer", "Augmented Reality (AR) Developer", "Virtual Reality (VR) Developer", "XR / Immersive Experience Designer", "XR UX/UI Designer", "XR Interaction Designer", "XR Technical Artist", "3D Environment Artist (XR)", "Mixed Reality (MR) Engineer", "Spatial Computing Engineer", "XR Narrative Designer", "Volumetric Capture / Immersive Media Specialist", "Simulator Systems Engineer", "XR Hardware Technician", "Motion Capture Engineer", "digital games developer", "game programmer", "gameplay engineer", "technical artist", "3D modeller"],
+      "skills": [
+        {"name": "Design, build, test and explain interactive 3D, AR, VR or mixed-reality experiences for a defined user and use case", "priority": "core", "evidence": "Nigerian XR ecosystem and creative-media standards context"},
+        {"name": "Combine spatial interaction, 3D content, storytelling, user experience, safety and performance considerations", "priority": "core", "evidence": "Nigerian immersive-media and XR training signals"},
+        {"name": "Prototype with users, iterate from feedback and document device, accessibility and deployment constraints", "priority": "core", "evidence": "Nigerian XR practice context"}
+      ],
+      "tools": [
+        {"name": "Unity, Unreal Engine, 360-video, 3D modelling, motion-capture, XR hardware and interactive-prototyping tools", "priority": "core", "evidence": "Nigerian XR ecosystem sources"},
+        {"name": "Version control, asset pipelines, device testing and spatial UX documentation", "priority": "supplementary", "evidence": "Nigerian immersive-development context"}
+      ],
+      "competencies": [
+        {"name": "Deliver a working, safe and audience-appropriate immersive prototype or production asset", "priority": "core", "evidence": "Nigerian XR and creative-media context"},
+        {"name": "Explain trade-offs between immersion, usability, performance, cost, access and real-world safety", "priority": "core", "evidence": "Nigerian XR training and built-environment use-case context"}
+      ],
+      "certifications": [{"name": "Nigerian XR, game, creative-media or technical portfolio and training pathway", "issuer": "Nigerian training provider, NBTE or applicable creative/technical body", "level": "sector_training_or_portfolio", "evidence": "Nigerian XR ecosystem and NFC standards-development sources", "limitation": "No universal Nigerian XR certification or broad local-demand requirement was established."}],
+      "regulatory_requirements": [{"name": "Immersive work must follow applicable Nigerian copyright, privacy, accessibility, safety and sector rules", "priority": "required_when_applicable", "evidence": "Nigerian creative, XR and built-environment context", "limitation": "The applicable obligations depend on the deployment setting and content."}]
+    },
+    {
+      "id": "ng_esports_2025_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_efn_esports_2025", "ng_nfc_creative_nos_2026", "ng_fmacce_gaming_2026"],
+      "domain_ids": ["D168", "D139", "D042"],
+      "subgroup_patterns": ["Esports Operations", "Competitive Gaming", "Creator Economy", "Gaming & Interactive Media"],
+      "role_patterns": ["Professional Streamer", "Shoutcaster / Esports Caster", "Esports Coach", "Esports Analyst", "Professional Content Creator", "Community Manager", "Influencer Marketing Manager", "Esports Event Manager", "Esports Team Manager"],
+      "skills": [
+        {"name": "Coordinate teams, competitions, schedules, rules, communication and participant experience", "priority": "core", "evidence": "Esports Federation of Nigeria national programme context"},
+        {"name": "Produce, broadcast, analyse or moderate gaming content and communities for a defined audience", "priority": "core", "evidence": "Nigerian esports and creative-media context"},
+        {"name": "Apply fair play, safeguarding, integrity, platform, event-safety and sponsor or partner requirements", "priority": "core", "evidence": "Nigerian esports ecosystem and event context"}
+      ],
+      "tools": [
+        {"name": "Game, streaming, broadcast, tournament-management, moderation, analytics and community platforms", "priority": "core", "evidence": "Nigerian esports role-family context"},
+        {"name": "Content, scheduling, team communication and event-production workflows", "priority": "core", "evidence": "Nigerian esports and creative-sector context"}
+      ],
+      "competencies": [
+        {"name": "Run or support a safe, fair and engaging competition, broadcast, team or creator programme", "priority": "core", "evidence": "Esports Federation of Nigeria programmes"},
+        {"name": "Build an attributable portfolio of broadcasts, events, analysis, content, community or team outcomes", "priority": "core", "evidence": "Nigerian esports and creative-media context"}
+      ],
+      "certifications": [{"name": "Esports, event, broadcast, game, creator or creative-media training and portfolio pathway", "issuer": "Esports Federation of Nigeria / NBTE / applicable training or creative body", "level": "sector_training_or_portfolio", "evidence": "Nigerian esports programme and creative-media standards context", "limitation": "No universal Nigerian esports certification or local vacancy requirement was established."}],
+      "regulatory_requirements": [{"name": "Esports and creator activities must follow applicable Nigerian event, child-safety, copyright, advertising, platform and data rules", "priority": "required_when_applicable", "evidence": "Nigerian esports and creative-sector context", "limitation": "The applicable rules depend on event, audience, content and commercial activity."}]
+    },
+    {
+      "id": "ng_quantum_research_context_2025_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nipes_quantum_2025"],
+      "domain_ids": ["D141"],
+      "skills": [{"name": "Build foundational understanding of quantum-computing concepts, architectures and error-correction research", "priority": "foundation", "evidence": "Nigerian quantum-computing conference contribution"}],
+      "tools": [{"name": "Quantum-circuit simulation, scientific-computing and research-literature workflows", "priority": "supplementary", "evidence": "Derived cautiously from the Nigerian conference research context", "limitation": "The source does not name a Nigerian employer tool stack."}],
+      "competencies": [{"name": "Read, discuss and communicate quantum-computing research while distinguishing Nigerian research interest from market demand", "priority": "core", "evidence": "NIPES 2025 quantum-computing conference context"}],
+      "certifications": [{"name": "No Nigerian quantum-specific certification established in the 2024-2026 search", "issuer": "Not established", "level": "not_established", "evidence": "Nigerian quantum evidence review", "limitation": "Use global/remote academic and industry pathways separately."}],
+      "regulatory_requirements": [{"name": "No Nigerian quantum-specific professional or practice licence established in the 2024-2026 search", "priority": "not_established", "evidence": "Nigerian quantum evidence review", "limitation": "This is an explicit evidence limitation, not a claim that the field is absent."}]
+    },
+    {
+      "id": "ng_myjobmag_exact_title_signals_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_myjobmag"],
+      "domain_ids": ["D166", "D134", "D131", "D070", "D028", "D124", "D026", "D024"],
+      "role_patterns": ["mechanical engineer", "production manager", "project manager", "community health worker"],
+      "local_role_names": ["mechanical engineer", "production manager", "project manager", "community health extension worker"],
+      "skills": [
+        {"name": "Plan, coordinate and document work, stakeholders, schedules, risks and deliverables appropriate to the role", "priority": "core", "evidence": "Nigerian MyJobMag vacancy title and employer-description signals observed July 2026"},
+        {"name": "Apply role-specific technical, operational, quality and safety procedures and escalate exceptions", "priority": "core", "evidence": "Nigerian MyJobMag engineering and production vacancy signals"},
+        {"name": "Provide community-facing health education, outreach, referral and record support where the community-health role applies", "priority": "core_when_community_health_applies", "evidence": "Nigerian MyJobMag community-health title signal"}
+      ],
+      "tools": [
+        {"name": "Role-appropriate project, engineering, production, reporting, health-record and communication tools", "priority": "core", "evidence": "Nigerian MyJobMag vacancy descriptions and title signals"}
+      ],
+      "competencies": [
+        {"name": "Deliver assigned work to the employer's scope, quality, safety and reporting expectations", "priority": "core", "evidence": "Nigerian MyJobMag employer vacancy context"},
+        {"name": "Communicate progress, identify problems and maintain the records needed for handoff or supervision", "priority": "core", "evidence": "Nigerian MyJobMag vacancy context"}
+      ],
+      "certifications": [],
+      "regulatory_requirements": []
+    }
+  ]
+}

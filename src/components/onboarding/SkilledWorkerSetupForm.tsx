@@ -87,7 +87,7 @@ export function SkilledWorkerSetupForm({
       try {
         const result = await careerData.searchCareer(query);
         setPriorFieldResults(result);
-      } catch (error) {
+      } catch {
         setPriorFieldResults(
           comingSoon<CareerSearchResult>("Search is temporarily unavailable."),
         );
@@ -115,8 +115,8 @@ export function SkilledWorkerSetupForm({
       <View style={styles.heading}>
         <Text style={[styles.title, { color: colors.text }]}>Your trade</Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Tell us your trade so we can show the domains, certifications and jobs
-          it unlocks.
+          Tell us your trade so we can show the domains, certifications and
+          Opportunities it connects to when they are available.
         </Text>
       </View>
 

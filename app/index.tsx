@@ -2,13 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ActivityIndicator,
-  ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { Redirect, useRouter } from "expo-router";
+import { Redirect } from "expo-router";
 import { useAuth } from "../src/hooks/useAuth";
 import { isAdminAccount, needsLegacyTypeSelection, useEffectiveAccountType } from "../src/lib/accountType";
 import { getEducatorProfile } from "../src/lib/educatorProfile";
@@ -18,12 +15,8 @@ import { resolvePostAuthHref } from "../src/lib/resumeNavigation";
 import type { EducatorProfile } from "../src/types/institution";
 import {
   Brand,
-  FontSize,
-  FontWeight,
-  Radius,
   Spacing,
   useTheme,
-  webContainer,
   INTRO_SEEN_KEY,
 } from "../src/theme";
 import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
@@ -32,16 +25,13 @@ import { hasExplicitLogout } from "../src/lib/logoutState";
 import AuthScreen from "../src/screens/AuthScreen";
 
 export default function LandingPage() {
-  const router = useRouter();
   const { colors } = useTheme();
-  const { user, loading, signInGuest } = useAuth();
+  const { user, loading } = useAuth();
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type, user?.id);
   const [educatorProfile, setEducatorProfile] = useState<EducatorProfile | null>(null);
   const [profileHydrated, setProfileHydrated] = useState(false);
   const [adminResumeHref, setAdminResumeHref] = useState<string | null>(null);
   const [adminResumeHydrated, setAdminResumeHydrated] = useState(false);
-  const [guestBusy, setGuestBusy] = useState(false);
-  const [guestError, setGuestError] = useState<string | null>(null);
   const [introState, setIntroState] = useState<"loading" | "show" | "done" | "logged_out">("loading");
 
   useEffect(() => {
@@ -122,56 +112,4 @@ export default function LandingPage() {
 
 const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: "center", justifyContent: "center", gap: Spacing.lg },
-  scroll: {
-    flexGrow: 1,
-    justifyContent: "center",
-    paddingVertical: Spacing.xxl,
-    paddingHorizontal: Spacing.lg,
-    gap: Spacing.xl,
-  },
-  hero: { alignItems: "center", gap: Spacing.md },
-  title: {
-    fontSize: FontSize.hero,
-    fontWeight: FontWeight.black,
-    textAlign: "center",
-  },
-  sub: {
-    maxWidth: 680,
-    fontSize: FontSize.md,
-    lineHeight: FontSize.md * 1.5,
-    textAlign: "center",
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    gap: Spacing.md,
-  },
-  primaryBtn: {
-    minWidth: 180,
-    borderRadius: Radius.full,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.xl,
-    alignItems: "center",
-  },
-  primaryText: { color: "#fff", fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  secondaryBtn: {
-    minWidth: 180,
-    borderWidth: 1,
-    borderRadius: Radius.full,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.xl,
-    alignItems: "center",
-  },
-  secondaryText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  browse: { alignSelf: "center", padding: Spacing.sm },
-  browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  viewIntro: { alignSelf: "center", padding: Spacing.xs },
-  errorText: {
-    alignSelf: "center",
-    maxWidth: 420,
-    textAlign: "center",
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
-  },
 });

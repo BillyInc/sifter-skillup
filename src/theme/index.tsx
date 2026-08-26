@@ -577,7 +577,7 @@ export const Brand = {
   name: 'Sifter LevelUp',
   short: 'LevelUp',
   tagline: 'Be the best you can be.',
-  promise: 'See the domains, roles and jobs your programme unlocks — local, global, remote.',
+  promise: 'See the domains, roles and Opportunities your programme connects to — local, global, remote.',
   // Accent used across brand surfaces (logo, splash, intro). Aligned to the
   // existing gold/amber accent so it never clashes with the neutral UI.
   primary: '#F59E0B',
