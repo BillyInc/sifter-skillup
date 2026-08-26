@@ -86,15 +86,32 @@ if os.path.exists(csvpath):
             sgid = uid("subgroup", dk2, str(isco))
             SQL.append(f"UPDATE skillup_dev.domain_subgroups SET cluster_skill_uris = cluster_skill_uris || {jsonb(uris)} WHERE id = {q(sgid)} AND domain_id = {q(did)};")
     # Role skills — append to JSONB arrays
-    role_essential = [r for r in rows if r["level"] == "role_essential"]
-    role_optional = [r for r in rows if r["level"] == "role_optional"]
+    # skills_uris.csv labels these "essential"/"optional", NOT
+    # "role_essential"/"role_optional". The old names matched nothing, so all
+    # 69,213 role-skill rows -- 96% of the file -- silently emitted zero SQL and
+    # every one of the 5,038 roles had empty essential_skill_uris /
+    # optional_skill_uris. Nothing errored: a filter that matches no rows just
+    # produces no statements. Guarded below so a future rename fails loudly
+    # instead of quietly dropping the data again.
+    role_essential = [r for r in rows if r["level"] == "essential"]
+    role_optional = [r for r in rows if r["level"] == "optional"]
+    if not role_essential and not role_optional:
+        raise SystemExit(
+            "skills_uris.csv produced no role-level rows -- expected level "
+            f"'essential'/'optional', saw {sorted({r['level'] for r in rows})}"
+        )
     for label, rrows in [("essential_skill_uris", role_essential), ("optional_skill_uris", role_optional)]:
         by_role = {}
         for r in rrows:
             by_role.setdefault(r["key"], []).append(r["uri"])
         for rk, uris in by_role.items():
-            arr_literal = "'{" + ",".join('"' + u.replace("\\", "\\\\").replace('"', '\\"') + '"' for u in uris) + "}'"
-            SQL.append(f"UPDATE skillup_dev.domain_roles SET {label} = {label} || {arr_literal}::jsonb WHERE role_key = {q(rk)};")
+            # jsonb, so the literal must be a JSON array -- [..]. The previous
+            # form built '{"a","b"}', which is postgres ARRAY-literal syntax and
+            # invalid JSON ("{" starts an object, whose members need key:value),
+            # so every one of these statements would have failed on cast. It was
+            # never noticed because the level filter above meant none were ever
+            # emitted. Two bugs stacked in the same dead path.
+            SQL.append(f"UPDATE skillup_dev.domain_roles SET {label} = {label} || {jsonb(uris)} WHERE role_key = {q(rk)};")
     SQL.append("")
 
 # ── Tools demand re-rank ──────

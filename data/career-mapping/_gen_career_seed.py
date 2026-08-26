@@ -106,6 +106,25 @@ HIDDEN = set(scope_audit.get("scope", {}).get("hidden_domains_excluded", []))
 def dom_uid(dk): return uid("domain", dk)
 def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
 
+# Every (domain_key, isco_submajor) pair that section 2 will actually emit as a
+# domain_subgroups row. The computational layers reference subgroups by ISCO
+# sub-major rather than by id, and sg_uid() will happily mint a deterministic
+# uuid5 for a pair that has no subgroup row behind it. That is not a generator
+# error -- it is a foreign-key violation discovered much later, at load time,
+# against a table the seed itself populates. D078 and D056 currently carry
+# computational evidence while having no subgroups at all in
+# domain_structure.json, which is how four link rows and four method rows came
+# to reference three subgroup ids that the seed never creates.
+VALID_SG = {
+    (dk, str(sg["isco_submajor"]))
+    for dk, st in struct.items() if dk not in HIDDEN
+    for sg in st.get("subgroups", [])
+}
+# Collected rather than silently dropped: a missing subgroup means the evidence
+# file and domain_structure.json disagree, and that belongs in front of whoever
+# owns the data, not buried in a diff of row counts.
+computational_skipped = []
+
 R = defaultdict(list)  # table -> list[list[str sql-literals]]
 
 # Cross-domain role families are a relationship layer over the existing
@@ -162,6 +181,10 @@ for link in computational_links.get("links") or []:
     subgroup_key = str(link.get("subgroup_isco_submajor") or "")
     if not role_key or not domain_key or not subgroup_key or domain_key in HIDDEN:
         continue
+    if (domain_key, subgroup_key) not in VALID_SG:
+        computational_skipped.append(
+            ("computational_role_subgroup_links", domain_key, subgroup_key, role_key))
+        continue
     R["computational_role_subgroup_links"].append([
         q(uid("computational_role_subgroup", role_key, subgroup_key)),
         q(uid("role", role_key)), q(dom_uid(domain_key)),
@@ -180,6 +203,10 @@ for method in computational_methods.get("methods") or []:
     subgroup_key = str(method.get("isco_submajor") or "")
     method_name = str(method.get("name") or "").strip()
     if not domain_key or not subgroup_key or not method_name or domain_key in HIDDEN:
+        continue
+    if (domain_key, subgroup_key) not in VALID_SG:
+        computational_skipped.append(
+            ("computational_method_evidence", domain_key, subgroup_key, method_name))
         continue
     R["computational_method_evidence"].append([
         q(uid("computational_method", domain_key, subgroup_key, method_name.lower())),
@@ -473,11 +500,30 @@ if HIDDEN:
                ", ".join(q(dom_uid(d)) for d in sorted(HIDDEN)) + ");")
     out.append("")
 
+duplicate_ids_dropped = {}
+
 def emit(table, cols, vals, conflict="id"):
     if not vals: out.append(f"-- {table}: 0 rows"); return
     collist = ", ".join(cols)
     upd = ", ".join(f"{c}=EXCLUDED.{c}" for c in cols if c != "id")
     CH = 200
+    # Rows are chunked into separate INSERT statements, so a repeated id used to
+    # survive: each statement is its own command and the later one simply
+    # upserts over the earlier via ON CONFLICT DO UPDATE. That only holds while
+    # the duplicates happen to straddle a chunk boundary. Any consumer that
+    # batches differently -- a bulk loader, PostgREST, a wider CH -- collapses
+    # them into ONE command and postgres rejects the whole thing with
+    # "ON CONFLICT DO UPDATE command cannot affect row a second time".
+    # Deduplicate here, keeping the LAST occurrence, which is exactly what the
+    # sequential upserts resolved to.
+    if conflict in cols:
+        pos = cols.index(conflict)
+        seen = {}
+        for v in vals:
+            seen[v[pos]] = v
+        if len(seen) != len(vals):
+            duplicate_ids_dropped[table] = len(vals) - len(seen)
+            vals = list(seen.values())
     out.append(f"-- {table}: {len(vals)} rows")
     for i in range(0, len(vals), CH):
         chunk = vals[i:i+CH]
@@ -509,3 +555,17 @@ print("seed_career_v2.sql generated:")
 for t in ["domains","domain_subgroups","domain_roles","domain_tools","domain_certifications","computational_role_subgroup_links","computational_method_evidence","career_role_families","career_role_family_domains","career_role_family_aliases","career_role_family_members","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:
     print(f"  {t:26} {len(R[t])} rows")
 print(f"  (programme_domain unresolved programmes: {pd_unresolved})")
+
+for _t, _n in sorted(duplicate_ids_dropped.items()):
+    print(f"  (dedup: {_t} had {_n} repeated id(s), kept the last of each)")
+
+if computational_skipped:
+    print()
+    print(f"DATA DEFECT: {len(computational_skipped)} computational row(s) skipped -- they name a")
+    print("(domain, isco_submajor) that has no subgroup in domain_structure.json, so emitting")
+    print("them would violate the subgroup foreign key at load time. Fix the source data:")
+    print("either give the domain the subgroup, or drop the evidence entry.")
+    for table, dk, sm, ref in sorted(computational_skipped):
+        have = sorted(sm2 for (dk2, sm2) in VALID_SG if dk2 == dk)
+        print(f"  {table:34} {dk} isco_submajor={sm:<4} ref={ref!r}")
+        print(f"    {dk} has subgroups: {have or 'NONE'}")
