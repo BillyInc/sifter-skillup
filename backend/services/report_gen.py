@@ -85,6 +85,53 @@ def _html_certs(certs: list) -> str:
     return "".join(items) or "<li>No certifications are recorded for this selection.</li>"
 
 
+def _guidance_focus(domain: dict, subgroups: list, roles: list) -> str:
+    """Render the staged learning explanation without inventing a ranking."""
+    match_type = str(domain.get("matchType") or "").lower()
+    incomplete = domain.get("dataState") in {"partial", "unsourced"} or domain.get("sourceConfidence") in {"low", "unsourced"}
+    if match_type in {"functional", "adjacent"}:
+        bridge = "This is a possible pivot. Your current foundation helps, but you " + ("may need" if incomplete else "need") + " this bridge before specializing."
+    else:
+        bridge = "You already have partial preparation from your programme and primary domain. These are the " + ("additional skills you may need." if incomplete else "additional skills you need.")
+    subgroup_names = [str(item.get("name")) for item in subgroups if item.get("name")]
+    role_names = [str(item.get("name")) for item in roles if item.get("name")]
+    subgroup_text = ", ".join(subgroup_names) if subgroup_names else "the selected subgroup"
+    role_text = ", ".join(role_names) if role_names else "the selected role"
+    return f"""
+      <div class='focus entity'>
+        <h4>What to focus on next</h4>
+        <p>{html.escape(bridge)}</p>
+        <ol>
+          <li><strong>Portable domain foundation:</strong> start with the foundation competencies listed for this domain.</li>
+          <li><strong>Additional subgroup capabilities:</strong> build the capabilities introduced by {html.escape(subgroup_text)}.</li>
+          <li><strong>Role-specific proof, tools and credentials:</strong> apply the foundation and bridge to {html.escape(role_text)}; optional or advanced items can wait.</li>
+        </ol>
+      </div>"""
+
+
+def _guidance_data_notes(domains: list) -> str:
+    """Explain missing selected-entity fields without treating absence as rank."""
+    notes: list[str] = []
+    for domain in domains or []:
+        name = str(domain.get("name") or "the selected domain")
+        if domain.get("dataState") in {"partial", "unsourced"}:
+            notes.append(f"Some source fields for {name} are incomplete; unavailable fields are not treated as lower priority.")
+        if not domain.get("skills"):
+            notes.append(f"No domain foundation competencies were supplied for {name} in the selected source record.")
+        for subgroup in domain.get("subgroups") or []:
+            subgroup_name = str(subgroup.get("name") or "the selected subgroup")
+            if not subgroup.get("skills"):
+                notes.append(f"No subgroup competencies were supplied for {subgroup_name} in the selected source record.")
+        for role in domain.get("roles") or []:
+            role_name = str(role.get("name") or "the selected role")
+            role_skills = role.get("skills") if isinstance(role.get("skills"), dict) else {}
+            if not role_skills.get("essential"):
+                notes.append(f"No essential role competencies were supplied for {role_name} in the selected source record.")
+    if not notes:
+        notes.append("The report includes only the selected source-backed path. Missing local, remote or global signals are not interpreted as proof that an item is unimportant.")
+    return "".join(f"<li>{html.escape(note)}</li>" for note in notes)
+
+
 def _report_title(academic: dict) -> str:
     """Use the student's route language in the printable heading."""
     user_type = str(academic.get("userType") or "").lower()
@@ -213,9 +260,10 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
               </div>""")
         domain_blocks.append(f"""
           <section class='entity page-break'>
-            <div class='entity-kicker'>{e(str(domain.get('matchType') or 'Selected domain'))}</div>
+            <div class='entity-kicker'>{e('Primary route' if domain.get('intent') == 'primary' else str(domain.get('matchType') or 'Selected domain'))}</div>
             <h3>{e(str(domain.get('name') or 'Selected domain'))}</h3>
             <p>{e(str(domain.get('description') or ''))}</p>
+            {_guidance_focus(domain, domain_sg, domain_roles)}
             <h4>Domain competencies</h4><ul>{_html_list(domain.get('skills'))}</ul>
             <h4>Domain tools</h4><ul>{_html_tools(domain.get('tools'))}</ul>
             <h4>Domain certifications</h4><ul>{_html_certs(domain.get('certifications'))}</ul>
@@ -223,6 +271,8 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
             {('<h4>Selected roles</h4>' + ''.join(role_blocks)) if role_blocks else '<p class="muted">No role was selected under this domain.</p>'}
           </section>""")
     domains_html = "".join(domain_blocks) or "<p class='muted'>No domain, sub-group, or role has been selected for this report yet.</p>"
+    discovery_door = path.get("discoveryDoor") or "Not recorded"
+    data_notes_html = _guidance_data_notes(domains)
     school = academic.get("schoolName") or ctx.school_name
     access_block = _report_access_block(path.get("accessCode"))
     programme_blocks = []
@@ -254,10 +304,12 @@ ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ 
 <div class='watermark'>{e(watermark)}</div><div class='content'>
 <header class='head'><div class='eyebrow'>{e(str(school or 'Sifter LevelUp'))}</div><h1>{e(ctx.student_name)}</h1><div class='muted'>{e(_report_title(academic))} - generated {e(ctx.generated_on)}</div></header>
 <h2>Your guidance context</h2><div>{context_rows or '<p class="muted">No additional academic context was recorded.</p>'}</div>
+<h2>What you selected</h2><div class='row'><strong>Discovery door</strong><span>{e(str(discovery_door))}</span></div>
 <h2>Subjects you entered</h2><div>{subject_rows or '<p class="muted">No subjects were recorded.</p>'}</div>
 <h2>Programmes you saved</h2>{programme_html}<p class='muted'>Current guidance path: {e(str(programme.get('name') or 'Programme not confirmed'))} at {e(str(university.get('name') or 'Not confirmed'))}.</p>
 <h2>Admission requirements</h2><div>{requirement_rows}</div>
 <h2>Selected intelligence path</h2>{domains_html}
+<h2>Data notes</h2><ul>{data_notes_html}</ul>
 {access_block}
 <div class='foot'>This report contains the source-backed selections made during guidance. It does not include unselected catalogue entities, unsupported demand claims, or Post-UTME claims. Guidance is not an admission, employment, salary, immigration, legal or professional guarantee. Verify current requirements with the relevant Nigerian institution or regulator before acting. Generated by Sifter LevelUp.</div>
 </div></body></html>"""

@@ -8,111 +8,20 @@
   "P3": "Structural mismatch or missing subgroups; reconcile structure before UI acceptance."
  },
  "empty_domains": [],
- "thin_domain_count": 49,
+ "thin_domain_count": 35,
  "roles_without_source_signal": 0,
  "gaps": [
-  {
-   "priority": "P3",
-   "domain_id": "D003",
-   "domain_name": "Artificial Intelligence",
-   "roles": 5,
-   "structure_roles": 5,
-   "subgroups": 0,
-   "any_source_signal": 5,
-   "framework_signal": 1,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D144",
-   "domain_name": "Climate Science, Meteorology",
-   "roles": 5,
-   "structure_roles": 5,
-   "subgroups": 0,
-   "any_source_signal": 5,
-   "framework_signal": 1,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D091",
-   "domain_name": "Driving Instruction",
-   "roles": 7,
-   "structure_roles": 7,
-   "subgroups": 0,
-   "any_source_signal": 7,
-   "framework_signal": 1,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D132",
-   "domain_name": "Space Science, Exploration",
-   "roles": 8,
-   "structure_roles": 8,
-   "subgroups": 0,
-   "any_source_signal": 8,
-   "framework_signal": 7,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
   {
    "priority": "P3",
    "domain_id": "D123",
    "domain_name": "Radiography, Medical Imaging",
    "roles": 11,
-   "structure_roles": 11,
-   "subgroups": 0,
+   "structure_roles": 12,
+   "subgroups": 2,
    "any_source_signal": 11,
    "framework_signal": 10,
    "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D126",
-   "domain_name": "Complementary, Alternative",
-   "roles": 11,
-   "structure_roles": 11,
-   "subgroups": 0,
-   "any_source_signal": 11,
-   "framework_signal": 4,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D084",
-   "domain_name": "Payroll, Bookkeeping",
-   "roles": 14,
-   "structure_roles": 14,
-   "subgroups": 0,
-   "any_source_signal": 14,
-   "framework_signal": 4,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D105",
-   "domain_name": "Handicraft, Basketry, Textile Craft",
-   "roles": 14,
-   "structure_roles": 14,
-   "subgroups": 0,
-   "any_source_signal": 14,
-   "framework_signal": 1,
-   "reasons": [
-    "no subgroups"
+    "structure mismatch"
    ]
   },
   {
@@ -124,19 +33,6 @@
    "subgroups": 0,
    "any_source_signal": 15,
    "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D004",
-   "domain_name": "Cybersecurity",
-   "roles": 16,
-   "structure_roles": 16,
-   "subgroups": 0,
-   "any_source_signal": 16,
-   "framework_signal": 5,
    "reasons": [
     "no subgroups"
    ]
@@ -175,19 +71,6 @@
    "structure_roles": 17,
    "subgroups": 0,
    "any_source_signal": 17,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D072",
-   "domain_name": "Geospatial Science",
-   "roles": 18,
-   "structure_roles": 18,
-   "subgroups": 0,
-   "any_source_signal": 18,
    "framework_signal": 0,
    "reasons": [
     "no subgroups"
@@ -243,6 +126,19 @@
    "framework_signal": 0,
    "reasons": [
     "no subgroups"
+   ]
+  },
+  {
+   "priority": "P3",
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "roles": 20,
+   "structure_roles": 22,
+   "subgroups": 6,
+   "any_source_signal": 20,
+   "framework_signal": 14,
+   "reasons": [
+    "structure mismatch"
    ]
   },
   {
@@ -338,19 +234,6 @@
   },
   {
    "priority": "P3",
-   "domain_id": "D078",
-   "domain_name": "Social Sciences",
-   "roles": 24,
-   "structure_roles": 24,
-   "subgroups": 0,
-   "any_source_signal": 24,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
    "domain_id": "D104",
    "domain_name": "Pottery, Ceramics, Glass",
    "roles": 24,
@@ -358,45 +241,6 @@
    "subgroups": 0,
    "any_source_signal": 24,
    "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D002",
-   "domain_name": "Data Engineering",
-   "roles": 25,
-   "structure_roles": 25,
-   "subgroups": 0,
-   "any_source_signal": 25,
-   "framework_signal": 4,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D056",
-   "domain_name": "Blockchain",
-   "roles": 25,
-   "structure_roles": 25,
-   "subgroups": 0,
-   "any_source_signal": 25,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D007",
-   "domain_name": "UI/UX Design",
-   "roles": 26,
-   "structure_roles": 26,
-   "subgroups": 0,
-   "any_source_signal": 26,
-   "framework_signal": 1,
    "reasons": [
     "no subgroups"
    ]
@@ -468,32 +312,6 @@
   },
   {
    "priority": "P3",
-   "domain_id": "D142",
-   "domain_name": "Bioinformatics, Computational Biology",
-   "roles": 36,
-   "structure_roles": 36,
-   "subgroups": 0,
-   "any_source_signal": 36,
-   "framework_signal": 0,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
-   "domain_id": "D001",
-   "domain_name": "Software Engineering",
-   "roles": 37,
-   "structure_roles": 37,
-   "subgroups": 0,
-   "any_source_signal": 37,
-   "framework_signal": 2,
-   "reasons": [
-    "no subgroups"
-   ]
-  },
-  {
-   "priority": "P3",
    "domain_id": "D024",
    "domain_name": "Nursing",
    "roles": 38,
@@ -523,12 +341,12 @@
    "domain_id": "D041",
    "domain_name": "Scientific Research",
    "roles": 43,
-   "structure_roles": 43,
-   "subgroups": 0,
+   "structure_roles": 45,
+   "subgroups": 2,
    "any_source_signal": 43,
    "framework_signal": 0,
    "reasons": [
-    "no subgroups"
+    "structure mismatch"
    ]
   },
   {

@@ -53,12 +53,12 @@ const SLIDES: Slide[] = [
   {
     eyebrow: "WHAT YOU GET",
     title: "Your programme,\nfully mapped",
-    body: "Search any programme and see the domains, roles and skills it unlocks — and the internships and jobs that follow, local, global and remote.",
+    body: "Search any programme and see the domains, roles and skills it connects to. Verified Opportunities appear when available, with local, global and remote signals kept separate.",
   },
   {
     eyebrow: "WHAT YOU GET",
-    title: "Real opportunities,\ntailored to you",
-    body: "See the domains, roles and skills connected to your programme, then discover the opportunities that follow.",
+    title: "Opportunities,\nwhen available",
+    body: "See the domains, roles and skills connected to your programme, then discover verified Opportunities when they are available.",
   },
 ];
 

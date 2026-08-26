@@ -1,6 +1,6 @@
 # Sifter LevelUp complete data migration
 
-Status: reconciled and regenerated on 2026-08-22.
+Status: reconciled and regenerated on 2026-08-26.
 
 This is the authoritative runbook for the current career, JAMB, domain,
 admission, and source-backed resource data. SQL files are generated outputs;
@@ -10,6 +10,12 @@ the partition manifest, JSON parts, and generators under
 The generated SQL has been locally regenerated and audited. It has not been
 executed against Supabase by this audit; the post-seed queries below are the
 required proof of a successful Supabase run.
+
+The current worktree also contains
+`backend/seed_career_v2_preview_2026-08-25.sql`. That file is a development
+preview of the corrected career taxonomy/context payload. It is not the
+production seed, and it must not be applied while the Nigerian population gate
+is closed.
 
 A read-only check of the configured Supabase project on 2026-08-24 found the
 older live subject state (506 options, 4,593 option items, and 0 typed rule
@@ -31,6 +37,7 @@ variants.
 | `seed_subject_options.sql` | 596 national subject options and 7,793 national option items; replacement seed for directly matchable subject combinations |
 | `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 676 matchable, 137 structured source rules, 3 cross-references, 420 direct-entry records, 24 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
+| `seed_career_v2_preview_2026-08-25.sql` | Development preview: 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, 4,000 overlaps; unresolved Nigerian evidence remains explicit |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
 
@@ -123,12 +130,33 @@ Run each file in the order below. Keep each SQL file's transaction intact.
 4. `backend/migration_subject_rule_records.sql`
 5. `backend/migration_career_v2.sql`
 6. `backend/migration_admission_intelligence.sql`
-7. `backend/migration_enrichment_v1.sql`
-8. `backend/migration_market_intelligence_v1.sql`
-9. `backend/migration_role_tools.sql`
-10. `backend/migration_role_detail_enrichment.sql`
-11. `backend/migration_source_backed_career_layers.sql`
+7. `backend/migration_role_tools.sql`
+8. `backend/migration_source_backed_career_layers.sql`
+9. `backend/migration_enrichment_v1.sql`
+10. `backend/migration_market_intelligence_v1.sql`
+11. `backend/migration_role_detail_enrichment.sql`
 12. `backend/migration_career_resources_v1.sql`
+
+For the current career preview, the dependency-critical subset is:
+
+```text
+migration_career_v2.sql
+  -> migration_admission_intelligence.sql
+  -> migration_role_tools.sql
+  -> migration_source_backed_career_layers.sql
+  -> migration_enrichment_v1.sql
+  -> migration_market_intelligence_v1.sql
+  -> migration_role_detail_enrichment.sql (when role detail data is used)
+  -> migration_career_resources_v1.sql (when resource data is used)
+  -> migration_saved_resource_support.sql (after saved_items exists)
+  -> seed_career_v2_preview_2026-08-25.sql (development only)
+```
+
+`migration_role_tools.sql` must precede
+`migration_source_backed_career_layers.sql`, and both must precede the current
+preview seed. The preview inserts the source-backed columns and role-scoped
+tool ownership that those migrations create. This order is specific to the
+current preview and does not authorize a production deployment.
 
 `migration_subject_catalog.sql` is required before
 `migration_career_pilot.sql` on a fresh database because the latter creates

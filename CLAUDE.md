@@ -105,11 +105,11 @@ backend/migration_career_pilot.sql
 backend/migration_subject_rule_records.sql
 backend/migration_career_v2.sql       # staging/empty rebuild only
 backend/migration_admission_intelligence.sql
+backend/migration_role_tools.sql
+backend/migration_source_backed_career_layers.sql
 backend/migration_enrichment_v1.sql
 backend/migration_market_intelligence_v1.sql
-backend/migration_role_tools.sql
 backend/migration_role_detail_enrichment.sql
-backend/migration_source_backed_career_layers.sql
 backend/migration_career_resources_v1.sql
 
 # 3. Provisioning, onboarding, guidance, and institution access
@@ -145,6 +145,62 @@ backend/seed_phase8_9_enrichment.sql
 backend/seed_career_resources_v1_parts/part-001.sql ... final part
 backend/patch_subject_catalog_streams.sql
 ```
+
+### Current career preview seed (new since the last push)
+
+The current worktree contains one new SQL artifact:
+`backend/seed_career_v2_preview_2026-08-25.sql`. It is a development-only
+preview generated from the repaired subgroup taxonomy and the current
+source-backed Nigerian context layer. Its purpose is to let a developer inspect
+the corrected domain/subgroup/role rows, tools and provenance payload before
+role enrichment is complete. It is not the production seed.
+
+For a fresh or explicitly approved staging database, the career-specific order
+for this preview is:
+
+```text
+backend/migration_career_base_registry.sql
+backend/migration_subject_catalog.sql
+backend/migration_career_pilot.sql
+backend/migration_subject_rule_records.sql
+backend/migration_career_v2.sql                 # staging/empty rebuild only
+backend/migration_admission_intelligence.sql
+backend/migration_role_tools.sql
+backend/migration_source_backed_career_layers.sql
+backend/migration_enrichment_v1.sql
+backend/migration_market_intelligence_v1.sql
+backend/migration_role_detail_enrichment.sql    # if role detail/cert data is used
+backend/migration_career_resources_v1.sql       # if resources are used
+backend/migration_saved_resource_support.sql    # after saved_items exists
+backend/seed_career_v2_preview_2026-08-25.sql   # development only
+```
+
+The preview must not be applied to production or renamed into
+`seed_career_v2.sql`. Before applying it, confirm that
+`migration_role_tools.sql` and `migration_source_backed_career_layers.sql`
+have been applied because the preview writes role-owned tool fields and
+source-confidence, data-state, provenance and Nigerian-context columns. Keep
+the preview transaction intact, record the database and date, and run the
+post-seed count/orphan queries from
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The Nigerian population gate
+is currently closed; a production seed may be generated only after the
+role-enrichment, provenance, reconciliation and completeness gates pass.
+
+Do not claim that this SQL was applied based on a local generator run. SQL is
+only applied through the Supabase SQL Editor or a verified `psql` connection.
+
+### Global search parameter and career-intelligence routing
+
+When changing `useGlobalSearchParams` or any `globalSearchParam` fix, verify
+that legacy routing cannot consume or redirect a career-intelligence route's
+parameters. Career-intelligence screens should use route-local parameters for
+their entity identity and should receive only an explicit, allow-listed
+guidance context. If the global search parameter causes legacy routing to
+interfere with career-intelligence routing, disable the global search parameter
+for that path. If it is genuinely required by an admin or shell flow, resolve
+the conflict properly with route namespacing/allow-listing and route-integrity
+tests; do not leave a global-parameter fallback that can hijack the career
+intelligence flow.
 
 Do not run `backend/migration_career_intelligence.sql`; it is superseded.
 After the subject seeds, run the exhaustive matcher audit:
