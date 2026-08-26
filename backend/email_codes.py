@@ -78,7 +78,14 @@ async def store_code(
     # Overwrites any previous code for this address: requesting a new code
     # must invalidate the old one and reset the attempt counter.
     await client.delete(key)
-    await client.hset(key, mapping={"code": code, "attempts": "0", "expires_at": str(expires_at)})
+    # Write fields separately for compatibility with the Redis 3.x Windows
+    # build used by local development. Redis 4+ accepts the multi-field
+    # ``HSET key mapping=...`` form, but Redis 3.x rejects it with
+    # "wrong number of arguments for 'hset' command" and turns signup into a
+    # misleading browser CORS/Failed to fetch error.
+    await client.hset(key, "code", code)
+    await client.hset(key, "attempts", "0")
+    await client.hset(key, "expires_at", str(expires_at))
     await client.expire(key, int(ttl * 60) + _TTL_GRACE_SECONDS)
 
 

@@ -153,8 +153,40 @@
     "n": 3
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "Software Development & Systems Engineering",
+    "role_count": 37,
+    "cluster_skills": [
+     "computer programming",
+     "create software design",
+     "execute software tests",
+     "systems development life-cycle",
+     "data models"
+    ],
+    "description": "Build, test and maintain software systems and applications.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_sfia",
+      "ng_cpn"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -355,8 +387,41 @@
     "n": 3
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "Data Platform & Pipeline Engineering",
+    "role_count": 25,
+    "cluster_skills": [
+     "data engineering",
+     "database management systems",
+     "data warehouse",
+     "data mining",
+     "data quality assessment",
+     "digital data processing"
+    ],
+    "description": "Build reliable systems that collect, organise and move data.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_sfia",
+      "ng_cpn"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -550,8 +615,42 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "Machine Learning & Computational Intelligence",
+    "role_count": 5,
+    "cluster_skills": [
+     "machine learning",
+     "computer programming",
+     "statistics",
+     "mathematical modelling",
+     "scientific computing",
+     "data mining"
+    ],
+    "description": "Build computational models that learn from data and support decisions.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_sfia",
+      "global_wef",
+      "ng_cpn"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -752,8 +851,76 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "12",
+    "label": "Cybersecurity Leadership & Governance",
+    "role_count": 2,
+    "cluster_skills": [
+     "information security strategy",
+     "define security policies",
+     "manage IT security compliances",
+     "internal risk management policy"
+    ],
+    "description": "Set security direction, manage risk and coordinate protective work.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_nice",
+     "sources": [
+      "global_nice",
+      "global_esco",
+      "global_onet",
+      "ng_cpn",
+      "ng_legal"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn",
+       "ng_legal"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   },
+   {
+    "isco_submajor": "25",
+    "label": "Cyber Defence & Security Engineering",
+    "role_count": 11,
+    "cluster_skills": [
+     "information security strategy",
+     "computer forensics",
+     "cyber security",
+     "cyber attack counter-measures",
+     "define security policies",
+     "manage system security",
+     "risk management"
+    ],
+    "description": "Protect systems, investigate incidents and test security controls.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_nice",
+     "sources": [
+      "global_nice",
+      "global_esco",
+      "global_onet",
+      "ng_cpn",
+      "ng_legal"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn",
+       "ng_legal"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -932,6 +1099,11 @@
     "n": 2
    },
    {
+    "skill": "deploy cloud resource",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
     "skill": "design computer network",
     "prevalence": 0.1176,
     "n": 2
@@ -950,11 +1122,6 @@
     "skill": "ict security legislation",
     "prevalence": 0.1176,
     "n": 2
-   },
-   {
-    "skill": "identify suppliers",
-    "prevalence": 0.1176,
-    "n": 2
    }
   ],
   "has_subgroups": true,
@@ -968,18 +1135,18 @@
      "network engineering",
      "use an application-specific interface",
      "develop with cloud services",
-     "do cloud refactoring"
+     "do cloud refactoring",
+     "cloud technologies",
+     "design cloud architecture"
     ],
     "description": "Design, deploy and automate reliable cloud systems.",
     "raw_isco_label": "Information and communications technology professionals",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
-      "global_esco",
-      "global_isco",
-      "global_onet",
       "global_sfia",
-      "global_wef",
+      "global_esco",
+      "global_onet",
       "ng_cpn",
       "ng_telecom"
      ],
@@ -991,9 +1158,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 11
+     }
     },
     "display_order": 1
    },
@@ -1013,18 +1178,19 @@
      "monitor system performance",
      "balance database resources",
      "maintain database performance",
-     "maintain database security"
+     "maintain database security",
+     "cloud technologies",
+     "network engineering",
+     "deploy cloud resource"
     ],
     "description": "Keep cloud services working and help resolve technical issues.",
     "raw_isco_label": "Information and communications technicians",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
-      "global_esco",
-      "global_isco",
-      "global_onet",
       "global_sfia",
-      "global_wef",
+      "global_esco",
+      "global_onet",
       "ng_cpn",
       "ng_telecom"
      ],
@@ -1036,9 +1202,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 2
    },
@@ -1160,12 +1324,37 @@
     "n": 3
    },
    {
+    "skill": "digital systems",
+    "prevalence": 0.2353,
+    "n": 4
+   },
+   {
+    "skill": "embedded systems",
+    "prevalence": 0.2353,
+    "n": 4
+   },
+   {
+    "skill": "internet of things",
+    "prevalence": 0.2353,
+    "n": 4
+   },
+   {
     "skill": "manage system testing",
     "prevalence": 0.1818,
     "n": 2
    },
    {
+    "skill": "computer programming",
+    "prevalence": 0.1765,
+    "n": 3
+   },
+   {
     "skill": "create flowchart diagram",
+    "prevalence": 0.1765,
+    "n": 3
+   },
+   {
+    "skill": "design drawings",
     "prevalence": 0.1765,
     "n": 3
    },
@@ -1176,6 +1365,11 @@
    },
    {
     "skill": "analyse software specifications",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
+    "skill": "computer technology",
     "prevalence": 0.1176,
     "n": 2
    },
@@ -1200,6 +1394,11 @@
     "n": 2
    },
    {
+    "skill": "electricity principles",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
     "skill": "electronic equipment standards",
     "prevalence": 0.1176,
     "n": 2
@@ -1215,62 +1414,27 @@
     "n": 2
    },
    {
+    "skill": "engineering principles",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
+    "skill": "hardware testing methods",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
+    "skill": "identify ict system weaknesses",
+    "prevalence": 0.1176,
+    "n": 2
+   },
+   {
     "skill": "interpret technical texts",
     "prevalence": 0.1176,
     "n": 2
    },
    {
     "skill": "operate scientific measuring equipment",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "perform ict security testing",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "prepare production prototypes",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "provide ict consulting advice",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "read engineering drawings",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "record test data",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "sensors",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "task algorithmisation",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "test sensors",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "tools for software configuration management",
-    "prevalence": 0.1176,
-    "n": 2
-   },
-   {
-    "skill": "use software design patterns",
     "prevalence": 0.1176,
     "n": 2
    }
@@ -1293,19 +1457,21 @@
      "environmental threats",
      "control engineering",
      "electricity",
-     "microsensors"
+     "microsensors",
+     "Internet of Things",
+     "computer technology",
+     "integrate system components",
+     "embedded systems",
+     "hardware components"
     ],
     "description": "Design the engineering and sensing systems behind connected devices.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
-      "esco/o*net",
-      "global_esco",
-      "global_isco",
-      "global_onet",
       "global_sfia",
-      "global_wef",
+      "global_esco",
+      "global_onet",
       "ng_cpn",
       "ng_engineering"
      ],
@@ -1317,9 +1483,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 1
    },
@@ -1338,19 +1502,17 @@
      "utilise computer-aided software engineering tools",
      "use software libraries",
      "integrate system components",
-     "software architecture models"
+     "software architecture models",
+     "perform ICT security testing"
     ],
     "description": "Connect software, devices and data into working IoT systems.",
     "raw_isco_label": "Information and communications technology professionals",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
-      "esco/o*net",
-      "global_esco",
-      "global_isco",
-      "global_onet",
       "global_sfia",
-      "global_wef",
+      "global_esco",
+      "global_onet",
       "ng_cpn",
       "ng_engineering"
      ],
@@ -1362,9 +1524,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 14
+     }
     },
     "display_order": 2
    },
@@ -1596,8 +1756,85 @@
     "n": 3
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Visual, Interaction & Motion Design",
+    "role_count": 15,
+    "cluster_skills": [
+     "computer graphics",
+     "graphic design",
+     "follow a brief",
+     "follow work schedule",
+     "finish project within budget",
+     "adapt to type of media",
+     "design graphics",
+     "copyright legislation",
+     "web programming",
+     "ICT software specifications"
+    ],
+    "description": "Design digital interfaces, visual systems and interactive experiences.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_sfia",
+      "ng_cpn",
+      "ng_creative"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn",
+       "ng_creative"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   },
+   {
+    "isco_submajor": "25",
+    "label": "Product & Interaction Design",
+    "role_count": 11,
+    "cluster_skills": [
+     "levels of software testing",
+     "report test findings",
+     "provide software testing documentation",
+     "execute software tests",
+     "address problems critically",
+     "replicate customer software issues",
+     "develop digital content",
+     "use an application-specific interface",
+     "software anomalies",
+     "World Wide Web Consortium standards"
+    ],
+    "description": "Design, build and test digital products and user interactions.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_sfia",
+      "ng_cpn",
+      "ng_creative"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn",
+       "ng_creative"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": []
  },
@@ -1765,7 +2002,14 @@
      "use ICT ticketing system",
      "comply with legal regulations",
      "recruit employees",
-     "coordinate technological activities"
+     "coordinate technological activities",
+     "manage budgets",
+     "define technology strategy",
+     "manage staff",
+     "decision support systems",
+     "attack vectors",
+     "ICT project management",
+     "ICT project management methodologies"
     ],
     "description": "Lead telecommunications, information systems and technology operations.",
     "raw_isco_label": "Production and specialised services managers",
@@ -1786,9 +2030,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 1
    },
@@ -1804,7 +2046,14 @@
      "execute analytical mathematical calculations",
      "provide ICT system training",
      "define technical requirements",
-     "use session border controller"
+     "use session border controller",
+     "microwave principles",
+     "procurement of ICT network equipment",
+     "electronics principles",
+     "ICT communications protocols",
+     "telecom regulations",
+     "design process",
+     "systems development life-cycle"
     ],
     "description": "Design and maintain communications, radio and network infrastructure.",
     "raw_isco_label": "Science and engineering professionals",
@@ -1825,9 +2074,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 2
    },
@@ -1847,7 +2094,15 @@
      "provide cost benefit analysis reports",
      "develop financial statistics reports",
      "improve business processes",
-     "forecast workload"
+     "forecast workload",
+     "analyse business requirements",
+     "network engineering",
+     "ICT network routing",
+     "network standards",
+     "design computer network",
+     "forecast future ICT network needs",
+     "implement a virtual private network",
+     "implement ICT network diagnostic tools"
     ],
     "description": "Plan, configure and integrate telecommunications and network systems.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -1868,9 +2123,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 3
    },
@@ -1890,7 +2143,8 @@
      "present reports",
      "have computer literacy",
      "tolerate stress",
-     "ICT network cable limitations"
+     "ICT network cable limitations",
+     "perform risk analysis"
     ],
     "description": "Install, monitor and support telecommunications and network equipment.",
     "raw_isco_label": "Information and communications technicians",
@@ -1911,9 +2165,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 4
    }
@@ -1930,7 +2182,7 @@
   "role_hint_certifications": []
  },
  "D139": {
-  "role_count": 29,
+  "role_count": 41,
   "foundation_skills": [
    {
     "skill": "computer graphics",
@@ -2088,7 +2340,7 @@
    {
     "isco_submajor": "21",
     "label": "Game Art & Animation",
-    "role_count": 14,
+    "role_count": 22,
     "cluster_skills": [
      "labour legislation",
      "intellectual property law",
@@ -2101,17 +2353,27 @@
      "discuss artwork",
      "adobe creative suite",
      "develop an artistic framework",
-     "monitor developments in technology used for design"
+     "monitor developments in technology used for design",
+     "computer graphics",
+     "graphic design",
+     "follow a brief",
+     "finish project within budget",
+     "follow work schedule",
+     "adapt to type of media",
+     "analyse a script",
+     "design graphics",
+     "study media sources",
+     "develop animations"
     ],
     "description": "Create visual, animated and interactive assets for digital games.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "global_creative",
       "global_esco",
-      "global_game_dev",
       "global_onet",
+      "global_game_dev",
+      "global_creative",
       "ng_creative"
      ],
      "ownership": "subgroup",
@@ -2121,16 +2383,14 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 14
+     }
     },
     "display_order": 1
    },
    {
     "isco_submajor": "25",
     "label": "Gameplay Programming",
-    "role_count": 9,
+    "role_count": 12,
     "cluster_skills": [
      "report test findings",
      "software architecture models",
@@ -2143,7 +2403,15 @@
      "style sheet languages",
      "content development processes",
      "web services",
-     "translate requirements into visual design"
+     "translate requirements into visual design",
+     "develop software prototype",
+     "define technical requirements",
+     "levels of software testing",
+     "provide software testing documentation",
+     "execute software tests",
+     "address problems critically",
+     "replicate customer software issues",
+     "web programming"
     ],
     "description": "Design, develop and test the software systems that make games work.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -2151,8 +2419,8 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_game_dev",
       "global_onet",
+      "global_game_dev",
       "global_sfia",
       "ng_cpn"
      ],
@@ -2163,16 +2431,14 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 9
+     }
     },
     "display_order": 2
    },
    {
     "isco_submajor": "26",
     "label": "Creative Direction",
-    "role_count": 6,
+    "role_count": 7,
     "cluster_skills": [
      "theatre techniques",
      "adapt designers’ work to the performance venue",
@@ -2180,19 +2446,21 @@
      "analyse the need for technical resources",
      "provide input to collaborators to guide their work",
      "develop design concept",
-     "organise rehearsals"
+     "organise rehearsals",
+     "manage budgets",
+     "finish project within budget",
+     "analyse a script"
     ],
     "description": "Shape the creative direction, production and experience of digital games.",
     "raw_isco_label": "Legal, social and cultural professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "global_creative",
       "global_esco",
-      "global_game_dev",
       "global_onet",
-      "ng_creative",
-      "tesda_psf_game_development"
+      "global_game_dev",
+      "global_creative",
+      "ng_creative"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -2201,9 +2469,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 6
+     }
     },
     "display_order": 3
    }
@@ -2300,6 +2566,11 @@
     "n": 4
    },
    {
+    "skill": "control engineering",
+    "prevalence": 0.2,
+    "n": 4
+   },
+   {
     "skill": "fasten components",
     "prevalence": 0.2,
     "n": 4
@@ -2358,11 +2629,6 @@
     "skill": "electrical engineering",
     "prevalence": 0.1818,
     "n": 2
-   },
-   {
-    "skill": "physics",
-    "prevalence": 0.1818,
-    "n": 2
    }
   ],
   "has_subgroups": true,
@@ -2386,21 +2652,14 @@
     "source_provenance": {
      "source": "skills_england_robotics",
      "sources": [
-      "arm_robotics_career",
-      "arm_roboticscareer",
-      "global_esco",
-      "skills_england_advanced_robotics_engineer",
-      "skills_england_robotics",
-      "skills_england_robotics_engineer"
+      "skills_england_robotics"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 9
+     }
     },
     "display_order": 1
    },
@@ -2457,30 +2716,26 @@
      "interpret circuit diagrams",
      "maintain robotic equipment",
      "monitor automated machines",
-     "assemble mechatronic units"
+     "assemble mechatronic units",
+     "robot maintenance",
+     "equipment troubleshooting",
+     "safe work practices",
+     "preventive maintenance",
+     "technical documentation"
     ],
     "description": "Maintain, test and support robotic and precision systems.",
     "raw_isco_label": "Science and engineering associate professionals",
     "source_provenance": {
      "source": "arm_robotics_career",
      "sources": [
-      "arm_robotics_career",
-      "arm_roboticscareer",
-      "global_esco",
-      "global_isco",
-      "global_onet",
-      "global_sfia",
-      "global_wef",
-      "skills_england_robotics"
+      "arm_robotics_career"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 3
    },
@@ -2716,8 +2971,8 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_education",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_education"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -2727,9 +2982,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 10
+     }
     },
     "display_order": 1
    },
@@ -2749,7 +3002,16 @@
      "tools for software configuration management",
      "system design",
      "software architecture models",
-     "software metrics"
+     "software metrics",
+     "define technical requirements",
+     "systems development life-cycle",
+     "digital systems",
+     "provide ICT consulting advice",
+     "use an application-specific interface",
+     "levels of software testing",
+     "address problems critically",
+     "data science",
+     "establish data processes"
     ],
     "description": "Build data systems, computational services and analytical software.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -2759,7 +3021,6 @@
       "global_esco",
       "global_onet",
       "global_sfia",
-      "global_wef",
       "ng_cpn"
      ],
      "ownership": "subgroup",
@@ -2769,9 +3030,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 27
+     }
     },
     "display_order": 2
    },
@@ -2788,7 +3047,10 @@
      "execute analytical mathematical calculations",
      "apply statistical analysis techniques",
      "apply scientific methods",
-     "conduct quantitative research"
+     "conduct quantitative research",
+     "digital data processing",
+     "mathematics",
+     "statistics"
     ],
     "description": "Prepare, process and check the data used for statistical analysis.",
     "raw_isco_label": "Business and administration associate professionals",
@@ -2797,8 +3059,8 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_education",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_education"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -2808,9 +3070,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 3
    }
@@ -3007,8 +3267,8 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_business",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_business"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -3018,9 +3278,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 1
    },
@@ -3040,7 +3298,11 @@
      "advise on efficiency improvements",
      "liaise with managers",
      "identify undetected organisational needs",
-     "align efforts towards business development"
+     "align efforts towards business development",
+     "apply change management",
+     "business analysis",
+     "management consulting",
+     "perform business analysis"
     ],
     "description": "Use business data and structured analysis to improve decisions and operations.",
     "raw_isco_label": "Business and administration professionals",
@@ -3049,7 +3311,6 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "global_wef",
       "ng_business",
       "ng_nbs"
      ],
@@ -3061,9 +3322,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 12
+     }
     },
     "display_order": 2
    },
@@ -3083,7 +3342,16 @@
      "use data processing techniques",
      "establish data processes",
      "create project specifications",
-     "data engineering"
+     "data engineering",
+     "define technical requirements",
+     "use an application-specific interface",
+     "systems development life-cycle",
+     "digital systems",
+     "levels of software testing",
+     "address problems critically",
+     "provide ICT consulting advice",
+     "analyse business requirements",
+     "integrate system components"
     ],
     "description": "Build and maintain the data and information systems used for analysis.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -3093,8 +3361,8 @@
       "global_esco",
       "global_onet",
       "global_sfia",
-      "ng_business",
-      "ng_cpn"
+      "ng_cpn",
+      "ng_business"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -3104,9 +3372,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 24
+     }
     },
     "display_order": 3
    },
@@ -3123,7 +3389,10 @@
      "execute analytical mathematical calculations",
      "apply statistical analysis techniques",
      "apply scientific methods",
-     "conduct quantitative research"
+     "conduct quantitative research",
+     "digital data processing",
+     "statistics",
+     "statistical analysis system software"
     ],
     "description": "Prepare, process and check the data used for business intelligence and reporting.",
     "raw_isco_label": "Business and administration associate professionals",
@@ -3143,9 +3412,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 4
    }
@@ -3333,7 +3600,9 @@
      "manage research data",
      "statistical modeling techniques",
      "research design",
-     "scientific literature"
+     "scientific literature",
+     "quantitative analysis",
+     "financial forecasting"
     ],
     "description": "Use mathematics, statistics and data to understand financial risk and markets.",
     "raw_isco_label": "Science and engineering professionals",
@@ -3342,8 +3611,8 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_finance",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_finance"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -3353,9 +3622,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 1
    },
@@ -3368,7 +3635,17 @@
      "provide support in financial calculation",
      "financial management",
      "Python",
-     "game theory"
+     "game theory",
+     "actuarial science",
+     "analyse financial risk",
+     "quantitative analysis",
+     "economics",
+     "fundamental analysis",
+     "asset management",
+     "modern portfolio theory",
+     "analyse market financial trends",
+     "review investment portfolios",
+     "obtain financial information"
     ],
     "description": "Use financial data, models and evidence to assess markets, investments and risk.",
     "raw_isco_label": "Business and administration professionals",
@@ -3388,9 +3665,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 2
    },
@@ -3403,7 +3678,15 @@
      "trade foreign currencies",
      "forecast economic trends",
      "communicate with customers",
-     "handle financial transactions"
+     "handle financial transactions",
+     "economics",
+     "analyse market financial trends",
+     "financial markets",
+     "actuarial science",
+     "financial jurisdiction",
+     "analyse economic trends",
+     "financial products",
+     "stock market"
     ],
     "description": "Apply market information, quantitative judgement and risk controls to financial transactions.",
     "raw_isco_label": "Business and administration associate professionals",
@@ -3423,9 +3706,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 14
+     }
     },
     "display_order": 3
    }
@@ -3507,6 +3788,16 @@
     "n": 2
    },
    {
+    "skill": "blockchain architecture",
+    "prevalence": 0.2143,
+    "n": 3
+   },
+   {
+    "skill": "blockchain components",
+    "prevalence": 0.2143,
+    "n": 3
+   },
+   {
     "skill": "blockchain application areas",
     "prevalence": 0.1429,
     "n": 2
@@ -3518,16 +3809,6 @@
    },
    {
     "skill": "blockchain applications security principles",
-    "prevalence": 0.1429,
-    "n": 2
-   },
-   {
-    "skill": "blockchain-based business models",
-    "prevalence": 0.1429,
-    "n": 2
-   },
-   {
-    "skill": "blockchain-based services regulation",
     "prevalence": 0.1429,
     "n": 2
    },
@@ -3567,22 +3848,22 @@
     "n": 2
    },
    {
+    "skill": "blockchain-based business models",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "blockchain-based services regulation",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
     "skill": "business processes",
     "prevalence": 0.1429,
     "n": 2
    },
    {
-    "skill": "decentralised identifiers",
-    "prevalence": 0.1429,
-    "n": 2
-   },
-   {
-    "skill": "design process for blockchain-based systems",
-    "prevalence": 0.1429,
-    "n": 2
-   },
-   {
-    "skill": "develop blockchain innovative architectures",
+    "skill": "debug software",
     "prevalence": 0.1429,
     "n": 2
    }
@@ -3641,19 +3922,22 @@
      "distributed ledger technologies vulnerabilities",
      "distributed ledger technologies consensus protocols",
      "identify blockchain innovation opportunities",
-     "explain blockchain implications"
+     "explain blockchain implications",
+     "computer programming",
+     "create software design",
+     "data models",
+     "software architecture models",
+     "ICT system integration",
+     "perform ICT security testing"
     ],
     "description": "Build secure software and data systems for financial services.",
     "raw_isco_label": "Information and communications technology professionals",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
-      "global_esco",
-      "global_isco",
-      "global_onet",
       "global_sfia",
-      "global_wef",
-      "global_wipo",
+      "global_esco",
+      "global_onet",
       "ng_cpn",
       "ng_finance"
      ],
@@ -3665,9 +3949,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 9
+     }
     },
     "display_order": 2
    },
@@ -3678,16 +3960,17 @@
     "cluster_skills": [
      "data models",
      "ICT system integration",
-     "perform ICT security testing"
+     "perform ICT security testing",
+     "computer programming"
     ],
     "description": "Support the systems, processes and products that deliver financial services.",
     "raw_isco_label": "Business and administration associate professionals",
     "source_provenance": {
      "source": "global_sfia",
      "sources": [
+      "global_sfia",
       "global_esco",
       "global_onet",
-      "global_sfia",
       "ng_cpn",
       "ng_finance"
      ],
@@ -3699,9 +3982,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 3
    },
@@ -4066,7 +4347,11 @@
      "numerical sequences",
      "draft scientific or academic papers and technical documentation",
      "create solutions to problems",
-     "manage research data"
+     "manage research data",
+     "mathematical modelling",
+     "quantitative analysis",
+     "statistical modeling techniques",
+     "data quality assessment"
     ],
     "description": "Use probability, statistics and modelling to understand uncertainty and risk.",
     "raw_isco_label": "Science and engineering professionals",
@@ -4075,8 +4360,8 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_finance",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_finance"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -4086,9 +4371,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 1
    },
@@ -4107,7 +4390,14 @@
      "risk modelling",
      "capital modelling",
      "stress testing",
-     "solvency analysis"
+     "solvency analysis",
+     "insurance law",
+     "principles of insurance",
+     "actuarial science",
+     "types of insurance",
+     "obtain financial information",
+     "insurance market",
+     "synthesise financial information"
     ],
     "description": "Use probability, statistics and evidence to assess insurance risk.",
     "raw_isco_label": "Business and administration professionals",
@@ -4116,7 +4406,6 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "global_wef",
       "ng_finance",
       "ng_nbs"
      ],
@@ -4128,9 +4417,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 2
    },
@@ -4143,7 +4430,15 @@
      "communicate with beneficiaries",
      "financial markets",
      "handle incoming insurance claims",
-     "interview insurance claimants"
+     "interview insurance claimants",
+     "actuarial science",
+     "insurance law",
+     "principles of insurance",
+     "types of insurance",
+     "claims procedures",
+     "review insurance process",
+     "analyse claim files",
+     "obtain financial information"
     ],
     "description": "Apply structured data, policy and risk knowledge to insurance decisions and claims.",
     "raw_isco_label": "Business and administration associate professionals",
@@ -4163,9 +4458,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 11
+     }
     },
     "display_order": 3
    }
@@ -6043,8 +6336,47 @@
     "n": 2
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Geospatial Data & Spatial Analysis",
+    "role_count": 18,
+    "cluster_skills": [
+     "mathematics",
+     "geology",
+     "geographic information systems",
+     "cartography",
+     "apply statistical analysis techniques",
+     "perform scientific research",
+     "perform surveying calculations",
+     "prepare scientific reports",
+     "create thematic maps",
+     "create GIS reports"
+    ],
+    "description": "Use mapping, geographic data and scientific analysis to understand places and physical systems.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_built_environment",
+      "ng_engineering",
+      "ng_environment"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_engineering",
+       "ng_environment"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [
    {
     "name": "Registered Surveyor (SURCON)",
@@ -6842,6 +7174,21 @@
     "n": 2
    },
    {
+    "skill": "mathematics",
+    "prevalence": 0.2,
+    "n": 3
+   },
+   {
+    "skill": "mechanical engineering",
+    "prevalence": 0.2,
+    "n": 3
+   },
+   {
+    "skill": "mechatronics",
+    "prevalence": 0.2,
+    "n": 3
+   },
+   {
     "skill": "perform test run",
     "prevalence": 0.2,
     "n": 3
@@ -6905,21 +7252,6 @@
     "skill": "design drawings",
     "prevalence": 0.1667,
     "n": 1
-   },
-   {
-    "skill": "electrical engineering",
-    "prevalence": 0.1667,
-    "n": 1
-   },
-   {
-    "skill": "engineering principles",
-    "prevalence": 0.1667,
-    "n": 1
-   },
-   {
-    "skill": "engineering processes",
-    "prevalence": 0.1667,
-    "n": 1
    }
   ],
   "has_subgroups": true,
@@ -6940,19 +7272,25 @@
      "project management",
      "smart grids systems",
      "computer science",
-     "artificial lighting systems"
+     "artificial lighting systems",
+     "electronics",
+     "engineering principles",
+     "design drawings",
+     "electrical engineering",
+     "technical drawings",
+     "physics",
+     "computer engineering",
+     "automation technology",
+     "adjust engineering designs"
     ],
     "description": "Design and control automated industrial processes and systems.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "global_built_environment",
       "global_esco",
-      "global_isco",
       "global_onet",
       "global_sfia",
-      "global_wef",
       "ng_engineering",
       "ng_nbte"
      ],
@@ -6964,9 +7302,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 4
+     }
     },
     "display_order": 1
    },
@@ -7291,18 +7627,24 @@
      "maintain plans of a mining site",
      "manage staff",
      "create thematic maps",
-     "create GIS reports"
+     "create GIS reports",
+     "mathematics",
+     "perform surveying calculations",
+     "cartography",
+     "geographic information systems",
+     "geomatics",
+     "process collected survey data",
+     "surveying methods",
+     "record survey data"
     ],
     "description": "Measure, map and manage land and spatial information using surveying technology.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "global_built_environment",
       "global_esco",
-      "global_isco",
       "global_onet",
-      "global_wef",
+      "global_built_environment",
       "ng_engineering",
       "ng_environment"
      ],
@@ -7314,9 +7656,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 1
    },
@@ -7632,16 +7972,23 @@
      "communicate with construction crews",
      "execute feasibility study",
      "adjust engineering designs",
-     "use technical drawing software"
+     "use technical drawing software",
+     "engineering principles",
+     "technical drawings",
+     "urban planning",
+     "environmental policy",
+     "ensure compliance with environmental legislation",
+     "civil engineering",
+     "engineering processes"
     ],
     "description": "Use data, engineering and planning to improve connected transport and urban systems.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "global_built_environment",
       "global_esco",
       "global_onet",
+      "global_built_environment",
       "ng_engineering"
      ],
      "ownership": "subgroup",
@@ -7651,9 +7998,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 12
+     }
     },
     "display_order": 2
    },
@@ -7918,7 +8263,7 @@
   ]
  },
  "D025": {
-  "role_count": 20,
+  "role_count": 22,
   "foundation_skills": [
    {
     "skill": "pharmaceutical technology",
@@ -8147,7 +8492,7 @@
    {
     "isco_submajor": "22",
     "label": "Licensed Pharmacists",
-    "role_count": 10,
+    "role_count": 12,
     "cluster_skills": [
      "pharmaceutical legislation",
      "controlled substances permits",
@@ -8456,17 +8801,17 @@
      "data quality assessment",
      "data ethics",
      "scientific research methodology",
-     "statistical analysis; clinical trial design; R/SAS; epidemiological methods"
+     "statistical analysis; clinical trial design; R/SAS; epidemiological methods",
+     "mathematics"
     ],
     "description": "Use population data, statistics and evidence to understand and improve public health.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "esco/o*net",
       "global_esco",
-      "global_health",
       "global_onet",
+      "global_health",
       "ng_health",
       "ng_nbs"
      ],
@@ -8478,9 +8823,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 1
    },
@@ -8756,7 +9099,17 @@
      "virology",
      "fish biology",
      "pharmacology",
-     "physics"
+     "physics",
+     "perform scientific research",
+     "manage personal professional development",
+     "draft scientific or academic papers and technical documentation",
+     "manage research data",
+     "interact professionally in research and professional environments",
+     "disseminate results to the scientific community",
+     "evaluate research activities",
+     "demonstrate disciplinary expertise",
+     "increase the impact of science on policy and society",
+     "apply for research funding"
     ],
     "description": "Use biological data, scientific models and research methods to study living systems.",
     "raw_isco_label": "Science and engineering professionals",
@@ -8764,8 +9117,8 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_health",
       "global_onet",
+      "global_health",
       "ng_health",
       "ng_nuc"
      ],
@@ -8777,9 +9130,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 34
+     }
     },
     "display_order": 1
    },
@@ -13393,7 +13744,7 @@
   "role_hint_certifications": []
  },
  "D041": {
-  "role_count": 43,
+  "role_count": 45,
   "foundation_skills": [
    {
     "skill": "laboratory techniques",
@@ -13546,8 +13897,83 @@
     "n": 3
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Computational & Quantitative Science",
+    "role_count": 34,
+    "cluster_skills": [
+     "draft scientific or academic papers and technical documentation",
+     "manage research data",
+     "interact professionally in research and professional environments",
+     "disseminate results to the scientific community",
+     "operate open source software",
+     "speak different languages",
+     "evaluate research activities",
+     "demonstrate disciplinary expertise",
+     "increase the impact of science on policy and society",
+     "manage findable accessible interoperable and reusable data"
+    ],
+    "description": "Use mathematical models, experiments and research data to explain scientific systems.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "ng_education",
+      "ng_nbs"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_education",
+       "ng_nbs"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Laboratory & Field Technicians",
+    "role_count": 11,
+    "cluster_skills": [
+     "laboratory techniques",
+     "maintain laboratory equipment",
+     "perform laboratory tests",
+     "apply safety procedures in laboratory",
+     "biology",
+     "perform scientific research",
+     "apply scientific methods",
+     "analyse experimental laboratory data",
+     "calibrate laboratory equipment",
+     "stem cells"
+    ],
+    "description": "Collect, measure and document the evidence used in scientific investigation.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "ng_education",
+      "ng_nbs"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_education",
+       "ng_nbs"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": []
  },
@@ -13705,8 +14131,87 @@
     "n": 2
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Computational Social Science & Quantitative Methods",
+    "role_count": 4,
+    "cluster_skills": [
+     "mathematics",
+     "statistics",
+     "scientific research methodology",
+     "draft scientific or academic papers and technical documentation",
+     "manage research data",
+     "interact professionally in research and professional environments",
+     "disseminate results to the scientific community",
+     "operate open source software",
+     "speak different languages",
+     "execute analytical mathematical calculations",
+     "social network analysis"
+    ],
+    "description": "Use data, statistics, network methods and computation to study people, populations and society.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "ng_nbs",
+      "ng_education",
+      "ng_creative"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_nbs",
+       "ng_education",
+       "ng_creative"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Social & Economic Research",
+    "role_count": 20,
+    "cluster_skills": [
+     "research design",
+     "statistics",
+     "sociology",
+     "empirical analysis",
+     "manage research data",
+     "scientific research methodology",
+     "disseminate results to the scientific community",
+     "social network analysis",
+     "game theory"
+    ],
+    "description": "Study social behaviour, institutions and economic life through structured research.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "ng_nbs",
+      "ng_education",
+      "ng_creative"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_nbs",
+       "ng_education",
+       "ng_creative"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "certifications": []
  },
  "D042": {
@@ -16059,7 +16564,16 @@
      "inspect government expenditures",
      "manage government funding",
      "liaise with government officials",
-     "inspect government incomes"
+     "inspect government incomes",
+     "government policy implementation",
+     "maintain relations with local representatives",
+     "manage government policy implementation",
+     "market analysis",
+     "business strategy concepts",
+     "competition law",
+     "create solutions to problems",
+     "maintain relationships with government agencies",
+     "advise on legislative acts"
     ],
     "description": "Use economic evidence, indicators and analysis to inform policy and decisions.",
     "raw_isco_label": "Business and administration professionals",
@@ -16069,8 +16583,8 @@
       "global_esco",
       "global_onet",
       "ng_education",
-      "ng_finance",
-      "ng_nbs"
+      "ng_nbs",
+      "ng_finance"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -16081,9 +16595,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 4
+     }
     },
     "display_order": 2
    },
@@ -16098,7 +16610,11 @@
      "strategic planning",
      "public finance",
      "empirical analysis",
-     "game theory"
+     "game theory",
+     "mathematical economics",
+     "statistics",
+     "financial forecasting",
+     "market analysis"
     ],
     "description": "Use economic evidence, statistics and models to explain markets and policy choices.",
     "raw_isco_label": "Legal, social and cultural professionals",
@@ -16107,9 +16623,9 @@
      "sources": [
       "global_esco",
       "global_onet",
-      "ng_education",
+      "ng_nbs",
       "ng_finance",
-      "ng_nbs"
+      "ng_education"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -16120,9 +16636,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 3
    }
@@ -16414,6 +16928,21 @@
   "role_count": 20,
   "foundation_skills": [
    {
+    "skill": "legal requirements in the social sector",
+    "prevalence": 0.85,
+    "n": 17
+   },
+   {
+    "skill": "social sciences",
+    "prevalence": 0.85,
+    "n": 17
+   },
+   {
+    "skill": "social justice",
+    "prevalence": 0.8,
+    "n": 16
+   },
+   {
     "skill": "work within communities",
     "prevalence": 0.75,
     "n": 15
@@ -16545,21 +17074,6 @@
    },
    {
     "skill": "manage stress in the work place",
-    "prevalence": 0.65,
-    "n": 13
-   },
-   {
-    "skill": "meet standards of practice in social services",
-    "prevalence": 0.65,
-    "n": 13
-   },
-   {
-    "skill": "prevent social problems",
-    "prevalence": 0.65,
-    "n": 13
-   },
-   {
-    "skill": "promote inclusion",
     "prevalence": 0.65,
     "n": 13
    }
@@ -16972,7 +17486,14 @@
      "software anomalies",
      "manage IT security compliances",
      "cyber security",
-     "identify ICT security risks"
+     "identify ICT security risks",
+     "security engineering",
+     "ICT network security risks",
+     "cyber attack counter-measures",
+     "ICT security standards",
+     "ethical hacking principles",
+     "attack vectors",
+     "ICT safety"
     ],
     "description": "Investigate digital evidence, protect systems and respond to cyber incidents.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -16980,8 +17501,8 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_nice",
       "global_onet",
+      "global_nice",
       "ng_cpn"
      ],
      "ownership": "subgroup",
@@ -16991,9 +17512,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 9
+     }
     },
     "display_order": 3
    },
@@ -18815,7 +19334,14 @@
      "CAE software",
      "fluid mechanics",
      "vehicle electrical systems",
-     "adjust engineering designs"
+     "adjust engineering designs",
+     "engineering principles",
+     "technical drawings",
+     "engineering processes",
+     "approve engineering design",
+     "mechanical engineering",
+     "mechanics",
+     "mathematics"
     ],
     "description": "Design and integrate automated, robotic and mechatronic systems.",
     "raw_isco_label": "Science and engineering professionals",
@@ -18836,9 +19362,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 14
+     }
     },
     "display_order": 1
    },
@@ -20332,8 +20856,44 @@
     "n": 2
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "Blockchain Software & Protocols",
+    "role_count": 25,
+    "cluster_skills": [
+     "blockchain architecture",
+     "blockchain components",
+     "distributed ledger technology",
+     "cryptocurrency",
+     "computer programming",
+     "ICT encryption",
+     "game theory"
+    ],
+    "description": "Build and maintain distributed-ledger software, protocols and applications.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_sfia",
+     "sources": [
+      "global_sfia",
+      "global_esco",
+      "global_onet",
+      "ng_cpn",
+      "ng_legal"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_cpn",
+       "ng_legal"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -20531,7 +21091,15 @@
      "multidisciplinary research",
      "nursing science",
      "scientific research methodology",
-     "contribute to public health campaigns"
+     "contribute to public health campaigns",
+     "communicate in healthcare",
+     "health care legislation",
+     "healthcare administration",
+     "budgetary principles",
+     "health care system",
+     "manage healthcare staff",
+     "delegate emergency care",
+     "advise policy makers in healthcare"
     ],
     "description": "Lead the use of information systems and data in healthcare organisations.",
     "raw_isco_label": "Production and specialised services managers",
@@ -20539,10 +21107,10 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_health",
       "global_onet",
-      "ng_cpn",
-      "ng_health"
+      "global_health",
+      "ng_health",
+      "ng_cpn"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -20552,9 +21120,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 1
    },
@@ -20598,12 +21164,11 @@
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "esco/o*net",
       "global_esco",
-      "global_health",
       "global_onet",
-      "ng_cpn",
-      "ng_health"
+      "global_health",
+      "ng_health",
+      "ng_cpn"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -20613,9 +21178,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 3
    },
@@ -21062,6 +21625,11 @@
     "n": 2
    },
    {
+    "skill": "geostationary satellites",
+    "prevalence": 0.1818,
+    "n": 2
+   },
+   {
     "skill": "global navigation satellite system performance parameters",
     "prevalence": 0.1818,
     "n": 2
@@ -21103,11 +21671,6 @@
    },
    {
     "skill": "perform scientific research",
-    "prevalence": 0.1818,
-    "n": 2
-   },
-   {
-    "skill": "production processes",
     "prevalence": 0.1818,
     "n": 2
    }
@@ -21808,8 +22371,25 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business and administration associate professionals",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Business and administration associate professionals"
+   },
+   {
+    "isco_submajor": "43",
+    "label": "Numerical and material recording clerks",
+    "role_count": 10,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Numerical and material recording clerks"
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -22484,8 +23064,25 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "23",
+    "label": "Teaching professionals",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Teaching professionals"
+   },
+   {
+    "isco_submajor": "51",
+    "label": "Personal service workers",
+    "role_count": 6,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Personal service workers"
+   }
+  ],
   "gateway_certifications": [
    {
     "name": "Accredited Driving School Instructor Certification",
@@ -24746,8 +25343,17 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "73",
+    "label": "Handicraft and printing workers",
+    "role_count": 14,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Handicraft and printing workers"
+   }
+  ],
   "certifications": []
  },
  "D106": {
@@ -27731,7 +28337,7 @@
   "role_hint_certifications": []
  },
  "D123": {
-  "role_count": 11,
+  "role_count": 12,
   "foundation_skills": [
    {
     "skill": "health care legislation",
@@ -27884,8 +28490,25 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health professionals",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Health professionals"
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health associate professionals",
+    "role_count": 10,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Health associate professionals"
+   }
+  ],
   "gateway_certifications": [
    {
     "name": "Radiographer Registration",
@@ -28363,8 +28986,25 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health professionals",
+    "role_count": 7,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Health professionals"
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health associate professionals",
+    "role_count": 3,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Health associate professionals"
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -29177,8 +29817,25 @@
     "n": 2
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science and engineering professionals",
+    "role_count": 3,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Science and engineering professionals"
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science and engineering associate professionals",
+    "role_count": 3,
+    "cluster_skills": [],
+    "description": "Source-backed activities within this domain.",
+    "raw_isco_label": "Science and engineering associate professionals"
+   }
+  ],
   "certifications": []
  },
  "D133": {
@@ -29905,7 +30562,12 @@
      "integrated development environment software",
      "tools for software configuration management",
      "web services",
-     "use an application-specific interface"
+     "use an application-specific interface",
+     "define technical requirements",
+     "business requirements techniques",
+     "ICT system user requirements",
+     "data models",
+     "create software design"
     ],
     "description": "Build and test the software, sensing and decision systems used by autonomous vehicles.",
     "raw_isco_label": "Information and communications technology professionals",
@@ -29927,9 +30589,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 2
    },
@@ -31152,7 +31812,14 @@
      "interact professionally in research and professional environments",
      "use technical drawing software",
      "approve engineering design",
-     "develop test procedures"
+     "develop test procedures",
+     "engineering principles",
+     "engineering processes",
+     "adjust engineering designs",
+     "perform scientific research",
+     "biology",
+     "technical drawings",
+     "medical devices materials"
     ],
     "description": "Apply engineering, research and computational methods to healthcare and biological systems.",
     "raw_isco_label": "Science and engineering professionals",
@@ -31160,13 +31827,10 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_health",
-      "global_isco",
-      "global_nuclear",
       "global_onet",
-      "global_wef",
-      "ng_engineering",
-      "ng_health"
+      "global_health",
+      "ng_health",
+      "ng_engineering"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -31176,9 +31840,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 7
+     }
     },
     "display_order": 1
    },
@@ -31229,7 +31891,11 @@
      "electricity",
      "electrical wiring plans",
      "medical device regulations",
-     "wear cleanroom suit"
+     "wear cleanroom suit",
+     "medical devices materials",
+     "biomedical engineering",
+     "medical devices",
+     "mechanics"
     ],
     "description": "Test, maintain and support biomedical and medical-device systems.",
     "raw_isco_label": "Science and engineering associate professionals",
@@ -31237,10 +31903,10 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_health",
       "global_onet",
-      "ng_engineering",
-      "ng_health"
+      "global_health",
+      "ng_health",
+      "ng_engineering"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -31250,9 +31916,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 3
    },
@@ -31280,10 +31944,10 @@
      "source": "global_esco",
      "sources": [
       "global_esco",
-      "global_health",
       "global_onet",
-      "ng_engineering",
-      "ng_health"
+      "global_health",
+      "ng_health",
+      "ng_engineering"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
@@ -31293,9 +31957,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 4
    },
@@ -31509,8 +32171,45 @@
     "n": 3
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Computational Biology & Bioinformatics",
+    "role_count": 36,
+    "cluster_skills": [
+     "computer programming",
+     "genomics",
+     "database management systems",
+     "computational chemistry",
+     "statistics",
+     "laboratory techniques",
+     "manage research data"
+    ],
+    "description": "Use programming, data and life-science methods to study biological systems.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "ng_nuc",
+      "ng_health",
+      "ng_nbs"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_nuc",
+       "ng_health",
+       "ng_nbs"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -31683,8 +32382,41 @@
     "n": 1
    }
   ],
-  "has_subgroups": false,
-  "subgroups": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Climate Modelling & Atmospheric Science",
+    "role_count": 4,
+    "cluster_skills": [
+     "conduct research on climate processes",
+     "develop models for weather forecast",
+     "mathematical modelling",
+     "statistics",
+     "perform data analysis",
+     "use specialised computer models for weather forecasting"
+    ],
+    "description": "Use observations, statistics and models to understand climate and weather.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_esco",
+     "sources": [
+      "global_esco",
+      "global_onet",
+      "global_wef",
+      "ng_environment"
+     ],
+     "ownership": "subgroup",
+     "nigerian_context": {
+      "source_ids": [
+       "ng_environment"
+      ],
+      "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
+      "salary": "excluded"
+     }
+    }
+   }
+  ],
   "gateway_certifications": [],
   "role_hint_certifications": [
    {
@@ -32131,17 +32863,24 @@
      "physics",
      "statistics",
      "perform scientific research",
-     "operate open source software"
+     "operate open source software",
+     "analytical chemistry",
+     "oxidation",
+     "green chemistry",
+     "scientific research methodology",
+     "draft scientific or academic papers and technical documentation",
+     "manage research data",
+     "interact professionally in research and professional environments",
+     "disseminate results to the scientific community"
     ],
     "description": "Use scientific modelling, measurement and engineering to develop advanced materials.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "esco/o*net",
       "global_esco",
-      "global_nuclear",
       "global_onet",
+      "global_nuclear",
       "ng_engineering"
      ],
      "ownership": "subgroup",
@@ -32151,9 +32890,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 8
+     }
     },
     "display_order": 1
    },
@@ -32161,16 +32898,17 @@
     "isco_submajor": "31",
     "label": "Nanofabrication & Materials Technicians",
     "role_count": 1,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "cleanroom protocols; photolithography; deposition equipment; metrology tools"
+    ],
     "description": "Operate and support the instruments and processes used to make and test advanced materials.",
     "raw_isco_label": "Science and engineering associate professionals",
     "source_provenance": {
      "source": "global_esco",
      "sources": [
-      "esco/o*net",
       "global_esco",
-      "global_nuclear",
       "global_onet",
+      "global_nuclear",
       "ng_engineering"
      ],
      "ownership": "subgroup",
@@ -32180,9 +32918,7 @@
       ],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 2
    },
@@ -32405,25 +33141,26 @@
      "quantum metrology",
      "sensor design",
      "quantum chemistry applications",
-     "quantum optimisation"
+     "quantum optimisation",
+     "laboratory techniques, noise and shielding",
+     "cryogenic, vacuum and cleanroom technologies",
+     "control technologies",
+     "quantum state control",
+     "quantum sensors and imaging systems"
     ],
     "description": "Build and operate quantum hardware, sensors and control systems.",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "qt_cfqt",
      "sources": [
-      "global_esco",
-      "qt_cfqt",
-      "qt_framework"
+      "qt_cfqt"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 6
+     }
     },
     "display_order": 1
    },
@@ -32465,18 +33202,14 @@
     "source_provenance": {
      "source": "qt_cfqt",
      "sources": [
-      "global_esco",
-      "qt_cfqt",
-      "qt_framework"
+      "qt_cfqt"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 3
    },
@@ -32496,25 +33229,22 @@
      "quantum programming",
      "quantum simulators",
      "quantum algorithms",
-     "quantum computing subroutines"
+     "quantum computing subroutines",
+     "error correction"
     ],
     "description": "Build quantum software, algorithms and error-correction methods.",
     "raw_isco_label": "Information and communications technology professionals",
     "source_provenance": {
      "source": "qt_cfqt",
      "sources": [
-      "global_esco",
-      "qt_cfqt",
-      "qt_framework"
+      "qt_cfqt"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 8
+     }
     },
     "display_order": 4
    },
@@ -32533,18 +33263,14 @@
     "source_provenance": {
      "source": "qt_cfqt",
      "sources": [
-      "global_esco",
-      "qt_cfqt",
-      "qt_framework"
+      "qt_cfqt"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 5
    }
@@ -32724,30 +33450,25 @@
      "web programming",
      "adobe creative suite",
      "task algorithmisation",
-     "web based collaborative platforms"
+     "web based collaborative platforms",
+     "immersive experience design",
+     "3D content development",
+     "spatial thinking",
+     "user testing"
     ],
     "description": "Design immersive experiences and build XR hardware",
     "raw_isco_label": "Science and engineering professionals",
     "source_provenance": {
      "source": "jff_xr",
      "sources": [
-      "global_esco",
-      "global_isco",
-      "global_onet",
-      "global_sfia",
-      "global_wef",
-      "global_xr",
-      "jff_xr",
-      "jobs_for_the_future_xr_framework"
+      "jff_xr"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 5
+     }
     },
     "display_order": 1
    },
@@ -32755,24 +33476,25 @@
     "isco_submajor": "24",
     "label": "XR Innovation & Solution Architecture",
     "role_count": 1,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "innovation facilitation",
+     "requirements translation",
+     "immersive experience planning",
+     "cross-functional collaboration"
+    ],
     "description": "Translate needs into workable immersive technology solutions.",
     "raw_isco_label": "Business and administration professionals",
     "source_provenance": {
      "source": "jff_xr",
      "sources": [
-      "global_esco",
-      "jff_xr",
-      "jobs_for_the_future_xr_framework"
+      "jff_xr"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 2
    },
@@ -32788,25 +33510,24 @@
      "real-time rendering",
      "unreal engine",
      "ar/vr sdks (openxr, arkit, arcore, openxr)",
-     "performance profiling and optimization"
+     "performance profiling and optimization",
+     "software development",
+     "interactive systems",
+     "testing and debugging"
     ],
     "description": "Code AR, VR, and spatial computing applications",
     "raw_isco_label": "Information and communications technology professionals",
     "source_provenance": {
      "source": "jff_xr",
      "sources": [
-      "global_esco",
-      "jff_xr",
-      "jobs_for_the_future_xr_framework"
+      "jff_xr"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 3
    },
@@ -32890,25 +33611,23 @@
     "role_count": 1,
     "cluster_skills": [
      "XR hardware support",
-     "XR software support"
+     "XR software support",
+     "troubleshooting",
+     "user assistance"
     ],
     "description": "Help people use immersive hardware and software reliably.",
     "raw_isco_label": "Information and communications technicians",
     "source_provenance": {
      "source": "jff_xr",
      "sources": [
-      "global_esco",
-      "jff_xr",
-      "jobs_for_the_future_xr_framework"
+      "jff_xr"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 6
    },
@@ -33117,26 +33836,22 @@
      "tournament operations",
      "scheduling",
      "stakeholder coordination",
-     "risk management"
+     "risk management",
+     "event management"
     ],
     "description": "Coordinate the business and operational side of esports.",
     "raw_isco_label": "Administrative and commercial managers",
     "source_provenance": {
      "source": "british_esports",
      "sources": [
-      "british_esports",
-      "british_esports_and_pearson_btec",
-      "global_esco",
-      "pearson_esports"
+      "british_esports"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 1
+     }
     },
     "display_order": 1
    },
@@ -33156,33 +33871,24 @@
      "digital media",
      "content marketing strategy",
      "online moderation techniques",
-     "marketing mix"
+     "marketing mix",
+     "community management",
+     "audience engagement",
+     "content planning"
     ],
     "description": "Grow audiences, communities and commercial relationships.",
     "raw_isco_label": "Business and administration professionals",
     "source_provenance": {
      "source": "british_esports",
      "sources": [
-      "british_esports",
-      "british_esports_and_pearson_btec",
-      "global_creative",
-      "global_esco",
-      "global_esports",
-      "global_game_dev",
-      "global_isco",
-      "global_music",
-      "global_onet",
-      "global_wef",
-      "pearson_esports"
+      "british_esports"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 2
    },
@@ -33202,33 +33908,26 @@
      "press law",
      "copyright legislation",
      "participate in editorial meetings",
-     "manage staff"
+     "manage staff",
+     "broadcast production",
+     "live event workflow",
+     "content creation",
+     "journalism",
+     "live commentary"
     ],
     "description": "Create and deliver esports broadcast and editorial content.",
     "raw_isco_label": "Legal, social and cultural professionals",
     "source_provenance": {
      "source": "british_esports",
      "sources": [
-      "british_esports",
-      "british_esports_and_pearson_btec",
-      "global_creative",
-      "global_esco",
-      "global_esports",
-      "global_game_dev",
-      "global_isco",
-      "global_music",
-      "global_onet",
-      "global_wef",
-      "pearson_esports"
+      "british_esports"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 4
+     }
     },
     "display_order": 3
    },
@@ -33248,33 +33947,23 @@
      "arrange event needs",
      "organise event participants' registration",
      "direct event administrative details",
-     "supervise event staff"
+     "supervise event staff",
+     "player support",
+     "operations planning"
     ],
     "description": "Support teams and players through organised competition.",
     "raw_isco_label": "Business and administration associate professionals",
     "source_provenance": {
      "source": "british_esports",
      "sources": [
-      "british_esports",
-      "british_esports_and_pearson_btec",
-      "global_creative",
-      "global_esco",
-      "global_esports",
-      "global_game_dev",
-      "global_isco",
-      "global_music",
-      "global_onet",
-      "global_wef",
-      "pearson_esports"
+      "british_esports"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 2
+     }
     },
     "display_order": 4
    },
@@ -33286,16 +33975,17 @@
      "teamwork",
      "strategic thinking",
      "strategic planning",
-     "team communication"
+     "team communication",
+     "competitive game performance",
+     "performance analysis",
+     "coaching",
+     "fair play"
     ],
     "description": "Develop performance, coaching and fair competition.",
     "raw_isco_label": "Legal, social, cultural and related associate professionals",
     "source_provenance": {
      "source": "pearson_esports",
      "sources": [
-      "british_esports",
-      "british_esports_and_pearson_btec",
-      "global_esco",
       "pearson_esports"
      ],
      "ownership": "subgroup",
@@ -33303,9 +33993,7 @@
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 5
    },
@@ -33543,26 +34231,27 @@
      "movement composition",
      "intellectual property law",
      "labour legislation",
-     "rehearsal direction"
+     "rehearsal direction",
+     "performance practice",
+     "dance technique",
+     "choreography",
+     "artistic direction",
+     "dramaturgy",
+     "audience communication"
     ],
     "description": "Create, rehearse and lead artistic work for live performance.",
     "raw_isco_label": "Legal, social and cultural professionals",
     "source_provenance": {
      "source": "mqa_performing_arts",
      "sources": [
-      "global_esco",
-      "mqa_performing_arts",
-      "mqa_performing_arts_standard",
-      "nac_arts_technical_theatre"
+      "mqa_performing_arts"
      ],
      "ownership": "subgroup",
      "nigerian_context": {
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 6
+     }
     },
     "display_order": 2
    },
@@ -33581,15 +34270,15 @@
      "draw up artistic production",
      "technical production operations",
      "lighting operations",
-     "sound recording operations"
+     "sound recording operations",
+     "production planning and scheduling",
+     "risk assessment for production"
     ],
     "description": "Coordinate and operate the technical and production systems behind live shows.",
     "raw_isco_label": "Legal, social, cultural and related associate professionals",
     "source_provenance": {
      "source": "nac_arts_technical_theatre",
      "sources": [
-      "global_esco",
-      "nac_arts_skills_framework",
       "nac_arts_technical_theatre"
      ],
      "ownership": "subgroup",
@@ -33597,9 +34286,7 @@
       "source_ids": [],
       "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
       "salary": "excluded"
-     },
-     "mapping_method": "canonical_role_library_isco_submajor",
-     "evidence_role_count": 3
+     }
     },
     "display_order": 3
    },

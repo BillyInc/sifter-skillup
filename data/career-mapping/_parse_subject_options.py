@@ -10,8 +10,9 @@ Output: backend/seed_subject_options.sql —
 This powers the SS3 "match by my subjects" door: the API's structured matcher
 (student_pipeline_routes._match_structured_subject_options) needs `required`
 items and `one_of` groups with min_from_group. Anything this parser cannot
-represent faithfully is marked needs_review and stays on the text fallback —
-NEVER emitted half-parsed as if complete.
+represent faithfully is marked needs_review and is kept as source text for
+programme detail — NEVER emitted half-parsed as if complete or used as a
+subject-match result.
 
 Grammar handled (v1):
   "Chemistry; Mathematics; Physics"                        -> 3 required
@@ -64,7 +65,8 @@ def source_variant_texts(source_report, jamb_name, layer):
     brochure can share one subject cell across several programme rows or
     preserve multiple university-block variants. Those source variants are
     evidence, not guesses, so the parser can expose each parseable variant as
-    a separate matcher option.
+    a separate source-rule/detail record; they are not silently promoted into
+    the national matcher.
     """
     for row in source_report.get("rows", []):
         if row.get("jamb_name") != jamb_name or row.get("layer") != layer:
@@ -331,6 +333,9 @@ def preclean(seg):
     # Brochure extraction often leaves a parenthesis around a subject and can
     # split "another" into "an other" while repairing word boundaries.
     seg = seg.replace("&", " and ")
+    # PDF extraction commonly inserts separators into this canonical subject
+    # name. Normalize it before parse_head tries to resolve the named head.
+    seg = re.sub(r"literature\s*-\s*in\s*-\s*english", "Literature in English", seg, flags=re.I)
     seg = re.sub(r"\ban\s+other\b", "one other", seg, flags=re.I)
     # cut page-noise tails: "... UTME SUBJECT(S) (i) MAUTY and FUTA require ..."
     seg = re.split(r"\bUTME\s+SUBJECTS?\b", seg)[0]
@@ -338,6 +343,10 @@ def preclean(seg):
     seg = re.sub(r"\(?\b[ivxlcdm]{1,6}\)\s+[A-Z][A-Z\-]{2,}.*$", "", seg)
     # strip parenthetical cross-refs "(same as in X)" — handled at statement level
     seg = re.sub(r"\(\s*same\s+as\s+in[^)]*\)", "", seg, flags=re.I)
+    # Trailing parentheticals containing prose are brochure/editorial notes,
+    # not part of the admission subject rule. Keep numeric count markers for
+    # the grammar below, but never let a note become a subject token.
+    seg = re.sub(r"\s*\([^)]*[A-Za-z][^)]*\)\s*$", "", seg)
     # strip stray enumeration markers "(a)" "a." "b)" glued into statements
     seg = re.sub(r"\(\s*[a-d]\s*\)|\b[a-d]\)\s|\s[a-d]\.\s*$", " ", seg)
     # deglue known collisions from PDF extraction
@@ -728,7 +737,7 @@ def parse_utme(text, allowed_codes=None):
 
 OLEVEL_COUNT_RE = re.compile(
     r"(seven|six|five|four|three|two|one|7|6|5|4|3|2|1)\s*(?:\(\s*\d\s*\))?\s*"
-    r"(?:ssce?|ssc|o.?\s?level)?\s*credit",
+    r"(?:ssce?|ssc|o.?\s?level)?\s*credits?",
     re.I,
 )
 
@@ -759,17 +768,98 @@ def parse_olevel(text):
         flags=re.I,
     )
     tail = re.sub(r"^(?:passes?|credits?)\s+", "", tail, flags=re.I)
+    # The national matcher models credit requirements only. A lower-level
+    # pass, sitting/equivalence rule, or similar qualification condition
+    # cannot be represented by the subject-credit schema without changing the
+    # meaning of the source. Keep such rows as official text/review evidence.
+    if re.search(
+        r"\bat\s+least\b|\b(?:o['’]?\s*level\s+)?passes?\s+in\b|\b(?:tc\s*ii|ntc|nbc)\b",
+        tail,
+        re.I,
+    ):
+        return None
     # A count without named subjects is not enough for a structured subject
     # option; retain its official text for display instead.
     if not tail:
         return None
+
+    # O-level prose often uses a category as the remaining credit rule:
+    # ``English Language and Arts subjects`` or ``English Language and four
+    # relevant subjects``.  parse_segment cannot safely handle that sentence
+    # because ``Arts subjects`` is not a named subject.  Preserve the named
+    # head and represent the remaining credits explicitly; otherwise a seeded
+    # row can contain only English while still claiming to be a five-credit
+    # exact rule.
+    category_tail = re.match(
+        r"^(?P<head>.+?)\s+(?:and|,)\s+(?:any\s+)?"
+        r"(?:(?:other)\s+)?"
+        r"(?:(?P<number>one|two|three|four|1|2|3|4)\s*"
+        r"(?:\(\s*\d\s*\))?\s+)?"
+        r"(?:(?:other|relevant)\s+)?"
+        r"(?P<category>arts?|social\s+sciences?|science|sciences?)"
+        r"(?:\s+subjects?)?\.?$",
+        tail,
+        re.I | re.S,
+    )
+    if category_tail:
+        head = parse_head(category_tail.group("head"), OLEVEL_CODES)
+        category = category_codes(category_tail.group("category") + " subjects", OLEVEL_CODES)
+        if head is not None and category:
+            required_codes = {
+                part[1]
+                for part in head
+                if part[0] == "required"
+            }
+            explicit_count = sum(
+                1 if part[0] == "required" else int(part[1])
+                for part in head
+            )
+            number = (
+                NUM_WORDS[category_tail.group("number").lower()]
+                if category_tail.group("number")
+                else n_min - explicit_count
+            )
+            category = sorted(set(category) - required_codes)
+            if number > 0 and number <= len(category):
+                return n_min, head + [("one_of", number, category)]
+
+    # A named head followed by an explicitly numbered but unqualified set of
+    # relevant/other subjects means the remaining credits are unrestricted by
+    # subject family.  Keep the count exact rather than dropping the group.
+    generic_tail = re.match(
+        r"^(?P<head>.+?)\s+(?:and|,)\s+(?:any\s+)?"
+        r"(?:(?:other)\s+)?"
+        r"(?P<number>one|two|three|four|1|2|3|4)\s+"
+        r"(?:(?:other|relevant)\s+)?subjects?\.?$",
+        tail,
+        re.I | re.S,
+    )
+    if generic_tail:
+        head = parse_head(generic_tail.group("head"), OLEVEL_CODES)
+        if head is not None:
+            required_codes = {
+                part[1]
+                for part in head
+                if part[0] == "required"
+            }
+            number = NUM_WORDS[generic_tail.group("number").lower()]
+            choices = sorted(set(OLEVEL_CODES) - required_codes)
+            if number > 0 and number <= len(choices):
+                return n_min, head + [("one_of", number, choices)]
+
     parts = parse_segment(tail, OLEVEL_CODES)
     if not parts:
         # Some university exceptions constrain the entire credit count to a
         # category without using the numbered-group grammar, e.g. ``two
         # credit passes only in Social Sciences subjects``.
         category = category_codes(tail, OLEVEL_CODES)
-        if category and n_min <= len(category):
+        category_only = re.fullmatch(
+            r"(?:any\s+)?(?:arts?|social\s+sciences?|science|sciences?)"
+            r"(?:\s+subjects?)?\.?",
+            tail,
+            re.I,
+        )
+        if category and category_only and n_min <= len(category):
             parts = [("one_of", n_min, sorted(set(category)))]
     if not parts:
         # ``five other subjects including English and Literature`` gives an
@@ -791,6 +881,36 @@ def parse_olevel(text):
                     choices = sorted(set(OLEVEL_CODES) - used)
                     parts = named + ([ ("one_of", n_min - named_count, choices) ] if n_min > named_count else [])
     if not parts:
+        return None
+
+    # If the brochure names only required inclusions (for example, "five
+    # credits including English Language"), the remaining credits are still
+    # part of the exact five-credit rule. Represent them as an unrestricted
+    # group. This prevents the matcher from accepting a one-subject option as
+    # though it were the whole O-level requirement.
+    explicit_count = sum(
+        1 if part[0] == "required" else int(part[1])
+        for part in parts
+    )
+    if explicit_count < n_min and not any(part[0] == "one_of" for part in parts):
+        required_codes = {
+            part[1]
+            for part in parts
+            if part[0] == "required"
+        }
+        choices = sorted(set(OLEVEL_CODES) - required_codes)
+        remaining = n_min - explicit_count
+        if remaining <= len(choices):
+            parts = parts + [("one_of", remaining, choices)]
+    explicit_count = sum(
+        1 if part[0] == "required" else int(part[1])
+        for part in parts
+    )
+    # A parsed option must account for all five (or otherwise stated) credit
+    # places. If a numbered group is shorter than the total and the parser has
+    # no faithful way to represent the omitted condition, leave the source on
+    # review instead of publishing a partial exact rule.
+    if explicit_count != n_min:
         return None
     return n_min, parts
 
@@ -828,11 +948,12 @@ def main():
 
     SQL = ["-- AUTO-GENERATED by data/career-mapping/_parse_subject_options.py — DO NOT EDIT",
            "-- Structured UTME and O-level subject options parsed from the JAMB brochure text.",
-           "-- Unparseable layers are marked needs_review and keep the official text fallback.",
+           "-- Only exact structured rows are emitted for subject matching; review text remains detail-only.",
            "SET search_path TO skillup_dev;", "BEGIN;",
            "-- deterministic regeneration: clear previously parsed rows first",
            "DELETE FROM programme_subject_option_items;",
-           "DELETE FROM programme_subject_options;", ""]
+           "DELETE FROM programme_subject_options;",
+           "UPDATE programme_subject_requirements SET parse_status='unparsed', parsed_at=NULL;", ""]
 
     stats = Counter()
     parsed_names, review_names = [], []
@@ -866,32 +987,12 @@ def main():
                 del refs[jname]
                 stats["ref_resolved"] += 1
 
-    # The source audit preserves exact and inherited brochure variants when a
-    # primary catalogue cell is blank, shared, or polluted by neighbouring PDF
-    # columns. Try those source-backed texts before leaving a programme on the
-    # text-only fallback. We choose the first parseable variant for the
-    # canonical matcher here; the source inventory still retains every variant
-    # for institution-aware display and review.
-    for jname in sorted(progs):
-        if jname not in parsed:
-            for variant_text in source_variant_texts(source_report, jname, "utme"):
-                candidate = parse_utme(variant_text)
-                if isinstance(candidate, tuple) and candidate[0] == "ref":
-                    target = by_lower.get(candidate[1].lower())
-                    candidate = parsed.get(target)
-                if candidate:
-                    parsed[jname] = candidate
-                    utme_text[jname] = variant_text
-                    stats["source_variant_resolved"] += 1
-                    break
-        if not olevel_rules.get(jname):
-            for variant_text in source_variant_texts(source_report, jname, "olevel"):
-                candidate = parse_olevel(variant_text)
-                if candidate:
-                    olevel_rules[jname] = candidate
-                    olevel_text[jname] = variant_text
-                    stats["source_variant_resolved"] += 1
-                    break
+    # Do not promote the first parseable brochure variant into the national
+    # matcher. A source variant can belong to a university-specific offering or
+    # to a neighbouring programme block in the extracted PDF. Unique source
+    # repairs have already been applied to the canonical programme field above;
+    # unresolved or conflicting variants remain in the typed source-rule seed
+    # and are detail/review evidence, never national eligibility rules.
 
     # ── emit ─────────────────────────────────────────────────────
     for jname in sorted(progs):
@@ -905,13 +1006,17 @@ def main():
 
         parts = parsed.get(jname)
         utme_needs_review = bool(utme and parts is None)
-        if utme and parts is None:
+        olevel_rule = olevel_rules.get(jname)
+        olevel_needs_review = bool(olevel and olevel_rule is None)
+        layer_needs_review = utme_needs_review or olevel_needs_review
+        if layer_needs_review:
             # Institution-variant prose: no single structured rule exists, but the
             # text is real information — keep it displayable (parse_status
-            # needs_review = "requirements vary by institution" in the UI, and
-            # matching falls back to text). Never a dead bucket.
+            # needs_review = "requirements vary by institution" in the UI),
+            # but never use it as an exact subject-match rule.
             stats["needs_review"] += 1
-            review_names.append((jname, utme[:140]))
+            review_text = utme if utme_needs_review else olevel
+            review_names.append((jname, review_text[:140]))
             SQL.append(f"UPDATE programme_subject_requirements SET parse_status='needs_review' WHERE id = {q(rid)};")
 
         if parts:
@@ -954,7 +1059,6 @@ def main():
         # O-level: preserve the total credit minimum and structured required /
         # alternative subjects.  Unparseable institutional prose remains in
         # the official text and is not emitted as a false structured rule.
-        olevel_rule = olevel_rules.get(jname)
         if olevel_rule:
             n_min, olevel_parts = olevel_rule
             ooid = uid("subj_opt", jname, "olevel")
@@ -993,10 +1097,50 @@ def main():
                         )
             stats["olevel_parsed"] += 1
 
-        if (parts or olevel_rule) and not utme_needs_review:
+        if (parts or olevel_rule) and not layer_needs_review:
             SQL.append(f"UPDATE programme_subject_requirements SET parse_status='parsed', parsed_at={q(NOW)} WHERE id = {q(rid)};")
 
-    SQL.append("")
+    SQL.extend([
+        "",
+        "-- Fail the SQL transaction if a supposedly structured option is empty",
+        "-- or its declared minimum is larger than the represented required/group",
+        "-- capacity. This catches truncated SQL or a stale subject catalogue.",
+        "DO $$",
+        "BEGIN",
+        "  IF EXISTS (",
+        "    WITH required_counts AS (",
+        "      SELECT option_id, COUNT(*)::smallint AS required_count",
+        "      FROM programme_subject_option_items",
+        "      WHERE requirement_role = 'required'",
+        "      GROUP BY option_id",
+        "    ), group_counts AS (",
+        "      SELECT option_id, group_key, MAX(COALESCE(min_from_group, 1))::smallint AS group_min",
+        "      FROM programme_subject_option_items",
+        "      WHERE requirement_role = 'one_of' AND group_key IS NOT NULL",
+        "      GROUP BY option_id, group_key",
+        "    ), group_sums AS (",
+        "      SELECT option_id, SUM(group_min)::smallint AS group_capacity",
+        "      FROM group_counts",
+        "      GROUP BY option_id",
+        "    ), item_counts AS (",
+        "      SELECT o.id, o.min_required,",
+        "        COUNT(i.id) AS item_count,",
+        "        COUNT(i.id) FILTER (WHERE i.requirement_role = 'required')::smallint AS required_count",
+        "      FROM programme_subject_options o",
+        "      LEFT JOIN programme_subject_option_items i ON i.option_id = o.id",
+        "      GROUP BY o.id, o.min_required",
+        "    ), capacities AS (",
+        "      SELECT i.id, i.min_required, i.item_count,",
+        "        i.required_count + COALESCE(g.group_capacity, 0) AS represented_capacity",
+        "      FROM item_counts i LEFT JOIN group_sums g ON g.option_id = i.id",
+        "    )",
+        "    SELECT 1 FROM capacities",
+        "    WHERE item_count = 0 OR represented_capacity < min_required",
+        "  ) THEN",
+        "    RAISE EXCEPTION 'Subject option seed contains an incomplete structured rule';",
+        "  END IF;",
+        "END $$;",
+    ])
     SQL.append("COMMIT;")
     dest = os.path.join(HERE, "..", "..", "backend", "seed_subject_options.sql")
     open(dest, "w", encoding="utf-8").write("\n".join(SQL))

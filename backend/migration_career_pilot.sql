@@ -1,7 +1,9 @@
 -- ============================================================
 -- SIFTER LEVELUP — CAREER MAPPING PILOT (Law + Social Sciences)
 -- Schema: skillup_dev
--- Run AFTER migration_career_intelligence.sql
+-- Run AFTER migration_career_base_registry.sql and
+-- migration_subject_catalog.sql.
+-- Do not run migration_career_intelligence.sql; it is superseded.
 -- ADDITIVE ONLY: extends schools/programmes; adds the JAMB↔CCMAS
 -- bridge tables. Does NOT touch programme_domain (domain phase).
 -- Idempotent: IF NOT EXISTS + ADD COLUMN IF NOT EXISTS.

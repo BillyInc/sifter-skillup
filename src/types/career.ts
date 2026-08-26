@@ -55,11 +55,37 @@ export interface DataMeta {
 export type SourceConfidence = "high" | "medium" | "low" | "unsourced";
 export type SourceDataState = "source_backed" | "partial" | "unsourced";
 
+/** Evidence scope used by guidance copy. These are semantic states, not a
+ * demand ranking and must not be rendered as scores or ordinal bands. */
+export type GuidanceEvidenceState =
+  | "source_backed"
+  | "context_only"
+  | "limited"
+  | "not_available"
+  | "pending";
+
+export interface GuidanceEvidenceLens {
+  state: GuidanceEvidenceState;
+  explanation: string;
+  sourceCount?: number;
+}
+
+export interface GuidanceEvidence {
+  /** Nigerian bodies, standards and checked local professional context. */
+  nigeria: GuidanceEvidenceLens;
+  /** A separate remote-work signal; never inferred from global evidence. */
+  remote: GuidanceEvidenceLens;
+  /** International occupational or professional evidence. */
+  global: GuidanceEvidenceLens;
+  limitations?: string[];
+}
+
 export interface SourceBackedFields {
   sourceConfidence?: SourceConfidence;
   dataState?: SourceDataState;
   sourceProvenance?: Record<string, unknown>;
   nigerianContext?: Record<string, unknown>;
+  guidanceEvidence?: GuidanceEvidence;
 }
 
 export interface DataState<T> {
@@ -583,6 +609,8 @@ export interface FoundationSkill {
 export interface DomainV2 extends SourceBackedFields {
   id: string; // domain_key e.g. "D001"
   name: string;
+  /** Programme context added by the guided selector; absent in context-free exploration. */
+  programmeMatchType?: DomainMatchType;
   cluster?: string;
   clusters: string[];
   description?: string;

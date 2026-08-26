@@ -25,7 +25,6 @@ import {
   type DataState,
   type Organisation,
   type Opportunity,
-  type Likelihood,
 } from "@/types/career";
 import {
   DetailScaffold,
@@ -145,7 +144,7 @@ function OrganisationOpportunities({
   resp: ReturnType<typeof useResponsive>;
 }) {
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
-    comingSoon<Opportunity[]>("Internships & jobs are being populated."),
+    comingSoon<Opportunity[]>("Verified Opportunities are being populated."),
   );
 
   useEffect(() => {

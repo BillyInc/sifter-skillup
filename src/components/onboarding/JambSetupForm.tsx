@@ -11,7 +11,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme, Spacing, FontSize, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { LiveAdmissionSearchField } from "./LiveAdmissionSearchField";
-import { LiveSubjectMultiSelect } from "./LiveSubjectMultiSelect";
+import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "./LiveSubjectMultiSelect";
 import {
   OptionCard,
   ChoiceChips,
@@ -229,7 +229,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           value={value.olevelSubjects}
           onChange={(v) => onChange({ olevelSubjects: v as string[] })}
           minSelected={5}
-          maxSelected={12}
+          maxSelected={MAX_OLEVEL_SUBJECTS}
           fixedSubjects={["English Language", "Mathematics"]}
           showSearch={false}
           helperText="Choose at least 5 subjects, including the core subjects shown first. We use them to check whether a programme&apos;s O-level requirements fit your plan."
@@ -301,9 +301,9 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            Universities may use different official names for a similar
-            programme. We will show each university&apos;s name and requirements so
-            you can tell the options apart.
+            We will show universities offering this exact programme identity.
+            If a different JAMB programme name appears, it will be shown as a
+            separate programme with its own universities and requirements.
           </Text>
         </View>
       ) : null}
@@ -321,7 +321,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
       ) : null}
 
       <SifterButton
-        label={door === "unsure" ? "Find matching programmes" : "See programme requirements"}
+        label="Continue"
         onPress={onContinue}
         disabled={!hasBaseInstitution || !hasDoorFields}
         variant="track"

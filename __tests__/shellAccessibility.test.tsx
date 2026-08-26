@@ -27,6 +27,11 @@ jest.mock("expo-router", () => ({
   useRouter: () => ({ push: mockPush, replace: jest.fn(), back: jest.fn() }),
   usePathname: () => "/(tabs)/home",
   useLocalSearchParams: () => ({}),
+  // The shell resolves its track context from global params; without this it
+  // throws before rendering and every assertion below fails for the wrong
+  // reason. This file's mock shadows the one in jest.setup.ts, so it needs
+  // its own copy.
+  useGlobalSearchParams: () => ({}),
   useFocusEffect: () => undefined,
   Link: ({ children }: any) => children,
 }));

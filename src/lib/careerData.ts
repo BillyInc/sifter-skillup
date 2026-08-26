@@ -43,6 +43,7 @@ import {
   type SkillDiscoveryResult,
   type JambDomainResult,
   type PivotResult,
+  type DomainMatchType,
   type NationalJambFloor,
   type ProgrammeSchoolCutoff,
   type SchoolAggregateFormula,
@@ -108,12 +109,25 @@ export interface GuidanceReportPath {
     university?: Record<string, unknown>;
     universityRequirements?: Record<string, unknown>;
     requirements?: Record<string, unknown>;
-    domains?: Record<string, unknown>[];
+    domains?: GuidanceDomainSelection[];
     subgroups?: Record<string, unknown>[];
     roles?: Record<string, unknown>[];
     notes?: string[];
+    /** Account-scoped checkpoint for reopening an unfinished guidance flow. */
+    resume?: Record<string, unknown>;
   };
   updatedAt?: string;
+}
+
+/** Persisted student intent for a programme-linked domain. Internal ordering
+ * is used to resume the route; it is never rendered as a raw rank. */
+export interface GuidanceDomainSelection {
+  [key: string]: unknown;
+  id: string;
+  name: string;
+  matchType?: DomainMatchType;
+  intent?: "primary" | "secondary";
+  sequence?: number;
 }
 
 export interface SubjectCatalogItem {
@@ -274,8 +288,8 @@ export interface SchoolFaculty {
 
 /**
  * A course as a specific university lists it — the enrolled student's entry
- * point. `jambName` is the name THAT school uses, never the CCMAS canonical
- * name.
+ * point. `jambName` is the national identity used to group the university
+ * offering; a genuinely different JAMB name is a separate result.
  */
 export interface SchoolProgrammeOffering {
   schoolId: string;
@@ -732,7 +746,7 @@ export const careerData = {
         `/api/career/opportunities${qs.toString() ? `?${qs.toString()}` : ""}`,
       );
     } catch {
-      return comingSoon<Opportunity[]>("Find internships, jobs, and entry points that fit your programme, level, and location.");
+      return comingSoon<Opportunity[]>("Find verified Opportunities and entry points that fit your programme, level, and location when they are available.");
     }
   },
 

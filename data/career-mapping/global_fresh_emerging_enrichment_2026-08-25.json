@@ -1,0 +1,219 @@
+{
+  "schema_version": "fresh_global_emerging_enrichment_v1",
+  "generated_at": "2026-08-25",
+  "purpose": "Additional source-backed global and remote evidence for emerging domains. This layer is intentionally separate from Nigerian evidence and does not assert Nigerian demand or licensing.",
+  "policy": {
+    "region": "global",
+    "nigeria": "Do not relabel these records as Nigerian evidence.",
+    "remote": "Global evidence can inform portable or remote pathways, but it is not proof of a remote vacancy or eligibility.",
+    "priority": "Priority labels are within the cited framework or profile and are not universal rankings.",
+    "licensing": "No licence or statutory requirement is inferred from these sources."
+  },
+  "sources": [
+    {
+      "id": "global_eu_cfqt_2025",
+      "region": "global",
+      "name": "European Competence Framework for Quantum Technologies",
+      "evidence_type": "competence_framework",
+      "availability": "published_framework",
+      "urls": ["https://op.europa.eu/en/publication-detail/-/publication/bbf03156-1684-11f0-b1a3-01aa75ed71a1/language-en"]
+    },
+    {
+      "id": "global_qtedu_cfqt_v3",
+      "region": "global",
+      "name": "European Quantum Technologies Competence Framework v3.0",
+      "evidence_type": "competence_framework",
+      "availability": "published_framework",
+      "urls": ["https://cdn.qtedu.eu/european-competence-framework-quantum-technologies"]
+    },
+    {
+      "id": "global_quantum_nonphd_skills",
+      "region": "global",
+      "name": "Experimental skills for non-PhD quantum technology roles",
+      "evidence_type": "academic_workforce_study",
+      "availability": "academic_preprint",
+      "urls": ["https://arxiv.org/abs/2510.12936"]
+    },
+    {
+      "id": "global_quantum_testing_roles",
+      "region": "global",
+      "name": "Quantum software testing roles and skills analysis",
+      "evidence_type": "online_vacancy_analysis",
+      "availability": "academic_preprint",
+      "urls": ["https://arxiv.org/abs/2512.14861"]
+    },
+    {
+      "id": "global_kit_quantum_job_posts",
+      "region": "global",
+      "name": "Worldwide quantum-technology job-posting skills analysis",
+      "evidence_type": "online_vacancy_analysis",
+      "availability": "published_research",
+      "urls": ["https://publikationen.bibliothek.kit.edu/1000191408"]
+    },
+    {
+      "id": "global_mit_qir_2025",
+      "region": "global",
+      "name": "MIT Quantum Index 2025",
+      "evidence_type": "industry_and_workforce_report",
+      "availability": "published_report",
+      "urls": ["https://qir.mit.edu/wp-content/uploads/2025/06/MIT-QIR-2025.pdf"]
+    },
+    {
+      "id": "global_xr_gao_workforce_2024",
+      "region": "global",
+      "name": "US Government Accountability Office extended-reality applications and workforce evidence",
+      "evidence_type": "government_technology_report",
+      "availability": "published_report",
+      "urls": ["https://www.gao.gov/products/gao-24-106665"]
+    },
+    {
+      "id": "global_esports_delphi_careers",
+      "region": "global",
+      "name": "Esports career skills Delphi study",
+      "evidence_type": "academic_workforce_study",
+      "availability": "published_research",
+      "urls": ["https://eprints.chi.ac.uk/id/eprint/7953/"]
+    },
+    {
+      "id": "global_microsoft_game_careers_2023",
+      "region": "global",
+      "name": "Microsoft game-industry career disciplines and skills guide",
+      "evidence_type": "industry_career_framework",
+      "availability": "published_web_guide",
+      "urls": ["https://developer.microsoft.com/en-us/games/articles/2023/11/game-industry-career-guide/"]
+    },
+    {
+      "id": "global_ubisoft_game_roles",
+      "region": "global",
+      "name": "Ubisoft game-development role families",
+      "evidence_type": "studio_role_framework",
+      "availability": "official_web",
+      "urls": ["https://www.ubisoft.com/en-us/company/careers/locations/articles/our-job-roles"]
+    },
+    {
+      "id": "global_epic_game_career_paths",
+      "region": "global",
+      "name": "Epic Games career paths and portfolio guidance",
+      "evidence_type": "studio_career_framework",
+      "availability": "official_web",
+      "urls": ["https://www.epicgames.com/site/earlycareers/career-paths?lang=en-US"]
+    },
+    {
+      "id": "global_skillsfuture_game_production_2025",
+      "region": "global",
+      "name": "Singapore Skills Framework for Media 2025 game production and development map",
+      "evidence_type": "national_industry_skills_framework",
+      "availability": "published_framework",
+      "urls": ["https://www.skillsfuture.gov.sg/docs/default-source/skills-framework/skills-framework-for-media-2025.pdf"]
+    },
+    {
+      "id": "global_screenskills_games_map_2025",
+      "region": "global",
+      "name": "ScreenSkills games career map",
+      "evidence_type": "industry_career_map",
+      "availability": "published_framework",
+      "urls": ["https://www.screenskills.com/media/xskl5wdb/2756-games-career-map-interactive-feb25-final.pdf"]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "global_game_development_role_families_profile",
+      "region": "global",
+      "source_ids": ["global_microsoft_game_careers_2023", "global_ubisoft_game_roles", "global_epic_game_career_paths", "global_skillsfuture_game_production_2025", "global_screenskills_games_map_2025", "tesda_psf_game_development"],
+      "domain_ids": ["D139"],
+      "subgroup_patterns": ["Game Art & Animation", "Gameplay Programming", "Creative Direction"],
+      "role_patterns": ["game designer", "digital games designer", "level designer", "technical game designer", "gameplay designer", "game producer", "game developer", "games developer", "digital games developer", "game programmer", "gameplay programmer", "technical director", "technical artist", "game concept artist", "concept artist", "game environment artist", "environment artist", "game character artist", "character artist", "game animator", "technical animator", "animator", "3d animator", "3d modeller", "game narrative designer", "narrative designer", "game writer", "game UI UX designer", "game UI designer", "user interface designer", "game QA tester", "game tester", "digital games tester", "game sound designer", "game audio designer"],
+      "skills": [
+        {"name": "Game concepts, mechanics, systems, level design and player experience", "priority": "core", "evidence": "Microsoft, Ubisoft, SkillsFuture and TESDA game-development frameworks"},
+        {"name": "Programming, gameplay implementation, tools and technical problem solving", "priority": "core", "evidence": "Microsoft and Ubisoft role families; SkillsFuture game technical development map"},
+        {"name": "Visual development, 2D/3D art, animation, lighting, materials and technical art", "priority": "core", "evidence": "Microsoft, Ubisoft, SkillsFuture and ScreenSkills games frameworks"},
+        {"name": "Quality assurance, playtesting, debugging and production documentation", "priority": "core", "evidence": "Microsoft and Ubisoft game-career role families"},
+        {"name": "Narrative, audio and interactive storytelling", "priority": "supplementary", "evidence": "Microsoft, ScreenSkills and TESDA game-development pathways"}
+      ],
+      "tools": [
+        {"name": "Game engines, level editors and rapid-prototyping tools", "priority": "core", "evidence": "Ubisoft, Epic and TESDA game-development pathways"},
+        {"name": "Programming languages, visual scripting, version control and build tools", "priority": "core", "evidence": "Epic, Ubisoft and SkillsFuture game technical-development frameworks"},
+        {"name": "3D modelling, sculpting, texturing, animation, audio and VFX tools", "priority": "core", "evidence": "Microsoft, Ubisoft, SkillsFuture and ScreenSkills games frameworks"},
+        {"name": "Issue tracking, test management, analytics and collaboration tools", "priority": "supplementary", "evidence": "Microsoft and Ubisoft production and QA role families"}
+      ],
+      "competencies": [
+        {"name": "Take an interactive game idea from concept through prototype, iteration, production and release", "priority": "core", "evidence": "Microsoft, Ubisoft, SkillsFuture and TESDA game-development frameworks"},
+        {"name": "Collaborate across design, programming, art, animation, audio, QA and production disciplines", "priority": "core", "evidence": "Microsoft and Ubisoft role-family descriptions"},
+        {"name": "Demonstrate working projects and explain design or technical decisions through a portfolio", "priority": "core", "evidence": "Epic Games early-career portfolio guidance"},
+        {"name": "Design for usability, accessibility, performance and the target audience", "priority": "supplementary", "evidence": "Ubisoft game-design responsibilities and ScreenSkills career map"}
+      ],
+      "certifications": []
+    },
+    {
+      "id": "global_xr_workforce_application_profile",
+      "region": "global",
+      "source_ids": ["global_xr_gao_workforce_2024", "global_jff_xr_2023", "global_oecd_xr_2025", "global_xra_2025"],
+      "domain_ids": ["D167", "D001", "D033", "D044", "D139"],
+      "role_patterns": ["xr developer", "vr developer", "ar developer", "immersive learning designer", "simulation designer", "xr producer", "spatial computing developer", "technical artist", "3d artist"],
+      "skills": [
+        {"name": "Design immersive experiences for training, simulation or public-facing use", "priority": "core", "evidence": "GAO XR applications report; JFF XR careers framework"},
+        {"name": "3D content, spatial interaction and real-time prototyping", "priority": "core", "evidence": "JFF XR careers framework"},
+        {"name": "Safety, accessibility and human factors for immersive experiences", "priority": "core", "evidence": "OECD immersive technologies primer; GAO XR applications report"}
+      ],
+      "tools": [
+        {"name": "Real-time 3D and game-engine tooling", "priority": "core", "evidence": "JFF XR careers framework"},
+        {"name": "3D modelling, animation and spatial-authoring tooling", "priority": "core", "evidence": "JFF XR careers framework"},
+        {"name": "XR devices and spatial-computing platforms", "priority": "supplementary", "evidence": "OECD immersive technologies primer; GAO XR applications report"}
+      ],
+      "competencies": [
+        {"name": "Translate an education, industrial or public-service problem into a usable immersive experience", "priority": "core", "evidence": "GAO XR applications report; OECD immersive technologies primer"},
+        {"name": "Evaluate usability, safety and learning or operational outcomes", "priority": "core", "evidence": "OECD immersive technologies primer"}
+      ],
+      "certifications": []
+    },
+    {
+      "id": "global_esports_extended_profile",
+      "region": "global",
+      "source_ids": ["global_esports_delphi_careers", "global_openlearn_esports", "global_pearson_esports"],
+      "domain_ids": ["D168", "D139", "D042", "D043", "D044", "D033", "D053"],
+      "role_patterns": ["esports player", "esports coach", "team manager", "tournament organiser", "broadcast producer", "shoutcaster", "community manager", "esports marketer", "game designer", "event producer", "esports analyst", "esports journalist"],
+      "skills": [
+        {"name": "Event operations, tournament administration and team coordination", "priority": "core", "evidence": "Esports career skills Delphi study; OpenLearn esports careers overview"},
+        {"name": "Broadcasting, live content, commentary and digital production", "priority": "core", "evidence": "Esports career skills Delphi study; Pearson esports career framework"},
+        {"name": "Audience development, marketing, sponsorship and community management", "priority": "core", "evidence": "Esports career skills Delphi study; Pearson esports career framework"},
+        {"name": "Game technology, analysis and performance support", "priority": "supplementary", "evidence": "Esports career skills Delphi study"}
+      ],
+      "tools": [
+        {"name": "Streaming, broadcast and live-production tools", "priority": "core", "evidence": "OpenLearn esports careers overview; Pearson esports career framework"},
+        {"name": "Community, social-media and audience-analytics tools", "priority": "core", "evidence": "Pearson esports career framework"},
+        {"name": "Game, performance and event-management systems", "priority": "supplementary", "evidence": "Esports career skills Delphi study"}
+      ],
+      "competencies": [
+        {"name": "Build a sustainable esports pathway beyond competitive play", "priority": "core", "evidence": "OpenLearn esports careers overview"},
+        {"name": "Communicate and collaborate across players, teams, audiences, broadcasters and sponsors", "priority": "core", "evidence": "Esports career skills Delphi study"}
+      ],
+      "certifications": []
+    },
+    {
+      "id": "global_quantum_extended_profile",
+      "region": "global",
+      "source_ids": ["global_eu_cfqt_2025", "global_qtedu_cfqt_v3", "global_quantum_nonphd_skills", "global_quantum_testing_roles", "global_kit_quantum_job_posts", "global_mit_qir_2025", "global_quantum_roles", "global_quantum_profiles", "global_quantum_market"],
+      "domain_ids": ["D141", "D001", "D002", "D003", "D016"],
+      "role_patterns": ["quantum software engineer", "quantum algorithm researcher", "quantum hardware engineer", "quantum systems engineer", "quantum applications scientist", "quantum educator", "quantum product manager", "quantum policy analyst", "quantum test engineer", "quantum control engineer", "quantum technician"],
+      "skills": [
+        {"name": "Quantum information, algorithms and programming", "priority": "core", "evidence": "European Competence Framework for Quantum Technologies; quantum role profiles"},
+        {"name": "Linear algebra, probability, computation and classical software engineering", "priority": "core", "evidence": "European Competence Framework for Quantum Technologies; worldwide quantum job-posting analysis"},
+        {"name": "Instrumentation, measurement and experimental or project design", "priority": "core", "evidence": "Experimental skills for non-PhD quantum technology roles"},
+        {"name": "Quantum software testing and verification", "priority": "supplementary", "evidence": "Quantum software testing roles analysis"},
+        {"name": "Cross-disciplinary communication and translation", "priority": "core", "evidence": "European Competence Framework for Quantum Technologies; quantum role profiles"}
+      ],
+      "tools": [
+        {"name": "Quantum programming frameworks and simulators", "priority": "core", "evidence": "Quantum role profiles and job-market studies"},
+        {"name": "Scientific computing, data-analysis and classical software tools", "priority": "core", "evidence": "European Competence Framework for Quantum Technologies; worldwide quantum job-posting analysis"},
+        {"name": "Laboratory instrumentation and control systems", "priority": "supplementary", "evidence": "Experimental skills for non-PhD quantum technology roles"}
+      ],
+      "competencies": [
+        {"name": "Bridge quantum concepts to software, hardware, science, business or policy applications", "priority": "core", "evidence": "European Competence Framework for Quantum Technologies"},
+        {"name": "Test, document and communicate quantum work across technical disciplines", "priority": "core", "evidence": "Quantum software testing roles analysis; quantum role profiles"}
+      ],
+      "certifications": [
+        {"name": "Quantum-technology competence or microcredential pathway", "issuer": "Framework-aligned provider", "level": "supplementary", "evidence": "European Quantum Technologies Competence Framework v3.0", "limitation": "Not a universal professional licence or Nigerian credential requirement."}
+      ]
+    }
+  ]
+}

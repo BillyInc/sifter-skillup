@@ -235,7 +235,7 @@ function WarpPortal({ color, spin, pulse }: { color: string; spin: Animated.Valu
         transform: [{ rotate: spin.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-360deg'] }) }],
       }]} />
       <View style={[styles.warpCore, { backgroundColor: color }]}>
-        <Text style={styles.warpEmoji}>⚡</Text>
+        <Text style={styles.warpEmoji}>✦</Text>
       </View>
     </View>
   );

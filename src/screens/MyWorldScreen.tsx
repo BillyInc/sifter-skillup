@@ -596,8 +596,8 @@ const PRIMARY_SECTIONS: {
     accent: "gold",
     links: [
       { label: "Guild", href: "/(tabs)/guild" },
-      { label: "Community", href: "/(tabs)/community" },
-      { label: "Leaderboard", href: "/(tabs)/community/leaderboard" },
+      { label: "Community", href: "/(tabs)/guild" },
+      { label: "Leaderboard", href: "/(tabs)/guild" },
       { label: "Feed", href: "/(tabs)/feed" },
     ],
   },
@@ -607,7 +607,7 @@ const MORE_LINKS: { icon: string; label: string; href: Href }[] = [
   { icon: "🧠", label: "Skills directory", href: "/(tabs)/skills" },
   { icon: "🎤", label: "Interview mode", href: "/(tabs)/skills/interview" },
   { icon: "🛍️", label: "Merchandise", href: "/merchandise" },
-  { icon: "🎁", label: "Referral", href: "/(tabs)/community/referral" },
+  { icon: "🎁", label: "Referral", href: "/(tabs)/referral" },
   { icon: "📓", label: "Diary", href: "/(tabs)/profile/diary" },
   { icon: "🔥", label: "Streaks", href: "/(tabs)/streaks" },
   { icon: "🐙", label: "GitHub sync", href: "/(tabs)/profile/github" },
@@ -677,6 +677,7 @@ function SavedItemRow({
   const { colors } = useTheme();
   const router = useRouter();
   const [removing, setRemoving] = useState(false);
+  const [removeNotice, setRemoveNotice] = useState<string | null>(null);
   const meta = ENTITY_META[item.entityType];
 
   const open = () => {
@@ -698,10 +699,15 @@ function SavedItemRow({
   const remove = async () => {
     if (removing) return;
     setRemoving(true);
+    setRemoveNotice(null);
     try {
-      await careerData.removeSavedItem(item.id);
+      const result = await careerData.removeSavedItem(item.id);
+      if (result.status === "real") onRemoved();
+      else setRemoveNotice(result.meta?.notice ?? "This item could not be removed yet.");
+    } catch {
+      setRemoveNotice("This item could not be removed yet. Try again.");
     } finally {
-      onRemoved();
+      setRemoving(false);
     }
   };
 
@@ -713,6 +719,7 @@ function SavedItemRow({
         removing && { opacity: 0.5 },
       ]}
     >
+      {removeNotice ? <Text style={[styles.removeNotice, { color: colors.textRole.muted }]}>{removeNotice}</Text> : null}
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={open}
@@ -1078,6 +1085,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.lg,
     borderWidth: 1,
     minHeight: 44,
+    flexWrap: "wrap",
   },
   rowMain: {
     flex: 1,
@@ -1107,6 +1115,7 @@ const styles = StyleSheet.create({
     marginLeft: Spacing.xs,
   },
   removeIcon: { fontSize: FontSize.lg },
+  removeNotice: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4, flexBasis: "100%" as const, marginTop: Spacing.xs },
 
   // ── Notes: folders + cards ──────────────────────────────────
   noteGroups: { gap: Spacing.md },

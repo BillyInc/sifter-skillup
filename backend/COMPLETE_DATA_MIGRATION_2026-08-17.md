@@ -1,6 +1,6 @@
 # Sifter LevelUp complete data migration
 
-Status: reconciled and regenerated on 2026-08-20.
+Status: reconciled and regenerated on 2026-08-26.
 
 This is the authoritative runbook for the current career, JAMB, domain,
 admission, and source-backed resource data. SQL files are generated outputs;
@@ -10,6 +10,19 @@ the partition manifest, JSON parts, and generators under
 The generated SQL has been locally regenerated and audited. It has not been
 executed against Supabase by this audit; the post-seed queries below are the
 required proof of a successful Supabase run.
+
+The current worktree also contains
+`backend/seed_career_v2_preview_2026-08-25.sql`. That file is a development
+preview of the corrected career taxonomy/context payload. It is not the
+production seed, and it must not be applied while the Nigerian population gate
+is closed.
+
+A read-only check of the configured Supabase project on 2026-08-24 found the
+older live subject state (506 options, 4,593 option items, and 0 typed rule
+records). The API now refuses to use national option rows unless they agree
+with the typed rule layer, so this stale state fails closed rather than
+producing untrusted matches. Apply both subject seeds in the order below, then
+rerun the post-seed queries.
 
 Do not paste every SQL file in `backend/` into Supabase in filename order.
 Several files are historical patches, rollback scripts, or superseded schema
@@ -21,9 +34,10 @@ variants.
 |---|---:|
 | `seed_career_pilot.sql` | 243 CCMAS/custom programmes, 861 schools, 420 JAMB programme names, 420 mappings, 9,130 unique university offerings, 420 national requirement rows, 3,884 university exceptions, 2,031 university subject options, 12,213 university option items, 2,706 brochure source variants |
 | `seed_subject_catalog.sql` | 46 canonical subjects |
-| `seed_subject_options.sql` | 740 national subject options and 7,246 national option items; replacement seed for directly matchable subject combinations |
-| `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 739 matchable, 84 structured source rules, 3 cross-references, 420 direct-entry records, 14 explicit source-missing records |
+| `seed_subject_options.sql` | 596 national subject options and 7,793 national option items; replacement seed for directly matchable subject combinations |
+| `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 676 matchable, 137 structured source rules, 3 cross-references, 420 direct-entry records, 24 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
+| `seed_career_v2_preview_2026-08-25.sql` | Development preview: 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, 4,000 overlaps; unresolved Nigerian evidence remains explicit |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
 
@@ -45,10 +59,9 @@ The JAMB inheritance audit resolves all 420 names to an explicit scope, with
 separately evidenced external curricula. The university/programme graph is
 complete and structurally valid: all 420 names have a canonical mapping and
 all 9,130 offerings resolve through that chain. This does not mean every
-source sentence is a machine-matchable subject rule: 39 programme layers still
-need subject parsing review and one layer has an empty requirement. Their
-official text is retained as a fallback and must not be presented as a fully
-enumerated subject combination.
+source sentence is a machine-matchable subject rule: 172 programme layers still
+need subject parsing review. Their official text is retained for programme
+detail and review, but is not used to manufacture a subject-match result.
 
 The resource gate is also green: 160 visible domains, zero resource
 validation errors, zero unsourced roles, and no invalid domain, subgroup, or
@@ -117,12 +130,33 @@ Run each file in the order below. Keep each SQL file's transaction intact.
 4. `backend/migration_subject_rule_records.sql`
 5. `backend/migration_career_v2.sql`
 6. `backend/migration_admission_intelligence.sql`
-7. `backend/migration_enrichment_v1.sql`
-8. `backend/migration_market_intelligence_v1.sql`
-9. `backend/migration_role_tools.sql`
-10. `backend/migration_role_detail_enrichment.sql`
-11. `backend/migration_source_backed_career_layers.sql`
+7. `backend/migration_role_tools.sql`
+8. `backend/migration_source_backed_career_layers.sql`
+9. `backend/migration_enrichment_v1.sql`
+10. `backend/migration_market_intelligence_v1.sql`
+11. `backend/migration_role_detail_enrichment.sql`
 12. `backend/migration_career_resources_v1.sql`
+
+For the current career preview, the dependency-critical subset is:
+
+```text
+migration_career_v2.sql
+  -> migration_admission_intelligence.sql
+  -> migration_role_tools.sql
+  -> migration_source_backed_career_layers.sql
+  -> migration_enrichment_v1.sql
+  -> migration_market_intelligence_v1.sql
+  -> migration_role_detail_enrichment.sql (when role detail data is used)
+  -> migration_career_resources_v1.sql (when resource data is used)
+  -> migration_saved_resource_support.sql (after saved_items exists)
+  -> seed_career_v2_preview_2026-08-25.sql (development only)
+```
+
+`migration_role_tools.sql` must precede
+`migration_source_backed_career_layers.sql`, and both must precede the current
+preview seed. The preview inserts the source-backed columns and role-scoped
+tool ownership that those migrations create. This order is specific to the
+current preview and does not authorize a production deployment.
 
 `migration_subject_catalog.sql` is required before
 `migration_career_pilot.sql` on a fresh database because the latter creates
@@ -188,7 +222,7 @@ Run after the schema above:
 
 `seed_subject_rule_records.sql` replaces the complete typed rule-record layer.
 `seed_subject_options.sql` deliberately deletes and replaces the national
-parsed-option tables before inserting the current 740 options and 7,246
+parsed-option tables before inserting the current 596 options and 7,793
 items. Run both after `seed_career_pilot.sql`; take a backup before using the
 replacement seed on an existing production database. The rule-record layer
 preserves every source condition and blank cell; only matchable records become
@@ -289,10 +323,47 @@ LEFT JOIN skillup_dev.domain_subgroups sg ON sg.id = r.subgroup_id
 LEFT JOIN skillup_dev.domain_roles dr ON dr.id = r.role_id
 WHERE d.id IS NULL OR (r.subgroup_id IS NOT NULL AND sg.id IS NULL)
    OR (r.role_id IS NOT NULL AND dr.id IS NULL);
+
+SELECT COUNT(*) AS options_without_current_typed_authority
+FROM skillup_dev.programme_subject_options o
+LEFT JOIN skillup_dev.programme_subject_rule_records r
+  ON r.jamb_programme_id = o.jamb_programme_id
+ AND r.requirement_id = o.requirement_id
+ AND r.exam_type = o.exam_type
+WHERE r.id IS NULL
+   OR r.rule_status NOT IN ('matchable', 'cross_reference')
+   OR regexp_replace(o.source_text, '\\s+\\[resolved:\\s*as in [^\\]]+\\]\\s*$', '', 'i') <> r.source_text;
+
+SELECT COUNT(*) AS incomplete_subject_options
+FROM (
+  WITH required_counts AS (
+    SELECT option_id, COUNT(*) AS required_count
+    FROM skillup_dev.programme_subject_option_items
+    WHERE requirement_role = 'required'
+    GROUP BY option_id
+  ), group_counts AS (
+    SELECT option_id, group_key, MAX(min_from_group) AS group_min
+    FROM skillup_dev.programme_subject_option_items
+    WHERE requirement_role = 'one_of'
+    GROUP BY option_id, group_key
+  ), capacities AS (
+    SELECT o.id, o.min_required,
+           COALESCE(r.required_count, 0) + COALESCE(g.group_capacity, 0)
+             AS represented_capacity
+    FROM skillup_dev.programme_subject_options o
+    LEFT JOIN required_counts r ON r.option_id = o.id
+    LEFT JOIN (
+      SELECT option_id, SUM(group_min) AS group_capacity
+      FROM group_counts
+      GROUP BY option_id
+    ) g ON g.option_id = o.id
+  )
+  SELECT id FROM capacities WHERE represented_capacity < min_required
+) x;
 ```
 
 Expected current counts are 46 subjects, 420 JAMB programmes, 420 national
-requirement rows, 740 national subject options, 7,246 national option items,
+requirement rows, 596 national subject options, 7,793 national option items,
 1,260 typed subject-rule records,
 861 schools, 9,130 unique school-programme offerings, 3,884 university
 exceptions, 2,031 university subject options, 12,213 university option items,
@@ -310,6 +381,7 @@ All three orphan checks must return zero.
 - Resource FK reconciliation: zero invalid domain, subgroup, or role IDs.
 - JAMB inheritance audit: 420/420 names resolved; zero stale names and zero
   component mismatches.
-- Seed regeneration: all 420 programme mappings link to a programme.
+- Seed regeneration: all 420 programme mappings link to a programme; the
+  subject-option completeness audit passed for all 596 emitted options.
 - Python compilation and JSON parsing passed for the generators and canonical
   artifacts.

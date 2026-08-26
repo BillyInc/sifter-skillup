@@ -4,7 +4,6 @@ SifterSkillUp/                   ← Expo project root
 ├── babel.config.js
 ├── tsconfig.json
 ├── assets/
-│   ├── icon.png
 │   └── splash.png
 └── src/
     ├── App.tsx                  ← Root navigator

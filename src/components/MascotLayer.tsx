@@ -91,25 +91,27 @@ const MASCOTS: Record<string, MascotDef> = {
   'supply-chain-analyst':  { face: '📦', name: 'The Inventory',    color: '#10b981', intro: 'Too much costs money. Too little stops the line.' },
   'content-creation':      { face: '🎙️', name: 'The Mic',          color: '#ef4444', intro: 'I amplify your voice — if you know how to use me.' },
   'community-management':  { face: '💬', name: 'The Community',    color: '#f97316', intro: 'I\'m alive 24/7. You need a system to manage me.' },
-  default:                 { face: '⚡', name: 'The Skill',         color: '#6366f1', intro: 'Every skill starts with one tool. This is yours.' },
+  // Use a text-safe neutral mark as the fallback; unsupported decorative glyphs
+  // can render as an opaque square on web.
+  default:                 { face: '✦', name: 'The Skill',         color: '#6366f1', intro: 'Every skill starts with one tool. This is yours.' },
 };
 
-// The ⚡ Bolt — Sifter brand mascot for milestone/global events (Duolingo owl equivalent).
+// The neutral Sifter mark for milestone/global events.
 // Used for: level_complete, boss_pass, streak_milestone, perfect_score, daily_return.
 // Track tool mascots used for: correct_answer, wrong_answer, lab_start.
-const BOLT_MASCOT: MascotDef = {
-  face:  '⚡',
+const MILESTONE_MASCOT: MascotDef = {
+  face:  '✦',
   name:  'Sifter',
   color: '#6366f1',
   intro: 'Skills compound. Keep building.',
 };
 
-const BOLT_EVENTS: MascotEvent[] = [
+const MILESTONE_EVENTS: MascotEvent[] = [
   'level_complete', 'boss_pass', 'streak_milestone', 'perfect_score', 'daily_return',
 ];
 
 function getMascot(trackId: string, event: MascotEvent): MascotDef {
-  if (BOLT_EVENTS.includes(event)) return BOLT_MASCOT;
+  if (MILESTONE_EVENTS.includes(event)) return MILESTONE_MASCOT;
   return MASCOTS[trackId] ?? MASCOTS.default;
 }
 

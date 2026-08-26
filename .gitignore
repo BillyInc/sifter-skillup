@@ -2,6 +2,15 @@ node_modules/
 .expo/
 dist/
 
+# Web bundle output from a scratch `expo export`. 77 files / 24MB of hashed,
+# minified chunks were committed and then went stale, so they were neither
+# useful nor reviewable -- a one-line source change could not be told apart
+# from a rebuild. `.expo/` above does not cover it; the directory is a
+# sibling, not a child. metro.config.js and tsconfig.json still list it under
+# blockList/exclude on purpose: it regenerates locally, and those rules keep
+# Metro and tsc from walking it when it does.
+.expo-web-test/
+
 # Jest coverage output. `--coverage` is how CI runs the suite, so anyone who
 # reproduces CI locally generates this; without the ignore it shows up in
 # `git status` and gets committed by accident (PR #108 carries 113 such files,

@@ -1,7 +1,7 @@
 /**
  * Sifter LevelUp — Celebration Overlay
  * Full-screen celebration triggered on lesson complete, lab complete, stage-up.
- * System palette confetti + The Bolt + XP burst. Auto-dismisses after 3.5s.
+ * System palette confetti + Sifter mark + XP burst. Auto-dismisses after 3.5s.
  *
  * Usage:
  *   <CelebrationOverlay
@@ -62,7 +62,7 @@ const EVENT_COPY: Record<CelebrationEventType, {
   sub: string;
   emoji: string;
 }> = {
-  lesson:      { headline: 'Lesson complete!',    sub: 'Keep that streak alive.',                emoji: '⚡' },
+  lesson:      { headline: 'Lesson complete!',    sub: 'Keep that streak alive.',                emoji: '✦' },
   lab:         { headline: 'Lab complete!',        sub: 'Real skill. Real XP.',                  emoji: '🔬' },
   boss:        { headline: 'Boss level cleared!',  sub: 'You just proved you get it.',           emoji: '🏆' },
   stage_up:    { headline: 'You evolved.',         sub: "Your character has a new look.",        emoji: '🌟' },
@@ -208,7 +208,7 @@ export default function CelebrationOverlay({
   const cardScale      = useRef(new Animated.Value(0.7)).current;
   const cardAlpha      = useRef(new Animated.Value(0)).current;
 
-  // The lesson completion modal should not show the legacy lightning mark.
+  // Lesson completion uses copy only; no legacy mascot mark is injected.
   const copy = type === 'lesson' ? { ...EVENT_COPY[type], emoji: '' } : EVENT_COPY[type];
 
   // Auto-dismiss timer
