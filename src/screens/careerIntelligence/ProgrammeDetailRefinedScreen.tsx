@@ -56,13 +56,13 @@ function displayRequirement(field: RequirementField, value?: string | null): str
 function relationshipCopy(matchType: DomainLink["matchType"]): string {
   switch (matchType) {
     case "direct":
-      return "This programme shares core subjects and training foundations with this field.";
+      return "This programme shares core subjects and training foundations with this domain.";
     case "functional":
-      return "This programme builds knowledge and skills that can be used in this field, even when the work is different.";
+      return "This programme builds knowledge and skills that can be used in this domain, even when the work is different.";
     case "adjacent":
-      return "This programme gives you a useful starting point for this field, but specialist study may still be needed.";
+      return "This programme gives you a useful starting point for this domain, but specialist study may still be needed.";
     default:
-      return "This field is connected to the programme through the mapped learning content.";
+      return "This domain is connected to the programme through the mapped learning content.";
   }
 }
 
@@ -393,8 +393,8 @@ function ProgrammeDetailBody({
              </View>
            ) : (
              <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-               <SectionLabel>Choose a university before field guidance</SectionLabel>
-               <Text style={[styles.body, { color: colors.textRole.secondary }]}>Review the universities offering this programme, choose one, and then continue to the fields, smaller areas and roles connected to that university-aware programme.</Text>
+               <SectionLabel>Choose a university before domain guidance</SectionLabel>
+               <Text style={[styles.body, { color: colors.textRole.secondary }]}>Review the universities offering this programme, choose one, and then continue to the domains, subgroups and roles connected to that university-aware programme.</Text>
                <TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
                  <Text style={styles.primaryText}>Choose a university</Text>
                </TouchableOpacity>
@@ -489,13 +489,13 @@ function ProgrammeDetailBody({
       {tab === "career" ? (
         <View style={styles.section}>
           <SectionLabel>Career guidance</SectionLabel>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>Explore the fields connected to this programme, then open a field to see its sub-groups, roles and source-backed resources.</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>Explore the domains connected to this programme, then open a domain to see its subgroups, roles and source-backed resources.</Text>
           {orderedDomains.map((link) => (
             <TouchableOpacity key={link.domainId} onPress={() => exploreNav.domain(router, link.domainId, guidanceStudentId, focusedGuidance)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
               <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
               <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>{relationshipCopy(link.matchType)}</Text>
-              <Text style={[styles.link, { color: colors.accentRole.action }]}>Open field guidance →</Text>
+              <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain guidance →</Text>
             </TouchableOpacity>
           ))}
           {!data.domains?.length ? <Text style={[styles.body, { color: colors.textRole.muted }]}>Career connections are not available for this programme yet.</Text> : null}

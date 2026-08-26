@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { DetailScaffold, GuidanceReportButton, SectionLabel } from "@/components/careerIntelligence";
+import { CertPlacementList, DetailScaffold, GuidanceEvidenceBlock, LearningResourcesBlock, MethodEvidenceBlock, SectionLabel, ToolGroupsBlock } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
 import { comingSoon, type DataState, type DomainV2 } from "@/types/career";
@@ -28,15 +28,20 @@ export default function SubgroupDetailScreen() {
   const subgroup = state.data?.subgroups.find((item) => item.id === subgroupId);
   const roles = state.data?.roles.filter((role) => role.subgroupId === subgroupId) ?? [];
 
-  return <DetailScaffold eyebrow="SMALLER AREA" title={subgroup?.name ?? "Smaller area"} backLabel={`Back to ${state.data?.name ?? "field"}`} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Smaller area", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} state={state}>
+  return <DetailScaffold eyebrow="SUBGROUP" title={subgroup?.name ?? "Subgroup"} backLabel={`Back to ${state.data?.name ?? "domain"}`} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Subgroup", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} state={state}>
     {() => subgroup ? <View style={styles.body}>
       <SectionLabel>Overview</SectionLabel>
       <Text style={[styles.heading, { color: colors.textRole.primary }]}>What people do in this area</Text>
-      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{subgroup.description || "This is a smaller area within the field. Explore its skills, resources and roles before adding it to your guidance."}</Text>
+      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{subgroup.description || "This is a subgroup within the domain. Explore its skills, resources and roles before adding it to your guidance."}</Text>
       <TouchableOpacity onPress={() => setExpanded((value) => !value)} style={[styles.more, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show less" : "View more"}</Text></TouchableOpacity>
-      {expanded ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><Text style={[styles.copy, { color: colors.textRole.secondary }]}>Skills connected to this area: {subgroup.clusterSkills.length ? subgroup.clusterSkills.join(", ") : "Not available yet."}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>Resources and certifications are shown when the source-backed records are available.</Text></View> : null}
+      {expanded ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><Text style={[styles.copy, { color: colors.textRole.secondary }]}>Skills connected to this area: {subgroup.clusterSkills.length ? subgroup.clusterSkills.join(", ") : "Not available yet."}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>These are the additional capabilities to build after the domain foundation. Resources and certifications are shown when the source-backed records are available.</Text></View> : null}
+      <ToolGroupsBlock tools={subgroup.tools} title="Tools for this specialization" />
+      <MethodEvidenceBlock methods={subgroup.methodEvidence} title="Competencies and methods connected to this specialization" />
+      <GuidanceEvidenceBlock evidence={subgroup.guidanceEvidence} />
+      <View style={styles.detail}><SectionLabel>Credentials for this specialization</SectionLabel><CertPlacementList subgroup={subgroup.certifications} /></View>
+      <LearningResourcesBlock resources={subgroup.resources} />
       <SectionLabel>Roles in this area</SectionLabel>
-      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles are organised under this smaller area. Open one to understand what it involves.</Text>
+      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles are organised under this subgroup. Open one to understand what it involves.</Text>
       {roles.length ? roles.map((role) => <TouchableOpacity key={role.key} onPress={() => exploreNav.role(router, role.key, targetStudentId, focusedGuidance)} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={{ flex: 1 }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{role.name}</Text><Text style={[styles.copy, { color: colors.textRole.muted }]}>View role details and connected skills.</Text></View><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Open</Text></TouchableOpacity>) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>Roles for this area are not available yet.</Text>}
     </View> : null}
   </DetailScaffold>;

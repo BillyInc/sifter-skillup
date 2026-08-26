@@ -1,14 +1,16 @@
 -- ============================================================
 -- SIFTER LEVELUP — CAREER TAXONOMY v2 (post-sweep)
 -- Schema: skillup_dev
--- Run AFTER supabase-schema.sql + migration_career_pilot.sql
+-- Run AFTER migration_career_base_registry.sql,
+-- migration_subject_catalog.sql and migration_career_pilot.sql.
 -- ------------------------------------------------------------
 -- Replaces the PRE-SWEEP taxonomy tables from
 -- migration_career_intelligence.sql (which held ZERO rows and
 -- could not represent sub-groups, tools, the gateway/subgroup/
 -- role certification split, or ready/bridge/stretch readiness).
 --
--- SAFE: only the empty taxonomy tables are dropped. All
+-- STAGING ONLY: use this when the taxonomy tables are empty or an explicitly
+-- approved taxonomy rebuild is intended. All
 -- user-owned tables (saved_items, user_notes,
 -- opportunity_subscriptions) and the programmes / jamb_programmes
 -- / school_programmes bridge are PRESERVED.

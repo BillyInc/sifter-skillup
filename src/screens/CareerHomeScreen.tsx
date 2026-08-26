@@ -51,7 +51,7 @@ const QUICK = [
   {
     icon: "Build",
     title: "Entrepreneurship",
-    body: "Business paths connected to your field",
+    body: "Business paths connected to your domain",
     href: "/(tabs)/explore/pathways/entrepreneurship" as const,
     locked: false,
   },
@@ -371,12 +371,12 @@ export default function CareerHomeScreen() {
           ) : null}
           {activeDomainNames.length ? (
             <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Fields: {activeDomainNames.join(", ")}
+              Domains: {activeDomainNames.join(", ")}
             </Text>
           ) : null}
           {activeSubgroupNames.length ? (
             <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              Areas: {activeSubgroupNames.join(", ")}
+              Subgroups: {activeSubgroupNames.join(", ")}
             </Text>
           ) : null}
           {activeRoleNames.length ? (

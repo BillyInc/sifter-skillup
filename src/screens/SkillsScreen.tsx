@@ -232,7 +232,7 @@ function FieldAccordionCard({
           ) : (
             <View style={[styles.inlineInfoCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
               <Text style={[styles.inlineInfoTitle, { color: colors.text }]}>Tracks locked</Text>
-              <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>This field is mapped, and its dedicated sub-tracks are being prepared behind the lock.</Text>
+              <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>This domain is mapped, and its dedicated subgroups are being prepared behind the lock.</Text>
             </View>
           )}
         </View>
@@ -289,7 +289,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
           {tab === 'overview' ? (
             <>
               <SifterCard style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>What this field is</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>What this domain is</Text>
                 <Text style={[styles.bodyText, { color: colors.textSoft }]}>{field.description}</Text>
               </SifterCard>
 
@@ -308,7 +308,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
               ) : null}
 
               <SifterCard style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Roles in this field</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Roles in this domain</Text>
                 <View style={styles.pillWrap}>
                   {field.roles.map((role) => (
                     <View key={role.title} style={[styles.rolePill, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
@@ -340,7 +340,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
                   ) : null}
                 </>
               ) : (
-                <Text style={[styles.bodyText, { color: colors.textSoft }]}>Salary data is not available yet for this field.</Text>
+                  <Text style={[styles.bodyText, { color: colors.textSoft }]}>Salary data is not available yet for this domain.</Text>
               )}
             </SifterCard>
           ) : null}
@@ -389,7 +389,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
               }) : (
                 <SifterCard style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                   <Text style={[styles.sectionTitle, { color: colors.text }]}>Tracks locked</Text>
-                  <Text style={[styles.bodyText, { color: colors.textSoft }]}>We are still building the dedicated curriculum for this field.</Text>
+                  <Text style={[styles.bodyText, { color: colors.textSoft }]}>We are still building the dedicated curriculum for this domain.</Text>
                 </SifterCard>
               )}
             </>
@@ -595,7 +595,7 @@ export default function SkillsScreen() {
             <>
               {searchResults.fields.length ? (
                 <>
-                  <Text style={[styles.webSectionTitle, { color: colors.text }]}>Matching Fields</Text>
+                  <Text style={[styles.webSectionTitle, { color: colors.text }]}>Matching Domains</Text>
                   <View style={styles.webAccordionStack}>
                     {searchResults.fields.map((field) => (
                       <FieldAccordionCard

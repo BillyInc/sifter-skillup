@@ -23,7 +23,7 @@ import { API } from "@/lib/api";
 import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
 import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
-import { DegreeSkills, GuidanceReportButton, invalidateGuidancePathCache } from "@/components/careerIntelligence";
+import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
@@ -68,7 +68,9 @@ type SubjectMatchStatus = "idle" | "loading" | "real" | "unavailable";
 
 type GuidanceResumeSnapshot = {
   status?: "in_progress" | "complete";
-  stage?: "context" | "subjects" | "programmes" | "university" | "fields";
+  // `fields` is retained only as a legacy value while older saved paths are
+  // migrated in memory. New writes must use the canonical `domains` stage.
+  stage?: "context" | "subjects" | "programmes" | "university" | "domains" | "fields";
   mode?: Mode;
   query?: string;
   schoolQuery?: string;
@@ -96,6 +98,10 @@ function readParam(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
+function normalizeGuidanceStage(stage: GuidanceResumeSnapshot["stage"]): GuidanceResumeSnapshot["stage"] {
+  return stage === "fields" ? "domains" : stage;
+}
+
 function matchSummary(item: SubjectProgrammeMatch): string {
   if (item.matchBasis === "combined") {
     if (item.eligibilityStatus === "eligible") {
@@ -110,19 +116,6 @@ function matchSummary(item: SubjectProgrammeMatch): string {
     return "O-level requirement matches your selected subjects. Check the UTME subjects before applying.";
   }
   return "UTME subjects match where requirements are parsed. Check O-level subjects before deciding.";
-}
-
-function domainRelationshipLabel(matchType?: string): string {
-  const value = (matchType || "connected").toLowerCase();
-  return value === "direct" ? "Direct connection" : value === "functional" ? "Functional connection" : value === "adjacent" ? "Adjacent connection" : "Connected field";
-}
-
-function domainRelationshipCopy(matchType?: string): string {
-  const value = (matchType || "").toLowerCase();
-  if (value === "direct") return "The programme shares core subjects and training foundations with this field.";
-  if (value === "functional") return "The programme builds knowledge and skills that can be used in this field, even when the work is different.";
-  if (value === "adjacent") return "The programme gives you a useful starting point for this field, but specialist study may still be needed.";
-  return "This field is connected to the programme through its mapped learning content.";
 }
 
 function appendProgrammeChoice(
@@ -333,6 +326,9 @@ export default function AdmissionBrowseScreen() {
       if (!active) return;
       const path = saved?.path ?? {};
       const resume = (path.resume ?? {}) as GuidanceResumeSnapshot;
+      // Older checkpoints called this stage “fields”. Preserve those saved
+      // routes while presenting and resaving them with canonical terminology.
+      resume.stage = normalizeGuidanceStage(resume.stage);
       const hasCompletedPath = Boolean(
         (path.programme as Record<string, unknown> | undefined)?.name &&
         (path.university as Record<string, unknown> | undefined)?.name,
@@ -532,7 +528,7 @@ export default function AdmissionBrowseScreen() {
     ) return;
     const timer = setTimeout(() => {
       const stage: GuidanceResumeSnapshot["stage"] = selectedAdmissionSchool || domains
-        ? "fields"
+        ? "domains"
         : selected
           ? "university"
           : candidates.length
@@ -815,7 +811,7 @@ export default function AdmissionBrowseScreen() {
         nextPath.resume = {
           ...(nextPath.resume ?? {}),
           status: "complete",
-          stage: "fields",
+          stage: "domains",
         };
         await provisioningData.saveGuidancePath(
           guidanceStudentId,
@@ -870,7 +866,7 @@ export default function AdmissionBrowseScreen() {
       showsVerticalScrollIndicator={false}
     >
       <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
-        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : "ADMISSION PATH"}
+        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : "ADMISSION INTELLIGENCE"}
       </Text>
       <Text style={[styles.title, { color: colors.text }]}>
         {guidedSubjectDiscovery

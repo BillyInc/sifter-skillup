@@ -143,7 +143,7 @@ export function DetailScaffold<T>({
               />
             ) : null}
             {reportSelection ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
-            {pdf ? <PdfExportButton title={pdfTitle ?? title} documentPath={pdfPath} /> : null}
+            {pdf ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
             {pdfPath ? (
               <ShareExportButton
                 documentPath={pdfPath}

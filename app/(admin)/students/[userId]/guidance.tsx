@@ -81,7 +81,13 @@ export default function AdminStudentGuidancePage() {
       >
         <View style={styles.intro}>
           <Text style={[styles.title, CompassFonts.displayBold, { color: colors.text }]}>Build this student&apos;s guidance path</Text>
-          <Text style={[styles.body, { color: colors.textMuted }]}>Use the same subject, programme, university and career-field flow the student would see. You can finish it now or leave at any point; this student&apos;s checkpoint is saved so the next visit returns to the same place.</Text>
+          <Text style={[styles.body, { color: colors.textMuted }]}>Use the same subject, programme, university, domain, subgroup and role flow the student would see. You can finish it now or leave at any point; this student&apos;s checkpoint is saved so the next visit returns to the same place.</Text>
+        </View>
+        <View style={[styles.contextCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]} accessibilityRole="summary">
+          <Text style={[styles.contextLabel, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>TARGET STUDENT</Text>
+          <Text style={[styles.contextTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Guidance is scoped to this student</Text>
+          <Text style={[styles.contextBody, { color: colors.textMuted }]}>The student&apos;s path and report remain separate from your personal guidance. Access and consent checks are enforced before records are shown.</Text>
+          {contextClass || stream ? <Text style={[styles.contextMeta, CompassFonts.data, { color: colors.textMuted }]}>{[contextClass, stream].filter(Boolean).join(" · ")}</Text> : null}
         </View>
         <LocalLegalNotice audience="institution" />
         <SifterButton
@@ -103,4 +109,9 @@ const styles = StyleSheet.create({
   intro: { gap: Spacing.sm, maxWidth: 720 },
   title: { fontSize: FontSize.xxl, lineHeight: FontSize.xxl * 1.2 },
   body: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
+  contextCard: { borderWidth: 1, borderRadius: 12, padding: Spacing.lg, gap: Spacing.xs, maxWidth: 720 },
+  contextLabel: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  contextTitle: { fontSize: FontSize.md },
+  contextBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  contextMeta: { fontSize: FontSize.xs, textTransform: "capitalize" },
 });

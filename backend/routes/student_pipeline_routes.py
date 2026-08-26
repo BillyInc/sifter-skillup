@@ -470,7 +470,12 @@ async def save_starting_point(
 
 
 def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
-    """Keep only report-selection context, never arbitrary client payloads."""
+    """Keep report context plus the safe account-scoped resume checkpoint.
+
+    The guided selector writes its current stage beside the selected path so a
+    student can leave and return without losing their place. Only the small
+    checkpoint vocabulary is retained; arbitrary client payloads are dropped.
+    """
     allowed_single = {
         "academicContext", "subjects", "programme", "university", "requirements",
         "discoveryDoor", "notes",
@@ -485,6 +490,15 @@ def _path_snapshot(path: dict[str, Any]) -> dict[str, Any]:
         value = path.get(key)
         if isinstance(value, list):
             out[key] = [item for item in value if isinstance(item, dict)]
+    resume = path.get("resume")
+    if isinstance(resume, dict):
+        checkpoint = {
+            key: resume[key]
+            for key in ("stage", "status", "mode")
+            if isinstance(resume.get(key), str) and resume[key].strip()
+        }
+        if checkpoint:
+            out["resume"] = checkpoint
     return out
 
 

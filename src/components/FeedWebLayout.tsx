@@ -23,9 +23,8 @@ import {
   Linking, Platform,
 } from 'react-native';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
+  useTheme, Spacing, Radius, FontSize, FontWeight,
 } from '../theme';
-import { getTrackFeedConfig } from '../lib/trackFeedConfig';
 import { FeedCard } from './FeedCard';
 import type { FeedItem, ReactionType, TrackFeedSection, MonitoredTrack } from '../types/feed';
 
@@ -337,7 +336,7 @@ function JobsPanel({
 
   return (
     <View style={[styles.panel, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <Text style={[styles.panelTitle, { color: colors.textMuted }]}>LATEST JOBS</Text>
+      <Text style={[styles.panelTitle, { color: colors.textMuted }]}>LATEST OPPORTUNITIES</Text>
 
       {jobs.map(item => {
         const meta = item.metadata as any;

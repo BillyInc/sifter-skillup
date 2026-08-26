@@ -362,7 +362,7 @@ export function CareerChangerScreen() {
         CAREER CHANGE
       </Text>
       <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Fields you can move into
+        Domains you can move into
       </Text>
 
       {/* ── Scenario selector ───────────────────────────────────── */}
@@ -392,7 +392,7 @@ export function CareerChangerScreen() {
             ]}
           >
             <Text style={[styles.scenarioTabText, { color: scenario === 'B1' ? colors.accentRole.action : colors.textRole.primary }, CompassFonts.bodyMedium]}>
-              Target Field Gap
+              Target Domain Gap
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -416,7 +416,7 @@ export function CareerChangerScreen() {
           What did you study or do?
         </Text>
         <Text style={[styles.pickerHelp, { color: colors.textRole.muted }, CompassFonts.body]}>
-          Tell us your background field and we&apos;ll find the fields your existing
+          Tell us your background domain and we&apos;ll find the domains your existing
           skills transfer into.
         </Text>
         <View
@@ -448,7 +448,7 @@ export function CareerChangerScreen() {
           <DataStateView
             state={searchState}
             empty={() => domainMatches.length === 0}
-            emptyTitle="No matching fields"
+            emptyTitle="No matching domains"
             emptyBody="Try another word for what you studied or did."
             compact
           >
@@ -522,7 +522,7 @@ export function CareerChangerScreen() {
                 spinnerOnPending
                 empty={(d) => d.moves.length === 0}
                 emptyTitle="No clear pivots yet"
-                emptyBody="We couldn’t find strong skill overlaps from this field yet. It’s being expanded — check back soon."
+                emptyBody="We couldn’t find strong skill overlaps from this domain yet. It’s being expanded — check back soon."
               >
                 {(data) => <PivotResults data={data} colors={colors} router={router} />}
               </DataStateView>
@@ -534,7 +534,7 @@ export function CareerChangerScreen() {
                 spinnerOnPending
                 empty={() => gapAnalysisState.data?.have.length === 0 && gapAnalysisState.data?.bridge.length === 0}
                 emptyTitle="No gap analysis data"
-                emptyBody="Select a target field to see the gap analysis."
+                emptyBody="Select a target domain to see the gap analysis."
               >
                 {(data) => data && <GapAnalysisResult data={data} colors={colors} />}
               </DataStateView>
@@ -568,7 +568,7 @@ function IntroCard({ colors }: { colors: ColorPalette }) {
         Changing direction isn&apos;t starting from zero
       </Text>
       <Text style={[styles.introBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        Pick the field you studied or worked in above. We&apos;ll rank the fields you
+        Pick the domain you studied or worked in above. We&apos;ll rank the domains you
         can realistically move into — ordered by how much of your existing skill
         set transfers — and show you exactly which skills carry over. Some moves
         are short sideways steps; others are bigger, honest stretches. We&apos;ll tell
@@ -597,7 +597,7 @@ function PivotResults({
   return (
     <View style={styles.results}>
       <SectionHeader
-        title={`From ${data.fromDomain.name} → fields you can move into`}
+        title={`From ${data.fromDomain.name} → domains you can move into`}
       />
 
       {/* Honest distance banner. */}
@@ -619,7 +619,7 @@ function PivotResults({
         >
           {isStretch
             ? "These are meaningful stretches — expect real re-skilling. The overlap below shows how much of a head start you already have."
-            : "Good news — several fields share a lot with your background. The strongest matches are at the top."}
+            : "Good news — several domains share a lot with your background. The strongest matches are at the top."}
         </Text>
       </View>
 
@@ -769,7 +769,7 @@ function GapAnalysisResult({
           ]}
         >
           {data.readiness === 'ready'
-            ? 'You have most of the skills needed for this field!'
+            ? 'You have most of the skills needed for this domain!'
             : data.readiness === 'bridge'
               ? 'You have a good foundation but need to bridge some gaps.'
               : 'This is a significant stretch requiring substantial skill development.'}
