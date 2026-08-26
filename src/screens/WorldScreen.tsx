@@ -160,7 +160,7 @@ function LabWorldScreen({
   function handleStartLab() {
     if (isStarknetTrack(trackId)) {
       const lab = getStarknetLab(trackId as StarknetTrackId, labNum);
-      if (lab && lab.lessons.length > 0) {
+      if (lab && lab.lessonCount > 0) {
         router.push({
           pathname: '/map/lesson' as any,
           params: {
