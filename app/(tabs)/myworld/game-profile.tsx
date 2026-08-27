@@ -1,9 +1,5 @@
-import ProfileScreen from "@/screens/ProfileScreen";
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-// The legacy game Home / dashboard (worker character, XP ring, career stages,
-// skill bars, Portfolio/Workspace/Guild rows). Per the LevelUp plan the legacy
-// game profile lives under My World when the world is live; this thin wrapper
-// renders the existing ProfileScreen unchanged.
-export default function MyWorldGameProfileRoute() {
-  return <ProfileScreen />;
+export default function GameProfileRoute() {
+  return <DisabledLearningScreen area="Learning progress and game profile" />;
 }

@@ -1,6 +1,5 @@
-import IslandMapScreen from '@/screens/IslandMapScreen';
-import { useLocalSearchParams } from 'expo-router';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function IslandRoute() {
-  const params = useLocalSearchParams();
-  return <IslandMapScreen route={{ params }} navigation={{}} />;
+  return <DisabledLearningScreen area="Learning islands" />;
 }

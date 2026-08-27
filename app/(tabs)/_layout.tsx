@@ -57,17 +57,7 @@ export default function TabsLayout() {
           <Tabs.Screen name="myworld" options={{ href: null }} />
           <Tabs.Screen name="profile" options={{ href: null }} />
 
-           {/* Preserved learning routes (fold into My World in a later phase). */}
-          <Tabs.Screen name="map" options={{ href: null }} />
-          <Tabs.Screen name="fields" options={{ href: null }} />
-          <Tabs.Screen name="guild" options={{ href: null }} />
-          <Tabs.Screen name="portfolio" options={{ href: null }} />
-          <Tabs.Screen name="streaks" options={{ href: null }} />
           <Tabs.Screen name="settings" options={{ href: null }} />
-           <Tabs.Screen name="feed" options={{ href: null }} />
-           <Tabs.Screen name="skills" options={{ href: null }} />
-           <Tabs.Screen name="leaderboard" options={{ href: null }} />
-           <Tabs.Screen name="referral" options={{ href: null }} />
         </Tabs>
       </ReferenceShell>
     </ScreenErrorBoundary>

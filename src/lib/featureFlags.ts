@@ -11,8 +11,12 @@
  * and makes the gate trivially greppable.
  */
 export const featureFlags = {
+  /** Master switch for the legacy learning/game layer. */
+  learningGameEnabled: process.env.EXPO_PUBLIC_LEARNING_GAME_ENABLED === "true",
   /** When true, My World becomes the live learning-world gateway. */
-  myWorldLive: process.env.EXPO_PUBLIC_MY_WORLD_LIVE === "true",
+  myWorldLive:
+    process.env.EXPO_PUBLIC_LEARNING_GAME_ENABLED === "true"
+    && process.env.EXPO_PUBLIC_MY_WORLD_LIVE === "true",
 } as const;
 
 export type FeatureFlags = typeof featureFlags;

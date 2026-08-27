@@ -1,6 +1,5 @@
-import TrackRoomScreen from '@/screens/TrackRoomScreen';
-import { useLocalSearchParams } from 'expo-router';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function TrackRoomRoute() {
-  const params = useLocalSearchParams();
-  return <TrackRoomScreen route={{ params }} navigation={{}} />;
+  return <DisabledLearningScreen area="Track rooms" />;
 }

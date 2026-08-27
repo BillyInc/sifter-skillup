@@ -1,8 +1,5 @@
-import { useLocalSearchParams } from 'expo-router';
-let StarknetTrackScreen: any;
-try { StarknetTrackScreen = require('@/screens/StarknetTrackScreen').default; } catch {}
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function StarknetTrackRoute() {
-  const params = useLocalSearchParams();
-  if (!StarknetTrackScreen) return null;
-  return <StarknetTrackScreen route={{ params }} navigation={{}} />;
+  return <DisabledLearningScreen area="Starknet learning" />;
 }

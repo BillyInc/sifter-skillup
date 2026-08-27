@@ -12,6 +12,7 @@ import { adminHomeForProfile } from "../lib/adminAudience";
 import { getEducatorProfile } from "../lib/educatorProfile";
 import { resolvePostAuthHref } from "../lib/resumeNavigation";
 import { isLegacyLearningPath, MY_WORLD_LEARNING_SOURCE } from "../lib/learningGate";
+import { featureFlags } from "../lib/featureFlags";
 import type { EducatorProfile } from "../types/institution";
 
 const LEGACY_COMMUNITY_PREFIX = "/community";
@@ -123,9 +124,17 @@ export function RouteIntegrityGuard() {
       return;
     }
 
-    // SkillUp learning and its adjacent legacy community surfaces are gated
-    // behind My World. This also repairs stale browser entries and old deep
-    // links instead of reopening them from another product surface.
+    // The legacy learning/game layer is disabled for the current release.
+    // Redirect stale browser entries and deep links instead of reopening
+    // simulator, lesson, game, portfolio or guild surfaces.
+    if (isLegacyLearningPath(pathname) && !featureFlags.learningGameEnabled) {
+      router.replace((user ? "/(tabs)/myworld" : "/(auth)/sign-in") as never);
+      previousPathRef.current = pathname;
+      return;
+    }
+
+    // When enabled later, preserve the existing My World-origin rule so its
+    // internal links can still open the legacy routes.
     const fromMyWorld = Array.isArray(params.from)
       ? params.from.includes(MY_WORLD_LEARNING_SOURCE)
       : params.from === MY_WORLD_LEARNING_SOURCE;
