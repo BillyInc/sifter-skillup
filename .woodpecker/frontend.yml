@@ -68,7 +68,15 @@ steps:
       # even evaluate the config command the build should still get to run the
       # tests and fail on something meaningful.
       - git config --global --add safe.directory "$CI_WORKSPACE" || true
-      - npx jest --ci --coverage --passWithNoTests
+      # --runInBand, not --maxWorkers=1: on a 2-CPU host jest already defaults
+      # to cpus-1 = 1 worker, so capping workers changes nothing. What costs us
+      # is that the single worker is a *separate node process* with its own
+      # heap, on a box sitting at ~1GB available with 2.8GB of swap already in
+      # use. Running in the main process removes that second heap and the IPC
+      # with it. This is the root cause behind the #133 flake, where the first
+      # test tripped a 5s timeout on an agent that took 59.2s over a suite that
+      # runs in 3s locally -- swap thrash, not a slow test.
+      - npx jest --ci --coverage --passWithNoTests --runInBand
 
   # NO web-build step, and this is a real coverage gap rather than an oversight.
   #

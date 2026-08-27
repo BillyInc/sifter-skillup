@@ -1,0 +1,181 @@
+# Deploy backend (dev) — ports deploy-backend.yml to Woodpecker.
+#
+# GitHub Actions cannot run these: the account's jobs are refused with "recent
+# account payments have failed or your spending limit needs to be increased",
+# which is why every check went red with zero steps executed. Woodpecker is not
+# subject to that, so CI/CD lives here now.
+#
+# BACKEND ONLY, on purpose. The web bundle is NOT built here: `expo export
+# --platform web` wants ~1.5-2GB, and this agent runs on storytime, which also
+# serves levelup.com.ng, its API, KYS, storytime and fetchit on 3.8GB. An OOM
+# here does not merely fail a build -- the kernel picks a victim, and that can
+# be a live service. Paying for that on every push to main is the wrong trade.
+# Web builds belong on EAS, whose runners are not this box. See
+# .eas/workflows/deploy-web.yml.
+#
+# Dev only. Prod (tag `v*`) is deliberately NOT ported — it needs the
+# `production` approval gate and an ENV_FILE secret that does not exist yet.
+#
+# REQUIRED SECRETS: ssh_private_key, server_host, server_user. All three must
+# EXIST in repo settings, scoped to the `push` event, before this file can be
+# on main.
+#
+# This is not a nicety, it is a hard Woodpecker constraint. Woodpecker compiles
+# every .woodpecker/*.yml into ONE pipeline, and resolves `from_secret` at
+# compile time. A secret that is merely ABSENT aborts the entire compile:
+# pipeline status `error`, `workflows: []`, and backend + frontend never get
+# scheduled either. A deploy misconfiguration takes down build and test CI with
+# it. That happened on ac61fc9 -- error: secret 'server_user' not found.
+#
+# Nothing in this file can catch that -- the abort happens before any step
+# exists. What the preflight step below DOES catch is the other half: a secret
+# that exists but is empty or still a placeholder. That case degrades to one
+# red step in this workflow, leaving backend and frontend green.
+#
+# So: to add a secret reference here, create the secret FIRST. An empty-valued
+# placeholder is enough to keep the compile alive; preflight turns it into a
+# legible failure rather than an ssh error 40 lines deep.
+#
+# Note also woodpecker-ci/woodpecker#2982: once a pipeline has errored this
+# way, adding the secret and pressing Restart tends to fail with "pipeline
+# definition not found". Trigger a fresh pipeline instead.
+
+when:
+  - event: push
+    branch: main
+
+# Only deploy what passed. Woodpecker runs each .woodpecker/ file as its own
+# workflow, in parallel by default; depends_on makes this one wait for both and
+# skip entirely if either fails. Do NOT rely on WOODPECKER_MAX_WORKFLOWS=1 for
+# ordering -- that caps concurrency, it does not sequence workflows.
+depends_on:
+  - backend
+  - frontend
+
+variables:
+  # alpine + the two binaries the deploy needs; no marketplace action exists
+  # here, so the ssh plumbing is explicit.
+  - &deploy_image 'alpine:3.20'
+
+steps:
+  # Fails fast, and fails ALONE. Steps run in order and a non-zero exit stops
+  # this workflow only, so a half-configured deploy shows up as one red step
+  # here instead of an ssh/rsync error much later -- or, worse, a deploy that
+  # half-succeeds against the wrong host.
+  #
+  # Checked for emptiness AND for the placeholder text, because the documented
+  # way to keep the pipeline compiling before the real key exists is to create
+  # the secret with a placeholder value. A placeholder that silently reached
+  # ssh-keyscan would be a confusing failure; here it is a named one.
+  - name: preflight-secrets
+    image: *deploy_image
+    environment:
+      SSH_KEY:
+        from_secret: ssh_private_key
+      SERVER_HOST:
+        from_secret: server_host
+      SERVER_USER:
+        from_secret: server_user
+    commands:
+      - |
+        # Spelled out rather than looped: an `eval "val=\$$v"` indirection would
+        # put `$$` in the config, which Drone-lineage substitution treats as an
+        # escape, and it names the secrets as the user must type them.
+        missing=""
+        [ -n "$SSH_KEY" ]     && [ "$SSH_KEY" != "REPLACE_ME" ]     || missing="$missing ssh_private_key"
+        [ -n "$SERVER_HOST" ] && [ "$SERVER_HOST" != "REPLACE_ME" ] || missing="$missing server_host"
+        [ -n "$SERVER_USER" ] && [ "$SERVER_USER" != "REPLACE_ME" ] || missing="$missing server_user"
+        if [ -n "$missing" ]; then
+          echo "deploy is not configured -- unset or placeholder:$missing" >&2
+          echo "set these in repo settings > secrets, scoped to the push event." >&2
+          echo "backend and frontend CI are unaffected; only this workflow fails." >&2
+          exit 1
+        fi
+        # A private key that lost its newlines is the classic silent failure:
+        # ssh rejects it with a format error that reads like an auth problem.
+        case "$SSH_KEY" in
+          *"-----BEGIN"*) ;;
+          *) echo "ssh_private_key does not look like a PEM private key." >&2
+             echo "paste the whole file, BEGIN/END lines included." >&2
+             exit 1 ;;
+        esac
+        echo "deploy secrets present."
+
+  - name: deploy-backend
+    image: *deploy_image
+    environment:
+      SSH_KEY:
+        from_secret: ssh_private_key
+      SERVER_HOST:
+        from_secret: server_host
+      SERVER_USER:
+        from_secret: server_user
+    commands:
+      - apk add --no-cache openssh-client rsync >/dev/null
+      # umask before the key is written, not after: a world-readable private
+      # key for even one instruction is a leak, and ssh refuses it anyway.
+      - umask 077
+      - mkdir -p ~/.ssh
+      - printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+      - chmod 600 ~/.ssh/deploy_key
+      # Trust-on-first-use per run, matching the GitHub workflow. A pinned
+      # host key would be stronger but needs another secret.
+      - ssh-keyscan -H "$SERVER_HOST" > ~/.ssh/known_hosts 2>/dev/null
+      - export SSH="ssh -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+      # .env is excluded: it is seeded once and never overwritten, exactly as
+      # the GitHub workflow does. --delete would otherwise remove it.
+      #
+      # celerybeat-schedule* is globbed, not exact: beat keeps its state in a
+      # SQLite db with -shm/-wal sidecars, and an exact match preserves the db
+      # while --delete removes the sidecars. That leaves the schedule
+      # inconsistent across the restart below -- lost last-run timestamps, a
+      # periodic task that re-fires or slips. Verified against the live box
+      # with a --dry-run: both sidecars were on the delete list.
+      - |
+        rsync -az --delete \
+          --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
+          --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
+          --exclude 'celerybeat-schedule*' \
+          -e "$SSH" \
+          backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend/"
+      - |
+        $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+        set -euo pipefail
+        cd ~/levelup-backend
+        chmod 600 .env
+        # Shared box (KYS lives here too): refuse to start if :8000 is already
+        # owned by something that is not our unit.
+        if ! systemctl is-active --quiet levelup-backend; then
+          if ss -ltnH 'sport = :8000' | grep -q .; then
+            echo "port 8000 already in use by another service -- aborting." >&2
+            exit 1
+          fi
+        fi
+        command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
+        export PATH="$HOME/.local/bin:$PATH"
+        uv sync --no-dev
+        mkdir -p logs
+        sudo cp systemd/levelup-*.service /etc/systemd/system/
+        sudo systemctl daemon-reload
+        sudo systemctl enable levelup-backend levelup-celery-worker levelup-celery-beat
+        sudo systemctl reload-or-restart levelup-backend
+        sudo systemctl restart levelup-celery-worker levelup-celery-beat
+        EOSSH
+      # Health check is the deploy's only proof. `uv sync` failing aborts above
+      # before any restart, so the old process keeps serving; a NEW process that
+      # starts and then fails its check leaves the service down, and recovery is
+      # manual -- re-run the previous green commit.
+      - |
+        $SSH "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+        set -euo pipefail
+        for i in $(seq 1 15); do
+          if curl -sf --max-time 5 http://127.0.0.1:8000/health >/dev/null; then
+            echo "health OK (attempt $i)"; exit 0
+          fi
+          echo "health attempt $i failed -- retrying in 4s"; sleep 4
+        done
+        echo "health check FAILED" >&2
+        sudo systemctl status --no-pager levelup-backend || true
+        sudo journalctl -u levelup-backend -n 40 --no-pager || true
+        exit 1
+        EOSSH

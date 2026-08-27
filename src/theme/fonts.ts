@@ -89,18 +89,29 @@ export function useCompassFonts(): boolean {
       try {
         // Dynamically imported so the bundle doesn't hard-depend on packages that
         // may not be installed. Guarded by COMPASS_FONTS_AVAILABLE.
-        const [Font, inter, spline] = await Promise.all([
+        //
+        // Per-weight subpaths, NOT the package barrel. `@expo-google-fonts/inter`
+        // re-exports all 18 variants -- every weight plus every italic -- and the
+        // bundler cannot tree-shake a `require()` of a .ttf, so importing the
+        // barrel shipped roughly 6MB of fonts to load the four faces this app
+        // actually renders. Inter has no "exports" map, so the subpath is the
+        // directory: @expo-google-fonts/inter/400Regular.
+        const [Font, i400, i500, i600, i700, s400, s500] = await Promise.all([
           import('expo-font'),
-          import('@expo-google-fonts/inter' as string),
-          import('@expo-google-fonts/spline-sans-mono' as string),
+          import('@expo-google-fonts/inter/400Regular' as string),
+          import('@expo-google-fonts/inter/500Medium' as string),
+          import('@expo-google-fonts/inter/600SemiBold' as string),
+          import('@expo-google-fonts/inter/700Bold' as string),
+          import('@expo-google-fonts/spline-sans-mono/400Regular' as string),
+          import('@expo-google-fonts/spline-sans-mono/500Medium' as string),
         ]);
         await Font.loadAsync({
-          Inter_400Regular: inter.Inter_400Regular,
-          Inter_500Medium: inter.Inter_500Medium,
-          Inter_600SemiBold: inter.Inter_600SemiBold,
-          Inter_700Bold: inter.Inter_700Bold,
-          SplineSansMono_400Regular: spline.SplineSansMono_400Regular,
-          SplineSansMono_500Medium: spline.SplineSansMono_500Medium,
+          Inter_400Regular: i400.Inter_400Regular,
+          Inter_500Medium: i500.Inter_500Medium,
+          Inter_600SemiBold: i600.Inter_600SemiBold,
+          Inter_700Bold: i700.Inter_700Bold,
+          SplineSansMono_400Regular: s400.SplineSansMono_400Regular,
+          SplineSansMono_500Medium: s500.SplineSansMono_500Medium,
         });
       } catch {
         // Packages missing or load failed — fall through to system stack.
