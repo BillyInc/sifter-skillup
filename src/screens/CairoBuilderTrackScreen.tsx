@@ -55,10 +55,10 @@ const CAIRO_LABS: LabDef[] = getStarknetLabs('cairo-builder').map((lab) => {
     id: lab.labId,
     number: lab.labNumber,
     title: ui?.title ?? `Lab ${lab.labNumber}`,
-    description: ui?.description ?? `Complete ${lab.lessons.length} lessons and the boss for Lab ${lab.labNumber}.`,
+    description: ui?.description ?? `Complete ${lab.lessonCount} lessons and the boss for Lab ${lab.labNumber}.`,
     bossLevelId: lab.bossLevelId,
     tags: ui?.tags ?? ['Cairo'],
-    lessonCount: lab.lessons.length,
+    lessonCount: lab.lessonCount,
   };
 });
 
