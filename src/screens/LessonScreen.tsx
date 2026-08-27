@@ -25,7 +25,6 @@ import {
 import {
   isStarknetTrack,
   getStarknetLab,
-  getStarknetLesson,
   getStarknetLessonRuntimeId,
   type StarknetTrackId,
 } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
@@ -785,9 +784,32 @@ export default function LessonScreen({
     && labNumber !== undefined
     && lessonIndex !== undefined,
   );
-  const starknetLesson = isStarknetLabLesson
-    ? getStarknetLesson(trackId as StarknetTrackId, labNumber as number, lessonIndex as number)
+  // Lab metadata is synchronous; the lesson bodies are not. They live in a
+  // lazily-loaded chunk (see starknetLessonRegistry), so they resolve after
+  // first paint instead of being bundled into the entry chunk.
+  const starknetLab = isStarknetLabLesson
+    ? getStarknetLab(trackId as StarknetTrackId, labNumber as number)
     : null;
+  const [starknetLessons, setStarknetLessons] = useState<any[] | null>(null);
+  useEffect(() => {
+    if (!starknetLab) {
+      setStarknetLessons(null);
+      return;
+    }
+    let alive = true;
+    starknetLab
+      .loadLessons()
+      .then((ls) => { if (alive) setStarknetLessons(ls); })
+      // An empty array (not null) so the render guard resolves instead of
+      // leaving the screen blank forever if the chunk fails to load.
+      .catch(() => { if (alive) setStarknetLessons([]); });
+    return () => { alive = false; };
+  }, [starknetLab]);
+
+  const starknetLesson =
+    starknetLessons && lessonIndex !== undefined
+      ? starknetLessons[lessonIndex] ?? null
+      : null;
   const classicLevel = getStarknetIslandLevel(levelId) ?? getStarknetTrackBossLevel(levelId) ?? getLevel(levelId);
   const lessonTopic = starknetLesson ? getAuthoredLessonTopic(starknetLesson as any) : classicLevel?.topic ?? 'Lesson';
   const lessonSummary = starknetLesson ? getAuthoredLessonSummary(starknetLesson as any) : classicLevel?.fact ?? '';
@@ -821,13 +843,12 @@ export default function LessonScreen({
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
   const isBossLvl  = Boolean(isBoss || classicLevel?.isBoss || classicLevel?.mechanic === 'boss');
-  const starknetLab = isStarknetLabLesson
-    ? getStarknetLab(trackId as StarknetTrackId, labNumber as number)
-    : null;
+  // starknetLab is resolved above, alongside the lazy lesson load.
   const hasNextStarknetLesson = Boolean(
     starknetLab
     && lessonIndex !== undefined
-    && lessonIndex + 1 < starknetLab.lessons.length,
+    // lessonCount, so "is there a next lesson" never waits on the chunk
+    && lessonIndex + 1 < starknetLab.lessonCount,
   );
   const userTrackId =
     (user as any)?.currentTrackId
@@ -858,7 +879,7 @@ export default function LessonScreen({
           labNumber as number,
           (lessonIndex as number) + 1,
         ),
-        topic: starknetLab?.lessons[(lessonIndex as number) + 1]?.title ?? 'Next Lesson',
+        topic: starknetLessons?.[(lessonIndex as number) + 1]?.title ?? 'Next Lesson',
         mechanic: 'memory',
       }
     : isStarknetLabLesson && starknetLab
@@ -885,7 +906,7 @@ export default function LessonScreen({
           labNumber as number,
           lessonIndex - 1,
         ),
-        topic: starknetLab.lessons[lessonIndex - 1]?.title ?? 'Previous Lesson',
+        topic: starknetLessons?.[lessonIndex - 1]?.title ?? 'Previous Lesson',
       }
     : (() => {
         const prevLevelId = levelId - 1;
@@ -927,7 +948,7 @@ export default function LessonScreen({
       startLesson(classicLevel);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [levelId, trackId, labId, labNumber, lessonIndex]);
+  }, [levelId, trackId, labId, labNumber, lessonIndex, starknetLesson]);
   useEffect(()=>{ if(state?.answered) setShowFeedback(true); }, [state?.answered]);
 
   const resetMood = useCallback(() => {
