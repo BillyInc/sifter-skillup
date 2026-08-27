@@ -1,0 +1,30 @@
+{
+  "format": "json-object-parts-v1",
+  "source": "role_tools.json",
+  "source_sha256": "84bf237650e3d7113c5fabf657db2fd2bdf98768e74174d3d6ac6bd20247e993",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.json.gz",
+      "bytes": 2319382,
+      "sha256": "d84db35c8cf73306bfffd6488e8022f60e48d90fff25ead06dba7ae8aab8a1a5"
+    },
+    {
+      "path": "part-002.json.gz",
+      "bytes": 3309430,
+      "sha256": "9a4e88e5638dd6c677a3df360fcef388c1a9e335747c434d352b3a5c71f87250"
+    },
+    {
+      "path": "part-003.json.gz",
+      "bytes": 2323553,
+      "sha256": "aa0ac351bea2df9e29866cb4fb415d9f6a2d4747c120d7c0c27d8cf397837aff"
+    },
+    {
+      "path": "part-004.json.gz",
+      "bytes": 137838,
+      "sha256": "aba4f15212aeca7fd406c8fb9df36aac5e9de9f3a463f4a881005a7966875ff0"
+    }
+  ],
+  "reassemble": "merge part files in numeric filename order as one top-level object"
+}

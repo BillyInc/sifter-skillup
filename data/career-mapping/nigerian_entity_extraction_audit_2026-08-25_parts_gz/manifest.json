@@ -1,0 +1,40 @@
+{
+  "format": "json-object-parts-v1",
+  "source": "nigerian_entity_extraction_audit_2026-08-25.json",
+  "source_sha256": "1579c2c86aa860e31b2a402ffecddbb35efde96f1c349e9207430691b9371693",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.json.gz",
+      "bytes": 4648449,
+      "sha256": "f2e50ec897ac10125569241797ff9076cd0944e691c2687d6c1a4b8b9b926ada"
+    },
+    {
+      "path": "part-002.json.gz",
+      "bytes": 3943974,
+      "sha256": "52f87f238f6182a2f35eb5c97f2b7ab7cfcf19e368065e7ff3c160e0b453cfe8"
+    },
+    {
+      "path": "part-003.json.gz",
+      "bytes": 3282227,
+      "sha256": "f0c8fd3a8e47fe33e1a7482042b3bff493cc1b87fa7b0bf87501ff2db488ea65"
+    },
+    {
+      "path": "part-004.json.gz",
+      "bytes": 4367782,
+      "sha256": "c7c0f788e7c6a0b7e665f9c37067be7c33c829985dbd97fc8058e56235c21ef8"
+    },
+    {
+      "path": "part-005.json.gz",
+      "bytes": 3093088,
+      "sha256": "530d3fc369fc5c6b4f27b7631ed29e673189efe2e668d79114a48afb63abe7a4"
+    },
+    {
+      "path": "part-006.json.gz",
+      "bytes": 1708538,
+      "sha256": "63671d7e8929c827f50ad5246ad2bc1ace0b653d86b702355d6e805f3bab7508"
+    }
+  ],
+  "reassemble": "merge part files in numeric filename order as one top-level object"
+}
