@@ -1,5 +1,5 @@
-import DiaryScreen from '@/screens/DiaryScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default function DiaryTabScreen() {
-  return <DiaryScreen />;
+export default function DiaryRoute() {
+  return <DisabledLearningScreen area="Learning diary" />;
 }

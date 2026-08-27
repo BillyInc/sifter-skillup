@@ -11,6 +11,7 @@ import gzip
 import hashlib
 import json
 import re
+import shutil
 from pathlib import Path
 from typing import Iterable
 
@@ -387,9 +388,25 @@ def join_json(manifest_path: Path, output: Path) -> None:
 
 def join_sql(manifest_path: Path, output: Path) -> None:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("format") != "sql-statement-parts-v1":
+        raise ValueError(f"Not an SQL parts manifest: {manifest_path}")
     with output.open("w", encoding="utf-8", newline="\n") as handle:
         for part in manifest["parts"]:
-            handle.write(read_transport(manifest_path.parent / part["path"]).decode("utf-8"))
+            part_path = manifest_path.parent / part["path"]
+            if not part_path.is_file():
+                raise FileNotFoundError(part_path)
+            actual_sha256 = sha256_file(part_path)
+            if actual_sha256 != part["sha256"]:
+                raise ValueError(
+                    f"Checksum mismatch for {part_path}: "
+                    f"expected {part['sha256']}, got {actual_sha256}"
+                )
+            if part_path.suffix == ".gz":
+                with gzip.open(part_path, "rt", encoding="utf-8", newline="") as source:
+                    shutil.copyfileobj(source, handle)
+            else:
+                with part_path.open("r", encoding="utf-8", newline="") as source:
+                    shutil.copyfileobj(source, handle)
             handle.write("\n")
     print(f"joined {output} ({sha256_file(output)})")
 

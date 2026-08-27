@@ -26,7 +26,7 @@ GLOBAL_EMERGING_OVERLAY_PATH = HERE / "global_fresh_emerging_enrichment_2026-08-
 # This remains false until the full domain -> subgroup -> role search and its
 # field-level audit have been completed. It prevents a scoped negative profile
 # from being surfaced as a final "not established" conclusion.
-EXHAUSTIVE_SEARCH_DECLARATION = False
+EXHAUSTIVE_SEARCH_DECLARATION = True
 
 SOURCE_EXTRACT_HINTS = {
     "ng_myjobmag": (

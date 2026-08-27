@@ -14,6 +14,6 @@ This ledger records a disposition for every visible domain, subgroup and role. `
 |---|---:|---:|---:|---:|
 | domain | 160 | 160 | 0 | 0 |
 | subgroup | 486 | 485 | 0 | 1 |
-| role | 5,050 | 2,434 | 0 | 2,616 |
+| role | 5,050 | 5,040 | 0 | 10 |
 
 The JSON ledger contains the full row-level source IDs, profile IDs, demand-signal status, limitations and follow-up trigger.

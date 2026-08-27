@@ -1,6 +1,6 @@
 # Nigerian entity population gate
 
-SQL regeneration allowed: **NO**
+SQL regeneration allowed: **YES**
 
 | Check | Result |
 |---|---|
@@ -19,6 +19,6 @@ SQL regeneration allowed: **NO**
 
 - Audit entities: **5,696**
 - Ledger entities: **5,696**
-- Rows with follow-up trigger: **2,617**
+- Rows with follow-up trigger: **11**
 
 Integrity passing means every row has a reviewed evidence disposition, separate Nigerian domain context, and provenance-safe separation. It does not mean every occupation has an exact Nigerian role match or Nigerian demand evidence.

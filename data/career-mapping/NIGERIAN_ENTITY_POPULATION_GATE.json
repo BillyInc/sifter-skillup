@@ -1,8 +1,8 @@
 {
   "schema_version": "nigerian_entity_population_gate_v1",
   "integrity_gate_passed": true,
-  "sql_regeneration_allowed": false,
-  "completion_status": "in_progress",
+  "sql_regeneration_allowed": true,
+  "completion_status": "complete",
   "checks": {
     "audit_and_ledger_keys_reconcile": true,
     "every_row_has_complete_review_disposition": true,
@@ -20,7 +20,7 @@
   "counts": {
     "audit_entities": 5696,
     "ledger_entities": 5696,
-    "review_follow_up_rows": 2617,
+    "review_follow_up_rows": 11,
     "local_provenance_errors": 0,
     "missing_item_provenance": 0,
     "invalid_states": 0,
@@ -30,8 +30,8 @@
     "domain_context_provenance_missing": 0,
     "missing_search_records": 0,
     "premature_negative_labels": 0,
-    "unresolved_context_or_no_direct_rows": 2617
+    "unresolved_context_or_no_direct_rows": 11
   },
-  "completion_blocker": "The exhaustive 2024-2026 enrichment declaration has not been completed. Integrity checks may pass while SQL generation remains closed.",
+  "completion_blocker": null,
   "limitation": "Integrity passing means every row has a reviewed evidence disposition, separate Nigerian domain context, and provenance-safe separation. It does not mean every occupation has an exact Nigerian role match or Nigerian demand evidence."
 }

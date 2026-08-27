@@ -1,5 +1,5 @@
-import GitHubScreen from '@/screens/GitHubScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default function GitHubTabScreen() {
-  return <GitHubScreen />;
+export default function GithubSyncRoute() {
+  return <DisabledLearningScreen area="Learning portfolio integrations" />;
 }

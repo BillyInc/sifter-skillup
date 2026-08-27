@@ -14,10 +14,10 @@ required proof of a successful Supabase run.
 The current worktree also contains the development preview of the corrected
 career taxonomy/context payload. Its repository transport form is the ordered,
 gzip-compressed directory
-`backend/seed_career_v2_preview_2026-08-25_parts_gz/`; the local generated
-form is `backend/seed_career_v2_preview_2026-08-25.sql`. It is not the
-production seed, and it must not be applied while the Nigerian population gate
-is closed.
+`backend/seed_career_v2_preview_2026-08-26_parts_gz/`; the local generated
+form is `backend/seed_career_v2_preview_2026-08-26.sql`. The local monolithic
+file is ignored by Git because it is about 598 MB. It is not the production
+seed and must not be applied to a populated production database.
 
 A read-only check of the configured Supabase project on 2026-08-24 found the
 older live subject state (506 options, 4,593 option items, and 0 typed rule
@@ -39,7 +39,7 @@ variants.
 | `seed_subject_options.sql` | 596 national subject options and 7,793 national option items; replacement seed for directly matchable subject combinations |
 | `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 676 matchable, 137 structured source rules, 3 cross-references, 420 direct-entry records, 24 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
-| `seed_career_v2_preview_2026-08-25.sql` | Development preview: 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, 4,000 overlaps; unresolved Nigerian evidence remains explicit |
+| `seed_career_v2_preview_2026-08-26_parts_gz/` | Development preview transport: 20 ordered gzip parts for 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, and 4,000 overlaps; 11 reviewed no-direct-local-match rows remain explicit |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
 
@@ -51,7 +51,8 @@ The oversized current career artifacts use the same transport rule. Their
 `.gz` parts are repository storage artifacts, not executable SQL or directly
 readable JSON inputs:
 
-- `backend/seed_career_v2_preview_2026-08-25_parts_gz/`
+- `backend/seed_career_v2_preview_2026-08-25_parts_gz/` (historical)
+- `backend/seed_career_v2_preview_2026-08-26_parts_gz/` (current)
 - `data/career-mapping/role_tools_parts_gz/`
 - `data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/`
 
@@ -66,14 +67,25 @@ python data/career-mapping/split_large_artifacts.py join-json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json `
-  backend/seed_career_v2_preview_2026-08-25.sql
+  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
+  backend/seed_career_v2_preview_2026-08-26.sql
 ```
 
-Supabase cannot run `.gz` bytes. Apply the decompressed preview SQL in numeric
-part order, or use the reassembled file through a verified `psql` connection.
-The original local generated files remain available and are not deleted by
-this transport process.
+Supabase cannot run `.gz` bytes. The reassembler verifies every part checksum.
+Use the reconstructed file through a verified `psql` connection with
+`ON_ERROR_STOP=1`, or decompress and apply the numbered parts in order through
+the SQL Editor. Each current part is a complete transaction; never paste or
+upload the compressed bytes to Supabase.
+
+```powershell
+psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
+  -v ON_ERROR_STOP=1 `
+  -f backend/seed_career_v2_preview_2026-08-26.sql
+```
+
+The current population gate permits this development preview. The 11 reviewed
+no-direct-local-match rows are intentionally represented as explicit gaps, not
+invented Nigerian matches. This does not authorize production promotion.
 
 - JSON manifest: `data/career-mapping/learning_resource_population.manifest.json`
 - JSON parts: `data/career-mapping/learning_resource_population_parts/part-*.json`
@@ -179,7 +191,7 @@ migration_career_v2.sql
   -> migration_role_detail_enrichment.sql (when role detail data is used)
   -> migration_career_resources_v1.sql (when resource data is used)
   -> migration_saved_resource_support.sql (after saved_items exists)
-  -> seed_career_v2_preview_2026-08-25.sql (development only)
+  -> seed_career_v2_preview_2026-08-26_parts_gz/ (reconstruct locally; development only)
 ```
 
 `migration_role_tools.sql` must precede

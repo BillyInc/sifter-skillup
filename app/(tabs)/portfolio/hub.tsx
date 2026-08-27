@@ -1,5 +1,5 @@
-import PortfolioScreen from '@/screens/PortfolioScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default function PortfolioHubTabScreen() {
-  return <PortfolioScreen />;
+export default function PortfolioHubRoute() {
+  return <DisabledLearningScreen area="Learning portfolio" />;
 }
