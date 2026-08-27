@@ -1,3 +1,5 @@
-import ReferralScreen from "@/screens/ReferralScreen";
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default ReferralScreen;
+export default function ReferralRoute() {
+  return <DisabledLearningScreen area="Learning referrals" />;
+}

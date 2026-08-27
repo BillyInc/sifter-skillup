@@ -1,4 +1,5 @@
-import WorldScreen from '@/screens/WorldScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function WorldRoute() {
-  return <WorldScreen />;
+  return <DisabledLearningScreen area="The learning world" />;
 }

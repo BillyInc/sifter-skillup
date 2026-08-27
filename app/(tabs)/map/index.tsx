@@ -1,6 +1,5 @@
-import HomeScreen from '@/screens/HomeScreen';
-import { useLocalSearchParams } from 'expo-router';
-export default function MapScreen() {
-  const params = useLocalSearchParams();
-  return <HomeScreen />;
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
+export default function MapRoute() {
+  return <DisabledLearningScreen area="The learning map" />;
 }

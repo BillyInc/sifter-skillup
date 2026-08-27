@@ -1,2 +1,5 @@
-import FeedScreen from '@/screens/FeedScreen';
-export default function FeedTab() { return <FeedScreen />; }
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
+export default function FeedRoute() {
+  return <DisabledLearningScreen area="Feed and community learning" />;
+}

@@ -1,6 +1,5 @@
-import CairoBuilderTrackScreen from '@/screens/CairoBuilderTrackScreen';
-import { useLocalSearchParams } from 'expo-router';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function CairoBuilderTrackRoute() {
-  const params = useLocalSearchParams();
-  return <CairoBuilderTrackScreen />;
+  return <DisabledLearningScreen area="Cairo Builder" />;
 }

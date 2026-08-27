@@ -229,6 +229,8 @@ export default function MyWorldScreen() {
   const { user } = useAuth();
   if (!user || user.auth_provider === "guest") return <GuestMyWorldGate />;
   // Pre-launch the flag is OFF → personal page. Live → learning-world gateway.
+  // The learning/game layer is disabled for the current release. My World
+  // remains the saved-careers and notes space until it is deliberately enabled.
   return featureFlags.myWorldLive ? <LiveWorldHub /> : <PersonalPage />;
 }
 
@@ -253,7 +255,6 @@ function GuestMyWorldGate() {
  * OFF branch — the pre-launch personal page.
  * ──────────────────────────────────────────────────────────────────────────── */
 function PersonalPage() {
-  const router = useRouter();
   const { colors } = useTheme();
   const { user } = useAuth();
   const isGuest = !user || user.auth_provider === "guest";
@@ -289,7 +290,6 @@ function PersonalPage() {
       <PersonalCareerBlocks {...personal} />
 
       {/* ── LOCKED: Learning Tracks & Portfolio (single card) ─────── */}
-      <LockedTracksCard router={router} />
     </ScrollView>
   );
 }

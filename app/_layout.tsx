@@ -44,12 +44,7 @@ export default function RootLayout() {
                         <Stack.Screen name="(auth)" />
                         <Stack.Screen name="(admin)" />
                         <Stack.Screen name="(tabs)" />
-                        <Stack.Screen name="world/index" />
-                        <Stack.Screen name="starknet-track/index" />
-                        <Stack.Screen name="track-room/index" />
                         <Stack.Screen name="merchandise/index" />
-                        <Stack.Screen name="map/island" />
-                        <Stack.Screen name="map/lesson" />
                       </Stack>
                     </AuthProvider>
                   </QueryClientProvider>
