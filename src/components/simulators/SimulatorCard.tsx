@@ -16,8 +16,15 @@ import ResearchWriterSandbox from './ResearchWriterSandbox';
 import CairoBuilderPhase2Scorer from './CairoBuilderPhase2Scorer';
 import { CairoBuilderCodeSandbox } from './CairoBuilderSimulators';
 import { getBossEntry } from '../../data/phase1BossRegistry';
-import { ECOSYSTEM_FINAL_BOSS } from '../../data/tracks/starknet_ecosystem/ecosystem/ecosystemAllLessons';
-import * as NavigatorSims from '../../data/tracks/starknet_ecosystem/navigator';
+// ECOSYSTEM_FINAL_BOSS is NOT imported here: it lives in ecosystemAllLessons
+// (~1MB of lesson content) and is needed by exactly one wrapper, for one boss
+// level. It is loaded on demand in BranchingInterviewWrapper instead.
+//
+// The simulators module directly, NOT the `navigator` barrel: that barrel does
+// `export * from './navigatorLessons'`, so importing it pulled another ~1MB of
+// lesson content into this component -- and this component is reachable from
+// the whole app.
+import * as NavigatorSims from '../../data/tracks/starknet_ecosystem/navigator/navigatorSimulators';
 import EcosystemSimulatorCard from '../../data/tracks/starknet_ecosystem/ecosystem/ecosystemSimulators';
 
 /**
@@ -4777,11 +4784,28 @@ function SolanaCompareSim({ onComplete, onSkip }: SimProps) {
 // ECOSYSTEM_FINAL_BOSS into BranchingInterviewRenderer.
 // ─────────────────────────────────────────────────────────────────────────────
 function BranchingInterviewWrapper({ onComplete, onSkip }: SimProps) {
+  // Loaded on demand so ecosystemAllLessons stays out of the entry chunk. This
+  // wrapper only renders for one boss level, so the chunk is fetched at the
+  // moment it is actually needed.
+  const [boss, setBoss] = useState<any | null>(null);
+  useEffect(() => {
+    let alive = true;
+    import('../../data/tracks/starknet_ecosystem/ecosystem/ecosystemAllLessons')
+      .then((m) => { if (alive) setBoss(m.ECOSYSTEM_FINAL_BOSS ?? false); })
+      .catch(() => { if (alive) setBoss(false); });
+    return () => { alive = false; };
+  }, []);
+
+  // `false` marks a settled-but-failed load, so we skip rather than hang the
+  // boss on a spinner forever.
+  if (boss === false) return null;
+  if (!boss) return null;
+
   return (
     <BranchingInterviewRenderer
-      interviewTitle={ECOSYSTEM_FINAL_BOSS.id}
-      interviewDescription={ECOSYSTEM_FINAL_BOSS.description.trim()}
-      coreQuestions={ECOSYSTEM_FINAL_BOSS.coreQuestions as any}
+      interviewTitle={boss.id}
+      interviewDescription={boss.description.trim()}
+      coreQuestions={boss.coreQuestions as any}
       passRequirement={3}
       onComplete={onComplete}
       onSkip={onSkip}

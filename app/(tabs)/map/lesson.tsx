@@ -63,7 +63,7 @@ export default function LessonRoute() {
       if (lab) {
         const nextLessonIndex = lessonIndex + 1;
 
-        if (nextLessonIndex < lab.lessons.length) {
+        if (nextLessonIndex < lab.lessonCount) {
           router.replace({
             pathname: '/map/lesson' as any,
             params: {
