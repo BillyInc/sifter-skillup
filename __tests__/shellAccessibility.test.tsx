@@ -122,7 +122,13 @@ describe("ReferenceShell accessibility", () => {
     expect(tabs.map((t: any) => t.props.accessibilityLabel)).toEqual([
       "Home",
       "Explore",
-      "Jobs",
+      // Renamed from "Jobs" in 237d074. The shell is self-consistent on
+      // "Opportunities": both MOBILE_NAV and PRIMARY_NAV use that label, the
+      // route is /(tabs)/opportunities, and the sub-copy reads "Opportunities,
+      // scholarships & windows" -- the destination covers scholarships and
+      // application windows, not just jobs. The app was updated and this
+      // expectation was not, which left main's frontend pipeline red.
+      "Opportunities",
       // The fourth destination is /(tabs)/myworld, which pre-launch IS the
       // saved-items page. Named "Saved" per the final UI concepts sheet.
       "Saved",
