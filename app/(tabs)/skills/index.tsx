@@ -1,5 +1,5 @@
-import SkillsScreen from '@/screens/SkillsScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default function SkillsTabScreen() {
-  return <SkillsScreen />;
+export default function SkillsRoute() {
+  return <DisabledLearningScreen area="Learning skills and tracks" />;
 }

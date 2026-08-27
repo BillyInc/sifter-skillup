@@ -1,8 +1,5 @@
-import { useLocalSearchParams } from 'expo-router';
-let EcosystemTrackScreen: any;
-try { EcosystemTrackScreen = require('@/screens/EcosystemTrackScreen').default; } catch {}
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
+
 export default function EcosystemTrackRoute() {
-  const params = useLocalSearchParams();
-  if (!EcosystemTrackScreen) return null;
-  return <EcosystemTrackScreen route={{ params }} navigation={{}} />;
+  return <DisabledLearningScreen area="Ecosystem learning tracks" />;
 }

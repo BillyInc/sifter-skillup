@@ -1,5 +1,5 @@
-import QuantMapScreen from '@/screens/QuantMapScreen';
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default function QuantMapTabScreen() {
-  return <QuantMapScreen />;
+export default function QuantMapRoute() {
+  return <DisabledLearningScreen area="Quant learning labs" />;
 }

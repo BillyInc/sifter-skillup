@@ -1,4 +1,5 @@
-import GuildScreen from "@/screens/GuildScreen";
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-/** SkillUp learning/community surface, intentionally reached from My World. */
-export default GuildScreen;
+export default function GuildRoute() {
+  return <DisabledLearningScreen area="Guild and community" />;
+}

@@ -1,3 +1,5 @@
-import LeaderboardScreen from "@/screens/LeaderboardScreen";
+import DisabledLearningScreen from "@/screens/DisabledLearningScreen";
 
-export default LeaderboardScreen;
+export default function LeaderboardRoute() {
+  return <DisabledLearningScreen area="Leaderboards" />;
+}
