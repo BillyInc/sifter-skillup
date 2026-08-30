@@ -408,7 +408,31 @@ def join_sql(manifest_path: Path, output: Path) -> None:
                 with part_path.open("r", encoding="utf-8", newline="") as source:
                     shutil.copyfileobj(source, handle)
             handle.write("\n")
-    print(f"joined {output} ({sha256_file(output)})")
+
+    # Part checksums prove the INPUTS were read correctly; they say nothing
+    # about what actually reached disk. Verifying the assembled file against
+    # the manifest's source_sha256 is what catches corruption introduced
+    # between decompression and write.
+    #
+    # This is not hypothetical. Joining the 2026-08-26 career preview produced
+    # a file of exactly the right length whose bytes differed from the source
+    # -- and differed again, in a different place, on a second run from the
+    # same inputs. Seven bytes were mangled inside jsonb payloads, one of them
+    # a structural `}`. Every part checksum passed both times, so the only
+    # signal was the printed hash that nothing compared.
+    expected = manifest.get("source_sha256")
+    actual = sha256_file(output)
+    if expected and actual != expected:
+        raise ValueError(
+            f"Reassembled {output} does not match the manifest source:\n"
+            f"  expected {expected}\n"
+            f"  actual   {actual}\n"
+            "Every part checksum passed, so the parts are intact and the fault "
+            "is local to this join (memory or disk). Do NOT apply this file. "
+            "Re-run the join; if it fails again with a different hash, the "
+            "machine is corrupting the write."
+        )
+    print(f"joined {output} ({actual})" + (" — matches source_sha256" if expected else ""))
 
 
 def main() -> None:
