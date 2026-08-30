@@ -1,10 +1,18 @@
 name: CI
 
+# Manual-only. Woodpecker (.woodpecker/frontend.yml + .woodpecker/backend.yml)
+# runs the same checks on every push and PR, so the automatic triggers here were
+# duplicating that work — and, since GitHub Actions billing lapsed, doing it as a
+# permanent red X on every commit. The jobs below are unchanged and still
+# runnable from the Actions tab if Woodpecker is ever unavailable.
+#
+# To restore automatic runs, put back:
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main, develop]
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  workflow_dispatch:
 
 permissions:
   contents: read

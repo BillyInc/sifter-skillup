@@ -1,20 +1,25 @@
 name: Deploy Frontend (dev)
 
+# Manual-only. .woodpecker/deploy-dev.yml deploys backend and frontend together
+# to the same box on every push to main, so the push trigger here was a second
+# deploy racing the first. Kept dispatchable as a fallback path.
+#
+# To restore automatic runs, put back:
+#   push:
+#     branches: [main]
+#     paths:
+#       # 'app/**' is the expo-router route tree and is NOT covered by
+#       # 'app.json' — a different path entirely. Without it, a change that only
+#       # adds or edits routes (a whole new screen stack, say) never triggers a
+#       # deploy, and the site silently keeps serving the previous build.
+#       - 'app/**'
+#       - 'src/**'
+#       - 'assets/**'
+#       - 'app.json'
+#       - 'package.json'
+#       - 'pnpm-lock.yaml'
+#       - '.github/workflows/deploy-frontend.yml'
 on:
-  push:
-    branches: [main]
-    paths:
-      # 'app/**' is the expo-router route tree and is NOT covered by 'app.json'
-      # — a different path entirely. Without it, a change that only adds or
-      # edits routes (a whole new screen stack, say) never triggers a deploy,
-      # and the site silently keeps serving the previous build.
-      - 'app/**'
-      - 'src/**'
-      - 'assets/**'
-      - 'app.json'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
 
 # Same fixed group as deploy-backend.yml — a push touching both backend/ and src/
