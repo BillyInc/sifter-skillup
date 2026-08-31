@@ -20,13 +20,15 @@ THIN_OVERLAY_PATH = HERE / "nigerian_thin_domain_overlays.json"
 FRESH_OVERLAY_PATH = HERE / "nigerian_fresh_web_enrichment_2026-08-25.json"
 FRESH_FOLLOWUP_OVERLAY_PATH = HERE / "nigerian_fresh_web_enrichment_2026-08-25_followup.json"
 FRESH_2026_08_26_OVERLAY_PATH = HERE / "nigerian_fresh_web_enrichment_2026-08-26.json"
+ROLE_GAP_FOLLOWUP_OVERLAY_PATH = HERE / "nigerian_role_gap_followup_2026-08-29.json"
+ROLE_GAP_CABLE_CAR_OVERLAY_PATH = HERE / "nigerian_role_gap_followup_cable_car_2026-08-29.json"
 DOMAIN_FIELD_OVERLAY_PATH = HERE / "nigerian_domain_field_enrichment_2026-08-25.json"
 SUBGROUP_FAMILY_OVERLAY_PATH = HERE / "nigerian_subgroup_family_enrichment_2026-08-25.json"
 GLOBAL_EMERGING_OVERLAY_PATH = HERE / "global_fresh_emerging_enrichment_2026-08-25.json"
-# This remains false until the full domain -> subgroup -> role search and its
-# field-level audit have been completed. It prevents a scoped negative profile
-# from being surfaced as a final "not established" conclusion.
-EXHAUSTIVE_SEARCH_DECLARATION = True
+# This must remain false until the refreshed domain -> subgroup -> role search
+# and field-level audit have actually been completed. A prior bounded pass must
+# not be presented as exhaustive evidence.
+EXHAUSTIVE_SEARCH_DECLARATION = False
 
 SOURCE_EXTRACT_HINTS = {
     "ng_myjobmag": (
@@ -60,7 +62,7 @@ CONTEXT_LABELS = {
 
 def _load_overlay():
     merged = {"sources": [], "profiles": []}
-    for path in (OVERLAY_PATH, THIN_OVERLAY_PATH, FRESH_OVERLAY_PATH, FRESH_FOLLOWUP_OVERLAY_PATH, FRESH_2026_08_26_OVERLAY_PATH, DOMAIN_FIELD_OVERLAY_PATH, SUBGROUP_FAMILY_OVERLAY_PATH, GLOBAL_EMERGING_OVERLAY_PATH):
+    for path in (OVERLAY_PATH, THIN_OVERLAY_PATH, FRESH_OVERLAY_PATH, FRESH_FOLLOWUP_OVERLAY_PATH, FRESH_2026_08_26_OVERLAY_PATH, ROLE_GAP_FOLLOWUP_OVERLAY_PATH, ROLE_GAP_CABLE_CAR_OVERLAY_PATH, DOMAIN_FIELD_OVERLAY_PATH, SUBGROUP_FAMILY_OVERLAY_PATH, GLOBAL_EMERGING_OVERLAY_PATH):
         try:
             with path.open(encoding="utf-8") as handle:
                 value = json.load(handle)
@@ -465,6 +467,10 @@ def resolved_nigerian_context(domain_id, domain_meta, registry, *, scope="domain
     source_summaries = [_source_summary(source_id, catalog) for source_id in local_source_ids]
     domain_context_source_ids = sorted(set(registry_local_ids + domain_context["source_ids"]))
     domain_context_source_summaries = [_source_summary(source_id, catalog) for source_id in domain_context_source_ids]
+    global_source_summaries = [
+        _source_summary(source_id, catalog)
+        for source_id in sorted(set(global_data["source_ids"]))
+    ]
     availability = {item["id"]: item["availability"] for item in source_summaries}
     context_labels = {CONTEXT_LABELS.get((catalog.get(source_id) or {}).get("evidence_type"), "Nigerian sector context") for source_id in registry_local_ids}
     if local["source_ids"]:
@@ -506,6 +512,7 @@ def resolved_nigerian_context(domain_id, domain_meta, registry, *, scope="domain
         "domain_id": domain_id,
         "source_ids": local_source_ids,
         "source_summaries": source_summaries,
+        "global_source_summaries": global_source_summaries,
         "source_availability": availability,
         "available_context": sorted(context_labels),
         "evidence_limit": "Local context and checked professional evidence only; no role-level Nigerian demand, salary or automatic licensing claim. A no_direct_local_counterpart result means no match was found in the currently checked Nigerian profiles; it is not proof that the occupation does not exist in Nigeria.",

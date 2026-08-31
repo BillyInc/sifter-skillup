@@ -791,6 +791,15 @@
       "url": "https://nema.gov.ng/",
       "access": "public_reference",
       "notes": "Emergency-management, disaster-response, transport-support and humanitarian coordination context in Nigeria."
+    },
+    "ng_choice_game_developer_2026": {
+      "name": "Choice Talents Nigeria game developer vacancy",
+      "region": "nigeria",
+      "evidence_type": "nigerian_vacancy_role_requirements",
+      "url": "https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421",
+      "access": "public_listing",
+      "observed_at": "2026-08-29",
+      "notes": "One dated Nigerian vacancy signal for game-development responsibilities and tools; not a market-wide demand count or universal requirement."
     }
   },
   "default_sources": ["global_esco", "global_onet", "global_isco", "global_wef", "ng_jobberman", "ng_myjobmag", "ng_nbs"],

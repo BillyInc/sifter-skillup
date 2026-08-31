@@ -1,0 +1,43 @@
+{
+  "schema_version": "nigerian_role_gap_followup_v1",
+  "generated_at": "2026-08-29",
+  "purpose": "Record the Nigerian cable-car project as local sector and role-context evidence without claiming that a controller vacancy or completed system exists.",
+  "sources": [
+    {
+      "id": "ng_lamata_cable_car_2026",
+      "region": "nigeria",
+      "name": "Lagos Metropolitan Area Transport Authority cable-car service and Lagos Cable Car Transit project",
+      "evidence_type": "nigerian_transport_project_context",
+      "availability": "official_web_and_project_record",
+      "observed_at": "2026-08-29",
+      "scope": "Proposed and planned cable-car/ropeway mass-transit infrastructure in Lagos, Nigeria",
+      "findings": ["LAMATA describes a cable-car corridor for Lagos, and the Lagos Cable Car Transit project documents ropeway mass-transit infrastructure."],
+      "limitations": "The project record is infrastructure and sector evidence, not proof of a completed system, a current operator, or a controller vacancy.",
+      "urls": ["https://www.lamata-ng.com/services/cable-car/", "https://www.afdb.org/fileadmin/uploads/afdb/Documents/Procurement/Project-related-Procurement/Nigeria%20-%20Lagos%20Cable%20Car%20Transit%20%28LCCT%29%20Project%20-%20SPN.pdf"]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ng_role_gap_automated_cable_vehicle_controller_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_lamata_cable_car_2026"],
+      "domain_ids": ["D116"],
+      "role_patterns": ["automated cable vehicle controller"],
+      "skills": [
+        {"name": "Monitor and support automated or ropeway transit operations, passenger safety, alarms, communications and controlled responses to faults", "priority": "core", "evidence": "Nigerian Lagos cable-car transport-project context", "limitation": "The Nigerian sources establish planned cable-car infrastructure, not a completed local job market or universal controller requirements."}
+      ],
+      "tools": [
+        {"name": "Ropeway control, monitoring, communications, alarm, emergency, maintenance and incident-reporting systems", "priority": "core", "evidence": "Nigerian cable-car transport-project context", "limitation": "The exact system depends on the technology supplier and operating authority."}
+      ],
+      "competencies": [
+        {"name": "Keep an automated passenger-transport system within approved safety limits and escalate abnormal conditions promptly", "priority": "core", "evidence": "Nigerian cable-car transport-project context"}
+      ],
+      "certifications": [
+        {"name": "Applicable ropeway, rail, electrical, mechanical, control-room or transport-safety training required by the operating authority", "issuer": "Operating authority, technology supplier, NBTE, recognised institution or approved provider", "level": "role_dependent", "evidence": "Nigerian cable-car transport-project context", "limitation": "No Nigerian personal certification requirement for this exact canonical title was established in the checked sources."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Cable-car operations must follow applicable Nigerian transport, engineering, passenger-safety, emergency, occupational-safety and infrastructure requirements", "priority": "required_when_applicable", "evidence": "Nigerian cable-car transport-project context"}
+      ]
+    }
+  ]
+}
