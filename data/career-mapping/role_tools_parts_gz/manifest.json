@@ -1,29 +1,44 @@
 {
   "format": "json-object-parts-v1",
   "source": "role_tools.json",
-  "source_sha256": "84bf237650e3d7113c5fabf657db2fd2bdf98768e74174d3d6ac6bd20247e993",
+  "source_sha256": "b45be835b11fa8fe2b8453b76221d3fba3fa7ee1a994cd52d7963d0454540a88",
   "max_part_bytes": 40000000,
   "compressed": true,
   "parts": [
     {
       "path": "part-001.json.gz",
-      "bytes": 2319382,
-      "sha256": "d84db35c8cf73306bfffd6488e8022f60e48d90fff25ead06dba7ae8aab8a1a5"
+      "bytes": 4627888,
+      "sha256": "8e2c52087f89fee8ccc4a0c2d0ce26e8176442d7e28e2ed36bb479b617bc2b92"
     },
     {
       "path": "part-002.json.gz",
-      "bytes": 3309430,
-      "sha256": "9a4e88e5638dd6c677a3df360fcef388c1a9e335747c434d352b3a5c71f87250"
+      "bytes": 5221824,
+      "sha256": "9436d989438bdc1c213eb8ec3a814b89e291e86a82a7287a89a0c967c8759c34"
     },
     {
       "path": "part-003.json.gz",
-      "bytes": 2323553,
-      "sha256": "aa0ac351bea2df9e29866cb4fb415d9f6a2d4747c120d7c0c27d8cf397837aff"
+      "bytes": 5985823,
+      "sha256": "69d8d61732d31c6fb222a2e5e25e5b4818ce7231607ead0e7949b46dec8c42fe"
     },
     {
       "path": "part-004.json.gz",
-      "bytes": 137838,
-      "sha256": "aba4f15212aeca7fd406c8fb9df36aac5e9de9f3a463f4a881005a7966875ff0"
+      "bytes": 6331840,
+      "sha256": "fe6044a7b81f8cd028b6e47c8c388e15e74e4c6f90dbd2d9004d1ed54505c35f"
+    },
+    {
+      "path": "part-005.json.gz",
+      "bytes": 5604330,
+      "sha256": "19f7c43d2cf3a3b3f45fcdfa838c632a5d2f8fc07ae73ceee8026a193a15be86"
+    },
+    {
+      "path": "part-006.json.gz",
+      "bytes": 4087164,
+      "sha256": "4d9969dcaaa5059fffc5908cb9c234b05a07d68a91e9a71ddb4412ef41350c2d"
+    },
+    {
+      "path": "part-007.json.gz",
+      "bytes": 4523445,
+      "sha256": "fa3347e103378951cb5a97fac5365f584e88eb5b833f8752256a782641a86ac8"
     }
   ],
   "reassemble": "merge part files in numeric filename order as one top-level object"
