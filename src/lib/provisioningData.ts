@@ -53,8 +53,14 @@ async function authHeaders(): Promise<Record<string, string>> {
 }
 
 async function fetchStudentDocument(path: string): Promise<Blob | null> {
-  const res = await fetch(`${API_BASE}${path}`, { headers: await authHeaders() });
-  return res.ok ? res.blob() : null;
+  try {
+    const res = await fetch(`${API_BASE}${path}`, { headers: await authHeaders() });
+    return res.ok ? await res.blob() : null;
+  } catch {
+    // Reports are online-only. Callers receive a false result and render the
+    // same recoverable notice as an authorization or server failure.
+    return null;
+  }
 }
 
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
@@ -469,14 +475,14 @@ export const provisioningData = {
     });
   },
 
-  /** Download the editable .docx career report. */
+  /** Download the editable .docx career report when online and authorised. */
   downloadReportDocx(userId: string, fileName = "career_report.docx") {
     return openStudentDocument(`/api/provisioning/students/${userId}/report.docx`, {
       download: fileName,
     });
   },
 
-  /** Open the printable HTML report (print-to-PDF). */
+  /** Open the online HTML report for print-to-PDF. */
   openReportHtml(userId: string) {
     return openStudentDocument(`/api/provisioning/students/${userId}/report.html`);
   },
@@ -506,7 +512,7 @@ export const provisioningData = {
     return { queued: Number(w?.queued ?? 0) };
   },
 
-  /** Download the printable HTML report for archiving or manual PDF export. */
+  /** Download the online HTML report for an authorised admin. */
   downloadReportHtml(userId: string, fileName = "career_report.html") {
     return openStudentDocument(`/api/provisioning/students/${userId}/report.html`, {
       download: fileName,
@@ -548,6 +554,7 @@ export const provisioningData = {
       `Career pathway report for ${fullName}`,
     );
   },
+
 };
 
 // ─── Student-side (not admin-gated) ───────────────────────────

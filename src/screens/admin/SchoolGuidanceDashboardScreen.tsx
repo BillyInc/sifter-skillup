@@ -209,7 +209,7 @@ export function SchoolGuidanceDashboardScreen() {
             onPress={() =>
               providerOnly
                 ? adminNav.session(router as Nav)
-                : adminNav.explore(router as Nav)
+                : adminNav.guidanceStart(router as Nav)
             }
             style={[styles.guidanceAction, { borderColor: colors.border }]}
           >
@@ -217,7 +217,7 @@ export function SchoolGuidanceDashboardScreen() {
               Skip to guidance
             </Text>
             <Text style={[styles.guidanceActionBody, { color: colors.textMuted }]}>
-              Open the catalogue without creating a student account.
+                Choose a target and journey before opening the catalogue.
             </Text>
           </TouchableOpacity>
         </View>

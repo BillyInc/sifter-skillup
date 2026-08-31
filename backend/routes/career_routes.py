@@ -140,6 +140,29 @@ def _guidance_evidence(context: Any) -> dict:
     actual = value.get("actual_enrichment") or {}
     global_data = value.get("global_enrichment") or {}
     local_sources = value.get("source_summaries") or []
+    global_sources = value.get("global_source_summaries") or []
+
+    def evidence_sources(summaries: list[dict]) -> list[dict]:
+        """Expose only labelled HTTPS source links owned by this evidence lens."""
+        links: list[dict] = []
+        seen: set[str] = set()
+        for summary in summaries:
+            if not isinstance(summary, dict):
+                continue
+            label = str(summary.get("name") or summary.get("id") or "Source").strip()
+            urls = summary.get("urls") or []
+            if isinstance(urls, str):
+                urls = [urls]
+            for url in urls:
+                if not isinstance(url, str) or not url.startswith("https://") or url in seen:
+                    continue
+                seen.add(url)
+                links.append({
+                    "id": str(summary.get("id") or url),
+                    "label": label,
+                    "url": url,
+                })
+        return links
     local_items = sum(
         len(actual.get(key) or [])
         for key in ("skills", "tools", "competencies", "certifications", "regulatory_requirements")
@@ -174,6 +197,7 @@ def _guidance_evidence(context: Any) -> dict:
             "state": nigeria_state,
             "explanation": nigeria_explanation,
             "sourceCount": len(local_sources),
+            "sources": evidence_sources(local_sources),
         },
         "remote": {
             "state": "not_available",
@@ -182,6 +206,8 @@ def _guidance_evidence(context: Any) -> dict:
         "global": {
             "state": global_state,
             "explanation": global_explanation,
+            "sourceCount": len(global_sources),
+            "sources": evidence_sources(global_sources),
         },
         "limitations": [
             "These signals explain evidence scope; they do not claim current vacancy volume, salary or automatic licensing.",
@@ -639,7 +665,7 @@ async def get_domain(domain_id: str):
         role_res = (
             svc.table("domain_roles")
             .select(
-                "id, role_key, role_name, also_known_as, tier, subgroup_id, elite_status, elite_flag"
+                "id, role_key, role_name, description, also_known_as, tier, subgroup_id, elite_status, elite_flag"
             )
             .eq("domain_id", domain_uuid)
             .execute()
@@ -805,6 +831,7 @@ async def get_domain(domain_id: str):
             {
                 "key": r.get("role_key"),
                 "name": r.get("role_name"),
+                "description": r.get("description"),
                 "tier": r.get("tier"),
                 "alsoKnownAs": r.get("also_known_as") or [],
                 "subgroupId": r.get("subgroup_id"),
@@ -878,6 +905,7 @@ async def get_role(role_id: str):
         resource_rows = _career_resources(svc, role_id=role.get("id"))
         role_tools: list[dict] = []
         role_certs: list[dict] = []
+        role_work_profile: dict | None = None
         try:
             role_tools = (
                 svc.table("domain_tools")
@@ -897,6 +925,27 @@ async def get_role(role_id: str):
             # The role enrichment migration is additive. Existing installations
             # can still render role skills while the patch is being applied.
             log.warning("career role enrichment unavailable", error=str(enrichment_exc))
+
+        try:
+            work_profile_rows = (
+                svc.table("domain_role_work_profiles")
+                .select(
+                    "source_record_status, onet_occupation_codes, activities, work_activities, "
+                    "job_zones, education_signals, work_context, related_occupations, "
+                    "source_links, source_provenance, limitations, data_state"
+                )
+                .eq("role_id", role.get("id"))
+                .limit(1)
+                .execute()
+                .data
+                or []
+            )
+            if work_profile_rows:
+                role_work_profile = work_profile_rows[0]
+        except Exception as work_profile_exc:  # noqa: BLE001
+            # The work-profile table is additive; role meaning and skills remain
+            # usable while an older installation is being migrated.
+            log.debug("career role work profile unavailable", error=str(work_profile_exc))
 
         essential = role.get("essential_skills") or []
         optional = role.get("optional_skills") or []
@@ -1028,6 +1077,7 @@ async def get_role(role_id: str):
         data = {
             "key": role.get("role_key"),
             "name": role.get("role_name"),
+            "description": role.get("description"),
             "subgroupId": role.get("subgroup_id"),
             "computationalSubgroups": computational_subgroups,
             "computationalMethods": computational_methods,
@@ -1055,6 +1105,20 @@ async def get_role(role_id: str):
             "nigerianContext": role.get("nigerian_context") or {},
             "guidanceEvidence": _guidance_evidence(role.get("nigerian_context") or {}),
             "sourceProvenance": role.get("source_provenance") or {},
+            "workProfile": {
+                "sourceRecordStatus": role_work_profile.get("source_record_status"),
+                "onetOccupationCodes": role_work_profile.get("onet_occupation_codes") or [],
+                "activities": role_work_profile.get("activities") or [],
+                "workActivities": role_work_profile.get("work_activities") or [],
+                "jobZones": role_work_profile.get("job_zones") or [],
+                "educationSignals": role_work_profile.get("education_signals") or [],
+                "workContext": role_work_profile.get("work_context") or [],
+                "relatedOccupations": role_work_profile.get("related_occupations") or [],
+                "sourceLinks": role_work_profile.get("source_links") or [],
+                "sourceProvenance": role_work_profile.get("source_provenance") or {},
+                "limitations": role_work_profile.get("limitations") or [],
+                "dataState": role_work_profile.get("data_state"),
+            } if role_work_profile else None,
             "essentialSkills": essential,
             "optionalSkills": optional,
             "tools": [

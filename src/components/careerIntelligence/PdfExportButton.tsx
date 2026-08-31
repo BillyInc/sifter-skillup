@@ -3,8 +3,9 @@
  *
  * Behaviour (never throws):
  *  - If `onExport` is provided, it is called and owns the export.
- *  - Else on web (Platform.OS === 'web') it calls window.print(), guarded by a
- *    `typeof window !== 'undefined'` check.
+ *  - A report endpoint is required for the export action. The catalogue never
+ *    prints its current component tree, which would create a convenient
+ *    component-level copy path.
  *  - Else (native) no print/file-system lib is installed, so it DEGRADES
  *    GRACEFULLY: it shows an inline locked export notice instead
  *    of attempting an unavailable native print.
@@ -13,7 +14,6 @@ import React, { useRef, useState } from "react";
 import {
   View,
   Text,
-  Platform,
   StyleSheet,
   type StyleProp,
   type ViewStyle,
@@ -21,6 +21,7 @@ import {
 import { useTheme, FontSize } from "../../theme";
 import { SifterButton } from "../ui";
 import { openStudentDocument } from "../../lib/provisioningData";
+import { hasInternetConnection } from "../../lib/networkState";
 
 export interface PdfExportButtonProps {
   title?: string;
@@ -47,7 +48,11 @@ export function PdfExportButton({
     hintTimer.current = setTimeout(() => setHint(null), 3000);
   };
 
-  const onPress = () => {
+  const onPress = async () => {
+    if (!(await hasInternetConnection())) {
+      showHint("Printing and downloads are available when you are online.");
+      return;
+    }
     if (onExport) {
       onExport();
       return;
@@ -58,12 +63,9 @@ export function PdfExportButton({
       });
       return;
     }
-    if (Platform.OS === "web" && typeof window !== "undefined") {
-      window.print();
-      return;
-    }
-    // No expo-print / file-system lib installed — be honest on native.
-    showHint("PDF export is locked on mobile while the export flow is prepared.");
+    // Fail closed when a screen has not supplied the authenticated report
+    // endpoint; never fall back to printing the live catalogue surface.
+    showHint("The full online report is not available from this screen yet.");
   };
 
   return (
@@ -71,7 +73,7 @@ export function PdfExportButton({
       <SifterButton
         label={title}
         icon="⤓"
-        onPress={onPress}
+      onPress={() => { void onPress(); }}
         variant="ghost"
         size="sm"
         fullWidth={false}

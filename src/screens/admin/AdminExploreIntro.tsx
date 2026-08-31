@@ -53,6 +53,16 @@ export function AdminExploreIntro({
           {advisory ? "Open guidance workspace ->" : "Open peer comparison ->"}
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => adminNav.guidanceStart(router as Nav)}
+        activeOpacity={0.75}
+        accessibilityRole="button"
+        style={styles.link}
+      >
+        <Text style={[styles.linkText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
+          Start a guided check -&gt;
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

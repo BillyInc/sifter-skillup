@@ -6,7 +6,7 @@
  * hand-off. Employment and a standalone Admission tab are deliberately not
  * user-facing concepts here.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter, type Router } from "expo-router";
@@ -23,7 +23,7 @@ import { useExploreNav } from "@/lib/exploreNav";
 import { provisioningData } from "@/lib/provisioningData";
 import { awardLine } from "@/lib/programmeAward";
 import { requirementFallbackText, sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
-import { comingSoon, real, type DataState, type DomainLink, type Programme } from "@/types/career";
+import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 
@@ -36,6 +36,8 @@ export interface ProgrammeDetailRefinedScreenProps {
   initialSchoolId?: string;
   userType?: string;
   guidanceStudentId?: string;
+  viewOnly?: boolean;
+  journeyMode?: string;
 }
 
 type ProgrammeTab = "overview" | "requirements" | "schools" | "career";
@@ -74,6 +76,59 @@ function relationshipOrder(matchType: DomainLink["matchType"]): number {
   return matchType === "direct" ? 0 : matchType === "functional" ? 1 : 2;
 }
 
+const DOMAIN_CONNECTIONS: DomainLink["matchType"][] = ["direct", "functional", "adjacent"];
+
+function connectionHeading(matchType: DomainLink["matchType"]): string {
+  if (matchType === "direct") return "Direct domains";
+  if (matchType === "functional") return "Functional domains";
+  return "Adjacent domains";
+}
+
+function connectionExplanation(matchType: DomainLink["matchType"]): string {
+  if (matchType === "direct") return "These are the closest matches to what this programme teaches.";
+  if (matchType === "functional") return "These use part of your programme foundation in a different kind of work.";
+  return "These are possible pivots. Your foundation helps, but a bigger bridge may be needed before specialising.";
+}
+
+function ProgrammeDomainTransition({
+  domains,
+  colors,
+  onOpenDomain,
+  onContinue,
+}: {
+  domains: DomainLink[];
+  colors: ColorPalette;
+  onOpenDomain: (domain: DomainLink) => void;
+  onContinue?: () => void;
+}) {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const groups = DOMAIN_CONNECTIONS.map((matchType) => ({
+    matchType,
+    links: domains.filter((link) => link.matchType === matchType),
+  })).filter((group) => group.links.length);
+
+  return <View style={styles.block}>
+    <SectionLabel>How this programme connects to areas of work</SectionLabel>
+    <Text style={[styles.body, { color: colors.textRole.secondary }]}>Start with the closest connections, then explore other directions when you understand the bridge from your programme.</Text>
+    {groups.length ? groups.map(({ matchType, links }) => {
+      const isExpanded = Boolean(expanded[matchType]);
+      const visible = isExpanded ? links : links.slice(0, 3);
+      return <View key={matchType} style={styles.connectionGroup}>
+        <Text style={[styles.connectionTitle, { color: colors.textRole.primary }]}>{connectionHeading(matchType)} <Text style={[styles.connectionCount, { color: colors.textRole.muted }]}>({links.length})</Text></Text>
+        <Text style={[styles.body, { color: colors.textRole.secondary }]}>{connectionExplanation(matchType)}</Text>
+        {visible.map((link) => <TouchableOpacity accessibilityRole="button" key={link.domainId} onPress={() => onOpenDomain(link)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
+          <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{relationshipCopy(link.matchType)}</Text>
+          <Text style={[styles.link, { color: colors.accentRole.action }]}>View domain guidance</Text>
+        </TouchableOpacity>)}
+        {links.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: isExpanded }} onPress={() => setExpanded((current) => ({ ...current, [matchType]: !isExpanded }))} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{isExpanded ? `Show fewer ${matchType} domains` : `See all ${links.length} ${matchType} domains`}</Text></TouchableOpacity> : null}
+      </View>;
+    }) : <Text style={[styles.body, { color: colors.textRole.muted }]}>Career connections are not available for this programme yet.</Text>}
+    {onContinue && domains.length ? <TouchableOpacity accessibilityRole="button" onPress={onContinue} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Continue to domain guidance</Text></TouchableOpacity> : null}
+  </View>;
+}
+
 function appendProgrammeChoice(
   path: GuidanceReportPath["path"],
   selection: Partial<GuidanceReportPath["path"]>,
@@ -99,21 +154,26 @@ function appendProgrammeChoice(
   };
 }
 
-export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType, guidanceStudentId }: ProgrammeDetailRefinedScreenProps) {
+export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgrammeId, initialSchoolId, userType, guidanceStudentId, viewOnly, journeyMode }: ProgrammeDetailRefinedScreenProps) {
   const router = useRouter();
-  const routeParams = useLocalSearchParams<{ focus?: string | string[] }>();
+  const routeParams = useLocalSearchParams<{ focus?: string | string[]; view_only?: string | string[]; journey_mode?: string | string[] }>();
   const focusedGuidance = (Array.isArray(routeParams.focus) ? routeParams.focus[0] : routeParams.focus) === "guidance";
+  const routeViewOnly = (Array.isArray(routeParams.view_only) ? routeParams.view_only[0] : routeParams.view_only) === "1";
+  const isViewOnly = Boolean(viewOnly || routeViewOnly);
+  const activeJourneyMode = journeyMode || (Array.isArray(routeParams.journey_mode) ? routeParams.journey_mode[0] : routeParams.journey_mode) || "";
+  const universityOptionsOnly = activeJourneyMode === "universities_only";
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
   const [tab, setTab] = useState<ProgrammeTab>("overview");
-  const [state, setState] = useState<DataState<Programme>>(() => comingSoon("Loading programme details..."));
+  const [state, setState] = useState<DataState<Programme>>(() => pending("Loading programme details..."));
   const [schools, setSchools] = useState<JambProgrammeSchool[]>([]);
   const [requirements, setRequirements] = useState<JambProgrammeRequirements | null>(null);
   const [selectedSchoolId, setSelectedSchoolId] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [savingSchool, setSavingSchool] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadProgramme = useCallback(() => {
+    setState(pending("Loading programme details..."));
     let active = true;
     void (async () => {
       if (jambProgrammeId) {
@@ -183,6 +243,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     return () => { active = false; };
   }, [initialSchoolId, jambProgrammeId, programmeId]);
 
+  useEffect(() => loadProgramme(), [loadProgramme]);
+
   const programme = state.data;
   const activeProgrammeId = jambProgrammeId || programmeId;
   const programmeName = programme?.studentName ?? programme?.studentNames?.[0] ?? programme?.name ?? "Programme name unavailable";
@@ -196,6 +258,14 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     if (!programme || savingSchool) return;
     setSavingSchool(school.schoolId);
     setNotice(null);
+    // Early-secondary users are exploring university offerings. Do not turn
+    // opening a school card into a saved commitment or onboarding completion.
+    if (isViewOnly || (userType === "senior_secondary" && !guidanceStudentId)) {
+      setSelectedSchoolId(school.schoolId);
+      setNotice(`${school.schoolName} is being viewed. This choice is not saved until the relevant requirements are confirmed.`);
+      setSavingSchool(null);
+      return;
+    }
     try {
       let existingPath: GuidanceReportPath["path"] = {};
       if (guidanceStudentId) {
@@ -260,10 +330,11 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       eyebrow="PROGRAMME"
       title={programmeName}
       backLabel="Back to programme choices"
-       save={focusedGuidance ? undefined : { entityType: "programme", entityId: activeProgrammeId }}
+       save={focusedGuidance || isViewOnly ? undefined : { entityType: "programme", entityId: activeProgrammeId }}
       pdf
-      pdfPath="/api/student/report.html"
+      pdfPath={guidanceStudentId ? `/api/provisioning/students/${encodeURIComponent(guidanceStudentId)}/report.html` : "/api/student/report.html"}
       state={state.status === "real" ? state : { ...state, data: state.data ?? PLACEHOLDER }}
+      onRetry={loadProgramme}
       header={header}
     >
       {(data) => (
@@ -289,11 +360,13 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
             });
           }}
           onChooseSchool={() => setTab("schools")}
-          guidanceStudentId={guidanceStudentId}
-          router={router}
-           colors={colors}
-           focusedGuidance={focusedGuidance}
-         />
+           guidanceStudentId={guidanceStudentId}
+           router={router}
+            colors={colors}
+            focusedGuidance={focusedGuidance}
+            viewOnly={isViewOnly}
+            showCareerGuidance={!universityOptionsOnly}
+          />
       )}
     </DetailScaffold>
   );
@@ -317,6 +390,8 @@ function ProgrammeDetailBody({
   router,
   colors,
   focusedGuidance,
+  viewOnly,
+  showCareerGuidance,
 }: {
   data: Programme;
   tab: ProgrammeTab;
@@ -335,6 +410,8 @@ function ProgrammeDetailBody({
   router: Router;
   colors: ColorPalette;
   focusedGuidance: boolean;
+  viewOnly: boolean;
+  showCareerGuidance: boolean;
 }) {
   const exploreNav = useExploreNav();
   const resp = useResponsive();
@@ -349,7 +426,6 @@ function ProgrammeDetailBody({
   const orderedDomains = [...(data.domains ?? [])].sort(
     (a, b) => relationshipOrder(a.matchType) - relationshipOrder(b.matchType),
   );
-  const previewDomains = orderedDomains.slice(0, 4);
 
   return (
     <View style={styles.content}>
@@ -370,26 +446,19 @@ function ProgrammeDetailBody({
               <SectionLabel>What this programme is about</SectionLabel>
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>{data.overview}</Text>
             </View>
-          ) : null}
-           <DegreeSkills technical={data.skillsTechnical} transferable={data.skillsTransferable} total={data.skillsCount} />
-           {selectedSchool ? (
+          ) : (
+            <View style={styles.block}>
+              <SectionLabel>What this programme is about</SectionLabel>
+              <Text style={[styles.body, { color: colors.textRole.secondary }]}>A plain-language programme summary is not available in the current source data. The Skills taught section below shows the recorded programme learning profile.</Text>
+            </View>
+          )}
+          <DegreeSkills technical={data.skillsTechnical} transferable={data.skillsTransferable} total={data.skillsCount} />
+          {data.skillsCount ? <DataSourceBadge verification="verified" source="CCMAS/JAMB learning outcomes" /> : null}
+          {selectedSchool || earlySecondary ? (
              <View style={styles.block}>
-               <SectionLabel>Where this programme can lead you to explore</SectionLabel>
-               {previewDomains.length ? previewDomains.map((link) => (
-                 <View key={link.domainId} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
-                   <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
-                   <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
-                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{relationshipCopy(link.matchType)}</Text>
-                 </View>
-               )) : <Text style={[styles.body, { color: colors.textRole.muted }]}>Career connections are not available for this programme yet.</Text>}
-               {previewDomains.length ? (
-                 <TouchableOpacity
-                   onPress={onContinueCareer}
-                   style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}
-                 >
-                    <Text style={styles.primaryText}>Continue</Text>
-                 </TouchableOpacity>
-               ) : null}
+               {earlySecondary && !selectedSchool ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>You can continue into domain guidance without choosing a university. The university list remains available whenever you want to inspect a school&apos;s requirements.</Text> : null}
+               {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a review-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
+              {showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceStudentId, focusedGuidance)} onContinue={onContinueCareer} /> : <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><SectionLabel>University options review</SectionLabel><Text style={[styles.body, { color: colors.textRole.secondary }]}>You have reviewed this university offering and its requirements. Career guidance is not part of this session mode.</Text><TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Change university</Text></TouchableOpacity></View>}
              </View>
            ) : (
              <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -464,8 +533,8 @@ function ProgrammeDetailBody({
 
       {tab === "schools" ? (
         <View style={styles.section}>
-          <SectionLabel>Universities offering this programme</SectionLabel>
-          <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose one university to keep its programme name, address and requirements in your guidance path.</Text>
+          <SectionLabel>{`${earlySecondary ? "Explore universities offering this programme" : "Universities offering this programme"}${schools.length ? ` (${schools.length})` : ""}`}</SectionLabel>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{earlySecondary ? "Open a university to view its requirements and admission notes. This is exploratory and does not commit you to that university." : "Choose one university to keep its programme name, address and requirements in your guidance path."}</Text>
           <View style={resp.isDesktop ? styles.schoolGrid : styles.schoolList}>
             {schools.map((school) => (
               <View key={school.schoolId} style={[styles.school, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
@@ -476,7 +545,7 @@ function ProgrammeDetailBody({
                   {school.hasUniversityException ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>University-specific admission note available</Text> : null}
                 </View>
                 <TouchableOpacity onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
-                  <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Saving..." : selectedSchoolId === school.schoolId ? "Selected" : "Choose"}</Text>
+                  <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Opening..." : selectedSchoolId === school.schoolId ? (earlySecondary ? "Viewing" : "Selected") : (earlySecondary ? "View details" : "Choose")}</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -490,15 +559,7 @@ function ProgrammeDetailBody({
         <View style={styles.section}>
           <SectionLabel>Career guidance</SectionLabel>
           <Text style={[styles.body, { color: colors.textRole.secondary }]}>Explore the domains connected to this programme, then open a domain to see its subgroups, roles and source-backed resources.</Text>
-          {orderedDomains.map((link) => (
-            <TouchableOpacity key={link.domainId} onPress={() => exploreNav.domain(router, link.domainId, guidanceStudentId, focusedGuidance)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
-              <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
-              <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
-              <Text style={[styles.body, { color: colors.textRole.secondary }]}>{relationshipCopy(link.matchType)}</Text>
-              <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain guidance →</Text>
-            </TouchableOpacity>
-          ))}
-          {!data.domains?.length ? <Text style={[styles.body, { color: colors.textRole.muted }]}>Career connections are not available for this programme yet.</Text> : null}
+          <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceStudentId, focusedGuidance)} />
         </View>
       ) : null}
     </View>
@@ -519,6 +580,11 @@ const styles = StyleSheet.create({
   preview: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: 4 },
   previewName: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
   previewType: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
+  connectionGroup: { gap: Spacing.sm },
+  connectionTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
+  connectionCount: { fontSize: FontSize.sm },
+  moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreButtonText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   primaryButton: { alignSelf: "flex-start", borderRadius: Radius.md, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
   primaryText: { color: "#fff", fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   requirement: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },

@@ -8,8 +8,10 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync, switchLocalUser } from '../lib/offlineStorage';
+import { flushQueue, setCareerCacheIdentity } from '../lib/careerCache';
 import { logger } from '../lib/logger';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
 import { resolvePostAuthHref } from '../lib/resumeNavigation';
@@ -161,6 +163,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (!user?.id) return;
+    let active = true;
+    const flushWhenOnline = (state: { isConnected?: boolean | null; isInternetReachable?: boolean | null }) => {
+      if (!active || state.isConnected === false || state.isInternetReachable === false) return;
+      void flushQueue().catch(() => {
+        // The queue deliberately remains encrypted and pending for the next
+        // reconnect or foreground opportunity.
+      });
+    };
+    const unsubscribe = NetInfo.addEventListener(flushWhenOnline);
+    void NetInfo.fetch().then(flushWhenOnline).catch(() => {});
+    return () => {
+      active = false;
+      unsubscribe();
+    };
+  }, [user?.id]);
+
+  useEffect(() => {
     // Feature-detect, don't infer from `typeof window`. React Native defines a
     // `window` global WITHOUT addEventListener, so a bare existence check
     // passes on native and then throws
@@ -239,6 +259,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const profile = await API.getMe() as UserProfile;
       const normalized = _normalise(profile);
       await saveSessionProfile(normalized);
+      await setCareerCacheIdentity(normalized.id);
       setUser(normalized);
       API.checkStreak().catch(() => {});
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
@@ -252,6 +273,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // temporary API outage. A real 401 still falls through to sign-in.
         const cached = await getSavedSessionProfile<UserProfile>();
         if (cached?.id) {
+          await setCareerCacheIdentity(cached.id);
           setUser(_normalise(cached));
           onLoginSync(cached.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
         }
@@ -269,6 +291,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const profile = _normalise(data.user);
     await saveSessionProfile(profile);
     await switchLocalUser(profile.id);
+    await setCareerCacheIdentity(profile.id);
     setPendingPostAuthRedirect(
       profile.onboarding_completed ? resolvePostAuthHref(profile) : null,
       profile.id,
@@ -425,6 +448,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!options.preserveLocalUserState) {
       await clearLocalUserState(user?.id);
     }
+    await setCareerCacheIdentity(null);
     await switchLocalUser('__signed_out__');
     setUser(null);
   }
@@ -437,6 +461,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await clearSessionProfile();
       await markExplicitLogout();
       await clearLocalUserState(user?.id);
+      await setCareerCacheIdentity(null);
       setUser(null);
     }
   }

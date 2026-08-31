@@ -43,6 +43,9 @@ export const adminNav = {
   guidanceDashboard(router: Nav) {
     router.replace("/(admin)/guidance" as never);
   },
+  guidanceStart(router: Nav) {
+    router.push("/(admin)/guidance-start" as never);
+  },
   /** Audience-correct home. Universities summarise; advisers look things up. */
   home(router: Nav, audience: AdminAudience) {
     router.replace(

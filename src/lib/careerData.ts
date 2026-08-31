@@ -50,12 +50,13 @@ import {
   type CourseCompetitiveness,
   type AdmissionSnapshotVersion,
   comingSoon,
+  error,
   pending,
   type MappingFeedback,
   type FeedbackType,
 } from "../types/career";
 import { request } from "./api";
-import { getCached, setCached, queueWrite, flushQueue } from "./careerCache";
+import { getCached, getCachedStale, setCached, queueWrite, cancelQueuedSave, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
 
 /** Reference data is refreshed daily; writes and account data never use this cache. */
@@ -70,7 +71,7 @@ async function readThrough<T>(
   ttlMs: number = REFERENCE_TTL_MS,
 ): Promise<DataState<T>> {
   const cached = await getCached<DataState<T>>(key);
-  if (cached?.status === "real") return cached;
+  const stale = await getCachedStale<DataState<T>>(key);
   try {
     const result = await fetcher();
     if (result.status === "real") {
@@ -79,10 +80,25 @@ async function readThrough<T>(
     }
     // Keep a previously verified reference result usable during a transient
     // backend/Supabase outage; never replace it with a developer-facing stub.
-    return cached ?? result;
+    return cached ?? stale ?? result;
   } catch {
-    return cached ?? comingSoon<T>(unavailableMessage);
+    return stale ?? cached ?? error<T>(unavailableMessage);
   }
+}
+
+async function updateSavedItemsCache(next: SavedItem[]): Promise<void> {
+  await setCached(
+    "saved_items",
+    {
+      status: "real",
+      data: next,
+      meta: {
+        verification: "pending",
+        notice: "This list includes device-pending changes until you reconnect.",
+      },
+    } satisfies DataState<SavedItem[]>,
+    DETAIL_TTL_MS,
+  );
 }
 
 /** A cluster of domains for the context-free Domain Explorer (no programme). */
@@ -439,29 +455,27 @@ export const careerData = {
   async getJambProgramme(
     jambProgrammeId: string,
   ): Promise<DataState<JambProgrammeDetail | null>> {
-    try {
-      return await request<DataState<JambProgrammeDetail | null>>(
+    return readThrough(
+      `jamb-programme:${jambProgrammeId}`,
+      () => request<DataState<JambProgrammeDetail | null>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}`,
-      );
-    } catch {
-      return comingSoon<JambProgrammeDetail | null>(
-        "Programme requirements are unavailable.",
-      );
-    }
+      ),
+      "Programme requirements are unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   async getJambProgrammeSchools(
     jambProgrammeId: string,
   ): Promise<DataState<JambProgrammeSchool[]>> {
-    try {
-      return await request<DataState<JambProgrammeSchool[]>>(
+    return readThrough(
+      `jamb-programme-schools:${jambProgrammeId}`,
+      () => request<DataState<JambProgrammeSchool[]>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
-      );
-    } catch {
-      return comingSoon<JambProgrammeSchool[]>(
-        "Schools and admission rows are unavailable.",
-      );
-    }
+      ),
+      "Schools and admission rows are unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   /** Courses offered by one institution (the enrolled-student entry point). */
@@ -513,15 +527,14 @@ export const careerData = {
   async getJambProgrammeDomains(
     jambProgrammeId: string,
   ): Promise<DataState<JambDomainResult>> {
-    try {
-      return await request<DataState<JambDomainResult>>(
+    return readThrough(
+      `jamb-programme-domains:${jambProgrammeId}`,
+      () => request<DataState<JambDomainResult>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/domains`,
-      );
-    } catch {
-      return comingSoon<JambDomainResult>(
-        "Domain paths are unavailable.",
-      );
-    }
+      ),
+      "Domain paths are unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   async affiliateWithSchoolCode(
@@ -573,51 +586,40 @@ export const careerData = {
 
   /** Full programme detail incl. its domain links (with match types). */
   async getProgramme(programmeId: string): Promise<DataState<Programme>> {
-    try {
-      return await request<DataState<Programme>>(
-        `/api/career/programmes/${encodeURIComponent(programmeId)}`,
-      );
-    } catch {
-      return comingSoon<Programme>("Programme details are temporarily unavailable.");
-    }
+    return readThrough(
+      `programme_${programmeId}`,
+      () => request<DataState<Programme>>(`/api/career/programmes/${encodeURIComponent(programmeId)}`),
+      "Programme details are temporarily unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   /** All domains grouped by cluster, for the context-free Domain Explorer. */
   async getDomainClusters(): Promise<DataState<DomainClusterGroup[]>> {
-    try {
-      return await request<DataState<DomainClusterGroup[]>>(
-        "/api/career/domains",
-      );
-    } catch {
-      return comingSoon<DomainClusterGroup[]>(
-        "The domain explorer is temporarily unavailable.",
-      );
-    }
+    return readThrough(
+      "domain_clusters",
+      () => request<DataState<DomainClusterGroup[]>>("/api/career/domains"),
+      "The domain explorer is temporarily unavailable.",
+    );
   },
 
   /** Disambiguation search: domains, roles (+aliases), programmes. */
   async searchCareer(query: string): Promise<DataState<CareerSearchResult>> {
-    try {
-      return await request<DataState<CareerSearchResult>>(
-        `/api/career/search?q=${encodeURIComponent(query)}`,
-      );
-    } catch {
-      return comingSoon<CareerSearchResult>(
-        "Search is temporarily unavailable.",
-      );
-    }
+    return readThrough(
+      `search_${query.trim().toLowerCase()}`,
+      () => request<DataState<CareerSearchResult>>(`/api/career/search?q=${encodeURIComponent(query)}`),
+      "Search is temporarily unavailable.",
+      SEARCH_TTL_MS,
+    );
   },
 
   async getGuidancePath(): Promise<DataState<GuidanceReportPath | null>> {
-    try {
-      return await request<DataState<GuidanceReportPath | null>>(
-        `/api/student/guidance-path`,
-      );
-    } catch {
-      return comingSoon<GuidanceReportPath | null>(
-        "Your saved guidance path is temporarily unavailable.",
-      );
-    }
+    return readThrough(
+      "guidance_path",
+      () => request<DataState<GuidanceReportPath | null>>(`/api/student/guidance-path`),
+      "Your saved guidance path is temporarily unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   async saveGuidancePath(input: {
@@ -625,14 +627,41 @@ export const careerData = {
     path: GuidanceReportPath["path"];
   }): Promise<DataState<GuidanceReportPath>> {
     try {
-      return await request<DataState<GuidanceReportPath>>(
+      const result = await request<DataState<GuidanceReportPath>>(
         `/api/student/guidance-path`,
         { method: "PUT", body: JSON.stringify(input) },
       );
+      if (result.status === "real") await setCached("guidance_path", result, DETAIL_TTL_MS);
+      return result;
     } catch {
-      return comingSoon<GuidanceReportPath>(
-        "Could not save this guidance path yet.",
-      );
+      try {
+        const optimistic: GuidanceReportPath = {
+          source: input.source,
+          path: input.path,
+          updatedAt: new Date().toISOString(),
+        };
+        await setCached(
+          "guidance_path",
+          {
+            status: "real",
+            data: optimistic,
+            meta: {
+              verification: "pending",
+              notice: "Saved on this device; reconnect to confirm it on your account.",
+            },
+          } satisfies DataState<GuidanceReportPath>,
+          DETAIL_TTL_MS,
+        );
+        await queueWrite({
+          endpoint: "/api/student/guidance-path",
+          method: "PUT",
+          body: input,
+        });
+        await flushQueue().catch(() => 0);
+        return pending<GuidanceReportPath>("Saved on this device — it will sync when you reconnect.");
+      } catch {
+        return comingSoon<GuidanceReportPath>("Could not save this guidance path yet.");
+      }
     }
   },
 
@@ -666,15 +695,12 @@ export const careerData = {
 
   /** JAMB name → domains (the SS/UTME student entry point). */
   async getJambDomains(jambName: string): Promise<DataState<JambDomainResult>> {
-    try {
-      return await request<DataState<JambDomainResult>>(
-        `/api/career/jamb/${encodeURIComponent(jambName)}/domains`,
-      );
-    } catch {
-      return comingSoon<JambDomainResult>(
-        "Domains for this JAMB programme are being populated.",
-      );
-    }
+    return readThrough(
+      `jamb_domains_${jambName}`,
+      () => request<DataState<JambDomainResult>>(`/api/career/jamb/${encodeURIComponent(jambName)}/domains`),
+      "Domains for this JAMB programme are being populated.",
+      DETAIL_TTL_MS,
+    );
   },
 
   /** A domain incl. its domain-level bridge skills and role list. */
@@ -685,20 +711,12 @@ export const careerData = {
 
   /** v2 domain detail: foundation skills, subgroups, tools, certs, demand metrics. */
   async getDomainV2(domainKey: string): Promise<DataState<DomainV2>> {
-    const cacheKey = `domain_${domainKey}`;
-    try {
-      const res = await request<DataState<DomainV2>>(
-        `/api/career/domains/${encodeURIComponent(domainKey)}`,
-      );
-      // Cache successful `real` payloads for instant re-hydration / offline.
-      if (res.status === "real") setCached(cacheKey, res, DETAIL_TTL_MS);
-      return res;
-    } catch {
-      // Offline / transient: serve a cached copy if we have a fresh one.
-      const cached = await getCached<DataState<DomainV2>>(cacheKey);
-      if (cached) return cached;
-      return comingSoon<DomainV2>("See what this field does, the skills it needs, and the roles it can unlock.");
-    }
+    return readThrough(
+      `domain_${domainKey}`,
+      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}`),
+      "See what this field does, the skills it needs, and the roles it can unlock.",
+      DETAIL_TTL_MS,
+    );
   },
 
   /** A role incl. its role-level bridge skills and coverage. */
@@ -709,18 +727,12 @@ export const careerData = {
 
   /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
   async getRoleV2(roleKey: string): Promise<DataState<DomainRoleV2>> {
-    const cacheKey = `role_${roleKey}`;
-    try {
-      const res = await request<DataState<DomainRoleV2>>(
-        `/api/career/roles/${encodeURIComponent(roleKey)}`,
-      );
-      if (res.status === "real") setCached(cacheKey, res, DETAIL_TTL_MS);
-      return res;
-    } catch {
-      const cached = await getCached<DataState<DomainRoleV2>>(cacheKey);
-      if (cached) return cached;
-      return comingSoon<DomainRoleV2>("Understand the role, the bridge skills, and the proof you need to become credible.");
-    }
+    return readThrough(
+      `role_${roleKey}`,
+      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}`),
+      "Understand the role, the bridge skills, and the proof you need to become credible.",
+      DETAIL_TTL_MS,
+    );
   },
 
   /** Opportunities matched to a programme/domain, eligibility-filtered.
@@ -805,11 +817,12 @@ export const careerData = {
 
   // ─── User-owned (require an account; guests get `locked`) ────
   async getSavedItems(): Promise<DataState<SavedItem[]>> {
-    try {
-      return await request<DataState<SavedItem[]>>(`/api/career/saved`);
-    } catch {
-      return comingSoon<SavedItem[]>("Saved items are temporarily unavailable.");
-    }
+    return readThrough(
+      "saved_items",
+      () => request<DataState<SavedItem[]>>(`/api/career/saved`),
+      "Saved items are temporarily unavailable.",
+      DETAIL_TTL_MS,
+    );
   },
 
   async saveItem(
@@ -818,23 +831,83 @@ export const careerData = {
     label?: string,
   ): Promise<DataState<SavedItem>> {
     try {
-      return await request<DataState<SavedItem>>(`/api/career/saved`, {
+      const result = await request<DataState<SavedItem>>(`/api/career/saved`, {
         method: "POST",
         body: JSON.stringify({ entityType, entityId, label }),
       });
+      if (result.status === "real" && result.data) {
+        const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+        const previous = cached?.data ?? [];
+        await updateSavedItemsCache([
+          ...previous.filter((item) => !(item.entityType === entityType && item.entityId === entityId)),
+          result.data,
+        ]);
+      }
+      return result;
     } catch {
-      return comingSoon<SavedItem>("Couldn't save that right now.");
+      try {
+        const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+        const previous = cached?.data ?? [];
+        const optimistic: SavedItem = {
+          id: `local_${entityType}_${entityId}`,
+          entityType,
+          entityId,
+          label,
+          createdAt: new Date().toISOString(),
+        };
+        await updateSavedItemsCache([
+          ...previous.filter((item) => !(item.entityType === entityType && item.entityId === entityId)),
+          optimistic,
+        ]);
+        await queueWrite({
+          endpoint: "/api/career/saved",
+          method: "POST",
+          body: { entityType, entityId, label },
+        });
+        await flushQueue().catch(() => 0);
+        return pending<SavedItem>("Saved on this device — it will sync when you reconnect.");
+      } catch {
+        return comingSoon<SavedItem>("Couldn't save that right now.");
+      }
     }
   },
 
   async removeSavedItem(savedItemId: string): Promise<DataState<null>> {
+    const cachedItems = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+    const cachedData = cachedItems?.data ?? [];
+    const localItem = cachedData.find((item) => item.id === savedItemId);
+    if (localItem?.id.startsWith("local_")) {
+      await cancelQueuedSave(localItem.entityType, localItem.entityId);
+      await updateSavedItemsCache(cachedData.filter((item) => item.id !== savedItemId));
+      return pending<null>("Removed on this device — it will sync when you reconnect.");
+    }
     try {
-      return await request<DataState<null>>(
+      const result = await request<DataState<null>>(
         `/api/career/saved/${encodeURIComponent(savedItemId)}`,
         { method: "DELETE" },
       );
+      if (result.status === "real") {
+        const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+        if (cached?.data) {
+          await updateSavedItemsCache(cached.data.filter((item) => item.id !== savedItemId));
+        }
+      }
+      return result;
     } catch {
-      return comingSoon<null>();
+      try {
+        const cached = await getCachedStale<DataState<SavedItem[]>>("saved_items");
+        if (cached?.data) {
+          await updateSavedItemsCache(cached.data.filter((item) => item.id !== savedItemId));
+        }
+        await queueWrite({
+          endpoint: `/api/career/saved/${encodeURIComponent(savedItemId)}`,
+          method: "DELETE",
+        });
+        await flushQueue().catch(() => 0);
+        return pending<null>("Removed on this device — it will sync when you reconnect.");
+      } catch {
+        return comingSoon<null>();
+      }
     }
   },
 

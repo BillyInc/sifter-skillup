@@ -36,45 +36,10 @@ Interpretation:
 
 ## Domains requiring review
 
-The following domains are flagged because they have fewer than five roles, no subgroups, a source gap, or a role-count mismatch between structure and canonical data.
+The following domains are flagged because they have fewer than five roles, a source gap, or a role-count mismatch between structure and canonical data. Domains without a supported subgroup taxonomy intentionally use direct domain-to-role navigation.
 
 | Domain | Roles | Structure roles | Subgroups | Any source | Reason |
 |---|---:|---:|---:|---:|---|
-| D123 Radiography, Medical Imaging | 11 | 12 | 2 | 11 | structure mismatch |
-| D090 Animal Care, Grooming | 15 | 15 | 0 | 15 | no subgroups |
-| D082 Customer Service, Contact Centre | 17 | 17 | 0 | 17 | no subgroups |
-| D124 Community Health Extension | 17 | 17 | 0 | 17 | no subgroups |
-| D157 Tax Advisory, Transfer Pricing | 17 | 17 | 0 | 17 | no subgroups |
-| D148 Offshore, Subsea | 18 | 18 | 0 | 18 | no subgroups |
-| D109 Metal Processing, Foundry | 19 | 19 | 0 | 19 | no subgroups |
-| D019 Renewable Energy Engineering | 20 | 20 | 0 | 20 | no subgroups |
-| D020 Environmental Engineering | 20 | 20 | 0 | 20 | no subgroups |
-| D025 Pharmacy | 20 | 22 | 6 | 20 | structure mismatch |
-| D116 Heavy Equipment, Earthmoving | 20 | 20 | 0 | 20 | no subgroups |
-| D093 Electrical Installation, Wiring | 21 | 21 | 0 | 21 | no subgroups |
-| D021 Architecture | 22 | 22 | 0 | 22 | no subgroups |
-| D083 Travel, Tourism | 22 | 22 | 0 | 22 | no subgroups |
-| D112 Wood Processing, Pulp | 22 | 22 | 0 | 22 | no subgroups |
-| D080 Interior Design | 23 | 23 | 0 | 23 | no subgroups |
-| D118 Crop Production, Horticulture | 23 | 23 | 0 | 23 | no subgroups |
-| D104 Pottery, Ceramics, Glass | 24 | 24 | 0 | 24 | no subgroups |
-| D094 Electronics Servicing, ICT Equipment | 26 | 26 | 0 | 26 | no subgroups |
-| D159 Credit Analysis, Structured Finance | 27 | 27 | 0 | 27 | no subgroups |
-| D106 Garment Making, Tailoring, Dressmaking | 28 | 28 | 0 | 28 | no subgroups |
-| D115 Road Transport Operations (Drivers | 28 | 28 | 0 | 28 | no subgroups |
-| D016 Electrical | 35 | 35 | 0 | 35 | no subgroups |
-| D024 Nursing | 38 | 38 | 0 | 38 | no subgroups |
-| D068 Allied Health | 38 | 38 | 0 | 38 | no subgroups |
-| D041 Scientific Research | 43 | 45 | 2 | 43 | structure mismatch |
-| D114 Assembly, Packaging | 43 | 43 | 0 | 43 | no subgroups |
-| D017 Mechanical | 45 | 45 | 0 | 45 | no subgroups |
-| D030 Marketing, Brand | 46 | 46 | 0 | 46 | no subgroups |
-| D023 Medicine | 49 | 49 | 0 | 49 | no subgroups |
-| D110 Chemical, Rubber | 56 | 56 | 0 | 56 | no subgroups |
-| D043 Journalism | 62 | 62 | 0 | 62 | no subgroups |
-| D097 Welding, Fabrication, Blacksmithing | 63 | 63 | 0 | 63 | no subgroups |
-| D018 Civil | 67 | 67 | 0 | 67 | no subgroups |
-| D085 Retail Sales, Shop Operations | 70 | 70 | 0 | 70 | no subgroups |
 
 ## Source strategy
 

@@ -15,6 +15,42 @@ STRUCTURE = os.path.join(HERE, "domain_structure.json")
 DOMAIN_TOOLS = os.path.join(HERE, "domain_tools.json")
 COMPUTATIONAL_MANIFEST = os.path.join(HERE, "computational_layer_manifest.json")
 
+# Official ISCO-08 sub-major group titles used as the fallback label when a
+# domain has not yet received a product-specific subgroup label.  These are
+# occupational groupings, not invented specialisations: the role library's
+# existing `isco_group` value is the source-backed ownership boundary.
+ISCO_SUBMAJOR = {
+    "12": ("Administrative and Commercial Managers", "Plan and direct commercial, administrative and service operations."),
+    "13": ("Production and Specialised Services Managers", "Plan and direct production and specialised service operations."),
+    "21": ("Science and Engineering Professionals", "Apply scientific, mathematical and engineering knowledge to professional work."),
+    "22": ("Health Professionals", "Provide professional health assessment, treatment and care."),
+    "24": ("Business and Administration Professionals", "Apply professional business, finance, administration and organisational knowledge."),
+    "26": ("Legal, Social and Cultural Professionals", "Apply professional legal, social, communication and cultural knowledge."),
+    "31": ("Science and Engineering Associate Professionals", "Support scientific, technical and engineering work through practical application and measurement."),
+    "32": ("Health Associate Professionals", "Support health services through technical, diagnostic and patient-care work."),
+    "33": ("Business and Administration Associate Professionals", "Perform technical business, finance, administration and transaction-support work."),
+    "34": ("Legal, Social, Cultural and Related Associate Professionals", "Provide technical support in legal, social, cultural and related services."),
+    "35": ("Information and Communications Technicians", "Install, operate and support information, communications and digital systems."),
+    "41": ("General and Keyboard Clerks", "Carry out general clerical, records, correspondence and data-entry work."),
+    "42": ("Customer Services Clerks", "Respond to customers, provide information and handle service requests and records."),
+    "51": ("Personal Services Workers", "Provide personal, hospitality, travel and related services directly to people."),
+    "52": ("Sales Workers", "Present, sell and support the purchase of goods and services."),
+    "53": ("Personal Care Workers", "Provide personal care and day-to-day support to people who need assistance."),
+    "61": ("Market-oriented Skilled Agricultural Workers", "Produce and manage crops, livestock and other market-oriented agricultural outputs."),
+    "62": ("Market-oriented Skilled Forestry, Fishery and Hunting Workers", "Manage and harvest market-oriented forestry, fishery and hunting outputs."),
+    "63": ("Subsistence Farmers, Fishers, Hunters and Gatherers", "Carry out small-scale or subsistence production from land, water and natural resources."),
+    "71": ("Building and Related Trades Workers", "Construct, maintain and finish buildings and related structures."),
+    "72": ("Metal, Machinery and Related Trades Workers", "Shape, assemble, install and maintain metal, machinery and related products."),
+    "73": ("Handicraft and Printing Workers", "Make, decorate, reproduce and finish crafted, printed and related products."),
+    "74": ("Electrical and Electronic Trades Workers", "Install, maintain, repair and test electrical and electronic systems."),
+    "75": ("Food Processing, Woodworking, Garment and Other Craft Workers", "Process food, wood, garments and other materials into finished products."),
+    "81": ("Stationary Plant and Machine Operators", "Operate and monitor stationary industrial plant, machinery and processing equipment."),
+    "82": ("Assemblers", "Assemble components and products to specification and quality requirements."),
+    "83": ("Drivers and Mobile Plant Operators", "Drive vehicles and operate mobile plant and earthmoving equipment safely."),
+    "91": ("Cleaners and Helpers", "Clean, maintain and support workplaces, homes and service environments."),
+    "92": ("Agricultural, Forestry and Fishery Labourers", "Perform practical labour supporting crop, forestry, fishery and related production."),
+}
+
 SUBGROUP_LABELS = {
     ("D140", "21"): ("Robotics Engineering & Automation", "Design and develop robotic, automation and control systems."),
     ("D140", "31"): ("Robotics Technicians & Precision Systems", "Maintain, test and support robotic and precision systems."),
@@ -96,13 +132,21 @@ def main():
     group_layers = load(GROUP_LAYERS) if os.path.exists(GROUP_LAYERS) else {"domains": {}, "subgroups": []}
     structure = load(STRUCTURE)
     overlay_roles = load_overlay_roles()
+    all_roles = base_roles + overlay_roles
+    canonical_roles = {}
+    for role in all_roles:
+        key = f"{text(role.get('domain_id'))}|{text(role.get('role_name'))}"
+        if key.strip("|"):
+            canonical_roles[key] = role
+    all_roles = list(canonical_roles.values())
+    # Materialise the structural subgroup layer for every visible role-bearing
+    # domain.  Previously this pass only visited emerging/overlay domains,
+    # leaving ordinary domains with valid ISCO ownership but no subgroup rows.
     changed_domains = sorted(
-        {text(role.get("domain_id")) for role in overlay_roles if text(role.get("domain_id"))}
+        {text(role.get("domain_id")) for role in all_roles if text(role.get("domain_id"))}
         | {text(domain_id) for domain_id in (group_layers.get("domains") or {}) if text(domain_id)}
         | {text(layer.get("domain_id")) for layer in group_layers.get("subgroups") or [] if text(layer.get("domain_id"))}
     )
-    all_roles = base_roles + overlay_roles
-
     roles_by_domain = defaultdict(list)
     for role in all_roles:
         domain_id = text(role.get("domain_id"))
@@ -111,13 +155,23 @@ def main():
 
     for domain_id in changed_domains:
         domain = structure.setdefault(domain_id, {})
+        # Roles without an ISCO crosswalk intentionally remain direct
+        # domain -> role rows; remove any stale synthetic subgroup from an
+        # earlier generation.
+        domain["subgroups"] = [
+            item for item in (domain.get("subgroups") or [])
+            if text(item.get("isco_submajor")) != "source_review_pending"
+        ]
         existing = {text(item.get("isco_submajor")): item for item in domain.get("subgroups") or []}
         counts = Counter(text(role.get("isco_group"))[:2] for role in roles_by_domain[domain_id] if text(role.get("isco_group")))
         for subgroup_id, count in counts.items():
             if subgroup_id not in existing:
                 label, description = labels.get(
                     (domain_id, subgroup_id),
-                    (f"{domain.get('domain_name', domain_id)} {subgroup_id}", "Source-backed activities within this domain."),
+                    ISCO_SUBMAJOR.get(
+                        subgroup_id,
+                        (f"ISCO-08 group {subgroup_id}", "Source-backed occupational activities within this domain."),
+                    ),
                 )
                 item = {
                     "isco_submajor": subgroup_id,
@@ -125,7 +179,14 @@ def main():
                     "role_count": count,
                     "cluster_skills": [],
                     "description": description,
-                    "raw_isco_label": "Source-backed occupational grouping",
+                    "raw_isco_label": ISCO_SUBMAJOR.get(subgroup_id, ("Source-backed occupational grouping", ""))[0],
+                    "source_provenance": {
+                        "source": "global_isco",
+                        "sources": ["global_isco"],
+                        "ownership": "subgroup",
+                        "mapping_method": "canonical_role_library_isco_submajor",
+                        "source_url": "https://isco.ilo.org/en/isco-08/",
+                    },
                 }
                 domain.setdefault("subgroups", []).append(item)
                 existing[subgroup_id] = item
@@ -133,6 +194,13 @@ def main():
                 existing[subgroup_id]["label"] = labels[(domain_id, subgroup_id)][0]
                 existing[subgroup_id]["description"] = labels[(domain_id, subgroup_id)][1]
             existing[subgroup_id]["role_count"] = count
+            existing[subgroup_id].setdefault("source_provenance", {
+                "source": "global_isco",
+                "sources": ["global_isco"],
+                "ownership": "subgroup",
+                "mapping_method": "canonical_role_library_isco_submajor",
+                "source_url": "https://isco.ilo.org/en/isco-08/",
+            })
 
         domain["subgroups"] = sorted(domain.get("subgroups") or [], key=lambda item: text(item.get("isco_submajor")))
         domain["has_subgroups"] = bool(domain["subgroups"])

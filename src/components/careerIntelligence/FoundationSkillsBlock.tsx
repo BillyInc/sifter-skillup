@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, Linking, type ViewStyle } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Linking, TouchableOpacity, type ViewStyle } from "react-native";
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
 import type { FoundationSkillEnriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
@@ -17,6 +17,7 @@ export function FoundationSkillsBlock({
   style,
 }: FoundationSkillsBlockProps) {
   const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
   if (!skills?.length) return null;
 
   const rows = [...skills].sort((a, b) => b.prevalence - a.prevalence);
@@ -59,7 +60,20 @@ export function FoundationSkillsBlock({
         Start with the suggested foundation, then add the other capabilities as your direction becomes clearer. This is guidance, not a checklist.
       </Text>
       {startHere.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Suggested starting point</Text><SkillRows items={startHere} /></View> : null}
-      {buildNext.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Other domain foundations</Text><SkillRows items={buildNext} /></View> : null}
+      {expanded && buildNext.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Other domain foundations</Text><SkillRows items={buildNext} /></View> : null}
+      {buildNext.length ? (
+        <TouchableOpacity
+          onPress={() => setExpanded((value) => !value)}
+          activeOpacity={0.75}
+          accessibilityRole="button"
+          accessibilityState={{ expanded }}
+          style={styles.moreButton}
+        >
+          <Text style={[styles.moreText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
+            {expanded ? "Show fewer domain skills" : `See all ${rows.length} domain skills`}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }
@@ -94,4 +108,11 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.semibold,
     textDecorationLine: "underline",
   },
+  moreButton: {
+    alignSelf: "flex-start",
+    minHeight: 34,
+    justifyContent: "center",
+    paddingTop: Spacing.xs,
+  },
+  moreText: { fontSize: FontSize.sm },
 });

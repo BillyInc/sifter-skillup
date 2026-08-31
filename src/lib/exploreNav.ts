@@ -40,13 +40,15 @@ export type ExploreNav = ReturnType<typeof makeExploreNav>;
 export function makeExploreNav(base: string) {
   return {
     base,
-    programme(router: Nav, programmeId: string, context?: { jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string; focused?: boolean }) {
+    programme(router: Nav, programmeId: string, context?: { jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string; focused?: boolean; viewOnly?: boolean; journeyMode?: string }) {
       const query = [
         context?.jambProgrammeId ? `jamb_programme_id=${encodeURIComponent(context.jambProgrammeId)}` : "",
         context?.schoolId ? `school_id=${encodeURIComponent(context.schoolId)}` : "",
         context?.userType ? `user_type=${encodeURIComponent(context.userType)}` : "",
         context?.guidanceStudentId ? `guidance_student_id=${encodeURIComponent(context.guidanceStudentId)}` : "",
         context?.focused ? "focus=guidance" : "",
+        context?.viewOnly ? "view_only=1" : "",
+        context?.journeyMode ? `journey_mode=${encodeURIComponent(context.journeyMode)}` : "",
       ].filter(Boolean).join("&");
       router.push(`${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never);
     },
@@ -76,10 +78,11 @@ export function makeExploreNav(base: string) {
     domains(router: Nav) {
       router.push(`${base}/domains` as never);
     },
-    domain(router: Nav, domainId: string, guidanceStudentId?: string, focused?: boolean) {
+    domain(router: Nav, domainId: string, guidanceStudentId?: string, focused?: boolean, matchType?: string) {
       const query = [
         guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
         focused ? "focus=guidance" : "",
+        matchType ? `match_type=${encodeURIComponent(matchType)}` : "",
       ].filter(Boolean).join("&");
       router.push(`${base}/domain/${domainId}${query ? `?${query}` : ""}` as never);
     },

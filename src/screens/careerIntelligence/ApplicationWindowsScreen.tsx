@@ -5,7 +5,7 @@
  * Phase 10 redesign: editorial header, responsive card grid, all legacy
  * tokens migrated.
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import { useTheme, Spacing, FontSize, CompassFonts } from "@/theme";
 import { careerData } from "@/lib/careerData";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type ApplicationWindow,
 } from "@/types/career";
@@ -35,15 +35,18 @@ export function ApplicationWindowsScreen() {
   const router = useRouter();
   const resp = useResponsive();
   const [state, setState] =
-    useState<DataState<ApplicationWindow[]>>(comingSoon<ApplicationWindow[]>());
+    useState<DataState<ApplicationWindow[]>>(pending<ApplicationWindow[]>("Loading application windows..."));
 
-  useEffect(() => {
+  const loadWindows = useCallback(() => {
+    setState(pending<ApplicationWindow[]>("Loading application windows..."));
     let alive = true;
-    careerData.getApplicationWindows().then((res) => {
+    void careerData.getApplicationWindows().then((res) => {
       if (alive) setState(res);
     });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => loadWindows(), [loadWindows]);
 
   const isGrid = (resp.isDesktop || resp.isTablet) && resp.isWeb;
 
@@ -83,6 +86,8 @@ export function ApplicationWindowsScreen() {
 
       <DataStateView
         state={state}
+        spinnerOnPending={!state.data}
+        onRetry={loadWindows}
         empty={(d) => d.length === 0}
         emptyTitle="No upcoming windows"
       >

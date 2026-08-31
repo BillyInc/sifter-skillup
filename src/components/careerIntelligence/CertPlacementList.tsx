@@ -10,12 +10,13 @@
  * subtle "No formal certification required" line — that absence is meaningful:
  * many fields genuinely have no licensing gate.
  */
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Linking,
+  TouchableOpacity,
   type ViewStyle,
 } from "react-native";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
@@ -176,20 +177,23 @@ function CertGroup({
   label,
   certs,
   emphasise,
+  expanded,
 }: {
   label: string;
   certs: CertificationV2Enriched[];
   emphasise?: boolean;
+  expanded: boolean;
 }) {
   const { colors } = useTheme();
   if (!certs.length) return null;
+  const visible = expanded ? certs : certs.slice(0, 4);
   return (
     <View style={styles.group}>
       <Text style={[styles.groupLabel, { color: colors.textMuted }]}>
         {label}
       </Text>
       <View style={styles.groupRows}>
-        {certs.map((c, i) => (
+        {visible.map((c, i) => (
           <CertRow key={`${c.name}-${i}`} cert={c} emphasise={!!emphasise} />
         ))}
       </View>
@@ -207,6 +211,9 @@ export function CertPlacementList({
   const g = gateway ?? [];
   const s = subgroup ?? [];
   const r = roleHint ?? [];
+  const [expanded, setExpanded] = useState(false);
+  const total = g.length + s.length + r.length;
+  const visibleCount = Math.min(g.length, 4) + Math.min(s.length, 4) + Math.min(r.length, 4);
 
   if (!g.length && !s.length && !r.length) {
     return (
@@ -220,9 +227,10 @@ export function CertPlacementList({
 
   return (
     <View style={[styles.container, style]}>
-      <CertGroup label="Required in some regulated paths" certs={g} emphasise />
-      <CertGroup label="Credentials for specialisations" certs={s} />
-      <CertGroup label="Credentials that may strengthen this route" certs={r} />
+      <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} />
+      <CertGroup label="Credentials for specialisations" certs={s} expanded={expanded} />
+      <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} />
+      {total > visibleCount ? <View style={styles.moreWrap}><Text style={[styles.moreHint, { color: colors.textMuted }]}>The first credentials are shown by placement level. The rest remain available when you want the full list.</Text><TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)}><Badge label={expanded ? "Show fewer credentials" : `See all ${total} credentials`} variant="info" size="sm" /></TouchableOpacity></View> : null}
     </View>
   );
 }
@@ -304,4 +312,6 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
     lineHeight: FontSize.sm * 1.5,
   },
+  moreWrap: { gap: Spacing.sm, alignItems: "flex-start" },
+  moreHint: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
 });

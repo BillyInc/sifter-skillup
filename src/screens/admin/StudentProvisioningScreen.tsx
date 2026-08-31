@@ -427,19 +427,21 @@ function RosterTab() {
               </Text>
               {s.guidanceComplete ? (
                 <>
-                  <TouchableOpacity
-                    onPress={() => provisioningData.openReportHtml(s.userId)}
-                    style={[styles.miniBtn, { borderColor: colors.border }]}
-                  >
-                    <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
-                  </TouchableOpacity>
                   {s.visible && (s.provenance === "provisioned" || s.hasConsent) ? (
-                    <TouchableOpacity
-                      onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&student_type=${encodeURIComponent(s.studentType ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
-                      style={[styles.miniBtn, { borderColor: colors.border }]}
-                    >
-                      <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Review guidance</Text>
-                    </TouchableOpacity>
+                    <>
+                      <TouchableOpacity
+                        onPress={() => provisioningData.openReportHtml(s.userId)}
+                        style={[styles.miniBtn, { borderColor: colors.border }]}
+                      >
+                        <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => router.push(`/(admin)/students/${encodeURIComponent(s.userId)}/guidance?student_class=${encodeURIComponent(s.studentClass ?? "")}&student_type=${encodeURIComponent(s.studentType ?? "")}&stream=${encodeURIComponent(s.stream ?? "")}` as never)}
+                        style={[styles.miniBtn, { borderColor: colors.border }]}
+                      >
+                        <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Review guidance</Text>
+                      </TouchableOpacity>
+                    </>
                   ) : null}
                 </>
               ) : s.visible && (s.provenance === "provisioned" || s.hasConsent) ? (
@@ -1194,8 +1196,8 @@ function GeneratedCards({
             {copied === g.userId ? "Copied!" : "Tap the code to copy"}
           </Text>
            {!g.guidanceComplete ? (
-             <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this student before printing a report.</Text>
-           ) : null}
+              <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this student before printing a report.</Text>
+            ) : null}
           <View style={styles.cardActions}>
             <TouchableOpacity
               onPress={() => provisioningData.openLoginCard(g.userId)}

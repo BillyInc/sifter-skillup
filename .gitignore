@@ -73,6 +73,12 @@ data/career-mapping/_legit_subgroups.json
 data/career-mapping/*.out
 backend/seed_career_v2.sql
 backend/seed_career_pilot.sql
+# role_tools.json is a build-time object assembled from the tracked compressed
+# parts below; keeping the 348 MB monolith out of GitHub avoids the file limit.
+data/career-mapping/role_tools.json
+# Raw audit/build outputs are reconstructed from tracked compressed parts.
+data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
+data/career-mapping/role_tools_malformed_2026-08-26.json
 # Large generated career preview SQL is reconstructed locally from the tracked
 # gzip parts; never add the monolithic output to GitHub.
 backend/seed_career_v2_preview_*.sql
