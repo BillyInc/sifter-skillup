@@ -8,7 +8,7 @@
  *
  * Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -241,9 +241,10 @@ export default function CareerHomeScreen() {
   } : null);
   const nextAction = resumeProfile ? nextStartingPointAction(resumeProfile, realGuidance) : null;
 
-  useEffect(() => {
+  const loadCareerHome = useCallback(() => {
+    setStartingLoaded(false);
     let active = true;
-    (async () => {
+    void (async () => {
       const [sp, items] = await Promise.all([
         getStartingPoint(user?.id),
         careerData.getSavedItems(),
@@ -259,6 +260,8 @@ export default function CareerHomeScreen() {
       active = false;
     };
   }, [user?.id]);
+
+  useEffect(() => loadCareerHome(), [loadCareerHome]);
 
   // Only saved domains & roles belong in "Your domains".
   const filterDomainsRoles = (items: SavedItem[]): DataState<SavedItem[]> => ({
@@ -477,6 +480,7 @@ export default function CareerHomeScreen() {
         empty={(rows) => rows.length === 0}
         emptyTitle="Nothing saved yet"
         emptyBody="Save programmes, domains or roles to return to them here."
+        onRetry={loadCareerHome}
       >
         {(rows) => (
           <View style={styles.list}>

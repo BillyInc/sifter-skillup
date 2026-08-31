@@ -99,26 +99,28 @@ export default function CareerProfileScreen() {
   const [notes, setNotes] = useState<DataState<Note[]> | null>(null);
   const [subs, setSubs] = useState<DataState<Subscription[]> | null>(null);
 
+  const loadProfileData = useCallback(async (isActive: () => boolean) => {
+    const [sp, savedState, notesState, subsState] = await Promise.all([
+      getStartingPoint(user?.id),
+      careerData.getSavedItems(),
+      careerData.getAllNotes(),
+      careerData.getSubscriptions(),
+    ]);
+    if (!isActive()) return;
+    setProfile(sp);
+    setSaved(savedState);
+    setNotes(notesState);
+    setSubs(subsState);
+  }, [user?.id]);
+
   useFocusEffect(
     useCallback(() => {
       let active = true;
-      (async () => {
-        const [sp, savedState, notesState, subsState] = await Promise.all([
-          getStartingPoint(user?.id),
-          careerData.getSavedItems(),
-          careerData.getAllNotes(),
-          careerData.getSubscriptions(),
-        ]);
-        if (!active) return;
-        setProfile(sp);
-        setSaved(savedState);
-        setNotes(notesState);
-        setSubs(subsState);
-      })();
+      void loadProfileData(() => active);
       return () => {
         active = false;
       };
-    }, [user?.id]),
+    }, [loadProfileData]),
   );
 
   const displayName =
@@ -229,6 +231,7 @@ export default function CareerProfileScreen() {
           {saved ? (
             <DataStateView
               state={saved}
+              onRetry={() => { void loadProfileData(() => true); }}
               empty={(items) => items.length === 0}
               emptyTitle="Nothing saved yet"
               emptyBody="Items you save across the app show up here."
@@ -258,6 +261,7 @@ export default function CareerProfileScreen() {
           {notes ? (
             <DataStateView
               state={notes}
+              onRetry={() => { void loadProfileData(() => true); }}
               empty={(rows) => rows.length === 0}
               emptyTitle="No notes yet"
               emptyBody="Notes you write on a domain or role appear here, grouped by category."
@@ -285,6 +289,7 @@ export default function CareerProfileScreen() {
           {subs ? (
             <DataStateView
               state={subs}
+              onRetry={() => { void loadProfileData(() => true); }}
               empty={(items) => items.length === 0}
               emptyTitle="No subscriptions yet"
               emptyBody="Subscribe to an opportunity or employer to get alerts here."
