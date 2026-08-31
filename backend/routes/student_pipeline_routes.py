@@ -31,6 +31,17 @@ _SCHEMA = "skillup_dev"
 MAX_EARLY_OLEVEL_SUBJECTS = 6
 MAX_UTME_SUBJECTS = 4
 _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
+CAREER_REPORT_EXPORTS_ENABLED = True
+
+
+def _require_career_report_exports_enabled() -> None:
+    if not CAREER_REPORT_EXPORTS_ENABLED:
+        raise HTTPException(
+            status_code=410,
+            detail="Career report export is disabled. Review and save your guidance inside Sifter LevelUp.",
+        )
+
+
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -589,6 +600,7 @@ async def get_my_guidance_report_html(
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Authenticated Student report; print-to-PDF is handled by the browser."""
+    _require_career_report_exports_enabled()
     try:
         ctx = _current_guidance_report_context(current_user)
         return Response(content=build_report_html(ctx), media_type="text/html")
@@ -604,6 +616,7 @@ async def get_my_guidance_report_docx(
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Authenticated Student report as an editable document."""
+    _require_career_report_exports_enabled()
     try:
         ctx = _current_guidance_report_context(current_user)
         safe = (ctx.student_name or "student").replace(" ", "_")[:40]

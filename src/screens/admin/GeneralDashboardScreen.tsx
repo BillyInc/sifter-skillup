@@ -41,7 +41,6 @@ import {
   CompassFonts,
   webContainer,
 } from "@/theme";
-import { PdfExportButton } from "@/components/careerIntelligence/PdfExportButton";
 import { adminData } from "@/lib/adminData";
 import { adminNav, type Nav } from "@/lib/adminNav";
 import { getEducatorProfile } from "@/lib/educatorProfile";
@@ -182,7 +181,6 @@ export function GeneralDashboardScreen() {
     <AdminShell
       title="General dashboard"
       eyebrow={orgName}
-      actions={<PdfExportButton title="Export" />}
     >
       <ScrollView
         style={{ flex: 1, backgroundColor: colors.bg }}

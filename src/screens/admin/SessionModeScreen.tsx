@@ -40,12 +40,43 @@ const SESSION_STEPS = [
   },
 ];
 
+type SessionJourney = "full" | "programme_to_role" | "utme_only" | "olevel_only" | "universities_only";
+
+const SESSION_JOURNEYS: { value: SessionJourney; title: string; body: string }[] = [
+  {
+    value: "full",
+    title: "Full guidance flow",
+    body: "Start with UTME and O-level subjects, then move through programme, university, domain, subgroup and role.",
+  },
+  {
+    value: "programme_to_role",
+    title: "Programme to career route",
+    body: "Start with a programme, review universities and requirements, then continue into domains, subgroups and roles.",
+  },
+  {
+    value: "utme_only",
+    title: "UTME-only check",
+    body: "Check UTME subjects alone. This remains incomplete until the relevant O-level requirements are reviewed.",
+  },
+  {
+    value: "olevel_only",
+    title: "O-level-only check",
+    body: "Check O-level subjects alone. This does not confirm the UTME subject gate.",
+  },
+  {
+    value: "universities_only",
+    title: "University options only",
+    body: "Inspect universities, addresses, requirements and notes without entering career guidance.",
+  },
+];
+
 export function SessionModeScreen() {
   const { colors } = useTheme();
   const { user } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<EducatorProfile | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [journey, setJourney] = useState<SessionJourney>("full");
 
   useEffect(() => {
     let active = true;
@@ -63,6 +94,23 @@ export function SessionModeScreen() {
     profile?.providerSessionOnly === true ||
     profile?.organizationType === "tutorial_centre" ||
     profile?.organizationType === "jamb_cafe";
+
+  const startJourney = (value: SessionJourney) => {
+    if (!profile) return;
+    setJourney(value);
+    const mode = value === "full" || value === "utme_only" || value === "olevel_only" ? "subjects" : "programme";
+    const examType = value === "utme_only" ? "utme" : value === "olevel_only" ? "olevel" : value === "full" ? "combined" : "";
+    const params = [
+      `mode=${mode}`,
+      "focus=guidance",
+      "admin=1",
+      `admin_type=${encodeURIComponent(profile.organizationType ?? "")}`,
+      "class_name=JAMB",
+      `journey=${encodeURIComponent(value)}`,
+      examType ? `exam_type=${examType}` : "",
+    ].filter(Boolean).join("&");
+    router.push(`/(admin)/workspace-explore/admission?${params}` as never);
+  };
 
   return (
     <AdminShell title="Session / Provider mode" eyebrow="Provider">
@@ -117,46 +165,25 @@ export function SessionModeScreen() {
             </View>
 
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
-                Start guidance
-              </Text>
+              <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>Choose how to guide</Text>
+              <Text style={[styles.cardBody, { color: colors.textMuted }]}>Choose the smallest journey that answers the student&apos;s question. You can return and run a fuller flow later.</Text>
               <View style={styles.actions}>
-                <TouchableOpacity
-                  activeOpacity={0.82}
-                  onPress={() =>
-                    router.push(`/(admin)/workspace-explore/admission?mode=subjects&focus=guidance&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
-                  }
-                  style={[
-                    styles.action,
-                    { backgroundColor: colors.accent, borderColor: colors.accent },
-                  ]}
-                >
-                  <Text style={[styles.actionTitle, { color: colors.textInverse }]}>
-                    Start from subjects
-                  </Text>
-                  <Text style={[styles.actionBody, { color: colors.textInverse }]}>
-                    Check UTME and O-level subjects together before discussing
-                    programme options.
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.82}
-                  onPress={() =>
-                    router.push(`/(admin)/workspace-explore/admission?mode=programme&focus=guidance&admin=1&admin_type=${encodeURIComponent(profile?.organizationType ?? "")}&class_name=JAMB` as never)
-                  }
-                  style={[
-                    styles.action,
-                    { backgroundColor: colors.card, borderColor: colors.border },
-                  ]}
-                >
-                  <Text style={[styles.actionTitle, { color: colors.text }]}>
-                    Start from programme
-                  </Text>
-                  <Text style={[styles.actionBody, { color: colors.textMuted }]}>
-                    Search the course first, then check schools, variants and
-                    requirements.
-                  </Text>
-                </TouchableOpacity>
+                {SESSION_JOURNEYS.map((option) => {
+                  const active = journey === option.value;
+                  return (
+                    <TouchableOpacity
+                      key={option.value}
+                      activeOpacity={0.82}
+                      onPress={() => startJourney(option.value)}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: active }}
+                      style={[styles.action, { backgroundColor: active ? colors.accent : colors.card, borderColor: active ? colors.accent : colors.border }]}
+                    >
+                      <Text style={[styles.actionTitle, { color: active ? colors.textInverse : colors.text }]}>{option.title}</Text>
+                      <Text style={[styles.actionBody, { color: active ? colors.textInverse : colors.textMuted }]}>{option.body}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
           </>
