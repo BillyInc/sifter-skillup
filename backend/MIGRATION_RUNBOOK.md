@@ -14,26 +14,26 @@ SQL Editor** (paste + run each file) or **psql** with the DB connection string
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <file>
 ```
 
-## Current career refresh since the last push (2026-08-26)
+## Current career refresh since the last push (2026-08-31)
 
-The current preview SQL is transported in compressed, ordered parts:
+The current career seed is transported in compressed, ordered parts:
 
-`backend/seed_career_v2_preview_2026-08-26_parts_gz/`
+`backend/seed_career_v2_2026-08-31_parts_gz/`
 
-The local generator output remains
-`backend/seed_career_v2_preview_2026-08-26.sql`; it is ignored by Git because
-it is about 598 MB. The compressed parts exist so the generated artifact can
-pass repository file-size limits. There are 20 `.sql.gz` parts, each below
-41 MB compressed, and each contains complete SQL statements in order.
+The reconstructed local SQL output is
+`backend/seed_career_v2_2026-08-31.sql`; it is ignored by Git because it is
+about 660 MB. The compressed parts exist so the generated artifact can pass
+repository file-size limits. There are 22 `.sql.gz` parts, each below 41 MB
+compressed, and each contains complete SQL statements in order.
 
-This is a development preview seed, not a migration and not the production
-seed. It exists so the corrected subgroup labels and the current Nigerian
-context/provenance payload can be inspected in a controlled development
-database while reviewed no-direct-local-match rows remain explicit. It contains
-all current domain, subgroup and role rows and must not be promoted to
-production.
+This is a generated development/staging seed, not a schema migration. It
+contains the corrected ISCO-backed subgroup hierarchy, current source-backed
+context/provenance payload and reviewed no-direct-local-match rows. It contains
+160 visible domains, 542 subgroups, 5,050 roles, 48,188 tools and 5,050 role
+work-profile rows. Apply it to production only after a production preflight,
+backup and explicit approval of the data refresh.
 
-### Correct order for the career preview
+### Correct order for the current career seed
 
 On an empty or explicitly approved staging database, apply the applicable
 schema files in this order before the preview seed:
@@ -53,16 +53,16 @@ schema files in this order before the preview seed:
 12. `backend/migration_career_resources_v1.sql` when resource data is being
     used
 13. `backend/migration_saved_resource_support.sql` after `saved_items` exists
-14. Decompressed preview SQL parts in
-    `backend/seed_career_v2_preview_2026-08-26_parts_gz/`, in numeric order
+14. Decompressed current SQL parts in
+    `backend/seed_career_v2_2026-08-31_parts_gz/`, in numeric order
 
 The `.sql.gz` files are not executable by Supabase. Before applying the
 preview, decompress/reassemble them from the repository root:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
-  backend/seed_career_v2_preview_2026-08-26.sql
+  backend/seed_career_v2_2026-08-31_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-08-31.sql
 ```
 
 The command verifies every compressed-part checksum before writing the
@@ -72,7 +72,7 @@ reconstructed SQL. Then pass the reconstructed file to `psql` with
 ```powershell
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
   -v ON_ERROR_STOP=1 `
-  -f backend/seed_career_v2_preview_2026-08-26.sql
+  -f backend/seed_career_v2_2026-08-31.sql
 ```
 
 If the SQL Editor must be used, decompress and run the numbered parts
@@ -85,12 +85,12 @@ data-state, provenance and Nigerian-context columns created by that migration.
 It must not be run before `migration_role_tools.sql` because role-scoped tool
 rows use `domain_tools.role_id` and the `scope='role'` constraint.
 
-Do not apply the preview to a populated production database. The current
-population gate permits this regenerated preview, while 11 reviewed
-no-direct-local-match rows remain explicit. When a production seed is approved,
-regenerate it from the same source inputs, rerun the provenance/reconciliation
-gates, and update this runbook rather than promoting this preview by renaming
-it.
+Do not apply the current seed to a populated production database without a
+production preflight, backup and explicit approval. The population gate now
+permits this regenerated seed after the 2026-08-29 structural repair, while
+roles without a supported subgroup taxonomy remain direct domain-to-role rows;
+reviewed no-direct-local-match rows remain explicit. A green population gate is
+not a substitute for production deployment verification.
 
 ## Run in THIS order
 
@@ -143,6 +143,37 @@ The rows above describe the historical production seed path. The new
 `backend/seed_career_v2_preview_2026-08-26_parts_gz/` transport is the current development
 preview and follows the dependency-critical order documented at the top of
 this runbook. Do not substitute it for `seed_career_v2.sql` in production.
+
+## 2026-08-31 authoritative correction
+
+The older seed counts above are historical and must not be used for the current
+career refresh. The current source inputs produce 160 visible domains, 542 supported
+subgroups, 5,050 roles, 48,188 tools, 240 certifications, 1,683
+programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links,
+4,000 domain-overlap rows and 5,050 role work profiles.
+
+Before rebuilding the current career seed after any role or structure change,
+run these commands from the repository root:
+
+```powershell
+python data/career-mapping/_apply_emerging_domain_structure.py
+python data/career-mapping/_build_source_backed_layers.py
+python data/career-mapping/_audit_role_completeness.py
+python data/career-mapping/validate_career_resource_seed_gate.py
+$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-08-31.sql'
+python data/career-mapping/_gen_career_seed.py
+Remove-Item Env:CAREER_SEED_OUTPUT_PATH
+python data/career-mapping/split_large_artifacts.py split-sql `
+  C:\tmp\seed_career_canonical_2026-08-31.sql `
+  backend/seed_career_v2_2026-08-31_parts_gz --max-bytes 40000000 --gzip
+```
+
+The structural pass is required because the role library's existing ISCO
+sub-major ownership must be materialized into `domain_structure.json` before
+the seed can create the subgroup foreign keys used by grouped roles, tools and
+resources. Roles without a supported subgroup taxonomy retain a direct
+domain-to-role path with a null subgroup foreign key. Do not hand-edit generated
+SQL to repair this relationship.
 
 ## Subject-pipeline deployment order
 
