@@ -5,7 +5,7 @@
  * Phase 10 redesign: editorial layout, Feather icons, semantic tokens,
  * CompassFonts, responsive layout.
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useRouter, type Router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -21,7 +21,7 @@ import { careerData } from "@/lib/careerData";
 import { opportunitiesNav } from "@/lib/opportunitiesNav";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type Organisation,
   type Opportunity,
@@ -44,17 +44,20 @@ export function OrganisationProfileScreen({
   const router = useRouter();
   const resp = useResponsive();
   const [state, setState] = useState<DataState<Organisation>>(() =>
-    comingSoon<Organisation>("This employer profile is being populated."),
+    pending<Organisation>("Loading employer profile..."),
   );
 
-  useEffect(() => {
+  const loadOrganisation = useCallback(() => {
+    setState(pending<Organisation>("Loading employer profile..."));
     let active = true;
-    (async () => {
+    void (async () => {
       const result = await careerData.getOrganisation(organisationId);
       if (active) setState(result);
     })();
     return () => { active = false; };
   }, [organisationId]);
+
+  useEffect(() => loadOrganisation(), [loadOrganisation]);
 
   return (
     <DetailScaffold
@@ -63,6 +66,7 @@ export function OrganisationProfileScreen({
       save={{ entityType: "organisation", entityId: organisationId }}
       pdf
       state={state}
+      onRetry={loadOrganisation}
     >
       {(data) => (
         <OrganisationBody
@@ -144,17 +148,20 @@ function OrganisationOpportunities({
   resp: ReturnType<typeof useResponsive>;
 }) {
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
-    comingSoon<Opportunity[]>("Verified Opportunities are being populated."),
+    pending<Opportunity[]>("Loading verified Opportunities..."),
   );
 
-  useEffect(() => {
+  const loadOpportunities = useCallback(() => {
+    setState(pending<Opportunity[]>("Loading verified Opportunities..."));
     let active = true;
-    (async () => {
+    void (async () => {
       const result = await careerData.getOpportunities({});
       if (active) setState(result);
     })();
     return () => { active = false; };
   }, []);
+
+  useEffect(() => loadOpportunities(), [loadOpportunities]);
 
   const isGrid = (resp.isDesktop || resp.isTablet) && resp.isWeb;
 
@@ -163,7 +170,7 @@ function OrganisationOpportunities({
       <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
         Opportunities here
       </Text>
-      <DataStateView state={state} empty={(d) => d.length === 0}>
+      <DataStateView state={state} empty={(d) => d.length === 0} spinnerOnPending={!state.data} onRetry={loadOpportunities}>
         {(opportunities) => (
           <View style={isGrid ? styles.cardsGrid : styles.cards}>
             {opportunities.map((o) => (

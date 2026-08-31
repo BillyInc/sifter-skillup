@@ -9,7 +9,7 @@
  * CompassFonts migration (FontWeight removed), vertical route-line diagram.
  */
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { Linking, View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import {
   DetailScaffold,
@@ -20,12 +20,14 @@ import {
   RouteLine,
   MethodEvidenceBlock,
   GuidanceEvidenceBlock,
+  NigerianContextBlock,
   LearningResourcesBlock,
+  RoleWorkEvidenceBlock,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type DomainRoleV2,
   type DomainRoleV2Enriched,
@@ -58,12 +60,13 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
 
   const [state, setState] = useState<DataState<DomainRoleV2>>(() =>
-    comingSoon<DomainRoleV2>("Loading role details..."),
+    pending<DomainRoleV2>("Loading role details..."),
   );
 
-  useEffect(() => {
+  const loadRole = useCallback(() => {
+    setState(pending<DomainRoleV2>("Loading role details..."));
     let alive = true;
-    careerData.getRoleV2(roleKey).then((res) => {
+    void careerData.getRoleV2(roleKey).then((res) => {
       if (alive) setState(res);
     });
     return () => {
@@ -71,12 +74,16 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
     };
   }, [roleKey]);
 
+  useEffect(() => loadRole(), [loadRole]);
+
   return (
     <DetailScaffold
       eyebrow="ROLE"
       title={state.data?.name ?? "Role"}
       backLabel={targetStudentId ? "Back to student guidance" : "Back to subgroup"}
       save={focusedGuidance ? undefined : { entityType: "role", entityId: roleKey }}
+      pdf
+      pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       reportSelection={{
         kind: "roles",
         id: roleKey,
@@ -86,9 +93,8 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
         subgroupId: state.data?.subgroupId ?? undefined,
       }}
       targetStudentId={targetStudentId}
-      pdf
-      pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
       state={state}
+      onRetry={loadRole}
     >
       {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />}
     </DetailScaffold>
@@ -119,12 +125,28 @@ function RoleBody({
   const appearsIn = role.appearsIn ?? [];
   const enriched = role as DomainRoleV2Enriched;
   const currency = enriched.currencyStatus;
+  const sourceUrl = role.escoOccupationUris?.[0]
+    ?? (role.onetOccupationCodes?.[0] ? `https://www.onetonline.org/link/summary/${encodeURIComponent(role.onetOccupationCodes[0])}` : undefined);
+  const sourceLabel = role.escoOccupationUris?.[0] ? "Open the ESCO occupation source" : role.onetOccupationCodes?.[0] ? "Open the O*NET occupation source" : undefined;
   const isDesktop = resp.isDesktop && resp.isWeb;
 
   // Section positions for nav scrolling
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
+  const [skillsExpanded, setSkillsExpanded] = useState(false);
+  const [toolsExpanded, setToolsExpanded] = useState(false);
+  const [certificationsExpanded, setCertificationsExpanded] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+
+  const commonRoleTools = roleTools.filter((tool) => tool.group === "common");
+  const specificRoleTools = roleTools.filter((tool) => tool.group !== "common");
+  const visibleEssential = skillsExpanded ? essential : essential.slice(0, 5);
+  const visibleOptional = skillsExpanded ? optional : optional.slice(0, 5);
+  const visibleCommonTools = toolsExpanded ? commonRoleTools : commonRoleTools.slice(0, 4);
+  const visibleSpecificTools = toolsExpanded ? specificRoleTools : specificRoleTools.slice(0, 4);
+  const visibleCertifications = certificationsExpanded ? roleCertifications : roleCertifications.slice(0, 4);
+  const hiddenSkillCount = Math.max(0, essential.length + optional.length - visibleEssential.length - visibleOptional.length);
+  const hiddenToolCount = Math.max(0, roleTools.length - visibleCommonTools.length - visibleSpecificTools.length);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -185,6 +207,11 @@ function RoleBody({
 
       {/* Skills to build for this role */}
       <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
+      <View style={styles.roleMeaning}>
+        <SectionLabel>What this role means</SectionLabel>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description || "A source-backed occupation explanation is not attached to this role record yet. Review the preparation and evidence below without treating the title alone as a complete job description."}</Text>
+        {sourceUrl ? <TouchableOpacity accessibilityRole="link" onPress={() => Linking.openURL(sourceUrl).catch(() => {})}><Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{sourceLabel} for a fuller explanation ↗</Text></TouchableOpacity> : null}
+      </View>
       {(essential.length || optional.length) ? (
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Skills to build for this role</SectionLabel>
@@ -192,24 +219,27 @@ function RoleBody({
           {essential.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Essential
+                Needed for this route
               </Text>
-              <ChipCloud items={essential} colors={colors} prominent />
+               <ChipCloud items={visibleEssential} colors={colors} prominent />
             </View>
           ) : null}
           {optional.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-                Supplementary
+                May strengthen this route
               </Text>
-              <ChipCloud items={optional} colors={colors} prominent={false} />
-            </View>
-          ) : null}
+               <ChipCloud items={visibleOptional} colors={colors} prominent={false} />
+             </View>
+           ) : null}
+           {(hiddenSkillCount > 0 || skillsExpanded) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer role skills" : `See all ${essential.length + optional.length} role skills`}</Text></TouchableOpacity> : null}
         </View>
-      ) : null}
+      ) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>No role skill list is attached to this source record yet. Do not treat the absence as proof that no preparation is needed.</Text>}
 
       <MethodEvidenceBlock methods={role.computationalMethods} title="Methods connected to this role" />
       <GuidanceEvidenceBlock evidence={role.guidanceEvidence} />
+      <NigerianContextBlock context={role.nigerianContext} level="role" />
+      <RoleWorkEvidenceBlock profile={role.workProfile} />
 
       {(roleTools.length || roleCertifications.length) ? (
         <View style={{ gap: Spacing.sm }}>
@@ -219,20 +249,22 @@ function RoleBody({
             <View style={{ gap: Spacing.xs }}>
               {(roleTools.filter((tool) => tool.group === "common").length) ? <>
                 <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Tools to practise early</Text>
-                <ChipCloud items={roleTools.filter((tool) => tool.group === "common").map((tool) => tool.name)} colors={colors} prominent />
+                <ChipCloud items={visibleCommonTools.map((tool) => tool.name)} colors={colors} prominent />
               </> : null}
               {(roleTools.filter((tool) => tool.group !== "common").length) ? <>
                 <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Role-specific tools</Text>
-                <ChipCloud items={roleTools.filter((tool) => tool.group !== "common").map((tool) => tool.name)} colors={colors} prominent={false} />
+                <ChipCloud items={visibleSpecificTools.map((tool) => tool.name)} colors={colors} prominent={false} />
               </> : null}
             </View>
           ) : null}
           {roleCertifications.length ? (
             <View style={{ gap: Spacing.xs }}>
               <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Credentials that may help</Text>
-              <ChipCloud items={roleCertifications.map((cert) => cert.name)} colors={colors} prominent={false} />
+              <ChipCloud items={visibleCertifications.map((cert) => cert.name)} colors={colors} prominent={false} />
             </View>
           ) : null}
+          {(hiddenToolCount > 0 || toolsExpanded) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: toolsExpanded }} onPress={() => setToolsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{toolsExpanded ? "Show fewer role tools" : `See all ${roleTools.length} role tools`}</Text></TouchableOpacity> : null}
+          {roleCertifications.length > 4 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: certificationsExpanded }} onPress={() => setCertificationsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{certificationsExpanded ? "Show fewer credentials" : `See all ${roleCertifications.length} credentials`}</Text></TouchableOpacity> : null}
         </View>
       ) : null}
 
@@ -621,6 +653,12 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.45,
   },
+  roleMeaning: { gap: Spacing.sm },
+  sourceLink: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.4,
+    textDecorationLine: "underline",
+  },
   // chips
   chipLabel: {
     fontSize: FontSize.xs,
@@ -639,6 +677,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   chipText: { fontSize: FontSize.sm },
+  moreButton: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
+  moreText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
 
   // related roles
   relatedWrap: {

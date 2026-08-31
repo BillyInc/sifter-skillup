@@ -27,8 +27,9 @@ import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
+import { careerRoleTierLabel, compareCareerRoles } from "@/lib/careerRoleOrdering";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type DomainV2,
 } from "@/types/career";
@@ -37,6 +38,7 @@ import {
   DomainIcon,
   FoundationSkillsBlock,
   GuidanceEvidenceBlock,
+  NigerianContextBlock,
   ToolGroupsBlock,
   CertPlacementList,
   LearningResourcesBlock,
@@ -64,21 +66,23 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
   const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
+  const matchType = Array.isArray(params.match_type) ? params.match_type[0] : params.match_type;
 
   const [state, setState] = useState<DataState<DomainV2>>(() =>
-    comingSoon<DomainV2>("Loading domain details..."),
+    pending<DomainV2>("Loading domain details..."),
   );
 
-  useEffect(() => {
+  const loadDomain = useCallback(() => {
+    setState(pending<DomainV2>("Loading domain details..."));
     let alive = true;
-    careerData.getDomainV2(domainKey).then((res) => {
+    void careerData.getDomainV2(domainKey).then((res) => {
       if (alive) setState(res);
     });
     return () => {
@@ -86,20 +90,23 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
     };
   }, [domainKey]);
 
+  useEffect(() => loadDomain(), [loadDomain]);
+
   return (
     <DetailScaffold
       eyebrow="DOMAIN"
       title={state.data?.name ?? "Domain"}
       backLabel={targetStudentId ? "Back to student guidance" : "Back to programme"}
       save={focusedGuidance ? undefined : { entityType: "domain", entityId: domainKey }}
-      reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
-      targetStudentId={targetStudentId}
       pdf
       pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
+      reportSelection={{ kind: "domains", id: domainKey, name: state.data?.name ?? "Domain" }}
+      targetStudentId={targetStudentId}
       state={state}
+      onRetry={loadDomain}
       scrollRef={scrollRef}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} scrollRef={scrollRef} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} matchType={matchType} scrollRef={scrollRef} />}
     </DetailScaffold>
   );
 }
@@ -109,12 +116,14 @@ function DomainBody({
   domainKey,
   targetStudentId,
   focusedGuidance,
+  matchType,
   scrollRef: outerScrollRef,
 }: {
   domain: DomainV2;
   domainKey: string;
   targetStudentId?: string;
   focusedGuidance: boolean;
+  matchType?: string;
   scrollRef: React.RefObject<ScrollView | null>;
 }) {
   const { colors } = useTheme();
@@ -138,7 +147,12 @@ function DomainBody({
   // ── Section positions for nav scrolling ──────────────────────
   const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
+  const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
+  const [directRolesExpanded, setDirectRolesExpanded] = useState(false);
   const desktopScrollRef = useRef<ScrollView>(null);
+  const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
+  const directRoles = (domain.roles ?? []).filter((role) => !role.subgroupId).sort(compareCareerRoles);
+  const visibleDirectRoles = directRolesExpanded ? directRoles : directRoles.slice(0, 6);
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -173,9 +187,12 @@ function DomainBody({
             {domain.name}
           </Text>
           {domain.description ? (
-            <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
-              {domain.description}
-            </Text>
+            <>
+              <Text style={[styles.heroDescLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>What this domain is and what people do</Text>
+              <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
+                {domain.description}
+              </Text>
+            </>
           ) : null}
           <View style={styles.heroChips}>
             {domain.eliteDomain ? (
@@ -189,6 +206,21 @@ function DomainBody({
           </View>
         </View>
       </View>
+
+      {matchType ? (
+        <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <SectionLabel>Why this domain is in your route</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
+            {matchType === "direct"
+              ? "This is a direct connection: your programme teaches knowledge that is closely related to this domain."
+              : matchType === "functional"
+                ? "This is a functional connection: some of what your programme teaches can be applied here, but the work is different."
+                : matchType === "adjacent"
+                  ? "This is a possible pivot. Your current foundation helps, but you may need a bridge before specialising."
+                  : "This domain is available in the wider career catalogue. Review its foundation before deciding whether it belongs in your route."}
+          </Text>
+        </View>
+      ) : null}
 
       {/* Wayfinding — this domain's place on the journey */}
       <RouteLine
@@ -236,10 +268,11 @@ function DomainBody({
         <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
-          title="Skills to build first"
+          title="Portable foundation: what to build first"
         />
         <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The route keeps Nigerian, remote and global possibilities visible. A local signal does not cancel a portable skill, and a global signal does not establish a Nigerian licence or requirement.</Text>
         <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
+        <NigerianContextBlock context={domain.nigerianContext} level="domain" />
       </View>
 
       {/* Tools */}
@@ -274,14 +307,16 @@ function DomainBody({
         compact
       />
 
-      {/* Subgroups are the next level. Roles are intentionally not rendered as
-          a flat list on the domain page; they belong to subgroup/role cards. */}
+      {/* Use domain -> subgroup -> role where a supported subgroup taxonomy
+          exists. Roles without a supported subgroup stay directly under the
+          domain instead of being forced into an invented grouping. */}
       <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View onLayout={(e) => onSectionLayout("subgroups", e.nativeEvent.layout.y)} />
         <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>Subgroups in this domain</SectionLabel>
-          {subgroups.length ? subgroups.map((sg) => (
-            <TouchableOpacity
+          {subgroups.length ? <>
+            <SectionLabel>Subgroups in this domain</SectionLabel>
+            {visibleSubgroups.map((sg) => (
+             <TouchableOpacity
               key={sg.id}
               activeOpacity={0.8}
               onPress={() => exploreNav.subgroup(router, domainKey, sg.id, targetStudentId, focusedGuidance)}
@@ -291,7 +326,31 @@ function DomainBody({
               {sg.description ? <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{sg.description}</Text> : null}
               <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Open subgroup and roles →</Text>
             </TouchableOpacity>
-          )) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Subgroups are not available for this domain yet.</Text>}
+            ))}
+            {subgroups.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: subgroupsExpanded }} onPress={() => setSubgroupsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{subgroupsExpanded ? "Show fewer subgroups" : `See all ${subgroups.length} subgroups`}</Text></TouchableOpacity> : null}
+          </> : null}
+          {directRoles.length ? <View style={{ gap: Spacing.sm, marginTop: subgroups.length ? Spacing.md : 0 }}>
+            <SectionLabel>{subgroups.length ? "Roles linked directly to this domain" : "Roles in this domain"}</SectionLabel>
+            <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>
+              {subgroups.length
+                ? "These source-backed roles do not have a supported subgroup mapping, so you can open them directly from the domain."
+                : "This domain does not currently have a supported subgroup taxonomy, so roles are shown directly here."}
+            </Text>
+            {visibleDirectRoles.map((role) => (
+              <TouchableOpacity
+                key={role.key}
+                accessibilityRole="button"
+                onPress={() => exploreNav.role(router, role.key, targetStudentId, focusedGuidance)}
+                style={[styles.subgroupCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+              >
+                <Text style={[styles.subgroupTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{role.name}</Text>
+                <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>{careerRoleTierLabel(role.tier)}</Text>
+                {role.description ? <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description}</Text> : null}
+                <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Open role details →</Text>
+              </TouchableOpacity>
+            ))}
+            {directRoles.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: directRolesExpanded }} onPress={() => setDirectRolesExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{directRolesExpanded ? "Show fewer roles" : `See all ${directRoles.length} roles`}</Text></TouchableOpacity> : null}
+          </View> : null}
         </View>
       </View>
 
@@ -416,6 +475,10 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.md * 1.5,
     marginTop: 2,
   },
+  heroDescLabel: {
+    fontSize: FontSize.xs,
+    marginTop: Spacing.xs,
+  },
   heroChips: {
     flexDirection: "row",
     alignItems: "center",
@@ -454,6 +517,12 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: Spacing.lg,
   },
+  connectionNote: {
+    gap: Spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+  },
   guidanceNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   bridgeList: { gap: Spacing.xs },
   bridgeLabel: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.5 },
@@ -476,6 +545,8 @@ const styles = StyleSheet.create({
   },
   subgroupTitle: { fontSize: FontSize.md },
   linkText: { fontSize: FontSize.sm, fontWeight: "800", marginTop: Spacing.xs },
+  moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreButtonText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   otherLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.5,
