@@ -3,6 +3,7 @@ import { Linking, Pressable, StyleSheet, Text, View, type ViewStyle } from "reac
 import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from "../../theme";
 import type { CareerLearningResource } from "../../types/career";
 import { careerData } from "../../lib/careerData";
+import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "../../lib/networkState";
 import { SectionLabel } from "./RedesignPrimitives";
 
 export interface LearningResourcesBlockProps {
@@ -68,6 +69,7 @@ export function LearningResourcesBlock({
   const [saved, setSaved] = React.useState<Record<string, boolean>>({});
   const [saving, setSaving] = React.useState<Record<string, boolean>>({});
   const [saveNotice, setSaveNotice] = React.useState<string | null>(null);
+  const [expanded, setExpanded] = React.useState(false);
   const grouped = useMemo(() => {
     const unique = new Map<string, CareerLearningResource>();
     for (const resource of resources ?? []) {
@@ -78,7 +80,7 @@ export function LearningResourcesBlock({
       ...group,
       resources: Array.from(unique.values())
         .filter((resource) => group.types.includes(resource.resourceType))
-        .slice(0, 8),
+        ,
     })).filter((group) => group.resources.length > 0);
   }, [resources]);
 
@@ -104,22 +106,33 @@ export function LearningResourcesBlock({
 
   if (!grouped.length) return null;
 
+  const openResource = async (url: string) => {
+    if (!(await hasInternetConnection())) {
+      setSaveNotice(OFFLINE_LINK_NOTICE);
+      return;
+    }
+    const opened = await Linking.openURL(url).then(() => true).catch(() => false);
+    if (!opened) setSaveNotice("This link could not be opened. Try again when your connection is stable.");
+  };
+
   return (
     <View style={[styles.container, style]}>
       <SectionLabel>{title}</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }]}>
         Use these links to understand the domain, build the most useful skills, and check professional requirements.
       </Text>
-      {grouped.map((group) => (
-        <View key={group.label} style={styles.group}>
+       {grouped.map((group) => {
+         const visibleResources = expanded ? group.resources : group.resources.slice(0, 8);
+         return (
+         <View key={group.label} style={styles.group}>
           <Text style={[styles.groupLabel, { color: colors.textRole.muted }]}>
             {group.label}
           </Text>
-          {group.resources.map((resource) => (
+           {visibleResources.map((resource) => (
             <Pressable
               key={`${resource.resourceType}|${resource.targetName}|${resource.provider}`}
               accessibilityRole="link"
-              onPress={() => Linking.openURL(resource.url).catch(() => {})}
+               onPress={() => { void openResource(resource.url); }}
               style={({ pressed }) => [
                 styles.resource,
                 {
@@ -172,9 +185,11 @@ export function LearningResourcesBlock({
                 </Pressable>
               </View>
             </Pressable>
-          ))}
-        </View>
-      ))}
+           ))}
+           {group.resources.length > 8 ? <Pressable accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show fewer resources" : `See all ${group.resources.length} resources`}</Text></Pressable> : null}
+         </View>
+         );
+       })}
       {saveNotice ? <Text style={[styles.saveNotice, { color: colors.textRole.muted }]}>{saveNotice}</Text> : null}
     </View>
   );
@@ -215,4 +230,6 @@ const styles = StyleSheet.create({
   saveButton: { paddingVertical: 3, paddingHorizontal: 2 },
   saveText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   saveNotice: { fontSize: FontSize.xs },
+  moreButton: { alignSelf: "flex-start", borderRadius: Radius.md, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 });

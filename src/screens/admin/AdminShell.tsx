@@ -310,10 +310,12 @@ export function AdminShell({
           {actions ? <View style={styles.actions}>{actions}</View> : null}
         </View>
 
-        {focusedGuidance && readParam(searchParams?.guidance_student_id) ? (
+        {focusedGuidance ? (
           <GuidanceContextBanner
             studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
             stream={readParam(searchParams?.stream)}
+            journey={readParam(searchParams?.journey)}
+            studentTarget={readParam(searchParams?.guidance_student_id) ? "student" : "anonymous"}
           />
         ) : null}
         <View style={{ flex: 1 }}>{children}</View>
@@ -349,8 +351,9 @@ export function AdminShell({
   );
 }
 
-function GuidanceContextBanner({ studentClass, stream }: { studentClass?: string; stream?: string }) {
+function GuidanceContextBanner({ studentClass, stream, journey, studentTarget }: { studentClass?: string; stream?: string; journey?: string; studentTarget: "student" | "anonymous" }) {
   const { colors } = useTheme();
+  const journeyLabel = journey ? journey.replace(/_/g, " ") : "";
   const context = [studentClass, stream].filter(Boolean).join(" · ");
   return (
     <View
@@ -358,11 +361,11 @@ function GuidanceContextBanner({ studentClass, stream }: { studentClass?: string
       style={[styles.guidanceContext, { backgroundColor: colors.surface.subtle, borderBottomColor: colors.borderRole.subtle }]}
     >
       <View style={styles.guidanceContextCopy}>
-        <Text style={[styles.guidanceContextEyebrow, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>TARGET STUDENT GUIDANCE</Text>
-        <Text style={[styles.guidanceContextTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>This workspace is scoped to the selected student</Text>
-        <Text style={[styles.guidanceContextBody, CompassFonts.body, { color: colors.textRole.secondary }]}>Selections and reports use this student&apos;s authorised guidance path. Access and consent checks remain enforced.</Text>
+        <Text style={[styles.guidanceContextEyebrow, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>{studentTarget === "student" ? "TARGET STUDENT GUIDANCE" : "ANONYMOUS GUIDANCE"}</Text>
+        <Text style={[styles.guidanceContextTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{studentTarget === "student" ? "This workspace is scoped to the selected student" : "This workspace is not attached to a student record"}</Text>
+        <Text style={[styles.guidanceContextBody, CompassFonts.body, { color: colors.textRole.secondary }]}>{studentTarget === "student" ? "Selections use this student&apos;s authorised guidance path. Access and consent checks remain enforced." : "Use this for your own or a walk-in-style exploration without identifying or inspecting a student."}</Text>
       </View>
-      {context ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>{context}</Text> : null}
+      {context || journeyLabel ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>{[context, journeyLabel].filter(Boolean).join(" · ")}</Text> : null}
     </View>
   );
 }

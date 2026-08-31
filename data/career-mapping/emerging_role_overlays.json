@@ -88,6 +88,14 @@
       "url": "https://www2.mqa.gov.my/qad/v2/pekeliling/2025/Programme%20Standards_Performing%20Arts%20FINAL_26.3.25.pdf",
       "evidence_type": "national_programme_and_occupation_reference",
       "region": "global_proxy"
+    },
+    "ng_choice_game_developer_2026": {
+      "name": "Choice Talents Nigeria game developer vacancy",
+      "url": "https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421",
+      "evidence_type": "nigerian_vacancy_role_requirements",
+      "region": "nigeria",
+      "observed_at": "2026-08-29",
+      "notes": "One dated Nigerian vacancy signal for game-development responsibilities and tools; not a market-wide demand count or universal requirement."
     }
   },
   "roles": [

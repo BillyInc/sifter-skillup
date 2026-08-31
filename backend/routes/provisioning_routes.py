@@ -53,6 +53,17 @@ router = APIRouter(prefix="/api/provisioning", tags=["provisioning"])
 
 _SCHEMA = "skillup_dev"
 _K_ANON_THRESHOLD = 5
+CAREER_REPORT_EXPORTS_ENABLED = True
+
+
+def _require_career_report_exports_enabled() -> None:
+    if not CAREER_REPORT_EXPORTS_ENABLED:
+        raise HTTPException(
+            status_code=410,
+            detail="Career report export is disabled. Review and save guidance inside Sifter LevelUp.",
+        )
+
+
 _CLAIM_CODE_TTL_DAYS = 365
 # Unambiguous alphabet for printed cards (no 0/O, 1/I/L).
 _CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
@@ -1647,6 +1658,7 @@ async def get_report_docx(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """Editable .docx career report — shareable to email/WhatsApp."""
+    _require_career_report_exports_enabled()
     school_id = _require_school(current_user)
     u = _require_guided_student(_load_school_student(user_id, school_id))
     _require_confirmed_report_path(user_id)
@@ -1666,6 +1678,7 @@ async def get_report_html(
     current_user: dict = Depends(Auth.require_admin),
 ):
     """HTML career report — print-to-PDF in any browser."""
+    _require_career_report_exports_enabled()
     school_id = _require_school(current_user)
     u = _require_guided_student(_load_school_student(user_id, school_id))
     _require_confirmed_report_path(user_id)

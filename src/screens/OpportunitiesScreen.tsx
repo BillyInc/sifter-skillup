@@ -6,7 +6,7 @@
  * Phase 10 redesign: editorial header, FilterChip rail, responsive card grid,
  * all legacy tokens migrated.
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -27,7 +27,7 @@ import { careerData } from "@/lib/careerData";
 import { opportunitiesNav } from "@/lib/opportunitiesNav";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type Opportunity,
   type OpportunityFilter,
@@ -73,17 +73,20 @@ export function OpportunitiesScreen() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<OpportunityFilter>({});
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
-    comingSoon<Opportunity[]>("Verified Opportunities are being populated."),
+    pending<Opportunity[]>("Loading verified Opportunities..."),
   );
 
-  useEffect(() => {
+  const loadOpportunities = useCallback(() => {
+    setState(pending<Opportunity[]>("Loading verified Opportunities..."));
     let active = true;
-    (async () => {
+    void (async () => {
       const result = await careerData.getOpportunities({ ...filter, query: query.trim() || undefined });
       if (active) setState(result);
     })();
     return () => { active = false; };
   }, [filter, query]);
+
+  useEffect(() => loadOpportunities(), [loadOpportunities]);
 
   const isDesktop = resp.isDesktop && resp.isWeb;
   const isTablet = resp.isTablet;
@@ -189,7 +192,7 @@ export function OpportunitiesScreen() {
 
       {/* ── Results ─────────────────────────────────────────── */}
       <View style={styles.results}>
-        <DataStateView state={state} empty={(d) => d.length === 0}>
+        <DataStateView state={state} empty={(d) => d.length === 0} spinnerOnPending={!state.data} onRetry={loadOpportunities}>
           {(opportunities) => (
             <View style={[styles.cards, (isDesktop || isTablet) ? styles.cardsGrid : undefined]}>
               {opportunities.map((o, i) => (

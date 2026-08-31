@@ -1,0 +1,76 @@
+{
+  "schema_version": "nigerian_role_gap_followup_v1",
+  "generated_at": "2026-08-29",
+  "purpose": "Add only exact-role Nigerian evidence found during the follow-up review of the residual role gaps. Generic domain context is not used as an exact-role match.",
+  "sources": [],
+  "profiles": [
+    {
+      "id": "ng_role_gap_tram_driver_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nigeria_rail_air_transport_operations_2026"],
+      "domain_ids": ["D035"],
+      "role_patterns": ["tram driver"],
+      "skills": [
+        {"name": "Operate or support guided urban rail services by following routes, signals, communications, passenger-safety procedures and abnormal-operation protocols", "priority": "core", "evidence": "Nigerian rail and transport-operations context", "limitation": "The checked Nigerian source supports rail-operations context; it does not establish the current volume of tram-driver vacancies."}
+      ],
+      "tools": [
+        {"name": "Rail signalling, dispatch, radio, route, timetable, rolling-stock and incident-reporting systems", "priority": "core", "evidence": "Nigerian rail and transport-operations context"}
+      ],
+      "competencies": [
+        {"name": "Keep passenger rail movements predictable and safe by coordinating signals, people, equipment and clear escalation", "priority": "core", "evidence": "Nigerian rail and transport-operations context"}
+      ],
+      "certifications": [
+        {"name": "Applicable Nigerian railway operations, signalling, driver or transport-safety pathway", "issuer": "Nigerian Railway Corporation, NBTE, recognised institution or approved operator", "level": "role_dependent", "evidence": "Nigerian rail and transport-operations context", "limitation": "The exact training and authorization depend on the operator, vehicle and operating rules."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Rail operations must follow applicable Nigerian railway, occupational-safety, equipment, passenger and emergency requirements", "priority": "required_when_applicable", "evidence": "Nigerian rail and transport-operations context"}
+      ]
+    },
+    {
+      "id": "ng_role_gap_astronaut_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nasrda"],
+      "domain_ids": ["D059", "D132"],
+      "role_patterns": ["astronaut"],
+      "skills": [
+        {"name": "Apply physical-science, engineering, data, instrumentation and human-safety knowledge to spaceflight or space-system work", "priority": "core", "evidence": "NASRDA space-science mandate, physical-and-life-sciences work and Nigerian Astronaut Program context", "limitation": "Nigeria has a documented astronaut-program and space-science context; the source does not establish an active Nigerian astronaut recruitment route."},
+        {"name": "Work rigorously with experiments, mission procedures, simulation, safety constraints and evidence under uncertain or high-risk conditions", "priority": "core", "evidence": "NASRDA physical-and-life-sciences and space-technology context"}
+      ],
+      "tools": [
+        {"name": "Space-system instrumentation, satellite and mission data, simulation, remote-sensing, communications and technical-record systems", "priority": "core", "evidence": "NASRDA space-science and technology context", "limitation": "The tools depend on whether the pathway is astronaut training, mission operations, research or engineering."}
+      ],
+      "competencies": [
+        {"name": "Make careful, safety-led decisions in a multidisciplinary space environment while communicating uncertainty and limits clearly", "priority": "core", "evidence": "NASRDA space-science and capacity-building context"}
+      ],
+      "certifications": [
+        {"name": "Relevant Nigerian physical-science, aerospace, engineering, medicine, data or space-research pathway", "issuer": "NASRDA, recognised Nigerian institution or applicable international programme", "level": "pathway_dependent", "evidence": "NASRDA space-science context", "limitation": "This is not a claim that a Nigerian astronaut licence or guaranteed astronaut selection pathway exists."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Space activities must follow applicable Nigerian space-activity authorization, safety, spectrum, health, research and international requirements", "priority": "required_when_applicable", "evidence": "Nigerian space-regulation and NASRDA context"}
+      ]
+    },
+    {
+      "id": "ng_role_gap_nuclear_operator_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nnra"],
+      "domain_ids": ["D135"],
+      "role_patterns": ["nuclear power reactor operators"],
+      "skills": [
+        {"name": "Monitor and control reactor or nuclear-facility systems, interpret instrumentation, follow operating procedures and respond to abnormal conditions", "priority": "core", "evidence": "NNRA Nigerian nuclear-facility and reactor-operator qualification materials", "limitation": "The evidence supports a Nigerian nuclear regulatory and research-reactor pathway; it does not prove a commercial power-reactor workforce is currently operating."},
+        {"name": "Maintain nuclear safety, radiation protection, precise records, shift handovers and escalation discipline", "priority": "core", "evidence": "NNRA nuclear-facility and operator-qualification context"}
+      ],
+      "tools": [
+        {"name": "Reactor instrumentation, control-room displays, radiation monitoring, alarms, operating logs, safety systems and approved simulators", "priority": "core", "evidence": "NNRA Nigerian reactor and nuclear-safety context"}
+      ],
+      "competencies": [
+        {"name": "Keep nuclear operations within approved safety limits and stop or escalate when conditions, evidence or authorization are insufficient", "priority": "core", "evidence": "NNRA nuclear-safety and operator-qualification context"}
+      ],
+      "certifications": [
+        {"name": "Nuclear operator training, qualification and authorization applicable to the licensed Nigerian facility", "issuer": "NNRA, NAEC, approved facility or applicable training body", "level": "regulated_role", "evidence": "NNRA draft regulations on licensing and qualifications of nuclear power plant operators", "limitation": "Qualification is facility- and authorization-dependent; it is not a general certificate for unrelated engineering work."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Nuclear work requires applicable NNRA authorization, radiation protection, safety, security, emergency and facility operating controls", "priority": "required", "evidence": "NNRA Nigerian nuclear regulatory context"}
+      ]
+    }
+  ]
+}

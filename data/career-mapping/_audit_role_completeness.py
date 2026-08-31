@@ -138,7 +138,6 @@ def main():
         row for row in domain_rows
         if row["roles"] < 5
         or row["any"] < row["roles"]
-        or row["subgroups"] == 0
         or row["structure_roles"] != row["roles"]
     ]
     thin_domains.sort(key=lambda row: (row["roles"], row["domain_id"]))
@@ -169,8 +168,6 @@ def main():
             reasons.append("empty canonical role layer")
         if row["structure_roles"] != row["roles"]:
             reasons.append("structure mismatch")
-        if row["subgroups"] == 0:
-            reasons.append("no subgroups")
         if row["any"] < row["roles"]:
             reasons.append("unsourced roles")
         priority = "P0" if row["roles"] == 0 else ("P1" if row["any"] == 0 else ("P2" if row["any"] < row["roles"] and row["roles"] < 10 else "P3"))
@@ -192,7 +189,7 @@ def main():
             "P0": "Empty canonical role layer; source research is required before the domain is exposed as populated.",
             "P1": "No source signal; use a specialist framework or authoritative occupation source before adding roles.",
             "P2": "Some roles lack source evidence or the domain is thin; review title ownership and local context.",
-            "P3": "Structural mismatch or missing subgroups; reconcile structure before UI acceptance."
+            "P3": "Structural mismatch; reconcile the hierarchy before UI acceptance. Domains without a supported subgroup taxonomy use direct domain-to-role navigation."
         },
         "empty_domains": [row["domain_id"] for row in empty_domains],
         "thin_domain_count": len(gap_rows),
@@ -246,7 +243,7 @@ def main():
         "",
         "## Domains requiring review",
         "",
-        "The following domains are flagged because they have fewer than five roles, no subgroups, a source gap, or a role-count mismatch between structure and canonical data.",
+        "The following domains are flagged because they have fewer than five roles, a source gap, or a role-count mismatch between structure and canonical data. Domains without a supported subgroup taxonomy intentionally use direct domain-to-role navigation.",
         "",
         "| Domain | Roles | Structure roles | Subgroups | Any source | Reason |",
         "|---|---:|---:|---:|---:|---|",
@@ -259,8 +256,6 @@ def main():
             reasons.append("empty canonical role layer")
         if row["structure_roles"] != row["roles"]:
             reasons.append("structure mismatch")
-        if row["subgroups"] == 0:
-            reasons.append("no subgroups")
         if row["any"] < row["roles"]:
             reasons.append("unsourced roles")
         lines.append(f"| {row['domain_id']} {row['domain_name']} | {row['roles']} | {row['structure_roles']} | {row['subgroups']} | {row.get('any', 0)} | {', '.join(reasons)} |")

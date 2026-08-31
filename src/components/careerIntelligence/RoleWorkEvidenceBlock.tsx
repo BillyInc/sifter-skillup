@@ -1,0 +1,122 @@
+import React, { useState } from "react";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
+import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
+import type { RoleWorkProfile } from "@/types/career";
+import { SectionLabel } from "./RedesignPrimitives";
+import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
+
+type Props = { profile?: RoleWorkProfile | null };
+
+/**
+ * Presents occupation evidence separately from the role's preparation list.
+ * The source is intentionally named in the copy because O*NET is a global/US
+ * proxy and must not be mistaken for Nigerian hiring evidence.
+ */
+export function RoleWorkEvidenceBlock({ profile }: Props) {
+  const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const openSource = async (url: string) => {
+    if (!(await hasInternetConnection())) {
+      setNotice(OFFLINE_LINK_NOTICE);
+      return;
+    }
+    const opened = await Linking.openURL(url).then(() => true).catch(() => false);
+    if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
+  };
+
+  if (!profile) return null;
+
+  if (profile.sourceRecordStatus === "not_available") {
+    return (
+      <View style={{ gap: Spacing.sm }}>
+        <SectionLabel>Work evidence</SectionLabel>
+        <Text style={[styles.copy, { color: colors.textRole.muted }]}>A detailed global occupation activity profile is not attached to this role yet. The role description, skills, local context, and registered source links remain available; no duties or Nigerian demand have been inferred from the title.</Text>
+      </View>
+    );
+  }
+
+  if (profile.sourceRecordStatus === "source_role_only") {
+    return (
+      <View style={{ gap: Spacing.sm }}>
+        <SectionLabel>Work evidence</SectionLabel>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>This role has a source-backed occupation or specialist-framework explanation, but the source does not provide the same task-level profile as O*NET. Read the role meaning and preparation above, then use the linked source for its fuller explanation.</Text>
+        <View style={{ gap: Spacing.xs }}>
+          {profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}
+          {profile.sourceLinks.map((source, index) => (
+            <TouchableOpacity key={`${source.url}-${index}`} accessibilityRole="link" onPress={() => { void openSource(source.url); }}>
+              <Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{source.label ? `Open ${source.label}` : "Open occupation source"} ↗</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    );
+  }
+
+  const activities = expanded ? profile.activities : profile.activities.slice(0, 5);
+  const hiddenCount = Math.max(0, profile.activities.length - activities.length);
+  const firstZone = profile.jobZones[0];
+  const firstEducation = profile.educationSignals[0]?.label;
+  const firstContext = profile.workContext.slice(0, 4);
+
+  return (
+    <View style={{ gap: Spacing.md }}>
+      <View style={{ gap: Spacing.sm }}>
+        <SectionLabel>What this work involves</SectionLabel>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>These are source-reported activities for the mapped occupation. They help you picture the work before deciding what to learn.</Text>
+        <View style={{ gap: Spacing.xs }}>
+          {activities.map((activity, index) => (
+            <Text key={`${activity}-${index}`} style={[styles.item, { color: colors.textRole.primary }]}>• {activity}</Text>
+          ))}
+        </View>
+        {(hiddenCount > 0 || expanded) ? (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={{ expanded }}
+            onPress={() => setExpanded((value) => !value)}
+            style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}
+          >
+            <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show fewer activities" : `See all ${profile.activities.length} activities`}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+
+      {(firstZone?.name || firstEducation || firstContext.length) ? (
+        <View style={{ gap: Spacing.xs }}>
+          <Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Preparation and work context</Text>
+          {firstZone?.name ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Preparation signal: </Text>{firstZone.name.replace(/^Job Zone [^:]+:\s*/i, "")}</Text> : null}
+          {firstEducation ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Education signal: </Text>{firstEducation}</Text> : null}
+          {firstContext.length ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Reported context: </Text>{firstContext.map((item) => `${item.name} — ${item.frequency}`).join("; ")}</Text> : null}
+        </View>
+      ) : null}
+
+      {profile.relatedOccupations.length ? (
+        <View style={{ gap: Spacing.xs }}>
+          <Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Related occupation examples</Text>
+          <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{profile.relatedOccupations.join(" · ")}</Text>
+        </View>
+      ) : null}
+
+      <View style={{ gap: Spacing.xs }}>
+        <Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Evidence limits and further reading</Text>
+        {profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}
+        {profile.sourceLinks.map((source, index) => (
+          <TouchableOpacity key={`${source.url}-${index}`} accessibilityRole="link" onPress={() => { void openSource(source.url); }}>
+            <Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{source.label ? `Open ${source.label}` : "Open occupation source"} ↗</Text>
+          </TouchableOpacity>
+        ))}
+        {notice ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>{notice}</Text> : null}
+      </View>
+    </View>
+  );
+}
+
+const styles = {
+  copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  item: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  label: { fontSize: FontSize.xs, letterSpacing: 0.6, textTransform: "uppercase" as const },
+  moreButton: { alignSelf: "flex-start" as const, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  sourceLink: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4, textDecorationLine: "underline" as const },
+};

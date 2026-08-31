@@ -146,20 +146,20 @@ backend/seed_career_resources_v1_parts/part-001.sql ... final part
 backend/patch_subject_catalog_streams.sql
 ```
 
-### Current career preview seed (generated 2026-08-26)
+### Current career seed transport (generated 2026-08-31)
 
-The current worktree contains the generated preview transport directory
-`backend/seed_career_v2_preview_2026-08-26_parts_gz/`. The corresponding local
-SQL file is `backend/seed_career_v2_preview_2026-08-26.sql`; it is deliberately
-ignored by Git because it is about 598 MB. The transport directory contains 20
-gzip-compressed parts, each below 41 MB, and is the form intended for repository
-storage. This is a development-only preview generated from the repaired
-subgroup taxonomy and source-backed Nigerian context layer. It includes the
-current domain, subgroup and role rows; the 11 reviewed no-direct-local-match
-rows remain explicit and are not replaced with invented Nigerian mappings.
+The current worktree contains the generated transport directory
+`backend/seed_career_v2_2026-08-31_parts_gz/`. The corresponding reconstructed
+SQL file is intentionally ignored by Git because it is about 660 MB. The
+transport directory contains 22 gzip-compressed parts, each below 41 MB, and
+is the form intended for repository storage. It was generated after the
+source-backed ISCO subgroup repair and source-link rebuild. It contains 160
+visible domains, 542 subgroups, 5,050 roles, 48,188 tools and 5,050 role
+work-profile rows. Reviewed no-direct-local-match rows remain explicit and are
+not replaced with invented Nigerian mappings.
 
 For a fresh or explicitly approved staging database, the career-specific order
-for this preview is:
+for this current development seed is:
 
 ```text
 backend/migration_career_base_registry.sql
@@ -175,18 +175,19 @@ backend/migration_market_intelligence_v1.sql
 backend/migration_role_detail_enrichment.sql    # if role detail/cert data is used
 backend/migration_career_resources_v1.sql       # if resources are used
 backend/migration_saved_resource_support.sql    # after saved_items exists
-backend/seed_career_v2_preview_2026-08-26_parts_gz/part-001.sql.gz ... part-020.sql.gz
+backend/seed_career_v2_2026-08-31_parts_gz/part-001.sql.gz ... part-022.sql.gz
 ```
 
-The preview must not be applied to production or renamed into
-`seed_career_v2.sql`. On a fresh or explicitly approved staging database, apply
+This is a generated development/staging seed. Do not apply it to a populated
+production database or silently replace the production seed. On a fresh or
+explicitly approved staging database, apply
 the schema files above first. Then reconstruct the SQL from the compressed
 parts:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
-  backend/seed_career_v2_preview_2026-08-26.sql
+  backend/seed_career_v2_2026-08-31_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-08-31.sql
 ```
 
 The reassembler verifies every part checksum before writing the SQL file. Apply
@@ -195,24 +196,50 @@ that reconstructed file through a verified database connection:
 ```powershell
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
   -v ON_ERROR_STOP=1 `
-  -f backend/seed_career_v2_preview_2026-08-26.sql
+  -f backend/seed_career_v2_2026-08-31.sql
 ```
 
 If the SQL Editor must be used, decompress and execute the numbered parts one
 at a time in order. Each part is a complete transaction. Supabase cannot
 execute `.sql.gz` bytes directly. Before applying it, confirm that
 `migration_role_tools.sql` and `migration_source_backed_career_layers.sql`
-have been applied because the preview writes role-owned tool fields and
+have been applied because the current seed writes role-owned tool fields and
 source-confidence, data-state, provenance and Nigerian-context columns. Keep
-the preview transactions intact, record the database and date, and run the
+the current seed transactions intact, record the database and date, and run the
 post-seed count/orphan queries from
-`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The population gate permits
-this regenerated preview; the remaining 11 reviewed no-direct rows must stay
-explicit until stronger evidence is found. This preview is not a production
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The population gate is allowed
+after the 2026-08-29 structural repair; roles without a supported subgroup
+taxonomy remain direct domain-to-role rows. Reviewed no-direct-local-match rows
+must stay explicit until stronger evidence is found. This is not a production
 promotion.
 
 Do not claim that this SQL was applied based on a local generator run. SQL is
 only applied through the Supabase SQL Editor or a verified `psql` connection.
+
+### Career seed regeneration rule
+
+If role or subgroup data changes, regenerate from the source inputs in this
+order before touching Supabase:
+
+```powershell
+python data/career-mapping/_apply_emerging_domain_structure.py
+python data/career-mapping/_build_source_backed_layers.py
+python data/career-mapping/_audit_role_completeness.py
+python data/career-mapping/validate_career_resource_seed_gate.py
+$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-08-31.sql'
+python data/career-mapping/_gen_career_seed.py
+Remove-Item Env:CAREER_SEED_OUTPUT_PATH
+python data/career-mapping/split_large_artifacts.py split-sql `
+  C:\tmp\seed_career_canonical_2026-08-31.sql `
+  backend/seed_career_v2_2026-08-31_parts_gz --max-bytes 40000000 --gzip
+```
+
+The first pass materializes the roles' existing ISCO-backed subgroup ownership
+and reconciles counts. Roles without a supported subgroup taxonomy remain on a
+direct domain-to-role path. The next pass rebuilds source/provenance payloads.
+Do not hand-edit the generated SQL or skip the audits. A green local gate proves
+seed readiness only; Supabase still requires a production preflight, backup,
+explicit approval and post-seed verification.
 
 ### Large generated artifact transport
 
@@ -224,6 +251,8 @@ backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json   # historical 
 backend/seed_career_v2_preview_2026-08-25_parts_gz/part-*.sql.gz
 backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json   # current transport
 backend/seed_career_v2_preview_2026-08-26_parts_gz/part-*.sql.gz
+backend/seed_career_v2_2026-08-31_parts_gz/manifest.json            # current transport
+backend/seed_career_v2_2026-08-31_parts_gz/part-*.sql.gz
 data/career-mapping/role_tools_parts_gz/manifest.json
 data/career-mapping/role_tools_parts_gz/part-*.json.gz
 data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json
@@ -241,8 +270,8 @@ python data/career-mapping/split_large_artifacts.py join-json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json `
-  backend/seed_career_v2_preview_2026-08-26.sql
+  backend/seed_career_v2_2026-08-31_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-08-31.sql
 ```
 
 For Supabase, apply the reconstructed SQL with `psql` as shown above, or apply
