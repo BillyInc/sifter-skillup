@@ -68,6 +68,14 @@ scope_audit = load("domain_skill_competency_certification_audit.json")
 roles  = load("role_library_v3_cleaned.json")
 roles.extend(load_overlay_roles())
 role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
+role_work_profiles = {}
+_work_profile_path = os.path.join(HERE, "role_work_profiles.json")
+if os.path.exists(_work_profile_path):
+    role_work_profiles = {
+        str(profile.get("role_key")): profile
+        for profile in load("role_work_profiles.json").get("profiles", [])
+        if profile.get("role_key")
+    }
 layer_provenance = load("domain_skill_provenance.json") if os.path.exists(os.path.join(HERE, "domain_skill_provenance.json")) else {}
 roles_by_key = {}
 for _role in roles:
@@ -270,7 +278,7 @@ for r in roles:
     role_data_state = source_entry.get("data_state") or "unsourced"
     R["domain_roles"].append([
         q(uid("role", rk)), q(dom_uid(dk)), (q(sgid) if sgid else "NULL"),
-        q(rk), q(r["role_name"]), arr(aka), q(r.get("tier")),
+        q(rk), q(r["role_name"]), q(r.get("description")), arr(aka), q(r.get("tier")),
         q(str(r.get("isco_group") or "")), q(r.get("esco_code")),
         q(r.get("elite_status") or "deferred"),
         jsonb(r.get("essential_skills", [])), jsonb(r.get("optional_skills", [])),
@@ -288,6 +296,31 @@ for r in roles:
                 "framework" if source_entry.get("source_provenance") else None,
                 ) if source],
         }), jsonb(source_entry.get("nigerian_context") or {})])
+
+# ── 3b. role work evidence (O*NET tasks, activities and preparation) ────────
+# This is a separate learner-facing evidence layer. Roles without an O*NET
+# match still receive a row so the UI can explain the limitation explicitly.
+for role_key, profile in role_work_profiles.items():
+    domain_key = role_key.split("|", 1)[0]
+    if domain_key not in meta or domain_key in HIDDEN or role_key not in roles_by_key:
+        continue
+    R["domain_role_work_profiles"].append([
+        q(uid("role_work_profile", role_key)),
+        q(uid("role", role_key)),
+        q(role_key),
+        q(profile.get("source_record_status") or "not_available"),
+        arr(profile.get("onet_occupation_codes") or []),
+        jsonb(profile.get("activities") or []),
+        jsonb(profile.get("work_activities") or []),
+        jsonb(profile.get("job_zones") or []),
+        jsonb(profile.get("education_signals") or []),
+        jsonb(profile.get("work_context") or []),
+        jsonb(profile.get("related_occupations") or []),
+        jsonb(profile.get("source_links") or []),
+        jsonb(profile.get("source") or {}),
+        jsonb(profile.get("limitations") or []),
+        q("source_backed" if profile.get("source_record_status") != "not_available" else "partial"),
+    ])
 
 # ── 4. domain_tools (domain + subgroup scope, distinctive+common) ─
 def tool_rows(dk, entry, scope, sgid):
@@ -537,7 +570,8 @@ def emit(table, cols, vals, conflict="id"):
 
 emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills","source_confidence","data_state","foundation_skill_sources","nigerian_context"], R["domains"])
 emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills","source_confidence","data_state","skill_sources","nigerian_context"], R["domain_subgroups"])
-emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills","esco_occupation_uris","source_confidence","data_state","onet_occupation_codes","onet_essential_skills","source_provenance","nigerian_context"], R["domain_roles"])
+emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","description","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills","esco_occupation_uris","source_confidence","data_state","onet_occupation_codes","onet_essential_skills","source_provenance","nigerian_context"], R["domain_roles"])
+emit("domain_role_work_profiles", ["id","role_id","role_key","source_record_status","onet_occupation_codes","activities","work_activities","job_zones","education_signals","work_context","related_occupations","source_links","source_provenance","limitations","data_state"], R["domain_role_work_profiles"], conflict="role_id")
 emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source","role_id","element_name","element_id","source_confidence","data_state","source_provenance"], R["domain_tools"])
 emit("domain_certifications", ["id","domain_id","subgroup_id","placement","name","body","region","level","gate_reason"], R["domain_certifications"])
 emit("computational_role_subgroup_links", ["id","role_id","domain_id","subgroup_id","role_key","relationship","evidence_skills","source_provenance"], R["computational_role_subgroup_links"])
@@ -562,7 +596,7 @@ with open(SEED_OUTPUT_PATH, "w", encoding="utf-8") as seed_file:
         seed_file.write("\n")
 
 print(f"{SEED_OUTPUT_PATH} generated:")
-for t in ["domains","domain_subgroups","domain_roles","domain_tools","domain_certifications","computational_role_subgroup_links","computational_method_evidence","career_role_families","career_role_family_domains","career_role_family_aliases","career_role_family_members","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:
+for t in ["domains","domain_subgroups","domain_roles","domain_role_work_profiles","domain_tools","domain_certifications","computational_role_subgroup_links","computational_method_evidence","career_role_families","career_role_family_domains","career_role_family_aliases","career_role_family_members","programme_domain","programme_role_score","jamb_programme_domain","domain_overlap"]:
     print(f"  {t:26} {len(R[t])} rows")
 print(f"  (programme_domain unresolved programmes: {pd_unresolved})")
 

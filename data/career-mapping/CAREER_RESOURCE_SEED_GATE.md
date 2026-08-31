@@ -26,7 +26,7 @@ SQL regeneration allowed: **YES**
 - Assigned body IDs with original source evidence: **129**
 - Assigned body IDs pending supplemental review: **0**
 - Catalog body IDs unassigned to visible domains: **22**
-- Domains requiring source review: **49**
+- Domains requiring source review: **0**
 - Roles without a source signal: **0**
 - Mechanical population rows: **160914**
 - Mechanical validation errors: **0**

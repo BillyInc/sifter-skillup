@@ -23,7 +23,7 @@
     "assigned_body_ids_with_source_audit_evidence": 129,
     "assigned_body_ids_pending_supplemental_review": 0,
     "catalog_body_ids_unassigned_to_visible_domain": 22,
-    "domains_requiring_review": 49,
+    "domains_requiring_review": 0,
     "roles_without_source_signal": 0,
     "resource_rows": 160914,
     "resource_validation_errors": 0
