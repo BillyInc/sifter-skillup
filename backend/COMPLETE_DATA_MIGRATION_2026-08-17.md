@@ -1,6 +1,6 @@
 # Sifter LevelUp complete data migration
 
-Status: reconciled and regenerated on 2026-08-26.
+Status: reconciled and regenerated on 2026-08-31.
 
 This is the authoritative runbook for the current career, JAMB, domain,
 admission, and source-backed resource data. SQL files are generated outputs;
@@ -14,10 +14,11 @@ required proof of a successful Supabase run.
 The current worktree also contains the development preview of the corrected
 career taxonomy/context payload. Its repository transport form is the ordered,
 gzip-compressed directory
-`backend/seed_career_v2_preview_2026-08-26_parts_gz/`; the local generated
-form is `backend/seed_career_v2_preview_2026-08-26.sql`. The local monolithic
-file is ignored by Git because it is about 598 MB. It is not the production
-seed and must not be applied to a populated production database.
+`backend/seed_career_v2_2026-08-31_parts_gz/`; the local reconstructed form is
+`backend/seed_career_v2_2026-08-31.sql`. The local monolithic file is ignored
+by Git because it is about 660 MB. It is a development/staging output and must
+not be applied to a populated production database without preflight, backup,
+approval and post-seed verification.
 
 A read-only check of the configured Supabase project on 2026-08-24 found the
 older live subject state (506 options, 4,593 option items, and 0 typed rule
@@ -40,8 +41,26 @@ variants.
 | `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 676 matchable, 137 structured source rules, 3 cross-references, 420 direct-entry records, 24 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
 | `seed_career_v2_preview_2026-08-26_parts_gz/` | Development preview transport: 20 ordered gzip parts for 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, and 4,000 overlaps; 11 reviewed no-direct-local-match rows remain explicit |
+| `seed_career_v2_2026-08-31_parts_gz/` | Current development/staging transport: 22 ordered gzip parts for 160 visible domains, 542 supported subgroups, 5,050 roles, 48,188 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, 4,000 overlaps, and 5,050 role work profiles |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
+
+## 2026-08-31 authoritative career-seed correction
+
+The older `seed_career_v2.sql` and 2026-08-26 preview counts in historical
+notes are superseded for this refresh. The repaired generator now emits 160
+visible domains, 542 supported ISCO subgroups, 5,050 roles, 48,188 tools,
+240 certifications and 5,050 role work profiles. The 35 former structural
+review cases are resolved by materializing the roles' existing ISCO sub-major
+ownership and reconciling counts after canonical role deduplication. Roles
+without a supported subgroup taxonomy retain a direct domain-to-role path with
+a null subgroup reference; no subgroup mapping is invented.
+
+The current transport is
+`backend/seed_career_v2_2026-08-31_parts_gz/` with 22 ordered gzip parts. The
+resource gate and role-completeness audit pass after this repair. Reviewed
+no-direct-local-match rows remain explicit; they are not converted into
+invented Nigerian counterparts.
 
 The resource artifacts are intentionally partitioned. The JSON parts are
 build inputs and are not read by the application at runtime. The SQL parts

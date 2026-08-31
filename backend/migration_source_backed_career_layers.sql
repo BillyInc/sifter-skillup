@@ -17,13 +17,37 @@ ALTER TABLE skillup_dev.domain_subgroups
     ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb;
 
 ALTER TABLE skillup_dev.domain_roles
+    ADD COLUMN IF NOT EXISTS description TEXT,
     ADD COLUMN IF NOT EXISTS esco_occupation_uris TEXT[] NOT NULL DEFAULT '{}',
     ADD COLUMN IF NOT EXISTS source_confidence TEXT,
     ADD COLUMN IF NOT EXISTS data_state TEXT NOT NULL DEFAULT 'unsourced',
     ADD COLUMN IF NOT EXISTS onet_occupation_codes TEXT[] NOT NULL DEFAULT '{}',
     ADD COLUMN IF NOT EXISTS onet_essential_skills JSONB NOT NULL DEFAULT '[]'::jsonb,
-    ADD COLUMN IF NOT EXISTS source_provenance JSONB NOT NULL DEFAULT '{}'::jsonb,
-    ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb;
+     ADD COLUMN IF NOT EXISTS source_provenance JSONB NOT NULL DEFAULT '{}'::jsonb,
+     ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb;
+
+-- Learner-facing work evidence is kept separate from the role title and skill
+-- checklist. It joins only to source occupation codes already attached to a
+-- canonical role; missing matches remain explicit rather than inferred.
+CREATE TABLE IF NOT EXISTS skillup_dev.domain_role_work_profiles (
+    id                       UUID PRIMARY KEY,
+    role_id                  UUID NOT NULL UNIQUE REFERENCES skillup_dev.domain_roles(id) ON DELETE CASCADE,
+    role_key                 TEXT NOT NULL UNIQUE,
+    source_record_status     TEXT NOT NULL CHECK (source_record_status IN ('source_backed','source_role_only','not_available')),
+    onet_occupation_codes    TEXT[] NOT NULL DEFAULT '{}',
+    activities               JSONB NOT NULL DEFAULT '[]'::jsonb,
+    work_activities          JSONB NOT NULL DEFAULT '[]'::jsonb,
+    job_zones                JSONB NOT NULL DEFAULT '[]'::jsonb,
+    education_signals        JSONB NOT NULL DEFAULT '[]'::jsonb,
+    work_context             JSONB NOT NULL DEFAULT '[]'::jsonb,
+    related_occupations      JSONB NOT NULL DEFAULT '[]'::jsonb,
+    source_links             JSONB NOT NULL DEFAULT '[]'::jsonb,
+    source_provenance        JSONB NOT NULL DEFAULT '{}'::jsonb,
+    limitations              JSONB NOT NULL DEFAULT '[]'::jsonb,
+    data_state               TEXT NOT NULL DEFAULT 'source_backed'
+);
+CREATE INDEX IF NOT EXISTS idx_domain_role_work_profiles_status
+    ON skillup_dev.domain_role_work_profiles(source_record_status, data_state);
 
 ALTER TABLE skillup_dev.domain_tools
     ADD COLUMN IF NOT EXISTS element_name TEXT,

@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.domain_roles (
     subgroup_id     UUID REFERENCES skillup_dev.domain_subgroups(id) ON DELETE SET NULL,
     role_key        TEXT NOT NULL,                   -- domain_key|role_name
     role_name       TEXT NOT NULL,
+    description     TEXT,
     also_known_as   TEXT[] NOT NULL DEFAULT '{}',
     tier            TEXT CHECK (tier IN ('entry','mid','senior')),
     isco_group      TEXT,
