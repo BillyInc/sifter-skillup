@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, Linking, type ViewStyle } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Linking, TouchableOpacity, type ViewStyle } from "react-native";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 import type { ToolGroupsEnriched, ToolV2Enriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
@@ -66,9 +66,15 @@ function ToolGroup({
 }
 
 export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
+  const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
   const common = tools?.common ?? [];
   const distinctive = tools?.distinctive ?? [];
   if (!distinctive.length && !common.length) return null;
+  const total = common.length + distinctive.length;
+  const visibleCommon = expanded ? common : common.slice(0, 4);
+  const visibleDistinctive = expanded ? distinctive : distinctive.slice(0, 4);
+  const hasHidden = visibleCommon.length < common.length || visibleDistinctive.length < distinctive.length;
 
   return (
     <View style={[styles.container, style]}>
@@ -76,8 +82,21 @@ export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
       <Text style={styles.explanation}>
         Practise broadly used tools alongside the foundation. Domain-specific tools become more relevant after you choose a subgroup or role; all available tools remain visible.
       </Text>
-      <ToolGroup label="Tools used across this domain" tools={common} prominent />
-      <ToolGroup label="Tools for a chosen specialization" tools={distinctive} prominent={false} />
+      <ToolGroup label="Tools used across this domain" tools={visibleCommon} prominent />
+      <ToolGroup label="Tools for a chosen specialization" tools={visibleDistinctive} prominent={false} />
+      {(hasHidden || expanded) ? (
+        <TouchableOpacity
+          onPress={() => setExpanded((value) => !value)}
+          activeOpacity={0.75}
+          accessibilityRole="button"
+          accessibilityState={{ expanded }}
+          style={styles.moreButton}
+        >
+          <Text style={[styles.moreText, { color: colors.accentRole.action }]}>
+            {expanded ? "Show fewer tools" : `See all ${total} tools`}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }
@@ -105,4 +124,6 @@ const styles = StyleSheet.create({
   },
   chipText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   chipLink: { textDecorationLine: "underline" },
+  moreButton: { alignSelf: "flex-start", minHeight: 34, justifyContent: "center" },
+  moreText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
 });

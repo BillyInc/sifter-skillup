@@ -108,11 +108,14 @@ export function SaveButton({
         ? await careerData.removeSavedItem(savedItemId as string)
         : await careerData.saveItem(entityType, entityId, label);
 
-      if (result.status === "real") {
+      if (result.status === "real" || result.status === "pending") {
         const next = !saved;
         setSaved(next);
-        setSavedItemId(next && result.data && "id" in result.data ? result.data.id : null);
+        setSavedItemId(next && result.data && "id" in result.data ? result.data.id : next ? `local_${entityType}_${entityId}` : null);
         onChange?.(next);
+        if (result.status === "pending") {
+          showHint(result.meta?.notice ?? "Saved on this device; it will sync when you reconnect.");
+        }
       } else {
         showHint(result.meta?.notice ?? "Saving comes online soon");
       }
