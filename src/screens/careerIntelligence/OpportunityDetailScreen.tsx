@@ -113,7 +113,6 @@ export function OpportunityDetailScreen({
       eyebrow="OPPORTUNITY"
       title={state.data?.title ?? "Opportunity"}
       save={{ entityType: "opportunity", entityId: opportunityId }}
-      pdf
       state={state}
     >
       {(data) => (

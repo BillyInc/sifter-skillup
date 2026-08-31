@@ -6,7 +6,7 @@
  * inline back+header chrome (mirroring DetailScaffold visually) and renders the
  * body through DataStateView. Semantic tokens + CompassFonts (BRIEF chrome).
  */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../t
 import { careerData } from "../../lib/careerData";
 import { opportunitiesNav } from "../../lib/opportunitiesNav";
 import {
-  comingSoon,
+  pending,
   type DataState,
   type Scholarship,
 } from "../../types/career";
@@ -32,17 +32,20 @@ export function ScholarshipsScreen() {
   const { colors } = useTheme();
   const router = useRouter();
   const [state, setState] =
-    useState<DataState<Scholarship[]>>(comingSoon<Scholarship[]>());
+    useState<DataState<Scholarship[]>>(pending<Scholarship[]>("Loading scholarships..."));
 
-  useEffect(() => {
+  const loadScholarships = useCallback(() => {
+    setState(pending<Scholarship[]>("Loading scholarships..."));
     let alive = true;
-    careerData.getScholarships().then((res) => {
+    void careerData.getScholarships().then((res) => {
       if (alive) setState(res);
     });
     return () => {
       alive = false;
     };
   }, []);
+
+  useEffect(() => loadScholarships(), [loadScholarships]);
 
   return (
     <ScrollView

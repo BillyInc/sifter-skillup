@@ -11,7 +11,7 @@
  * screen is a literal: the header used to claim "168 domains across 37
  * clusters" while getDomainClusters was a stub and the grid was empty.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -31,7 +31,7 @@ import {
 import { StaggerReveal } from "@/components/animations";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
-import { comingSoon, type DataState } from "@/types/career";
+import { pending, type DataState } from "@/types/career";
 import {
   useTheme,
   Spacing,
@@ -56,12 +56,13 @@ export function DomainExplorerScreen() {
   const [filter, setFilter] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const [state, setState] = useState<DataState<DomainClusterGroup[]>>(() =>
-    comingSoon<DomainClusterGroup[]>(),
+    pending<DomainClusterGroup[]>("Loading domains..."),
   );
 
-  useEffect(() => {
+  const loadDomains = useCallback(() => {
+    setState(pending<DomainClusterGroup[]>("Loading domains..."));
     let active = true;
-    (async () => {
+    void (async () => {
       const result = await careerData.getDomainClusters();
       if (active) setState(result);
     })();
@@ -69,6 +70,8 @@ export function DomainExplorerScreen() {
       active = false;
     };
   }, []);
+
+  useEffect(() => loadDomains(), [loadDomains]);
 
   const clusterKeys = useMemo(() => {
     if (!state.data) return [];
@@ -208,7 +211,7 @@ export function DomainExplorerScreen() {
         ))}
       </ScrollView>
 
-      <DataStateView state={filtered} empty={(g) => g.length === 0}>
+      <DataStateView state={filtered} empty={(g) => g.length === 0} spinnerOnPending={!filtered.data} onRetry={loadDomains}>
         {(groups) => (
           <View style={styles.masonry}>
             {groups.map((g, idx) => {
