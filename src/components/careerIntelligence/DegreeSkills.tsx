@@ -70,7 +70,7 @@ export function DegreeSkills({
         style={[styles.teaser, { color: color ?? colors.textRole.muted }]}
         numberOfLines={2}
       >
-        You may study: {preview}
+        Skills taught preview: {preview}
         {total > TEASER_MAX ? ` +${total - TEASER_MAX} more` : ""}
       </Text>
     );
@@ -79,7 +79,7 @@ export function DegreeSkills({
   if (!total) {
     return (
       <View style={styles.block}>
-        <SectionLabel>What this programme helps you build</SectionLabel>
+        <SectionLabel>Skills taught</SectionLabel>
         <Text style={[styles.empty, { color: colors.textRole.muted }]}>
           We do not have a verified skills profile for this programme yet.
         </Text>
@@ -92,7 +92,7 @@ export function DegreeSkills({
 
   return (
     <View style={styles.block}>
-      <SectionLabel>What this programme helps you build</SectionLabel>
+       <SectionLabel>Skills taught</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
         These are source-backed learning outcomes connected to this programme.
         They describe the direction of study, not a promise of proficiency.
@@ -141,7 +141,7 @@ export function DegreeSkills({
               { color: colors.textRole.muted },
             ]}
           >
-            Skills useful beyond this programme
+            Transferable skills
           </Text>
           <View style={styles.chips}>
             {soft.map((skill, i) => (

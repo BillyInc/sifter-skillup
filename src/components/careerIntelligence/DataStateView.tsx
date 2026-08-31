@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import type { DataState, DataStatus } from "../../types/career";
@@ -20,6 +20,8 @@ export interface DataStateViewProps<T> {
   emptyBody?: string;
   spinnerOnPending?: boolean;
   compact?: boolean;
+  /** Retry a transient request failure. */
+  onRetry?: () => void;
 }
 
 export function DataStateView<T>({
@@ -30,6 +32,7 @@ export function DataStateView<T>({
   emptyBody = "There is nothing to show right now.",
   spinnerOnPending,
   compact,
+  onRetry,
 }: DataStateViewProps<T>) {
   const { colors } = useTheme();
 
@@ -47,26 +50,35 @@ export function DataStateView<T>({
   const preset = state.status === "coming_soon"
     ? lockedPreviewFor(state.meta?.notice)
     : PRESET[state.status as Exclude<DataStatus, "real">] ?? PRESET.coming_soon;
-  return <StatePanel icon={preset.icon} title={preset.title} body={state.meta?.notice ?? preset.body} compact={compact} />;
+  return <StatePanel icon={preset.icon} title={preset.title} body={state.meta?.notice ?? preset.body} compact={compact} retry={state.status === "error" ? onRetry : undefined} />;
 
   function StatePanel({
     icon,
     title,
     body,
     compact: compactState,
+    retry,
   }: {
     icon: keyof typeof Feather.glyphMap;
     title: string;
     body: string;
     compact?: boolean;
+    retry?: () => void;
   }) {
     if (compactState) {
       return (
         <View style={[styles.compact, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
           <Feather name={icon} size={15} color={colors.state.locked} />
-          <Text style={[styles.compactText, { color: colors.textRole.muted }]} numberOfLines={2}>
-            {title} - {body}
-          </Text>
+          <View style={styles.compactContent}>
+            <Text style={[styles.compactText, { color: colors.textRole.muted }]} numberOfLines={2}>
+              {title} - {body}
+            </Text>
+            {retry ? (
+              <Pressable accessibilityRole="button" accessibilityLabel="Retry loading this content" onPress={retry}>
+                <Text style={[styles.retryText, { color: colors.accentRole.action }]}>Try again</Text>
+              </Pressable>
+            ) : null}
+          </View>
         </View>
       );
     }
@@ -77,6 +89,16 @@ export function DataStateView<T>({
         </View>
         <Text style={[styles.panelTitle, { color: colors.textRole.primary }]}>{title}</Text>
         <Text style={[styles.panelBody, { color: colors.textRole.secondary }]}>{body}</Text>
+        {retry ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Retry loading this content"
+            onPress={retry}
+            style={[styles.retry, { borderColor: colors.borderRole.subtle }]}
+          >
+            <Text style={[styles.retryText, { color: colors.accentRole.action }]}>Try again</Text>
+          </Pressable>
+        ) : null}
       </View>
     );
   }
@@ -123,6 +145,9 @@ const styles = StyleSheet.create({
   panelIcon: { width: 42, height: 42, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },
   panelTitle: { fontSize: FontSize.lg, fontWeight: "600", marginTop: Spacing.xs },
   panelBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5, textAlign: "center", maxWidth: 360 },
+  retry: { marginTop: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  retryText: { fontSize: FontSize.sm, fontWeight: "700" },
   compact: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   compactText: { flex: 1, fontSize: FontSize.xs, fontWeight: "600" },
+  compactContent: { flex: 1, gap: 2 },
 });

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useTheme, FontSize } from "../../theme";
 import { SifterButton } from "../ui";
 import { shareStudentDocument } from "../../lib/provisioningData";
+import { hasInternetConnection } from "../../lib/networkState";
 
 export interface ShareExportButtonProps {
   documentPath: string;
@@ -23,7 +24,11 @@ export function ShareExportButton({
   const { colors } = useTheme();
   const [hint, setHint] = useState<string | null>(null);
 
-  const onPress = () => {
+  const onPress = async () => {
+    if (!(await hasInternetConnection())) {
+      setHint("Sharing and downloads are available when you are online.");
+      return;
+    }
     void shareStudentDocument(documentPath, fileName, "Sifter LevelUp guidance report").then((shared) => {
       if (!shared) setHint("The share sheet was unavailable. The report can still be downloaded or printed.");
     });
@@ -34,7 +39,7 @@ export function ShareExportButton({
       <SifterButton
         label={title}
         icon="share-2"
-        onPress={onPress}
+         onPress={() => { void onPress(); }}
         variant="ghost"
         size="sm"
         fullWidth={false}

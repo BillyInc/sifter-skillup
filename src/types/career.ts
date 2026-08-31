@@ -64,10 +64,17 @@ export type GuidanceEvidenceState =
   | "not_available"
   | "pending";
 
+export interface GuidanceEvidenceSource {
+  id: string;
+  label: string;
+  url: string;
+}
+
 export interface GuidanceEvidenceLens {
   state: GuidanceEvidenceState;
   explanation: string;
   sourceCount?: number;
+  sources?: GuidanceEvidenceSource[];
 }
 
 export interface GuidanceEvidence {
@@ -112,6 +119,13 @@ export function locked<T>(notice?: string): DataState<T> {
 export function pending<T>(notice?: string): DataState<T> {
   return {
     status: "pending",
+    data: null,
+    meta: notice ? { notice } : undefined,
+  };
+}
+export function error<T>(notice?: string): DataState<T> {
+  return {
+    status: "error",
     data: null,
     meta: notice ? { notice } : undefined,
   };
@@ -588,11 +602,34 @@ export interface SubgroupV2 extends SourceBackedFields {
 export interface DomainRoleSummary {
   key: string; // "D011|securities trader"
   name: string;
+  description?: string;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
   subgroupId?: string | null;
   eliteStatus?: string;
   resources?: CareerLearningResource[];
+}
+
+/** Source-backed work evidence joined from an occupation profile. */
+export interface RoleWorkProfile {
+  sourceRecordStatus: "source_backed" | "source_role_only" | "not_available";
+  onetOccupationCodes: string[];
+  activities: string[];
+  workActivities: Array<{ name: string; importance?: number }>;
+  jobZones: Array<{
+    zone?: number | null;
+    name?: string;
+    experience?: string;
+    education?: string;
+    job_training?: string;
+  }>;
+  educationSignals: Array<{ label: string; share?: number }>;
+  workContext: Array<{ name: string; frequency: string; share?: number }>;
+  relatedOccupations: string[];
+  sourceLinks: Array<{ label?: string; url: string; source_id?: string }>;
+  sourceProvenance?: Record<string, unknown>;
+  limitations: string[];
+  dataState?: SourceDataState;
 }
 
 /** A domain's common ("foundation") skill, shown with how prevalent it is across the
@@ -635,6 +672,8 @@ export interface DomainV2 extends SourceBackedFields {
 export interface DomainRoleV2 extends SourceBackedFields {
   key: string;
   name: string;
+  /** Source-backed occupation explanation, when the role source provides one. */
+  description?: string;
   subgroupId?: string | null;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
@@ -643,6 +682,8 @@ export interface DomainRoleV2 extends SourceBackedFields {
   eliteStatus?: string;
   essentialSkills: string[];
   optionalSkills: string[];
+  /** O*NET task, activity and preparation evidence, when a code is mapped. */
+  workProfile?: RoleWorkProfile | null;
   computationalMethods?: (ComputationalMethodEvidence & { subgroupId?: string | null })[];
   escoOccupationUris?: string[];
   onetOccupationCodes?: string[];

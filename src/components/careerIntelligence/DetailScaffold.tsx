@@ -1,6 +1,6 @@
 /**
  * DetailScaffold — shared chrome for every Explore detail screen (programme,
- * role, domain). Provides a back button, an optional Save + PDF action row, a
+ * role, domain). Provides a back button and an optional Save action row, a
  * title/eyebrow header, and a scrollable body that renders a DataState
  * gracefully (Coming Soon / Pending / Error) before showing content.
  */
@@ -39,10 +39,10 @@ export interface DetailScaffoldProps<T> {
   backLabel?: string;
   /** When provided, a Save bookmark action appears in the header. */
   save?: { entityType: SavedEntityType; entityId: string; label?: string };
-  /** Show the "Save as PDF" action. */
+  /** Show online report printing/download action. */
   pdf?: boolean;
   pdfTitle?: string;
-  /** Authenticated full-report endpoint. */
+  /** Authenticated report endpoint; fails closed when offline. */
   pdfPath?: string;
   /** Explicitly add this selected branch to the student's report path. */
   reportSelection?: GuidanceReportSelection;
@@ -52,6 +52,8 @@ export interface DetailScaffoldProps<T> {
   state: DataState<T>;
   /** Render the populated body. */
   children: (data: T) => ReactNode;
+  /** Retry a transient request failure. */
+  onRetry?: () => void;
   /** Optional content rendered above the DataStateView (e.g. tabs). */
   header?: ReactNode;
   empty?: (data: T) => boolean;
@@ -75,6 +77,7 @@ export function DetailScaffold<T>({
   targetStudentId,
   state,
   children,
+  onRetry,
   header,
   empty,
   disclaimer = true,
@@ -144,12 +147,7 @@ export function DetailScaffold<T>({
             ) : null}
             {reportSelection ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
             {pdf ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
-            {pdfPath ? (
-              <ShareExportButton
-                documentPath={pdfPath}
-                fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`}
-              />
-            ) : null}
+            {pdfPath ? <ShareExportButton documentPath={pdfPath} fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`} /> : null}
           </View>
         </View>
       </View>
@@ -157,7 +155,7 @@ export function DetailScaffold<T>({
       {header}
 
       <View style={styles.bodyWrap}>
-        <DataStateView state={state} empty={empty}>
+        <DataStateView state={state} empty={empty} spinnerOnPending={!state.data} onRetry={onRetry}>
           {children}
         </DataStateView>
       </View>
