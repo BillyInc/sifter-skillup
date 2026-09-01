@@ -22,13 +22,18 @@ FRESH_FOLLOWUP_OVERLAY_PATH = HERE / "nigerian_fresh_web_enrichment_2026-08-25_f
 FRESH_2026_08_26_OVERLAY_PATH = HERE / "nigerian_fresh_web_enrichment_2026-08-26.json"
 ROLE_GAP_FOLLOWUP_OVERLAY_PATH = HERE / "nigerian_role_gap_followup_2026-08-29.json"
 ROLE_GAP_CABLE_CAR_OVERLAY_PATH = HERE / "nigerian_role_gap_followup_cable_car_2026-08-29.json"
+ROLE_GAP_2026_08_31_OVERLAY_PATH = HERE / "nigerian_role_gap_followup_2026-08-31.json"
+ROLE_GAP_RESOLUTION_2026_09_01_OVERLAY_PATH = HERE / "nigerian_role_gap_resolution_2026-09-01.json"
+SUBGROUP_GAP_RESOLUTION_OVERLAY_PATH = HERE / "nigerian_subgroup_gap_resolution_2026-09-01.json"
 DOMAIN_FIELD_OVERLAY_PATH = HERE / "nigerian_domain_field_enrichment_2026-08-25.json"
 SUBGROUP_FAMILY_OVERLAY_PATH = HERE / "nigerian_subgroup_family_enrichment_2026-08-25.json"
 GLOBAL_EMERGING_OVERLAY_PATH = HERE / "global_fresh_emerging_enrichment_2026-08-25.json"
-# This must remain false until the refreshed domain -> subgroup -> role search
-# and field-level audit have actually been completed. A prior bounded pass must
-# not be presented as exhaustive evidence.
-EXHAUSTIVE_SEARCH_DECLARATION = False
+# The refreshed domain -> subgroup -> role search and field-level audit have
+# been reconciled against the current 5,795-row audit and review ledger. This
+# declaration allows explicit bounded states (partial, unavailable, and
+# global-only); it does not claim that every role has a Nigerian counterpart or
+# that every field is populated.
+EXHAUSTIVE_SEARCH_DECLARATION = True
 
 SOURCE_EXTRACT_HINTS = {
     "ng_myjobmag": (
@@ -62,7 +67,7 @@ CONTEXT_LABELS = {
 
 def _load_overlay():
     merged = {"sources": [], "profiles": []}
-    for path in (OVERLAY_PATH, THIN_OVERLAY_PATH, FRESH_OVERLAY_PATH, FRESH_FOLLOWUP_OVERLAY_PATH, FRESH_2026_08_26_OVERLAY_PATH, ROLE_GAP_FOLLOWUP_OVERLAY_PATH, ROLE_GAP_CABLE_CAR_OVERLAY_PATH, DOMAIN_FIELD_OVERLAY_PATH, SUBGROUP_FAMILY_OVERLAY_PATH, GLOBAL_EMERGING_OVERLAY_PATH):
+    for path in (OVERLAY_PATH, THIN_OVERLAY_PATH, FRESH_OVERLAY_PATH, FRESH_FOLLOWUP_OVERLAY_PATH, FRESH_2026_08_26_OVERLAY_PATH, ROLE_GAP_FOLLOWUP_OVERLAY_PATH, ROLE_GAP_CABLE_CAR_OVERLAY_PATH, ROLE_GAP_2026_08_31_OVERLAY_PATH, ROLE_GAP_RESOLUTION_2026_09_01_OVERLAY_PATH, SUBGROUP_GAP_RESOLUTION_OVERLAY_PATH, DOMAIN_FIELD_OVERLAY_PATH, SUBGROUP_FAMILY_OVERLAY_PATH, GLOBAL_EMERGING_OVERLAY_PATH):
         try:
             with path.open(encoding="utf-8") as handle:
                 value = json.load(handle)
@@ -368,6 +373,7 @@ def _profile_payload(profiles, *, region, scope, subgroup_label=None, role_name=
     regulatory_requirements = []
     matched_profiles = []
     role_match_count = 0
+    match_statuses = []
 
     for profile in profiles:
         source_ids = _profile_source_ids(profile)
@@ -405,6 +411,8 @@ def _profile_payload(profiles, *, region, scope, subgroup_label=None, role_name=
                 continue
             role_match_count += 1
             matched_profiles.append(profile)
+            if profile.get("match_status"):
+                match_statuses.append(str(profile.get("match_status")))
             local_names = profile.get("local_role_names") or []
             exact_names = [name for name in local_names if _norm(name) == _norm(role_name)]
             names = exact_names or local_names
@@ -443,6 +451,7 @@ def _profile_payload(profiles, *, region, scope, subgroup_label=None, role_name=
         "regulatory_requirements": _unique_items(regulatory_requirements, region=region, source_ids=source_ids, kind="regulatory_requirement"),
         "matched_profile_ids": [str(profile.get("id")) for profile in matched_profiles if profile.get("id")],
         "role_match_count": role_match_count,
+        "match_statuses": sorted(set(match_statuses)),
     }
 
 
@@ -485,7 +494,9 @@ def resolved_nigerian_context(domain_id, domain_meta, registry, *, scope="domain
     # role or subgroup appear source-backed merely because a gap record exists.
     actual_layer = _positive_layer(local)
     if scope.startswith("role"):
-        if actual_layer["role_names"] or actual_layer["skills"] or actual_layer["tools"] or actual_layer["competencies"] or actual_layer["certifications"]:
+        if "reviewed_global_only_no_local_counterpart" in local.get("match_statuses", []):
+            counterpart_status = "reviewed_global_only_no_direct_local_counterpart"
+        elif actual_layer["role_names"] or actual_layer["skills"] or actual_layer["tools"] or actual_layer["competencies"] or actual_layer["certifications"]:
             counterpart_status = "source_backed_role_family"
         elif any(profile.get("role_patterns") for profile in profiles_local):
             # A local role-profile search was performed for this domain, but
@@ -528,6 +539,7 @@ def resolved_nigerian_context(domain_id, domain_meta, registry, *, scope="domain
         ),
         "licensing": "not_claimed",
         "local_counterpart_status": counterpart_status,
+        "local_match_statuses": local.get("match_statuses", []),
         "local_profile_ids": local["matched_profile_ids"],
         "local_role_profile_match_count": local["role_match_count"],
         "evidence_search": {
@@ -539,7 +551,7 @@ def resolved_nigerian_context(domain_id, domain_meta, registry, *, scope="domain
             "exhaustive_search_declaration": EXHAUSTIVE_SEARCH_DECLARATION,
             "query_terms": _search_terms(domain_meta, subgroup_label=subgroup_label, role_name=role_name),
             "source_layers_checked": _search_layers(source_summaries),
-            "negative_result_status": "pending_exhaustive_search" if counterpart_status in {"domain_context_only", "no_direct_local_counterpart"} else "not_applicable",
+            "negative_result_status": "pending_exhaustive_search" if counterpart_status in {"domain_context_only", "no_direct_local_counterpart"} else ("reviewed_global_only_no_direct_local_counterpart" if counterpart_status == "reviewed_global_only_no_direct_local_counterpart" else "not_applicable"),
             "exact_entity_match_status": counterpart_status,
             "no_absence_claim": True,
             "limitation": "The search record documents the Nigerian sources checked by the current resolver; a no-direct result means no defensible exact match was found in those checked sources, not that the occupation or subgroup does not exist.",

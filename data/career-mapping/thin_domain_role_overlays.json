@@ -29,6 +29,14 @@
    "access": "public_reference",
    "notes": "Surveying, valuation, property, construction and built-environment role terminology."
   },
+  "global_cfa_finance": {
+   "name": "CFA Institute curriculum and investment profession resources",
+   "region": "global",
+   "evidence_type": "professional_competency_and_credential_framework",
+   "url": "https://www.cfainstitute.org/",
+   "access": "public_reference",
+   "notes": "Investment analysis, portfolio management, ethics and finance competency context."
+  },
   "global_creative": {
    "name": "ScreenSkills creative-industry role profiles",
    "region": "global",
@@ -36,6 +44,14 @@
    "url": "https://www.screenskills.com/",
    "access": "public",
    "notes": "Film, television, animation, games and production role profiles; supplement with ESCO/O*NET."
+  },
+  "global_driver_training": {
+   "name": "DVSA National Standard for Driver and Rider Training",
+   "region": "global_proxy",
+   "evidence_type": "regulated_training_and_competency_framework",
+   "url": "https://www.gov.uk/government/publications/national-standard-for-driver-and-rider-training/national-standard-for-driver-and-rider-training",
+   "access": "public",
+   "notes": "Official driver-trainer framework covering coaching, learner assessment, communication, safety, risk management and continuing professional development; UK regulatory context, not Nigerian licensing or demand data."
   },
   "global_esco": {
    "name": "ESCO occupations and skills",
@@ -68,6 +84,14 @@
    "url": "https://igda.org/resources/",
    "access": "public_reference",
    "notes": "Game-development role vocabulary and industry context for the sparse Game Design domain."
+  },
+  "global_garp_risk": {
+   "name": "Global Association of Risk Professionals resources",
+   "region": "global",
+   "evidence_type": "professional_competency_and_credential_framework",
+   "url": "https://www.garp.org/",
+   "access": "public_reference",
+   "notes": "Risk management, financial risk and FRM competency context."
   },
   "global_health": {
    "name": "WHO health workforce resources",
@@ -132,12 +156,12 @@
    "notes": "Nuclear engineering, radiation science, medical physics and safety terminology."
   },
   "global_onet": {
-   "name": "O*NET 30.3 Database",
+   "name": "O*NET 31.0 Database",
    "region": "global_proxy",
    "evidence_type": "occupation_taxonomy_and_job_titles",
    "url": "https://www.onetcenter.org/database.html",
    "access": "public_download_api",
-   "notes": "US-economy source used as a global proxy for occupation descriptions, alternate titles, tasks and technology skills; do not label US counts as Nigerian demand."
+   "notes": "US-economy source used as a global proxy for occupation descriptions, alternate titles, tasks and technology skills; repository pinned to O*NET 31.0 as of 2026-08-31; do not label US counts as Nigerian demand."
   },
   "global_project_management": {
    "name": "Project Management Institute standards",
@@ -565,6 +589,42 @@
      "information security"
     ],
     "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D004",
+   "domain_name": "Cybersecurity",
+   "role_name": "Digital Forensics Analysts",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "15-1299.06",
+   "isco_group": null,
+   "description": "Conduct investigations on computer-based crimes establishing documentary or physical evidence, such as digital media and logs associated with cyber intrusion incidents. Analyze digital evidence and investigate computer security incidents to derive information in support of system and network vulnerability mitigation. Preserve and present computer-related evidence in support of criminal, fraud, counterintelligence, or law enforcement investigations.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "global_nice"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_cpn",
+     "ng_telecom"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "forensic"
+    ],
+    "mapping_score": 4,
     "region": "global_proxy"
    },
    "source_confidence": "medium",
@@ -1111,6 +1171,42 @@
   {
    "domain_id": "D005",
    "domain_name": "Cloud Computing",
+   "role_name": "Network and Computer Systems Administrators",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "15-1244.00",
+   "isco_group": null,
+   "description": "Install, configure, and maintain an organization's local area network (LAN), wide area network (WAN), data communications network, operating systems, and physical and virtual servers. Perform system monitoring and verify the integrity and availability of hardware, network, and server resources and systems. Review system and application logs and verify completion of scheduled jobs, including system backups. Analyze network and server resource consumption and control user access. Install and upgrade software and maintain software licenses. May assist in network modeling, analysis, planning, and coordination between network and data communications hardware and software.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_cpn",
+     "ng_telecom"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "network",
+     "systems administrator"
+    ],
+    "mapping_score": 12,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D005",
+   "domain_name": "Cloud Computing",
    "role_name": "Computer Network Architects",
    "also_known_as": [],
    "source": "onet",
@@ -1152,41 +1248,6 @@
    "onet_code": "15-1231.00",
    "isco_group": null,
    "description": "Analyze, test, troubleshoot, and evaluate existing network systems, such as local area networks (LAN), wide area networks (WAN), cloud networks, servers, and other data communications networks. Perform network maintenance to ensure networks operate correctly with minimal interruption.",
-   "source_provenance": {
-    "sources": [
-     "global_esco",
-     "global_onet",
-     "global_isco",
-     "global_wef",
-     "global_sfia"
-    ],
-    "context_sources": [
-     "ng_jobberman",
-     "ng_myjobmag",
-     "ng_nbs",
-     "ng_cpn",
-     "ng_telecom"
-    ],
-    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
-    "mapping_method": "curated_domain_source_family_title_anchor",
-    "matched_terms": [
-     "network"
-    ],
-    "mapping_score": 4,
-    "region": "global_proxy"
-   },
-   "source_confidence": "medium",
-   "data_state": "source_backed"
-  },
-  {
-   "domain_id": "D005",
-   "domain_name": "Cloud Computing",
-   "role_name": "Network and Computer Systems Administrators",
-   "also_known_as": [],
-   "source": "onet",
-   "onet_code": "15-1244.00",
-   "isco_group": null,
-   "description": "Install, configure, and maintain an organization's local area network (LAN), wide area network (WAN), data communications network, operating systems, and physical and virtual servers. Perform system monitoring and verify the integrity and availability of hardware, network, and server resources and systems. Review system and application logs and verify completion of scheduled jobs, including system backups. Analyze network and server resource consumption and control user access. Install and upgrade software and maintain software licenses. May assist in network modeling, analysis, planning, and coordination between network and data communications hardware and software.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -1892,6 +1953,134 @@
   {
    "domain_id": "D140",
    "domain_name": "Robotics Engineering, Systems Design",
+   "role_name": "robotics engineering technician",
+   "also_known_as": [
+    "robotics engineering technologist",
+    "robot technician",
+    "technician in robotic systems",
+    "robot technologist",
+    "automation control engineering inspector",
+    "robotics inspector",
+    "technologist in robotics",
+    "robotics technician",
+    "robot engineering inspector",
+    "automation engineering inspector",
+    "robot engineering technologist",
+    "robotic systems technician",
+    "technologist in robotics engineering",
+    "robotics technologist",
+    "robotics mechanic",
+    "robotics systems technologist",
+    "technician in robotics engineering",
+    "robot inspector",
+    "technician in robotics",
+    "robotics engineering mechanic"
+   ],
+   "source": "esco",
+   "isco_group": 3119,
+   "esco_code": "3119.2.1",
+   "description": "Robotics engineering technicians collaborate with engineers in the development of robotic devices and applications through a combination of mechanical engineering, electronic engineering, and computer engineering. Robotics engineering technicians build, test, install and calibrate robotic equipment.",
+   "essential_skills": [
+    "design drawings",
+    "electrical engineering",
+    "mathematics",
+    "physics",
+    "automatic control system",
+    "robotic components",
+    "electronics",
+    "control engineering",
+    "mechatronics",
+    "robotics",
+    "automation technology",
+    "monitor machine operations",
+    "inspect quality of products",
+    "read assembly drawings",
+    "record test data",
+    "adjust engineering designs",
+    "perform test run",
+    "develop computer vision system",
+    "align components",
+    "test mechatronic units",
+    "assemble robots",
+    "follow standards for machinery safety",
+    "set up machine controls",
+    "read engineering drawings",
+    "liaise with engineers",
+    "fasten components",
+    "assist scientific research",
+    "prepare production prototypes",
+    "set up automotive robot"
+   ],
+   "optional_skills": [
+    "safety engineering",
+    "programmable logic controller",
+    "hydraulics",
+    "sensors",
+    "transmission technology",
+    "computer science",
+    "power electronics",
+    "computer engineering",
+    "mechanical engineering",
+    "hybrid control systems",
+    "CAD software",
+    "electric drives",
+    "pneumatics",
+    "optoelectronics",
+    "keep up with digital transformation of industrial processes",
+    "communicate with customers",
+    "resolve equipment malfunctions",
+    "assemble hardware components",
+    "customise software for drive system",
+    "calibrate mechatronic instruments",
+    "maintain robotic equipment",
+    "use CAM software",
+    "integrate new products in manufacturing",
+    "examine engineering principles",
+    "write technical reports",
+    "simulate mechatronic design concepts",
+    "use CAD software",
+    "apply technical communication skills",
+    "install software",
+    "replace machines",
+    "keep records of work progress",
+    "perform project management",
+    "program firmware",
+    "assemble mechatronic units"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "arm_robotics_career",
+     "skills_england_robotics"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_cpn",
+     "ng_telecom",
+     "ng_engineering",
+     "ng_nbte"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "robotics",
+     "robot*"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D140",
+   "domain_name": "Robotics Engineering, Systems Design",
    "role_name": "automation engineering technician",
    "also_known_as": [
     "marine sensor technician",
@@ -2535,133 +2724,6 @@
   {
    "domain_id": "D140",
    "domain_name": "Robotics Engineering, Systems Design",
-   "role_name": "robotics engineering technician",
-   "also_known_as": [
-    "robotics engineering technologist",
-    "robot technician",
-    "technician in robotic systems",
-    "robot technologist",
-    "automation control engineering inspector",
-    "robotics inspector",
-    "technologist in robotics",
-    "robotics technician",
-    "robot engineering inspector",
-    "automation engineering inspector",
-    "robot engineering technologist",
-    "robotic systems technician",
-    "technologist in robotics engineering",
-    "robotics technologist",
-    "robotics mechanic",
-    "robotics systems technologist",
-    "technician in robotics engineering",
-    "robot inspector",
-    "technician in robotics",
-    "robotics engineering mechanic"
-   ],
-   "source": "esco",
-   "isco_group": 3119,
-   "esco_code": "3119.2.1",
-   "description": "Robotics engineering technicians collaborate with engineers in the development of robotic devices and applications through a combination of mechanical engineering, electronic engineering, and computer engineering. Robotics engineering technicians build, test, install and calibrate robotic equipment.",
-   "essential_skills": [
-    "design drawings",
-    "electrical engineering",
-    "mathematics",
-    "physics",
-    "automatic control system",
-    "robotic components",
-    "electronics",
-    "control engineering",
-    "mechatronics",
-    "robotics",
-    "automation technology",
-    "monitor machine operations",
-    "inspect quality of products",
-    "read assembly drawings",
-    "record test data",
-    "adjust engineering designs",
-    "perform test run",
-    "develop computer vision system",
-    "align components",
-    "test mechatronic units",
-    "assemble robots",
-    "follow standards for machinery safety",
-    "set up machine controls",
-    "read engineering drawings",
-    "liaise with engineers",
-    "fasten components",
-    "assist scientific research",
-    "prepare production prototypes",
-    "set up automotive robot"
-   ],
-   "optional_skills": [
-    "safety engineering",
-    "programmable logic controller",
-    "hydraulics",
-    "sensors",
-    "transmission technology",
-    "computer science",
-    "power electronics",
-    "computer engineering",
-    "mechanical engineering",
-    "hybrid control systems",
-    "CAD software",
-    "electric drives",
-    "pneumatics",
-    "optoelectronics",
-    "keep up with digital transformation of industrial processes",
-    "communicate with customers",
-    "resolve equipment malfunctions",
-    "assemble hardware components",
-    "customise software for drive system",
-    "calibrate mechatronic instruments",
-    "maintain robotic equipment",
-    "use CAM software",
-    "integrate new products in manufacturing",
-    "examine engineering principles",
-    "write technical reports",
-    "simulate mechatronic design concepts",
-    "use CAD software",
-    "apply technical communication skills",
-    "install software",
-    "replace machines",
-    "keep records of work progress",
-    "perform project management",
-    "program firmware",
-    "assemble mechatronic units"
-   ],
-   "source_provenance": {
-    "sources": [
-     "global_esco",
-     "global_onet",
-     "global_isco",
-     "global_wef",
-     "global_sfia",
-     "arm_robotics_career",
-     "skills_england_robotics"
-    ],
-    "context_sources": [
-     "ng_jobberman",
-     "ng_myjobmag",
-     "ng_nbs",
-     "ng_cpn",
-     "ng_telecom",
-     "ng_engineering",
-     "ng_nbte"
-    ],
-    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
-    "mapping_method": "curated_domain_source_family_title_anchor",
-    "matched_terms": [
-     "robotics"
-    ],
-    "mapping_score": 17,
-    "region": "global"
-   },
-   "source_confidence": "medium",
-   "data_state": "source_backed"
-  },
-  {
-   "domain_id": "D140",
-   "domain_name": "Robotics Engineering, Systems Design",
    "role_name": "Quality Control Systems Managers",
    "also_known_as": [],
    "source": "onet",
@@ -2701,12 +2763,12 @@
   {
    "domain_id": "D140",
    "domain_name": "Robotics Engineering, Systems Design",
-   "role_name": "Electro-Mechanical and Mechatronics Technologists and Technicians",
+   "role_name": "Robotics Engineers",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "17-3024.00",
+   "onet_code": "17-2199.08",
    "isco_group": null,
-   "description": "Operate, test, maintain, or adjust unmanned, automated, servomechanical, or electromechanical equipment. May operate unmanned submarines, aircraft, or other equipment to observe or record visual information at sites such as oil rigs, crop fields, buildings, or for similar infrastructure, deep ocean exploration, or hazardous waste removal. May assist engineers in testing and designing robotics equipment.",
+   "description": "Research, design, develop, or test robotic applications.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -2729,9 +2791,10 @@
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
-     "mechatronics"
+     "robotics",
+     "robot*"
     ],
-    "mapping_score": 4,
+    "mapping_score": 8,
     "region": "global_proxy"
    },
    "source_confidence": "medium",
@@ -3258,7 +3321,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3335,7 +3400,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3415,7 +3482,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3484,7 +3553,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3575,7 +3646,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3647,7 +3720,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3726,7 +3801,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3794,7 +3871,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -3869,7 +3948,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_cfa_finance",
+     "global_garp_risk"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -4399,6 +4480,44 @@
   {
    "domain_id": "D074",
    "domain_name": "Occupational Health, Safety",
+   "role_name": "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-2111.00",
+   "isco_group": null,
+   "description": "Promote worksite or product safety by applying knowledge of industrial processes, mechanics, chemistry, psychology, and industrial health and safety laws. Includes industrial product safety engineers.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_built_environment",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "health and safety",
+     "safety engineer"
+    ],
+    "mapping_score": 16,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D074",
+   "domain_name": "Occupational Health, Safety",
    "role_name": "Occupational Health and Safety Specialists",
    "also_known_as": [],
    "source": "onet",
@@ -4475,12 +4594,12 @@
   {
    "domain_id": "D074",
    "domain_name": "Occupational Health, Safety",
-   "role_name": "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",
+   "role_name": "Mining and Geological Engineers, Including Mining Safety Engineers",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "17-2111.00",
+   "onet_code": "17-2151.00",
    "isco_group": null,
-   "description": "Promote worksite or product safety by applying knowledge of industrial processes, mechanics, chemistry, psychology, and industrial health and safety laws. Includes industrial product safety engineers.",
+   "description": "Conduct subsurface surveys to identify the characteristics of potential land or mining development sites. May specify the ground support systems, processes, and equipment for safe, economical, and environmentally sound extraction or underground construction activities. May inspect areas for unsafe geological conditions, equipment, and working conditions. May design, implement, and coordinate mine safety programs.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -4501,7 +4620,7 @@
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
-     "health and safety"
+     "safety engineer"
     ],
     "mapping_score": 8,
     "region": "global_proxy"
@@ -6678,6 +6797,78 @@
    "data_state": "source_backed"
   },
   {
+   "domain_id": "D156",
+   "domain_name": "Land Surveying, Cadastral Mapping",
+   "role_name": "Geodetic Surveyors",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-1022.01",
+   "isco_group": null,
+   "description": "Measure large areas of the Earth's surface using satellite observations, global navigation satellite systems (GNSS), light detection and ranging (LIDAR), or related sources.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_built_environment",
+     "ng_surcon"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "surveyor"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D156",
+   "domain_name": "Land Surveying, Cadastral Mapping",
+   "role_name": "Surveyors",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-1022.00",
+   "isco_group": null,
+   "description": "Make exact measurements and determine property boundaries. Provide data relevant to the shape, contour, gravitation, location, elevation, or dimension of land or land features on or near the earth's surface for engineering, mapmaking, mining, land evaluation, construction, and other purposes.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_built_environment",
+     "ng_surcon"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "surveyor"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
    "domain_id": "D164",
    "domain_name": "Urban Mobility, Smart City Systems",
    "role_name": "air traffic controller",
@@ -8294,12 +8485,12 @@
   {
    "domain_id": "D064",
    "domain_name": "Psychology, Counselling",
-   "role_name": "Mental Health and Substance Abuse Social Workers",
+   "role_name": "Mental Health Counselors",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "21-1023.00",
+   "onet_code": "21-1014.00",
    "isco_group": null,
-   "description": "Assess and treat individuals with mental, emotional, or substance abuse problems, including abuse of alcohol, tobacco, and/or other drugs. Activities may include individual and group therapy, crisis intervention, case management, client advocacy, prevention, and education.",
+   "description": "Counsel and advise individuals and groups to promote optimum mental and emotional health, with an emphasis on prevention. May help individuals deal with a broad range of mental health issues, such as those associated with addictions and substance abuse; family, parenting, and marital problems; stress management; self-esteem; or aging.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -8318,9 +8509,10 @@
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
+     "counselor",
      "mental health"
     ],
-    "mapping_score": 8,
+    "mapping_score": 12,
     "region": "global_proxy"
    },
    "source_confidence": "medium",
@@ -8329,12 +8521,12 @@
   {
    "domain_id": "D064",
    "domain_name": "Psychology, Counselling",
-   "role_name": "Mental Health Counselors",
+   "role_name": "Mental Health and Substance Abuse Social Workers",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "21-1014.00",
+   "onet_code": "21-1023.00",
    "isco_group": null,
-   "description": "Counsel and advise individuals and groups to promote optimum mental and emotional health, with an emphasis on prevention. May help individuals deal with a broad range of mental health issues, such as those associated with addictions and substance abuse; family, parenting, and marital problems; stress management; self-esteem; or aging.",
+   "description": "Assess and treat individuals with mental, emotional, or substance abuse problems, including abuse of alcohol, tobacco, and/or other drugs. Activities may include individual and group therapy, crisis intervention, case management, client advocacy, prevention, and education.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -8475,6 +8667,42 @@
   {
    "domain_id": "D067",
    "domain_name": "Dentistry",
+   "role_name": "Dental Hygienists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "29-1292.00",
+   "isco_group": null,
+   "description": "Administer oral hygiene care to patients. Assess patient oral hygiene problems or needs and maintain health records. Advise patients on oral health maintenance and disease prevention. May provide advanced care such as providing fluoride treatment or administering topical anesthesia.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_health",
+     "ng_mdcn"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "dental",
+     "hygienist"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D067",
+   "domain_name": "Dentistry",
    "role_name": "Oral and Maxillofacial Surgeons",
    "also_known_as": [],
    "source": "onet",
@@ -8546,12 +8774,12 @@
   {
    "domain_id": "D067",
    "domain_name": "Dentistry",
-   "role_name": "Dental Hygienists",
+   "role_name": "Dental Laboratory Technicians",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "29-1292.00",
+   "onet_code": "51-9081.00",
    "isco_group": null,
-   "description": "Administer oral hygiene care to patients. Assess patient oral hygiene problems or needs and maintain health records. Advise patients on oral health maintenance and disease prevention. May provide advanced care such as providing fluoride treatment or administering topical anesthesia.",
+   "description": "Construct and repair full or partial dentures or dental appliances.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -8581,12 +8809,12 @@
   {
    "domain_id": "D067",
    "domain_name": "Dentistry",
-   "role_name": "Dental Laboratory Technicians",
+   "role_name": "Dentists, All Other Specialists",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "51-9081.00",
+   "onet_code": "29-1029.00",
    "isco_group": null,
-   "description": "Construct and repair full or partial dentures or dental appliances.",
+   "description": "All dentists not listed separately.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -8605,7 +8833,42 @@
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
-     "dental"
+     "dentist"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D067",
+   "domain_name": "Dentistry",
+   "role_name": "Dentists, General",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "29-1021.00",
+   "isco_group": null,
+   "description": "Examine, diagnose, and treat diseases, injuries, and malformations of teeth and gums. May treat diseases of nerve, pulp, and other dental tissues affecting oral hygiene and retention of teeth. May fit dental appliances or provide preventive care.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_health",
+     "ng_mdcn"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "dentist"
     ],
     "mapping_score": 4,
     "region": "global_proxy"
@@ -8904,6 +9167,41 @@
   {
    "domain_id": "D165",
    "domain_name": "Wellness Coaching, Lifestyle Medicine",
+   "role_name": "Dietitians and Nutritionists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "29-1031.00",
+   "isco_group": null,
+   "description": "Plan and conduct food service or nutritional programs to assist in the promotion of health and control of disease. May supervise activities of a department providing quantity food services, counsel individuals, or conduct nutritional research.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_health",
+     "ng_education"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "nutritionist"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D165",
+   "domain_name": "Wellness Coaching, Lifestyle Medicine",
    "role_name": "Fitness and Wellness Coordinators",
    "also_known_as": [],
    "source": "onet",
@@ -8998,7 +9296,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9135,7 +9434,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9248,7 +9548,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9309,7 +9610,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9399,7 +9701,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9471,7 +9774,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9585,7 +9889,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9664,7 +9969,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9698,7 +10004,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9732,7 +10039,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -9766,7 +10074,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_project_management"
+     "global_project_management",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -10776,6 +11085,40 @@
    "data_state": "source_backed"
   },
   {
+   "domain_id": "D163",
+   "domain_name": "Intellectual Property Law, Patents",
+   "role_name": "Paralegals and Legal Assistants",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "23-2011.00",
+   "isco_group": null,
+   "description": "Assist lawyers by investigating facts, preparing legal documents, or researching legal precedent. Conduct research to support a legal proceeding, to formulate a defense, or to initiate legal action.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_wipo"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_legal"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "legal assistant"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
    "domain_id": "D065",
    "domain_name": "Translation, Interpretation",
    "role_name": "language engineer",
@@ -11061,6 +11404,44 @@
     ],
     "mapping_score": 17,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D065",
+   "domain_name": "Translation, Interpretation",
+   "role_name": "Interpreters and Translators",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "27-3091.00",
+   "isco_group": null,
+   "description": "Interpret oral or sign language, or translate written text from one language into another.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_creative",
+     "global_music",
+     "global_unesco"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_creative",
+     "ng_education"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "translator",
+     "interpreter"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -13179,6 +13560,42 @@
    "data_state": "source_backed"
   },
   {
+   "domain_id": "D160",
+   "domain_name": "Fashion Styling, Image Consulting",
+   "role_name": "Hairdressers, Hairstylists, and Cosmetologists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "39-5012.00",
+   "isco_group": null,
+   "description": "Provide beauty services, such as cutting, coloring, and styling hair, and massaging and treating scalp. May shampoo hair, apply makeup, dress wigs, remove hair, and provide nail and skincare services.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_creative",
+     "global_music"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_creative",
+     "ng_nbte"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hairdresser"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
    "domain_id": "D063",
    "domain_name": "Economics",
    "role_name": "business studies and economics teacher secondary school",
@@ -13427,6 +13844,40 @@
   {
    "domain_id": "D063",
    "domain_name": "Economics",
+   "role_name": "Climate Change Policy Analysts",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-2041.01",
+   "isco_group": null,
+   "description": "Research and analyze policy developments related to climate change. Make climate-related recommendations for actions such as legislation, awareness campaigns, or fundraising approaches.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_unesco"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_finance"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "policy analyst"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D063",
+   "domain_name": "Economics",
    "role_name": "Economics Teachers, Postsecondary",
    "also_known_as": [],
    "source": "onet",
@@ -13451,6 +13902,74 @@
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
      "economics"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D063",
+   "domain_name": "Economics",
+   "role_name": "Economists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-3011.00",
+   "isco_group": null,
+   "description": "Conduct research, prepare reports, or formulate plans to address economic problems related to the production and distribution of goods and services or monetary and fiscal policy. May collect and process economic and statistical data using sampling techniques and econometric methods.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_unesco"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_finance"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "economist"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D063",
+   "domain_name": "Economics",
+   "role_name": "Environmental Economists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-3011.01",
+   "isco_group": null,
+   "description": "Conduct economic analysis related to environmental protection and use of the natural environment, such as water, air, land, and renewable energy resources. Evaluate and quantify benefits, costs, incentives, and impacts of alternative options using economic principles and statistical techniques.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_unesco"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_finance"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "economist"
     ],
     "mapping_score": 4,
     "region": "global_proxy"
@@ -15669,6 +16188,134 @@
   {
    "domain_id": "D151",
    "domain_name": "Criminology, Criminal Justice",
+   "role_name": "digital forensics expert",
+   "also_known_as": [
+    "computer forensics consultant",
+    "computer forensics investigator",
+    "computer forensics expert",
+    "digital forensics analyst",
+    "digital forensics specialist",
+    "digital forensics experts",
+    "ICT forensics expert",
+    "digital forensic expert",
+    "cyber forensics expert",
+    "cybersecurity analyst",
+    "information forensics expert",
+    "cybersecurity and forensic specialist"
+   ],
+   "source": "esco",
+   "isco_group": 2529,
+   "esco_code": "2529.2",
+   "description": "Digital forensics experts retrieve and analyse information from computers and other types of data storage devices. They examine digital media that may have been hidden, encrypted or damaged, in a forensic manner with the aim to identify, preserve, recover, analyse and present facts and opinions about the digital information.",
+   "essential_skills": [
+    "digital data processing",
+    "computer forensics",
+    "check methods",
+    "ICT network security risks",
+    "ICT security standards",
+    "attack vectors",
+    "cyber attack counter-measures",
+    "security threats",
+    "audit techniques",
+    "security engineering",
+    "tools for ICT test automation",
+    "ICT security legislation",
+    "cyber security",
+    "levels of software testing",
+    "forensic intelligence",
+    "resource description framework query language",
+    "query languages",
+    "information confidentiality",
+    "ICT infrastructure",
+    "GDPR",
+    "penetration testing tool",
+    "operating systems",
+    "manage IT security compliances",
+    "gather data for forensic purposes",
+    "establish an ICT security prevention plan",
+    "provide ICT consulting advice",
+    "perform forensic preservations of digital devices",
+    "present evidence",
+    "develop information security strategy",
+    "use software for data preservation",
+    "use technology for forensics",
+    "use scripting programming",
+    "educate on data confidentiality",
+    "apply reverse engineering",
+    "manage data for legal matters",
+    "implement ICT network diagnostic tools",
+    "identify ICT system weaknesses",
+    "secure sensitive customer's information",
+    "perform ICT security testing",
+    "identify ICT security risks"
+   ],
+   "optional_skills": [
+    "Maltego",
+    "Cain and Abel (penetration testing tool)",
+    "hardware platforms",
+    "information security strategy",
+    "MDX",
+    "information architecture",
+    "OWASP ZAP",
+    "Nessus",
+    "XQuery",
+    "Metasploit",
+    "Aircrack (penetration testing tool)",
+    "Backbox (penetration testing tool)",
+    "SPARQL",
+    "Kali Linux",
+    "John The Ripper (penetration testing tool)",
+    "BlackArch",
+    "Wireshark",
+    "LDAP",
+    "data storage",
+    "legal requirements of ICT products",
+    "Parrot Security OS",
+    "Samurai Web Testing Framework",
+    "cloud technologies",
+    "LINQ",
+    "ICT encryption",
+    "hardware architectures",
+    "WhiteHat Sentinel",
+    "Nexpose",
+    "THC Hydra",
+    "N1QL",
+    "implement ICT security policies",
+    "design computer network",
+    "use different communication channels",
+    "perform data mining",
+    "analyse network configuration and performance",
+    "manage cloud data and storage",
+    "collect cyber defence data"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nice"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_legal"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "forensic"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D151",
+   "domain_name": "Criminology, Criminal Justice",
    "role_name": "police trainer",
    "also_known_as": [
     "law enforcement trainer",
@@ -16012,6 +16659,40 @@
   {
    "domain_id": "D151",
    "domain_name": "Criminology, Criminal Justice",
+   "role_name": "Digital Forensics Analysts",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "15-1299.06",
+   "isco_group": null,
+   "description": "Conduct investigations on computer-based crimes establishing documentary or physical evidence, such as digital media and logs associated with cyber intrusion incidents. Analyze digital evidence and investigate computer security incidents to derive information in support of system and network vulnerability mitigation. Preserve and present computer-related evidence in support of criminal, fraud, counterintelligence, or law enforcement investigations.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nice"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_legal"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "forensic"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D151",
+   "domain_name": "Criminology, Criminal Justice",
    "role_name": "Dispatchers, Except Police, Fire, and Ambulance",
    "also_known_as": [],
    "source": "onet",
@@ -16070,74 +16751,6 @@
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
      "correctional"
-    ],
-    "mapping_score": 4,
-    "region": "global_proxy"
-   },
-   "source_confidence": "medium",
-   "data_state": "source_backed"
-  },
-  {
-   "domain_id": "D151",
-   "domain_name": "Criminology, Criminal Justice",
-   "role_name": "First-Line Supervisors of Police and Detectives",
-   "also_known_as": [],
-   "source": "onet",
-   "onet_code": "33-1012.00",
-   "isco_group": null,
-   "description": "Directly supervise and coordinate activities of members of police force.",
-   "source_provenance": {
-    "sources": [
-     "global_esco",
-     "global_onet",
-     "global_isco",
-     "global_wef",
-     "global_nice"
-    ],
-    "context_sources": [
-     "ng_jobberman",
-     "ng_myjobmag",
-     "ng_nbs",
-     "ng_legal"
-    ],
-    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
-    "mapping_method": "curated_domain_source_family_title_anchor",
-    "matched_terms": [
-     "police"
-    ],
-    "mapping_score": 4,
-    "region": "global_proxy"
-   },
-   "source_confidence": "medium",
-   "data_state": "source_backed"
-  },
-  {
-   "domain_id": "D151",
-   "domain_name": "Criminology, Criminal Justice",
-   "role_name": "Forensic Science Technicians",
-   "also_known_as": [],
-   "source": "onet",
-   "onet_code": "19-4092.00",
-   "isco_group": null,
-   "description": "Collect, identify, classify, and analyze physical evidence related to criminal investigations. Perform tests on weapons or substances, such as fiber, hair, and tissue to determine significance to investigation. May testify as expert witnesses on evidence or crime laboratory techniques. May serve as specialists in area of expertise, such as ballistics, fingerprinting, handwriting, or biochemistry.",
-   "source_provenance": {
-    "sources": [
-     "global_esco",
-     "global_onet",
-     "global_isco",
-     "global_wef",
-     "global_nice"
-    ],
-    "context_sources": [
-     "ng_jobberman",
-     "ng_myjobmag",
-     "ng_nbs",
-     "ng_legal"
-    ],
-    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
-    "mapping_method": "curated_domain_source_family_title_anchor",
-    "matched_terms": [
-     "forensic"
     ],
     "mapping_score": 4,
     "region": "global_proxy"
@@ -20001,13 +20614,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20090,13 +20707,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20190,13 +20811,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20280,13 +20905,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20369,13 +20998,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20465,13 +21098,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20499,13 +21136,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20533,13 +21174,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -20567,13 +21212,17 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_sfia"
+     "global_sfia",
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
      "ng_myjobmag",
      "ng_nbs",
-     "ng_cpn"
+     "ng_cpn",
+     "ng_aviation",
+     "ng_engineering"
     ],
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
@@ -21178,12 +21827,12 @@
   {
    "domain_id": "D081",
    "domain_name": "Office Administration, Secretarial",
-   "role_name": "Library Assistants, Clerical",
+   "role_name": "Executive Secretaries and Executive Administrative Assistants",
    "also_known_as": [],
    "source": "onet",
-   "onet_code": "43-4121.00",
+   "onet_code": "43-6011.00",
    "isco_group": null,
-   "description": "Compile records, and sort, shelve, issue, and receive library materials such as books, electronic media, pictures, cards, slides and microfilm. Locate library materials for loan and replace material in shelving area, stacks, or files according to identification number and title. Register patrons to permit them to borrow books, periodicals, and other library materials.",
+   "description": "Provide high-level administrative support by conducting research, preparing statistical reports, and handling information requests, as well as performing routine administrative functions such as preparing correspondence, receiving visitors, arranging conference calls, and scheduling meetings. May also train and supervise lower-level clerical staff.",
    "source_provenance": {
     "sources": [
      "global_esco",
@@ -21202,9 +21851,9 @@
     "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
-     "clerical"
+     "administrative assistant"
     ],
-    "mapping_score": 4,
+    "mapping_score": 8,
     "region": "global_proxy"
    },
    "source_confidence": "medium",
@@ -21275,7 +21924,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_sfia"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -21298,6 +21948,41 @@
   {
    "domain_id": "D084",
    "domain_name": "Payroll, Bookkeeping",
+   "role_name": "New Accounts Clerks",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "43-4141.00",
+   "isco_group": null,
+   "description": "Interview persons desiring to open accounts in financial institutions. Explain account services available to prospective customers and assist them in preparing applications.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_business",
+     "ng_finance"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "accounts clerk"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D084",
+   "domain_name": "Payroll, Bookkeeping",
    "role_name": "Bookkeeping, Accounting, and Auditing Clerks",
    "also_known_as": [],
    "source": "onet",
@@ -21309,7 +21994,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_sfia"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -21343,7 +22029,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_sfia"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -21377,7 +22064,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_sfia"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -21468,7 +22156,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_icao_iata",
+     "global_driver_training"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -22787,6 +23477,78 @@
   {
    "domain_id": "D096",
    "domain_name": "Agricultural",
+   "role_name": "Farm Equipment Mechanics and Service Technicians",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "49-3041.00",
+   "isco_group": null,
+   "description": "Diagnose, adjust, repair, or overhaul farm machinery and vehicles, such as tractors, harvesters, dairy equipment, and irrigation systems.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_fao"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_engineering",
+     "ng_agriculture"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "equipment mechanic"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D096",
+   "domain_name": "Agricultural",
+   "role_name": "Mobile Heavy Equipment Mechanics, Except Engines",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "49-3042.00",
+   "isco_group": null,
+   "description": "Diagnose, adjust, repair, or overhaul mobile mechanical, hydraulic, and pneumatic equipment, such as cranes, bulldozers, graders, and conveyors, used in construction, logging, and mining.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_fao"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_engineering",
+     "ng_agriculture"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "equipment mechanic"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D096",
+   "domain_name": "Agricultural",
    "role_name": "Heavy and Tractor-Trailer Truck Drivers",
    "also_known_as": [],
    "source": "onet",
@@ -22935,7 +23697,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_built_environment"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -23027,7 +23790,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_built_environment"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -23123,7 +23887,8 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_built_environment"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -23139,6 +23904,113 @@
     ],
     "mapping_score": 21,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D099",
+   "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+   "role_name": "Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "47-3014.00",
+   "isco_group": null,
+   "description": "Help painters, paperhangers, plasterers, or stucco masons by performing duties requiring less skill. Duties include using, supplying, or holding materials or tools, and cleaning work area and equipment.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_built_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "mason",
+     "plasterer"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D099",
+   "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+   "role_name": "Plasterers and Stucco Masons",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "47-2161.00",
+   "isco_group": null,
+   "description": "Apply interior or exterior plaster, cement, stucco, or similar materials. May also set ornamental plaster.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_built_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "mason",
+     "plasterer"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D099",
+   "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+   "role_name": "Cement Masons and Concrete Finishers",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "47-2051.00",
+   "isco_group": null,
+   "description": "Smooth and finish surfaces of poured concrete, such as floors, walks, sidewalks, roads, or curbs using a variety of hand and power tools. Align forms for sidewalks, curbs, or gutters; patch voids; and use saws to cut expansion joints.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_built_environment"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_built_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "mason"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -23823,7 +24695,9 @@
      "global_esco",
      "global_onet",
      "global_isco",
-     "global_wef"
+     "global_wef",
+     "global_creative",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -23839,6 +24713,42 @@
     ],
     "mapping_score": 17,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D105",
+   "domain_name": "Handicraft, Basketry, Textile Craft",
+   "role_name": "Potters, Manufacturing",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "51-9195.05",
+   "isco_group": null,
+   "description": "Operate production machines such as pug mill, jigger machine, or potter's wheel to process clay in manufacture of ceramic, pottery and stoneware products.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_creative",
+     "global_unesco"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_nbte",
+     "ng_creative"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "potter"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -27236,10 +28146,167 @@
     "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
+     "radiograph*",
      "nuclear medicine radiographer"
     ],
-    "mapping_score": 19,
+    "mapping_score": 23,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "role_name": "diagnostic radiographer",
+   "also_known_as": [
+    "expert diagnostic radiographer",
+    "practitioner of diagnostic radiography",
+    "senior diagnostic radiographer",
+    "specialist diagnostic radiographer",
+    "radiologic technologist",
+    "diagnostic imaging radiographer",
+    "diagnostic radiography practitioner",
+    "diagnostic imaging radiology technologist"
+   ],
+   "source": "esco",
+   "isco_group": 2269,
+   "esco_code": "2269.8.1",
+   "description": "Diagnostic radiographers plan, prepare and perform diagnostic imaging examinations and post processing, with a wide range of equipment and techniques using X-rays, strong magnetic fields or Magnetic Resonance Imaging (MRI) and high frequency sound (Ultrasound).",
+   "essential_skills": [
+    "hygiene in a health care setting",
+    "pharmaceutical products",
+    "health care legislation",
+    "medical terminology",
+    "health care occupation-specific ethics",
+    "radiation physics in healthcare",
+    "human physiology",
+    "evidence-based radiography practice",
+    "medical contrast agents",
+    "radiobiology",
+    "paediatrics",
+    "human anatomy",
+    "medical oncology",
+    "radiation protection",
+    "first aid",
+    "respond to changing situations in health care",
+    "provide psychological support to patients",
+    "contribute to continuity of health care",
+    "conduct cancer screening tests",
+    "prepare for diagnostic imaging procedures",
+    "perform bronchoscopy",
+    "empathise with the healthcare user",
+    "evaluate delivery of radiation treatment",
+    "analyse X-ray imagery",
+    "apply radiation protection procedures",
+    "maintain imaging equipment",
+    "manage radiology information system",
+    "assess radiation response",
+    "manage healthcare users' data",
+    "deal with emergency care situations",
+    "conduct preoperative investigations",
+    "perform diagnostic imaging procedures",
+    "communicate in healthcare",
+    "follow clinical guidelines",
+    "apply medical imaging techniques",
+    "operate medical imaging equipment",
+    "comply with quality standards related to healthcare practice",
+    "comply with legislation related to health care",
+    "listen actively",
+    "determine medical images' diagnostic suitability",
+    "apply radiological health sciences",
+    "post-process medical images",
+    "interact with healthcare users",
+    "ensure safety of healthcare users",
+    "determine imaging techniques to be performed",
+    "adhere to organisational code of ethics",
+    "apply organisational techniques",
+    "determine patient's exposure factors",
+    "ensure compliance with radiation protection regulations",
+    "use treatment verification systems",
+    "apply context specific clinical competences",
+    "work in multidisciplinary health teams",
+    "undertake post-examination activities",
+    "calculate exposure to radiation",
+    "prepare patients for imaging procedures"
+   ],
+   "optional_skills": [
+    "psychology",
+    "development trends in radiography",
+    "interpret medical images",
+    "conduct video telemetry",
+    "determine eye disease progression",
+    "perform clinical research in radiography",
+    "identify progression of disease",
+    "administer contrast media",
+    "conduct health related research",
+    "perform ultrasound",
+    "report on radiological examinations",
+    "use foreign languages for health-related research",
+    "conduct radiotherapy computer planning",
+    "use foreign languages in patient care",
+    "use obstetric sonography",
+    "Interpret diagnostic procedures for vascular surgery"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_health",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_health",
+     "ng_nnra"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "radiograph*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "role_name": "Diagnostic Medical Sonographers",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "29-2032.00",
+   "isco_group": null,
+   "description": "Produce ultrasonic recordings of internal organs for use by physicians. Includes vascular technologists.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_health",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_health",
+     "ng_nnra"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "sonograph*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -28555,7 +29622,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -28646,7 +29714,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -28748,7 +29817,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -28832,7 +29902,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -28930,7 +30001,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -28966,7 +30038,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -29002,7 +30075,8 @@
      "global_onet",
      "global_isco",
      "global_wef",
-     "global_icao_iata"
+     "global_icao_iata",
+     "global_unesco"
     ],
     "context_sources": [
      "ng_jobberman",
@@ -30035,6 +31109,317 @@
     ],
     "mapping_score": 21,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D166",
+   "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+   "role_name": "robotics engineer",
+   "also_known_as": [
+    "automation systems engineer",
+    "robotics engineering adviser",
+    "autonomous systems engineer",
+    "robotic technology engineering specialist",
+    "robotics engineering expert",
+    "robotic engineer",
+    "engineer of robotics",
+    "control systems engineer",
+    "robotics engineering consultant",
+    "robotic technology engineer",
+    "engineer of robotic systems",
+    "robotics engineering specialist",
+    "robotic technology engineering consultant",
+    "robotic technology engineering expert",
+    "robotic technology engineering adviser",
+    "robotic systems engineer",
+    "engineer in robotics"
+   ],
+   "source": "esco",
+   "isco_group": 2149,
+   "esco_code": "2149.15",
+   "description": "Robotics engineers design and develop robotic devices and applications in combination with mechanical engineering principles. They use pre-established designs and current developments for improving or inventing systems, machinery and equipment. They combine several knowledge fields such as computing, engineering, and electronics in the development of new engineering applications.",
+   "essential_skills": [
+    "human-robot collaboration",
+    "engineering principles",
+    "technical drawings",
+    "automatic control system",
+    "engineering processes",
+    "robotic components",
+    "mechanical engineering",
+    "robotics",
+    "mechanics",
+    "adjust engineering designs",
+    "develop computer vision system",
+    "perform scientific research",
+    "use technical drawing software",
+    "execute feasibility study",
+    "assess financial viability",
+    "approve engineering design",
+    "design automation components"
+   ],
+   "optional_skills": [
+    "model based system engineering",
+    "manufacturing processes",
+    "electrical engineering",
+    "safety engineering",
+    "design principles",
+    "computer engineering",
+    "microprocessors",
+    "electronics",
+    "industrial engineering",
+    "state estimation",
+    "mechatronics",
+    "product data management",
+    "industrial research and development",
+    "keep up with digital transformation of industrial processes",
+    "debug software",
+    "record test data",
+    "create software design",
+    "perform test run",
+    "apply advanced manufacturing",
+    "create technical plans",
+    "calibrate mechatronic instruments",
+    "test mechatronic units",
+    "maintain robotic equipment",
+    "use CAM software",
+    "assemble robots",
+    "analyse test data",
+    "follow standards for machinery safety",
+    "advise on machinery malfunctions",
+    "simulate mechatronic design concepts",
+    "draft design specifications",
+    "use CAD software",
+    "design prototypes",
+    "conduct performance tests",
+    "assemble mechatronic units",
+    "prepare production prototypes",
+    "control production"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "global_xr"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_aviation_maritime",
+     "ng_cpn"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "robot*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D166",
+   "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+   "role_name": "robotics engineering technician",
+   "also_known_as": [
+    "robotics engineering technologist",
+    "robot technician",
+    "technician in robotic systems",
+    "robot technologist",
+    "automation control engineering inspector",
+    "robotics inspector",
+    "technologist in robotics",
+    "robotics technician",
+    "robot engineering inspector",
+    "automation engineering inspector",
+    "robot engineering technologist",
+    "robotic systems technician",
+    "technologist in robotics engineering",
+    "robotics technologist",
+    "robotics mechanic",
+    "robotics systems technologist",
+    "technician in robotics engineering",
+    "robot inspector",
+    "technician in robotics",
+    "robotics engineering mechanic"
+   ],
+   "source": "esco",
+   "isco_group": 3119,
+   "esco_code": "3119.2.1",
+   "description": "Robotics engineering technicians collaborate with engineers in the development of robotic devices and applications through a combination of mechanical engineering, electronic engineering, and computer engineering. Robotics engineering technicians build, test, install and calibrate robotic equipment.",
+   "essential_skills": [
+    "design drawings",
+    "electrical engineering",
+    "mathematics",
+    "physics",
+    "automatic control system",
+    "robotic components",
+    "electronics",
+    "control engineering",
+    "mechatronics",
+    "robotics",
+    "automation technology",
+    "monitor machine operations",
+    "inspect quality of products",
+    "read assembly drawings",
+    "record test data",
+    "adjust engineering designs",
+    "perform test run",
+    "develop computer vision system",
+    "align components",
+    "test mechatronic units",
+    "assemble robots",
+    "follow standards for machinery safety",
+    "set up machine controls",
+    "read engineering drawings",
+    "liaise with engineers",
+    "fasten components",
+    "assist scientific research",
+    "prepare production prototypes",
+    "set up automotive robot"
+   ],
+   "optional_skills": [
+    "safety engineering",
+    "programmable logic controller",
+    "hydraulics",
+    "sensors",
+    "transmission technology",
+    "computer science",
+    "power electronics",
+    "computer engineering",
+    "mechanical engineering",
+    "hybrid control systems",
+    "CAD software",
+    "electric drives",
+    "pneumatics",
+    "optoelectronics",
+    "keep up with digital transformation of industrial processes",
+    "communicate with customers",
+    "resolve equipment malfunctions",
+    "assemble hardware components",
+    "customise software for drive system",
+    "calibrate mechatronic instruments",
+    "maintain robotic equipment",
+    "use CAM software",
+    "integrate new products in manufacturing",
+    "examine engineering principles",
+    "write technical reports",
+    "simulate mechatronic design concepts",
+    "use CAD software",
+    "apply technical communication skills",
+    "install software",
+    "replace machines",
+    "keep records of work progress",
+    "perform project management",
+    "program firmware",
+    "assemble mechatronic units"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "global_xr"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_aviation_maritime",
+     "ng_cpn"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "robot*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D166",
+   "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+   "role_name": "Robotics Engineers",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-2199.08",
+   "isco_group": null,
+   "description": "Research, design, develop, or test robotic applications.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "global_xr"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_aviation_maritime",
+     "ng_cpn"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "robot*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D166",
+   "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+   "role_name": "Robotics Technicians",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-3024.01",
+   "isco_group": null,
+   "description": "Build, install, test, or maintain robotic equipment or related automated production systems.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_sfia",
+     "global_xr"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_aviation_maritime",
+     "ng_cpn"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "robot*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -31856,6 +33241,98 @@
   {
    "domain_id": "D137",
    "domain_name": "Medical Physics, Radiation Therapy",
+   "role_name": "medical physics expert",
+   "also_known_as": [
+    "MPE",
+    "medical radiation physics expert",
+    "patients radiation protection optimisation expert",
+    "dosimetry expert",
+    "medical radiation physics specialist",
+    "medical physics specialist"
+   ],
+   "source": "esco",
+   "isco_group": 2269,
+   "esco_code": "2269.3",
+   "description": "Medical physics experts advice on matters related to radiation physics applied to medical exposure. They are responsible for dosimetry and the optimisation of the radiation protection of patients and other individuals subjected to medical exposure, including the application and use of diagnostic reference levels. Medical physics experts are involved in the selection of medical radiological equipment, the quality assurance including acceptance testing, the preparation of technical specifications, and the installation, design and surveillance of the medical radiological installations. They also ",
+   "essential_skills": [
+    "radiology",
+    "mathematics",
+    "radiation physics in healthcare",
+    "laboratory techniques",
+    "dosimetric planning",
+    "health technology assessment",
+    "densiometry",
+    "medical devices",
+    "medical laboratory technology",
+    "radiation protection",
+    "scientific research methodology",
+    "test medical devices",
+    "contribute to continuity of health care",
+    "evaluate delivery of radiation treatment",
+    "apply radiation protection procedures",
+    "assess radiation response",
+    "perform transcranial magnetic stimulation",
+    "develop radiation protection strategies",
+    "follow clinical guidelines",
+    "apply scientific methods",
+    "advise on medical device features",
+    "comply with quality standards related to healthcare practice",
+    "comply with legislation related to health care",
+    "perform dosimetry measurements",
+    "use measurement instruments",
+    "monitor radiation levels",
+    "ensure safety of healthcare users",
+    "measure physical phenomena in healthcare",
+    "ensure compliance with radiation protection regulations",
+    "use treatment verification systems",
+    "calculate exposure to radiation",
+    "maintain medical devices"
+   ],
+   "optional_skills": [
+    "contamination exposure regulations",
+    "general medicine",
+    "statistics",
+    "cancer risks",
+    "perform laboratory tests",
+    "execute analytical mathematical calculations",
+    "teach medical science",
+    "analyse experimental laboratory data",
+    "conduct health related research",
+    "operate scientific measuring equipment",
+    "implant brachytherapy treatments",
+    "work in multidisciplinary health teams"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nnra",
+     "ng_health"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "medical physic"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D137",
+   "domain_name": "Medical Physics, Radiation Therapy",
    "role_name": "nuclear medicine radiographer",
    "also_known_as": [
     "nuclear medicine technologist"
@@ -32480,6 +33957,92 @@
   {
    "domain_id": "D138",
    "domain_name": "Biomedical Engineering",
+   "role_name": "prosthetic-orthotics technician",
+   "also_known_as": [
+    "orthopaedic appliance maker",
+    "prosthetics maker",
+    "prosthetic brace maker",
+    "prosthetic devices maker",
+    "orthopaedic technician",
+    "orthotic and prosthetic technician",
+    "prosthetics assembler",
+    "O&P technician",
+    "orthotic appliance maker",
+    "prosthetic appliance maker",
+    "orthotic technician",
+    "prosthetic support maker",
+    "surgical appliance technician",
+    "surgical appliance maker",
+    "orthotics technician"
+   ],
+   "source": "esco",
+   "isco_group": 2269,
+   "esco_code": "2269.15",
+   "description": "Prosthetic-orthotics technicians design, create, fit and repair supportive devices, such as braces, joints, arch supports, and other surgical and medical appliances.",
+   "essential_skills": [
+    "prosthetic devices",
+    "human anatomy",
+    "types of orthopedic supplies",
+    "biomedical engineering",
+    "orthotic devices",
+    "prosthetic-orthotic device materials",
+    "manipulate plastic",
+    "manipulate metal",
+    "manipulate wood",
+    "repair prosthetic-orthotic devices",
+    "use technical drawing software",
+    "finish prosthetic-orthotic devices",
+    "interpret prescriptions",
+    "maintain prosthetic-orthotic devices",
+    "test prosthetic-orthotic devices",
+    "manufacture prosthetic-orthotic devices",
+    "repair orthopedic goods"
+   ],
+   "optional_skills": [
+    "use of special equipment for daily activities",
+    "musculoskeletal anatomy",
+    "orthopaedic goods industry",
+    "biomedical techniques",
+    "prosthetic-orthotic examination",
+    "order supplies",
+    "recommend orthopedic goods to customers depending on their condition",
+    "advise on medical device features",
+    "comply with legislation related to health care",
+    "maintain prosthetic-orthotic laboratory equipment",
+    "design objects to be crafted",
+    "use casts of body parts"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_health"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "prosthetic",
+     "orthotic"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D138",
+   "domain_name": "Biomedical Engineering",
    "role_name": "biomedical scientist",
    "also_known_as": [
     "biomedical doctor",
@@ -32771,91 +34334,6 @@
   {
    "domain_id": "D138",
    "domain_name": "Biomedical Engineering",
-   "role_name": "prosthetic-orthotics technician",
-   "also_known_as": [
-    "orthopaedic appliance maker",
-    "prosthetics maker",
-    "prosthetic brace maker",
-    "prosthetic devices maker",
-    "orthopaedic technician",
-    "orthotic and prosthetic technician",
-    "prosthetics assembler",
-    "O&P technician",
-    "orthotic appliance maker",
-    "prosthetic appliance maker",
-    "orthotic technician",
-    "prosthetic support maker",
-    "surgical appliance technician",
-    "surgical appliance maker",
-    "orthotics technician"
-   ],
-   "source": "esco",
-   "isco_group": 2269,
-   "esco_code": "2269.15",
-   "description": "Prosthetic-orthotics technicians design, create, fit and repair supportive devices, such as braces, joints, arch supports, and other surgical and medical appliances.",
-   "essential_skills": [
-    "prosthetic devices",
-    "human anatomy",
-    "types of orthopedic supplies",
-    "biomedical engineering",
-    "orthotic devices",
-    "prosthetic-orthotic device materials",
-    "manipulate plastic",
-    "manipulate metal",
-    "manipulate wood",
-    "repair prosthetic-orthotic devices",
-    "use technical drawing software",
-    "finish prosthetic-orthotic devices",
-    "interpret prescriptions",
-    "maintain prosthetic-orthotic devices",
-    "test prosthetic-orthotic devices",
-    "manufacture prosthetic-orthotic devices",
-    "repair orthopedic goods"
-   ],
-   "optional_skills": [
-    "use of special equipment for daily activities",
-    "musculoskeletal anatomy",
-    "orthopaedic goods industry",
-    "biomedical techniques",
-    "prosthetic-orthotic examination",
-    "order supplies",
-    "recommend orthopedic goods to customers depending on their condition",
-    "advise on medical device features",
-    "comply with legislation related to health care",
-    "maintain prosthetic-orthotic laboratory equipment",
-    "design objects to be crafted",
-    "use casts of body parts"
-   ],
-   "source_provenance": {
-    "sources": [
-     "global_esco",
-     "global_onet",
-     "global_isco",
-     "global_wef",
-     "global_nuclear",
-     "global_health"
-    ],
-    "context_sources": [
-     "ng_jobberman",
-     "ng_myjobmag",
-     "ng_nbs",
-     "ng_engineering",
-     "ng_health"
-    ],
-    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
-    "mapping_method": "curated_domain_source_family_title_anchor",
-    "matched_terms": [
-     "prosthetic"
-    ],
-    "mapping_score": 17,
-    "region": "global"
-   },
-   "source_confidence": "medium",
-   "data_state": "source_backed"
-  },
-  {
-   "domain_id": "D138",
-   "domain_name": "Biomedical Engineering",
    "role_name": "specialist biomedical scientist",
    "also_known_as": [
     "specialist in biomedical research",
@@ -33002,6 +34480,421 @@
   {
    "domain_id": "D144",
    "domain_name": "Climate Science, Meteorology",
+   "role_name": "hydrologist",
+   "also_known_as": [
+    "hydrological engineer",
+    "surface hydrologist",
+    "hydrology research analyst",
+    "hydrology researcher",
+    "hydrology scientist",
+    "hydrology analyst",
+    "hydrology science researcher",
+    "hydrobiologist",
+    "hydrologists",
+    "water analysis specialist",
+    "hydrology research scientist"
+   ],
+   "source": "esco",
+   "isco_group": 2114,
+   "esco_code": "2114.1.5",
+   "description": "Hydrologists research and study the quality, current challenges, and distribution of water in the Earth. They study water supply from rivers, streams, and springs to determine their adequate and sustainable use. Together with a cross functional team of professionals, they plan and develop how water can be supplied to cities and urban areas while ensuring efficiency and resource conservation.",
+   "essential_skills": [
+    "environmental policy",
+    "water policies",
+    "hydrology",
+    "scientific literature",
+    "statistics",
+    "watershed development",
+    "scientific modelling",
+    "geography",
+    "scientific research methodology",
+    "draft scientific or academic papers and technical documentation",
+    "manage land resources permits",
+    "ensure compliance with environmental legislation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "operate open source software",
+    "speak different languages",
+    "apply statistical analysis techniques",
+    "evaluate research activities",
+    "demonstrate disciplinary expertise",
+    "increase the impact of science on policy and society",
+    "manage findable accessible interoperable and reusable data",
+    "perform scientific research",
+    "develop environmental policy",
+    "manage intellectual property rights",
+    "apply for research funding",
+    "develop water purification methods",
+    "apply scientific methods",
+    "apply research ethics and scientific integrity principles in research activities",
+    "promote open innovation in research",
+    "publish academic research",
+    "promote the transfer of knowledge",
+    "think abstractly",
+    "mentor individuals",
+    "manage personal professional development",
+    "write scientific publications",
+    "operate scientific measuring equipment",
+    "develop professional network with researchers and scientists",
+    "integrate gender dimension in research",
+    "perform project management",
+    "manage open publications",
+    "synthesise information",
+    "conduct research across disciplines",
+    "promote the participation of citizens in scientific and research activities",
+    "communicate with a non-scientific audience"
+   ],
+   "optional_skills": [
+    "microbiology-bacteriology",
+    "habitat restoration",
+    "botany",
+    "fish identification and classification",
+    "oceanography",
+    "geology",
+    "soil science",
+    "coastal management",
+    "environmental design",
+    "perform laboratory tests",
+    "conduct sediment control",
+    "write research proposals",
+    "manage water quality testing",
+    "advise on soil and water protection",
+    "collect samples for analysis",
+    "plan water resource development",
+    "teach in academic or vocational contexts",
+    "advise on pollution prevention",
+    "carry out waste water treatment",
+    "report test findings",
+    "develop flood remediation strategies",
+    "analyse environmental data",
+    "test samples for pollutants",
+    "conduct erosion control",
+    "promote environmental awareness",
+    "develop scientific research protocols",
+    "apply blended learning",
+    "advise on environmental remediation",
+    "identify risk of flooding",
+    "conduct field work",
+    "monitor water quality",
+    "develop environmental remediation strategies",
+    "design scientific equipment",
+    "report on environmental issues"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hydrolog*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "meteorology technician",
+   "also_known_as": [
+    "atmospheric scientist",
+    "weather forecaster",
+    "weather service specialist",
+    "meteorological instrumentation technician",
+    "meteorologist",
+    "climatological technician",
+    "MET tower installation technician",
+    "metrologist assistant",
+    "weather station operator",
+    "meteorological researcher",
+    "MET services technician",
+    "meteorological technician",
+    "wind technician",
+    "aviation meteorology technician",
+    "electronics technician",
+    "atmospheric scientist technician"
+   ],
+   "source": "esco",
+   "isco_group": 3111,
+   "esco_code": "3111.8",
+   "description": "Meteorology technicians collect large amounts of meteorological information for weather information users such as aviation companies or meteorological institutions. They operate specialised measuring instruments to make accurate weather predictions and report their observations. Meteorology technicians assist meteorologists in their scientific operations.",
+   "essential_skills": [
+    "mathematics",
+    "meteorology",
+    "precision measuring instruments",
+    "climatology",
+    "operate remote sensing equipment",
+    "collect weather-related data",
+    "use specialised computer models for weather forecasting",
+    "use meteorological tools to forecast meteorological conditions",
+    "execute analytical mathematical calculations",
+    "apply statistical analysis techniques",
+    "operate precision measuring equipment",
+    "use geographic information systems",
+    "calibrate optical instruments",
+    "perform scientific research",
+    "review meteorological forecast data",
+    "operate meteorological instruments",
+    "use communication devices",
+    "apply scientific methods",
+    "meet deadlines",
+    "write technical reports",
+    "carry out meteorological research",
+    "assist scientific research"
+   ],
+   "optional_skills": [
+    "statistics",
+    "scientific research methodology",
+    "advise on weather-related issues",
+    "analyse scientific data",
+    "conduct research on climate processes",
+    "maintain equipment",
+    "manage meteorological database",
+    "study aerial photos",
+    "analyse weather forecast",
+    "write scientific publications",
+    "create weather maps",
+    "write weather briefing",
+    "design scientific equipment"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "meteorolog*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "oceanographer",
+   "also_known_as": [
+    "marine geologist",
+    "marine physicist",
+    "oceanography scientist",
+    "oceanography science researcher",
+    "oceanographers",
+    "oceanography research scientist",
+    "marine chemist",
+    "oceanography analyst",
+    "oceanography research analyst",
+    "marine research scientist",
+    "oceanography researcher"
+   ],
+   "source": "esco",
+   "isco_group": 2114,
+   "esco_code": "2114.1.8",
+   "description": "Oceanographers study and perform research on matters related to the sea and oceans. Oceanographers divide their expertise in different branches of research which are physical oceanographers whose research focus on waves and tides, chemical oceanographers whose study address the chemical constitution of sea waters, and geological oceanographer whose research refers to the bottom of seas and their plaques.",
+   "essential_skills": [
+    "mathematics",
+    "physics",
+    "oceanography",
+    "statistics",
+    "geology",
+    "scientific modelling",
+    "scientific research methodology",
+    "draft scientific or academic papers and technical documentation",
+    "manage research data",
+    "interact professionally in research and professional environments",
+    "disseminate results to the scientific community",
+    "operate open source software",
+    "speak different languages",
+    "execute analytical mathematical calculations",
+    "apply statistical analysis techniques",
+    "evaluate research activities",
+    "demonstrate disciplinary expertise",
+    "increase the impact of science on policy and society",
+    "manage findable accessible interoperable and reusable data",
+    "perform scientific research",
+    "manage intellectual property rights",
+    "apply for research funding",
+    "apply scientific methods",
+    "apply research ethics and scientific integrity principles in research activities",
+    "promote open innovation in research",
+    "gather experimental data",
+    "publish academic research",
+    "promote the transfer of knowledge",
+    "think abstractly",
+    "mentor individuals",
+    "manage personal professional development",
+    "use measurement instruments",
+    "write scientific publications",
+    "operate scientific measuring equipment",
+    "develop professional network with researchers and scientists",
+    "integrate gender dimension in research",
+    "perform project management",
+    "manage open publications",
+    "synthesise information",
+    "conduct research across disciplines",
+    "promote the participation of citizens in scientific and research activities",
+    "communicate with a non-scientific audience"
+   ],
+   "optional_skills": [
+    "cartography",
+    "geographic information systems",
+    "aquatic ecology",
+    "environmental legislation",
+    "geophysics",
+    "meteorology",
+    "biology",
+    "coastal management",
+    "environmental engineering",
+    "remote sensing techniques",
+    "chemistry",
+    "operate remote sensing equipment",
+    "perform laboratory tests",
+    "write research proposals",
+    "use geographic information systems",
+    "conduct research on climate processes",
+    "collect samples for analysis",
+    "teach in academic or vocational contexts",
+    "develop scientific theories",
+    "perform diving interventions",
+    "apply digital mapping",
+    "conduct underwater surveys",
+    "apply blended learning",
+    "conduct field work",
+    "assist scientific research",
+    "design scientific equipment"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "oceanograph*"
+    ],
+    "mapping_score": 17,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Atmospheric and Space Scientists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-2021.00",
+   "isco_group": null,
+   "description": "Investigate atmospheric phenomena and interpret meteorological data, gathered by surface and air stations, satellites, and radar to prepare reports and forecasts for public and other uses. Includes weather analysts and forecasters whose functions require the detailed knowledge of meteorology.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "atmospher*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "25-1051.00",
+   "isco_group": null,
+   "description": "Teach courses in the physical sciences, except chemistry and physics. Includes both teachers primarily engaged in teaching, and those who do a combination of teaching and research.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "atmospher*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
    "role_name": "Climate Change Policy Analysts",
    "also_known_as": [],
    "source": "onet",
@@ -33028,6 +34921,150 @@
     "mapping_method": "curated_domain_source_family_title_anchor",
     "matched_terms": [
      "climate"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Geological Technicians, Except Hydrologic Technicians",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-4043.00",
+   "isco_group": null,
+   "description": "Assist scientists or engineers in the use of electronic, sonic, or nuclear measuring instruments in laboratory, exploration, and production activities to obtain data indicating resources such as metallic ore, minerals, gas, coal, or petroleum. Analyze mud and drill cuttings. Chart pressure, temperature, and other characteristics of wells or bore holes.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hydrolog*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Geoscientists, Except Hydrologists and Geographers",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-2042.00",
+   "isco_group": null,
+   "description": "Study the composition, structure, and other physical aspects of the Earth. May use geological, physics, and mathematics knowledge in exploration for oil, gas, minerals, or underground water; or in waste disposal, land reclamation, or other environmental problems. May study the Earth's internal composition, atmospheres, and oceans, and its magnetic, electrical, and gravitational forces. Includes mineralogists, paleontologists, stratigraphers, geodesists, and seismologists.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hydrolog*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Hydrologic Technicians",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-4044.00",
+   "isco_group": null,
+   "description": "Collect and organize data concerning the distribution and circulation of ground and surface water, and data on its physical, chemical, and biological properties. Measure and report on flow rates and ground water levels, maintain field equipment, collect water samples, install and collect sampling equipment, and process samples for shipment to testing laboratories. May collect data on behalf of hydrologists, engineers, developers, government agencies, or agriculture.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hydrolog*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D144",
+   "domain_name": "Climate Science, Meteorology",
+   "role_name": "Hydrologists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-2043.00",
+   "isco_group": null,
+   "description": "Research the distribution, circulation, and physical properties of underground and surface waters; and study the form and intensity of precipitation and its rate of infiltration into the soil, movement through the earth, and return to the ocean and atmosphere.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nimet",
+     "ng_environment"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "hydrolog*"
     ],
     "mapping_score": 4,
     "region": "global_proxy"
@@ -33226,6 +35263,449 @@
    "data_state": "source_backed"
   },
   {
+   "domain_id": "D145",
+   "domain_name": "Neuroscience, Cognitive Science",
+   "role_name": "Clinical Neuropsychologists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-3039.03",
+   "isco_group": null,
+   "description": "Assess and diagnose patients with neurobehavioral problems related to acquired or developmental disorders of the nervous system, such as neurodegenerative disorders, traumatic brain injury, seizure disorders, and learning disabilities. Recommend treatment after diagnosis, such as therapy, medication, or surgery. Assist with evaluation before and after neurosurgical procedures, such as deep brain stimulation.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_health",
+     "ng_education"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "neuropsych*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D145",
+   "domain_name": "Neuroscience, Cognitive Science",
+   "role_name": "Neurologists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "29-1217.00",
+   "isco_group": null,
+   "description": "Diagnose, manage, and treat disorders and diseases of the brain, spinal cord, and peripheral nerves, with a primarily nonsurgical focus.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_health",
+     "ng_education"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "neurolog*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D145",
+   "domain_name": "Neuroscience, Cognitive Science",
+   "role_name": "Neuropsychologists",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "19-3039.02",
+   "isco_group": null,
+   "description": "Apply theories and principles of neuropsychology to evaluate and diagnose disorders of higher cerebral functioning, often in research and medical settings. Study the human brain and the effect of physiological states on human cognition and behavior. May formulate and administer programs of treatment.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear",
+     "global_health"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_health",
+     "ng_education"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "neuropsych*"
+    ],
+    "mapping_score": 4,
+    "region": "global_proxy"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "role_name": "materials engineer",
+   "also_known_as": [
+    "construction materials engineering expert",
+    "materials engineering consultant",
+    "building materials engineering consultant",
+    "ceramic engineer",
+    "building materials engineer",
+    "construction materials engineer",
+    "materials engineering adviser",
+    "material engineer",
+    "battery materials engineer",
+    "construction materials engineering adviser",
+    "advanced materials engineer",
+    "building materials engineering expert",
+    "construction materials engineering specialist",
+    "materials engineering expert",
+    "building materials engineering adviser",
+    "construction materials engineering consultant",
+    "materials engineering specialist",
+    "building materials engineering specialist"
+   ],
+   "source": "esco",
+   "isco_group": 2149,
+   "esco_code": "2149.11",
+   "description": "Materials engineers research and design new or improved materials for a diverse number of applications. They analyse the composition of materials, conduct experiments, and develop new materials for industry-specific use that can range from rubber, to textiles, glass, metals, and chemicals. They advise companies in damage assessments, quality assurance of materials, and recycling of materials.",
+   "essential_skills": [
+    "analytical chemistry",
+    "engineering principles",
+    "material mechanics",
+    "manufacturing processes",
+    "materials engineering",
+    "engineering processes",
+    "composite materials",
+    "chemistry",
+    "advanced materials",
+    "sustainable building materials",
+    "integrated design",
+    "thermoplastic materials",
+    "create solutions to problems",
+    "test materials",
+    "forecast organisational risks",
+    "adjust engineering designs",
+    "perform scientific research",
+    "perform chemical experiments",
+    "develop material testing procedures",
+    "integrate new products in manufacturing",
+    "work with chemicals",
+    "develop advanced materials",
+    "test chemical samples",
+    "apply health and safety standards",
+    "assess environmental impact",
+    "analyse production processes for improvement",
+    "approve engineering design"
+   ],
+   "optional_skills": [
+    "properties of textile materials",
+    "pollution legislation",
+    "envelope systems for buildings",
+    "types of metal",
+    "laboratory techniques",
+    "quality standards",
+    "rubber technology",
+    "types of plastic",
+    "green chemistry",
+    "electricity",
+    "semiconductors",
+    "mechanics",
+    "basic chemicals",
+    "perform laboratory tests",
+    "assess the feasibility of implementing developments",
+    "develop chemical products",
+    "advise on pollution prevention",
+    "define quality standards",
+    "design prototypes",
+    "advise on waste management procedures"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nbte"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "material engineer"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "role_name": "microelectronics materials engineer",
+   "also_known_as": [
+    "microelectronics materials technology engineering specialist",
+    "engineer in microelectronics materials",
+    "microelectronics materials engineering adviser",
+    "microelectronics materials engineering specialist",
+    "specialist microelectronics materials engineer",
+    "microelectronics materials engineering expert",
+    "engineer specialised in microelectronics materials",
+    "microelectronics materials technology engineering consultant",
+    "microelectronics materials development engineer",
+    "microelectronics materials design engineer",
+    "engineer of microelectronics materials",
+    "microelectronics materials engineering consultant",
+    "microelectronics materials technology engineering expert",
+    "microelectronics materials designer",
+    "microelectronics materials technology engineer",
+    "microelectronics materials developer"
+   ],
+   "source": "esco",
+   "isco_group": 2152,
+   "esco_code": "2152.1.8",
+   "description": "Microelectronics materials engineers design, develop and supervise the production of materials that are required for microelectronics and microelectromechanical systems (MEMS), and are able to apply them in these devices, appliances, products. They aid the design of microelectronics with physical and chemical knowledge about metals, semiconductors, ceramics, polymers, and composite materials. They conduct research on material structures, perform analysis, investigate failure mechanisms, and supervise research works.",
+   "essential_skills": [
+    "data mining",
+    "manufacturing processes",
+    "machine learning",
+    "electrical engineering",
+    "emergent technologies",
+    "mathematics",
+    "microelectronics",
+    "microsystem test procedures",
+    "hazardous waste treatment",
+    "artificial neural networks",
+    "hazardous waste types",
+    "characteristics of waste",
+    "materials engineering",
+    "physics",
+    "environmental legislation",
+    "sensors",
+    "types of metal",
+    "environmental threats",
+    "electronics",
+    "mechanical engineering",
+    "types of plastic",
+    "microassembly",
+    "precision measuring instruments",
+    "nanomaterials",
+    "chemistry",
+    "principles of artificial intelligence",
+    "semiconductors",
+    "basic chemicals",
+    "data models",
+    "test materials",
+    "perform laboratory tests",
+    "inspect semiconductor components",
+    "apply soldering techniques",
+    "test microelectromechanical systems",
+    "join metals",
+    "perform data analysis",
+    "develop hazardous waste management strategies",
+    "record test data",
+    "apply statistical analysis techniques",
+    "dispose of soldering waste",
+    "perform data mining",
+    "analyse big data",
+    "perform chemical experiments",
+    "analyse test data",
+    "work with chemicals",
+    "manage data",
+    "read engineering drawings",
+    "abide by regulations on banned materials",
+    "report analysis results",
+    "use specific data analysis software"
+   ],
+   "optional_skills": [
+    "electricity principles",
+    "material mechanics",
+    "precision mechanics",
+    "engineering processes",
+    "composite materials",
+    "CAE software",
+    "laboratory techniques",
+    "quality standards",
+    "nanotechnology",
+    "microoptics",
+    "micromechanics",
+    "optoelectronics",
+    "microsensors",
+    "conduct literature research",
+    "adjust engineering designs",
+    "define manufacturing quality criteria",
+    "advise on pollution prevention",
+    "perform scientific research",
+    "use technical drawing software",
+    "create technical plans",
+    "develop material testing procedures",
+    "use CAM software",
+    "integrate new products in manufacturing",
+    "use precision tools",
+    "develop microelectromechanical system test procedures",
+    "use CAD software",
+    "design prototypes",
+    "operate scientific measuring equipment",
+    "advise on waste management procedures"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nbte"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "material engineer"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "role_name": "synthetic materials engineer",
+   "also_known_as": [
+    "plastics production engineer",
+    "synthetic materials production engineer",
+    "polymers production engineer",
+    "synthetic materials research engineer",
+    "polymers development engineer",
+    "plastics quality engineer",
+    "plastics engineer",
+    "plastics research engineer",
+    "synthetic materials development engineer",
+    "polymers quality engineer",
+    "plastics development engineer",
+    "polymers research engineer",
+    "polymers engineer",
+    "synthetic materials quality engineer"
+   ],
+   "source": "esco",
+   "isco_group": 2145,
+   "esco_code": "2145.3",
+   "description": "Synthetic materials engineers develop new synthetic materials processes or improve existing ones. They design and construct installations and machines for the production of synthetic materials and examine samples of raw materials in order to ensure quality.",
+   "essential_skills": [
+    "manufacturing processes",
+    "injection moulding machine parts",
+    "design principles",
+    "materials engineering",
+    "chemical processes",
+    "civil engineering",
+    "types of plastic",
+    "synthetic materials",
+    "basic chemicals",
+    "handle chemicals",
+    "design process",
+    "adjust engineering designs",
+    "use hand tools",
+    "design engineering components",
+    "work safely with chemicals",
+    "work with chemicals",
+    "manage processes",
+    "check quality of raw materials",
+    "manage environmental impact of operations",
+    "analyse production processes for improvement"
+   ],
+   "optional_skills": [
+    "communication",
+    "quality standards",
+    "rubber technology",
+    "quality assurance methodologies",
+    "electrical machines",
+    "test materials",
+    "inspect quality of products",
+    "record test data",
+    "use technical drawing software",
+    "perform maintenance on installed equipment",
+    "assemble machines",
+    "examine engineering principles",
+    "write technical reports",
+    "prepare scientific reports",
+    "use CAD software",
+    "build machines",
+    "anticipate installation maintenance",
+    "measure materials"
+   ],
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nbte"
+    ],
+    "evidence": "Exact ESCO occupation record; the domain placement is a documented cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "material engineer"
+    ],
+    "mapping_score": 21,
+    "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
    "domain_id": "D155",
    "domain_name": "Nanotechnology, Advanced Materials",
    "role_name": "semiconductor processor",
@@ -33319,6 +35799,41 @@
     ],
     "mapping_score": 17,
     "region": "global"
+   },
+   "source_confidence": "medium",
+   "data_state": "source_backed"
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "role_name": "Materials Engineers",
+   "also_known_as": [],
+   "source": "onet",
+   "onet_code": "17-2131.00",
+   "isco_group": null,
+   "description": "Evaluate materials and develop machinery and processes to manufacture materials for use in products that must meet specialized design and performance specifications. Develop new uses for known materials. Includes those engineers working with composite materials or specializing in one type of material, such as graphite, metal and metal alloys, ceramics and glass, plastics and polymers, and naturally occurring materials. Includes metallurgists and metallurgical engineers, ceramic engineers, and welding engineers.",
+   "source_provenance": {
+    "sources": [
+     "global_esco",
+     "global_onet",
+     "global_isco",
+     "global_wef",
+     "global_nuclear"
+    ],
+    "context_sources": [
+     "ng_jobberman",
+     "ng_myjobmag",
+     "ng_nbs",
+     "ng_engineering",
+     "ng_nbte"
+    ],
+    "evidence": "Exact O*NET preferred occupation record; the domain placement is a curated cross-domain taxonomy mapping.",
+    "mapping_method": "curated_domain_source_family_title_anchor",
+    "matched_terms": [
+     "material engineer"
+    ],
+    "mapping_score": 8,
+    "region": "global_proxy"
    },
    "source_confidence": "medium",
    "data_state": "source_backed"
@@ -34785,11 +37300,12 @@
   },
   "D004": {
    "before": 12,
-   "added": 4,
-   "after": 16,
+   "added": 5,
+   "after": 17,
    "selected": [
     "director of compliance and information security",
     "Information Security Engineers",
+    "Digital Forensics Analysts",
     "Forensic Science Technicians",
     "Penetration Testers"
    ]
@@ -34804,9 +37320,9 @@
     "ICT network engineer",
     "ICT network technician",
     "ICT network architect",
+    "Network and Computer Systems Administrators",
     "Computer Network Architects",
-    "Computer Network Support Specialists",
-    "Network and Computer Systems Administrators"
+    "Computer Network Support Specialists"
    ]
   },
   "D006": {
@@ -34827,15 +37343,15 @@
    "added": 9,
    "after": 20,
    "selected": [
+    "robotics engineering technician",
     "automation engineering technician",
     "electronics and automation vocational teacher",
     "industrial robot controller",
     "marine mechatronics technician",
     "mechatronics assembler",
     "mechatronics engineering technician",
-    "robotics engineering technician",
     "Quality Control Systems Managers",
-    "Electro-Mechanical and Mechatronics Technologists and Technicians"
+    "Robotics Engineers"
    ]
   },
   "D012": {
@@ -34869,8 +37385,8 @@
   },
   "D074": {
    "before": 10,
-   "added": 9,
-   "after": 19,
+   "added": 10,
+   "after": 20,
    "selected": [
     "health and safety engineer",
     "health and safety officer",
@@ -34878,9 +37394,10 @@
     "aviation safety officer",
     "construction safety inspector",
     "mine safety officer",
+    "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",
     "Occupational Health and Safety Specialists",
     "Occupational Health and Safety Technicians",
-    "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors"
+    "Mining and Geological Engineers, Including Mining Safety Engineers"
    ]
   },
   "D146": {
@@ -34918,12 +37435,14 @@
   },
   "D156": {
    "before": 6,
-   "added": 3,
-   "after": 9,
+   "added": 5,
+   "after": 11,
    "selected": [
     "marine surveyor",
     "quantity surveyor",
-    "real estate surveyor"
+    "real estate surveyor",
+    "Geodetic Surveyors",
+    "Surveyors"
    ]
   },
   "D164": {
@@ -34963,20 +37482,22 @@
     "mental health social worker",
     "mental health support worker",
     "educational counsellor",
-    "Mental Health and Substance Abuse Social Workers",
-    "Mental Health Counselors"
+    "Mental Health Counselors",
+    "Mental Health and Substance Abuse Social Workers"
    ]
   },
   "D067": {
    "before": 5,
-   "added": 5,
-   "after": 10,
+   "added": 7,
+   "after": 12,
    "selected": [
     "dental instrument assembler",
+    "Dental Hygienists",
     "Oral and Maxillofacial Surgeons",
     "Dental Assistants",
-    "Dental Hygienists",
-    "Dental Laboratory Technicians"
+    "Dental Laboratory Technicians",
+    "Dentists, All Other Specialists",
+    "Dentists, General"
    ]
   },
   "D154": {
@@ -34994,10 +37515,11 @@
   },
   "D165": {
    "before": 12,
-   "added": 2,
-   "after": 14,
+   "added": 3,
+   "after": 15,
    "selected": [
     "weight loss consultant",
+    "Dietitians and Nutritionists",
     "Fitness and Wellness Coordinators"
    ]
   },
@@ -35044,24 +37566,26 @@
   },
   "D163": {
    "before": 2,
-   "added": 5,
-   "after": 7,
+   "added": 6,
+   "after": 8,
    "selected": [
     "intellectual property consultant",
     "legal assistant",
     "licensing manager",
     "licensing officer",
-    "patent engineer"
+    "patent engineer",
+    "Paralegals and Legal Assistants"
    ]
   },
   "D065": {
    "before": 8,
-   "added": 3,
-   "after": 11,
+   "added": 4,
+   "after": 12,
    "selected": [
     "language engineer",
     "sign language teacher",
-    "translation agency manager"
+    "translation agency manager",
+    "Interpreters and Translators"
    ]
   },
   "D152": {
@@ -35086,8 +37610,8 @@
   },
   "D160": {
    "before": 5,
-   "added": 11,
-   "after": 16,
+   "added": 12,
+   "after": 17,
    "selected": [
     "beauty salon attendant",
     "beauty salon manager",
@@ -35099,17 +37623,21 @@
     "hairdresser",
     "hairdresser assistant",
     "performance hairdresser",
-    "Fashion Designers"
+    "Fashion Designers",
+    "Hairdressers, Hairstylists, and Cosmetologists"
    ]
   },
   "D063": {
    "before": 11,
-   "added": 3,
-   "after": 14,
+   "added": 6,
+   "after": 17,
    "selected": [
     "business studies and economics teacher secondary school",
     "economics lecturer",
-    "Economics Teachers, Postsecondary"
+    "Climate Change Policy Analysts",
+    "Economics Teachers, Postsecondary",
+    "Economists",
+    "Environmental Economists"
    ]
   },
   "D128": {
@@ -35153,16 +37681,16 @@
    "selected": [
     "criminal justice social worker",
     "correctional services manager",
+    "digital forensics expert",
     "police trainer",
     "prison instructor",
     "probation officer",
     "Criminal Justice and Law Enforcement Teachers, Postsecondary",
     "Probation Officers and Correctional Treatment Specialists",
     "Correctional Officers and Jailers",
+    "Digital Forensics Analysts",
     "Dispatchers, Except Police, Fire, and Ambulance",
-    "First-Line Supervisors of Correctional Officers",
-    "First-Line Supervisors of Police and Detectives",
-    "Forensic Science Technicians"
+    "First-Line Supervisors of Correctional Officers"
    ]
   },
   "D161": {
@@ -35263,15 +37791,16 @@
     "medical administrative assistant",
     "office manager",
     "secretary general",
-    "Library Assistants, Clerical"
+    "Executive Secretaries and Executive Administrative Assistants"
    ]
   },
   "D084": {
    "before": 10,
-   "added": 4,
-   "after": 14,
+   "added": 5,
+   "after": 15,
    "selected": [
     "bookkeeper",
+    "New Accounts Clerks",
     "Bookkeeping, Accounting, and Auditing Clerks",
     "Human Resources Assistants, Except Payroll and Timekeeping",
     "Payroll and Timekeeping Clerks"
@@ -35303,26 +37832,31 @@
   },
   "D096": {
    "before": 6,
-   "added": 7,
-   "after": 13,
+   "added": 9,
+   "after": 15,
    "selected": [
     "agricultural machinery and equipment distribution manager",
     "mining equipment mechanic",
     "roadside vehicle technician",
     "rotating equipment mechanic",
     "vehicle technician",
+    "Farm Equipment Mechanics and Service Technicians",
+    "Mobile Heavy Equipment Mechanics, Except Engines",
     "Heavy and Tractor-Trailer Truck Drivers",
     "Industrial Truck and Tractor Operators"
    ]
   },
   "D099": {
    "before": 14,
-   "added": 3,
-   "after": 17,
+   "added": 6,
+   "after": 20,
    "selected": [
     "building construction worker",
     "road construction worker",
-    "sewer construction worker"
+    "sewer construction worker",
+    "Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",
+    "Plasterers and Stucco Masons",
+    "Cement Masons and Concrete Finishers"
    ]
   },
   "D103": {
@@ -35341,10 +37875,11 @@
   },
   "D105": {
    "before": 13,
-   "added": 1,
-   "after": 14,
+   "added": 2,
+   "after": 15,
    "selected": [
-    "production potter"
+    "production potter",
+    "Potters, Manufacturing"
    ]
   },
   "D117": {
@@ -35414,10 +37949,12 @@
   },
   "D123": {
    "before": 9,
-   "added": 2,
-   "after": 11,
+   "added": 4,
+   "after": 13,
    "selected": [
     "nuclear medicine radiographer",
+    "diagnostic radiographer",
+    "Diagnostic Medical Sonographers",
     "Magnetic Resonance Imaging Technologists"
    ]
   },
@@ -35491,10 +38028,14 @@
   },
   "D166": {
    "before": 9,
-   "added": 1,
-   "after": 10,
+   "added": 5,
+   "after": 14,
    "selected": [
-    "automotive test driver"
+    "automotive test driver",
+    "robotics engineer",
+    "robotics engineering technician",
+    "Robotics Engineers",
+    "Robotics Technicians"
    ]
   },
   "D135": {
@@ -35537,9 +38078,10 @@
   },
   "D137": {
    "before": 3,
-   "added": 5,
-   "after": 8,
+   "added": 6,
+   "after": 9,
    "selected": [
+    "medical physics expert",
     "nuclear medicine radiographer",
     "radiation protection officer",
     "radiation protection technician",
@@ -35554,36 +38096,52 @@
    "selected": [
     "medical device assembler",
     "medical device engineer",
+    "prosthetic-orthotics technician",
     "biomedical scientist",
     "biomedical scientist advanced",
-    "prosthetic-orthotics technician",
     "specialist biomedical scientist",
     "Bioengineers and Biomedical Engineers"
    ]
   },
   "D144": {
    "before": 4,
-   "added": 1,
-   "after": 5,
+   "added": 10,
+   "after": 14,
    "selected": [
-    "Climate Change Policy Analysts"
+    "hydrologist",
+    "meteorology technician",
+    "oceanographer",
+    "Atmospheric and Space Scientists",
+    "Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",
+    "Climate Change Policy Analysts",
+    "Geological Technicians, Except Hydrologic Technicians",
+    "Geoscientists, Except Hydrologists and Geographers",
+    "Hydrologic Technicians",
+    "Hydrologists"
    ]
   },
   "D145": {
    "before": 7,
-   "added": 2,
-   "after": 9,
+   "added": 5,
+   "after": 12,
    "selected": [
     "assistant clinical psychologist",
-    "sensory scientist"
+    "sensory scientist",
+    "Clinical Neuropsychologists",
+    "Neurologists",
+    "Neuropsychologists"
    ]
   },
   "D155": {
    "before": 9,
-   "added": 3,
-   "after": 12,
+   "added": 7,
+   "after": 16,
    "selected": [
+    "materials engineer",
+    "microelectronics materials engineer",
+    "synthetic materials engineer",
     "semiconductor processor",
+    "Materials Engineers",
     "Nanotechnology Engineering Technologists and Technicians",
     "Semiconductor Processing Technicians"
    ]
@@ -35641,7 +38199,7 @@
    "domain_id": "D004",
    "domain_name": "Cybersecurity",
    "needed": 8,
-   "found": 4
+   "found": 5
   },
   {
    "domain_id": "D005",
@@ -35662,12 +38220,6 @@
    "found": 6
   },
   {
-   "domain_id": "D074",
-   "domain_name": "Occupational Health, Safety",
-   "needed": 10,
-   "found": 9
-  },
-  {
    "domain_id": "D146",
    "domain_name": "Building Services Engineering — Mechanical, Electrical",
    "needed": 17,
@@ -35683,13 +38235,13 @@
    "domain_id": "D156",
    "domain_name": "Land Surveying, Cadastral Mapping",
    "needed": 14,
-   "found": 3
+   "found": 5
   },
   {
    "domain_id": "D067",
    "domain_name": "Dentistry",
    "needed": 15,
-   "found": 5
+   "found": 7
   },
   {
    "domain_id": "D154",
@@ -35701,7 +38253,7 @@
    "domain_id": "D165",
    "domain_name": "Wellness Coaching, Lifestyle Medicine",
    "needed": 8,
-   "found": 2
+   "found": 3
   },
   {
    "domain_id": "D130",
@@ -35725,25 +38277,25 @@
    "domain_id": "D163",
    "domain_name": "Intellectual Property Law, Patents",
    "needed": 18,
-   "found": 5
+   "found": 6
   },
   {
    "domain_id": "D065",
    "domain_name": "Translation, Interpretation",
    "needed": 12,
-   "found": 3
+   "found": 4
   },
   {
    "domain_id": "D160",
    "domain_name": "Fashion Styling, Image Consulting",
    "needed": 15,
-   "found": 11
+   "found": 12
   },
   {
    "domain_id": "D063",
    "domain_name": "Economics",
    "needed": 9,
-   "found": 3
+   "found": 6
   },
   {
    "domain_id": "D150",
@@ -35773,7 +38325,7 @@
    "domain_id": "D084",
    "domain_name": "Payroll, Bookkeeping",
    "needed": 10,
-   "found": 4
+   "found": 5
   },
   {
    "domain_id": "D091",
@@ -35785,25 +38337,19 @@
    "domain_id": "D096",
    "domain_name": "Agricultural",
    "needed": 14,
-   "found": 7
-  },
-  {
-   "domain_id": "D099",
-   "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
-   "needed": 6,
-   "found": 3
+   "found": 9
   },
   {
    "domain_id": "D105",
    "domain_name": "Handicraft, Basketry, Textile Craft",
    "needed": 7,
-   "found": 1
+   "found": 2
   },
   {
    "domain_id": "D123",
    "domain_name": "Radiography, Medical Imaging",
    "needed": 11,
-   "found": 2
+   "found": 4
   },
   {
    "domain_id": "D125",
@@ -35827,7 +38373,7 @@
    "domain_id": "D166",
    "domain_name": "Autonomous Vehicles, Self-Driving Systems",
    "needed": 11,
-   "found": 1
+   "found": 5
   },
   {
    "domain_id": "D135",
@@ -35839,7 +38385,7 @@
    "domain_id": "D137",
    "domain_name": "Medical Physics, Radiation Therapy",
    "needed": 17,
-   "found": 5
+   "found": 6
   },
   {
    "domain_id": "D138",
@@ -35851,19 +38397,19 @@
    "domain_id": "D144",
    "domain_name": "Climate Science, Meteorology",
    "needed": 16,
-   "found": 1
+   "found": 10
   },
   {
    "domain_id": "D145",
    "domain_name": "Neuroscience, Cognitive Science",
    "needed": 13,
-   "found": 2
+   "found": 5
   },
   {
    "domain_id": "D155",
    "domain_name": "Nanotechnology, Advanced Materials",
    "needed": 11,
-   "found": 3
+   "found": 7
   },
   {
    "domain_id": "D141",

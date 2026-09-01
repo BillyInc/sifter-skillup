@@ -7,6 +7,33 @@ import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 type Props = { profile?: RoleWorkProfile | null };
 
+const WEF_CATEGORY_LABELS: Record<string, string> = {
+  fastest_growing_pct: "among the fastest-growing roles by percentage",
+  fastest_declining_pct: "among the fastest-declining roles by percentage",
+  largest_growth_absolute: "among the roles with the largest projected growth in number",
+  largest_decline_absolute: "among the roles with the largest projected decline in number",
+  emerging_tech_roles: "listed as an emerging technology role",
+};
+
+function FutureOfWorkSignals({ profile, openSource, labelColor, copyColor, actionColor }: { profile: RoleWorkProfile; openSource: (url: string) => void; labelColor: string; copyColor: string; actionColor: string }) {
+  if (!profile.wefSignals.length) return null;
+  const explanations = Array.from(new Set(profile.wefSignals.flatMap((signal) => (
+    signal.categories.map((category) => WEF_CATEGORY_LABELS[category] || category)
+  ))));
+  const sourceUrl = profile.wefSignals.find((signal) => signal.sourceUrl)?.sourceUrl;
+  return (
+    <View style={{ gap: Spacing.xs }}>
+      <Text style={[styles.label, { color: labelColor }, CompassFonts.bodySemibold]}>Future-of-work signal</Text>
+      <Text style={[styles.copy, { color: copyColor }]}>The World Economic Forum included “{profile.wefSignals[0].wefLabel}” in a global employer-survey trend list: {explanations.join("; ")}. This is a global projection, not Nigerian demand or a promise of employment.</Text>
+      {sourceUrl ? (
+        <TouchableOpacity accessibilityRole="link" onPress={() => openSource(sourceUrl)}>
+          <Text style={[styles.sourceLink, { color: actionColor }]}>Open the WEF source ↗</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
+}
+
 /**
  * Presents occupation evidence separately from the role's preparation list.
  * The source is intentionally named in the copy because O*NET is a global/US
@@ -42,6 +69,7 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
       <View style={{ gap: Spacing.sm }}>
         <SectionLabel>Work evidence</SectionLabel>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>This role has a source-backed occupation or specialist-framework explanation, but the source does not provide the same task-level profile as O*NET. Read the role meaning and preparation above, then use the linked source for its fuller explanation.</Text>
+        <FutureOfWorkSignals profile={profile} openSource={(url) => { void openSource(url); }} labelColor={colors.textRole.muted} copyColor={colors.textRole.secondary} actionColor={colors.accentRole.action} />
         <View style={{ gap: Spacing.xs }}>
           {profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}
           {profile.sourceLinks.map((source, index) => (
@@ -62,6 +90,7 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
 
   return (
     <View style={{ gap: Spacing.md }}>
+      <FutureOfWorkSignals profile={profile} openSource={(url) => { void openSource(url); }} labelColor={colors.textRole.muted} copyColor={colors.textRole.secondary} actionColor={colors.accentRole.action} />
       <View style={{ gap: Spacing.sm }}>
         <SectionLabel>What this work involves</SectionLabel>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>These are source-reported activities for the mapped occupation. They help you picture the work before deciding what to learn.</Text>

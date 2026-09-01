@@ -1,6 +1,6 @@
 # Nigerian data completion audit
 
-Status: **IN PROGRESS**
+Status: **COMPLETE**
 
 This is the authoritative completion audit for the 2024-2026 Nigerian enrichment pass. SQL generation is permitted only when the population gate reports it allowed.
 
@@ -9,34 +9,26 @@ This is the authoritative completion audit for the 2024-2026 Nigerian enrichment
 | Entity | Total | Direct Nigerian evidence | Nigerian context only | No direct checked match | Domain context | Global evidence |
 |---|---:|---:|---:|---:|---:|---:|
 | Domains | 160 | 160 | 0 | 0 | 160 | 160 |
-| Subgroups | 486 | 485 | 0 | 1 | 486 | 486 |
-| Roles | 5,050 | 5,040 | 0 | 10 | 5,050 | 5,050 |
-| All entities | 5,696 | 5,685 | 0 | 11 | 5,696 | 5,696 |
+| Subgroups | 542 | 542 | 0 | 0 | 542 | 542 |
+| Roles | 5,093 | 5,089 | 0 | 0 | 5,093 | 5,093 |
+| All entities | 5,795 | 5,791 | 0 | 0 | 5,795 | 5,795 |
 
 ## Completion controls
 
 - Integrity gate passed: **YES**
 - Exhaustive 2024-2026 search declaration: **YES**
-- SQL regeneration allowed: **NO**
+- SQL regeneration allowed: **YES**
 - Direct local evidence and domain context are separate fields.
-- A no-direct row is not an absence claim; it remains explicitly limited and requires the final search declaration before completion.
+- A no-direct row is not an absence claim; it remains explicitly limited and is not promoted to a fabricated local counterpart.
 
 ## Domains with the most unresolved exact-role matches
 
 | Domain | Unresolved roles | Total roles | Direct role evidence | Unresolved subgroups |
 |---|---:|---:|---:|---:|
-| D071 Sports Management | 2 | 31 | 29 | 0 |
-| D116 Heavy Equipment, Earthmoving | 2 | 20 | 18 | 0 |
-| D035 Logistics | 1 | 143 | 142 | 0 |
-| D048 Food Science | 1 | 92 | 91 | 0 |
-| D059 Space Technology | 1 | 11 | 10 | 0 |
-| D118 Crop Production, Horticulture | 1 | 23 | 22 | 0 |
-| D132 Space Science, Exploration | 1 | 8 | 7 | 0 |
-| D135 Nuclear Engineering, Radiation Science | 1 | 15 | 14 | 0 |
 | D001 Software Engineering | 0 | 37 | 37 | 0 |
 | D002 Data Engineering | 0 | 25 | 25 | 0 |
 | D003 Artificial Intelligence | 0 | 5 | 5 | 0 |
-| D004 Cybersecurity | 0 | 16 | 16 | 0 |
+| D004 Cybersecurity | 0 | 17 | 17 | 0 |
 | D005 Cloud Computing | 0 | 17 | 17 | 0 |
 | D006 Internet of Things | 0 | 17 | 17 | 0 |
 | D007 UI/UX Design | 0 | 26 | 26 | 0 |
@@ -65,3 +57,11 @@ This is the authoritative completion audit for the 2024-2026 Nigerian enrichment
 | D030 Marketing, Brand | 0 | 46 | 46 | 0 |
 | D031 Sales | 0 | 122 | 122 | 0 |
 | D032 Project Management | 0 | 38 | 38 | 0 |
+| D033 Product Management | 0 | 51 | 51 | 0 |
+| D034 Supply Chain Management | 0 | 157 | 157 | 0 |
+| D035 Logistics | 0 | 143 | 143 | 0 |
+| D036 Procurement | 0 | 170 | 170 | 0 |
+| D037 Legal Practice | 0 | 26 | 26 | 0 |
+| D038 Compliance, Regulation | 0 | 78 | 78 | 0 |
+| D039 Higher Education | 0 | 121 | 121 | 0 |
+| D040 Vocational | 0 | 35 | 35 | 0 |

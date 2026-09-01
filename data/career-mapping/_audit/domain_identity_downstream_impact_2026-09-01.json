@@ -1,0 +1,34 @@
+{
+  "schema_version": "2026-09-01.domain-identity-downstream-impact.v1",
+  "purpose": "Verify that domain identity reconciliation changes display labels only and does not alter domain IDs, ownership, or downstream source-backed relationships.",
+  "identity_decision_counts": {
+    "exact_source_terminology": 7,
+    "source_supported_umbrella": 159,
+    "curated_addition": 2
+  },
+  "domain_ids": {
+    "domain_meta": 168,
+    "domain_structure": 168,
+    "invalid_downstream_references": 0
+  },
+  "display_labels": {
+    "programme_links_checked": 1683,
+    "jamb_links_checked": 3163,
+    "role_records_checked": 4703,
+    "role_profiles_checked": 5096,
+    "label_mismatches_after_normalization": 0
+  },
+  "source_backed_layers": {
+    "domain_tool_keys_checked_excluding_meta": 166,
+    "invalid_tool_domain_ids": [],
+    "invalid_role_profile_domain_ids": []
+  },
+  "nigerian_review_overlay": {
+    "affected_jamb_rows": 86,
+    "published_reviewed_links": 710,
+    "published_bridge_links": 163
+  },
+  "impact_decision": "No domain identity rename or reassignment was made. The reconciliation preserved all domain IDs, subgroup/role ownership, and source layers; it normalized stale display labels to domain_meta and applied the Nigerian reviewed-link overlay to the active JAMB map.",
+  "invalid_reference_samples": [],
+  "label_mismatch_samples": []
+}

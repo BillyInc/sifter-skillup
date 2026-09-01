@@ -14,22 +14,22 @@ SQL Editor** (paste + run each file) or **psql** with the DB connection string
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <file>
 ```
 
-## Current career refresh since the last push (2026-08-31)
+## Current career refresh since the last push (2026-09-01)
 
 The current career seed is transported in compressed, ordered parts:
 
-`backend/seed_career_v2_2026-08-31_parts_gz/`
+`backend/seed_career_v2_2026-09-01_parts_gz/`
 
 The reconstructed local SQL output is
-`backend/seed_career_v2_2026-08-31.sql`; it is ignored by Git because it is
-about 660 MB. The compressed parts exist so the generated artifact can pass
-repository file-size limits. There are 22 `.sql.gz` parts, each below 41 MB
+`backend/seed_career_v2_2026-09-01.sql`; it is ignored by Git because it is
+about 672 MB. The compressed parts exist so the generated artifact can pass
+repository file-size limits. There are 23 `.sql.gz` parts, each below 41 MB
 compressed, and each contains complete SQL statements in order.
 
 This is a generated development/staging seed, not a schema migration. It
 contains the corrected ISCO-backed subgroup hierarchy, current source-backed
 context/provenance payload and reviewed no-direct-local-match rows. It contains
-160 visible domains, 542 subgroups, 5,050 roles, 48,188 tools and 5,050 role
+160 visible domains, 542 subgroups, 5,093 roles, 48,585 tools and 5,090 role
 work-profile rows. Apply it to production only after a production preflight,
 backup and explicit approval of the data refresh.
 
@@ -54,15 +54,15 @@ schema files in this order before the preview seed:
     used
 13. `backend/migration_saved_resource_support.sql` after `saved_items` exists
 14. Decompressed current SQL parts in
-    `backend/seed_career_v2_2026-08-31_parts_gz/`, in numeric order
+    `backend/seed_career_v2_2026-09-01_parts_gz/`, in numeric order
 
 The `.sql.gz` files are not executable by Supabase. Before applying the
 preview, decompress/reassemble them from the repository root:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_2026-08-31_parts_gz/manifest.json `
-  backend/seed_career_v2_2026-08-31.sql
+  backend/seed_career_v2_2026-09-01_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-09-01.sql
 ```
 
 The command verifies every compressed-part checksum before writing the
@@ -72,7 +72,7 @@ reconstructed SQL. Then pass the reconstructed file to `psql` with
 ```powershell
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
   -v ON_ERROR_STOP=1 `
-  -f backend/seed_career_v2_2026-08-31.sql
+  -f backend/seed_career_v2_2026-09-01.sql
 ```
 
 If the SQL Editor must be used, decompress and run the numbered parts
@@ -144,12 +144,12 @@ The rows above describe the historical production seed path. The new
 preview and follows the dependency-critical order documented at the top of
 this runbook. Do not substitute it for `seed_career_v2.sql` in production.
 
-## 2026-08-31 authoritative correction
+## 2026-09-01 authoritative correction
 
 The older seed counts above are historical and must not be used for the current
 career refresh. The current source inputs produce 160 visible domains, 542 supported
-subgroups, 5,050 roles, 48,188 tools, 240 certifications, 1,683
-programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links,
+subgroups, 5,093 roles, 48,585 tools, 240 certifications, 1,683
+programme-domain links, 70,246 programme-role scores, 3,163 JAMB-domain links,
 4,000 domain-overlap rows and 5,050 role work profiles.
 
 Before rebuilding the current career seed after any role or structure change,
@@ -160,12 +160,12 @@ python data/career-mapping/_apply_emerging_domain_structure.py
 python data/career-mapping/_build_source_backed_layers.py
 python data/career-mapping/_audit_role_completeness.py
 python data/career-mapping/validate_career_resource_seed_gate.py
-$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-08-31.sql'
+$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-09-01.sql'
 python data/career-mapping/_gen_career_seed.py
 Remove-Item Env:CAREER_SEED_OUTPUT_PATH
 python data/career-mapping/split_large_artifacts.py split-sql `
-  C:\tmp\seed_career_canonical_2026-08-31.sql `
-  backend/seed_career_v2_2026-08-31_parts_gz --max-bytes 40000000 --gzip
+  C:\tmp\seed_career_canonical_2026-09-01.sql `
+  backend/seed_career_v2_2026-09-01_parts_gz --max-bytes 40000000 --gzip
 ```
 
 The structural pass is required because the role library's existing ISCO

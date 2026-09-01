@@ -1,6 +1,6 @@
 {
   "schema_version": "nigerian_data_completion_audit_v1",
-  "generated_at": "2026-08-26",
+  "generated_at": "2026-09-01",
   "date_window": "2024-01-01 through 2026-08-25",
   "completion_status": "complete",
   "sql_regeneration_allowed": true,
@@ -15,37 +15,37 @@
       "global_evidence_present": 160
     },
     "subgroups": {
-      "total": 486,
-      "source_backed": 485,
+      "total": 542,
+      "source_backed": 542,
       "context_only": 0,
-      "no_direct_local_counterpart": 1,
-      "domain_context_present": 486,
-      "global_evidence_present": 486
+      "no_direct_local_counterpart": 0,
+      "domain_context_present": 542,
+      "global_evidence_present": 542
     },
     "roles": {
-      "total": 5050,
-      "source_backed": 5040,
+      "total": 5093,
+      "source_backed": 5089,
       "context_only": 0,
-      "no_direct_local_counterpart": 10,
-      "domain_context_present": 5050,
-      "global_evidence_present": 5050
+      "no_direct_local_counterpart": 0,
+      "domain_context_present": 5093,
+      "global_evidence_present": 5093
     },
     "all_entities": {
-      "total": 5696,
-      "source_backed": 5685,
+      "total": 5795,
+      "source_backed": 5791,
       "context_only": 0,
-      "no_direct_local_counterpart": 11,
-      "domain_context_present": 5696,
-      "global_evidence_present": 5696
+      "no_direct_local_counterpart": 0,
+      "domain_context_present": 5795,
+      "global_evidence_present": 5795
     }
   },
   "integrity_gate": {
     "integrity_gate_passed": true,
     "sql_regeneration_allowed": true,
     "counts": {
-      "audit_entities": 5696,
-      "ledger_entities": 5696,
-      "review_follow_up_rows": 11,
+      "audit_entities": 5795,
+      "ledger_entities": 5795,
+      "review_follow_up_rows": 0,
       "local_provenance_errors": 0,
       "missing_item_provenance": 0,
       "invalid_states": 0,
@@ -55,322 +55,16 @@
       "domain_context_provenance_missing": 0,
       "missing_search_records": 0,
       "premature_negative_labels": 0,
-      "unresolved_context_or_no_direct_rows": 11
+      "unresolved_context_or_no_direct_rows": 0
     }
   },
   "policy": {
     "direct_local_evidence": "An exact or defensible Nigerian role/subgroup profile match with item-level provenance.",
     "domain_context": "Separate Nigerian sector or domain evidence that can guide a role without claiming the item is role-specific.",
     "no_direct": "No exact match in the checked Nigerian profiles; never an absence claim. The row retains global evidence and domain context where available.",
-    "sql": "Do not regenerate SQL while exhaustive_search_declaration is false, even when the integrity gate passes."
+    "sql": "Regenerate SQL only when exhaustive_search_declaration and sql_regeneration_allowed are true in the current population gate."
   },
   "domains_ranked_by_unresolved_roles": [
-    {
-      "domain_id": "D071",
-      "name": "Sports Management",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 31,
-        "source_backed": 29,
-        "context_only": 0,
-        "no_direct_local_counterpart": 2,
-        "domain_context_present": 31,
-        "global_evidence_present": 31
-      },
-      "subgroup_summary": {
-        "total": 4,
-        "source_backed": 4,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 4,
-        "global_evidence_present": 4
-      },
-      "domain_context_source_ids": [
-        "ng_cia_public_administration",
-        "ng_creative",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_nbs",
-        "ng_nbte_sports_management",
-        "ng_nigeria_sports_development_coaching_2026",
-        "ng_nigeria_tourism_travel_hospitality_2026",
-        "ng_nipas_admin_2024_2025",
-        "ng_nis_sports_2024",
-        "ng_nis_sports_coaching_2024_2026",
-        "ng_smedan_founder_mse_2024_2026"
-      ]
-    },
-    {
-      "domain_id": "D116",
-      "name": "Heavy Equipment, Earthmoving",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 20,
-        "source_backed": 18,
-        "context_only": 0,
-        "no_direct_local_counterpart": 2,
-        "domain_context_present": 20,
-        "global_evidence_present": 20
-      },
-      "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
-      },
-      "domain_context_source_ids": [
-        "ng_aviation_maritime",
-        "ng_frsc_driving",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_nbs",
-        "ng_nbte",
-        "ng_nbte_construction_curricula_2026",
-        "ng_nigeria_construction_building_standards_2026",
-        "ng_nigeria_construction_equipment_operations_2026",
-        "ng_nigeria_hospitality_tourism_training_regulation_2026",
-        "ng_nimasa_maritime"
-      ]
-    },
-    {
-      "domain_id": "D035",
-      "name": "Logistics",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 143,
-        "source_backed": 142,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 143,
-        "global_evidence_present": 143
-      },
-      "subgroup_summary": {
-        "total": 4,
-        "source_backed": 4,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 4,
-        "global_evidence_present": 4
-      },
-      "domain_context_source_ids": [
-        "ng_crffn_freight",
-        "ng_crffn_freight_2026",
-        "ng_frsc_driving",
-        "ng_jobberman",
-        "ng_jobberman_supply_chain_2026",
-        "ng_myjobmag",
-        "ng_myjobmag_supply_chain_2026",
-        "ng_nbs",
-        "ng_nbte_creative_media_2026",
-        "ng_nbte_nos_brochure_2026",
-        "ng_ncaa_aviation",
-        "ng_ncs_aeo_2025",
-        "ng_nepc_logistics_2026",
-        "ng_nigeria_energy_planning_efficiency_2026",
-        "ng_nigeria_hospitality_tourism_training_regulation_2026",
-        "ng_nigeria_inland_waterway_operations_2026",
-        "ng_nigeria_petroleum_operations_safety_2026",
-        "ng_nigeria_process_automation_mechatronics_2026",
-        "ng_nigeria_rail_air_transport_operations_2026",
-        "ng_nigeria_road_driver_licensing_operations_2026",
-        "ng_nigerian_procurement_supply_profession_2026",
-        "ng_nimasa_maritime",
-        "ng_nimasa_stcw_2026",
-        "ng_nitt_logistics_training_2025",
-        "ng_supply_chain"
-      ]
-    },
-    {
-      "domain_id": "D048",
-      "name": "Food Science",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 92,
-        "source_backed": 91,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 92,
-        "global_evidence_present": 92
-      },
-      "subgroup_summary": {
-        "total": 4,
-        "source_backed": 4,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 4,
-        "global_evidence_present": 4
-      },
-      "domain_context_source_ids": [
-        "ng_agriculture",
-        "ng_ehcon_environmental_health",
-        "ng_fmafs_agriculture_nags_2025",
-        "ng_food_quality_vacancy_2026",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_nafdac_food",
-        "ng_nafdac_food_manufacturing_2026",
-        "ng_nbs",
-        "ng_nbte_food_processing_2026",
-        "ng_nbte_nos_2026",
-        "ng_nbte_nos_brochure_2026",
-        "ng_nicfost_food_science_2026",
-        "ng_nigeria_microbiologist_2026",
-        "ng_nigerian_biomedical_research_2026",
-        "ng_son_food_agriculture",
-        "ng_son_food_safety"
-      ]
-    },
-    {
-      "domain_id": "D059",
-      "name": "Space Technology",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 11,
-        "source_backed": 10,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 11,
-        "global_evidence_present": 11
-      },
-      "subgroup_summary": {
-        "total": 3,
-        "source_backed": 3,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 3,
-        "global_evidence_present": 3
-      },
-      "domain_context_source_ids": [
-        "ng_aviation",
-        "ng_coren_engineering",
-        "ng_coren_reforms_2026",
-        "ng_cpn",
-        "ng_engineering",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_naseni_nanotech",
-        "ng_nasrda_space_2025",
-        "ng_nbs",
-        "ng_nbte_electrical_hospitality_2025_2026",
-        "ng_nigeria_cloud_data_centre_2026",
-        "ng_nigeria_data_engineering_cloud_2026",
-        "ng_nigeria_digital_technology_policy_and_training_2026",
-        "ng_nigeria_electronics_telecommunications_repairs_2026"
-      ]
-    },
-    {
-      "domain_id": "D118",
-      "name": "Crop Production, Horticulture",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 23,
-        "source_backed": 22,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 23,
-        "global_evidence_present": 23
-      },
-      "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
-      },
-      "domain_context_source_ids": [
-        "ng_agriculture",
-        "ng_fmafs_agriculture_nags_2025",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_nbs",
-        "ng_nbte",
-        "ng_nbte_nos_2026",
-        "ng_nbte_trade_standards_2024_2026",
-        "ng_nigeria_agricultural_research_training_2026",
-        "ng_nigeria_grape_viticulture_2026"
-      ]
-    },
-    {
-      "domain_id": "D132",
-      "name": "Space Science, Exploration",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 8,
-        "source_backed": 7,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 8,
-        "global_evidence_present": 8
-      },
-      "subgroup_summary": {
-        "total": 2,
-        "source_backed": 2,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 2,
-        "global_evidence_present": 2
-      },
-      "domain_context_source_ids": [
-        "ng_aviation",
-        "ng_aviation_maritime",
-        "ng_engineering",
-        "ng_hotnigerianjobs_physicist_2026",
-        "ng_jobberman",
-        "ng_myjobmag",
-        "ng_nasrda_space_2025",
-        "ng_nbs",
-        "ng_nigeria_allied_health_licensing_2026",
-        "ng_nigeria_aviation_operations_roles_2026",
-        "ng_nigeria_rail_air_transport_operations_2026",
-        "ng_nnra_mining_radiation_2026"
-      ]
-    },
-    {
-      "domain_id": "D135",
-      "name": "Nuclear Engineering, Radiation Science",
-      "domain_state": "source_backed",
-      "role_summary": {
-        "total": 15,
-        "source_backed": 14,
-        "context_only": 0,
-        "no_direct_local_counterpart": 1,
-        "domain_context_present": 15,
-        "global_evidence_present": 15
-      },
-      "subgroup_summary": {
-        "total": 4,
-        "source_backed": 4,
-        "context_only": 0,
-        "no_direct_local_counterpart": 0,
-        "domain_context_present": 4,
-        "global_evidence_present": 4
-      },
-      "domain_context_source_ids": [
-        "ng_coren_clean_energy_2024_2025",
-        "ng_coren_engineering",
-        "ng_coren_reforms_2026",
-        "ng_engineering",
-        "ng_health_records_digital_health_2024_2025",
-        "ng_hotnigerianjobs_physicist_2026",
-        "ng_jobberman",
-        "ng_mdcn_mlscn_health_training_2024_2026",
-        "ng_myjobmag",
-        "ng_naseni_nanotech",
-        "ng_nbs",
-        "ng_nemsa_renewable_2026",
-        "ng_nerc_generation_2026",
-        "ng_nesrea_environment_2025",
-        "ng_nigeria_allied_health_licensing_2026",
-        "ng_nigeria_aviation_operations_roles_2026",
-        "ng_nigeria_nuclear_research_reactor_2026",
-        "ng_nigeria_rail_air_transport_operations_2026",
-        "ng_nnra",
-        "ng_nnra_mining_radiation_2026"
-      ]
-    },
     {
       "domain_id": "D001",
       "name": "Software Engineering",
@@ -485,12 +179,12 @@
       "name": "Cybersecurity",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 16,
-        "source_backed": 16,
+        "total": 17,
+        "source_backed": 17,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 16,
-        "global_evidence_present": 16
+        "domain_context_present": 17,
+        "global_evidence_present": 17
       },
       "subgroup_summary": {
         "total": 2,
@@ -937,12 +631,12 @@
         "global_evidence_present": 35
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_built_environment",
@@ -972,12 +666,12 @@
         "global_evidence_present": 45
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_built_environment",
@@ -1008,12 +702,12 @@
         "global_evidence_present": 67
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_built_environment",
@@ -1046,12 +740,12 @@
         "global_evidence_present": 20
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 3,
+        "source_backed": 3,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 3,
+        "global_evidence_present": 3
       },
       "domain_context_source_ids": [
         "ng_built_environment",
@@ -1083,22 +777,24 @@
         "global_evidence_present": 20
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 3,
+        "source_backed": 3,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 3,
+        "global_evidence_present": 3
       },
       "domain_context_source_ids": [
         "ng_built_environment",
         "ng_coren_clean_energy_2024_2025",
         "ng_coren_competency",
+        "ng_coren_engineering",
         "ng_ehcon_environmental_health",
         "ng_engineering",
         "ng_jobberman",
         "ng_myjobmag",
         "ng_nbs",
+        "ng_nbte_nos_2026",
         "ng_nemsa_renewable_2026",
         "ng_nerc_generation_2026",
         "ng_nesrea_environment_2025",
@@ -1118,12 +814,12 @@
         "global_evidence_present": 22
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_arcon_architecture",
@@ -1198,12 +894,12 @@
         "global_evidence_present": 49
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 3,
+        "source_backed": 3,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 3,
+        "global_evidence_present": 3
       },
       "domain_context_source_ids": [
         "ng_fmoh_health_policy_2024_2026",
@@ -1235,12 +931,12 @@
         "global_evidence_present": 38
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 3,
+        "source_backed": 3,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 3,
+        "global_evidence_present": 3
       },
       "domain_context_source_ids": [
         "ng_fmoh_health_policy_2024_2026",
@@ -1463,12 +1159,12 @@
         "global_evidence_present": 46
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_arcon_advertising",
@@ -1646,6 +1342,54 @@
         "ng_npcp_procurement_2026",
         "ng_pmdan_project_2026",
         "ng_pmi_nigeria_project",
+        "ng_supply_chain"
+      ]
+    },
+    {
+      "domain_id": "D035",
+      "name": "Logistics",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 143,
+        "source_backed": 143,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 143,
+        "global_evidence_present": 143
+      },
+      "subgroup_summary": {
+        "total": 4,
+        "source_backed": 4,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 4,
+        "global_evidence_present": 4
+      },
+      "domain_context_source_ids": [
+        "ng_crffn_freight",
+        "ng_crffn_freight_2026",
+        "ng_frsc_driving",
+        "ng_jobberman",
+        "ng_jobberman_supply_chain_2026",
+        "ng_myjobmag",
+        "ng_myjobmag_supply_chain_2026",
+        "ng_nbs",
+        "ng_nbte_creative_media_2026",
+        "ng_nbte_nos_brochure_2026",
+        "ng_ncaa_aviation",
+        "ng_ncs_aeo_2025",
+        "ng_nepc_logistics_2026",
+        "ng_nigeria_energy_planning_efficiency_2026",
+        "ng_nigeria_hospitality_tourism_training_regulation_2026",
+        "ng_nigeria_inland_waterway_operations_2026",
+        "ng_nigeria_petroleum_operations_safety_2026",
+        "ng_nigeria_process_automation_mechatronics_2026",
+        "ng_nigeria_rail_air_transport_operations_2026",
+        "ng_nigeria_road_driver_licensing_operations_2026",
+        "ng_nigerian_procurement_supply_profession_2026",
+        "ng_nimasa_maritime",
+        "ng_nimasa_stcw_2026",
+        "ng_nitt_logistics_training_2025",
         "ng_supply_chain"
       ]
     },
@@ -1960,12 +1704,12 @@
         "global_evidence_present": 62
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_arcon_advertising",
@@ -2159,6 +1903,47 @@
         "ng_nigerian_environmental_science_2026",
         "ng_nigerian_fisheries_aquaculture_research_2026",
         "ng_son_food_agriculture"
+      ]
+    },
+    {
+      "domain_id": "D048",
+      "name": "Food Science",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 92,
+        "source_backed": 92,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 92,
+        "global_evidence_present": 92
+      },
+      "subgroup_summary": {
+        "total": 4,
+        "source_backed": 4,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 4,
+        "global_evidence_present": 4
+      },
+      "domain_context_source_ids": [
+        "ng_agriculture",
+        "ng_ehcon_environmental_health",
+        "ng_fmafs_agriculture_nags_2025",
+        "ng_food_quality_vacancy_2026",
+        "ng_jobberman",
+        "ng_myjobmag",
+        "ng_nafdac_food",
+        "ng_nafdac_food_manufacturing_2026",
+        "ng_nbs",
+        "ng_nbte_food_processing_2026",
+        "ng_nbte_nos_2026",
+        "ng_nbte_nos_brochure_2026",
+        "ng_nicfost_food_science_2026",
+        "ng_nigeria_microbiologist_2026",
+        "ng_nigeria_tobacco_manufacturing_operator_2026",
+        "ng_nigerian_biomedical_research_2026",
+        "ng_son_food_agriculture",
+        "ng_son_food_safety"
       ]
     },
     {
@@ -2540,6 +2325,45 @@
       ]
     },
     {
+      "domain_id": "D059",
+      "name": "Space Technology",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 11,
+        "source_backed": 11,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 11,
+        "global_evidence_present": 11
+      },
+      "subgroup_summary": {
+        "total": 3,
+        "source_backed": 3,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 3,
+        "global_evidence_present": 3
+      },
+      "domain_context_source_ids": [
+        "ng_aviation",
+        "ng_coren_engineering",
+        "ng_coren_reforms_2026",
+        "ng_cpn",
+        "ng_engineering",
+        "ng_jobberman",
+        "ng_myjobmag",
+        "ng_naseni_nanotech",
+        "ng_nasrda",
+        "ng_nasrda_space_2025",
+        "ng_nbs",
+        "ng_nbte_electrical_hospitality_2025_2026",
+        "ng_nigeria_cloud_data_centre_2026",
+        "ng_nigeria_data_engineering_cloud_2026",
+        "ng_nigeria_digital_technology_policy_and_training_2026",
+        "ng_nigeria_electronics_telecommunications_repairs_2026"
+      ]
+    },
+    {
       "domain_id": "D060",
       "name": "Banking, Credit",
       "domain_state": "source_backed",
@@ -2659,12 +2483,12 @@
       "name": "Economics",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 14,
-        "source_backed": 14,
+        "total": 17,
+        "source_backed": 17,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 14,
-        "global_evidence_present": 14
+        "domain_context_present": 17,
+        "global_evidence_present": 17
       },
       "subgroup_summary": {
         "total": 3,
@@ -2741,12 +2565,12 @@
       "name": "Translation, Interpretation",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 11,
-        "source_backed": 11,
+        "total": 12,
+        "source_backed": 12,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 11,
-        "global_evidence_present": 11
+        "domain_context_present": 12,
+        "global_evidence_present": 12
       },
       "subgroup_summary": {
         "total": 4,
@@ -2813,12 +2637,12 @@
       "name": "Dentistry",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 10,
-        "source_backed": 10,
+        "total": 12,
+        "source_backed": 12,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 10,
-        "global_evidence_present": 10
+        "domain_context_present": 12,
+        "global_evidence_present": 12
       },
       "subgroup_summary": {
         "total": 3,
@@ -2857,12 +2681,12 @@
         "global_evidence_present": 38
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_chprbn_allied_health",
@@ -2961,6 +2785,42 @@
       ]
     },
     {
+      "domain_id": "D071",
+      "name": "Sports Management",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 31,
+        "source_backed": 29,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 31,
+        "global_evidence_present": 31
+      },
+      "subgroup_summary": {
+        "total": 4,
+        "source_backed": 4,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 4,
+        "global_evidence_present": 4
+      },
+      "domain_context_source_ids": [
+        "ng_cia_public_administration",
+        "ng_creative",
+        "ng_jobberman",
+        "ng_myjobmag",
+        "ng_nbs",
+        "ng_nbte_sports_management",
+        "ng_nigeria_sports_development_coaching_2026",
+        "ng_nigeria_tourism_travel_hospitality_2026",
+        "ng_nigeria_winter_sports_context_2026",
+        "ng_nipas_admin_2024_2025",
+        "ng_nis_sports_2024",
+        "ng_nis_sports_coaching_2024_2026",
+        "ng_smedan_founder_mse_2024_2026"
+      ]
+    },
+    {
       "domain_id": "D072",
       "name": "Geospatial Science",
       "domain_state": "source_backed",
@@ -3031,12 +2891,12 @@
       "name": "Occupational Health, Safety",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 19,
-        "source_backed": 19,
+        "total": 20,
+        "source_backed": 20,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 19,
-        "global_evidence_present": 19
+        "domain_context_present": 20,
+        "global_evidence_present": 20
       },
       "subgroup_summary": {
         "total": 4,
@@ -3269,12 +3129,12 @@
         "global_evidence_present": 23
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_creative",
@@ -3343,12 +3203,12 @@
         "global_evidence_present": 17
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_business",
@@ -3380,12 +3240,12 @@
         "global_evidence_present": 22
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_business",
@@ -3415,12 +3275,12 @@
       "name": "Payroll, Bookkeeping",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 14,
-        "source_backed": 14,
+        "total": 15,
+        "source_backed": 15,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 14,
-        "global_evidence_present": 14
+        "domain_context_present": 15,
+        "global_evidence_present": 15
       },
       "subgroup_summary": {
         "total": 2,
@@ -3434,6 +3294,7 @@
         "ng_business",
         "ng_cbn_sec_finance_operations_2025_2026",
         "ng_cia_public_administration",
+        "ng_cibn_banking",
         "ng_finance",
         "ng_fmoh_health_policy_2024_2026",
         "ng_ican_syllabus_2026",
@@ -3461,12 +3322,12 @@
         "global_evidence_present": 70
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_jobberman",
@@ -3495,12 +3356,12 @@
         "global_evidence_present": 15
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_fmafs_agriculture_nags_2025",
@@ -3597,12 +3458,12 @@
         "global_evidence_present": 21
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_engineering",
@@ -3631,12 +3492,12 @@
         "global_evidence_present": 26
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_engineering",
@@ -3694,12 +3555,12 @@
       "name": "Agricultural",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 13,
-        "source_backed": 13,
+        "total": 15,
+        "source_backed": 15,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 13,
-        "global_evidence_present": 13
+        "domain_context_present": 15,
+        "global_evidence_present": 15
       },
       "subgroup_summary": {
         "total": 3,
@@ -3719,6 +3580,8 @@
         "ng_naerls_2024_2026",
         "ng_nbs",
         "ng_nbte",
+        "ng_nbte_agricultural_equipment_mechanics_2026",
+        "ng_nbte_nos_2026",
         "ng_nifor_agriculture_2025",
         "ng_nigeria_agricultural_engineer_2026",
         "ng_nigeria_agricultural_research_training_2026",
@@ -3740,12 +3603,12 @@
         "global_evidence_present": 63
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_clmis_construction_nos",
@@ -3810,12 +3673,12 @@
       "name": "Masonry, Bricklaying, Tiling, Plastering",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 17,
-        "source_backed": 17,
+        "total": 20,
+        "source_backed": 20,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 17,
-        "global_evidence_present": 17
+        "domain_context_present": 20,
+        "global_evidence_present": 20
       },
       "subgroup_summary": {
         "total": 3,
@@ -3927,12 +3790,12 @@
         "global_evidence_present": 24
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_jobberman",
@@ -3953,12 +3816,12 @@
       "name": "Handicraft, Basketry, Textile Craft",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 14,
-        "source_backed": 14,
+        "total": 15,
+        "source_backed": 15,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 14,
-        "global_evidence_present": 14
+        "domain_context_present": 15,
+        "global_evidence_present": 15
       },
       "subgroup_summary": {
         "total": 1,
@@ -3995,12 +3858,12 @@
         "global_evidence_present": 28
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_jobberman",
@@ -4067,12 +3930,12 @@
         "global_evidence_present": 19
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_engineering",
@@ -4102,12 +3965,12 @@
         "global_evidence_present": 56
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_coren_engineering",
@@ -4180,12 +4043,12 @@
         "global_evidence_present": 22
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_engineering",
@@ -4212,12 +4075,12 @@
         "global_evidence_present": 43
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_engineering",
@@ -4226,6 +4089,7 @@
         "ng_nafdac_chemical_manufacturing",
         "ng_nbs",
         "ng_nbte",
+        "ng_nbte_nos_2026",
         "ng_nbte_textile_wood_assembly",
         "ng_nigeria_industrial_automation_mechatronics_2026",
         "ng_nigeria_metal_fabrication_technical_standards_2026",
@@ -4245,12 +4109,12 @@
         "global_evidence_present": 28
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 1,
+        "source_backed": 1,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 1,
+        "global_evidence_present": 1
       },
       "domain_context_source_ids": [
         "ng_aviation_maritime",
@@ -4265,6 +4129,42 @@
         "ng_nigeria_road_driver_licensing_operations_2026",
         "ng_nimasa_maritime",
         "ng_nimasa_seafarer_qualification_2026"
+      ]
+    },
+    {
+      "domain_id": "D116",
+      "name": "Heavy Equipment, Earthmoving",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 20,
+        "source_backed": 19,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 20,
+        "global_evidence_present": 20
+      },
+      "subgroup_summary": {
+        "total": 1,
+        "source_backed": 1,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 1,
+        "global_evidence_present": 1
+      },
+      "domain_context_source_ids": [
+        "ng_aviation_maritime",
+        "ng_frsc_driving",
+        "ng_jobberman",
+        "ng_lamata_cable_car_2026",
+        "ng_myjobmag",
+        "ng_nbs",
+        "ng_nbte",
+        "ng_nbte_construction_curricula_2026",
+        "ng_nigeria_construction_building_standards_2026",
+        "ng_nigeria_construction_equipment_operations_2026",
+        "ng_nigeria_hospitality_tourism_training_regulation_2026",
+        "ng_nigeria_rail_air_transport_operations_2026",
+        "ng_nimasa_maritime"
       ]
     },
     {
@@ -4304,6 +4204,40 @@
         "ng_nitt_railway_training_2026",
         "ng_nrc_railway_training_2025",
         "ng_transport"
+      ]
+    },
+    {
+      "domain_id": "D118",
+      "name": "Crop Production, Horticulture",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 23,
+        "source_backed": 22,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 23,
+        "global_evidence_present": 23
+      },
+      "subgroup_summary": {
+        "total": 2,
+        "source_backed": 2,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 2,
+        "global_evidence_present": 2
+      },
+      "domain_context_source_ids": [
+        "ng_agriculture",
+        "ng_fmafs_agriculture_nags_2025",
+        "ng_jobberman",
+        "ng_myjobmag",
+        "ng_nbs",
+        "ng_nbte",
+        "ng_nbte_nos_2026",
+        "ng_nbte_trade_standards_2024_2026",
+        "ng_nigeria_agricultural_research_training_2026",
+        "ng_nigeria_grape_viticulture_2026",
+        "ng_nigeria_hop_cultivation_context_2026"
       ]
     },
     {
@@ -4469,12 +4403,12 @@
       "name": "Radiography, Medical Imaging",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 11,
-        "source_backed": 11,
+        "total": 13,
+        "source_backed": 13,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 11,
-        "global_evidence_present": 11
+        "domain_context_present": 13,
+        "global_evidence_present": 13
       },
       "subgroup_summary": {
         "total": 2,
@@ -4511,12 +4445,12 @@
         "global_evidence_present": 17
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_chprbn_community_health",
@@ -4575,9 +4509,9 @@
       },
       "subgroup_summary": {
         "total": 2,
-        "source_backed": 1,
+        "source_backed": 2,
         "context_only": 0,
-        "no_direct_local_counterpart": 1,
+        "no_direct_local_counterpart": 0,
         "domain_context_present": 2,
         "global_evidence_present": 2
       },
@@ -4796,6 +4730,42 @@
       ]
     },
     {
+      "domain_id": "D132",
+      "name": "Space Science, Exploration",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 8,
+        "source_backed": 8,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 8,
+        "global_evidence_present": 8
+      },
+      "subgroup_summary": {
+        "total": 2,
+        "source_backed": 2,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 2,
+        "global_evidence_present": 2
+      },
+      "domain_context_source_ids": [
+        "ng_aviation",
+        "ng_aviation_maritime",
+        "ng_engineering",
+        "ng_hotnigerianjobs_physicist_2026",
+        "ng_jobberman",
+        "ng_myjobmag",
+        "ng_nasrda",
+        "ng_nasrda_space_2025",
+        "ng_nbs",
+        "ng_nigeria_allied_health_licensing_2026",
+        "ng_nigeria_aviation_operations_roles_2026",
+        "ng_nigeria_rail_air_transport_operations_2026",
+        "ng_nnra_mining_radiation_2026"
+      ]
+    },
+    {
       "domain_id": "D133",
       "name": "Luxury",
       "domain_state": "source_backed",
@@ -4870,6 +4840,49 @@
       ]
     },
     {
+      "domain_id": "D135",
+      "name": "Nuclear Engineering, Radiation Science",
+      "domain_state": "source_backed",
+      "role_summary": {
+        "total": 15,
+        "source_backed": 15,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 15,
+        "global_evidence_present": 15
+      },
+      "subgroup_summary": {
+        "total": 4,
+        "source_backed": 4,
+        "context_only": 0,
+        "no_direct_local_counterpart": 0,
+        "domain_context_present": 4,
+        "global_evidence_present": 4
+      },
+      "domain_context_source_ids": [
+        "ng_coren_clean_energy_2024_2025",
+        "ng_coren_engineering",
+        "ng_coren_reforms_2026",
+        "ng_engineering",
+        "ng_health_records_digital_health_2024_2025",
+        "ng_hotnigerianjobs_physicist_2026",
+        "ng_jobberman",
+        "ng_mdcn_mlscn_health_training_2024_2026",
+        "ng_myjobmag",
+        "ng_naseni_nanotech",
+        "ng_nbs",
+        "ng_nemsa_renewable_2026",
+        "ng_nerc_generation_2026",
+        "ng_nesrea_environment_2025",
+        "ng_nigeria_allied_health_licensing_2026",
+        "ng_nigeria_aviation_operations_roles_2026",
+        "ng_nigeria_nuclear_research_reactor_2026",
+        "ng_nigeria_rail_air_transport_operations_2026",
+        "ng_nnra",
+        "ng_nnra_mining_radiation_2026"
+      ]
+    },
+    {
       "domain_id": "D136",
       "name": "Aeronautical",
       "domain_state": "source_backed",
@@ -4916,12 +4929,12 @@
       "name": "Medical Physics, Radiation Therapy",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 8,
-        "source_backed": 8,
+        "total": 9,
+        "source_backed": 9,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 8,
-        "global_evidence_present": 8
+        "domain_context_present": 9,
+        "global_evidence_present": 9
       },
       "subgroup_summary": {
         "total": 4,
@@ -5187,12 +5200,12 @@
       "name": "Climate Science, Meteorology",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 5,
-        "source_backed": 5,
+        "total": 14,
+        "source_backed": 14,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 5,
-        "global_evidence_present": 5
+        "domain_context_present": 14,
+        "global_evidence_present": 14
       },
       "subgroup_summary": {
         "total": 1,
@@ -5221,12 +5234,12 @@
       "name": "Neuroscience, Cognitive Science",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 9,
-        "source_backed": 9,
+        "total": 12,
+        "source_backed": 12,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 9,
-        "global_evidence_present": 9
+        "domain_context_present": 12,
+        "global_evidence_present": 12
       },
       "subgroup_summary": {
         "total": 3,
@@ -5240,8 +5253,10 @@
         "ng_biortc_neuroscience_2025",
         "ng_education",
         "ng_engineering",
+        "ng_fmoh_health_report_2024",
         "ng_health",
         "ng_jobberman",
+        "ng_mdcn_medicine_2026",
         "ng_myjobmag",
         "ng_national_ai_strategy_2025",
         "ng_nbs",
@@ -5250,7 +5265,8 @@
         "ng_nigerian_biomedical_research_2026",
         "ng_nigerian_clinical_psychology_2026",
         "ng_nigerian_psychology_2026",
-        "ng_nislt_nanotech_2025"
+        "ng_nislt_nanotech_2025",
+        "ng_npmcn_neurology_curriculum_2026"
       ]
     },
     {
@@ -5340,21 +5356,23 @@
         "global_evidence_present": 18
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_aviation_maritime",
         "ng_coren_competency",
+        "ng_coren_engineering",
         "ng_energy",
         "ng_jobberman",
         "ng_myjobmag",
         "ng_nbs",
         "ng_nigeria_energy_planning_efficiency_2026",
+        "ng_nigeria_industrial_automation_mechatronics_2026",
         "ng_nigeria_petroleum_operations_safety_2026",
         "ng_nigeria_process_automation_mechatronics_2026"
       ]
@@ -5450,12 +5468,14 @@
         "global_evidence_present": 6
       },
       "domain_context_source_ids": [
+        "ng_cpn_syllabus_2021",
         "ng_jobberman",
         "ng_legal",
         "ng_motorsport_boundary_2024_2026",
         "ng_myjobmag",
         "ng_nbs",
         "ng_nigeria_digital_forensics_cybercrime_2026",
+        "ng_nigeria_digital_technology_policy_and_training_2026",
         "ng_nigeria_real_estate_professional_practice_2026",
         "ng_nigeria_security_fire_correctional_services_2026",
         "ng_nigeria_social_work_child_care_2026",
@@ -5591,12 +5611,12 @@
       "name": "Nanotechnology, Advanced Materials",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 12,
-        "source_backed": 12,
+        "total": 16,
+        "source_backed": 16,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 12,
-        "global_evidence_present": 12
+        "domain_context_present": 16,
+        "global_evidence_present": 16
       },
       "subgroup_summary": {
         "total": 3,
@@ -5630,12 +5650,12 @@
       "name": "Land Surveying, Cadastral Mapping",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 9,
-        "source_backed": 9,
+        "total": 11,
+        "source_backed": 11,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 9,
-        "global_evidence_present": 9
+        "domain_context_present": 11,
+        "global_evidence_present": 11
       },
       "subgroup_summary": {
         "total": 3,
@@ -5678,15 +5698,17 @@
         "global_evidence_present": 17
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_casson_counselling_2026",
+        "ng_cbn_sec_finance_operations_2025_2026",
+        "ng_cibn_banking",
         "ng_cipm_labour_2025_2026",
         "ng_finance",
         "ng_ican_accountancy",
@@ -5702,6 +5724,7 @@
         "ng_nema_emergency_2024",
         "ng_payroll_tax_2025",
         "ng_pcn_2024_2025",
+        "ng_sec_capital_markets",
         "ng_sec_investment_2024"
       ]
     },
@@ -5759,12 +5782,12 @@
         "global_evidence_present": 27
       },
       "subgroup_summary": {
-        "total": 0,
-        "source_backed": 0,
+        "total": 2,
+        "source_backed": 2,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 0,
-        "global_evidence_present": 0
+        "domain_context_present": 2,
+        "global_evidence_present": 2
       },
       "domain_context_source_ids": [
         "ng_cbn_recapitalization_2024_2026",
@@ -5789,12 +5812,12 @@
       "name": "Fashion Styling, Image Consulting",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 16,
-        "source_backed": 16,
+        "total": 17,
+        "source_backed": 17,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 16,
-        "global_evidence_present": 16
+        "domain_context_present": 17,
+        "global_evidence_present": 17
       },
       "subgroup_summary": {
         "total": 6,
@@ -5911,12 +5934,12 @@
       "name": "Intellectual Property Law, Patents",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 7,
-        "source_backed": 7,
+        "total": 8,
+        "source_backed": 8,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 7,
-        "global_evidence_present": 7
+        "domain_context_present": 8,
+        "global_evidence_present": 8
       },
       "subgroup_summary": {
         "total": 5,
@@ -5988,12 +6011,12 @@
       "name": "Wellness Coaching, Lifestyle Medicine",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 14,
-        "source_backed": 14,
+        "total": 15,
+        "source_backed": 15,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 14,
-        "global_evidence_present": 14
+        "domain_context_present": 15,
+        "global_evidence_present": 15
       },
       "subgroup_summary": {
         "total": 3,
@@ -6024,12 +6047,12 @@
       "name": "Autonomous Vehicles, Self-Driving Systems",
       "domain_state": "source_backed",
       "role_summary": {
-        "total": 10,
-        "source_backed": 10,
+        "total": 14,
+        "source_backed": 14,
         "context_only": 0,
         "no_direct_local_counterpart": 0,
-        "domain_context_present": 10,
-        "global_evidence_present": 10
+        "domain_context_present": 14,
+        "global_evidence_present": 14
       },
       "subgroup_summary": {
         "total": 3,

@@ -37,6 +37,8 @@ def evidence_state(context: dict) -> str:
     actual = context.get("actual_enrichment") or {}
     if item_count(actual):
         return "source_backed"
+    if context.get("local_counterpart_status") == "reviewed_global_only_no_direct_local_counterpart":
+        return "reviewed_global_only_no_direct_local_counterpart"
     if context.get("local_counterpart_status") == "domain_context_only":
         return "context_only"
     if context.get("local_counterpart_status") == "no_direct_local_counterpart":
@@ -409,8 +411,9 @@ def main() -> None:
         backed = counts[f"{entity_type}_source_backed"]
         context_only = counts[f"{entity_type}_context_only"]
         no_counterpart = counts[f"{entity_type}_no_direct_local_counterpart"]
+        global_only = counts[f"{entity_type}_reviewed_global_only_no_direct_local_counterpart"]
         state_lines.append(
-            f"| {entity_type} | {total:,} | {backed:,} | {context_only:,} | {no_counterpart:,} |"
+            f"| {entity_type} | {total:,} | {backed:,} | {context_only:,} | {no_counterpart:,} | {global_only:,} |"
         )
         field_lines.append(
             f"| {entity_type} | {counts[f'{entity_type}_without_skills']:,} | {counts[f'{entity_type}_without_tools']:,} | {counts[f'{entity_type}_without_competencies']:,} | {counts[f'{entity_type}_without_certifications']:,} | {counts[f'{entity_type}_without_regulatory_requirements']:,} | {counts[f'{entity_type}_missing_provenance']:,} | {counts[f'{entity_type}_manual_review_required']:,} | {counts[f'{entity_type}_with_local_demand_signal']:,} |"
@@ -421,8 +424,8 @@ def main() -> None:
         "from the career seed. A context-only or no-counterpart row is a reviewed "
         "evidence state, not an invitation to infer local skills from global data.\n\n"
         "## Current counts\n\n"
-        "| Entity | Total | Item-level Nigerian evidence | Context only | No direct local counterpart |\n"
-        "|---|---:|---:|---:|---:|\n"
+        "| Entity | Total | Item-level Nigerian evidence | Context only | No direct local counterpart | Reviewed global-only, no direct local counterpart |\n"
+        "|---|---:|---:|---:|---:|---:|\n"
         + "\n".join(state_lines)
         + "\n\n## Field-level review counts\n\n"
         "These are fields without item-level Nigerian evidence in the current audit. A blank certification or licence field is not treated as proof that a credential is required; it is a review signal.\n\n"
@@ -435,7 +438,10 @@ def main() -> None:
         "skills, tools, competencies, certifications or regulatory requirements "
         "with source provenance. `context_only` and `no_direct_local_counterpart` "
         "rows remain visible with an explicit reviewed disposition and may carry "
-        "a follow-up trigger; they must not be treated as absence claims. Global "
+        "a follow-up trigger; they must not be treated as absence claims. "
+        "`reviewed_global_only_no_direct_local_counterpart` is a separately "
+        "audited, intentionally bounded state: the global role remains usable "
+        "for explanation, but no Nigerian counterpart is asserted. Global "
         "and remote evidence is retained inside each row as a separate layer. "
         "For domains and subgroups, the global taxonomy may be explicitly marked "
         "as derived from constituent role records; it is not Nigerian evidence. "

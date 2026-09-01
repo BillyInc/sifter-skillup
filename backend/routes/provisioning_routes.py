@@ -69,6 +69,60 @@ _CLAIM_CODE_TTL_DAYS = 365
 _CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 _CODE_LEN = 8
 _CONSENT_SCOPES = {"progress", "contact", "full"}
+_GUIDANCE_STREAMS = {"science", "commercial", "art"}
+_GUIDANCE_LEARNER_TYPES = {
+    "secondary_school": {"ss1", "ss2", "ss3"},
+    "tutorial_centre": {"jamb"},
+    "jamb_cafe": {"jamb"},
+    "university": {"undergraduate"},
+}
+
+
+def _normalise_guidance_learner_type(value: Optional[str]) -> Optional[str]:
+    """Normalize the learner-stage values used by admin guidance."""
+    value = (value or "").strip().lower()
+    return value if value in {"ss1", "ss2", "ss3", "jamb", "undergraduate"} else None
+
+
+def _guidance_context_is_allowed(
+    organisation_type: str,
+    provisioned_type: Optional[str],
+    student_class: Optional[str],
+    stream: Optional[str],
+) -> bool:
+    """Keep admin guidance inside the organisation's learner scope.
+
+    The client presents these choices, but the server must enforce them too:
+    URLs and request bodies are not an authorization boundary. A missing stage
+    or (for secondary schools) missing stream fails closed rather than being
+    silently guessed.
+    """
+    allowed = _GUIDANCE_LEARNER_TYPES.get(organisation_type)
+    if not allowed:
+        return False
+    learner_type = _normalise_guidance_learner_type(provisioned_type) or _normalise_guidance_learner_type(student_class)
+    if learner_type not in allowed:
+        return False
+    if organisation_type == "secondary_school":
+        return _clean_stream(stream) in _GUIDANCE_STREAMS
+    return not (stream or "").strip()
+
+
+def _guidance_visibility_is_allowed(
+    provenance: Optional[str],
+    claim_state: Optional[str],
+    provisioning_school_id: Optional[str],
+    school_id: str,
+    has_active_consent: bool,
+) -> bool:
+    """Apply the individual-visibility rule at every admin guidance write."""
+    return bool(
+        provenance == "provisioned"
+        and claim_state == "unclaimed"
+        and provisioning_school_id == school_id
+    ) or has_active_consent
+
+
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -1503,10 +1557,28 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
 
 
 def _load_school_student(user_id: str, school_id: str) -> dict:
-    """Fetch a student that belongs to the admin's school; 404 otherwise."""
-    ures = _users().select(
-        "id, username, student_class, stream, chosen_direction, provisioning_school_id"
-    ).eq("id", user_id).limit(1).execute()
+    """Fetch an individually visible, in-scope student; 404 otherwise.
+
+    Roster filtering is not enough protection because a caller can manually
+    construct a URL containing a user ID. Keep the same visibility rule at the
+    guidance-path boundary: an unclaimed provisioned account is operable by
+    its school, while a claimed/self-affiliated account requires active
+    progress/full consent for this school.
+    """
+    user_fields = (
+        "id, username, student_class, stream, chosen_direction, "
+        "provisioning_school_id, provenance, claim_state, provisioned_user_type, settings"
+    )
+    try:
+        ures = _users().select(user_fields).eq("id", user_id).limit(1).execute()
+    except Exception:
+        # Keep rolling deployments usable before the additive column migration
+        # reaches every environment; _stored_provisioned_type also reads the
+        # compatibility value from settings.
+        ures = _users().select(
+            "id, username, student_class, stream, chosen_direction, "
+            "provisioning_school_id, provenance, claim_state, settings"
+        ).eq("id", user_id).limit(1).execute()
     u = (ures.data or [None])[0]
     if not u:
         raise HTTPException(status_code=404, detail="Student not found.")
@@ -1517,6 +1589,46 @@ def _load_school_student(user_id: str, school_id: str) -> dict:
         ).eq("school_id", school_id).limit(1).execute()
         if not aff.data:
             raise HTTPException(status_code=404, detail="Student not found for your school.")
+
+    school_rows = _svc().table("schools").select("institution_type").eq(
+        "id", school_id
+    ).limit(1).execute().data or []
+    if not school_rows:
+        raise HTTPException(status_code=404, detail="School not found.")
+    organisation_type = (school_rows[0].get("institution_type") or "").strip().lower()
+    provisioned_type = _stored_provisioned_type(u)
+    if not _guidance_context_is_allowed(
+        organisation_type,
+        provisioned_type,
+        u.get("student_class"),
+        u.get("stream"),
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="This Student's learner stage or stream is outside your organisation's guidance scope.",
+        )
+
+    consent = []
+    if not _guidance_visibility_is_allowed(
+        u.get("provenance"),
+        u.get("claim_state"),
+        u.get("provisioning_school_id"),
+        school_id,
+        False,
+    ):
+        consent = _svc().table("student_consents").select("id").eq(
+            "student_id", user_id
+        ).eq("school_id", school_id).in_("scope", ["progress", "full"]).not_.is_(
+            "granted_at", "null"
+        ).is_("revoked_at", "null").limit(1).execute().data or []
+    if not _guidance_visibility_is_allowed(
+        u.get("provenance"),
+        u.get("claim_state"),
+        u.get("provisioning_school_id"),
+        school_id,
+        bool(consent),
+    ):
+        raise HTTPException(status_code=404, detail="Student not found for your guidance scope.")
     return u
 
 

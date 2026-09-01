@@ -8,13 +8,17 @@ ALTER TABLE skillup_dev.domains
     ADD COLUMN IF NOT EXISTS source_confidence TEXT,
     ADD COLUMN IF NOT EXISTS data_state TEXT NOT NULL DEFAULT 'partial',
     ADD COLUMN IF NOT EXISTS foundation_skill_sources JSONB NOT NULL DEFAULT '{}'::jsonb,
-    ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb;
+    ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb,
+    ADD COLUMN IF NOT EXISTS source_provenance JSONB NOT NULL DEFAULT '{}'::jsonb;
 
 ALTER TABLE skillup_dev.domain_subgroups
     ADD COLUMN IF NOT EXISTS source_confidence TEXT,
     ADD COLUMN IF NOT EXISTS data_state TEXT NOT NULL DEFAULT 'partial',
     ADD COLUMN IF NOT EXISTS skill_sources JSONB NOT NULL DEFAULT '{}'::jsonb,
-    ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb;
+    ADD COLUMN IF NOT EXISTS nigerian_context JSONB NOT NULL DEFAULT '{}'::jsonb,
+    ADD COLUMN IF NOT EXISTS what_people_do TEXT,
+    ADD COLUMN IF NOT EXISTS work_context JSONB NOT NULL DEFAULT '[]'::jsonb,
+    ADD COLUMN IF NOT EXISTS display_order INTEGER;
 
 ALTER TABLE skillup_dev.domain_roles
     ADD COLUMN IF NOT EXISTS description TEXT,
@@ -46,6 +50,8 @@ CREATE TABLE IF NOT EXISTS skillup_dev.domain_role_work_profiles (
     limitations              JSONB NOT NULL DEFAULT '[]'::jsonb,
     data_state               TEXT NOT NULL DEFAULT 'source_backed'
 );
+ALTER TABLE skillup_dev.domain_role_work_profiles
+    ADD COLUMN IF NOT EXISTS wef_signals JSONB NOT NULL DEFAULT '[]'::jsonb;
 CREATE INDEX IF NOT EXISTS idx_domain_role_work_profiles_status
     ON skillup_dev.domain_role_work_profiles(source_record_status, data_state);
 

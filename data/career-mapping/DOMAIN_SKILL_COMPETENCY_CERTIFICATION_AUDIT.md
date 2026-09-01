@@ -12,8 +12,8 @@ This matrix is evidence-first and does not regenerate SQL or seed data.
 - Domains where no general individual licence was found in review: 6
 - Domains with a Nigerian body follow-up item: 0
 - Domains with explicit local profile overlays: 160
-- Thin-gap rows: 42
-- Thin-gap rows with global role evidence: 42
+- Thin-gap rows: 40
+- Thin-gap rows with global role evidence: 40
 
 ## Evidence interpretation
 

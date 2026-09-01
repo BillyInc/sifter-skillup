@@ -1,0 +1,332 @@
+{
+  "schema_version": "nigerian_subgroup_gap_resolution_v1",
+  "generated_at": "2026-09-01",
+  "purpose": "Resolve the remaining generic subgroup-family gaps only where a Nigerian occupational label is confirmed by NBS and the selected domain has a separate Nigerian professional, occupational-standard, training or sector source supporting the displayed preparation.",
+  "policy": {
+    "label_evidence": "NBS confirms that the generic ISCO family vocabulary is used in Nigerian labour classification; NBS alone does not establish skills, tools or credentials.",
+    "item_evidence": "Skills, tools, competencies and certification routes are attached only from the named domain-relevant Nigerian sources.",
+    "scope": "These are domain-scoped family overlays, not claims that every occupation in an ISCO family has the same preparation or that a credential is universally required.",
+    "no_absence_claim": true
+  },
+  "profiles": [
+    {
+      "id": "ng_gap_engineering_families_d018_d020",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_coren_engineering", "ng_nbte_nos_2026"],
+      "domain_ids": ["D018", "D019", "D020"],
+      "subgroup_patterns": ["Science and Engineering Professionals", "Science and Engineering Associate Professionals"],
+      "skills": [
+        {"name": "Apply technical analysis, design, measurement, testing, maintenance and safety practice within the selected engineering or environmental field", "priority": "foundation", "evidence": "COREN engineering practice and NBTE Nigerian occupational-standard pathways", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"]},
+        {"name": "Document technical work, interpret specifications and escalate quality, environmental or public-safety risks", "priority": "core", "evidence": "COREN engineering competency and Nigerian technical-training context", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"]}
+      ],
+      "tools": [
+        {"name": "Role-appropriate drawings, measurement, modelling, testing, maintenance, field-reporting and engineering-documentation workflows", "priority": "core", "evidence": "COREN and NBTE engineering/technical practice context", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"], "limitation": "The exact equipment or software depends on the discipline, employer and responsibility."}
+      ],
+      "competencies": [
+        {"name": "Produce accurate, safe and documented technical work within the selected engineering or environmental scope", "priority": "core", "evidence": "COREN engineering practice and Nigerian occupational-standard context", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable Nigerian engineering or technical qualification pathway, with COREN registration where the responsibility is regulated", "issuer": "COREN / NBTE / recognised Nigerian institution", "level": "role_dependent", "evidence": "COREN registration guidance and NBTE NOS catalogue", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"], "limitation": "COREN registration does not apply automatically to every science, technician or environmental-support role."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Check the exact Nigerian professional-registration, environmental, workplace-safety, standards and project requirements for the selected activity", "priority": "required_when_applicable", "evidence": "COREN and Nigerian occupational-standard context", "source_ids": ["ng_coren_engineering", "ng_nbte_nos_2026"]}
+      ]
+    },
+    {
+      "id": "ng_gap_architecture_families_d021",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_arcon_architecture", "ng_nigeria_civil_engineering_technician_2026"],
+      "domain_ids": ["D021"],
+      "subgroup_patterns": ["Science and Engineering Professionals", "Science and Engineering Associate Professionals"],
+      "skills": [
+        {"name": "Translate site, building, user and planning requirements into coordinated drawings, specifications and safe project decisions", "priority": "foundation", "evidence": "ARCON and Nigerian built-environment practice context", "source_ids": ["ng_arcon_architecture"]},
+        {"name": "Use measurements, technical documentation, quality checks and site communication to support design and construction delivery", "priority": "core", "evidence": "Nigerian civil-engineering technician and built-environment context", "source_ids": ["ng_nigeria_civil_engineering_technician_2026"]}
+      ],
+      "tools": [
+        {"name": "Role-appropriate CAD/BIM, drawing, surveying, site-reporting, specification, inspection and project-documentation workflows", "priority": "core", "evidence": "Nigerian architecture and civil-engineering technician context", "source_ids": ["ng_arcon_architecture", "ng_nigeria_civil_engineering_technician_2026"], "limitation": "No single Nigerian software stack is asserted."}
+      ],
+      "competencies": [
+        {"name": "Produce or verify coordinated, safe and buildable design or technical information while recording issues clearly", "priority": "core", "evidence": "ARCON and Nigerian built-environment practice context", "source_ids": ["ng_arcon_architecture", "ng_nigeria_civil_engineering_technician_2026"]}
+      ],
+      "certifications": [
+        {"name": "Applicable Nigerian architecture, built-environment or technical pathway, with ARCON registration where the practice is regulated", "issuer": "ARCON / recognised Nigerian institution", "level": "role_dependent", "evidence": "ARCON registration guidance", "source_ids": ["ng_arcon_architecture"], "limitation": "Architecture registration is not a blanket requirement for every technician or construction-support role."}
+      ],
+      "regulatory_requirements": [
+        {"name": "Verify applicable Nigerian planning, building approval, professional-registration, safety and project requirements", "priority": "required_when_applicable", "evidence": "ARCON and Nigerian built-environment context", "source_ids": ["ng_arcon_architecture", "ng_nigeria_civil_engineering_technician_2026"]}
+      ]
+    },
+    {
+      "id": "ng_gap_electronics_associate_d094",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_electronics_telecommunications_repairs_2026", "ng_nbte_nos_2026"],
+      "domain_ids": ["D094"],
+      "subgroup_patterns": ["Science and Engineering Associate Professionals"],
+      "skills": [
+        {"name": "Install, test, diagnose, repair, maintain or configure electronic, computer, communication and instrumentation equipment", "priority": "foundation", "evidence": "Nigerian electronics, hardware and telecommunications training context", "source_ids": ["ng_nigeria_electronics_telecommunications_repairs_2026", "ng_nbte_nos_2026"]},
+        {"name": "Use measurement, fault-finding, component, cabling, safety and service-documentation practices", "priority": "core", "evidence": "Nigerian electronics and technical-training context", "source_ids": ["ng_nigeria_electronics_telecommunications_repairs_2026"]}
+      ],
+      "tools": [{"name": "Role-appropriate multimeters, test instruments, soldering and rework tools, cabling, diagnostic software and service records", "priority": "core", "evidence": "Nigerian electronics and telecommunications context", "source_ids": ["ng_nigeria_electronics_telecommunications_repairs_2026"], "limitation": "The equipment depends on the device, system and employer."}],
+      "competencies": [{"name": "Restore the functionality, safety and reliability of electronic or communication systems and document the work", "priority": "core", "evidence": "Nigerian electronics and telecommunications context", "source_ids": ["ng_nigeria_electronics_telecommunications_repairs_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian electronics, computer-hardware, telecommunications, electrical/electronics or instrumentation technical pathway", "issuer": "NBTE / recognised Nigerian technical-training body", "level": "technical_pathway", "evidence": "NBTE NOS and Nigerian electronics training context", "source_ids": ["ng_nbte_nos_2026", "ng_nigeria_electronics_telecommunications_repairs_2026"], "limitation": "The exact route depends on the system and technical level."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian electrical, communications, equipment, workplace-safety and site requirements", "priority": "required_when_applicable", "evidence": "Nigerian electronics and telecommunications context", "source_ids": ["ng_nigeria_electronics_telecommunications_repairs_2026"]}]
+    },
+    {
+      "id": "ng_gap_wood_technical_associate_d112",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_son_manufacturing_conformity", "ng_nbte_textile_wood_assembly", "ng_nigerian_carpentry_furniture_2026"],
+      "domain_ids": ["D112"],
+      "subgroup_patterns": ["Science and Engineering Associate Professionals"],
+      "skills": [
+        {"name": "Plan, measure, process and inspect wood, fibre or paper materials using safe production methods", "priority": "foundation", "evidence": "Nigerian wood-production and technical-training context", "source_ids": ["ng_nbte_textile_wood_assembly", "ng_nigerian_carpentry_furniture_2026"]},
+        {"name": "Control material flow, machine settings, product quality, waste, maintenance and production records", "priority": "core", "evidence": "SON conformity and Nigerian wood-production context", "source_ids": ["ng_son_manufacturing_conformity", "ng_nigerian_carpentry_furniture_2026"]}
+      ],
+      "tools": [{"name": "Role-appropriate saws, planers, debarkers, chippers, pulping, laminating, measurement, quality and maintenance workflows", "priority": "core", "evidence": "Nigerian wood and manufacturing context", "source_ids": ["ng_nbte_textile_wood_assembly", "ng_nigerian_carpentry_furniture_2026"], "limitation": "The equipment depends on material, product and facility."}],
+      "competencies": [{"name": "Produce consistent, usable and safe wood, fibre or paper outputs while identifying defects and process risks", "priority": "core", "evidence": "Nigerian wood-production and conformity context", "source_ids": ["ng_son_manufacturing_conformity", "ng_nigerian_carpentry_furniture_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian wood-processing, paper technology, carpentry, furniture, machine-operation or technical-production pathway", "issuer": "NBTE / recognised Nigerian awarding body", "level": "role_dependent", "evidence": "NBTE and Nigerian wood-production context", "source_ids": ["ng_nbte_textile_wood_assembly", "ng_nigerian_carpentry_furniture_2026"], "limitation": "The route depends on the material, machine, employer and responsibility."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian forestry, environmental, fire, machinery, workplace-safety, product and waste requirements", "priority": "required_when_applicable", "evidence": "Nigerian wood-production and standards context", "source_ids": ["ng_son_manufacturing_conformity", "ng_nigerian_carpentry_furniture_2026"]}]
+    },
+    {
+      "id": "ng_gap_medicine_health_professionals_d023",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D023"],
+      "subgroup_patterns": ["Health Professionals"],
+      "skills": [
+        {"name": "Assess health information, support evidence-based clinical decisions and document care safely", "priority": "foundation", "evidence": "Nigerian medical and health-system context", "source_ids": ["ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"]},
+        {"name": "Communicate with patients and care teams, protect dignity and confidentiality, and recognise when to refer or escalate", "priority": "core", "evidence": "Nigerian patient-safety and medical-practice context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}
+      ],
+      "tools": [{"name": "Role-appropriate clinical, diagnostic, patient-record, hospital-information and safety-reporting workflows", "priority": "core", "evidence": "Nigerian health-facility context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "The tools depend on profession, facility and scope."}],
+      "competencies": [{"name": "Provide or coordinate safe, documented and patient-centred health services within professional scope", "priority": "core", "evidence": "Nigerian medical and health-system context", "source_ids": ["ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian health-profession qualification and registration pathway", "issuer": "Relevant Nigerian professional regulator", "level": "regulated_profession", "evidence": "Nigerian health-regulatory context", "source_ids": ["ng_mdcn_medicine_2026"], "limitation": "MDCN registration applies to medicine and dentistry, not every health profession."}],
+      "regulatory_requirements": [{"name": "Verify the relevant Nigerian council registration, ethics, scope-of-practice and facility requirements", "priority": "required_when_applicable", "evidence": "Nigerian medical and health-regulatory context", "source_ids": ["ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_medicine_health_associate_d023",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D023"],
+      "subgroup_patterns": ["Health Associate Professionals"],
+      "skills": [{"name": "Support diagnosis, emergency response, laboratory, rehabilitation or assistive care within training, supervision and scope", "priority": "foundation", "evidence": "Nigerian allied-health and health-service context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"]}, {"name": "Handle equipment, records, infection prevention, quality controls and escalation appropriately", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Role-appropriate laboratory, diagnostic, emergency, assistive, records and infection-control tools", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"], "limitation": "The tools depend on discipline, facility and supervision."}],
+      "competencies": [{"name": "Support accurate, safe and compassionate care while protecting patient dignity, confidentiality and scope boundaries", "priority": "core", "evidence": "Nigerian allied-health context", "source_ids": ["ng_nigeria_allied_health_licensing_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian allied-health, laboratory, emergency-care, biomedical or technical pathway, with registration where regulated", "issuer": "Relevant Nigerian regulator or accredited institution", "level": "role_dependent", "evidence": "Nigerian allied-health licensing context", "source_ids": ["ng_nigeria_allied_health_licensing_2026"], "limitation": "Do not infer one licence for every assistant or technician title."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian professional registration, patient-safety, privacy, infection-control, facility and scope-of-practice requirements", "priority": "required_when_applicable", "evidence": "Nigerian allied-health and health-policy context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_nursing_health_professionals_d024",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nmcn_nursing", "ng_nmcn_registers", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D024"],
+      "subgroup_patterns": ["Health Professionals"],
+      "skills": [{"name": "Assess patients, plan and deliver nursing or midwifery care, monitor change and document safely", "priority": "foundation", "evidence": "Nigerian Nursing and Midwifery Council professional context", "source_ids": ["ng_nmcn_nursing", "ng_nmcn_registers"]}, {"name": "Communicate respectfully, prevent infection, protect confidentiality and escalate deterioration or risk", "priority": "core", "evidence": "Nigerian nursing and patient-safety context", "source_ids": ["ng_nmcn_nursing", "ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Patient-assessment, medication, care-plan, clinical-record, infection-control and handover workflows", "priority": "core", "evidence": "Nigerian nursing practice context", "source_ids": ["ng_nmcn_nursing", "ng_fmoh_health_policy_2024_2026"], "limitation": "The equipment and systems depend on the facility and specialty."}],
+      "competencies": [{"name": "Deliver safe, compassionate and documented nursing or midwifery care within scope", "priority": "core", "evidence": "Nigerian Nursing and Midwifery Council context", "source_ids": ["ng_nmcn_nursing", "ng_nmcn_registers"]}],
+      "certifications": [{"name": "Nigerian Nursing and Midwifery Council qualification, registration and practising route", "issuer": "NMCN", "level": "regulated_profession", "evidence": "NMCN registration context", "source_ids": ["ng_nmcn_nursing", "ng_nmcn_registers"]}],
+      "regulatory_requirements": [{"name": "Nursing and midwifery practice must follow NMCN registration, scope, ethics, facility and patient-safety requirements", "priority": "required_when_applicable", "evidence": "NMCN and Nigerian health-policy context", "source_ids": ["ng_nmcn_nursing", "ng_nmcn_registers", "ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_nursing_health_associate_d024",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026", "ng_ncdc_public_health_surveillance_response_2026"],
+      "domain_ids": ["D024"],
+      "subgroup_patterns": ["Health Associate Professionals"],
+      "skills": [{"name": "Support safe patient care through preparation, observation, documentation, education, assistance and referral within scope", "priority": "foundation", "evidence": "Nigerian health-service and allied-health context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"]}, {"name": "Use infection prevention, communication, confidentiality, accurate records and escalation practices", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Role-appropriate patient-record, screening, first-aid, vital-signs, communication and infection-control tools", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "The equipment depends on cadre, facility and supervision."}],
+      "competencies": [{"name": "Provide respectful and reliable health support while recognising limits of competence and referral needs", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_nigeria_allied_health_licensing_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian health-support, allied-health, community-health or technical pathway, with registration where regulated", "issuer": "Relevant Nigerian regulator, NBTE or accredited institution", "level": "role_dependent", "evidence": "Nigerian health and training context", "source_ids": ["ng_nigeria_allied_health_licensing_2026"], "limitation": "No single licence applies to every support title."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian scope-of-practice, patient-safety, privacy, infection-control, facility and referral requirements", "priority": "required_when_applicable", "evidence": "Nigerian health-policy context", "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_nigeria_allied_health_licensing_2026"]}]
+    },
+    {
+      "id": "ng_gap_nursing_personal_care_d024",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_fmoh_health_policy_2024_2026", "ng_nigeria_allied_health_licensing_2026"],
+      "domain_ids": ["D024"],
+      "subgroup_patterns": ["Personal Care Workers"],
+      "skills": [{"name": "Assist with daily living, mobility, hygiene, comfort, observation and respectful communication", "priority": "foundation", "evidence": "Nigerian health-service and patient-support context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}, {"name": "Recognise changes, protect dignity and escalate concerns to the appropriate trained professional", "priority": "core", "evidence": "Nigerian patient-safety context", "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_nigeria_allied_health_licensing_2026"]}],
+      "tools": [{"name": "Care plans, mobility and hygiene equipment, observation records, communication and referral workflows", "priority": "core", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "The equipment and supervision depend on the care setting."}],
+      "competencies": [{"name": "Provide safe, dignified and reliable day-to-day support without exceeding the role's competence or authority", "priority": "core", "evidence": "Nigerian patient-support context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian care-support, first-aid or health-support training route", "issuer": "Approved Nigerian provider or relevant authority", "level": "role_dependent", "evidence": "Nigerian health-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "This is not a nursing or medical licence."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian patient-safety, privacy, infection-control, employment, facility and referral requirements", "priority": "required_when_applicable", "evidence": "Nigerian health-policy context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_allied_health_families_d068",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_report_2024", "ng_mrtb_rehabilitation"],
+      "domain_ids": ["D068"],
+      "subgroup_patterns": ["Health Professionals", "Health Associate Professionals"],
+      "skills": [{"name": "Assess, support, rehabilitate, image, treat or advise patients within the scope and supervision requirements of the named allied-health profession", "priority": "foundation", "evidence": "Nigerian allied-health regulatory and health-system context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_mrtb_rehabilitation"]}, {"name": "Use safe assessment, documentation, communication, referral, infection-control and patient-centred practice", "priority": "core", "evidence": "Nigerian allied-health and health-system context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_report_2024"]}],
+      "tools": [{"name": "Profession-specific imaging, laboratory, rehabilitation, assessment, assistive, documentation and patient-safety tools", "priority": "core", "evidence": "Nigerian allied-health context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_mrtb_rehabilitation"], "limitation": "The equipment depends on profession, facility and licence."}],
+      "competencies": [{"name": "Provide safe, ethical and appropriately bounded allied-health care while recognising when referral or escalation is required", "priority": "core", "evidence": "Nigerian allied-health regulators", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_mrtb_rehabilitation"]}],
+      "certifications": [{"name": "Applicable Nigerian allied-health qualification and current registration or practising licence where the named profession is regulated", "issuer": "Relevant Nigerian professional regulator", "level": "regulated_or_role_dependent", "evidence": "Nigerian allied-health regulatory context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_mrtb_rehabilitation"], "limitation": "Do not apply one board or licence to every allied-health, laboratory or support title."}],
+      "regulatory_requirements": [{"name": "Follow the applicable Nigerian board, facility, privacy, patient-safety and scope-of-practice rules", "priority": "required_when_applicable", "evidence": "Nigerian allied-health context", "source_ids": ["ng_nigeria_allied_health_licensing_2026", "ng_mrtb_rehabilitation"]}]
+    },
+    {
+      "id": "ng_gap_marketing_business_families_d030",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nimn_marketing_2026", "ng_arcon_advertising", "ng_nigeria_marketing_media_training_regulation_2026"],
+      "domain_ids": ["D030"],
+      "subgroup_patterns": ["Administrative and Commercial Managers", "Business and Administration Professionals"],
+      "skills": [{"name": "Research audiences, understand value propositions, develop positioning and measure communication or commercial outcomes", "priority": "foundation", "evidence": "Nigerian marketing professional and advertising context", "source_ids": ["ng_nimn_marketing_2026", "ng_arcon_advertising"]}, {"name": "Plan ethical campaigns, content, brand and stakeholder communications using evidence and feedback", "priority": "core", "evidence": "Nigerian marketing and communications context", "source_ids": ["ng_nimn_marketing_2026", "ng_nigeria_marketing_media_training_regulation_2026"]}],
+      "tools": [{"name": "Campaign planning, market research, analytics, content, design, publishing and relationship-management workflows", "priority": "core", "evidence": "Nigerian marketing practice context", "source_ids": ["ng_nimn_marketing_2026", "ng_nigeria_marketing_media_training_regulation_2026"], "limitation": "No universal Nigerian employer software stack is asserted."}],
+      "competencies": [{"name": "Turn research and organisational objectives into clear, testable communications or customer-growth actions", "priority": "core", "evidence": "Nigerian marketing professional context", "source_ids": ["ng_nimn_marketing_2026", "ng_arcon_advertising"]}],
+      "certifications": [{"name": "Applicable National Institute of Marketing of Nigeria professional or continuing-development pathway", "issuer": "NIMN", "level": "professional_or_continuing_development", "evidence": "NIMN professional context", "source_ids": ["ng_nimn_marketing_2026"], "limitation": "NIMN is not a universal requirement for every communications, sales or creative role."}],
+      "regulatory_requirements": [{"name": "Advertising and communications work must follow applicable Nigerian advertising, consumer, copyright, privacy and sector rules", "priority": "required_when_applicable", "evidence": "Nigerian advertising and communications context", "source_ids": ["ng_arcon_advertising", "ng_nigeria_marketing_media_training_regulation_2026"]}]
+    },
+    {
+      "id": "ng_gap_finance_business_families_d157_d159",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026", "ng_cibn_banking", "ng_sec_capital_markets"],
+      "domain_ids": ["D157", "D159"],
+      "subgroup_patterns": ["Business and Administration Professionals", "Business and Administration Associate Professionals"],
+      "skills": [{"name": "Analyse transactions, budgets, borrowers, costs, financial records or market information and document defensible decisions", "priority": "foundation", "evidence": "Nigerian accounting, banking and capital-market context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026", "ng_cibn_banking", "ng_sec_capital_markets"]}, {"name": "Apply controls, ethics, confidentiality, compliance and clear escalation when financial or regulatory risk appears", "priority": "core", "evidence": "Nigerian financial-regulatory context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026"]}],
+      "tools": [{"name": "Spreadsheet, accounting, reconciliation, financial-model, credit, valuation, risk and regulatory-reporting workflows", "priority": "core", "evidence": "Nigerian finance and accounting practice context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026", "ng_cibn_banking"], "limitation": "No universal Nigerian employer software stack is asserted."}],
+      "competencies": [{"name": "Make financial information accurate, reviewable and decision-ready within delegated authority", "priority": "core", "evidence": "Nigerian accounting, banking and capital-market context", "source_ids": ["ng_ican_syllabus_2026", "ng_cbn_sec_finance_operations_2025_2026", "ng_sec_capital_markets"]}],
+      "certifications": [{"name": "Applicable Nigerian accounting, banking, finance, securities, taxation or risk pathway", "issuer": "ICAN / CIBN / SEC-approved institution / relevant Nigerian professional body", "level": "role_dependent", "evidence": "Nigerian professional-body and regulator context", "source_ids": ["ng_ican_syllabus_2026", "ng_cibn_banking", "ng_sec_capital_markets"], "limitation": "The applicable route depends on the exact function; no single certificate covers all business or finance roles."}],
+      "regulatory_requirements": [{"name": "Verify applicable Nigerian CBN, SEC, tax, AML, consumer, disclosure, privacy and professional requirements", "priority": "required_when_applicable", "evidence": "Nigerian financial-regulatory context", "source_ids": ["ng_cbn_sec_finance_operations_2025_2026", "ng_sec_capital_markets", "ng_ican_syllabus_2026"]}]
+    },
+    {
+      "id": "ng_gap_interior_cultural_associate_d080",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_oau_interior_design", "ng_nbte_creative_media_2026"],
+      "domain_ids": ["D080"],
+      "subgroup_patterns": ["Legal, Social, Cultural and Related Associate Professionals"],
+      "skills": [{"name": "Research briefs, organise space, select materials and communicate visual or cultural design decisions", "priority": "foundation", "evidence": "Nigerian interior-design and creative-media education context", "source_ids": ["ng_oau_interior_design", "ng_nbte_creative_media_2026"]}, {"name": "Coordinate client requirements, visualisation, accessibility, sustainability and practical project delivery", "priority": "core", "evidence": "Nigerian interior-design curriculum context", "source_ids": ["ng_oau_interior_design"]}],
+      "tools": [{"name": "CAD, 3D visualisation, rendering, presentation, drawing and project-documentation workflows", "priority": "core", "evidence": "Nigerian interior-design curriculum", "source_ids": ["ng_oau_interior_design"], "limitation": "No universal Nigerian software stack is asserted."}],
+      "competencies": [{"name": "Translate a client or spatial brief into a functional, safe and visually coherent interior outcome", "priority": "core", "evidence": "Nigerian interior-design curriculum", "source_ids": ["ng_oau_interior_design"]}],
+      "certifications": [{"name": "Recognised Nigerian interior-design, spatial-design or creative-practice education pathway", "issuer": "Recognised Nigerian institution or professional association", "level": "education_or_professional", "evidence": "Nigerian interior-design programme context", "source_ids": ["ng_oau_interior_design"], "limitation": "No statutory Nigerian interior-design licence was established by these sources."}],
+      "regulatory_requirements": [{"name": "Check applicable Nigerian building, safety, accessibility, procurement, copyright and project requirements", "priority": "required_when_applicable", "evidence": "Nigerian built-environment and creative-practice context", "source_ids": ["ng_oau_interior_design", "ng_nbte_creative_media_2026"]}]
+    },
+    {
+      "id": "ng_gap_customer_service_associate_d082",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026", "ng_nbte_nos_2026"],
+      "domain_ids": ["D082"],
+      "subgroup_patterns": ["Business and Administration Associate Professionals"],
+      "skills": [{"name": "Discover customer needs, explain products or services, process requests and recover service problems professionally", "priority": "foundation", "evidence": "Nigerian customer-service and retail vacancy context", "source_ids": ["ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"]}, {"name": "Maintain accurate follow-up, records, customer satisfaction and team coordination", "priority": "core", "evidence": "Nigerian customer-service context", "source_ids": ["ng_nelex_customer_service_2026"]}],
+      "tools": [{"name": "Customer-relationship, order, record-keeping, phone, email, website and messaging workflows", "priority": "core", "evidence": "Nigerian customer-service context", "source_ids": ["ng_nelex_customer_service_2026", "ng_nigerian_retail_sales_2026"], "limitation": "No universal employer platform is asserted."}],
+      "competencies": [{"name": "Understand a request, give accurate information, resolve or escalate it and leave a reliable service record", "priority": "core", "evidence": "Nigerian customer-service context", "source_ids": ["ng_nelex_customer_service_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian customer-service, office-administration, sales or technical pathway", "issuer": "NBTE / approved Nigerian provider", "level": "role_dependent", "evidence": "Nigerian customer-service and training context", "source_ids": ["ng_nbte_nos_2026"], "limitation": "No universal certification is required for every customer-service role."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian consumer, privacy, employment, financial or sector rules for the service activity", "priority": "required_when_applicable", "evidence": "Nigerian customer-service context", "source_ids": ["ng_nelex_customer_service_2026"]}]
+    },
+    {
+      "id": "ng_gap_travel_personal_services_d083",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_fmino_tourism", "ng_son_tourism_standards", "ng_nigeria_tourism_travel_hospitality_2026"],
+      "domain_ids": ["D083"],
+      "subgroup_patterns": ["Personal Services Workers"],
+      "skills": [{"name": "Plan travel or visitor services, explain destinations and support safe, informed and culturally respectful experiences", "priority": "foundation", "evidence": "Nigerian tourism and travel-service context", "source_ids": ["ng_fmino_tourism", "ng_son_tourism_standards"]}, {"name": "Coordinate itineraries, customer communication, service recovery and relevant records", "priority": "core", "evidence": "Nigerian tourism and travel operations context", "source_ids": ["ng_fmino_tourism", "ng_nigeria_tourism_travel_hospitality_2026"]}],
+      "tools": [{"name": "Travel booking, itinerary, visitor-service, communication and service-reporting workflows", "priority": "core", "evidence": "Nigerian travel and tourism context", "source_ids": ["ng_fmino_tourism", "ng_nigeria_tourism_travel_hospitality_2026"], "limitation": "Specific software products were not established by the cited sources."}],
+      "competencies": [{"name": "Deliver safe, accurate and culturally responsible travel or visitor support while escalating risks appropriately", "priority": "core", "evidence": "Nigerian tourism standards and ministry context", "source_ids": ["ng_fmino_tourism", "ng_son_tourism_standards"]}],
+      "certifications": [{"name": "Applicable Nigerian travel, tourism, hospitality or visitor-service training pathway", "issuer": "Approved Nigerian provider or relevant authority", "level": "activity_specific_training", "evidence": "Nigerian tourism context", "source_ids": ["ng_fmino_tourism", "ng_son_tourism_standards"], "limitation": "The route depends on the exact service and responsibility."}],
+      "regulatory_requirements": [{"name": "Check applicable Nigerian tourism, travel, consumer, safety, transport and premises requirements", "priority": "required_when_applicable", "evidence": "Nigerian tourism and standards context", "source_ids": ["ng_fmino_tourism", "ng_son_tourism_standards"]}]
+    },
+    {
+      "id": "ng_gap_animal_personal_services_d090",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_veterinary_animal_health_regulation_2026", "ng_fmafs_agriculture_nags_2025"],
+      "domain_ids": ["D090"],
+      "subgroup_patterns": ["Personal Services Workers"],
+      "skills": [{"name": "Handle, feed, groom, train, transport, observe or shelter animals using humane, safe and species-appropriate practices", "priority": "foundation", "evidence": "Nigerian animal-care and veterinary context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026", "ng_fmafs_agriculture_nags_2025"]}, {"name": "Recognise illness, injury, stress or welfare concerns and seek veterinary support when needed", "priority": "core", "evidence": "Nigerian animal-health context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026"]}],
+      "tools": [{"name": "Role-appropriate handling, grooming, cleaning, feeding, enrichment, training, transport, housing and animal-record tools", "priority": "core", "evidence": "Nigerian animal-care context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026"], "limitation": "The tools depend on species, facility and supervision."}],
+      "competencies": [{"name": "Protect animal welfare and public safety while communicating clearly with owners, farmers, visitors or veterinary professionals", "priority": "core", "evidence": "Nigerian animal-health context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian animal-care, animal-production, veterinary-support, training, grooming or welfare pathway", "issuer": "VCN / NBTE / recognised Nigerian institution", "level": "role_dependent", "evidence": "Nigerian animal-care context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026", "ng_fmafs_agriculture_nags_2025"], "limitation": "Veterinary-surgeon registration does not automatically apply to every animal-care role."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian animal-welfare, veterinary, public-health, environmental, transport, safety and facility requirements", "priority": "required_when_applicable", "evidence": "Nigerian animal-health context", "source_ids": ["ng_nigeria_veterinary_animal_health_regulation_2026", "ng_fmafs_agriculture_nags_2025"]}]
+    },
+    {
+      "id": "ng_gap_manufacturing_operators_d109_d110_d112",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity", "ng_nbte_textile_wood_assembly"],
+      "domain_ids": ["D109", "D110", "D112"],
+      "subgroup_patterns": ["Stationary Plant and Machine Operators"],
+      "skills": [{"name": "Set up, monitor, control, sample, maintain and safely shut down the selected industrial process or machine", "priority": "foundation", "evidence": "Nigerian manufacturing, standards and occupational-training context", "source_ids": ["ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity", "ng_nbte_textile_wood_assembly"]}, {"name": "Measure inputs and outputs, record batches, inspect quality and escalate safety, environmental or process deviations", "priority": "core", "evidence": "NAFDAC, SON and Nigerian manufacturing context", "source_ids": ["ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity"]}],
+      "tools": [{"name": "Role-appropriate production, mixing, forming, casting, cutting, pulping, packaging, inspection, measurement, maintenance and protective equipment", "priority": "core", "evidence": "Nigerian manufacturing and technical-production context", "source_ids": ["ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity", "ng_nbte_textile_wood_assembly"], "limitation": "The equipment depends on product, plant, process and hazard class."}],
+      "competencies": [{"name": "Operate a controlled, traceable and safe process while protecting product quality, workers, communities and the environment", "priority": "core", "evidence": "Nigerian manufacturing conformity and safety context", "source_ids": ["ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity"]}],
+      "certifications": [{"name": "Applicable Nigerian occupational standard, NSQ/NOS or technical-production pathway", "issuer": "NBTE / recognised Nigerian awarding body", "level": "trade_or_role_dependent", "evidence": "NBTE Nigerian occupational standards", "source_ids": ["ng_nbte_textile_wood_assembly"], "limitation": "No single qualification covers every process-operator role."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian machinery, workplace-safety, environmental, chemical, fire, waste, product and facility requirements", "priority": "required_when_applicable", "evidence": "NAFDAC, SON and Nigerian manufacturing context", "source_ids": ["ng_nafdac_chemical_manufacturing", "ng_son_manufacturing_conformity"]}]
+    },
+    {
+      "id": "ng_gap_assembly_d114",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nbte_nos_2026", "ng_nigeria_industrial_automation_mechatronics_2026", "ng_nigeria_metal_fabrication_technical_standards_2026"],
+      "domain_ids": ["D114"],
+      "subgroup_patterns": ["Assemblers"],
+      "skills": [{"name": "Read drawings or work instructions, prepare materials, assemble, fit, join, test and finish components to specification", "priority": "foundation", "evidence": "Nigerian NBTE automation and technical-production context", "source_ids": ["ng_nbte_nos_2026", "ng_nigeria_industrial_automation_mechatronics_2026"]}, {"name": "Control quality, traceability, process safety, tools, materials and handoffs across the assembly workflow", "priority": "core", "evidence": "Nigerian technical-production context", "source_ids": ["ng_nigeria_metal_fabrication_technical_standards_2026", "ng_nbte_nos_2026"]}],
+      "tools": [{"name": "Role-appropriate assembly fixtures, hand and power tools, soldering, welding, cutting, CNC, measurement, test and production-control equipment", "priority": "core", "evidence": "Nigerian automation and fabrication standards", "source_ids": ["ng_nigeria_industrial_automation_mechatronics_2026", "ng_nigeria_metal_fabrication_technical_standards_2026"], "limitation": "The equipment depends on product, material and process."}],
+      "competencies": [{"name": "Produce safe, accurate, repeatable and testable assemblies while identifying defects, process risks and escalation points", "priority": "core", "evidence": "Nigerian technical-production context", "source_ids": ["ng_nbte_nos_2026", "ng_nigeria_industrial_automation_mechatronics_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian technical-production, fabrication, welding, electronics, mechatronics, machining or assembly pathway", "issuer": "NBTE / NABTEB / recognised Nigerian technical-training body", "level": "trade_or_role_dependent", "evidence": "Nigerian technical standards", "source_ids": ["ng_nbte_nos_2026"], "limitation": "The route depends on product, process, employer and responsibility."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian machinery, electrical, product, workplace-safety, fire, environmental and sector requirements", "priority": "required_when_applicable", "evidence": "Nigerian technical-production context", "source_ids": ["ng_nigeria_industrial_automation_mechatronics_2026", "ng_nigeria_metal_fabrication_technical_standards_2026"]}]
+    },
+    {
+      "id": "ng_gap_agriculture_families_d118",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_nigeria_agricultural_research_training_2026", "ng_fmafs_agriculture_nags_2025", "ng_nbte_nos_2026"],
+      "domain_ids": ["D118"],
+      "subgroup_patterns": ["Market-oriented Skilled Agricultural Workers", "Agricultural, Forestry and Fishery Labourers"],
+      "skills": [{"name": "Plan, grow, maintain, harvest, grade or improve crops and horticultural products while managing soil, water, planting material and pests", "priority": "foundation", "evidence": "Nigerian agricultural research, extension and occupational-standard context", "source_ids": ["ng_nigeria_agricultural_research_training_2026", "ng_fmafs_agriculture_nags_2025", "ng_nbte_nos_2026"]}, {"name": "Organise practical farm work, monitor outcomes and apply safe, sustainable and locally appropriate production practices", "priority": "core", "evidence": "Nigerian agriculture and training context", "source_ids": ["ng_nigeria_agricultural_research_training_2026", "ng_fmafs_agriculture_nags_2025"]}],
+      "tools": [{"name": "Role-appropriate field, nursery, irrigation, soil and water testing, crop monitoring, spraying, harvesting, farm-record and post-harvest tools", "priority": "core", "evidence": "Nigerian horticultural and agricultural context", "source_ids": ["ng_nigeria_agricultural_research_training_2026", "ng_nbte_nos_2026"], "limitation": "The tools depend on crop, scale, location and production system."}],
+      "competencies": [{"name": "Maintain productive, safe, quality-focused and environmentally responsible crop systems while responding to weather, pests and resource constraints", "priority": "core", "evidence": "Nigerian agricultural context", "source_ids": ["ng_nigeria_agricultural_research_training_2026", "ng_fmafs_agriculture_nags_2025"]}],
+      "certifications": [{"name": "Applicable Nigerian crop-production, horticulture, farm-management, pesticide-handling, agricultural-extension or technical pathway", "issuer": "ARCN / NIHORT / NBTE / recognised Nigerian awarding body", "level": "role_dependent", "evidence": "Nigerian agricultural and training context", "source_ids": ["ng_nigeria_agricultural_research_training_2026", "ng_nbte_nos_2026"], "limitation": "The route depends on crop, activity, employer and responsibility."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian pesticide, food, environmental, labour, land, water and agricultural-inspection requirements", "priority": "required_when_applicable", "evidence": "Nigerian agricultural and environmental context", "source_ids": ["ng_fmafs_agriculture_nags_2025", "ng_nigeria_agricultural_research_training_2026"]}]
+    },
+    {
+      "id": "ng_gap_community_health_families_d124",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_chprbn_community_health", "ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D124"],
+      "subgroup_patterns": ["Health Associate Professionals", "Personal Care Workers"],
+      "skills": [{"name": "Support safe community or facility care through screening, preparation, observation, documentation, education, assistance and referral within scope", "priority": "foundation", "evidence": "Nigerian community-health and health-service context", "source_ids": ["ng_chprbn_community_health", "ng_nigeria_allied_health_licensing_2026", "ng_fmoh_health_policy_2024_2026"]}, {"name": "Use infection prevention, communication, confidentiality, accurate records and escalation when more care is needed", "priority": "core", "evidence": "Nigerian community-health and public-health context", "source_ids": ["ng_chprbn_community_health", "ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Role-appropriate screening, first-aid, patient-record, health-education, communication and referral tools", "priority": "core", "evidence": "Nigerian community-health context", "source_ids": ["ng_chprbn_community_health", "ng_fmoh_health_policy_2024_2026"], "limitation": "The tools depend on cadre, facility, supervision and patient responsibility."}],
+      "competencies": [{"name": "Provide respectful, safe and reliable community-health or care support while recognising limits of competence and referral needs", "priority": "core", "evidence": "CHPRBN and Nigerian health-policy context", "source_ids": ["ng_chprbn_community_health", "ng_fmoh_health_policy_2024_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian community-health, allied-health, care-support or technical pathway, with CHPRBN registration where the named profession is regulated", "issuer": "CHPRBN / relevant Nigerian regulator / accredited institution", "level": "role_dependent", "evidence": "Nigerian community-health context", "source_ids": ["ng_chprbn_community_health", "ng_nigeria_allied_health_licensing_2026"], "limitation": "Do not apply a CHEW or allied-health licence to every support title."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian scope-of-practice, patient-safety, infection-control, privacy, facility and referral requirements", "priority": "required_when_applicable", "evidence": "Nigerian community-health and health-policy context", "source_ids": ["ng_chprbn_community_health", "ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_environmental_health_associate_d020",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"],
+      "domain_ids": ["D020"],
+      "subgroup_patterns": ["Health Associate Professionals"],
+      "skills": [{"name": "Inspect environmental health conditions, sanitation, waste, water and public-health risks using documented procedures", "priority": "foundation", "evidence": "Environmental Health Officers Registration Council of Nigeria and Nigerian environmental-health context", "source_ids": ["ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"]}, {"name": "Collect evidence, communicate risks and support corrective action within the authorised environmental-health scope", "priority": "core", "evidence": "Nigerian environmental-health and environmental-science context", "source_ids": ["ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"]}],
+      "tools": [{"name": "Environmental sampling, sanitary-inspection, water and waste-monitoring, records and reporting workflows", "priority": "core", "evidence": "Nigerian environmental-health context", "source_ids": ["ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"], "limitation": "The tools depend on the environmental medium, facility and authorised responsibility."}],
+      "competencies": [{"name": "Identify and communicate environmental-health risks and support lawful, evidence-based mitigation", "priority": "core", "evidence": "Nigerian environmental-health context", "source_ids": ["ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"]}],
+      "certifications": [{"name": "EHCON registration and annual practice licence where the selected environmental-health cadre is regulated", "issuer": "EHCON", "level": "regulated_or_role_dependent", "evidence": "EHCON registration and licensing mandate", "source_ids": ["ng_ehcon_environmental_health"], "limitation": "EHCON requirements do not automatically apply to every environmental scientist, engineer or waste worker."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian environmental-health, sanitation, water, waste, workplace-safety and public-health requirements", "priority": "required_when_applicable", "evidence": "Nigerian environmental-health context", "source_ids": ["ng_ehcon_environmental_health", "ng_nigerian_environmental_science_2026"]}]
+    },
+    {
+      "id": "ng_gap_hospital_operations_managers_d023",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D023"],
+      "subgroup_patterns": ["Production and Specialised Services Managers"],
+      "skills": [{"name": "Plan and coordinate hospital or clinical-service operations, staffing, resources, records and service quality", "priority": "foundation", "evidence": "Nigerian hospital-administration and health-system context", "source_ids": ["ng_mdcn_medicine_2026", "ng_fmoh_health_policy_2024_2026"]}, {"name": "Manage risk, patient safety, compliance, escalation and continuous improvement without confusing management authority with clinical authority", "priority": "core", "evidence": "Nigerian health-policy and medical-service context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Hospital-information, scheduling, staffing, inventory, quality, incident, budget and clinical-governance workflows", "priority": "core", "evidence": "Nigerian health-service management context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "The systems depend on the facility and management responsibility."}],
+      "competencies": [{"name": "Coordinate reliable, safe and compliant health-service delivery while escalating clinical decisions to the appropriate professionals", "priority": "core", "evidence": "Nigerian health-system context", "source_ids": ["ng_fmoh_health_policy_2024_2026", "ng_mdcn_medicine_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian health-administration, hospital-management or sector-management pathway", "issuer": "Recognised Nigerian institution or relevant professional body", "level": "role_dependent", "evidence": "Nigerian health-system context", "source_ids": ["ng_fmoh_health_policy_2024_2026"], "limitation": "Medical registration is not automatically required for a non-clinical administrator."}],
+      "regulatory_requirements": [{"name": "Hospital-management work must follow applicable Nigerian facility, patient-safety, privacy, labour, procurement and health-service requirements", "priority": "required_when_applicable", "evidence": "Nigerian health-policy context", "source_ids": ["ng_fmoh_health_policy_2024_2026"]}]
+    },
+    {
+      "id": "ng_gap_offshore_engineering_families_d148",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_coren_engineering", "ng_nigeria_petroleum_operations_safety_2026", "ng_nigeria_industrial_automation_mechatronics_2026"],
+      "domain_ids": ["D148"],
+      "subgroup_patterns": ["Science and Engineering Professionals", "Science and Engineering Associate Professionals"],
+      "skills": [{"name": "Apply engineering, process, maintenance, measurement and safety principles to offshore, subsea, petroleum or marine systems", "priority": "foundation", "evidence": "COREN and Nigerian petroleum/process-safety context", "source_ids": ["ng_coren_engineering", "ng_nigeria_petroleum_operations_safety_2026"]}, {"name": "Interpret operating data, follow permit and handover procedures, coordinate maintenance and respond to abnormal conditions", "priority": "core", "evidence": "Nigerian petroleum and process-operations context", "source_ids": ["ng_nigeria_petroleum_operations_safety_2026", "ng_nigeria_industrial_automation_mechatronics_2026"]}],
+      "tools": [{"name": "SCADA, DCS, PLC, HMI, pumps, valves, gauges, control-room, maintenance, permit-to-work and HSE workflows", "priority": "core", "evidence": "Nigerian process and petroleum operations context", "source_ids": ["ng_nigeria_petroleum_operations_safety_2026", "ng_nigeria_industrial_automation_mechatronics_2026"], "limitation": "The equipment and site training depend on the installation, operator role and offshore authorisation."}],
+      "competencies": [{"name": "Keep complex offshore or energy operations safe, observable and within approved operating limits while escalating unsafe work", "priority": "core", "evidence": "Nigerian petroleum and engineering context", "source_ids": ["ng_nigeria_petroleum_operations_safety_2026", "ng_coren_engineering"]}],
+      "certifications": [{"name": "Recognised Nigerian engineering, petroleum, process-operations, instrumentation or HSE pathway with applicable site and offshore safety training", "issuer": "COREN / PTI / recognised Nigerian institution or approved provider", "level": "role_dependent", "evidence": "Nigerian engineering and petroleum context", "source_ids": ["ng_coren_engineering", "ng_nigeria_petroleum_operations_safety_2026"], "limitation": "The exact professional registration and offshore/site training depend on responsibility and installation."}],
+      "regulatory_requirements": [{"name": "Offshore and petroleum work must follow applicable Nigerian NUPRC, NMDPRA, PIA, HSE, environmental, permit-to-work and competent-person requirements", "priority": "required_when_applicable", "evidence": "Nigerian petroleum operations context", "source_ids": ["ng_nigeria_petroleum_operations_safety_2026"]}]
+    },
+    {
+      "id": "ng_gap_tcam_health_families_d126",
+      "region": "nigeria",
+      "source_ids": ["ng_nbs", "ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"],
+      "domain_ids": ["D126"],
+      "subgroup_patterns": ["Health Professionals", "Health Associate Professionals"],
+      "skills": [{"name": "Assess a person's stated need, explain the evidence and limits of an intervention, provide safe support and refer when the need exceeds scope", "priority": "foundation", "evidence": "Nigerian traditional, complementary and alternative medicine context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"]}, {"name": "Handle products, consent, records, claims, adverse effects and collaboration with regulated providers responsibly", "priority": "core", "evidence": "Nigerian TCAM and health-regulatory context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"]}],
+      "tools": [{"name": "Role-specific assessment, treatment, herbal-product, hygiene, documentation, consent, referral and client-record workflows", "priority": "core", "evidence": "Nigerian TCAM context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"], "limitation": "The tools depend on whether the work is practice, research or product manufacture."}],
+      "competencies": [{"name": "Protect clients from unsafe claims or delayed care by staying within evidence, competence, consent and referral boundaries", "priority": "core", "evidence": "Nigerian TCAM context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"]}],
+      "certifications": [{"name": "Applicable Nigerian traditional, complementary or alternative medicine, herbal, acupuncture, homeopathy or approved health pathway", "issuer": "Applicable Nigerian authority, recognised institution or approved training body", "level": "profession_dependent", "evidence": "Nigerian TCAM context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"], "limitation": "The applicable route depends on practice, research or product activity; no universal licence is asserted."}],
+      "regulatory_requirements": [{"name": "Follow applicable Nigerian health, product, consent, safety, claims, NAFDAC, SON and professional requirements", "priority": "required_when_applicable", "evidence": "Nigerian TCAM context", "source_ids": ["ng_fmoh_tcam", "ng_fmoh_health_policy_2024_2026"]}]
+    }
+  ]
+}

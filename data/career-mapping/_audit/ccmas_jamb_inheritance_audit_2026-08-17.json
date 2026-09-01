@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "decision": "All 420 active JAMB names have an explicit inheritance scope: full CCMAS, combined CCMAS, course-scoped partial CCMAS, or separately evidenced external curriculum. The active domain links match the saved canonical scope artifact.",
+  "decision": "The active JAMB domain map is derived from full CCMAS curricula, explicit combined components, course-scoped partial curricula, and separately evidenced external curricula. 86 row(s) remain review-required because their scope/domain evidence is still insufficient.",
   "mapping_contract": {
     "single_ccmas_full_curriculum": "A_exact and C_reclassified rows inherit one reviewed CCMAS programme's domain links.",
     "partial_curriculum_scope": "B_granular rows expose only domains anchored by their recorded CCMAS course slice; a full-parent fan-out is not proof.",
@@ -31,9 +31,10 @@
     "contract": "Exact and combined JAMB domain links must equal the union of their resolved CCMAS component links; partial and external rows cannot inherit unsupported links.",
     "summary": {
       "partial_curriculum_scope:matches_derived_domain_set": 273,
-      "single_ccmas_full_curriculum:matches_derived_domain_set": 113,
+      "single_ccmas_full_curriculum:external_domain_provenance_required": 86,
       "combined_ccmas_curriculum:matches_derived_domain_set": 28,
-      "external_sources_required:matches_derived_domain_set": 6
+      "external_sources_required:matches_derived_domain_set": 6,
+      "single_ccmas_full_curriculum:matches_derived_domain_set": 27
     },
     "match_type_mismatches": {},
     "rows": [
@@ -60,10 +61,16 @@
       {
         "jamb_name": "Common and Islamic Law",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D037",
+          "D078",
+          "D150",
+          "D151",
+          "D163"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -80,10 +87,19 @@
       {
         "jamb_name": "Criminology and Security Studies (printed under Law faculty block)",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D028",
+          "D037",
+          "D045",
+          "D063",
+          "D077",
+          "D078",
+          "D130",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -120,20 +136,39 @@
       {
         "jamb_name": "Criminology and Security Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D028",
+          "D037",
+          "D045",
+          "D063",
+          "D077",
+          "D078",
+          "D130",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Demography and Social Statistics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D014",
+          "D029",
+          "D041",
+          "D045",
+          "D063",
+          "D072",
+          "D078",
+          "D130"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -360,10 +395,19 @@
       {
         "jamb_name": "Political Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D028",
+          "D037",
+          "D045",
+          "D063",
+          "D078",
+          "D130",
+          "D149",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -480,10 +524,21 @@
       {
         "jamb_name": "Psychology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D037",
+          "D064",
+          "D078",
+          "D130",
+          "D143",
+          "D145",
+          "D151",
+          "D154"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -540,10 +595,21 @@
       {
         "jamb_name": "Social Work",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D037",
+          "D045",
+          "D046",
+          "D063",
+          "D064",
+          "D078",
+          "D128",
+          "D130",
+          "D151",
+          "D161"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -570,30 +636,75 @@
       {
         "jamb_name": "Business Administration",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 17,
-        "ccmas_derived_link_count": 17,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D010",
+          "D013",
+          "D014",
+          "D028",
+          "D029",
+          "D030",
+          "D032",
+          "D033",
+          "D045",
+          "D060",
+          "D061",
+          "D062",
+          "D063",
+          "D130",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Marketing",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D008",
+          "D009",
+          "D012",
+          "D028",
+          "D030",
+          "D031",
+          "D033",
+          "D060",
+          "D061",
+          "D063",
+          "D158"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Entrepreneurship",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D008",
+          "D012",
+          "D014",
+          "D028",
+          "D030",
+          "D031",
+          "D032",
+          "D033",
+          "D061",
+          "D063",
+          "D078",
+          "D130",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -610,10 +721,22 @@
       {
         "jamb_name": "Taxation",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D012",
+          "D014",
+          "D015",
+          "D037",
+          "D060",
+          "D061",
+          "D063",
+          "D130",
+          "D149",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -640,20 +763,46 @@
       {
         "jamb_name": "Insurance",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D011",
+          "D013",
+          "D014",
+          "D015",
+          "D028",
+          "D037",
+          "D060",
+          "D061",
+          "D062",
+          "D063",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Procurement Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D014",
+          "D028",
+          "D031",
+          "D032",
+          "D033",
+          "D034",
+          "D035",
+          "D036",
+          "D037",
+          "D061",
+          "D062",
+          "D130"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -670,10 +819,26 @@
       {
         "jamb_name": "Actuarial Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 15,
-        "ccmas_derived_link_count": 15,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D011",
+          "D012",
+          "D013",
+          "D014",
+          "D028",
+          "D032",
+          "D033",
+          "D060",
+          "D061",
+          "D062",
+          "D063",
+          "D157",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -720,20 +885,38 @@
       {
         "jamb_name": "Social Standards",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D029",
+          "D037",
+          "D045",
+          "D063",
+          "D064",
+          "D078",
+          "D128",
+          "D130",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Project Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
-        "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "status": "external_domain_provenance_required",
+        "stored_link_count": 7,
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D014",
+          "D028",
+          "D032",
+          "D033",
+          "D063",
+          "D158"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -770,10 +953,25 @@
       {
         "jamb_name": "Logistics and Supply Chain Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 14,
-        "ccmas_derived_link_count": 14,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D012",
+          "D013",
+          "D014",
+          "D028",
+          "D030",
+          "D034",
+          "D035",
+          "D036",
+          "D060",
+          "D061",
+          "D062",
+          "D063",
+          "D079"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -870,10 +1068,23 @@
       {
         "jamb_name": "Transport Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 12,
-        "ccmas_derived_link_count": 12,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D008",
+          "D009",
+          "D013",
+          "D028",
+          "D033",
+          "D034",
+          "D035",
+          "D061",
+          "D062",
+          "D063",
+          "D083",
+          "D158"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -890,10 +1101,22 @@
       {
         "jamb_name": "Employment and Human Resource Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D014",
+          "D028",
+          "D029",
+          "D030",
+          "D033",
+          "D045",
+          "D063",
+          "D074",
+          "D130",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -980,10 +1203,26 @@
       {
         "jamb_name": "Aviation Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 15,
-        "ccmas_derived_link_count": 15,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D008",
+          "D013",
+          "D014",
+          "D028",
+          "D030",
+          "D031",
+          "D060",
+          "D061",
+          "D062",
+          "D063",
+          "D069",
+          "D083",
+          "D158",
+          "D159",
+          "D164"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1040,10 +1279,19 @@
       {
         "jamb_name": "Computer Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D002",
+          "D003",
+          "D005",
+          "D009",
+          "D033",
+          "D056",
+          "D140"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1060,20 +1308,34 @@
       {
         "jamb_name": "Microbiology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D025",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D048",
+          "D122",
+          "D142"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Mathematics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D003",
+          "D009",
+          "D014"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1090,10 +1352,22 @@
       {
         "jamb_name": "BIOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1110,60 +1384,116 @@
       {
         "jamb_name": "Statistics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D002",
+          "D003",
+          "D009",
+          "D014"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Software Engineering",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 13,
-        "ccmas_derived_link_count": 13,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D002",
+          "D003",
+          "D004",
+          "D005",
+          "D007",
+          "D009",
+          "D012",
+          "D033",
+          "D056",
+          "D139",
+          "D140",
+          "D167"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "PHYSICS WITH ELECTRONICS",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D006",
+          "D008",
+          "D016",
+          "D017",
+          "D019",
+          "D050",
+          "D059",
+          "D093",
+          "D094",
+          "D140"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Geology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D022",
+          "D041",
+          "D054",
+          "D072",
+          "D144",
+          "D156"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "INFORMATION TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D002",
+          "D003",
+          "D004",
+          "D005",
+          "D007",
+          "D008",
+          "D009",
+          "D056",
+          "D140"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Zoology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D027",
+          "D041",
+          "D047",
+          "D119",
+          "D121",
+          "D122",
+          "D142"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1180,10 +1510,16 @@
       {
         "jamb_name": "Industrial Mathematics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D003",
+          "D009",
+          "D012",
+          "D014"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1210,20 +1546,38 @@
       {
         "jamb_name": "Science Laboratory Technology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D026",
+          "D027",
+          "D041",
+          "D074",
+          "D093",
+          "D122"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Biotechnology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D025",
+          "D027",
+          "D041",
+          "D047",
+          "D048",
+          "D122",
+          "D138",
+          "D142",
+          "D143"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1250,20 +1604,38 @@
       {
         "jamb_name": "Environmental Management and Toxicology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D026",
+          "D027",
+          "D041",
+          "D072",
+          "D074",
+          "D121",
+          "D122",
+          "D143",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "FORENSIC SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D037",
+          "D064",
+          "D077",
+          "D122",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1310,10 +1682,21 @@
       {
         "jamb_name": "Industrial Physics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D006",
+          "D008",
+          "D016",
+          "D019",
+          "D050",
+          "D059",
+          "D093",
+          "D132",
+          "D140",
+          "D155"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1330,10 +1713,20 @@
       {
         "jamb_name": "Petroleum Chemistry",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D019",
+          "D020",
+          "D022",
+          "D041",
+          "D054",
+          "D055",
+          "D074",
+          "D110",
+          "D155"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -1570,10 +1963,19 @@
       {
         "jamb_name": "Marine Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D041",
+          "D072",
+          "D076",
+          "D120",
+          "D134",
+          "D142",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2110,10 +2512,16 @@
       {
         "jamb_name": "Brewing Science and Technology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D027",
+          "D041",
+          "D048",
+          "D055",
+          "D110"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2460,10 +2868,22 @@
       {
         "jamb_name": "Biochemistry",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D025",
+          "D027",
+          "D041",
+          "D047",
+          "D048",
+          "D055",
+          "D122",
+          "D138",
+          "D142",
+          "D143"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2490,10 +2910,18 @@
       {
         "jamb_name": "Human Nutrition and Dietetics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D026",
+          "D027",
+          "D041",
+          "D048",
+          "D068",
+          "D142",
+          "D165"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2540,30 +2968,59 @@
       {
         "jamb_name": "Physiotherapy",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D024",
+          "D068",
+          "D137",
+          "D145",
+          "D165"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Pharmacology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D023",
+          "D025",
+          "D027",
+          "D041",
+          "D068",
+          "D122",
+          "D138",
+          "D142",
+          "D145",
+          "D165"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Radiography",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D003",
+          "D023",
+          "D024",
+          "D025",
+          "D026",
+          "D122",
+          "D123",
+          "D124",
+          "D135",
+          "D137",
+          "D145"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2620,10 +3077,19 @@
       {
         "jamb_name": "Animal Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D027",
+          "D030",
+          "D041",
+          "D047",
+          "D063",
+          "D090",
+          "D119",
+          "D121"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2780,10 +3246,17 @@
       {
         "jamb_name": "Archaeology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D039",
+          "D041",
+          "D072",
+          "D073",
+          "D078",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2940,10 +3413,24 @@
       {
         "jamb_name": "Economics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 13,
-        "ccmas_derived_link_count": 13,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D013",
+          "D014",
+          "D015",
+          "D028",
+          "D030",
+          "D045",
+          "D061",
+          "D062",
+          "D063",
+          "D078",
+          "D158",
+          "D159"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -2960,10 +3447,17 @@
       {
         "jamb_name": "Linguistics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D039",
+          "D043",
+          "D064",
+          "D065",
+          "D073",
+          "D130"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3000,10 +3494,16 @@
       {
         "jamb_name": "Music",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D039",
+          "D042",
+          "D043",
+          "D130",
+          "D153"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3020,10 +3520,14 @@
       {
         "jamb_name": "Philosophy",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D037",
+          "D039",
+          "D078"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3100,10 +3604,18 @@
       {
         "jamb_name": "Sociology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D037",
+          "D046",
+          "D063",
+          "D064",
+          "D078",
+          "D151"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3180,10 +3692,17 @@
       {
         "jamb_name": "Systems Engineering",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D017",
+          "D032",
+          "D050",
+          "D140",
+          "D147"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3220,20 +3739,37 @@
       {
         "jamb_name": "Architecture",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D017",
+          "D021",
+          "D051",
+          "D093",
+          "D099",
+          "D102",
+          "D146",
+          "D164"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Quantity Surveying",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D015",
+          "D018",
+          "D021",
+          "D032",
+          "D036",
+          "D063",
+          "D146"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3250,20 +3786,30 @@
       {
         "jamb_name": "Urban and Regional Planning",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D021",
+          "D045",
+          "D063",
+          "D072",
+          "D078"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Industrial Design",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 2,
-        "ccmas_derived_link_count": 2,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D044",
+          "D075"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3330,20 +3876,40 @@
       {
         "jamb_name": "Environmental Health Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D021",
+          "D026",
+          "D027",
+          "D041",
+          "D064",
+          "D072",
+          "D074",
+          "D078",
+          "D121",
+          "D138"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Environmental Management",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D041",
+          "D051",
+          "D063",
+          "D072",
+          "D074",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3360,10 +3926,21 @@
       {
         "jamb_name": "Environmental Standards",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D028",
+          "D041",
+          "D045",
+          "D063",
+          "D072",
+          "D074",
+          "D078",
+          "D121",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3460,20 +4037,35 @@
       {
         "jamb_name": "Islamic Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D037",
+          "D039",
+          "D130",
+          "D150"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Optometry",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D023",
+          "D024",
+          "D025",
+          "D026",
+          "D064",
+          "D068",
+          "D124",
+          "D138",
+          "D145"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3510,10 +4102,16 @@
       {
         "jamb_name": "Surveying and Geoinformatics",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D002",
+          "D009",
+          "D059",
+          "D072",
+          "D156"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3540,100 +4138,195 @@
       {
         "jamb_name": "OCEANOGRAPHY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 8,
-        "ccmas_derived_link_count": 8,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D041",
+          "D072",
+          "D076",
+          "D120",
+          "D134",
+          "D142",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Earth Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D022",
+          "D041",
+          "D054",
+          "D072",
+          "D144",
+          "D156"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Geoscience",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D022",
+          "D041",
+          "D054",
+          "D072",
+          "D144",
+          "D156"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Ecology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Applied Ecology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Ecology and Environmental Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Parasitology and Entomology",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D027",
+          "D041",
+          "D047",
+          "D119",
+          "D121",
+          "D122",
+          "D142"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "BIOINFORMATICS",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D025",
+          "D027",
+          "D041",
+          "D047",
+          "D048",
+          "D122",
+          "D138",
+          "D142",
+          "D143"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "OPERATIONS RESEARCH",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D003",
+          "D009",
+          "D012",
+          "D014"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "BIOLOGICAL SCIENCE(S)",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3660,80 +4353,136 @@
       {
         "jamb_name": "Energy and Petroleum Studies",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D019",
+          "D020",
+          "D022",
+          "D041",
+          "D054",
+          "D055",
+          "D074",
+          "D110",
+          "D155"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "Electrons",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D006",
+          "D008",
+          "D016",
+          "D017",
+          "D019",
+          "D050",
+          "D059",
+          "D093",
+          "D094",
+          "D140"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "ELECTRONICS AND COMMUNICATIONS",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 9,
-        "ccmas_derived_link_count": 9,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D001",
+          "D006",
+          "D008",
+          "D009",
+          "D016",
+          "D019",
+          "D050",
+          "D094",
+          "D140"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "COMMUNICATIONS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D008",
+          "D016",
+          "D059"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "COMMUNICATION AND WIRELESS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D008",
+          "D016",
+          "D059"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "TELECOMMUNICATION AND WIRELESS TECHNOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D008",
+          "D016",
+          "D059"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "TELECOMMUNICATION SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D008",
+          "D016",
+          "D059"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "TELECOMMUNICATION MANAGEMENT",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 4,
-        "ccmas_derived_link_count": 4,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D004",
+          "D008",
+          "D016",
+          "D059"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3760,20 +4509,40 @@
       {
         "jamb_name": "NATURAL AND ENVIRONMENTAL SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 7,
-        "ccmas_derived_link_count": 7,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D020",
+          "D041",
+          "D051",
+          "D063",
+          "D072",
+          "D074",
+          "D144"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
       {
         "jamb_name": "ANTHROPOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 11,
-        "ccmas_derived_link_count": 11,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D009",
+          "D026",
+          "D027",
+          "D041",
+          "D047",
+          "D118",
+          "D119",
+          "D121",
+          "D122",
+          "D142",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3790,10 +4559,17 @@
       {
         "jamb_name": "ARCHEAOLOGY",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 6,
-        "ccmas_derived_link_count": 6,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D039",
+          "D041",
+          "D072",
+          "D073",
+          "D078",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3820,10 +4596,16 @@
       {
         "jamb_name": "LIBRARY AND INFORMATION SCIENCE",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 5,
-        "ccmas_derived_link_count": 5,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D010",
+          "D043",
+          "D063",
+          "D073",
+          "D152"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3880,10 +4662,14 @@
       {
         "jamb_name": "Library and Information Science",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 3,
-        "ccmas_derived_link_count": 3,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D010",
+          "D043",
+          "D073"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -3900,10 +4686,21 @@
       {
         "jamb_name": "Business Education",
         "inheritance_type": "single_ccmas_full_curriculum",
-        "status": "matches_derived_domain_set",
+        "status": "external_domain_provenance_required",
         "stored_link_count": 10,
-        "ccmas_derived_link_count": 10,
-        "unexpected_stored_domain_ids": [],
+        "ccmas_derived_link_count": 0,
+        "unexpected_stored_domain_ids": [
+          "D015",
+          "D028",
+          "D029",
+          "D030",
+          "D039",
+          "D040",
+          "D060",
+          "D061",
+          "D063",
+          "D081"
+        ],
         "missing_ccmas_derived_domain_ids": [],
         "match_type_mismatch_domain_ids": []
       },
@@ -12032,7 +12829,8 @@
     "path": "career-mapping\\_audit\\jamb_ccmas_inheritance_canonical_2026-08-17.json",
     "status_counts": {
       "ready_partial": 273,
-      "ready": 141,
+      "review_required": 86,
+      "ready": 55,
       "ready_external": 6
     }
   },
@@ -29745,13 +30543,13 @@
     "unmatched_rows": []
   },
   "subgroup_audit_summary": {
-    "derivation_findings": 0,
-    "threshold_findings": 0,
-    "level_direction_findings": 0,
+    "derivation_findings": 3,
+    "threshold_findings": 56,
+    "level_direction_findings": 8,
     "placeholder_or_missing_label_or_description": 0,
-    "empty_or_overlapping_skill_findings": 5,
+    "empty_or_overlapping_skill_findings": 305,
     "source_layer_overlap_is_evidence_index": 1,
-    "stored_role_count_findings": 0,
+    "stored_role_count_findings": 21,
     "independent_resolution_findings": 1
   },
   "quantitative_finance_audit": {
@@ -29774,7 +30572,9 @@
         "manage research data",
         "statistical modeling techniques",
         "research design",
-        "scientific literature"
+        "scientific literature",
+        "quantitative analysis",
+        "financial forecasting"
       ],
       "description": "Use mathematics, statistics and data to understand financial risk and markets.",
       "raw_isco_label": "Science and engineering professionals",
@@ -29783,8 +30583,8 @@
         "sources": [
           "global_esco",
           "global_onet",
-          "ng_finance",
-          "ng_nbs"
+          "ng_nbs",
+          "ng_finance"
         ],
         "ownership": "subgroup",
         "nigerian_context": {
@@ -29794,9 +30594,7 @@
           ],
           "evidence_limit": "Local context and terminology only; not role-level Nigerian demand, salary or licensing proof.",
           "salary": "excluded"
-        },
-        "mapping_method": "canonical_role_library_isco_submajor",
-        "evidence_role_count": 2
+        }
       },
       "display_order": 1
     },
