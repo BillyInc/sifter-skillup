@@ -18,9 +18,9 @@
     "no_final_negative_label_before_exhaustive_search": true
   },
   "counts": {
-    "audit_entities": 5696,
-    "ledger_entities": 5696,
-    "review_follow_up_rows": 11,
+    "audit_entities": 5795,
+    "ledger_entities": 5795,
+    "review_follow_up_rows": 0,
     "local_provenance_errors": 0,
     "missing_item_provenance": 0,
     "invalid_states": 0,
@@ -30,7 +30,7 @@
     "domain_context_provenance_missing": 0,
     "missing_search_records": 0,
     "premature_negative_labels": 0,
-    "unresolved_context_or_no_direct_rows": 11
+    "unresolved_context_or_no_direct_rows": 0
   },
   "completion_blocker": null,
   "limitation": "Integrity passing means every row has a reviewed evidence disposition, separate Nigerian domain context, and provenance-safe separation. It does not mean every occupation has an exact Nigerian role match or Nigerian demand evidence."

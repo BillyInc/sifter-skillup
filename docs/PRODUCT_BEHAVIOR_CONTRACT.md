@@ -4,6 +4,10 @@ Status: repository-wide audit and portable handoff contract
 
 Audit date: 2026-08-21
 
+Guidance-flow reconciliation: 2026-09-01. This revision aligns the admission
+journey with the current programme-preview and university-offering decisions;
+the original repository-wide audit date remains unchanged.
+
 This document is the behavioral source of truth for future design and
 implementation work. It was produced from the current repository, backend route
 and migration inventory, tests, existing product documents, and the supplied
@@ -272,7 +276,7 @@ Admission Intelligence resolves academic choices before career mapping.
 ```text
 Admission Intelligence
   -> School mode: choose university -> choose its programme offering
-  -> Programme mode: choose programme -> compare universities/offerings
+  -> Programme mode: choose programme -> programme preview -> university offerings
   -> Subjects mode: choose subjects -> receive programme guidance
   -> institution-specific overview
   -> requirements / gaps / review notes
@@ -296,6 +300,14 @@ The three modes are separate decisions, not three labels for the same form.
 Requirements are institution-specific. Unsupported Post-UTME, score,
 readiness, or market claims must not be invented. Missing or unparsed source
 fields are unavailable, not silently filled.
+
+For SS1/SS2, the university list is exploratory and optional. SS3 and JAMB
+users see the canonical programme preview first, then the universities offering
+that JAMB name, including address where available, and open one university to
+inspect its requirements and notes. These journeys do not use programme or
+university comparison. Undergraduates remain in the university-first flow;
+comparison is only available where the specific account journey and product
+surface explicitly support it.
 
 Status: code and product mockups are substantial; Figma has no complete
 Admission Intelligence flow. Existing Figma onboarding notes imply admission
@@ -782,7 +794,8 @@ boundary: academic resolution first, career interpretation second.
 - UI/components: mode tabs/cards for school, programme, and subjects; live search,
   filters, result cards, selection summary, continue CTA.
 - Actions/exits: choose mode -> query; select record -> next step; continue ->
-  insight/programme overview; back -> Explore or admin session.
+  programme preview; preview -> university offerings or optional career
+  guidance; back -> Explore or admin session.
 - States/data: pending/no results/error/real/fallback/validation/locked; admission
   and student-pipeline endpoints plus source dates are authoritative.
 - Persistence/permissions/feedback: save query/selection in starting-point and
@@ -798,10 +811,12 @@ boundary: academic resolution first, career interpretation second.
   `src/screens/careerIntelligence/AdmissionInsightScreen.tsx:62`.
 - Persona/entry/purpose: student or authorised educator reviews one admission
   programme/university result and decides whether to continue.
-- UI/components: result header, university/programme context, requirements,
-  subject match/gaps, source notes, compare/save/continue actions.
-- Actions/exits: select offering -> programme detail; compare -> compare; save ->
-  My World; back -> browse.
+- UI/components: result header, canonical programme context, university
+  offering context, requirements, subject match/gaps, source notes, save and
+  continue actions. Comparison is not shown in SS1/SS2/SS3/JAMB journeys.
+- Actions/exits: select offering -> programme detail; save -> My World where
+  supported; continue -> domain guidance where the journey allows it; back ->
+  browse.
 - States/data: real, partial requirements, fallback, pending, empty/error/locked;
   institution-specific admission endpoints are authoritative.
 - Persistence/permissions/feedback: saved programme/comparison and starting point
@@ -821,7 +836,9 @@ boundary: academic resolution first, career interpretation second.
 - UI/components: programme header, institution context, overview, requirements,
   domains, guidance/report action, save, notes, resources, PDF/share scaffold.
 - Actions/exits: open domain -> domain detail; save -> My World; add guidance ->
-  report path; print/share -> report; change offering -> admission/compare.
+  report path; print/share -> report; change offering -> the university-options
+  list. Do not imply that a university offers a different programme version;
+  requirements, notes and location are the university-specific differences.
 - States/data: pending/real/partial/fallback/empty/error/locked; career and
   student-pipeline programme endpoints with source metadata are authoritative.
 - Persistence/permissions/feedback: programme/save/guidance path persists;

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Linking, TouchableOpacity, type ViewStyle } fro
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
 import type { FoundationSkillEnriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
+import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
@@ -18,6 +19,7 @@ export function FoundationSkillsBlock({
 }: FoundationSkillsBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   if (!skills?.length) return null;
 
   const rows = [...skills].sort((a, b) => b.prevalence - a.prevalence);
@@ -27,8 +29,15 @@ export function FoundationSkillsBlock({
   const SkillRows = ({ items }: { items: FoundationSkillEnriched[] }) => (
     <View style={styles.rows}>
       {items.map((skill, index) => {
-        const openUri = () => {
-          if (skill.uri) Linking.openURL(skill.uri).catch(() => {});
+        const openUri = async () => {
+          if (!skill.uri) return;
+          setNotice(null);
+          if (!(await hasInternetConnection())) {
+            setNotice(OFFLINE_LINK_NOTICE);
+            return;
+          }
+          const opened = await Linking.openURL(skill.uri).then(() => true).catch(() => false);
+          if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
         };
         return (
           <View key={`${skill.skill}-${index}`} style={styles.row}>
@@ -40,7 +49,7 @@ export function FoundationSkillsBlock({
             </Text>
             {skill.uri ? (
               <Text
-                onPress={openUri}
+                onPress={() => { void openUri(); }}
                 style={[styles.link, { color: colors.accentRole.action }]}
                 accessibilityRole="link"
               >
@@ -74,6 +83,7 @@ export function FoundationSkillsBlock({
           </Text>
         </TouchableOpacity>
       ) : null}
+      {notice ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{notice}</Text> : null}
     </View>
   );
 }

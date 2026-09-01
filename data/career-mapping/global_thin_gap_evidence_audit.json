@@ -2,8 +2,8 @@
   "schema_version": "1.0.0",
   "purpose": "Separate global source coverage, role-spine evidence and specialist framework evidence for the current thin-domain queue before SQL regeneration.",
   "scope": {
-    "thin_queue_rows": 42,
-    "actual_unpopulated_gap_rows": 41,
+    "thin_queue_rows": 40,
+    "actual_unpopulated_gap_rows": 39,
     "reconciliation_rows": 1,
     "reconciled_count_note": "The repository contains 42 thin-queue rows. Forty-one have thin overlay additions and are the actual unpopulated gaps. D003 is a reconciliation row with five existing source-backed global role records and no additional overlay row.",
     "sql_regeneration": "blocked_until_evidence_review"
@@ -15,13 +15,13 @@
     "credential_rule": "Only a source that explicitly establishes registration, examination, certification, licence or credential is eligible for a certification field."
   },
   "coverage_summary": {
-    "thin_queue_rows": 42,
-    "actual_unpopulated_gap_rows": 41,
+    "thin_queue_rows": 40,
+    "actual_unpopulated_gap_rows": 39,
     "reconciliation_rows": 1,
-    "role_spine_resolved": 42,
-    "thin_overlay_resolved": 41,
+    "role_spine_resolved": 40,
+    "thin_overlay_resolved": 39,
     "taxonomy_only": 0,
-    "taxonomy_plus_specialist_framework": 42,
+    "taxonomy_plus_specialist_framework": 40,
     "minimum_global_sources": 5,
     "maximum_global_sources": 10
   },
@@ -40,7 +40,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -79,7 +79,7 @@
       "role_spine": {
         "repository_role_rows": 5,
         "roles_with_tools": 4,
-        "roles_with_onet_competencies": 2,
+        "roles_with_onet_competencies": 4,
         "roles_with_esco_skills": 4,
         "roles_with_specialist_framework_signal": 0,
         "specialist_role_source_ids": []
@@ -103,6 +103,16 @@
         "digital image processing",
         "python computer programming",
         "principles of artificial intelligence",
+        "mathematics",
+        "critical thinking",
+        "reading comprehension",
+        "active learning",
+        "speaking",
+        "active listening",
+        "writing",
+        "monitoring",
+        "learning strategies",
+        "science",
         "mathematical modelling",
         "data mining",
         "visual presentation techniques",
@@ -113,16 +123,6 @@
         "scientific literature",
         "information categorisation",
         "resource description framework query language",
-        "mathematics",
-        "critical thinking",
-        "reading comprehension",
-        "active listening",
-        "speaking",
-        "writing",
-        "active learning",
-        "science",
-        "monitoring",
-        "learning strategies",
         "digital data processing",
         "information structure",
         "systems development life cycle",
@@ -236,7 +236,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -281,11 +281,11 @@
         "global_nice"
       ],
       "role_spine": {
-        "repository_role_rows": 16,
-        "roles_with_tools": 14,
-        "roles_with_onet_competencies": 11,
+        "repository_role_rows": 17,
+        "roles_with_tools": 15,
+        "roles_with_onet_competencies": 15,
         "roles_with_esco_skills": 11,
-        "roles_with_specialist_framework_signal": 4,
+        "roles_with_specialist_framework_signal": 5,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -296,10 +296,11 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 4,
+        "role_count": 5,
         "role_names": [
           "director of compliance and information security",
           "Information Security Engineers",
+          "Digital Forensics Analysts",
           "Forensic Science Technicians",
           "Penetration Testers"
         ]
@@ -470,7 +471,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -507,11 +508,11 @@
         "global_sfia"
       ],
       "role_spine": {
-        "repository_role_rows": 17,
-        "roles_with_tools": 10,
-        "roles_with_onet_competencies": 10,
+        "repository_role_rows": 18,
+        "roles_with_tools": 11,
+        "roles_with_onet_competencies": 11,
         "roles_with_esco_skills": 13,
-        "roles_with_specialist_framework_signal": 8,
+        "roles_with_specialist_framework_signal": 9,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -521,16 +522,17 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 8,
+        "role_count": 9,
         "role_names": [
           "cloud identity manager",
           "communication infrastructure maintainer",
           "ICT network engineer",
           "ICT network technician",
           "ICT network architect",
+          "Network and Computer Systems Administrators",
           "Computer Network Architects",
           "Computer Network Support Specialists",
-          "Network and Computer Systems Administrators"
+          "Food Servers, Nonrestaurant"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -765,7 +767,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -1065,7 +1067,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -1112,7 +1114,7 @@
       "role_spine": {
         "repository_role_rows": 14,
         "roles_with_tools": 13,
-        "roles_with_onet_competencies": 11,
+        "roles_with_onet_competencies": 13,
         "roles_with_esco_skills": 10,
         "roles_with_specialist_framework_signal": 6,
         "specialist_role_source_ids": [
@@ -1360,328 +1362,6 @@
       "interpretation": "The repository has a global role spine and an additional thin-domain overlay that still requires field-level review."
     },
     {
-      "domain_id": "D074",
-      "domain_name": "Occupational Health, Safety",
-      "global_source_count": 6,
-      "global_sources": [
-        {
-          "source_id": "global_esco",
-          "name": "ESCO occupations and skills",
-          "evidence_type": "occupation_taxonomy",
-          "region": "global",
-          "url": "https://esco.ec.europa.eu/en/use-esco"
-        },
-        {
-          "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
-          "evidence_type": "occupation_taxonomy_and_job_titles",
-          "region": "global_proxy",
-          "url": "https://www.onetcenter.org/database.html"
-        },
-        {
-          "source_id": "global_isco",
-          "name": "ILO ISCO-08",
-          "evidence_type": "international_occupation_standard",
-          "region": "global",
-          "url": "https://isco.ilo.org/en/isco-08/"
-        },
-        {
-          "source_id": "global_wef",
-          "name": "World Economic Forum Future of Jobs 2025",
-          "evidence_type": "emerging_role_signal",
-          "region": "global",
-          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
-        },
-        {
-          "source_id": "global_built_environment",
-          "name": "RICS built-environment and property standards",
-          "evidence_type": "professional_role_and_competency_framework",
-          "region": "global",
-          "url": "https://www.rics.org/"
-        },
-        {
-          "source_id": "global_health",
-          "name": "WHO health workforce resources",
-          "evidence_type": "health_workforce_context",
-          "region": "global",
-          "url": "https://www.who.int/teams/health-workforce"
-        }
-      ],
-      "taxonomy_source_ids": [
-        "global_esco",
-        "global_onet",
-        "global_isco",
-        "global_wef"
-      ],
-      "specialist_domain_source_ids": [
-        "global_built_environment",
-        "global_health"
-      ],
-      "role_spine": {
-        "repository_role_rows": 19,
-        "roles_with_tools": 17,
-        "roles_with_onet_competencies": 17,
-        "roles_with_esco_skills": 16,
-        "roles_with_specialist_framework_signal": 9,
-        "specialist_role_source_ids": [
-          "global_esco",
-          "global_onet",
-          "global_isco",
-          "global_wef",
-          "global_built_environment",
-          "global_health"
-        ]
-      },
-      "thin_overlay": {
-        "role_count": 9,
-        "role_names": [
-          "health and safety engineer",
-          "health and safety officer",
-          "mine health and safety engineer",
-          "aviation safety officer",
-          "construction safety inspector",
-          "mine safety officer",
-          "Occupational Health and Safety Specialists",
-          "Occupational Health and Safety Technicians",
-          "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors"
-        ]
-      },
-      "actual_unpopulated_gap": true,
-      "reconciliation_row": false,
-      "current_domain_skills": [
-        "sa8000",
-        "health and safety measures in transportation",
-        "prepare audit activities",
-        "perform risk analysis",
-        "assess transport risks",
-        "adhere to ohsas 18001",
-        "promote the use of sustainable transport",
-        "manage health and safety standards",
-        "develop environmental policy",
-        "monitor employee s health",
-        "consider ergonomic aspects of urban transportation",
-        "monitor legislation developments",
-        "active listening",
-        "reading comprehension",
-        "speaking",
-        "writing",
-        "critical thinking",
-        "monitoring",
-        "active learning",
-        "learning strategies",
-        "mathematics",
-        "science",
-        "health and safety in the workplace",
-        "government policy implementation",
-        "audit techniques",
-        "personnel management",
-        "employment law",
-        "conduct workplace audits",
-        "inspect government policy compliance",
-        "maintain relationships with government agencies",
-        "gather feedback from employees",
-        "protect employee rights",
-        "advise on government policy compliance",
-        "health care legislation",
-        "medical terminology",
-        "safe management of medicines",
-        "health safety and hygiene legislation",
-        "medical studies",
-        "health care system",
-        "communicate health and safety measures",
-        "advise on risk management",
-        "inspect staff",
-        "ensure compliance with healthcare regulations",
-        "examine healthcare facility",
-        "interview techniques",
-        "risk management",
-        "occupational health",
-        "health and safety regulations",
-        "make health safety and environment assessments",
-        "promote health and safety policies in health services",
-        "legislation about animal origin products",
-        "foodborne diseases",
-        "food safety principles",
-        "food toxicity",
-        "cultural practices regarding animal parts sorting",
-        "food legislation",
-        "european food safety policy",
-        "risks associated to physical chemical biological hazards in food and beverages",
-        "quality assurance methodologies",
-        "food authentication techniques",
-        "cultural practices regarding animal slaughter",
-        "environmental policy",
-        "check methods",
-        "environmental legislation",
-        "public health",
-        "ensure compliance with environmental legislation",
-        "address public health issues",
-        "perform environmental investigations",
-        "use consulting techniques",
-        "promote health and safety",
-        "conduct environmental surveys",
-        "quality assurance procedures",
-        "waste management",
-        "environmental engineering",
-        "chemistry",
-        "ensure compliance with waste legislative regulations",
-        "collect samples for analysis",
-        "issue penalties to violators of the sanitation code",
-        "write inspection reports",
-        "label samples",
-        "radioactive contamination",
-        "hazardous materials transportation",
-        "hazardous waste treatment",
-        "hazardous waste types",
-        "pollution prevention",
-        "waste and scrap products",
-        "hazardous waste storage",
-        "advise on chemical use reduction",
-        "ensure appropriate packaging of dangerous goods",
-        "food materials",
-        "food engineering",
-        "biotechnology",
-        "food science",
-        "food storage",
-        "food product ingredients",
-        "food allergies",
-        "inspect compliance with hazardous waste regulations",
-        "carry out environmental audits",
-        "educate on hazardous waste",
-        "inspect waste disposal facilities",
-        "inspect industrial equipment",
-        "engineering principles",
-        "safety engineering",
-        "assessment of risks and threats",
-        "advise on safety improvements",
-        "adjust engineering designs",
-        "draw up risk assessment",
-        "adhere to health well being and safety",
-        "prevent health and safety problems",
-        "approve engineering design",
-        "technical drawings",
-        "personal protective equipment",
-        "quality standards",
-        "follow standards for machinery safety",
-        "advise on conflict management",
-        "present reports",
-        "educate employees on occupational hazards",
-        "mine safety legislation",
-        "geology",
-        "electricity",
-        "develop health and safety strategies in mining",
-        "ensure compliance with safety legislation",
-        "maintain records of mining operations",
-        "investigate mine accidents",
-        "manage emergency procedures",
-        "train employees in mine safety",
-        "supervise staff",
-        "prepare scientific reports",
-        "address problems critically",
-        "aviation standards and recommended practices",
-        "framework for a safety management system",
-        "airport safety regulations",
-        "common aviation safety regulations",
-        "follow ethical code of conduct in transport services",
-        "use different communication channels",
-        "ensure data protection in aviation operations",
-        "work in an aviation team",
-        "adhere to standards of national and international safety programmes",
-        "stay alert",
-        "report airport security incidents",
-        "identify airport safety hazards",
-        "implement safety management systems",
-        "follow industry codes of practice for aviation safety",
-        "perform safety data analysis",
-        "carry out evacuation of airport in an emergency",
-        "human factors regarding safety",
-        "construction methods",
-        "undertake inspections",
-        "inspect construction supplies",
-        "identify preventive actions",
-        "test construction material samples",
-        "follow health and safety procedures in construction",
-        "write work related reports",
-        "identify process improvements",
-        "monitor construction site",
-        "impact of geological factors on mining operations",
-        "troubleshoot",
-        "deal with pressure from unexpected circumstances",
-        "conduct drug abuse tests",
-        "inspect mine safety conditions",
-        "assist employee health programmes",
-        "assist blood sample collection",
-        "conduct inter shift communication"
-      ],
-      "current_domain_tools": [
-        "Google Android",
-        "Yardi software",
-        "Operating system software",
-        "Transact-SQL",
-        "Apple iOS",
-        "Autodesk AutoCAD Civil 3D",
-        "Microsoft SQL Server Reporting Services SSRS",
-        "Zoom",
-        "Google Workspace software",
-        "Bentley MicroStation",
-        "Microsoft Active Server Pages ASP",
-        "Microsoft Access",
-        "Microsoft Excel",
-        "Microsoft Office software",
-        "Microsoft Outlook",
-        "Microsoft PowerPoint",
-        "Microsoft Word",
-        "Microsoft Project",
-        "Microsoft SharePoint",
-        "Microsoft Windows",
-        "SAP software",
-        "Adobe Acrobat",
-        "Autodesk AutoCAD"
-      ],
-      "current_domain_certifications": [
-        "NEBOSH International General Certificate",
-        "IOSH Managing Safely",
-        "Certified Safety Professional (CSP)",
-        "NEBOSH International Diploma",
-        "Member of the Institution of Safety Professionals of Nigeria (MISPON)"
-      ],
-      "nigerian_bodies": [
-        {
-          "body_id": "ng_coren",
-          "name": "Council for the Regulation of Engineering in Nigeria",
-          "body_type": "regulator",
-          "url": "https://coren.gov.ng/"
-        },
-        {
-          "body_id": "ng_ehocon",
-          "name": "Environmental Health Officers Registration Council of Nigeria",
-          "body_type": "regulator",
-          "url": "https://ehorecon.gov.ng/"
-        },
-        {
-          "body_id": "ng_nesrea",
-          "name": "National Environmental Standards and Regulations Enforcement Agency",
-          "body_type": "regulator",
-          "url": "https://nesrea.gov.ng/"
-        },
-        {
-          "body_id": "ng_iepn",
-          "name": "Institute of Environmental Practitioners of Nigeria",
-          "body_type": "professional_body",
-          "url": "https://iepn.gov.ng/"
-        },
-        {
-          "body_id": "ng_ossn",
-          "name": "Occupational Safety Society of Nigeria",
-          "body_type": "professional_association",
-          "url": "https://ossnigeria.org/"
-        }
-      ],
-      "status": "multi_source_role_spine_and_thin_overlay",
-      "evidence_level": "taxonomy_plus_specialist_framework",
-      "interpretation": "The repository has a global role spine and an additional thin-domain overlay that still requires field-level review."
-    },
-    {
       "domain_id": "D146",
       "domain_name": "Building Services Engineering — Mechanical, Electrical",
       "global_source_count": 5,
@@ -1695,7 +1375,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -2028,7 +1708,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -2418,7 +2098,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -2455,11 +2135,11 @@
         "global_built_environment"
       ],
       "role_spine": {
-        "repository_role_rows": 9,
-        "roles_with_tools": 9,
-        "roles_with_onet_competencies": 9,
+        "repository_role_rows": 11,
+        "roles_with_tools": 11,
+        "roles_with_onet_competencies": 11,
         "roles_with_esco_skills": 9,
-        "roles_with_specialist_framework_signal": 3,
+        "roles_with_specialist_framework_signal": 5,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -2469,11 +2149,13 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 3,
+        "role_count": 5,
         "role_names": [
           "marine surveyor",
           "quantity surveyor",
-          "real estate surveyor"
+          "real estate surveyor",
+          "Geodetic Surveyors",
+          "Surveyors"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -2662,7 +2344,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -2699,11 +2381,11 @@
         "global_health"
       ],
       "role_spine": {
-        "repository_role_rows": 10,
-        "roles_with_tools": 9,
-        "roles_with_onet_competencies": 9,
+        "repository_role_rows": 12,
+        "roles_with_tools": 10,
+        "roles_with_onet_competencies": 10,
         "roles_with_esco_skills": 6,
-        "roles_with_specialist_framework_signal": 5,
+        "roles_with_specialist_framework_signal": 7,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -2713,13 +2395,15 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 5,
+        "role_count": 7,
         "role_names": [
           "dental instrument assembler",
+          "Dental Hygienists",
           "Oral and Maxillofacial Surgeons",
           "Dental Assistants",
-          "Dental Hygienists",
-          "Dental Laboratory Technicians"
+          "Dental Laboratory Technicians",
+          "Dentists, All Other Specialists",
+          "Dentists, General"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -2842,7 +2526,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -3053,7 +2737,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -3090,11 +2774,11 @@
         "global_health"
       ],
       "role_spine": {
-        "repository_role_rows": 14,
-        "roles_with_tools": 13,
-        "roles_with_onet_competencies": 13,
+        "repository_role_rows": 15,
+        "roles_with_tools": 14,
+        "roles_with_onet_competencies": 14,
         "roles_with_esco_skills": 13,
-        "roles_with_specialist_framework_signal": 2,
+        "roles_with_specialist_framework_signal": 3,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -3104,9 +2788,10 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 2,
+        "role_count": 3,
         "role_names": [
           "weight loss consultant",
+          "Dietitians and Nutritionists",
           "Fitness and Wellness Coordinators"
         ]
       },
@@ -3287,7 +2972,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -3342,7 +3027,8 @@
           "global_onet",
           "global_isco",
           "global_wef",
-          "global_project_management"
+          "global_project_management",
+          "global_unesco"
         ]
       },
       "thin_overlay": {
@@ -3592,7 +3278,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -3824,7 +3510,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -4062,7 +3748,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -4099,11 +3785,11 @@
         "global_wipo"
       ],
       "role_spine": {
-        "repository_role_rows": 7,
-        "roles_with_tools": 5,
-        "roles_with_onet_competencies": 5,
+        "repository_role_rows": 8,
+        "roles_with_tools": 6,
+        "roles_with_onet_competencies": 6,
         "roles_with_esco_skills": 7,
-        "roles_with_specialist_framework_signal": 5,
+        "roles_with_specialist_framework_signal": 6,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -4113,13 +3799,14 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 5,
+        "role_count": 6,
         "role_names": [
           "intellectual property consultant",
           "legal assistant",
           "licensing manager",
           "licensing officer",
-          "patent engineer"
+          "patent engineer",
+          "Paralegals and Legal Assistants"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -4257,7 +3944,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -4310,11 +3997,11 @@
         "global_unesco"
       ],
       "role_spine": {
-        "repository_role_rows": 11,
-        "roles_with_tools": 7,
-        "roles_with_onet_competencies": 7,
+        "repository_role_rows": 12,
+        "roles_with_tools": 8,
+        "roles_with_onet_competencies": 8,
         "roles_with_esco_skills": 11,
-        "roles_with_specialist_framework_signal": 3,
+        "roles_with_specialist_framework_signal": 4,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -4326,11 +4013,12 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 3,
+        "role_count": 4,
         "role_names": [
           "language engineer",
           "sign language teacher",
-          "translation agency manager"
+          "translation agency manager",
+          "Interpreters and Translators"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -4508,7 +4196,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -4553,11 +4241,11 @@
         "global_music"
       ],
       "role_spine": {
-        "repository_role_rows": 16,
-        "roles_with_tools": 14,
-        "roles_with_onet_competencies": 14,
+        "repository_role_rows": 17,
+        "roles_with_tools": 15,
+        "roles_with_onet_competencies": 15,
         "roles_with_esco_skills": 15,
-        "roles_with_specialist_framework_signal": 11,
+        "roles_with_specialist_framework_signal": 12,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -4568,7 +4256,7 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 11,
+        "role_count": 12,
         "role_names": [
           "beauty salon attendant",
           "beauty salon manager",
@@ -4580,7 +4268,8 @@
           "hairdresser",
           "hairdresser assistant",
           "performance hairdresser",
-          "Fashion Designers"
+          "Fashion Designers",
+          "Hairdressers, Hairstylists, and Cosmetologists"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -4840,7 +4529,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -4877,11 +4566,11 @@
         "global_unesco"
       ],
       "role_spine": {
-        "repository_role_rows": 14,
-        "roles_with_tools": 11,
-        "roles_with_onet_competencies": 11,
+        "repository_role_rows": 17,
+        "roles_with_tools": 14,
+        "roles_with_onet_competencies": 14,
         "roles_with_esco_skills": 13,
-        "roles_with_specialist_framework_signal": 3,
+        "roles_with_specialist_framework_signal": 6,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -4891,11 +4580,14 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 3,
+        "role_count": 6,
         "role_names": [
           "business studies and economics teacher secondary school",
           "economics lecturer",
-          "Economics Teachers, Postsecondary"
+          "Climate Change Policy Analysts",
+          "Economics Teachers, Postsecondary",
+          "Economists",
+          "Environmental Economists"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -5086,7 +4778,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -5259,7 +4951,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -5298,7 +4990,7 @@
       "role_spine": {
         "repository_role_rows": 18,
         "roles_with_tools": 14,
-        "roles_with_onet_competencies": 13,
+        "roles_with_onet_competencies": 14,
         "roles_with_esco_skills": 14,
         "roles_with_specialist_framework_signal": 15,
         "specialist_role_source_ids": [
@@ -5693,7 +5385,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -5740,7 +5432,7 @@
       "role_spine": {
         "repository_role_rows": 14,
         "roles_with_tools": 8,
-        "roles_with_onet_competencies": 6,
+        "roles_with_onet_competencies": 8,
         "roles_with_esco_skills": 7,
         "roles_with_specialist_framework_signal": 2,
         "specialist_role_source_ids": [
@@ -5906,7 +5598,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -5972,7 +5664,9 @@
           "global_onet",
           "global_isco",
           "global_wef",
-          "global_sfia"
+          "global_sfia",
+          "global_icao_iata",
+          "global_unesco"
         ]
       },
       "thin_overlay": {
@@ -6005,14 +5699,14 @@
         "ict system user requirements",
         "signal processing",
         "critical thinking",
+        "reading comprehension",
         "active listening",
         "speaking",
-        "reading comprehension",
+        "writing",
         "active learning",
         "monitoring",
-        "writing",
-        "mathematics",
         "learning strategies",
+        "mathematics",
         "science",
         "launching of satellites into orbit",
         "geographic information systems",
@@ -6156,7 +5850,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -6193,17 +5887,24 @@
         "global_sfia"
       ],
       "role_spine": {
-        "repository_role_rows": 14,
-        "roles_with_tools": 14,
-        "roles_with_onet_competencies": 14,
+        "repository_role_rows": 15,
+        "roles_with_tools": 15,
+        "roles_with_onet_competencies": 15,
         "roles_with_esco_skills": 11,
-        "roles_with_specialist_framework_signal": 0,
-        "specialist_role_source_ids": []
+        "roles_with_specialist_framework_signal": 5,
+        "specialist_role_source_ids": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_sfia"
+        ]
       },
       "thin_overlay": {
-        "role_count": 4,
+        "role_count": 5,
         "role_names": [
           "bookkeeper",
+          "New Accounts Clerks",
           "Bookkeeping, Accounting, and Auditing Clerks",
           "Human Resources Assistants, Except Payroll and Timekeeping",
           "Payroll and Timekeeping Clerks"
@@ -6227,11 +5928,11 @@
         "reading comprehension",
         "active listening",
         "critical thinking",
-        "speaking",
         "writing",
         "mathematics",
-        "monitoring",
+        "speaking",
         "active learning",
+        "monitoring",
         "learning strategies",
         "science",
         "financial products",
@@ -6379,7 +6080,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -6431,8 +6132,15 @@
         "roles_with_tools": 0,
         "roles_with_onet_competencies": 0,
         "roles_with_esco_skills": 7,
-        "roles_with_specialist_framework_signal": 0,
-        "specialist_role_source_ids": []
+        "roles_with_specialist_framework_signal": 1,
+        "specialist_role_source_ids": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_icao_iata",
+          "global_driver_training"
+        ]
       },
       "thin_overlay": {
         "role_count": 1,
@@ -6514,7 +6222,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -6551,11 +6259,11 @@
         "global_fao"
       ],
       "role_spine": {
-        "repository_role_rows": 13,
-        "roles_with_tools": 12,
-        "roles_with_onet_competencies": 12,
+        "repository_role_rows": 15,
+        "roles_with_tools": 14,
+        "roles_with_onet_competencies": 14,
         "roles_with_esco_skills": 11,
-        "roles_with_specialist_framework_signal": 7,
+        "roles_with_specialist_framework_signal": 9,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -6565,13 +6273,15 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 7,
+        "role_count": 9,
         "role_names": [
           "agricultural machinery and equipment distribution manager",
           "mining equipment mechanic",
           "roadside vehicle technician",
           "rotating equipment mechanic",
           "vehicle technician",
+          "Farm Equipment Mechanics and Service Technicians",
+          "Mobile Heavy Equipment Mechanics, Except Engines",
           "Heavy and Tractor-Trailer Truck Drivers",
           "Industrial Truck and Tractor Operators"
         ]
@@ -6769,258 +6479,6 @@
       "interpretation": "The repository has a global role spine and an additional thin-domain overlay that still requires field-level review."
     },
     {
-      "domain_id": "D099",
-      "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
-      "global_source_count": 5,
-      "global_sources": [
-        {
-          "source_id": "global_esco",
-          "name": "ESCO occupations and skills",
-          "evidence_type": "occupation_taxonomy",
-          "region": "global",
-          "url": "https://esco.ec.europa.eu/en/use-esco"
-        },
-        {
-          "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
-          "evidence_type": "occupation_taxonomy_and_job_titles",
-          "region": "global_proxy",
-          "url": "https://www.onetcenter.org/database.html"
-        },
-        {
-          "source_id": "global_isco",
-          "name": "ILO ISCO-08",
-          "evidence_type": "international_occupation_standard",
-          "region": "global",
-          "url": "https://isco.ilo.org/en/isco-08/"
-        },
-        {
-          "source_id": "global_wef",
-          "name": "World Economic Forum Future of Jobs 2025",
-          "evidence_type": "emerging_role_signal",
-          "region": "global",
-          "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/"
-        },
-        {
-          "source_id": "global_built_environment",
-          "name": "RICS built-environment and property standards",
-          "evidence_type": "professional_role_and_competency_framework",
-          "region": "global",
-          "url": "https://www.rics.org/"
-        }
-      ],
-      "taxonomy_source_ids": [
-        "global_esco",
-        "global_onet",
-        "global_isco",
-        "global_wef"
-      ],
-      "specialist_domain_source_ids": [
-        "global_built_environment"
-      ],
-      "role_spine": {
-        "repository_role_rows": 17,
-        "roles_with_tools": 17,
-        "roles_with_onet_competencies": 17,
-        "roles_with_esco_skills": 17,
-        "roles_with_specialist_framework_signal": 0,
-        "specialist_role_source_ids": []
-      },
-      "thin_overlay": {
-        "role_count": 3,
-        "role_names": [
-          "building construction worker",
-          "road construction worker",
-          "sewer construction worker"
-        ]
-      },
-      "actual_unpopulated_gap": true,
-      "reconciliation_row": false,
-      "current_domain_skills": [
-        "types of tile adhesive",
-        "sanding techniques",
-        "caulk expansion joints",
-        "work ergonomically",
-        "snap chalk line",
-        "transport construction supplies",
-        "lay tiles",
-        "inspect construction supplies",
-        "fill tile joints",
-        "follow health and safety procedures in construction",
-        "use measurement instruments",
-        "cut tiles",
-        "active listening",
-        "speaking",
-        "critical thinking",
-        "mathematics",
-        "monitoring",
-        "reading comprehension",
-        "active learning",
-        "writing",
-        "learning strategies",
-        "science",
-        "sort waste",
-        "lay bricks",
-        "split bricks",
-        "secure working area",
-        "install construction profiles",
-        "interpret 3d plans",
-        "check straightness of brick",
-        "create floor plan template",
-        "apply floor adhesive",
-        "install laminate floor",
-        "prepare floor for underlayment",
-        "cut resilient flooring materials",
-        "mix construction grouts",
-        "protect surfaces during construction work",
-        "install drop ceiling",
-        "maintain work area cleanliness",
-        "tape drywall",
-        "fit ceiling tiles",
-        "paint surfaces",
-        "wood cuts",
-        "types of wood",
-        "install wood elements in structures",
-        "pin parquet",
-        "join wood elements",
-        "fill nail holes in wood planks",
-        "lacquer wood surfaces",
-        "create smooth wood surface",
-        "types of engraving stone",
-        "quality standards",
-        "types of engraving needles",
-        "position engraving equipment",
-        "engrave patterns",
-        "ensure equipment availability",
-        "sketch designs on workpieces",
-        "inspect stone surface",
-        "operate engraving equipment",
-        "adjust cut sizes",
-        "prepare workpieces for etching",
-        "prepare workpieces for engraving",
-        "building codes",
-        "roofing techniques",
-        "building materials industry",
-        "perform roof maintenance",
-        "prepare site for construction",
-        "design floor",
-        "check construction compliance",
-        "check compatibility of materials",
-        "work in a construction team",
-        "install frameless glass",
-        "use shims",
-        "inspect glass sheet",
-        "smooth glass edges",
-        "cut glass",
-        "manipulate glass",
-        "rinse glass",
-        "apply proofing membranes",
-        "grind terrazzo",
-        "prevent premature drying",
-        "prepare floor for terrazzo",
-        "work safely with chemicals",
-        "pour terrazzo",
-        "mix terrazzo material",
-        "pour concrete",
-        "inspect supplied concrete",
-        "mix concrete",
-        "prevent damage to utility infrastructure",
-        "inspect concrete structures",
-        "remove concrete forms",
-        "monitor concrete curing process",
-        "place concrete forms",
-        "types of insulation material",
-        "airtight construction",
-        "energy conservation",
-        "environmental indoor quality",
-        "cut insulation material to size",
-        "install insulation blocks",
-        "install insulation material",
-        "types of carpet",
-        "place carpet",
-        "fit carpet seams",
-        "finish carpet edges",
-        "cut carpet",
-        "types of stone for working",
-        "regulate cutting speed",
-        "prepare stone for smoothing",
-        "create cutting plan",
-        "types of plastering materials",
-        "plaster surfaces",
-        "apply adhesive wall coating",
-        "apply finish to concrete",
-        "inspect masonry work",
-        "dig soil mechanically",
-        "operate digging construction equipment",
-        "prepare wall for wallpaper",
-        "prepare surface for painting",
-        "move soil",
-        "use safety equipment in construction",
-        "discharge cement",
-        "prepare surface for plastering",
-        "place drywall",
-        "lay base courses",
-        "work safely with hot materials",
-        "plan surface slope",
-        "perform drainage work",
-        "prepare subgrade for road pavement",
-        "install frost protection materials",
-        "pave asphalt layers",
-        "level earth surface",
-        "mechanical systems",
-        "excavation techniques",
-        "mechanics",
-        "provide pipe bedding",
-        "detect flaws in pipeline infrastructure",
-        "inspect construction sites",
-        "dig sewer trenches",
-        "test pipeline infrastructure operations",
-        "prevent pipeline deterioration",
-        "assemble manufactured pipeline parts",
-        "react to events in time critical environments",
-        "transport pipes",
-        "lay sewer pipe"
-      ],
-      "current_domain_tools": [
-        "Autodesk Revit",
-        "Dassault Systemes SolidWorks",
-        "Microsoft Active Server Pages ASP",
-        "Microsoft Excel",
-        "Microsoft Office software",
-        "Microsoft Word",
-        "Microsoft Windows",
-        "Microsoft Outlook",
-        "Microsoft PowerPoint",
-        "Facebook",
-        "Salesforce software",
-        "Intuit QuickBooks",
-        "Microsoft Access",
-        "SAP software",
-        "Autodesk AutoCAD"
-      ],
-      "current_domain_certifications": [
-        "Federal Trade Test Certificate (Grades I–III)",
-        "City & Guilds Trowel Occupations (Bricklaying)"
-      ],
-      "nigerian_bodies": [
-        {
-          "body_id": "ng_corbon",
-          "name": "Council of Registered Builders of Nigeria",
-          "body_type": "regulator",
-          "url": "https://www.corbon.gov.ng/aboutUs"
-        },
-        {
-          "body_id": "ng_nbte",
-          "name": "National Board for Technical Education",
-          "body_type": "education_regulator",
-          "url": "https://web.nbte.gov.ng/downloads"
-        }
-      ],
-      "status": "multi_source_role_spine_and_thin_overlay",
-      "evidence_level": "taxonomy_plus_specialist_framework",
-      "interpretation": "The repository has a global role spine and an additional thin-domain overlay that still requires field-level review."
-    },
-    {
       "domain_id": "D105",
       "domain_name": "Handicraft, Basketry, Textile Craft",
       "global_source_count": 6,
@@ -7034,7 +6492,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -7079,17 +6537,25 @@
         "global_unesco"
       ],
       "role_spine": {
-        "repository_role_rows": 14,
-        "roles_with_tools": 8,
-        "roles_with_onet_competencies": 8,
+        "repository_role_rows": 15,
+        "roles_with_tools": 9,
+        "roles_with_onet_competencies": 9,
         "roles_with_esco_skills": 14,
-        "roles_with_specialist_framework_signal": 0,
-        "specialist_role_source_ids": []
+        "roles_with_specialist_framework_signal": 2,
+        "specialist_role_source_ids": [
+          "global_esco",
+          "global_onet",
+          "global_isco",
+          "global_wef",
+          "global_creative",
+          "global_unesco"
+        ]
       },
       "thin_overlay": {
-        "role_count": 1,
+        "role_count": 2,
         "role_names": [
-          "production potter"
+          "production potter",
+          "Potters, Manufacturing"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -7278,7 +6744,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -7323,11 +6789,11 @@
         "global_nuclear"
       ],
       "role_spine": {
-        "repository_role_rows": 11,
-        "roles_with_tools": 5,
-        "roles_with_onet_competencies": 5,
-        "roles_with_esco_skills": 3,
-        "roles_with_specialist_framework_signal": 2,
+        "repository_role_rows": 13,
+        "roles_with_tools": 7,
+        "roles_with_onet_competencies": 7,
+        "roles_with_esco_skills": 4,
+        "roles_with_specialist_framework_signal": 4,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -7338,9 +6804,11 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 2,
+        "role_count": 4,
         "role_names": [
           "nuclear medicine radiographer",
+          "diagnostic radiographer",
+          "Diagnostic Medical Sonographers",
           "Magnetic Resonance Imaging Technologists"
         ]
       },
@@ -7362,11 +6830,11 @@
         "active listening",
         "critical thinking",
         "monitoring",
+        "reading comprehension",
         "speaking",
         "active learning",
-        "reading comprehension",
-        "learning strategies",
         "writing",
+        "learning strategies",
         "science",
         "mathematics",
         "pharmaceutical products",
@@ -7428,7 +6896,15 @@
         "work in multidisciplinary health teams",
         "undertake post examination activities",
         "calculate exposure to radiation",
-        "prepare patients for imaging procedures"
+        "prepare patients for imaging procedures",
+        "prepare for diagnostic imaging procedures",
+        "perform bronchoscopy",
+        "evaluate delivery of radiation treatment",
+        "assess radiation response",
+        "conduct preoperative investigations",
+        "perform diagnostic imaging procedures",
+        "apply medical imaging techniques",
+        "use treatment verification systems"
       ],
       "current_domain_tools": [
         "eClinicalWorks EHR software",
@@ -7478,7 +6954,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -7517,7 +6993,7 @@
       "role_spine": {
         "repository_role_rows": 10,
         "roles_with_tools": 10,
-        "roles_with_onet_competencies": 9,
+        "roles_with_onet_competencies": 10,
         "roles_with_esco_skills": 8,
         "roles_with_specialist_framework_signal": 3,
         "specialist_role_source_ids": [
@@ -7699,7 +7175,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -7913,7 +7389,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -7971,7 +7447,8 @@
           "global_onet",
           "global_isco",
           "global_wef",
-          "global_icao_iata"
+          "global_icao_iata",
+          "global_unesco"
         ]
       },
       "thin_overlay": {
@@ -8002,13 +7479,13 @@
         "quantum computing",
         "scientific research methodology",
         "science",
-        "reading comprehension",
         "critical thinking",
-        "speaking",
         "active learning",
+        "reading comprehension",
+        "speaking",
+        "writing",
         "active listening",
         "learning strategies",
-        "writing",
         "monitoring",
         "computer simulation",
         "production processes",
@@ -8127,7 +7604,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -8172,11 +7649,11 @@
         "global_xr"
       ],
       "role_spine": {
-        "repository_role_rows": 10,
-        "roles_with_tools": 8,
-        "roles_with_onet_competencies": 8,
-        "roles_with_esco_skills": 10,
-        "roles_with_specialist_framework_signal": 1,
+        "repository_role_rows": 14,
+        "roles_with_tools": 12,
+        "roles_with_onet_competencies": 12,
+        "roles_with_esco_skills": 12,
+        "roles_with_specialist_framework_signal": 5,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -8187,9 +7664,13 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 1,
+        "role_count": 5,
         "role_names": [
-          "automotive test driver"
+          "automotive test driver",
+          "robotics engineer",
+          "robotics engineering technician",
+          "Robotics Engineers",
+          "Robotics Technicians"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -8208,14 +7689,14 @@
         "ict system user requirements",
         "signal processing",
         "critical thinking",
+        "reading comprehension",
         "active listening",
         "speaking",
-        "reading comprehension",
+        "writing",
         "active learning",
         "monitoring",
-        "writing",
-        "mathematics",
         "learning strategies",
+        "mathematics",
         "science",
         "business requirements techniques",
         "software architecture models",
@@ -8298,7 +7779,32 @@
         "drive vehicles",
         "perform test run",
         "wear appropriate protective gear",
-        "liaise with engineers"
+        "liaise with engineers",
+        "human robot collaboration",
+        "automatic control system",
+        "robotic components",
+        "robotics",
+        "develop computer vision system",
+        "perform scientific research",
+        "use technical drawing software",
+        "execute feasibility study",
+        "assess financial viability",
+        "approve engineering design",
+        "design automation components",
+        "automation technology",
+        "monitor machine operations",
+        "inspect quality of products",
+        "read assembly drawings",
+        "align components",
+        "test mechatronic units",
+        "assemble robots",
+        "follow standards for machinery safety",
+        "set up machine controls",
+        "read engineering drawings",
+        "fasten components",
+        "assist scientific research",
+        "prepare production prototypes",
+        "set up automotive robot"
       ],
       "current_domain_tools": [
         "Siemens Teamcenter",
@@ -8373,7 +7879,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -8457,11 +7963,11 @@
         "active listening",
         "critical thinking",
         "monitoring",
+        "reading comprehension",
         "speaking",
         "active learning",
-        "reading comprehension",
-        "learning strategies",
         "writing",
+        "learning strategies",
         "science",
         "mathematics",
         "mathematical modelling",
@@ -8646,7 +8152,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -8691,11 +8197,11 @@
         "global_health"
       ],
       "role_spine": {
-        "repository_role_rows": 8,
-        "roles_with_tools": 7,
-        "roles_with_onet_competencies": 6,
-        "roles_with_esco_skills": 6,
-        "roles_with_specialist_framework_signal": 5,
+        "repository_role_rows": 9,
+        "roles_with_tools": 8,
+        "roles_with_onet_competencies": 7,
+        "roles_with_esco_skills": 7,
+        "roles_with_specialist_framework_signal": 6,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -8706,8 +8212,9 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 5,
+        "role_count": 6,
         "role_names": [
+          "medical physics expert",
           "nuclear medicine radiographer",
           "radiation protection officer",
           "radiation protection technician",
@@ -8733,11 +8240,11 @@
         "active listening",
         "critical thinking",
         "monitoring",
+        "reading comprehension",
         "speaking",
         "active learning",
-        "reading comprehension",
-        "learning strategies",
         "writing",
+        "learning strategies",
         "science",
         "mathematics",
         "pharmaceutical products",
@@ -8761,17 +8268,42 @@
         "interact professionally in research and professional environments",
         "disseminate results to the scientific community",
         "operate open source software",
+        "radiology",
+        "laboratory techniques",
+        "dosimetric planning",
+        "health technology assessment",
+        "densiometry",
+        "medical devices",
+        "medical laboratory technology",
+        "radiation protection",
+        "test medical devices",
+        "evaluate delivery of radiation treatment",
+        "apply radiation protection procedures",
+        "assess radiation response",
+        "develop radiation protection strategies",
+        "follow clinical guidelines",
+        "apply scientific methods",
+        "advise on medical device features",
+        "comply with quality standards related to healthcare practice",
+        "comply with legislation related to health care",
+        "perform dosimetry measurements",
+        "use measurement instruments",
+        "monitor radiation levels",
+        "ensure safety of healthcare users",
+        "measure physical phenomena in healthcare",
+        "ensure compliance with radiation protection regulations",
+        "use treatment verification systems",
+        "calculate exposure to radiation",
+        "maintain medical devices",
         "evidence based radiography practice",
         "paediatrics",
         "medical oncology",
-        "radiation protection",
         "first aid",
         "respond to changing situations in health care",
         "provide psychological support to patients",
         "conduct cancer screening tests",
         "empathise with the healthcare user",
         "analyse x ray imagery",
-        "apply radiation protection procedures",
         "maintain imaging equipment",
         "conduct video telemetry",
         "administer radiopharmaceuticals",
@@ -8780,29 +8312,23 @@
         "administer contrast media",
         "deal with emergency care situations",
         "use nuclear medicine techniques",
-        "follow clinical guidelines",
         "operate medical imaging equipment",
         "handle radiopharmaceuticals",
-        "comply with quality standards related to healthcare practice",
-        "comply with legislation related to health care",
         "listen actively",
         "determine medical images diagnostic suitability",
         "apply radiological health sciences",
         "post process medical images",
         "interact with healthcare users",
-        "ensure safety of healthcare users",
         "determine imaging techniques to be performed",
         "adhere to organisational code of ethics",
         "apply organisational techniques",
         "implant brachytherapy treatments",
         "determine patient s exposure factors",
-        "ensure compliance with radiation protection regulations",
         "perform nuclear medicine procedures",
         "apply context specific clinical competences",
         "prepare for nuclear medicine procedures",
         "work in multidisciplinary health teams",
         "undertake post examination activities",
-        "calculate exposure to radiation",
         "prepare patients for imaging procedures",
         "radioactive contamination",
         "environmental legislation",
@@ -8815,12 +8341,10 @@
         "advise on pollution prevention",
         "use personal protection equipment",
         "design strategies for nuclear emergencies",
-        "develop radiation protection strategies",
         "follow nuclear plant safety precautions",
         "instruct employees on radiation protection",
         "monitor nuclear power plant systems",
         "respond to nuclear emergencies",
-        "monitor radiation levels",
         "nuclear reprocessing",
         "health safety and hygiene legislation",
         "hazardous waste treatment",
@@ -8888,7 +8412,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -8952,9 +8476,9 @@
         "role_names": [
           "medical device assembler",
           "medical device engineer",
+          "prosthetic-orthotics technician",
           "biomedical scientist",
           "biomedical scientist advanced",
-          "prosthetic-orthotics technician",
           "specialist biomedical scientist",
           "Bioengineers and Biomedical Engineers"
         ]
@@ -8980,8 +8504,8 @@
         "reading comprehension",
         "monitoring",
         "active learning",
-        "speaking",
         "mathematics",
+        "speaking",
         "writing",
         "learning strategies",
         "engineering principles",
@@ -9083,6 +8607,21 @@
         "prepare production prototypes",
         "approve engineering design",
         "synthesise information",
+        "prosthetic devices",
+        "human anatomy",
+        "types of orthopedic supplies",
+        "orthotic devices",
+        "prosthetic orthotic device materials",
+        "manipulate plastic",
+        "manipulate metal",
+        "manipulate wood",
+        "repair prosthetic orthotic devices",
+        "finish prosthetic orthotic devices",
+        "interpret prescriptions",
+        "maintain prosthetic orthotic devices",
+        "test prosthetic orthotic devices",
+        "manufacture prosthetic orthotic devices",
+        "repair orthopedic goods",
         "hygiene in a health care setting",
         "biological haematology",
         "clinical immunology",
@@ -9105,7 +8644,6 @@
         "immunology",
         "molecular biology",
         "professional documentation in health care",
-        "human anatomy",
         "epidemiology",
         "biostatistics",
         "manage healthcare staff",
@@ -9177,20 +8715,6 @@
         "make clinical decisions",
         "perform transcranial magnetic stimulation",
         "study topics",
-        "prosthetic devices",
-        "types of orthopedic supplies",
-        "orthotic devices",
-        "prosthetic orthotic device materials",
-        "manipulate plastic",
-        "manipulate metal",
-        "manipulate wood",
-        "repair prosthetic orthotic devices",
-        "finish prosthetic orthotic devices",
-        "interpret prescriptions",
-        "maintain prosthetic orthotic devices",
-        "test prosthetic orthotic devices",
-        "manufacture prosthetic orthotic devices",
-        "repair orthopedic goods",
         "multidisciplinary research",
         "empathise with the healthcare user",
         "monitor biomedical equipment stock",
@@ -9269,7 +8793,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -9306,23 +8830,32 @@
         "global_nuclear"
       ],
       "role_spine": {
-        "repository_role_rows": 5,
-        "roles_with_tools": 5,
-        "roles_with_onet_competencies": 5,
-        "roles_with_esco_skills": 4,
-        "roles_with_specialist_framework_signal": 1,
+        "repository_role_rows": 14,
+        "roles_with_tools": 13,
+        "roles_with_onet_competencies": 12,
+        "roles_with_esco_skills": 7,
+        "roles_with_specialist_framework_signal": 10,
         "specialist_role_source_ids": [
           "global_esco",
-          "global_isco",
-          "global_nuclear",
           "global_onet",
-          "global_wef"
+          "global_isco",
+          "global_wef",
+          "global_nuclear"
         ]
       },
       "thin_overlay": {
-        "role_count": 1,
+        "role_count": 10,
         "role_names": [
-          "Climate Change Policy Analysts"
+          "hydrologist",
+          "meteorology technician",
+          "oceanographer",
+          "Atmospheric and Space Scientists",
+          "Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",
+          "Climate Change Policy Analysts",
+          "Geological Technicians, Except Hydrologic Technicians",
+          "Geoscientists, Except Hydrologists and Geographers",
+          "Hydrologic Technicians",
+          "Hydrologists"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -9374,6 +8907,57 @@
         "perform scientific research",
         "carry out meteorological research",
         "conduct research across disciplines",
+        "environmental policy",
+        "water policies",
+        "hydrology",
+        "scientific literature",
+        "watershed development",
+        "scientific modelling",
+        "geography",
+        "scientific research methodology",
+        "manage land resources permits",
+        "ensure compliance with environmental legislation",
+        "apply statistical analysis techniques",
+        "evaluate research activities",
+        "demonstrate disciplinary expertise",
+        "increase the impact of science on policy and society",
+        "manage findable accessible interoperable and reusable data",
+        "develop environmental policy",
+        "manage intellectual property rights",
+        "apply for research funding",
+        "develop water purification methods",
+        "apply scientific methods",
+        "apply research ethics and scientific integrity principles in research activities",
+        "promote open innovation in research",
+        "publish academic research",
+        "promote the transfer of knowledge",
+        "think abstractly",
+        "mentor individuals",
+        "manage personal professional development",
+        "write scientific publications",
+        "operate scientific measuring equipment",
+        "develop professional network with researchers and scientists",
+        "integrate gender dimension in research",
+        "perform project management",
+        "manage open publications",
+        "synthesise information",
+        "promote the participation of citizens in scientific and research activities",
+        "communicate with a non scientific audience",
+        "precision measuring instruments",
+        "operate remote sensing equipment",
+        "operate precision measuring equipment",
+        "use geographic information systems",
+        "calibrate optical instruments",
+        "operate meteorological instruments",
+        "use communication devices",
+        "meet deadlines",
+        "write technical reports",
+        "assist scientific research",
+        "physics",
+        "oceanography",
+        "geology",
+        "gather experimental data",
+        "use measurement instruments",
         "develop models for weather forecast",
         "mathematical modelling"
       ],
@@ -9438,7 +9022,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -9483,11 +9067,11 @@
         "global_health"
       ],
       "role_spine": {
-        "repository_role_rows": 9,
-        "roles_with_tools": 8,
-        "roles_with_onet_competencies": 8,
+        "repository_role_rows": 12,
+        "roles_with_tools": 11,
+        "roles_with_onet_competencies": 11,
         "roles_with_esco_skills": 9,
-        "roles_with_specialist_framework_signal": 2,
+        "roles_with_specialist_framework_signal": 5,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -9498,10 +9082,13 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 2,
+        "role_count": 5,
         "role_names": [
           "assistant clinical psychologist",
-          "sensory scientist"
+          "sensory scientist",
+          "Clinical Neuropsychologists",
+          "Neurologists",
+          "Neuropsychologists"
         ]
       },
       "actual_unpopulated_gap": true,
@@ -9680,7 +9267,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -9717,11 +9304,11 @@
         "global_nuclear"
       ],
       "role_spine": {
-        "repository_role_rows": 12,
-        "roles_with_tools": 7,
-        "roles_with_onet_competencies": 6,
-        "roles_with_esco_skills": 5,
-        "roles_with_specialist_framework_signal": 3,
+        "repository_role_rows": 16,
+        "roles_with_tools": 11,
+        "roles_with_onet_competencies": 10,
+        "roles_with_esco_skills": 8,
+        "roles_with_specialist_framework_signal": 7,
         "specialist_role_source_ids": [
           "global_esco",
           "global_onet",
@@ -9731,9 +9318,13 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 3,
+        "role_count": 7,
         "role_names": [
+          "materials engineer",
+          "microelectronics materials engineer",
+          "synthetic materials engineer",
           "semiconductor processor",
+          "Materials Engineers",
           "Nanotechnology Engineering Technologists and Technicians",
           "Semiconductor Processing Technicians"
         ]
@@ -9788,14 +9379,80 @@
         "cleanroom protocols photolithography deposition equipment metrology tools",
         "materials characterisation xrd sem tem materials modelling research publication",
         "surface analysis thin film deposition tribology contact angle measurement",
-        "integrated circuits",
+        "material mechanics",
+        "manufacturing processes",
+        "composite materials",
+        "advanced materials",
+        "sustainable building materials",
+        "integrated design",
+        "thermoplastic materials",
+        "test materials",
+        "develop material testing procedures",
+        "integrate new products in manufacturing",
+        "work with chemicals",
+        "develop advanced materials",
+        "test chemical samples",
+        "apply health and safety standards",
+        "assess environmental impact",
+        "analyse production processes for improvement",
+        "approve engineering design",
+        "data mining",
+        "machine learning",
+        "electrical engineering",
+        "emergent technologies",
         "microelectronics",
-        "led lighting components",
+        "microsystem test procedures",
+        "hazardous waste treatment",
+        "artificial neural networks",
+        "hazardous waste types",
+        "characteristics of waste",
+        "environmental legislation",
+        "sensors",
+        "types of metal",
+        "environmental threats",
         "electronics",
+        "mechanical engineering",
+        "types of plastic",
         "microassembly",
+        "precision measuring instruments",
+        "nanomaterials",
+        "principles of artificial intelligence",
         "semiconductors",
-        "wear cleanroom suit",
+        "basic chemicals",
+        "data models",
+        "perform laboratory tests",
         "inspect semiconductor components",
+        "apply soldering techniques",
+        "test microelectromechanical systems",
+        "join metals",
+        "perform data analysis",
+        "develop hazardous waste management strategies",
+        "record test data",
+        "apply statistical analysis techniques",
+        "dispose of soldering waste",
+        "perform data mining",
+        "analyse big data",
+        "analyse test data",
+        "manage data",
+        "read engineering drawings",
+        "abide by regulations on banned materials",
+        "report analysis results",
+        "use specific data analysis software",
+        "injection moulding machine parts",
+        "design principles",
+        "civil engineering",
+        "synthetic materials",
+        "handle chemicals",
+        "design process",
+        "use hand tools",
+        "design engineering components",
+        "work safely with chemicals",
+        "manage processes",
+        "check quality of raw materials",
+        "manage environmental impact of operations",
+        "integrated circuits",
+        "led lighting components",
+        "wear cleanroom suit",
         "monitor machine operations",
         "imprint circuit design onto wafers",
         "read assembly drawings",
@@ -9867,7 +9524,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -10041,7 +9698,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -10322,7 +9979,7 @@
         },
         {
           "source_id": "global_onet",
-          "name": "O*NET 30.3 Database",
+          "name": "O*NET 31.0 Database",
           "evidence_type": "occupation_taxonomy_and_job_titles",
           "region": "global_proxy",
           "url": "https://www.onetcenter.org/database.html"
@@ -10399,11 +10056,11 @@
         "pearson_esports"
       ],
       "role_spine": {
-        "repository_role_rows": 15,
-        "roles_with_tools": 14,
-        "roles_with_onet_competencies": 5,
+        "repository_role_rows": 17,
+        "roles_with_tools": 16,
+        "roles_with_onet_competencies": 7,
         "roles_with_esco_skills": 4,
-        "roles_with_specialist_framework_signal": 15,
+        "roles_with_specialist_framework_signal": 17,
         "specialist_role_source_ids": [
           "british_esports",
           "pearson_esports",
@@ -10418,14 +10075,16 @@
         ]
       },
       "thin_overlay": {
-        "role_count": 6,
+        "role_count": 8,
         "role_names": [
           "event manager",
           "online community manager",
           "broadcast news editor",
           "broadcast technician",
           "Video Game Designers",
-          "Broadcast Technicians"
+          "Broadcast Technicians",
+          "Molders, Shapers, and Casters, Except Metal and Plastic",
+          "Pourers and Casters, Metal"
         ]
       },
       "actual_unpopulated_gap": true,

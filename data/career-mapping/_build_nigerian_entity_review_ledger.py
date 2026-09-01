@@ -31,6 +31,8 @@ def disposition(entity: dict) -> tuple[str, str, bool]:
         if evidence.get("local_profile_ids"):
             return "not_found_in_checked_nigerian_evidence", "checked_nigerian_role_or_subgroup_profiles_without_match", True
         return "not_found_in_checked_nigerian_evidence", "checked_registered_nigerian_sources_without_entity_profile_match", True
+    if state == "reviewed_global_only_no_direct_local_counterpart":
+        return "reviewed_global_only_no_direct_local_counterpart", "reviewed_checked_sources_and_retained_global_role_without_local_counterpart_claim", False
     return "requires_pipeline_review", "unexpected_or_pending_evidence_state", True
 
 

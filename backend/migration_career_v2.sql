@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.domains (
     elite_domain      BOOLEAN NOT NULL DEFAULT false,
     excluded          BOOLEAN NOT NULL DEFAULT false, -- D086 gambling
     role_count        INTEGER NOT NULL DEFAULT 0,
+    source_provenance JSONB NOT NULL DEFAULT '{}'::jsonb,
     foundation_skills JSONB NOT NULL DEFAULT '[]',    -- L1 ≥50%-of-roles skills
     created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -55,9 +56,12 @@ CREATE TABLE IF NOT EXISTS skillup_dev.domain_subgroups (
     isco_submajor  TEXT NOT NULL,
     label          TEXT NOT NULL,                    -- student-friendly name
     description    TEXT,
+    what_people_do TEXT,                             -- plain-language work summary
+    work_context   JSONB NOT NULL DEFAULT '[]'::jsonb,
     raw_isco_label TEXT,                             -- provenance
     role_count     INTEGER NOT NULL DEFAULT 0,
     cluster_skills JSONB NOT NULL DEFAULT '[]',      -- L2 delta skills
+    display_order  INTEGER,
     UNIQUE(domain_id, isco_submajor)
 );
 CREATE INDEX IF NOT EXISTS idx_domain_subgroups_domain ON skillup_dev.domain_subgroups(domain_id);

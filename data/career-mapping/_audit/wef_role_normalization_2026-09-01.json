@@ -1,0 +1,877 @@
+{
+  "schema_version": "2026-09-01.wef-role-normalization.v1",
+  "purpose": "Normalize WEF 2025 labels to current role keys without changing the canonical taxonomy.",
+  "source": {
+    "name": "World Economic Forum Future of Jobs 2025",
+    "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+    "repository_input": "career-mapping/taxonomies/wef_2025_roles.json",
+    "repository_input_sha256": "f16a37327de47765bbfb1fbffbb6fbdedcbc32c096e2ca70dd84264778cfd8d8",
+    "limitation": "WEF is a global employer-survey trend signal, not a complete occupation dictionary or Nigerian demand source."
+  },
+  "matching_rules": [
+    "Preserve the original WEF label and category.",
+    "Normalize case, punctuation, simple plural endings, and DevOps spelling only for matching.",
+    "Accept a normalized title or alias only when it resolves to exactly one current role key.",
+    "Keep ambiguous and aggregate labels in review; never create a role or subgroup from WEF wording alone."
+  ],
+  "current_role_input_counts": {
+    "deduplicated_role_keys": 5209,
+    "base_role_rows": 4703,
+    "emerging_overlay_rows": 49,
+    "thin_overlay_rows": 462
+  },
+  "summary": {
+    "distinct_wef_labels": 48,
+    "category_count": 5,
+    "status_counts": {
+      "ambiguous_canonical_match": 2,
+      "review_required_unmatched_or_aggregate": 26,
+      "unique_canonical_match": 20
+    },
+    "disposition_counts": {
+      "attached_to_unique_canonical_role": 20,
+      "retained_as_unmatched_wef_signal_no_role_creation": 26,
+      "retained_as_ambiguous_wef_signal_no_role_assignment": 2
+    }
+  },
+  "labels": [
+    {
+      "wef_label": "AI and Machine Learning Specialists",
+      "normalization_key": "ai and machine learning specialist",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D003|AI and Machine Learning Specialists"
+      ],
+      "canonical_role_names": [
+        "AI and Machine Learning Specialists"
+      ],
+      "canonical_domains": [
+        "D003"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Accountants and Auditors",
+      "normalization_key": "accountant and auditor",
+      "wef_categories": [
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Accounting, Bookkeeping and Payroll Clerks",
+      "normalization_key": "accounting bookkeeping and payroll clerk",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Administrative Assistants and Executive Secretaries",
+      "normalization_key": "administrative assistant and executive secretary",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Autonomous and Electric Vehicle Specialists",
+      "normalization_key": "autonomou and electric vehicle specialist",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Bank Tellers and Related Clerks",
+      "normalization_key": "bank teller and related clerk",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Big Data Specialists",
+      "normalization_key": "big data specialist",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D002|Big Data Specialists"
+      ],
+      "canonical_role_names": [
+        "Big Data Specialists"
+      ],
+      "canonical_domains": [
+        "D002"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Building Caretakers, Cleaners and Housekeepers",
+      "normalization_key": "building caretaker cleaner and housekeeper",
+      "wef_categories": [
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Building Framers, Finishers, and Related Trades Workers",
+      "normalization_key": "building framer finisher and related trade worker",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Business Services and Administration Managers",
+      "normalization_key": "business service and administration manager",
+      "wef_categories": [
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Car, Van and Motorcycle Drivers",
+      "normalization_key": "car van and motorcycle driver",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D115|Car, Van and Motorcycle Drivers"
+      ],
+      "canonical_role_names": [
+        "Car, Van and Motorcycle Drivers"
+      ],
+      "canonical_domains": [
+        "D115"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Cashiers and Ticket Clerks",
+      "normalization_key": "cashier and ticket clerk",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Claims Adjusters, Examiners, and Investigators",
+      "normalization_key": "claim adjuster examiner and investigator",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Client Information and Customer Service Workers",
+      "normalization_key": "client information and customer service worker",
+      "wef_categories": [
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Data Analysts and Scientists",
+      "normalization_key": "data analyst and scientist",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D009|Data Analysts and Scientists"
+      ],
+      "canonical_role_names": [
+        "Data Analysts and Scientists"
+      ],
+      "canonical_domains": [
+        "D009"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Data Entry Clerks",
+      "normalization_key": "data entry clerk",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D081|data entry clerk"
+      ],
+      "canonical_role_names": [
+        "data entry clerk"
+      ],
+      "canonical_domains": [
+        "D081"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Data Warehousing Specialists",
+      "normalization_key": "data warehousing specialist",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D002|Data Warehousing Specialists"
+      ],
+      "canonical_role_names": [
+        "Data Warehousing Specialists"
+      ],
+      "canonical_domains": [
+        "D002"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Devops Engineer",
+      "normalization_key": "devops engineer",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D005|DevOps Engineers"
+      ],
+      "canonical_role_names": [
+        "DevOps Engineers"
+      ],
+      "canonical_domains": [
+        "D005"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Door-To-Door Sales Workers, News and Street Vendors, and Related Workers",
+      "normalization_key": "door to door sale worker new and street vendor and related worker",
+      "wef_categories": [
+        "fastest_declining_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Environmental Engineers",
+      "normalization_key": "environmental engineer",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D020|environmental engineer"
+      ],
+      "canonical_role_names": [
+        "environmental engineer"
+      ],
+      "canonical_domains": [
+        "D020"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Farmworkers, Labourers, and Other Agricultural Workers",
+      "normalization_key": "farmworker labourer and other agricultural worker",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "FinTech Engineers",
+      "normalization_key": "fintech engineer",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D012|FinTech Engineers"
+      ],
+      "canonical_role_names": [
+        "FinTech Engineers"
+      ],
+      "canonical_domains": [
+        "D012"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Food Processing and Related Trades Workers",
+      "normalization_key": "food processing and related trade worker",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Food and Beverage Serving Workers",
+      "normalization_key": "food and beverage serving worker",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "General and Operations Managers",
+      "normalization_key": "general and operation manager",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D042|General and Operations Managers"
+      ],
+      "canonical_role_names": [
+        "General and Operations Managers"
+      ],
+      "canonical_domains": [
+        "D042"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Graphic Designers",
+      "normalization_key": "graphic designer",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "ambiguous_canonical_match",
+      "match_method": "normalized_title_or_alias",
+      "canonical_role_keys": [
+        "D007|graphic designer",
+        "D044|graphic designer",
+        "D080|graphic designer",
+        "D139|graphic designer"
+      ],
+      "canonical_role_names": [
+        "graphic designer",
+        "graphic designer",
+        "graphic designer",
+        "graphic designer"
+      ],
+      "canonical_domains": [
+        "D007",
+        "D044",
+        "D080",
+        "D139"
+      ],
+      "disposition": "retained_as_ambiguous_wef_signal_no_role_assignment",
+      "note": "More than one domain owns this normalized label; no target is selected automatically."
+    },
+    {
+      "wef_label": "Information Security Analysts",
+      "normalization_key": "information security analyst",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D004|Information Security Analysts"
+      ],
+      "canonical_role_names": [
+        "Information Security Analysts"
+      ],
+      "canonical_domains": [
+        "D004"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Internet of Things Specialists",
+      "normalization_key": "internet of thing specialist",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D006|Internet of Things Specialists"
+      ],
+      "canonical_role_names": [
+        "Internet of Things Specialists"
+      ],
+      "canonical_domains": [
+        "D006"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Legal Officials",
+      "normalization_key": "legal official",
+      "wef_categories": [
+        "fastest_declining_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Legal Secretaries",
+      "normalization_key": "legal secretary",
+      "wef_categories": [
+        "fastest_declining_pct"
+      ],
+      "match_status": "ambiguous_canonical_match",
+      "match_method": "normalized_title_or_alias",
+      "canonical_role_keys": [
+        "D037|legal administrative assistant",
+        "D038|court jury coordinator",
+        "D081|legal administrative assistant"
+      ],
+      "canonical_role_names": [
+        "legal administrative assistant",
+        "court jury coordinator",
+        "legal administrative assistant"
+      ],
+      "canonical_domains": [
+        "D037",
+        "D038",
+        "D081"
+      ],
+      "disposition": "retained_as_ambiguous_wef_signal_no_role_assignment",
+      "note": "More than one domain owns this normalized label; no target is selected automatically."
+    },
+    {
+      "wef_label": "Light Truck or Delivery Services Drivers",
+      "normalization_key": "light truck or delivery service driver",
+      "wef_categories": [
+        "fastest_growing_pct",
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D115|Light Truck or Delivery Services Drivers"
+      ],
+      "canonical_role_names": [
+        "Light Truck or Delivery Services Drivers"
+      ],
+      "canonical_domains": [
+        "D115"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Material-Recording and Stock-Keeping Clerks",
+      "normalization_key": "material recording and stock keeping clerk",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Nursing Professionals",
+      "normalization_key": "nursing professional",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D024|Nursing Professionals"
+      ],
+      "canonical_role_names": [
+        "Nursing Professionals"
+      ],
+      "canonical_domains": [
+        "D024"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Personal Care Aides",
+      "normalization_key": "personal care aide",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D024|Personal Care Aides"
+      ],
+      "canonical_role_names": [
+        "Personal Care Aides"
+      ],
+      "canonical_domains": [
+        "D024"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Postal Service Clerks",
+      "normalization_key": "postal service clerk",
+      "wef_categories": [
+        "fastest_declining_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Printing and Related Trades Workers",
+      "normalization_key": "printing and related trade worker",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Project Managers",
+      "normalization_key": "project manager",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D028|project manager"
+      ],
+      "canonical_role_names": [
+        "project manager"
+      ],
+      "canonical_domains": [
+        "D028"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Renewable Energy Engineers",
+      "normalization_key": "renewable energy engineer",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Secondary Education Teachers",
+      "normalization_key": "secondary education teacher",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Security Guards",
+      "normalization_key": "security guard",
+      "wef_categories": [
+        "largest_decline_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D077|security guard"
+      ],
+      "canonical_role_names": [
+        "security guard"
+      ],
+      "canonical_domains": [
+        "D077"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Security Management Specialists",
+      "normalization_key": "security management specialist",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D004|Security Management Specialists"
+      ],
+      "canonical_role_names": [
+        "Security Management Specialists"
+      ],
+      "canonical_domains": [
+        "D004"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Shop Salespersons",
+      "normalization_key": "shop salesperson",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Social Work and Counselling Professionals",
+      "normalization_key": "social work and counselling professional",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Software and Applications Developers",
+      "normalization_key": "software and application developer",
+      "wef_categories": [
+        "emerging_tech_roles",
+        "fastest_growing_pct",
+        "largest_growth_absolute"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D001|Software and Applications Developers"
+      ],
+      "canonical_role_names": [
+        "Software and Applications Developers"
+      ],
+      "canonical_domains": [
+        "D001"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "Telemarketers",
+      "normalization_key": "telemarketer",
+      "wef_categories": [
+        "fastest_declining_pct"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "Transportation Attendants and Conductors",
+      "normalization_key": "transportation attendant and conductor",
+      "wef_categories": [
+        "fastest_declining_pct",
+        "largest_decline_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    },
+    {
+      "wef_label": "UI and UX Designers",
+      "normalization_key": "ui and ux designer",
+      "wef_categories": [
+        "fastest_growing_pct"
+      ],
+      "match_status": "unique_canonical_match",
+      "match_method": "normalized_title",
+      "canonical_role_keys": [
+        "D007|UI and UX Designers"
+      ],
+      "canonical_role_names": [
+        "UI and UX Designers"
+      ],
+      "canonical_domains": [
+        "D007"
+      ],
+      "disposition": "attached_to_unique_canonical_role",
+      "note": "WEF wording is retained as a source signal; no canonical role text is overwritten."
+    },
+    {
+      "wef_label": "University and Higher Education Teachers",
+      "normalization_key": "university and higher education teacher",
+      "wef_categories": [
+        "largest_growth_absolute"
+      ],
+      "match_status": "review_required_unmatched_or_aggregate",
+      "match_method": "none",
+      "canonical_role_keys": [],
+      "canonical_role_names": [],
+      "canonical_domains": [],
+      "disposition": "retained_as_unmatched_wef_signal_no_role_creation",
+      "note": "The WEF label is broad, differently named, or absent from the current role layer; it is not an automatic new role."
+    }
+  ]
+}

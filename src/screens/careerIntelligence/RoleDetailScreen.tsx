@@ -35,6 +35,7 @@ import {
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ColorPalette } from "@/theme";
 import { useResponsive } from "@/hooks/useResponsive";
+import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
@@ -136,6 +137,7 @@ function RoleBody({
   const [skillsExpanded, setSkillsExpanded] = useState(false);
   const [toolsExpanded, setToolsExpanded] = useState(false);
   const [certificationsExpanded, setCertificationsExpanded] = useState(false);
+  const [sourceNotice, setSourceNotice] = useState<string | null>(null);
   const scrollRef = useRef<ScrollView>(null);
 
   const commonRoleTools = roleTools.filter((tool) => tool.group === "common");
@@ -147,6 +149,17 @@ function RoleBody({
   const visibleCertifications = certificationsExpanded ? roleCertifications : roleCertifications.slice(0, 4);
   const hiddenSkillCount = Math.max(0, essential.length + optional.length - visibleEssential.length - visibleOptional.length);
   const hiddenToolCount = Math.max(0, roleTools.length - visibleCommonTools.length - visibleSpecificTools.length);
+
+  const openRoleSource = async () => {
+    if (!sourceUrl) return;
+    setSourceNotice(null);
+    if (!(await hasInternetConnection())) {
+      setSourceNotice(OFFLINE_LINK_NOTICE);
+      return;
+    }
+    const opened = await Linking.openURL(sourceUrl).then(() => true).catch(() => false);
+    if (!opened) setSourceNotice("This source could not be opened. Try again when your connection is stable.");
+  };
 
   const onSectionLayout = useCallback((key: string, y: number) => {
     if (sectionY.current[key] === undefined) {
@@ -210,7 +223,8 @@ function RoleBody({
       <View style={styles.roleMeaning}>
         <SectionLabel>What this role means</SectionLabel>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description || "A source-backed occupation explanation is not attached to this role record yet. Review the preparation and evidence below without treating the title alone as a complete job description."}</Text>
-        {sourceUrl ? <TouchableOpacity accessibilityRole="link" onPress={() => Linking.openURL(sourceUrl).catch(() => {})}><Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{sourceLabel} for a fuller explanation ↗</Text></TouchableOpacity> : null}
+        {sourceUrl ? <TouchableOpacity accessibilityRole="link" onPress={() => { void openRoleSource(); }}><Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{sourceLabel} for a fuller explanation ↗</Text></TouchableOpacity> : null}
+        {sourceNotice ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>{sourceNotice}</Text> : null}
       </View>
       {(essential.length || optional.length) ? (
         <View style={{ gap: Spacing.sm }}>

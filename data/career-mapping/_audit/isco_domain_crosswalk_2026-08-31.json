@@ -1,0 +1,217 @@
+{
+  "schema_version": "2026-08-31.isco-domain-crosswalk.v1",
+  "purpose": "Reconcile ISCO codes recorded in the domain-definition library against the supplied ISCO-08 hierarchy without silently rewriting the source values.",
+  "source": "Local copy of ILO ISCO-08 EN Structure and definitions.xlsx",
+  "official_reference": {
+    "name": "ILO ISCO-08 official codelist and structure",
+    "url": "https://isco.ilo.org/en/isco-08/codelist/",
+    "volume_url": "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+    "finding": "The official ISCO-08 structure confirms the valid standard unit-group candidates recorded below; national adaptations or older classifications must not be promoted as standard ISCO-08 replacements."
+  },
+  "summary": {
+    "missing_code_count": 8,
+    "affected_domain_count": 4
+  },
+  "records": [
+    {
+      "raw_library_code": "2121",
+      "status": "invalid_code_candidate_only",
+      "valid_parent_code": "212",
+      "valid_parent_title": "Mathematicians, Actuaries and Statisticians",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2120",
+          "title": "Mathematicians, Actuaries and Statisticians"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D003",
+          "domain_name": "Artificial Intelligence"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2120, not 2121. 2120 is the only valid child of parent 212, but the source library gives no title or meaning proving that 2121 is a transcription of 2120."
+    },
+    {
+      "raw_library_code": "2213",
+      "status": "invalid_code_parent_anchor_only",
+      "valid_parent_code": "221",
+      "valid_parent_title": "Medical Doctors",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2211",
+          "title": "Generalist Medical Practitioners"
+        },
+        {
+          "code": "2212",
+          "title": "Specialist Medical Practitioners"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2211 and 2212 under parent 221, not 2213–2216. The valid parent is retained as the safe structural anchor; no specialist child is inferred."
+    },
+    {
+      "raw_library_code": "2214",
+      "status": "invalid_code_parent_anchor_only",
+      "valid_parent_code": "221",
+      "valid_parent_title": "Medical Doctors",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2211",
+          "title": "Generalist Medical Practitioners"
+        },
+        {
+          "code": "2212",
+          "title": "Specialist Medical Practitioners"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2211 and 2212 under parent 221, not 2213–2216. The valid parent is retained as the safe structural anchor; no specialist child is inferred."
+    },
+    {
+      "raw_library_code": "2215",
+      "status": "invalid_code_parent_anchor_only",
+      "valid_parent_code": "221",
+      "valid_parent_title": "Medical Doctors",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2211",
+          "title": "Generalist Medical Practitioners"
+        },
+        {
+          "code": "2212",
+          "title": "Specialist Medical Practitioners"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2211 and 2212 under parent 221, not 2213–2216. The valid parent is retained as the safe structural anchor; no specialist child is inferred."
+    },
+    {
+      "raw_library_code": "2216",
+      "status": "invalid_code_parent_anchor_only",
+      "valid_parent_code": "221",
+      "valid_parent_title": "Medical Doctors",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2211",
+          "title": "Generalist Medical Practitioners"
+        },
+        {
+          "code": "2212",
+          "title": "Specialist Medical Practitioners"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2211 and 2212 under parent 221, not 2213–2216. The valid parent is retained as the safe structural anchor; no specialist child is inferred."
+    },
+    {
+      "raw_library_code": "2311",
+      "status": "invalid_code_candidate_only",
+      "valid_parent_code": "231",
+      "valid_parent_title": "University and Higher Education Teachers",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2310",
+          "title": "University and Higher Education Teachers"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D039",
+          "domain_name": "Higher Education"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2310, not 2311. 2310 is a possible transcription candidate, but it is not promoted without source-meaning confirmation."
+    },
+    {
+      "raw_library_code": "2321",
+      "status": "invalid_code_candidate_only",
+      "valid_parent_code": "232",
+      "valid_parent_title": "Vocational education teachers",
+      "valid_unit_group_siblings": [
+        {
+          "code": "2320",
+          "title": "Vocational Education Teachers"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D039",
+          "domain_name": "Higher Education"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains 2320, not 2321. 2320 is a possible transcription candidate, but it is not promoted without source-meaning confirmation."
+    },
+    {
+      "raw_library_code": "3330",
+      "status": "invalid_code_parent_anchor_only",
+      "valid_parent_code": "333",
+      "valid_parent_title": "Business Services Agents",
+      "valid_unit_group_siblings": [
+        {
+          "code": "3331",
+          "title": "Clearing and Forwarding Aents"
+        },
+        {
+          "code": "3332",
+          "title": "Conference and Event Planners"
+        },
+        {
+          "code": "3333",
+          "title": "Employment agents and contractors"
+        },
+        {
+          "code": "3334",
+          "title": "Real Estate Agents and Property Managers"
+        },
+        {
+          "code": "3339",
+          "title": "Business Services Agents Not Elsewhere Classified"
+        }
+      ],
+      "affected_domains": [
+        {
+          "domain_id": "D040",
+          "domain_name": "Vocational"
+        }
+      ],
+      "decision": "Preserve the raw library code; do not silently substitute a parent or sibling.",
+      "canonical_anchor": null,
+      "reason": "The supplied ISCO-08 workbook contains parent 333 and child groups 3331–3334/3339, not 3330. The generic parent is retained; no child is selected without role meaning."
+    }
+  ]
+}

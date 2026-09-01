@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <base href="file:///C:/Users/USER/Documents/sifter-skillup-integrated/docs/">
+  <title>Career TAXONOMY SOURCE INVENTORY 2026-09-01</title>
+  <style>
+    @page { size: A4; margin: 16mm 14mm 17mm; }
+    :root { color-scheme: light; }
+    body { font-family: Arial, Helvetica, sans-serif; color: #172033; line-height: 1.42; font-size: 10.2pt; }
+    h1 { color: #102a43; font-size: 23pt; border-bottom: 3px solid #2c7a7b; padding-bottom: 7px; margin-bottom: 13px; }
+    h2 { color: #155e75; font-size: 15pt; margin-top: 22px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; }
+    h3 { color: #334e68; font-size: 12pt; margin-top: 16px; }
+    h4 { color: #486581; font-size: 10.8pt; }
+    p { margin: 6px 0 8px; }
+    a { color: #075985; text-decoration: underline; }
+    table { width: 100%; border-collapse: collapse; margin: 9px 0 14px; page-break-inside: auto; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    th { background: #e6fffa; color: #164e63; text-align: left; font-weight: 700; }
+    th, td { border: 1px solid #b8c4ce; padding: 5px 6px; vertical-align: top; }
+    code { font-family: Consolas, "Courier New", monospace; font-size: 0.88em; color: #7c2d12; background: #fff7ed; padding: 1px 3px; }
+    pre { white-space: pre-wrap; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 5px; padding: 8px; font-size: 8.2pt; }
+    blockquote { border-left: 4px solid #2c7a7b; margin: 10px 0; padding: 2px 12px; background: #f0fdfa; }
+    .flow-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 10px 0 5px; padding: 10px; background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 7px; page-break-inside: avoid; }
+    .flow-node { display: inline-block; max-width: 175px; padding: 7px 9px; color: #164e63; background: white; border: 2px solid #2c7a7b; border-radius: 6px; font-size: 8.5pt; font-weight: 600; text-align: center; }
+    .flow-arrow { color: #0f766e; font-size: 15pt; font-weight: 700; }
+    .flow-source { margin: 2px 0 11px; font-size: 8pt; }
+    .flow-source summary { color: #0f766e; cursor: pointer; }
+    .flow-fallback { margin: 8px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 3px 0; }
+    hr { border: 0; border-top: 1px solid #cbd5e1; margin: 15px 0; }
+  </style>
+</head>
+<body>
+<h1 id="career-taxonomy-source-and-behavior-inventory">Career taxonomy source and behavior inventory</h1>
+<p><strong>Document ID:</strong> <code>SOURCE-INVENTORY-2026-09-01</code><br>
+<strong>Audience:</strong> academic reviewer, product reviewer, and the next maintainer<br>
+<strong>Purpose:</strong> identify the authoritative source inputs, the repository's derived
+artifacts, and the currently implemented subject-matching behavior before the
+content and SQL release gates are frozen.</p>
+<p>This inventory separates three claims that must not be confused:</p>
+<ol>
+<li>a source exists and can be located;</li>
+<li>the source says a particular fact; and</li>
+<li>Sifter applies a documented rule to use that fact in a mapping or display.</li>
+</ol>
+<p>A source URL or a file name alone proves only the first claim.</p>
+<h2 id="1-authoritative-source-inputs">1. Authoritative source inputs</h2>
+<h3 id="nigerian-admission-and-curriculum-sources">Nigerian admission and curriculum sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source layer</th>
+<th>Local source input</th>
+<th>What it can support</th>
+<th>Repository evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JAMB/IBASS</td>
+<td><code>C:\Users\USER\Downloads\jamb brochure\</code> (10 brochure PDFs)</td>
+<td>Programme catalogue names, national subject combinations, O-level wording, and direct-entry wording as printed</td>
+<td><code>data/career-mapping/_audit/jamb_brochure_source_audit_2026-08-17.json</code></td>
+</tr>
+<tr>
+<td>CCMAS/NUC</td>
+<td><code>C:\Users\USER\Downloads\ccmas original documents\</code> (17 original PDFs)</td>
+<td>Programme overviews, objectives, courses, learning outcomes, and course content</td>
+<td><code>data/career-mapping/ccmas/*.json</code>, <code>data/career-mapping/_ccmas_txt/*.txt</code></td>
+</tr>
+<tr>
+<td>Nigerian context</td>
+<td>Repository Nigerian professional-body, regulator, university, government, and local-sector source records</td>
+<td>Nigerian terminology, credentials, regulatory boundaries, local practice, and local demand only where directly evidenced</td>
+<td><code>data/career-mapping/domain_role_source_registry.json</code> and the Nigerian enrichment catalogs</td>
+</tr>
+</tbody>
+</table>
+<p>The JAMB brochure audit contains 416 checked catalogue rows: 400 exact matches,
+16 declared aliases, and no unmatched catalogue row. It also records source
+file and page arrays. For example, <code>Medicine and Surgery (Human Medicine)</code> is
+in <code>Medica_Pharmaceutical Health Science.pdf</code>, page 1. The printed-under-Law
+display variant of <code>Criminology and Security Studies</code> is linked to the same
+name in <code>Arts _ Humanities.pdf</code>, page 126, <code>Law.pdf</code>, page 13, and <code>Social
+Management Science.pdf</code>, pages 1, 36, 39, 41, 42, 44, 45, 49, and 50.</p>
+<p>The extracted CCMAS text preserves printed page markers. For example,
+<code>data/career-mapping/_ccmas_txt/computing.txt</code> places the B.Sc. Computer
+Science overview, philosophy, and objectives at printed page 27 and the
+employability-skills section at printed page 28. The same source places
+<code>CSC 402: Ethics and Legal Issues in Computer Science</code> and its learning
+outcomes at printed page 50. The companion JSON keeps course-level locators
+such as <code>Computing::Computer Science::COS 201</code> and the extracted
+<code>skills_learned</code> text.</p>
+<h3 id="international-classification-and-enrichment-sources">International classification and enrichment sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Supplied version/input</th>
+<th>Proper role in the method</th>
+<th>Key limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ISIC</td>
+<td>Local ISIC Rev.5 workbook, <code>ISIC5_Exp_Notes_11Mar2024.xlsx</code>; SHA-256 <code>fd5986a1235259961787cce553c5515fb308b70b96580541246516ead5a7bdad</code></td>
+<td>Industry/activity context and completeness survey</td>
+<td>Not an occupation, skill, or programme-suitability taxonomy</td>
+</tr>
+<tr>
+<td>ISCO</td>
+<td>Local <code>ISCO-08 EN Structure and definitions.xlsx</code>; SHA-256 <code>df10744491b4216ed3580e8263b6324502e774c16667a1d7ecdb...</code></td>
+<td>Occupational-function hierarchy and unit-group anchors</td>
+<td>Does not define Sifter domain labels; raw absent codes remain explicit review findings</td>
+</tr>
+<tr>
+<td>ESCO</td>
+<td>Classification archive v1.2.1; SHA-256 <code>f9761b0b52be1828b38a3e5e0ae59a93a7b0ce358bc800f52f57a8b002adeb3e</code></td>
+<td>Preferred/alternative occupation labels, URIs, descriptions, and skills linked to ISCO</td>
+<td>European/global vocabulary, not Nigerian demand proof</td>
+</tr>
+<tr>
+<td>O*NET</td>
+<td>Repository O*NET 31.0 and retained prior archive</td>
+<td>Tasks, tools/software, work activities, preparation, and work context</td>
+<td>US/global proxy; no automatic Nigerian counterpart</td>
+</tr>
+<tr>
+<td>ILO</td>
+<td>ISCO/ILO occupational material</td>
+<td>International occupational definitions and employment context</td>
+<td>Not direct Nigerian market evidence</td>
+</tr>
+<tr>
+<td>WEF</td>
+<td>Future of Jobs 2025 PDF; SHA-256 <code>8374fa3b3a55779d367ca6c295b6d6f1991caa1f01ece3c4cb40fb650115a223</code></td>
+<td>Trend and skills signals</td>
+<td>Not a complete occupation list or local vacancy source</td>
+</tr>
+</tbody>
+</table>
+<p>The domain definition library is the original classification input, not an
+official ISIC/ISCO replacement. Its SHA-256 is
+<code>de9637ce32ef5892932e47a11d57f87a3e76af5176c3ff5a1b4bce4f2485da03</code>.
+<code>data/career-mapping/_audit/domain_source_traceability_2026-08-31.json</code>
+records each domain's library row, raw anchors, label class, and source
+references. The current audit found D001-D166 in that library and D167-D168 as
+later repository additions.</p>
+<h2 id="2-domain-subgroup-and-role-derivation">2. Domain, subgroup, and role derivation</h2>
+<p>The derivation is layered rather than a claim that one source generated every
+name:</p>
+<pre><code class="language-text">ISIC activity context
+  -&gt; source-library domain identity and boundary
+  -&gt; ISCO occupational-function anchors
+  -&gt; ESCO normalized occupations and skills
+  -&gt; O*NET/ILO/WEF task, preparation, and trend enrichment
+  -&gt; Nigerian sources for local terminology, regulation, credentials, and demand
+  -&gt; Sifter domain/subgroup/role display record
+</code></pre>
+<p>The source audit currently records:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th style="text-align: right;">Current audited scope</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain records</td>
+<td style="text-align: right;">168 total; 160 visible</td>
+<td>D001-D166 trace to the supplied library; D167-D168 are later curated additions</td>
+</tr>
+<tr>
+<td>Domain label classes</td>
+<td style="text-align: right;">7 exact source terms; 159 source-supported umbrellas; 2 curated additions</td>
+<td>Practitioner-facing labels are not claimed to be verbatim official classification labels</td>
+</tr>
+<tr>
+<td>Full subgroup provenance</td>
+<td style="text-align: right;">555/555</td>
+<td>The full taxonomy retains provenance; visible product scope is 542</td>
+</tr>
+<tr>
+<td>Visible subgroup context</td>
+<td style="text-align: right;">542/542</td>
+<td>Each visible subgroup has at least one source-backed Nigerian context record</td>
+</tr>
+<tr>
+<td>Merged roles</td>
+<td style="text-align: right;">5,209</td>
+<td>Source evidence may be exact, normalized, or source-role-only; these are not interchangeable claims</td>
+</tr>
+<tr>
+<td>Visible role context</td>
+<td style="text-align: right;">5,093/5,093</td>
+<td>5,089 have actual local enrichment; four are explicitly global-only</td>
+</tr>
+</tbody>
+</table>
+<p>When a subgroup cannot be defended, the product uses <code>domain -&gt; role</code> rather
+than inventing a subgroup. A role without an exact Nigerian counterpart remains
+global-only or otherwise bounded; global evidence is not relabelled as local
+demand.</p>
+<h3 id="layer-by-layer-ownership">Layer-by-layer ownership</h3>
+<table>
+<thead>
+<tr>
+<th>Product layer</th>
+<th>Primary source facts</th>
+<th>Enrichment sources</th>
+<th>Current evidence artifact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain name and definition</td>
+<td>Supplied domain-definition library; ISIC activity context; ISCO occupational anchors</td>
+<td>ESCO, O*NET, ILO, WEF, specialist frameworks, Nigerian sector sources</td>
+<td><code>domain_meta.json</code>, <code>domain_source_traceability_2026-08-31.json</code>, naming provenance audit</td>
+</tr>
+<tr>
+<td>Subgroup name and boundary</td>
+<td>Domain library and ISCO sub-major/work-family structure</td>
+<td>ESCO/O*NET occupation families, SFIA/NICE and specialist frameworks, Nigerian occupational standards</td>
+<td><code>domain_structure.json</code>, <code>computational_layer_manifest.json</code>, subgroup source traceability audit</td>
+</tr>
+<tr>
+<td>Role identity and description</td>
+<td>ISCO unit groups, ESCO occupations/URIs, O*NET occupation data and titles</td>
+<td>WEF signals, specialist frameworks, Nigerian vacancy and regulator sources</td>
+<td><code>role_library_v3_cleaned.json</code>, <code>role_work_profiles.json</code>, <code>emerging_role_overlays.json</code></td>
+</tr>
+<tr>
+<td>Skills and competencies</td>
+<td>ESCO skill relations; O*NET Essential Skills, Transferable Skills, Work Activities, Tasks, Knowledge, and Abilities</td>
+<td>SFIA, NICE, specialist frameworks, CCMAS learning outcomes where they describe programme preparation</td>
+<td><code>domain_skill_provenance.json</code>, <code>role_tools.json</code>, computational method evidence</td>
+</tr>
+<tr>
+<td>Tools and software</td>
+<td>O*NET Software Skills and named tools in checked role evidence</td>
+<td>ESCO/tool relations and specialist technology frameworks; Nigerian sector sources for local context</td>
+<td><code>domain_tools.json</code>, <code>role_tools.json</code>, source-backed layer audit</td>
+</tr>
+<tr>
+<td>Certifications and regulated preparation</td>
+<td>Nigerian regulator/professional-body requirements and official credential routes</td>
+<td>CFA, GARP, PMI, CIPS, SFIA, CPN, COREN, health councils, and other specialist bodies</td>
+<td>certification gap audit, Nigerian context coverage report, learning-resource seed gate</td>
+</tr>
+<tr>
+<td>Nigerian enrichment</td>
+<td>Direct Nigerian regulator, professional-body, government, university, vacancy, and sector evidence</td>
+<td>NBS labour context and dated vacancy/title signals</td>
+<td><code>nigerian_global_professional_overlays.json</code>, Nigerian context audit, role/subgroup gap overlays</td>
+</tr>
+<tr>
+<td>Learning resources and source links</td>
+<td>Source-backed reference pages, official frameworks, and learning/exam links</td>
+<td>Resource catalog aggregation only; it does not create a new occupational fact</td>
+<td><code>learning_resource_population.manifest.json</code>, learning-resource population audit</td>
+</tr>
+<tr>
+<td>Programme-to-domain relationship</td>
+<td>Nigerian CCMAS courses, objectives, outcomes, and content; JAMB programme identity</td>
+<td>Nigerian professional/local context for a bridge explanation; global sources do not repair weak curriculum fit</td>
+<td>reviewed CCMAS/JAMB link artifact and active <code>jamb_domain_map.json</code></td>
+</tr>
+</tbody>
+</table>
+<p>The words “skill”, “competency”, “tool”, and “certification” are not treated as
+synonyms. A source may say that a role uses a tool or requires knowledge; that
+does not prove that a learner has demonstrated competence, and a certification
+resource does not prove that the certification is legally required in Nigeria.
+The display layer must preserve these distinctions.</p>
+<h2 id="3-current-jambo-level-matcher-behavior">3. Current JAMB/O-level matcher behavior</h2>
+<p>The executable behavior is in <code>backend/routes/student_pipeline_routes.py</code>,
+principally <code>programmes_by_subjects()</code> and
+<code>_match_structured_subject_options()</code>. The UI entry and state behavior are in
+<code>src/screens/careerIntelligence/AdmissionBrowseScreen.tsx</code>.</p>
+<h3 id="three-supported-modes">Three supported modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Inputs</th>
+<th>Rule applied</th>
+<th>Result meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JAMB-only / <code>utme</code></td>
+<td>Exactly four normalized UTME subjects, including Use of English</td>
+<td>Match only typed <code>utme</code> option records; required subjects and one-of groups must be satisfied</td>
+<td>Subject-combination guidance for the JAMB gate, not an admission guarantee</td>
+</tr>
+<tr>
+<td>O-level-only / <code>olevel</code></td>
+<td>Five to the configured early-guidance maximum normalized O-level subjects</td>
+<td>Match only typed <code>olevel</code> option records; named requirements and the total credit minimum are enforced</td>
+<td>O-level programme-fit guidance without using UTME rows</td>
+</tr>
+<tr>
+<td>Combined / <code>combined</code></td>
+<td>Exactly four UTME subjects plus five to the O-level maximum</td>
+<td>Independently match UTME and O-level by the same canonical JAMB programme ID, then intersect; retain O-level gaps/status</td>
+<td>A combined view showing <code>eligible</code>, <code>utme_match_olevel_gap</code>, or <code>utme_match_olevel_unparsed</code> where applicable</td>
+</tr>
+</tbody>
+</table>
+<p>The matcher fails closed unless the subject catalogue, structured option seed,
+and typed rule-record seed agree on programme ID, requirement ID, exam type, and
+source text. It does not turn a shared word in unparsed brochure prose into an
+exact match. University offerings are attached only after the canonical JAMB
+programme match; they add address, requirements, and notes rather than creating
+a different programme identity.</p>
+<h3 id="worked-matcher-example">Worked matcher example</h3>
+<p>Suppose a typed UTME rule contains required <code>CHEM</code> and <code>BIO</code>, plus one of
+<code>MATH</code> or <code>PHY</code>, while its O-level rule requires <code>ENG</code>, <code>BIO</code>, <code>MATH</code>, and
+<code>CHEM</code>, plus one of <code>GEO</code>, <code>HSC</code>, <code>PHY</code>, or <code>STAT</code>.</p>
+<pre><code class="language-text">JAMB-only selection:
+  ENG, CHEM, BIO, PHY
+  -&gt; the UTME rule matches because CHEM and BIO are present and PHY satisfies
+     the one-of group.
+
+O-level-only selection:
+  ENG, BIO, MATH, CHEM, GEO plus another subject
+  -&gt; the O-level rule matches because all named credits and the one-of group
+     are present and the minimum subject count is met.
+
+Combined selection:
+  -&gt; compute the two matches separately;
+  -&gt; keep the programme only if its same canonical JAMB programme ID occurs in
+     both result sets;
+  -&gt; report any O-level missing subjects instead of flattening UTME and O-level
+     into one list.
+</code></pre>
+<p>This is why the UI can say that a programme fits the UTME subjects while still
+showing an O-level gap. It is also why a stream changes ordering of subject
+choices but does not silently hide valid catalogue subjects. The independent
+matrix audit and tests document the same behavior in
+<code>docs/manual-review/subject-selection-matrix-run-2026-08-18.md</code> and
+<code>backend/tests/test_student_pipeline_match.py</code>.</p>
+<h2 id="4-review-and-release-interpretation">4. Review and release interpretation</h2>
+<p>The historical CCMAS/JAMB complement audit reported 547 sufficient, 153
+insufficient, and 11 missing-anchor occurrences. That was a before-state
+diagnostic. The current reviewed artifact covers all 711 occurrences:</p>
+<table>
+<thead>
+<tr>
+<th>Disposition</th>
+<th style="text-align: right;">Count</th>
+<th>Product meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certified Nigerian curriculum link</td>
+<td style="text-align: right;">547</td>
+<td>Publish the relationship with exact curriculum anchors</td>
+</tr>
+<tr>
+<td>Resolved Nigerian bridge link</td>
+<td style="text-align: right;">163</td>
+<td>Publish as a guided bridge, not an automatic qualification</td>
+</tr>
+<tr>
+<td>Removed unsupported candidate</td>
+<td style="text-align: right;">1</td>
+<td>Keep in audit; do not seed/display as active</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, the 153 were not silently erased or treated as exact matches. They
+were reclassified through the reviewed disposition layer. The remaining
+bounded states are also explicit: 220 intentional partial definitions, 135 no
+source-candidate records, 26 unmatched WEF signals, two ambiguous WEF signals,
+and four visible global-only roles. “Reviewed” means a disposition exists; it
+does not mean every item has an exact Nigerian counterpart, tool, certification,
+regulatory requirement, or local demand signal.</p>
+<p>The population gate currently reports integrity success and permits SQL
+regeneration after the refreshed 5,795-row audit and review ledger were
+reconciled. The regenerated SQL remains a delivery artifact: it must be
+audited and applied only in a controlled Supabase run.</p>
+<h2 id="5-complete-taxonomy-source-register">5. Complete taxonomy source register</h2>
+<p>The following is the complete source catalog currently routed by
+<code>domain_role_source_registry.json</code>. It is included here so an academic reader
+does not need repository access to know which source families were used. A
+catalog entry is a routing declaration; the evidence audits separately record
+whether the source was actually checked in an extract or source document.</p>
+<h3 id="global-international-and-specialist-sources">Global, international, and specialist sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source ID</th>
+<th>Source</th>
+<th>Public location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>global_esco</code></td>
+<td>ESCO occupations and skills</td>
+<td><a href="https://esco.ec.europa.eu/en/use-esco">ESCO</a></td>
+</tr>
+<tr>
+<td><code>global_onet</code></td>
+<td>O*NET 31.0 Database</td>
+<td><a href="https://www.onetcenter.org/database.html">O*NET</a></td>
+</tr>
+<tr>
+<td><code>global_isco</code></td>
+<td>ILO ISCO-08</td>
+<td><a href="https://isco.ilo.org/en/isco-08/">ISCO</a></td>
+</tr>
+<tr>
+<td><code>global_wef</code></td>
+<td>World Economic Forum Future of Jobs 2025</td>
+<td><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/">WEF</a></td>
+</tr>
+<tr>
+<td><code>global_sfia</code></td>
+<td>SFIA 9</td>
+<td><a href="https://sfia-online.org/en/sfia-9">SFIA</a></td>
+</tr>
+<tr>
+<td><code>global_nice</code></td>
+<td>NIST NICE Workforce Framework</td>
+<td><a href="https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center">NICE</a></td>
+</tr>
+<tr>
+<td><code>global_supply_chain</code></td>
+<td>ASCM supply-chain body of knowledge</td>
+<td><a href="https://www.ascm.org/">ASCM</a></td>
+</tr>
+<tr>
+<td><code>global_cips</code></td>
+<td>CIPS Global Standard for Procurement and Supply</td>
+<td><a href="https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply">CIPS</a></td>
+</tr>
+<tr>
+<td><code>global_project_management</code></td>
+<td>Project Management Institute standards</td>
+<td><a href="https://www.pmi.org/standards">PMI</a></td>
+</tr>
+<tr>
+<td><code>global_health</code></td>
+<td>WHO health workforce resources</td>
+<td><a href="https://www.who.int/teams/health-workforce">WHO</a></td>
+</tr>
+<tr>
+<td><code>global_fao</code></td>
+<td>FAO agriculture and food-systems resources</td>
+<td><a href="https://www.fao.org/">FAO</a></td>
+</tr>
+<tr>
+<td><code>global_woah</code></td>
+<td>WOAH animal-health standards</td>
+<td><a href="https://www.woah.org/">WOAH</a></td>
+</tr>
+<tr>
+<td><code>global_icao_iata</code></td>
+<td>ICAO and IATA aviation standards</td>
+<td><a href="https://www.icao.int/">ICAO</a> / <a href="https://www.iata.org/">IATA</a></td>
+</tr>
+<tr>
+<td><code>global_imo_imarest</code></td>
+<td>IMO and IMarEST maritime standards</td>
+<td><a href="https://www.imo.org/">IMO</a> / <a href="https://www.imarest.org/">IMarEST</a></td>
+</tr>
+<tr>
+<td><code>global_built_environment</code></td>
+<td>RICS built-environment and property standards</td>
+<td><a href="https://www.rics.org/">RICS</a></td>
+</tr>
+<tr>
+<td><code>global_energy</code></td>
+<td>SPE petroleum-engineering competency resources</td>
+<td><a href="https://www.spe.org/en/training/competency-management/">SPE</a></td>
+</tr>
+<tr>
+<td><code>global_nuclear</code></td>
+<td>IAEA nuclear and radiation resources</td>
+<td><a href="https://www.iaea.org/">IAEA</a></td>
+</tr>
+<tr>
+<td><code>global_unesco</code></td>
+<td>UNESCO education, science, and culture resources</td>
+<td><a href="https://www.unesco.org/">UNESCO</a></td>
+</tr>
+<tr>
+<td><code>global_creative</code></td>
+<td>ScreenSkills creative-industry role profiles</td>
+<td><a href="https://www.screenskills.com/">ScreenSkills</a></td>
+</tr>
+<tr>
+<td><code>global_game_dev</code></td>
+<td>International Game Developers Association resources</td>
+<td><a href="https://igda.org/resources/">IGDA</a></td>
+</tr>
+<tr>
+<td><code>tesda_psf_game_development</code></td>
+<td>Philippine Skills Framework for Game Development</td>
+<td><a href="https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf">TESDA framework</a></td>
+</tr>
+<tr>
+<td><code>global_xr</code></td>
+<td>Khronos Group open standards</td>
+<td><a href="https://www.khronos.org/">Khronos</a></td>
+</tr>
+<tr>
+<td><code>qt_cfqt</code></td>
+<td>European Competence Framework for Quantum Technologies v3.0</td>
+<td><a href="https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf">Quantum Flagship CFQT</a></td>
+</tr>
+<tr>
+<td><code>nac_arts_technical_theatre</code></td>
+<td>Singapore National Arts Council Technical Theatre and Production framework</td>
+<td><a href="https://www.skillsfuture.gov.sg/docs/default-source/skills-framework/skills-framework-for-arts-%28technical-theatre-production%29.pdf">Skills Framework</a></td>
+</tr>
+<tr>
+<td><code>skills_england_live_event</code></td>
+<td>Skills England Live Event Technician standard</td>
+<td><a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1297A">Skills England</a></td>
+</tr>
+<tr>
+<td><code>mqa_performing_arts</code></td>
+<td>Malaysian Qualifications Agency Performing Arts standards</td>
+<td><a href="https://www2.mqa.gov.my/qad/v2/pekeliling/2025/Programme%20Standards_Performing%20Arts%20FINAL_26.3.25.pdf">MQA</a></td>
+</tr>
+<tr>
+<td><code>jff_xr</code></td>
+<td>JFF XR and Immersive Learning Career Pathways Framework</td>
+<td><a href="https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/">JFF</a></td>
+</tr>
+<tr>
+<td><code>arm_robotics_career</code></td>
+<td>ARM RoboticsCareer competency pathways</td>
+<td><a href="https://www.roboticscareer.org/careers">RoboticsCareer</a></td>
+</tr>
+<tr>
+<td><code>skills_england_robotics</code></td>
+<td>Skills England Robotics Engineer occupational maps</td>
+<td><a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1317">Robotics Engineer</a> / <a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1381">Advanced Robotics</a></td>
+</tr>
+<tr>
+<td><code>british_esports</code></td>
+<td>British Esports career pathways</td>
+<td><a href="https://britishesports.org/esports-and-education/career-pathways/">British Esports</a></td>
+</tr>
+<tr>
+<td><code>pearson_esports</code></td>
+<td>Pearson BTEC Esports career pathways</td>
+<td><a href="https://qualifications.pearson.com/content/dam/pdf/BTEC-Higher-Nationals/esport/2024/specification-and-sample-assessments/9781292467900-btec-hnc-hnd-l45-esports-spc.pdf">Pearson BTEC</a></td>
+</tr>
+<tr>
+<td><code>global_esports</code></td>
+<td>Hitmarker esports and gaming jobs</td>
+<td><a href="https://hitmarker.net/">Hitmarker</a></td>
+</tr>
+<tr>
+<td><code>global_music</code></td>
+<td>IFPI global music-industry resources</td>
+<td><a href="https://www.ifpi.org/">IFPI</a></td>
+</tr>
+<tr>
+<td><code>global_wipo</code></td>
+<td>WIPO intellectual-property resources</td>
+<td><a href="https://www.wipo.int/">WIPO</a></td>
+</tr>
+<tr>
+<td><code>global_cfa_finance</code></td>
+<td>CFA Institute investment-profession resources</td>
+<td><a href="https://www.cfainstitute.org/">CFA Institute</a></td>
+</tr>
+<tr>
+<td><code>global_garp_risk</code></td>
+<td>Global Association of Risk Professionals resources</td>
+<td><a href="https://www.garp.org/">GARP</a></td>
+</tr>
+<tr>
+<td><code>global_driver_training</code></td>
+<td>DVSA National Standard for Driver and Rider Training</td>
+<td><a href="https://www.gov.uk/government/publications/national-standard-for-driver-and-rider-training/national-standard-for-driver-and-rider-training">DVSA</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nigerian-sources">Nigerian sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source ID</th>
+<th>Source</th>
+<th>Public location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ng_jobberman</code></td>
+<td>Jobberman Nigeria jobs</td>
+<td><a href="https://www.jobberman.com/jobs">Jobberman</a></td>
+</tr>
+<tr>
+<td><code>ng_myjobmag</code></td>
+<td>MyJobMag Nigeria feeds</td>
+<td><a href="https://www.myjobmag.com/feeds">MyJobMag</a></td>
+</tr>
+<tr>
+<td><code>ng_nbs</code></td>
+<td>National Bureau of Statistics Labour Force Survey</td>
+<td><a href="https://microdata.nigerianstat.gov.ng/index.php/catalog/151/study-description">NBS microdata</a></td>
+</tr>
+<tr>
+<td><code>ng_national_ai</code></td>
+<td>Nigeria National Artificial Intelligence Strategy 2025</td>
+<td>Local checked PDF in source registry</td>
+</tr>
+<tr>
+<td><code>ng_nbte</code></td>
+<td>NBTE National Occupational Standards and curricula</td>
+<td><a href="https://web.nbte.gov.ng/downloads">NBTE downloads</a></td>
+</tr>
+<tr>
+<td><code>ng_cpn_syllabus_2021</code></td>
+<td>CPN 2021 Examination Syllabus</td>
+<td><a href="https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf">CPN syllabus</a></td>
+</tr>
+<tr>
+<td><code>ng_ncs</code></td>
+<td>Nigeria Computer Society</td>
+<td><a href="https://www.ncs.org.ng/">NCS</a></td>
+</tr>
+<tr>
+<td><code>ng_nsqf_nos</code></td>
+<td>NBTE NSQF and National Occupational Standards</td>
+<td><a href="https://www.web.nbte.gov.ng/nsqf">NSQF</a> / <a href="https://www.digitalnbte.nbte.gov.ng/Public/PUCNOS">PUCNOS</a></td>
+</tr>
+<tr>
+<td><code>ng_cieeen</code></td>
+<td>Council for Innovative Engineering and Emerging Engineering</td>
+<td><a href="https://cieeen.gov.ng/">CIEEEN</a></td>
+</tr>
+<tr>
+<td><code>ng_health_ministry</code></td>
+<td>Federal Ministry of Health and Social Welfare</td>
+<td><a href="https://health.gov.ng/hospital-services/">Hospital services</a></td>
+</tr>
+<tr>
+<td><code>ng_mls</code></td>
+<td>Medical Laboratory Science Council of Nigeria</td>
+<td><a href="https://mlscn.gov.ng/publications/mlscn-approved-documents">MLSCN documents</a></td>
+</tr>
+<tr>
+<td><code>ng_clmis_corbon</code></td>
+<td>CORBON construction labour-market information and NOS</td>
+<td><a href="https://www.clmis.corbon.gov.ng/nos">CORBON CLMIS</a></td>
+</tr>
+<tr>
+<td><code>ng_qsrbn</code></td>
+<td>Quantity Surveyors Registration Board of Nigeria</td>
+<td><a href="https://qsrbn.gov.ng/registration/">QSRBN</a></td>
+</tr>
+<tr>
+<td><code>ng_nnra</code></td>
+<td>Nigerian Nuclear Regulatory Authority</td>
+<td><a href="https://nnra.gov.ng/">NNRA</a></td>
+</tr>
+<tr>
+<td><code>ng_trcn</code></td>
+<td>Teachers Registration Council of Nigeria</td>
+<td><a href="https://trcn.gov.ng/">TRCN</a></td>
+</tr>
+<tr>
+<td><code>ng_nogicjqs</code></td>
+<td>Nigerian Oil and Gas Industry Content Joint Qualification System</td>
+<td><a href="https://nogicjqs.gov.ng/">NOGIC JQS</a></td>
+</tr>
+<tr>
+<td><code>ng_cmd</code></td>
+<td>Centre for Management Development Nigeria</td>
+<td><a href="https://www.cmd.gov.ng/">CMD</a></td>
+</tr>
+<tr>
+<td><code>ng_nasrda</code></td>
+<td>National Space Research and Development Agency</td>
+<td><a href="https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/">NASRDA</a></td>
+</tr>
+<tr>
+<td><code>ng_nema</code></td>
+<td>National Emergency Management Agency</td>
+<td><a href="https://nema.gov.ng/">NEMA</a></td>
+</tr>
+<tr>
+<td><code>ng_fmacce</code></td>
+<td>Federal Ministry of Arts, Culture and Creative Economy</td>
+<td><a href="https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece">FMaCCE</a></td>
+</tr>
+<tr>
+<td><code>ng_ican_syllabus</code></td>
+<td>Institute of Chartered Accountants of Nigeria 2026 syllabus</td>
+<td><a href="https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf">ICAN syllabus</a></td>
+</tr>
+<tr>
+<td><code>ng_cibn</code></td>
+<td>Chartered Institute of Bankers of Nigeria competency framework</td>
+<td><a href="https://portal.cibng.org/cb_competencyframework.asp">CIBN</a></td>
+</tr>
+<tr>
+<td><code>ng_nuj</code></td>
+<td>Nigeria Union of Journalists professional ethics</td>
+<td><a href="https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/">NUJ ethics</a></td>
+</tr>
+<tr>
+<td><code>ng_nla</code></td>
+<td>Nigerian Library Association and LRCN context</td>
+<td><a href="https://nla.org.ng/public/">NLA</a></td>
+</tr>
+<tr>
+<td><code>ng_nicfost</code></td>
+<td>Nigerian Council of Food Science and Technology</td>
+<td><a href="https://nicfost.gov.ng/">NICFOST</a></td>
+</tr>
+<tr>
+<td><code>ng_nihotour</code></td>
+<td>NIHOTOUR RIVAC registration portal</td>
+<td><a href="https://rivac.nihotour.gov.ng/">RIVAC</a></td>
+</tr>
+<tr>
+<td><code>ng_fmafs</code></td>
+<td>Federal Ministry of Agriculture and Food Security</td>
+<td><a href="https://agriculture.gov.ng/about-us/">FMAFS</a></td>
+</tr>
+<tr>
+<td><code>ng_npa_psychology</code></td>
+<td>Nigerian Psychological Association</td>
+<td><a href="https://npafct.org/">NPA</a></td>
+</tr>
+<tr>
+<td><code>ng_fashion_council</code></td>
+<td>Nigerian Fashion Council and FADAN</td>
+<td><a href="https://fadan.ng/registration/">FADAN</a></td>
+</tr>
+<tr>
+<td><code>ng_sports_context</code></td>
+<td>Nigeria Olympic Committee sports context</td>
+<td><a href="https://nigeriaolympic.org/athletes-commission/commissions/">NOC</a></td>
+</tr>
+<tr>
+<td><code>ng_public_health_context</code></td>
+<td>NPHCDA and Nigerian public-health sources</td>
+<td><a href="https://nphcda.gov.ng/brief-history-mandate/">NPHCDA</a></td>
+</tr>
+<tr>
+<td><code>ng_nemet</code></td>
+<td>Nigeria Meteorological Agency</td>
+<td><a href="https://nimet.gov.ng/foi">NiMet</a></td>
+</tr>
+<tr>
+<td><code>ng_nimet</code></td>
+<td>Nigerian Meteorological Agency</td>
+<td><a href="https://nimet.gov.ng/foi">NiMet</a></td>
+</tr>
+<tr>
+<td><code>ng_nmdpra</code></td>
+<td>Nigerian upstream and midstream petroleum regulators</td>
+<td><a href="https://www.nuprc.gov.ng/">NUPRC</a> / <a href="https://www.nmdpra.gov.ng/">NMDPRA</a></td>
+</tr>
+<tr>
+<td><code>ng_legal_context</code></td>
+<td>Nigerian legal, immigration, diplomacy and IP source set</td>
+<td><a href="https://nigerianbar.org.ng/">NBA</a></td>
+</tr>
+<tr>
+<td><code>ng_cipsmn</code></td>
+<td>Chartered Institute of Purchasing and Supply Management of Nigeria</td>
+<td><a href="https://www.cipsmn.org.ng/about">CIPSMN</a></td>
+</tr>
+<tr>
+<td><code>ng_nas_research</code></td>
+<td>Nigerian Academy of Science and national research sources</td>
+<td><a href="https://nas.org.ng/">NAS</a></td>
+</tr>
+<tr>
+<td><code>ng_nuc</code></td>
+<td>National Universities Commission CCMAS and standards</td>
+<td><a href="https://www.nuc.edu.ng/">NUC</a></td>
+</tr>
+<tr>
+<td><code>ng_cpn</code></td>
+<td>Computer Professionals Registration Council of Nigeria</td>
+<td><a href="https://www.cpn.gov.ng/">CPN</a></td>
+</tr>
+<tr>
+<td><code>ng_telecom</code></td>
+<td>NCC and NITDA ICT ecosystem sources</td>
+<td><a href="https://www.ncc.gov.ng/">NCC</a> / <a href="https://nitda.gov.ng/">NITDA</a></td>
+</tr>
+<tr>
+<td><code>ng_engineering</code></td>
+<td>COREN and Nigerian Society of Engineers</td>
+<td><a href="https://coren.gov.ng/">COREN</a> / <a href="https://www.nse.org.ng/">NSE</a></td>
+</tr>
+<tr>
+<td><code>ng_built_environment</code></td>
+<td>Nigerian built-environment regulators and bodies</td>
+<td><a href="https://arcon.gov.ng/">ARCON</a> / <a href="https://surcon.org.ng/">SURCON</a></td>
+</tr>
+<tr>
+<td><code>ng_health</code></td>
+<td>Nigerian health-profession regulators</td>
+<td><a href="https://www.mdcn.gov.ng/">MDCN</a> / <a href="https://www.nmcn.gov.ng/">NMCN</a> / <a href="https://www.pcn.gov.ng/">PCN</a></td>
+</tr>
+<tr>
+<td><code>ng_finance</code></td>
+<td>Nigerian finance and accounting bodies/regulators</td>
+<td><a href="https://icanig.org/">ICAN</a> / <a href="https://sec.gov.ng/">SEC</a> / <a href="https://www.cbn.gov.ng/">CBN</a></td>
+</tr>
+<tr>
+<td><code>ng_business</code></td>
+<td>CIPM Nigeria and Nigerian Institute of Management</td>
+<td><a href="https://cipmnigeria.org/">CIPM</a></td>
+</tr>
+<tr>
+<td><code>ng_supply_chain</code></td>
+<td>CILT Nigeria and Nigerian supply-chain bodies</td>
+<td><a href="https://ciltnigeria.org/">CILT Nigeria</a></td>
+</tr>
+<tr>
+<td><code>ng_legal</code></td>
+<td>Nigerian Bar Association and legal regulators</td>
+<td><a href="https://nigerianbar.org.ng/">NBA</a></td>
+</tr>
+<tr>
+<td><code>ng_education</code></td>
+<td>NUC, NCCE and Nigerian education standards</td>
+<td><a href="https://ncce.gov.ng/">NCCE</a></td>
+</tr>
+<tr>
+<td><code>ng_agriculture</code></td>
+<td>Nigerian agriculture, food and veterinary authorities</td>
+<td><a href="https://www.nafdac.gov.ng/">NAFDAC</a> / <a href="https://vcn.gov.ng/">VCN</a></td>
+</tr>
+<tr>
+<td><code>ng_energy</code></td>
+<td>Nigerian upstream, midstream and downstream energy regulators</td>
+<td><a href="https://www.nuprc.gov.ng/">NUPRC</a> / <a href="https://www.nmdpra.gov.ng/">NMDPRA</a></td>
+</tr>
+<tr>
+<td><code>ng_aviation_maritime</code></td>
+<td>Nigerian aviation and maritime authorities</td>
+<td><a href="https://ncaa.gov.ng/">NCAA</a> / <a href="https://nimasa.gov.ng/">NIMASA</a></td>
+</tr>
+<tr>
+<td><code>ng_creative</code></td>
+<td>Nigerian creative-industry and media sources</td>
+<td><a href="https://www.nuj.org.ng/">NUJ</a> / <a href="https://www.nfvcb.gov.ng/">NFVCB</a></td>
+</tr>
+<tr>
+<td><code>ng_gaming</code></td>
+<td>National Lottery Regulatory Commission and Nigerian gaming ecosystem</td>
+<td><a href="https://nlrc-gov.ng/">NLRC</a></td>
+</tr>
+<tr>
+<td><code>ng_environment</code></td>
+<td>NESREA and Nigerian environmental regulators</td>
+<td><a href="https://nesrea.gov.ng/">NESREA</a></td>
+</tr>
+<tr>
+<td><code>ng_surcon</code></td>
+<td>Surveyors Council of Nigeria</td>
+<td><a href="https://www.surcon.gov.ng/">SURCON</a></td>
+</tr>
+<tr>
+<td><code>ng_mdcn</code></td>
+<td>Medical and Dental Council of Nigeria</td>
+<td><a href="https://www.mdcn.gov.ng/">MDCN</a></td>
+</tr>
+<tr>
+<td><code>ng_transport</code></td>
+<td>Federal Ministry of Transportation</td>
+<td><a href="https://transportation.gov.ng/about/">Transportation Ministry</a></td>
+</tr>
+<tr>
+<td><code>ng_aviation</code></td>
+<td>Federal Ministry of Aviation and Aerospace Development</td>
+<td><a href="https://aviation.gov.ng/index.php/about">Aviation Ministry</a></td>
+</tr>
+<tr>
+<td><code>ng_choice_game_developer_2026</code></td>
+<td>Choice Talents Nigeria game-developer vacancy</td>
+<td><a href="https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421">Dated LinkedIn listing</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="source-files-used-for-the-nigerian-admission-layer">Source files used for the Nigerian admission layer</h3>
+<p>The JAMB input set is the ten files in <code>C:\Users\USER\Downloads\jamb
+brochure</code>: <code>Administration.pdf</code>, <code>Agriculture.pdf</code>, <code>Arts _ Humanities.pdf</code>,
+<code>Education.pdf</code>, <code>Engineering _ Enviromental _ Technology.pdf</code>, <code>Law.pdf</code>,
+<code>Medica_Pharmaceutical Health Science.pdf</code>, <code>Sciences.pdf</code>, <code>Social Management
+Science.pdf</code>, and <code>Specific Entry Requirements.pdf</code>.</p>
+<p>The CCMAS input set is the following seventeen original PDFs in
+<code>C:\Users\USER\Downloads\ccmas original documents</code>:</p>
+<pre><code class="language-text">Administration-and-Management.pdf
+Agriculture-2023.pdf
+Allied-Health-Sciences-2023.pdf
+Architecture-CCMAS-2023-FINAL.pdf
+Arts-CCMAS-2023-FINAL.pdf
+Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf
+Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf
+Computing-CCMAS-2023-FINAL.pdf
+Education-CCMAS-2023-New.pdf
+Engineering-Technology-CCMAS-2023-FINAL.pdf
+Environmental-Sciences-CCMAS-2023-FINAL.pdf
+Law-ALL.pdf
+Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf
+Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf
+Sciences-CCMAS-2023-FINAL.pdf
+Social-Sciences-CCMAS-FINAL-2023-A.pdf
+Veterinary-Medicine-CCMAS-2023-FINAL.pdf
+</code></pre>
+<p>Their exact file hashes are recorded in the source traceability packet and
+should be preserved with any future release packet. The extracted CCMAS text
+files are derived working extracts, not substitutes for the original PDFs.</p>
+<h2 id="6-external-references">6. External references</h2>
+<ul>
+<li><a href="https://jamb.gov.ng/FAQ">JAMB FAQ</a> — IBASS programme and UTME subject-combination guidance.</li>
+<li><a href="https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-education.pdf">IBASS education brochure</a></li>
+<li><a href="https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-sciences.pdf">IBASS sciences brochure</a></li>
+<li><a href="https://ibass.jamb.gov.ng/assets/uploads/brochure-degree-arts.pdf">IBASS arts brochure</a></li>
+<li><a href="https://isco.ilo.org/en/isco-08/">Official ISCO-08 page</a></li>
+<li><a href="https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08%20EN%20Vol%201.pdf">ISCO-08 Volume 1</a></li>
+<li><a href="https://unstats.un.org/unsd/classifications/Econ/ISIC.cshtml">UN ISIC classification page</a></li>
+<li><a href="https://esco.ec.europa.eu/en/use-esco">ESCO use and classification resources</a></li>
+</ul>
+<p>These links identify the public source. The repository audit artifacts identify
+the local file, version/hash, extracted fact, locator, and mapping decision.</p>
+</body>
+</html>

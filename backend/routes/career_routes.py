@@ -795,7 +795,14 @@ async def get_domain(domain_id: str):
 
         # Subgroups — each carries its cluster skills, tools and specialisation certs.
         subgroups = []
-        for sg in (sg_res.data or []):
+        for sg in sorted(
+            (sg_res.data or []),
+            key=lambda row: (
+                row.get("display_order") is None,
+                row.get("display_order") if row.get("display_order") is not None else 0,
+                (row.get("label") or "").casefold(),
+            ),
+        ):
             sg_id = sg["id"]
             sg_tools = [
                 t for t in tool_rows
@@ -810,13 +817,16 @@ async def get_domain(domain_id: str):
                 {
                     "id": sg_id,
                     "iscoSubmajor": sg.get("isco_submajor"),
-                    "name": sg.get("label"),
-                    "description": sg.get("description"),
-                    "roleCount": sg.get("role_count"),
+                     "name": sg.get("label"),
+                     "description": sg.get("description"),
+                     "whatPeopleDo": sg.get("what_people_do"),
+                     "workContext": sg.get("work_context") or [],
+                     "roleCount": sg.get("role_count"),
                      "clusterSkills": sg.get("cluster_skills") or [],
                      "clusterSkillUris": sg.get("cluster_skill_uris") or {},
                      "sourceConfidence": sg.get("source_confidence"),
                      "dataState": sg.get("data_state"),
+                     "displayOrder": sg.get("display_order"),
                      "nigerianContext": sg.get("nigerian_context") or {},
                      "guidanceEvidence": _guidance_evidence(sg.get("nigerian_context") or {}),
                      "skillSources": sg.get("skill_sources") or {},
@@ -865,9 +875,10 @@ async def get_domain(domain_id: str):
             "eliteDomain": bool(domain.get("elite_domain")),
             "foundationSkills": _foundation_skills(domain),
             "foundationSkillUris": domain.get("foundation_skill_uris") or {},
-            "sourceConfidence": domain.get("source_confidence"),
-            "dataState": domain.get("data_state"),
-            "nigerianContext": domain.get("nigerian_context") or {},
+             "sourceConfidence": domain.get("source_confidence"),
+             "dataState": domain.get("data_state"),
+             "sourceProvenance": domain.get("source_provenance") or {},
+             "nigerianContext": domain.get("nigerian_context") or {},
             "guidanceEvidence": _guidance_evidence(domain.get("nigerian_context") or {}),
             "foundationSkillSources": domain.get("foundation_skill_sources") or {},
             "roleCount": domain.get("role_count"),
@@ -932,7 +943,7 @@ async def get_role(role_id: str):
                 .select(
                     "source_record_status, onet_occupation_codes, activities, work_activities, "
                     "job_zones, education_signals, work_context, related_occupations, "
-                    "source_links, source_provenance, limitations, data_state"
+                    "wef_signals, source_links, source_provenance, limitations, data_state"
                 )
                 .eq("role_id", role.get("id"))
                 .limit(1)
@@ -1114,6 +1125,7 @@ async def get_role(role_id: str):
                 "educationSignals": role_work_profile.get("education_signals") or [],
                 "workContext": role_work_profile.get("work_context") or [],
                 "relatedOccupations": role_work_profile.get("related_occupations") or [],
+                "wefSignals": role_work_profile.get("wef_signals") or [],
                 "sourceLinks": role_work_profile.get("source_links") or [],
                 "sourceProvenance": role_work_profile.get("source_provenance") or {},
                 "limitations": role_work_profile.get("limitations") or [],

@@ -22,14 +22,18 @@ from _nigerian_context import resolved_nigerian_context
 from _role_overlay_loader import load_overlay_roles
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ONET_VERSION = "31.0"
+ONET_ARCHIVE = os.path.join(HERE, "_source_downloads", "taxonomy", "onet_31_0_database.zip")
+ONET_ARCHIVE_SHA256 = "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+ONET_ARCHIVE_URL = "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip"
 
 CROSSWALK = os.path.join(HERE, "_tax_src", "esco_onet_crosswalk.csv")
 ONET_SKILLS = [
-    os.path.join(HERE, "_source_extracts", "onet_30_3", "Software Skills.txt"),
+    os.path.join(HERE, "_source_extracts", "onet_31_0", "Software Skills.txt"),
     os.path.join(HERE, "_tax_src", "onet", "Technology Skills.txt"),
 ]
-ONET_ESSENTIAL_SKILLS = os.path.join(HERE, "_source_extracts", "onet_30_3", "Essential Skills.txt")
-ONET_OCCUPATION_DATA = os.path.join(HERE, "_source_extracts", "onet_30_3", "Occupation Data.txt")
+ONET_ESSENTIAL_SKILLS = os.path.join(HERE, "_source_extracts", "onet_31_0", "Essential Skills.txt")
+ONET_OCCUPATION_DATA = os.path.join(HERE, "_source_extracts", "onet_31_0", "Occupation Data.txt")
 ESCO_OCCUPATIONS = os.path.join(HERE, "taxonomies", "esco_occupations.json")
 # The cleaned library is the canonical source for the current 4,698 keyed
 # roles. The older v3 file is retained for historical seed comparison only.
@@ -395,7 +399,11 @@ def main():
 
     output["_meta"] = {
         "schema_version": 2,
+        "onet_version": ONET_VERSION,
         "onet_source": os.path.relpath(onet_path, HERE).replace("\\", "/"),
+        "onet_archive": os.path.relpath(ONET_ARCHIVE, HERE).replace("\\", "/"),
+        "onet_archive_sha256": ONET_ARCHIVE_SHA256,
+        "onet_archive_url": ONET_ARCHIVE_URL,
         "crosswalk_source": os.path.relpath(CROSSWALK, HERE).replace("\\", "/"),
         "esco_source": os.path.relpath(ESCO_OCCUPATIONS, HERE).replace("\\", "/"),
         "soc_join": "exact_detailed_onet_soc",
