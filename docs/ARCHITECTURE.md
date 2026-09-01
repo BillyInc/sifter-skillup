@@ -801,7 +801,7 @@ table is the authoritative audit that drives Part IV. Statuses:
 | `src/screens/ExploreScreen`, `FieldsScreen`, `MyWorldScreen`, `OpportunitiesScreen` | **Core** | Migrate to `app/(tabs)/*` under Phase 3 |
 | `src/screens/PortfolioHubScreen`, `PortfolioScreen`, `CommunityScreen`, `FeedScreen`, `GuildScreen`, `GitHubScreen`, `StreaksScreen`, `LeaderboardScreen`, `DiaryScreen` | **Legacy** | |
 | `src/screens/InterviewModeScreen` | **Supporting** | Career prep |
-| `src/screens/StarknetTrackScreen`, `CairoBuilderTrackScreen`, `EcosystemTrackScreen`, `DownloadTrackScreen`, `PostIslandTrackSelection` | **Future / Legacy** | |
+| `src/screens/StarknetTrackScreen`, `CairoBuilderTrackScreen`, `DownloadTrackScreen`, `PostIslandTrackSelection` | **Future / Legacy** | `EcosystemTrackScreen` was deleted — it was unrouted and unreferenced, and its static import pulled a 1.1MB lesson corpus toward the web entry chunk |
 | `src/screens/MerchandiseScreen` | **Legacy** | |
 | `src/screens/ReferralScreen` | **Supporting** | If retained, background |
 | `src/screens/admin/*` | **Core** | Elevate |
