@@ -11,6 +11,13 @@ const hyperlaneAliases = new Map([
   ['@hyperlane-xyz/sdk', path.resolve(__dirname, 'src/shims/hyperlane/sdk.ts')],
   ['@hyperlane-xyz/registry', path.resolve(__dirname, 'src/shims/hyperlane/registry.ts')],
   ['@hyperlane-xyz/utils', path.resolve(__dirname, 'src/shims/hyperlane/utils.ts')],
+  // lucide-react's barrel re-exports ~1,600 icons and Metro does not
+  // tree-shake it, so all of them reach the web entry chunk for the sake of
+  // the 29 that @privy-io/react-auth actually imports. The shim re-exports
+  // exactly those 29 from their own module paths. Only the bare specifier is
+  // aliased -- deep 'lucide-react/dist/esm/...' paths still resolve to the
+  // real package, which is what lets the shim import from it without cycling.
+  ['lucide-react', path.resolve(__dirname, 'src/shims/lucide-react.ts')],
   ['abitype', path.resolve(__dirname, 'node_modules/abitype')],
   ['isows', path.resolve(__dirname, 'node_modules/isows')],
   ['ox', path.resolve(__dirname, 'node_modules/ox')],
