@@ -590,6 +590,10 @@ export interface SubgroupV2 extends SourceBackedFields {
   /** Student-friendly cluster name (e.g. "Traders & Brokers"). */
   name: string;
   description?: string;
+  whatPeopleDo?: string | null;
+  workContext?: Array<{ name: string; frequency?: string; share?: number }>;
+  /** Source-defined subgroup presentation order; lower values appear first. */
+  displayOrder?: number | null;
   roleCount?: number;
   clusterSkills: string[];
   skillSources?: Record<string, unknown>;
@@ -626,6 +630,12 @@ export interface RoleWorkProfile {
   educationSignals: Array<{ label: string; share?: number }>;
   workContext: Array<{ name: string; frequency: string; share?: number }>;
   relatedOccupations: string[];
+  wefSignals: Array<{
+    wefLabel: string;
+    categories: string[];
+    sourceId?: string;
+    sourceUrl?: string;
+  }>;
   sourceLinks: Array<{ label?: string; url: string; source_id?: string }>;
   sourceProvenance?: Record<string, unknown>;
   limitations: string[];

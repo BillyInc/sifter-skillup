@@ -18,8 +18,8 @@ META = os.path.join(HERE, "domain_meta.json")
 BASE = os.path.join(HERE, "role_library_v3_cleaned.json")
 EMERGING = os.path.join(HERE, "emerging_role_overlays.json")
 ESCO = os.path.join(HERE, "taxonomies", "esco_occupations.json")
-ONET_OCCUPATIONS = os.path.join(HERE, "_source_extracts", "onet_30_3", "Occupation Data.txt")
-ONET_ALIASES = os.path.join(HERE, "_tax_src", "onet", "Alternate Titles.txt")
+ONET_OCCUPATIONS = os.path.join(HERE, "_source_extracts", "onet_31_0", "Occupation Data.txt")
+ONET_ALIASES = os.path.join(HERE, "_source_extracts", "onet_31_0", "Job Titles.txt")
 CROSSWALK = os.path.join(HERE, "_tax_src", "esco_onet_crosswalk.csv")
 OUT = os.path.join(HERE, "thin_domain_role_overlays.json")
 SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
@@ -27,8 +27,11 @@ HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
 ROLE_CUTOFF = 15
 ROLE_TARGET = int(os.environ.get("ROLE_TARGET", "20"))
 
-# These are title/alias anchors, not invented roles. A candidate must match one
-# of these anchors in the ESCO preferred or alternative occupation title.
+# These are title anchors, not invented roles. A candidate must match one of
+# these anchors in the preferred occupation title. Alternative/job titles are
+# retained for display and later review, but are not sufficient by themselves
+# to place a new occupation in a domain: they are often broad or reused across
+# unrelated occupations.
 KEYWORDS = {
     "D132": ["aerospace", "satellite", "astronaut", "astrophysic", "astronom", "spacecraft", "orbital", "rocket", "mission control"],
     "D059": ["spacecraft", "satellite", "aerospace", "avionics", "propulsion", "orbital", "mission control", "rocket"],
@@ -96,8 +99,11 @@ KEYWORDS = {
 
 # Title hits such as "mission" or "facility" are too broad on their own.
 EXCLUDE = {
-    "D003": ["industrial robot", "robotics engineering technician"],
-    "D005": ["network marketer", "railway", "sewerage", "water network", "picture archiving"],
+    # These are already represented in the canonical AI population or belong
+    # to the dedicated robotics domain; do not duplicate/reassign them from a
+    # broad title anchor.
+    "D003": ["industrial robot", "robotics", "data scientist"],
+    "D005": ["network marketer", "railway", "sewerage", "water network", "picture archiving", "food servers"],
     "D006": ["physiotherapist", "biotechnical", "food biotechnologist"],
     "D025": ["addiction counsellor", "drug and alcohol"],
     "D064": ["embassy counsellor", "environmental health inspector"],
@@ -106,18 +112,19 @@ EXCLUDE = {
     "D091": ["railway"],
     "D126": ["animal massage", "animal osteopath"],
     "D152": ["agricultural", "horticulture", "nature conservation", "water conservation"],
-    "D168": ["brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector"],
+    "D168": ["brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector", "molders, shapers, and casters", "pourers and casters"],
     "D132": ["police", "missionary", "commissioner", "fire commissioner", "electricity", "gas transmission", "interior", "welder", "de-icer"],
     "D059": ["police", "missionary", "commissioner", "electricity", "gas transmission", "commissioning"],
     "D150": ["secretary of state", "government minister", "political affairs", "speechwriter", "secondary school", "learning mentor"],
     "D161": ["missionary", "immigration", "cyber incident", "social counsellor", "special-interest"],
     "D146": ["swimming facility", "sport facility", "recreational facilities", "mine ventilation", "wholesale merchant", "sales representative"],
     "D167": ["specialised seller", "shop manager", "gaming dealer", "web designer"],
-    "D168": ["weather forecaster", "translator", "telecommunications engineer", "disc jockey", "brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector"],
+    "D168": ["weather forecaster", "translator", "telecommunications engineer", "disc jockey", "brick and tile", "pottery", "casino", "gaming dealer", "gaming inspector", "molders, shapers, and casters", "pourers and casters"],
     "D160": ["vlogger", "editorial assistant", "shop manager"],
     "D145": ["physicist", "sociologist", "seismologist", "remote sensing", "research manager"],
     "D166": ["vocational teacher", "assembler", "engineering drafter", "industrial robot"],
     "D096": ["construction equipment", "wholesale merchant", "sales representative", "rental service", "import export"],
+    "D134": ["import export", "distribution manager"],
     "D165": ["animal feed", "specialised veterinarian", "vlogger"],
 }
 
@@ -178,27 +185,32 @@ def source_sets_for(domain_id, taxonomy_source):
 
 
 def title_hits(record, terms):
-    title = norm(record.get("label"))
-    tokens = title.split()
+    labels = [record.get("label")]
     hits = []
     for raw_term in terms:
-        term = norm(raw_term)
+        raw = str(raw_term or "").strip().lower()
+        prefix = raw.endswith("*")
+        term = norm(raw[:-1] if prefix else raw)
         if not term:
             continue
-        prefix = term.endswith("*")
-        if prefix:
-            term = term[:-1].strip()
         term_tokens = term.split()
         matched = False
-        for index in range(len(tokens) - len(term_tokens) + 1):
-            window = tokens[index:index + len(term_tokens)]
-            if prefix:
-                matched = all(
-                    (word.startswith(expected) if position == len(term_tokens) - 1 else word == expected)
-                    for position, (word, expected) in enumerate(zip(window, term_tokens))
-                )
-            else:
-                matched = window == term_tokens
+        for label in labels:
+            tokens = norm(label).split()
+            for index in range(len(tokens) - len(term_tokens) + 1):
+                window = tokens[index:index + len(term_tokens)]
+                if prefix:
+                    matched = all(
+                        (word.startswith(expected) if position == len(term_tokens) - 1 else word == expected)
+                        for position, (word, expected) in enumerate(zip(window, term_tokens))
+                    )
+                else:
+                    matched = all(
+                        word == expected or word == f"{expected}s"
+                        for word, expected in zip(window, term_tokens)
+                    )
+                if matched:
+                    break
             if matched:
                 break
         if matched:
@@ -296,10 +308,10 @@ def load_onet_candidates(esco):
 
     candidates = []
     for code, row in occupations.items():
-        candidates.append((code, str(row.get("Title") or "").strip(), row, onet_to_isco.get(code, set())))
-    # Alternate titles are retained by O*NET as aliases, not independent
-    # occupations. They must not inflate the role count or turn a broad alias
-    # into a specialist role row.
+        candidates.append((code, str(row.get("Title") or "").strip(), row, onet_to_isco.get(code, set()), []))
+    # Job Titles are retained in the source archive as aliases, not independent
+    # occupations. They are not used for automatic domain placement because a
+    # lay title can be broad or shared across occupations.
     return candidates
 
 
@@ -338,11 +350,11 @@ def main():
             score += min(3, len(record.get("alt_labels") or []))
             # Prefer an exact ESCO record when both taxonomies name the role.
             candidates.append((score + 10, key, label, "esco", record, hits, None))
-        for code, title, record, isco_values in onet_candidates:
+        for code, title, record, isco_values, aliases in onet_candidates:
             key = norm(title)
             if not key or key in existing[domain_id] or is_excluded(title, domain_id):
                 continue
-            hits = title_hits({"label": title, "alt_labels": []}, terms)
+            hits = title_hits({"label": title, "alt_labels": aliases}, terms)
             if not hits:
                 continue
             score = sum(8 if " " in term else 4 for term in hits)

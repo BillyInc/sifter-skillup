@@ -1,0 +1,147 @@
+{
+  "schema_version": "nigerian_role_gap_followup_v2",
+  "generated_at": "2026-08-31",
+  "purpose": "Close the five residual canonical-role review gaps with explicit source-backed local evidence or an explicit reviewed global-only disposition. A reviewed global-only disposition is not a Nigerian demand claim.",
+  "sources": [
+    {
+      "id": "ng_nigeria_winter_sports_context_2026",
+      "region": "nigeria",
+      "name": "Nigerian winter-sports and ski-instruction context",
+      "evidence_type": "nigerian_sport_and_sector_context",
+      "availability": "public_web_sources_checked",
+      "observed_at": "2026-08-31",
+      "scope": "Nigerian winter-sports participation, federation activity and a Nigerian skier's instructional activity",
+      "findings": [
+        "The Bobsled and Skeleton Federation of Nigeria provides Nigerian winter-sports federation context.",
+        "The African winter-sports material includes Nigeria in an African winter-sports context.",
+        "A published profile of Nigerian skier Samuel Ikpefan describes cross-country skiing instruction, supporting a Nigerian participant/instructor context."
+      ],
+      "limitations": "These sources do not establish a Nigerian ski-resort labour market, a current vacancy, or a Nigerian licensing requirement for ski or snowboard instructors.",
+      "urls": [
+        "https://bsfnigeria.com/",
+        "https://africaolympic.com/wp-content/uploads/2022/10/ACNOA-MAGAZINE-OCTOBRE-2022.pdf",
+        "https://www.francsjeux.com/en/2026/03/02/Samuel-Ikpefan-of-Nigeria--with-the-right-resources--will-win-an-African-medalist-at-the-Winter-Olympics./109990/"
+      ]
+    },
+    {
+      "id": "ng_nigeria_tobacco_manufacturing_operator_2026",
+      "region": "nigeria",
+      "name": "Nigerian tobacco-manufacturing equipment-operator role evidence",
+      "evidence_type": "live_vacancy_title_signal",
+      "availability": "public_job_postings_checked",
+      "observed_at": "2026-08-31",
+      "scope": "British American Tobacco Nigeria manufacturing and operator/technician postings, including Ibadan production activity",
+      "findings": [
+        "Public Nigerian postings use equipment operator/technician and production-operator titles for cigarette making or packing machinery.",
+        "The postings describe operating, monitoring and maintaining production equipment and meeting process and quality requirements.",
+        "The postings show a Nigerian manufacturing context and role-family terminology, but are dated advertisements rather than a permanent demand estimate."
+      ],
+      "limitations": "A job posting is a time-bound market signal. It does not establish universal Nigerian demand, salary, or one mandatory qualification for every employer.",
+      "urls": [
+        "https://www.hotnigerianjobs.com/hotjobs/798130/equipment-operator-technician-at-british-american.html",
+        "https://www.myjobmag.com/job/operator-british-american-tobacco-3",
+        "https://www.hotnigerianjobs.com/hotjobs/6968/production-operator-at-british-american-tobacco.html",
+        "https://tobaccoreporter.com/2024/02/05/bat-nigeria-celebrates-factory-anniversary/"
+      ]
+    },
+    {
+      "id": "ng_nigeria_hop_cultivation_context_2026",
+      "region": "nigeria",
+      "name": "Nigerian hop-cultivation and hop-substitute research context",
+      "evidence_type": "nigerian_agricultural_research_context",
+      "availability": "public_research_sources_checked",
+      "observed_at": "2026-08-31",
+      "scope": "Nigerian brewing inputs, local agricultural research and the distinction between hop-substitute work and commercial hop farming",
+      "findings": [
+        "The checked Nigerian research discusses local hop substitutes and explains the temperate-climate constraints affecting commercial hop supply in Nigeria.",
+        "The evidence supports a Nigerian research/agriculture context, not an established commercial Nigerian hop-farmer occupation."
+      ],
+      "limitations": "No direct Nigerian commercial hop-farm role or vacancy was established in the checked evidence. The global role remains visible with this limitation.",
+      "urls": [
+        "https://www.researchgate.net/publication/275641005_Pilot_scale_brewing_trials_using_formulated_blends_of_selected_local_vegetables_as_hop_substitute",
+        "https://www.jstor.org/stable/3059613",
+        "https://www.nbplc.com/import-substitution-nigerian-breweries-plc-invests-n78billion-in-smallholder-farming-for-sorghum-and-cassava/"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ng_role_gap_winter_instruction_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nigeria_winter_sports_context_2026"],
+      "domain_ids": ["D071"],
+      "role_patterns": ["ski instructor", "snowboard instructor"],
+      "match_status": "reviewed_global_only_no_local_counterpart"
+    },
+    {
+      "id": "ng_role_gap_hop_farmer_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nigeria_hop_cultivation_context_2026"],
+      "domain_ids": ["D118"],
+      "role_patterns": ["hop farmer"],
+      "match_status": "reviewed_global_only_no_local_counterpart"
+    },
+    {
+      "id": "ng_role_gap_snow_clearing_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_nigeria_construction_equipment_operations_2026",
+        "ng_nigeria_rail_air_transport_operations_2026"
+      ],
+      "domain_ids": ["D116"],
+      "role_patterns": ["snow-clearing worker"],
+      "match_status": "reviewed_global_only_no_local_counterpart"
+    },
+    {
+      "id": "ng_role_gap_cigarette_machine_operator_followup_2026_profile",
+      "region": "nigeria",
+      "source_ids": ["ng_nigeria_tobacco_manufacturing_operator_2026"],
+      "domain_ids": ["D048"],
+      "role_patterns": ["cigarette making machine operator"],
+      "local_role_names": ["Equipment Operator / Technician", "Production Operator"],
+      "skills": [
+        {
+          "name": "Operate, monitor and carry out routine checks on cigarette-making or packing production machinery while meeting process and quality requirements",
+          "priority": "core",
+          "evidence": "Nigerian tobacco-manufacturing operator postings"
+        },
+        {
+          "name": "Record production conditions, identify equipment faults and coordinate safe escalation or maintenance support",
+          "priority": "core",
+          "evidence": "Nigerian tobacco-manufacturing operator postings"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Cigarette-making and packing machinery, production controls, inspection tools, maintenance records and personal-protective equipment",
+          "priority": "core",
+          "evidence": "Nigerian tobacco-manufacturing operator postings",
+          "limitation": "The exact machine and control system depends on the factory and production line."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Keep a high-volume manufacturing line safe, available, consistent and compliant with operating and quality procedures",
+          "priority": "core",
+          "evidence": "Nigerian tobacco-manufacturing operator postings"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Relevant Nigerian production-operations, mechanical, electrical, mechatronics or technical-vocational pathway",
+          "issuer": "Employer, NBTE, recognised institution or approved technical provider",
+          "level": "role_dependent",
+          "evidence": "Nigerian tobacco-manufacturing operator postings",
+          "limitation": "The postings show education and technical experience expectations, not one universal certification requirement."
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Factory work must follow applicable Nigerian occupational-safety, machinery, product-quality, environmental and tobacco-manufacturing requirements",
+          "priority": "required_when_applicable",
+          "evidence": "Nigerian manufacturing context"
+        }
+      ]
+    }
+  ]
+}

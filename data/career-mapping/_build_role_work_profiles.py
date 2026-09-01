@@ -25,17 +25,22 @@ from _role_overlay_loader import load_overlay_roles
 
 
 HERE = Path(__file__).resolve().parent
-ARCHIVE = HERE / "_source_downloads" / "taxonomy" / "onet_30_3_database.zip"
+ONET_VERSION = "31.0"
+ARCHIVE = HERE / "_source_downloads" / "taxonomy" / "onet_31_0_database.zip"
+ARCHIVE_PREFIX = "db_31_0_text"
+ARCHIVE_SHA256 = "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23a9"
+ARCHIVE_URL = "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip"
 OUTPUT = HERE / "role_work_profiles.json"
 ROLE_LIBRARY = HERE / "role_library_v3_cleaned.json"
 ROLE_TOOLS = HERE / "role_tools.json"
 SCOPE_AUDIT = HERE / "domain_skill_competency_certification_audit.json"
 SOURCE_REGISTRY = HERE / "domain_role_source_registry.json"
 EMERGING_OVERLAYS = HERE / "emerging_role_overlays.json"
+WEF_NORMALIZATION = HERE / "_audit" / "wef_role_normalization_2026-09-01.json"
 
 
 def read_tsv(archive: zipfile.ZipFile, name: str) -> list[dict[str, str]]:
-    with archive.open(f"db_30_3_text/{name}.txt") as stream:
+    with archive.open(f"{ARCHIVE_PREFIX}/{name}.txt") as stream:
         text = io.TextIOWrapper(stream, encoding="utf-8-sig", newline="")
         return list(csv.DictReader(text, delimiter="\t"))
 
@@ -52,6 +57,40 @@ def unique(items: list[str], limit: int | None = None) -> list[str]:
         if limit and len(result) >= limit:
             break
     return result
+
+
+def load_wef_signals(path: Path) -> dict[str, list[dict]]:
+    """Load only uniquely resolved WEF annotations for existing role keys.
+
+    WEF labels are trend signals, not a canonical occupation dictionary.  The
+    normalization audit therefore remains authoritative for matching, and
+    this generator consumes only rows with exactly one canonical target.  An
+    absent audit is allowed so the profile builder remains reproducible before
+    the optional WEF annotation step has run.
+    """
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    source_url = str((payload.get("source") or {}).get("url") or "")
+    signals: dict[str, list[dict]] = defaultdict(list)
+    for row in payload.get("labels", []):
+        if row.get("match_status") != "unique_canonical_match":
+            continue
+        targets = row.get("canonical_role_keys") or []
+        if len(targets) != 1 or not row.get("wef_label"):
+            continue
+        signal = {
+            "wef_label": str(row["wef_label"]),
+            "categories": sorted(str(item) for item in (row.get("wef_categories") or [])),
+            "source_id": "global_wef",
+            "source_url": source_url,
+        }
+        if signal not in signals[targets[0]]:
+            signals[targets[0]].append(signal)
+    return {
+        key: sorted(items, key=lambda item: (item["wef_label"], item["categories"]))
+        for key, items in signals.items()
+    }
 
 
 def build_onet_indexes(archive: zipfile.ZipFile) -> dict[str, dict]:
@@ -169,7 +208,7 @@ def build_onet_indexes(archive: zipfile.ZipFile) -> dict[str, dict]:
             "related_occupations": unique(related.get(code, []), 6),
             "source": {
                 "id": "global_onet",
-                "name": "O*NET 30.3 Database",
+                "name": f"O*NET {ONET_VERSION} Database",
                 "url": "https://www.onetcenter.org/database.html",
                 "occupation_url": f"https://www.onetonline.org/link/summary/{code}",
                 "region": "global_proxy",
@@ -196,6 +235,7 @@ def main() -> None:
     for source_id, source in overlay_sources.items():
         registry.setdefault(source_id, source)
     hidden = set(audit.get("scope", {}).get("hidden_domains_excluded", []))
+    wef_signals_by_role = load_wef_signals(WEF_NORMALIZATION)
 
     profiles: list[dict] = []
     for role_key, role in sorted(roles_by_key.items()):
@@ -225,6 +265,8 @@ def main() -> None:
             source_ids = ["global_wef"]
         elif not source_ids and source_label.casefold() == "esco/o*net":
             source_ids = ["global_esco", "global_onet"]
+        if role_key in wef_signals_by_role:
+            source_ids = unique([*source_ids, "global_wef"])
         source_links = []
         for uri in (entry.get("esco") or {}).get("occupation_uris", []) or []:
             source_links.append({
@@ -272,6 +314,7 @@ def main() -> None:
                 "domain_id": domain_id,
                 "source_record_status": source_record_status,
                 "onet_occupation_codes": codes,
+                "wef_signals": wef_signals_by_role.get(role_key, []),
                 "activities": tasks,
                 "work_activities": activities,
                 "job_zones": [record["job_zone"] for record in records],
@@ -315,7 +358,7 @@ def main() -> None:
                 ],
                 "source": {
                     "ids": unique(["global_onet", *source_ids]) if records else source_ids,
-                    "name": "O*NET 30.3 Database plus registered occupation/framework sources" if records else "Registered occupation/framework source",
+                    "name": f"O*NET {ONET_VERSION} Database plus registered occupation/framework sources" if records else "Registered occupation/framework source",
                     "url": "https://www.onetcenter.org/database.html" if records else None,
                     "region": "global_proxy",
                     "evidence_type": "occupation_tasks_activities_preparation" if records else "occupation_or_framework_profile",
@@ -329,14 +372,25 @@ def main() -> None:
             "role_library_v3_cleaned.json",
             "emerging_role_overlays.json",
             "role_tools.json",
-            "_source_downloads/taxonomy/onet_30_3_database.zip",
+            "_source_downloads/taxonomy/onet_31_0_database.zip",
+            "_audit/wef_role_normalization_2026-09-01.json",
         ],
         "source": {
             "id": "global_onet",
-            "name": "O*NET 30.3 Database",
+            "name": f"O*NET {ONET_VERSION} Database",
+            "version": ONET_VERSION,
             "url": "https://www.onetcenter.org/database.html",
-            "observed_at": "2026-08-29",
+            "archive_url": ARCHIVE_URL,
+            "archive_sha256": ARCHIVE_SHA256,
+            "observed_at": "2026-08-31",
             "limitation": "Global/US occupational evidence only; it does not establish Nigerian demand or requirements.",
+        },
+        "wef_source": {
+            "id": "global_wef",
+            "name": "World Economic Forum Future of Jobs 2025",
+            "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+            "normalization_audit": "_audit/wef_role_normalization_2026-09-01.json",
+            "limitation": "Global employer-survey trend signal; not a complete occupation dictionary and not Nigerian demand evidence.",
         },
         "profiles": profiles,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

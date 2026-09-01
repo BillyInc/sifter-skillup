@@ -1,0 +1,323 @@
+{
+  "schema_version": "nigerian_role_gap_resolution_v1",
+  "generated_at": "2026-09-01",
+  "purpose": "Narrow, source-backed Nigerian enrichment for the residual canonical roles that survived placement cleanup. These profiles add evidence for the role family; they do not claim universal demand, salary, licensing eligibility or an exact employer title.",
+  "sources": [
+    {
+      "id": "ng_nbte_agricultural_equipment_mechanics_2026",
+      "region": "nigeria",
+      "name": "NBTE agricultural equipment and implement mechanics curriculum",
+      "evidence_type": "official_nigerian_technical_curriculum",
+      "availability": "official_web",
+      "observed_at": "2026-09-01",
+      "scope": "Nigerian agricultural equipment mechanics training, including agricultural mechanisation, tractor systems, repair, maintenance and workshop safety",
+      "findings": [
+        "NBTE publishes Agricultural Equipment Mechanics NOS/NSQ pathways and an Agricultural Equipment and Implement Mechanics work curriculum.",
+        "The curriculum includes agricultural mechanisation, tractors, equipment repair and maintenance, workshop practice and safety controls."
+      ],
+      "limitations": "A national technical curriculum establishes a Nigerian training route, not a universal employer requirement or a guarantee of work in every agricultural or heavy-equipment setting.",
+      "urls": [
+        "https://www.digitalnbte.nbte.gov.ng/Public/PUCNOS",
+        "https://www.digitalnbte.nbte.gov.ng/Public/DownloadCurriculum/Q4d5d815cff85f55d690ee65c500d425e.pdf",
+        "https://www.digitalnbte.nbte.gov.ng/Public/DownloadCurriculum/I373e1449d962b7c162a2e20a2b5c6190.pdf"
+      ]
+    },
+    {
+      "id": "ng_npmcn_neurology_curriculum_2026",
+      "region": "nigeria",
+      "name": "National Postgraduate Medical College of Nigeria neurology subspecialty curriculum",
+      "evidence_type": "official_nigerian_postgraduate_medical_curriculum",
+      "availability": "official_web",
+      "observed_at": "2026-09-01",
+      "scope": "Nigerian postgraduate neurology specialist training and clinical practice preparation",
+      "findings": [
+        "The National Postgraduate Medical College of Nigeria publishes a Neurology Sub-Specialty training curriculum.",
+        "MDCN materials separately establish Nigerian medical registration and additional postgraduate-qualification registration boundaries."
+      ],
+      "limitations": "The curriculum supports a specialist pathway; it does not state that every neurologist follows one identical appointment route or that a postgraduate qualification alone substitutes for MDCN registration.",
+      "urls": [
+        "https://npmcn.edu.ng/downloads/curriculummedicinept2.pdf",
+        "https://www.mdcn.gov.ng/",
+        "https://mdcn.gov.ng/frequently-asked-questions"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ng_role_gap_digital_forensics_resolution_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_nigeria_digital_forensics_cybercrime_2026",
+        "ng_nigeria_digital_technology_policy_and_training_2026",
+        "ng_cpn_syllabus_2021"
+      ],
+      "domain_ids": ["D004", "D151"],
+      "role_patterns": [
+        "digital forensics analysts",
+        "digital forensics analyst",
+        "digital forensics expert"
+      ],
+      "skills": [
+        {
+          "name": "Acquire, preserve, examine and analyse digital evidence using repeatable and authorised procedures",
+          "priority": "core",
+          "evidence": "Nigerian National Digital Forensic Laboratory and cybercrime-investigation context"
+        },
+        {
+          "name": "Document evidence integrity, technical findings and limitations so they can support an incident response or lawful investigation",
+          "priority": "core",
+          "evidence": "Nigerian National Digital Forensic Laboratory and CPN computing context"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Forensic acquisition, evidence-preservation, hashing, storage, malware-analysis, endpoint and case-record tools",
+          "priority": "core",
+          "evidence": "Nigerian National Digital Forensic Laboratory context",
+          "limitation": "The exact toolset depends on the device, evidence type, authorisation and employing institution."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Produce defensible digital-evidence findings without exceeding authorisation or overstating conclusions",
+          "priority": "core",
+          "evidence": "Nigerian digital-forensics and cybercrime-investigation context"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Recognised Nigerian computing, cybersecurity, digital-forensics or investigation training pathway",
+          "issuer": "CPN, NCCC/NPF, recognised Nigerian institution or approved provider",
+          "level": "role_dependent",
+          "evidence": "Nigerian CPN, NDFL and cybercrime-investigation context",
+          "limitation": "No single certificate is asserted as mandatory for every Nigerian digital-forensics role."
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Digital-forensics work must follow applicable Nigerian cybercrime, privacy, data-protection, authorisation, evidence and chain-of-custody requirements",
+          "priority": "required_when_applicable",
+          "evidence": "Nigerian NDFL, NPF-NCCC and digital-policy context"
+        }
+      ]
+    },
+    {
+      "id": "ng_role_gap_new_accounts_clerks_resolution_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_cibn_banking",
+        "ng_cbn_sec_finance_operations_2025_2026",
+        "ng_ican_syllabus_2026"
+      ],
+      "domain_ids": ["D084"],
+      "role_patterns": ["new accounts clerks"],
+      "local_role_names": ["Banking Operations Officer", "Account Opening Officer", "Customer Service Officer"],
+      "skills": [
+        {
+          "name": "Collect, verify and record customer and account information accurately within the institution's approved process",
+          "priority": "core",
+          "evidence": "Nigerian banking operations and financial-regulatory context"
+        },
+        {
+          "name": "Explain available financial services clearly, protect customer information and refer needs that exceed the role's authority",
+          "priority": "core",
+          "evidence": "CIBN banking and CBN customer-protection/operations context"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Banking core systems, customer records, identity/KYC documentation, secure communication and transaction-control workflows",
+          "priority": "core",
+          "evidence": "Nigerian banking operations and regulatory context",
+          "limitation": "The internal system and exact KYC workflow depend on the institution and the service being opened."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Open or maintain accounts accurately while recognising incomplete information, suspicious activity and requests requiring escalation",
+          "priority": "core",
+          "evidence": "Nigerian banking, CBN and CIBN context"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Relevant Nigerian banking-operations or financial-services professional pathway",
+          "issuer": "CIBN, recognised Nigerian institution or employer-approved training route",
+          "level": "role_dependent",
+          "evidence": "CIBN and Nigerian banking context",
+          "limitation": "CIBN membership or qualification is not asserted as mandatory for every account-opening or customer-service post."
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Account-opening work must follow applicable Nigerian customer-identification, anti-money-laundering, data-protection, consumer-protection and banking-control requirements",
+          "priority": "required_when_applicable",
+          "evidence": "CBN and Nigerian financial-regulatory context"
+        }
+      ]
+    },
+    {
+      "id": "ng_role_gap_agricultural_equipment_mechanics_resolution_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_nbte_agricultural_equipment_mechanics_2026",
+        "ng_nbte_nos_2026",
+        "ng_nigeria_agricultural_engineer_2026",
+        "ng_nigeria_agricultural_research_training_2026"
+      ],
+      "domain_ids": ["D096"],
+      "role_patterns": ["farm equipment mechanics and service technicians"],
+      "skills": [
+        {
+          "name": "Inspect, diagnose, repair, maintain and test tractors, implements, irrigation or other agricultural equipment",
+          "priority": "core",
+          "evidence": "NBTE Agricultural Equipment and Implement Mechanics curriculum and Nigerian agricultural-engineering context"
+        },
+        {
+          "name": "Use maintenance records, workshop safety, basic electrical and mechanical diagnosis, and field-service judgement to prevent avoidable breakdowns",
+          "priority": "core",
+          "evidence": "NBTE agricultural equipment mechanics curriculum"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Tractors, agricultural implements, hydraulic and electrical test equipment, hand tools, workshop equipment and protective wear",
+          "priority": "core",
+          "evidence": "NBTE agricultural equipment mechanics curriculum",
+          "limitation": "The machine, implement and diagnostic tools depend on the farm, dealer, manufacturer and service responsibility."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Return agricultural equipment to a safe and serviceable condition while documenting faults, repairs, tests and remaining limits",
+          "priority": "core",
+          "evidence": "NBTE agricultural equipment mechanics curriculum"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Agricultural Equipment Mechanics NOS/NSQ, NTC or related Nigerian agricultural/mechanical technical pathway",
+          "issuer": "NBTE, recognised agricultural college, technical institution or approved provider",
+          "level": "trade_or_role_dependent",
+          "evidence": "NBTE national occupational standards and curriculum"
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Equipment repair and field work must follow applicable Nigerian workshop, occupational-safety, machinery, environmental and road-use requirements",
+          "priority": "required_when_applicable",
+          "evidence": "Nigerian technical-training and agricultural-engineering context"
+        }
+      ]
+    },
+    {
+      "id": "ng_role_gap_mobile_heavy_equipment_resolution_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_nigeria_construction_equipment_operations_2026",
+        "ng_nigeria_automotive_engineering_maintenance_2026",
+        "ng_nigeria_automotive_mechatronics_industry_2026",
+        "ng_nbte_nos_2026"
+      ],
+      "domain_ids": ["D096"],
+      "role_patterns": ["mobile heavy equipment mechanics, except engines"],
+      "skills": [
+        {
+          "name": "Inspect, diagnose, repair and test mobile mechanical, hydraulic, pneumatic and electrical equipment used in field operations",
+          "priority": "core",
+          "evidence": "Nigerian construction-equipment, automotive-mechatronics and technical-training context"
+        },
+        {
+          "name": "Read technical information, isolate faults, record work and verify safe performance before returning equipment to service",
+          "priority": "core",
+          "evidence": "Nigerian equipment-maintenance and mechatronics context"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Heavy equipment, hydraulic and electrical diagnostic tools, hand and power tools, lifting equipment, manuals and maintenance records",
+          "priority": "core",
+          "evidence": "Nigerian construction-equipment and mechatronics context",
+          "limitation": "The equipment and authorisations depend on the machine class, worksite and employer."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Keep heavy mobile equipment safe, reliable and fit for its intended site duty while escalating defects that require specialist repair",
+          "priority": "core",
+          "evidence": "Nigerian equipment-maintenance context"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Recognised Nigerian heavy-equipment, automotive, mechanical, mechatronics or technical-vocational pathway",
+          "issuer": "NBTE, recognised institution, equipment manufacturer or approved provider",
+          "level": "trade_or_role_dependent",
+          "evidence": "Nigerian technical and equipment-maintenance context",
+          "limitation": "No single certificate is asserted as mandatory for every heavy-equipment employer."
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Heavy-equipment work must follow applicable Nigerian machinery, workplace, lifting, environmental, site and occupational-safety requirements",
+          "priority": "required_when_applicable",
+          "evidence": "Nigerian construction-equipment and technical-safety context"
+        }
+      ]
+    },
+    {
+      "id": "ng_role_gap_neurologists_resolution_2026_profile",
+      "region": "nigeria",
+      "source_ids": [
+        "ng_npmcn_neurology_curriculum_2026",
+        "ng_mdcn_medicine_2026",
+        "ng_fmoh_health_report_2024"
+      ],
+      "domain_ids": ["D145"],
+      "role_patterns": ["neurologists"],
+      "skills": [
+        {
+          "name": "Assess neurological symptoms and signs, formulate differential diagnoses and manage disorders of the brain, spinal cord and peripheral nerves",
+          "priority": "core",
+          "evidence": "Nigerian postgraduate neurology curriculum and medical-regulatory context"
+        },
+        {
+          "name": "Use clinical reasoning, investigations, documentation, referral and patient communication within specialist medical practice",
+          "priority": "core",
+          "evidence": "Nigerian postgraduate neurology curriculum and health-system context"
+        }
+      ],
+      "tools": [
+        {
+          "name": "Neurological examination, clinical records, diagnostic-investigation, imaging, laboratory, referral and evidence-review tools appropriate to the case",
+          "priority": "core",
+          "evidence": "Nigerian postgraduate neurology and health-facility context",
+          "limitation": "The exact investigation and equipment available depends on the facility, patient and clinical question."
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Provide safe, evidence-informed neurological assessment and care while recognising uncertainty, urgency and the need for referral",
+          "priority": "core",
+          "evidence": "Nigerian postgraduate neurology and medical-practice context"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Medical degree, applicable Nigerian medical registration and recognised postgraduate neurology/specialist pathway",
+          "issuer": "MDCN and recognised Nigerian postgraduate medical training pathway",
+          "level": "regulated_professional",
+          "evidence": "MDCN registration materials and National Postgraduate Medical College of Nigeria neurology curriculum",
+          "limitation": "The platform must not treat this record as permission to practise medicine or as a substitute for current regulator verification."
+        }
+      ],
+      "regulatory_requirements": [
+        {
+          "name": "Neurology practice must follow applicable MDCN registration, ethics, specialist-training, facility and patient-safety requirements",
+          "priority": "required",
+          "evidence": "MDCN and Nigerian postgraduate medical training context"
+        }
+      ]
+    }
+  ]
+}

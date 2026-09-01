@@ -49,7 +49,7 @@ def main() -> None:
         key = (entity.get("entity_type"), entity.get("entity_id"))
         evidence = entity.get("evidence") or {}
         state = evidence.get("state")
-        if state not in {"source_backed", "context_only", "no_direct_local_counterpart"}:
+        if state not in {"source_backed", "context_only", "no_direct_local_counterpart", "reviewed_global_only_no_direct_local_counterpart"}:
             invalid_states.append(key)
         if not evidence.get("coverage", {}).get("global_evidence_present"):
             missing_global.append(key)

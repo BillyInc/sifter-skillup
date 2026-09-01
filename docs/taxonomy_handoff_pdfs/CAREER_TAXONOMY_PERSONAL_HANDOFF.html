@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <base href="file:///C:/Users/USER/Documents/sifter-skillup-integrated/docs/">
+  <title>Career TAXONOMY PERSONAL HANDOFF</title>
+  <style>
+    @page { size: A4; margin: 16mm 14mm 17mm; }
+    :root { color-scheme: light; }
+    body { font-family: Arial, Helvetica, sans-serif; color: #172033; line-height: 1.42; font-size: 10.2pt; }
+    h1 { color: #102a43; font-size: 23pt; border-bottom: 3px solid #2c7a7b; padding-bottom: 7px; margin-bottom: 13px; }
+    h2 { color: #155e75; font-size: 15pt; margin-top: 22px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; }
+    h3 { color: #334e68; font-size: 12pt; margin-top: 16px; }
+    h4 { color: #486581; font-size: 10.8pt; }
+    p { margin: 6px 0 8px; }
+    a { color: #075985; text-decoration: underline; }
+    table { width: 100%; border-collapse: collapse; margin: 9px 0 14px; page-break-inside: auto; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    th { background: #e6fffa; color: #164e63; text-align: left; font-weight: 700; }
+    th, td { border: 1px solid #b8c4ce; padding: 5px 6px; vertical-align: top; }
+    code { font-family: Consolas, "Courier New", monospace; font-size: 0.88em; color: #7c2d12; background: #fff7ed; padding: 1px 3px; }
+    pre { white-space: pre-wrap; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 5px; padding: 8px; font-size: 8.2pt; }
+    blockquote { border-left: 4px solid #2c7a7b; margin: 10px 0; padding: 2px 12px; background: #f0fdfa; }
+    .flow-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 10px 0 5px; padding: 10px; background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 7px; page-break-inside: avoid; }
+    .flow-node { display: inline-block; max-width: 175px; padding: 7px 9px; color: #164e63; background: white; border: 2px solid #2c7a7b; border-radius: 6px; font-size: 8.5pt; font-weight: 600; text-align: center; }
+    .flow-arrow { color: #0f766e; font-size: 15pt; font-weight: 700; }
+    .flow-source { margin: 2px 0 11px; font-size: 8pt; }
+    .flow-source summary { color: #0f766e; cursor: pointer; }
+    .flow-fallback { margin: 8px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 3px 0; }
+    hr { border: 0; border-top: 1px solid #cbd5e1; margin: 15px 0; }
+  </style>
+</head>
+<body>
+<h1 id="sifter-career-taxonomy-personal-handoff">Sifter Career Taxonomy — Personal Handoff</h1>
+<p><strong>Document ID:</strong> <code>HANDOFF-2026-09-01</code><br>
+<strong>Audience:</strong> the next Codex account, maintainer, or reviewer<br>
+<strong>Purpose:</strong> transfer the current evidence state without confusing historical
+diagnostics, active product data, and deferred SQL deployment</p>
+<h2 id="0-handoff-path">0. Handoff path</h2>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Read this handoff</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Read academic methodology</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Inspect source traceability</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Inspect Nigerian curriculum dispositions</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Inspect entity coverage and review ledger</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run downstream impact checks</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Population gate open?</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Continue evidence or behavior work; do not regenerate SQL</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Freeze and generate SQL once</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
+  A[Read this handoff] --&gt; B[Read academic methodology]
+  B --&gt; C[Inspect source traceability]
+  C --&gt; D[Inspect Nigerian curriculum dispositions]
+  D --&gt; E[Inspect entity coverage and review ledger]
+  E --&gt; F[Run downstream impact checks]
+  F --&gt; G{Population gate open?}
+  G --&gt;|No| H[Continue evidence or behavior work; do not regenerate SQL]
+  G --&gt;|Yes| I[Freeze and generate SQL once]</pre></details>
+
+<table>
+<thead>
+<tr>
+<th>Handoff key</th>
+<th>Follow this link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HANDOFF-METHOD</code></td>
+<td><a href="CAREER_TAXONOMY_ACADEMIC_METHODOLOGY.md">Academic methodology</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-SOURCES</code></td>
+<td><a href="CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md">Complete source and behavior inventory</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-DOMAIN</code></td>
+<td><a href="../data/career-mapping/_audit/DOMAIN_SOURCE_TRACEABILITY_AUDIT_2026-08-31.md">Domain source traceability</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-NAMING</code></td>
+<td><a href="../data/career-mapping/_audit/DOMAIN_NAMING_PROVENANCE_AUDIT_2026-08-31.md">Domain naming provenance</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-CCMAS</code></td>
+<td><a href="../data/career-mapping/_audit/CCMAS_NIGERIAN_REVIEWED_LINKS_2026-09-01.md">Reviewed Nigerian CCMAS/JAMB links</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-ENTITIES</code></td>
+<td><a href="../data/career-mapping/_audit/NIGERIAN_CONTEXT_COVERAGE_REPORT.md">Nigerian context coverage</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-REVIEW</code></td>
+<td><a href="../data/career-mapping/_audit/REVIEW_STATE_DISPOSITIONS_2026-09-01.md">Review-state dispositions</a></td>
+</tr>
+<tr>
+<td><code>HANDOFF-GATE</code></td>
+<td><a href="../data/career-mapping/NIGERIAN_ENTITY_POPULATION_GATE.md">Population gate</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-current-state-at-a-glance">1. Current state at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>State key</th>
+<th style="text-align: right;">Current result</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>STATE-DOMAIN</code></td>
+<td style="text-align: right;">168 total; 160 visible</td>
+<td>7 exact source terms, 159 source-supported umbrellas, 2 curated later additions</td>
+</tr>
+<tr>
+<td><code>STATE-SUBGROUP</code></td>
+<td style="text-align: right;">555 provenance rows; 542 visible</td>
+<td>All visible subgroups have actual Nigerian local enrichment</td>
+</tr>
+<tr>
+<td><code>STATE-ROLE</code></td>
+<td style="text-align: right;">5,209 merged role records</td>
+<td>Every merged role has some recorded source evidence</td>
+</tr>
+<tr>
+<td><code>STATE-ROLE-ANCHOR</code></td>
+<td style="text-align: right;">5,130 explicit anchors; 5,090 work-profile links</td>
+<td>Different anchor types are intentionally not collapsed into one claim</td>
+</tr>
+<tr>
+<td><code>STATE-NG-ROLE</code></td>
+<td style="text-align: right;">5,093 visible role-context entries; 5,089 locally enriched</td>
+<td>Four visible roles are explicit global-only exceptions</td>
+</tr>
+<tr>
+<td><code>STATE-CCMAS</code></td>
+<td style="text-align: right;">711 candidate occurrences dispositioned</td>
+<td>547 certified, 163 guided bridges, 1 removed</td>
+</tr>
+<tr>
+<td><code>STATE-REVIEW</code></td>
+<td style="text-align: right;">1,538 dispositions; 0 follow-up</td>
+<td>The inventory is reviewed; bounded states remain explicit</td>
+</tr>
+<tr>
+<td><code>STATE-SQL</code></td>
+<td style="text-align: right;">Open for regeneration</td>
+<td>The current 5,795-row audit and review ledger reconcile cleanly; generated SQL still requires transport and deployment verification</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-the-three-things-that-must-stay-separate">2. The three things that must stay separate</h2>
+<p><a id="handoff-three-layers"></a></p>
+<table>
+<thead>
+<tr>
+<th>Layer key</th>
+<th>Definition</th>
+<th>Example</th>
+<th>Evidence location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LAYER-REFERENCE</code></td>
+<td>A pointer to a source</td>
+<td>URL, file, page, section, or row locator</td>
+<td>Source registry and source traceability</td>
+</tr>
+<tr>
+<td><code>LAYER-CONTENT</code></td>
+<td>What the source actually says</td>
+<td>Course outcome, task, occupation title, rule, or extracted competency</td>
+<td>CCMAS and entity audit JSON</td>
+</tr>
+<tr>
+<td><code>LAYER-DECISION</code></td>
+<td>Why Sifter uses the content for a relationship</td>
+<td>Direct, functional, adjacent, subgroup, role, or explicit limitation</td>
+<td>Mapping and disposition artifacts</td>
+</tr>
+</tbody>
+</table>
+<p>Never describe a URL alone as proof of a mapping. Never use global content as
+Nigerian demand evidence. Never turn an unresolved or unavailable state into an
+invented local title, licence, credential, or market claim.</p>
+<h2 id="3-domain-handoff">3. Domain handoff</h2>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Domain ID</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Source-library identity</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">ISIC industry anchor</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">ISCO occupational anchor</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">ESCO role vocabulary</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">O*NET/ILO/WEF enrichment</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Nigerian context</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Label class and boundary reason</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Product domain record</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
+  A[Domain ID] --&gt; B[Source-library identity]
+  B --&gt; C[ISIC industry anchor]
+  C --&gt; D[ISCO occupational anchor]
+  D --&gt; E[ESCO role vocabulary]
+  E --&gt; F[O*NET/ILO/WEF enrichment]
+  F --&gt; G[Nigerian context]
+  G --&gt; H[Label class and boundary reason]
+  H --&gt; I[Product domain record]</pre></details>
+
+<table>
+<thead>
+<tr>
+<th>Domain row key</th>
+<th>Must be present</th>
+<th>Current evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DOMAIN-ID</code></td>
+<td>Stable D-number; do not rename by display text alone</td>
+<td>D001–D168</td>
+</tr>
+<tr>
+<td><code>DOMAIN-SOURCE</code></td>
+<td>Source-library label, cluster, raw ISIC/ISCO values, ESCO role count</td>
+<td><a href="../data/career-mapping/_audit/domain_source_traceability_2026-08-31.json">Traceability JSON</a></td>
+</tr>
+<tr>
+<td><code>DOMAIN-CLASS</code></td>
+<td>Exact, source-supported umbrella, or curated addition</td>
+<td><a href="../data/career-mapping/_audit/DOMAIN_NAMING_PROVENANCE_AUDIT_2026-08-31.md">Naming provenance</a></td>
+</tr>
+<tr>
+<td><code>DOMAIN-LIMIT</code></td>
+<td>Revision/code mismatch or evidence limitation</td>
+<td><a href="../data/career-mapping/_audit/ISIC_DOMAIN_CROSSWALK_2026-08-31.md">ISIC crosswalk</a>, <a href="../data/career-mapping/_audit/ISCO_DOMAIN_CROSSWALK_2026-08-31.md">ISCO crosswalk</a></td>
+</tr>
+</tbody>
+</table>
+<p>The eight invalid/missing raw ISCO values have been explicitly dispositioned
+with official parent/sibling candidates. Do not silently replace <code>2121</code>,
+<code>2213</code>–<code>2216</code>, <code>2311</code>, <code>2321</code>, or <code>3330</code> with a guessed child code.</p>
+<h2 id="4-nigerian-curriculum-handoff">4. Nigerian curriculum handoff</h2>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">JAMB programme</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">CCMAS course and outcome evidence</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Skills taught display</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Relationship</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Closely related foundation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Useful capabilities plus bridge</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Transferable base plus bridge</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Domain guidance</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
+  A[JAMB programme] --&gt; B[CCMAS course and outcome evidence]
+  B --&gt; C[Skills taught display]
+  B --&gt; D{Relationship}
+  D --&gt;|Direct| E[Closely related foundation]
+  D --&gt;|Functional| F[Useful capabilities plus bridge]
+  D --&gt;|Adjacent| G[Transferable base plus bridge]
+  E --&gt; H[Domain guidance]
+  F --&gt; H
+  G --&gt; H</pre></details>
+
+<table>
+<thead>
+<tr>
+<th>Mapping key</th>
+<th>Rule</th>
+<th>Display wording</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAP-DIRECT</code></td>
+<td>At least two specific Nigerian CCMAS course/objective anchors closely support the domain foundation</td>
+<td>“Your programme teaches a foundation closely related to this domain.”</td>
+</tr>
+<tr>
+<td><code>MAP-FUNCTIONAL</code></td>
+<td>At least two specific Nigerian CCMAS course/objective anchors support capabilities used in the domain</td>
+<td>“Your programme gives you useful preparation, but you will need additional domain-specific capability.”</td>
+</tr>
+<tr>
+<td><code>MAP-ADJACENT</code></td>
+<td>At least one domain-specific prerequisite plus relevant transferable evidence</td>
+<td>“This is a possible pivot. Your current foundation helps, but you need this bridge before specialising.”</td>
+</tr>
+</tbody>
+</table>
+<p>The former 153 insufficient occurrences are part of the historical before-state.
+The final active disposition is 547 certified, 163 explicit bridge links, and
+one unsupported candidate removed. The active reviewed overlay has 710
+published links and no <code>review_required</code> rows.</p>
+<h3 id="subject-matcher-handoff">Subject matcher handoff</h3>
+<p>The complete source and behavior inventory is in
+<a href="CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md">CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md</a>.
+The executable matcher has three separate modes:</p>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Choose mode</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">JAMB-only, O-level-only, or combined?</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Exactly four UTME subjects</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Five to allowed O-level maximum</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Four UTME plus five to allowed O-level maximum</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Typed UTME rules only</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Typed O-level rules only</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Match both layers independently</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Intersect same canonical JAMB programme ID</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Attach university offerings</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Show matches, gaps, source wording, and limitation</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
+  A[Choose mode] --&gt; B{JAMB-only, O-level-only, or combined?}
+  B --&gt;|JAMB-only| C[Exactly four UTME subjects]
+  B --&gt;|O-level-only| D[Five to allowed O-level maximum]
+  B --&gt;|Combined| E[Four UTME plus five to allowed O-level maximum]
+  C --&gt; F[Typed UTME rules only]
+  D --&gt; G[Typed O-level rules only]
+  E --&gt; H[Match both layers independently]
+  H --&gt; I[Intersect same canonical JAMB programme ID]
+  F --&gt; J[Attach university offerings]
+  G --&gt; J
+  I --&gt; J
+  J --&gt; K[Show matches, gaps, source wording, and limitation]</pre></details>
+
+<ul>
+<li><strong>JAMB-only:</strong> Use of English plus three other UTME subjects; match only
+  <code>utme</code> rules and their required/one-of groups.</li>
+<li><strong>O-level-only:</strong> At least five O-level subjects; match only <code>olevel</code> rules
+  and enforce the source's named credits and minimum where structured.</li>
+<li><strong>Combined:</strong> Match UTME and O-level independently, intersect by the same
+  canonical JAMB programme ID, and report O-level gaps instead of flattening
+  both exams into one score.</li>
+</ul>
+<p>The matcher fails closed if the subject catalogue, structured options, typed
+rule records, programme ID, requirement ID, exam type, or source text do not
+agree. It does not turn an unparsed brochure sentence into an exact match.
+University rows are attached after the canonical programme match and add
+address, requirements, and notes; they do not create a new programme version.</p>
+<p>Worked example: with UTME <code>ENG, CHEM, BIO, PHY</code>, a rule requiring <code>CHEM</code> and
+<code>BIO</code> plus one of <code>MATH/PHY</code> matches. With O-level <code>ENG, BIO, MATH, CHEM, GEO</code>
+plus another subject, a rule requiring the four named credits plus one of
+<code>GEO/HSC/PHY/STAT</code> matches. In combined mode, the programme is retained only
+when its same JAMB ID appears in both sets; missing O-level credits remain
+visible as a gap. See the <a href="CAREER_TAXONOMY_ACADEMIC_METHODOLOGY.md#5-2-domain-identity-and-occupational-boundary-d023-medicine">academic worked examples</a>
+and <a href="manual-review/subject-selection-matrix-run-2026-08-18.md">matcher audit</a>.</p>
+<h2 id="5-entity-and-product-handoff">5. Entity and product handoff</h2>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Programme overview and Skills taught</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Domain explanation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Prioritised foundation first</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">See all domain competencies</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Subgroup, if supported</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Direct role path, if no subgroup</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Role explanation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Essential and optional skills/tools/certifications/resources</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Sources, limitation, save and resume</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
+  P[Programme overview and Skills taught] --&gt; D[Domain explanation]
+  D --&gt; F[Prioritised foundation first]
+  F --&gt; A[See all domain competencies]
+  A --&gt; S[Subgroup, if supported]
+  A --&gt; R0[Direct role path, if no subgroup]
+  S --&gt; R[Role explanation]
+  R0 --&gt; R
+  R --&gt; T[Essential and optional skills/tools/certifications/resources]
+  T --&gt; E[Sources, limitation, save and resume]</pre></details>
+
+<table>
+<thead>
+<tr>
+<th>Product key</th>
+<th>Required behavior</th>
+<th>Data source/verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PRODUCT-OVERVIEW</code></td>
+<td>Keep the programme preview concise; use <strong>Skills taught</strong> for the programme learning summary</td>
+<td>CCMAS/JAMB evidence</td>
+</tr>
+<tr>
+<td><code>PRODUCT-DOMAIN</code></td>
+<td>Explain what the domain does, show the portable foundation first, then retain all available competencies behind “See all”</td>
+<td>Domain record plus global/Nigerian context</td>
+</tr>
+<tr>
+<td><code>PRODUCT-SUBGROUP</code></td>
+<td>Explain what the specialization adds beyond the domain foundation; show priority items then all items</td>
+<td>Subgroup record and source lineage</td>
+</tr>
+<tr>
+<td><code>PRODUCT-ROLE</code></td>
+<td>Explain work, outputs, progression, entry/mid/senior positioning, essential versus optional preparation, and evidence limits</td>
+<td>Role profile plus Nigerian context</td>
+</tr>
+<tr>
+<td><code>PRODUCT-FALLBACK</code></td>
+<td>Use domain → role when no defensible subgroup exists</td>
+<td>Structure and role attribution audit</td>
+</tr>
+<tr>
+<td><code>PRODUCT-LINKS</code></td>
+<td>Make source/resource links inspectable; show an offline connect state rather than pretending the external page is cached</td>
+<td>Source IDs and URLs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nigerian-entity-counts">Nigerian entity counts</h3>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th style="text-align: right;">Visible total</th>
+<th style="text-align: right;">Local enrichment</th>
+<th>Explicit exception</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">160</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Subgroup</td>
+<td style="text-align: right;">542</td>
+<td style="text-align: right;">542</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Role context</td>
+<td style="text-align: right;">5,093</td>
+<td style="text-align: right;">5,089</td>
+<td>4 global-only: snowboard instructor, ski instructor, snow-clearing worker, hop farmer</td>
+</tr>
+</tbody>
+</table>
+<p>Local enrichment means at least one source-backed local skill, tool, competency,
+credential, regulation, or role-family record. It does not mean Nigerian demand,
+exact local title equivalence, or automatic licensure.</p>
+<h2 id="6-review-handoff">6. Review handoff</h2>
+<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Review finding</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Can source evidence support correction?</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Resolved source variant or canonical attachment</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Explicit partial/unavailable/global-only state</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Exclude/remove from active mapping</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Publish with provenance</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Publish with limitation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Keep audit record; do not seed</span></div>
+<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
+  A[Review finding] --&gt; B{Can source evidence support correction?}
+  B --&gt;|Yes| C[Resolved source variant or canonical attachment]
+  B --&gt;|No, bounded state useful| D[Explicit partial/unavailable/global-only state]
+  B --&gt;|Unsupported| E[Exclude/remove from active mapping]
+  C --&gt; F[Publish with provenance]
+  D --&gt; G[Publish with limitation]
+  E --&gt; H[Keep audit record; do not seed]</pre></details>
+
+<table>
+<thead>
+<tr>
+<th>Review key</th>
+<th style="text-align: right;">Count</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REVIEW-TOTAL</code></td>
+<td style="text-align: right;">1,538</td>
+<td>Dispositioned</td>
+</tr>
+<tr>
+<td><code>REVIEW-FOLLOWUP</code></td>
+<td style="text-align: right;">0</td>
+<td>No ledger follow-up rows</td>
+</tr>
+<tr>
+<td><code>REVIEW-PARTIAL</code></td>
+<td style="text-align: right;">220</td>
+<td>Intentional partial source definitions</td>
+</tr>
+<tr>
+<td><code>REVIEW-VARIANTS</code></td>
+<td style="text-align: right;">445</td>
+<td>Source variants preserved for university-specific display</td>
+</tr>
+<tr>
+<td><code>REVIEW-NOCANDIDATE</code></td>
+<td style="text-align: right;">135</td>
+<td>No source candidate explicitly preserved</td>
+</tr>
+<tr>
+<td><code>REVIEW-WEF</code></td>
+<td style="text-align: right;">28</td>
+<td>26 unmatched/aggregate signals and 2 ambiguous signals; no invented roles</td>
+</tr>
+<tr>
+<td><code>REVIEW-GLOBALONLY</code></td>
+<td style="text-align: right;">4</td>
+<td>Global role retained without direct Nigerian counterpart claim</td>
+</tr>
+</tbody>
+</table>
+<p>Full row-level detail is in <a href="../data/career-mapping/_audit/REVIEW_STATE_DISPOSITIONS_2026-09-01.md">REVIEW_STATE_DISPOSITIONS_2026-09-01.md</a>.</p>
+<h2 id="7-verification-and-sql-gate">7. Verification and SQL gate</h2>
+<h3 id="verification-sequence">Verification sequence</h3>
+<pre><code class="language-text">1. Source/domain traceability
+2. CCMAS/JAMB evidence and reviewed overlay
+3. Nigerian entity extraction and review ledger
+4. Review-state inventory and dispositions
+5. Subgroup/role source traceability and role attribution
+6. Domain identity downstream impact
+7. Nigerian population gate
+8. Freeze the source/content contract
+9. Generate SQL once, audit it, then apply in a controlled environment
+</code></pre>
+<p>The current integrity checks pass for 5,795 audit entities and 5,795 ledger
+entities, with zero follow-up rows and zero provenance/state reconciliation
+errors. The exhaustive-search declaration has now been reconciled to that
+current evidence, so the SQL gate is open for regeneration. Existing
+compressed seed files remain pre-freeze snapshots until the newly generated
+transport is audited.</p>
+<h3 id="reproducibility-commands">Reproducibility commands</h3>
+<pre><code class="language-text">python data/career-mapping/_audit_domain_source_traceability.py
+python data/career-mapping/_audit_review_state_inventory.py
+python data/career-mapping/_audit_review_state_dispositions.py
+python data/career-mapping/_audit_subgroup_role_source_traceability.py
+python data/career-mapping/_audit_role_attribution_reconciliation.py
+python data/career-mapping/_audit_domain_identity_downstream_impact.py
+python data/career-mapping/_validate_nigerian_entity_population_gate.py
+</code></pre>
+<h2 id="8-safe-continuation-rules">8. Safe continuation rules</h2>
+<ul>
+<li>Preserve stable domain IDs; display labels are not primary keys.</li>
+<li>Preserve raw source codes and source revisions; use explicit crosswalks.</li>
+<li>Do not turn source references into source content without extraction.</li>
+<li>Do not use global/remote evidence as Nigerian demand evidence.</li>
+<li>Do not create a subgroup merely to make the UI symmetrical.</li>
+<li>Keep bridge, unavailable, partial, global-only, and no-counterpart states
+  visible with plain-language limitations.</li>
+<li>Do not apply SQL until the generated transport, checksums, schema order, and
+  production preflight are verified. The population gate is now open for
+  regeneration.</li>
+</ul>
+</body>
+</html>

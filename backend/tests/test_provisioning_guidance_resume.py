@@ -1,4 +1,9 @@
-from routes.provisioning_routes import RosterStudent, _guidance_path_snapshot
+from routes.provisioning_routes import (
+    RosterStudent,
+    _guidance_context_is_allowed,
+    _guidance_path_snapshot,
+    _guidance_visibility_is_allowed,
+)
 from routes.student_pipeline_routes import _path_snapshot
 from services.report_gen import ReportContext, build_report_html
 
@@ -28,6 +33,22 @@ def test_roster_student_exposes_student_type_for_contextual_resume():
     )
 
     assert row.student_type == "ss1"
+
+
+def test_admin_guidance_context_is_scoped_by_organisation():
+    assert _guidance_context_is_allowed("secondary_school", "ss2", "SS2", "science")
+    assert not _guidance_context_is_allowed("secondary_school", "jamb", "JAMB", "science")
+    assert not _guidance_context_is_allowed("secondary_school", "ss2", "SS2", None)
+    assert _guidance_context_is_allowed("tutorial_centre", "jamb", None, None)
+    assert _guidance_context_is_allowed("university", "undergraduate", None, None)
+    assert not _guidance_context_is_allowed("university", "ss3", "SS3", None)
+
+
+def test_admin_guidance_visibility_requires_provisioning_or_active_consent():
+    assert _guidance_visibility_is_allowed("provisioned", "unclaimed", "school-1", "school-1", False)
+    assert not _guidance_visibility_is_allowed("provisioned", "claimed", "school-1", "school-1", False)
+    assert not _guidance_visibility_is_allowed("self", None, None, "school-1", False)
+    assert _guidance_visibility_is_allowed("self", None, None, "school-1", True)
 
 
 def test_student_resume_checkpoint_survives_path_snapshot_without_arbitrary_payload():

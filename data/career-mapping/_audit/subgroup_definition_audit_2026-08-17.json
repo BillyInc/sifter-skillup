@@ -10,17 +10,17 @@
       "proof_gate": "Do not promote from subgroup size or intuition alone; require an independent source-backed domain definition, distinct foundation evidence, role boundary, and reviewed programme impact."
     }
   },
-  "canonical_roles": 5154,
+  "canonical_roles": 5212,
   "domains": 168,
-  "subgroups": 464,
+  "subgroups": 555,
   "summary": {
-    "derivation_findings": 0,
-    "threshold_findings": 0,
-    "level_direction_findings": 0,
+    "derivation_findings": 3,
+    "threshold_findings": 56,
+    "level_direction_findings": 8,
     "placeholder_or_missing_label_or_description": 0,
-    "empty_or_overlapping_skill_findings": 5,
+    "empty_or_overlapping_skill_findings": 305,
     "source_layer_overlap_is_evidence_index": 1,
-    "stored_role_count_findings": 0,
+    "stored_role_count_findings": 21,
     "independent_resolution_findings": 1
   },
   "findings": {
@@ -96,11 +96,2178 @@
         "recommendation": "Use more than two sub-majors, or more than 50 roles with at least two sub-majors, as the clustering trigger; keep a single-sub-major domain flat and demand-sorted."
       }
     ],
-    "derivation": [],
-    "thresholds": [],
-    "level_direction": [],
-    "labels": [],
+    "derivation": [
+      {
+        "domain_id": "D151",
+        "invalid_submajors": [],
+        "missing_submajors": [
+          "25"
+        ]
+      },
+      {
+        "domain_id": "D134",
+        "invalid_submajors": [
+          "54",
+          "72"
+        ],
+        "missing_submajors": [
+          "13"
+        ]
+      },
+      {
+        "domain_id": "D166",
+        "invalid_submajors": [],
+        "missing_submajors": [
+          "31"
+        ]
+      }
+    ],
+    "thresholds": [
+      {
+        "domain_id": "D001",
+        "roles": 37,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D002",
+        "roles": 25,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D003",
+        "roles": 5,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D004",
+        "roles": 17,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D007",
+        "roles": 26,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D159",
+        "roles": 27,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D016",
+        "roles": 35,
+        "submajors": 2,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D017",
+        "roles": 45,
+        "submajors": 2,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D018",
+        "roles": 67,
+        "submajors": 2,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D019",
+        "roles": 20,
+        "submajors": 3,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D020",
+        "roles": 20,
+        "submajors": 3,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D021",
+        "roles": 22,
+        "submajors": 2,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D072",
+        "roles": 18,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D023",
+        "roles": 49,
+        "submajors": 3,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D024",
+        "roles": 38,
+        "submajors": 3,
+        "priority": "P3",
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D068",
+        "roles": 38,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D030",
+        "roles": 46,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D157",
+        "roles": 17,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D041",
+        "roles": 43,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D078",
+        "roles": 24,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D043",
+        "roles": 62,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D080",
+        "roles": 23,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D148",
+        "roles": 18,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D056",
+        "roles": 25,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D082",
+        "roles": 17,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D083",
+        "roles": 22,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D084",
+        "roles": 15,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D085",
+        "roles": 70,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D087",
+        "roles": 5,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D088",
+        "roles": 12,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D089",
+        "roles": 4,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D090",
+        "roles": 15,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D091",
+        "roles": 7,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D093",
+        "roles": 21,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D094",
+        "roles": 26,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D097",
+        "roles": 63,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D100",
+        "roles": 15,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D101",
+        "roles": 6,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D104",
+        "roles": 24,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D105",
+        "roles": 15,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D106",
+        "roles": 28,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D108",
+        "roles": 20,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D109",
+        "roles": 19,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D110",
+        "roles": 56,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D112",
+        "roles": 22,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D113",
+        "roles": 41,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D114",
+        "roles": 43,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D115",
+        "roles": 28,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D116",
+        "roles": 20,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D118",
+        "roles": 23,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D123",
+        "roles": 13,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D124",
+        "roles": 17,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D126",
+        "roles": 11,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D132",
+        "roles": 8,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D142",
+        "roles": 36,
+        "submajors": 1,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      },
+      {
+        "domain_id": "D144",
+        "roles": 14,
+        "submajors": 2,
+        "priority": null,
+        "expected_cluster": false,
+        "actual_cluster": true
+      }
+    ],
+    "level_direction": [
+      {
+        "domain_id": "D016",
+        "groups": [
+          "21",
+          "31"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D017",
+        "groups": [
+          "21",
+          "31"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D018",
+        "groups": [
+          "21",
+          "31"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D019",
+        "groups": [
+          "21",
+          "31",
+          "74"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D020",
+        "groups": [
+          "21",
+          "31",
+          "32"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D021",
+        "groups": [
+          "21",
+          "31"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D023",
+        "groups": [
+          "13",
+          "22",
+          "32"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      },
+      {
+        "domain_id": "D024",
+        "groups": [
+          "22",
+          "32",
+          "53"
+        ],
+        "detail": "Priority 3 says this domain should stay flat; groups currently expose ISCO sub-major splits."
+      }
+    ],
+    "labels": [
+      {
+        "domain_id": "D084",
+        "isco_submajor": "33",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D084",
+        "isco_submajor": "43",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D091",
+        "isco_submajor": "23",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D091",
+        "isco_submajor": "51",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D105",
+        "isco_submajor": "73",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D123",
+        "isco_submajor": "22",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D123",
+        "isco_submajor": "32",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D126",
+        "isco_submajor": "22",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D126",
+        "isco_submajor": "32",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D132",
+        "isco_submajor": "21",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      },
+      {
+        "domain_id": "D132",
+        "isco_submajor": "31",
+        "kind": "placeholder_or_missing_description",
+        "description": "Source-backed activities within this domain."
+      }
+    ],
     "skills": [
+      {
+        "domain_id": "D001",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming",
+          "create software design",
+          "execute software tests"
+        ]
+      },
+      {
+        "domain_id": "D002",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "data engineering",
+          "data mining",
+          "data quality assessment",
+          "data warehouse",
+          "database management systems",
+          "digital data processing"
+        ]
+      },
+      {
+        "domain_id": "D003",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming",
+          "data mining",
+          "machine learning",
+          "mathematical modelling",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D004",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "information security strategy",
+          "internal risk management policy",
+          "manage it security compliances"
+        ]
+      },
+      {
+        "domain_id": "D004",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer forensics",
+          "cyber attack counter measures",
+          "cyber security",
+          "information security strategy",
+          "manage system security",
+          "risk management"
+        ]
+      },
+      {
+        "domain_id": "D005",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cloud technologies",
+          "deploy cloud resource",
+          "design cloud architecture"
+        ]
+      },
+      {
+        "domain_id": "D005",
+        "isco_submajor": "35",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cloud technologies",
+          "deploy cloud resource"
+        ]
+      },
+      {
+        "domain_id": "D006",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer technology",
+          "design drawings",
+          "electricity principles",
+          "embedded systems",
+          "engineering principles",
+          "internet of things"
+        ]
+      },
+      {
+        "domain_id": "D006",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming",
+          "computer technology",
+          "digital systems",
+          "embedded systems",
+          "hardware testing methods",
+          "identify ict system weaknesses",
+          "internet of things"
+        ]
+      },
+      {
+        "domain_id": "D006",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "design drawings"
+        ]
+      },
+      {
+        "domain_id": "D007",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer graphics",
+          "copyright legislation",
+          "finish project within budget",
+          "follow a brief",
+          "follow work schedule",
+          "graphic design",
+          "ict software specifications",
+          "web programming"
+        ]
+      },
+      {
+        "domain_id": "D007",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "address problems critically",
+          "execute software tests",
+          "levels of software testing",
+          "provide software testing documentation",
+          "replicate customer software issues",
+          "report test findings",
+          "software anomalies"
+        ]
+      },
+      {
+        "domain_id": "D008",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "attack vectors",
+          "decision support systems",
+          "define technology strategy",
+          "ict project management",
+          "ict project management methodologies",
+          "manage budgets",
+          "manage staff"
+        ]
+      },
+      {
+        "domain_id": "D008",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "design process",
+          "electronics principles",
+          "ict communications protocols",
+          "microwave principles",
+          "procurement of ict network equipment",
+          "systems development life cycle",
+          "telecom regulations"
+        ]
+      },
+      {
+        "domain_id": "D008",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "ict network routing",
+          "network engineering",
+          "network standards"
+        ]
+      },
+      {
+        "domain_id": "D008",
+        "isco_submajor": "35",
+        "kind": "foundation_overlap",
+        "skills": [
+          "perform risk analysis"
+        ]
+      },
+      {
+        "domain_id": "D139",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt to type of media",
+          "analyse a script",
+          "computer graphics",
+          "finish project within budget",
+          "follow a brief",
+          "follow work schedule",
+          "graphic design"
+        ]
+      },
+      {
+        "domain_id": "D139",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "address problems critically",
+          "execute software tests",
+          "levels of software testing",
+          "provide software testing documentation",
+          "replicate customer software issues",
+          "web programming"
+        ]
+      },
+      {
+        "domain_id": "D139",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse a script",
+          "finish project within budget",
+          "manage budgets"
+        ]
+      },
+      {
+        "domain_id": "D140",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "control engineering"
+        ]
+      },
+      {
+        "domain_id": "D009",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "address problems critically",
+          "digital systems",
+          "levels of software testing",
+          "provide ict consulting advice",
+          "systems development life cycle",
+          "use an application specific interface"
+        ]
+      },
+      {
+        "domain_id": "D009",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "digital data processing",
+          "mathematics",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D010",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply change management",
+          "business analysis",
+          "management consulting",
+          "perform business analysis"
+        ]
+      },
+      {
+        "domain_id": "D010",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "address problems critically",
+          "digital systems",
+          "levels of software testing",
+          "provide ict consulting advice",
+          "systems development life cycle",
+          "use an application specific interface"
+        ]
+      },
+      {
+        "domain_id": "D010",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "digital data processing",
+          "statistical analysis system software",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D011",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "quantitative analysis"
+        ]
+      },
+      {
+        "domain_id": "D011",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "actuarial science",
+          "analyse financial risk",
+          "analyse market financial trends",
+          "asset management",
+          "economics",
+          "fundamental analysis",
+          "modern portfolio theory",
+          "obtain financial information",
+          "quantitative analysis",
+          "review investment portfolios"
+        ]
+      },
+      {
+        "domain_id": "D011",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "actuarial science",
+          "analyse economic trends",
+          "analyse market financial trends",
+          "economics",
+          "financial jurisdiction",
+          "financial markets",
+          "financial products",
+          "stock market"
+        ]
+      },
+      {
+        "domain_id": "D012",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "blockchain architecture",
+          "blockchain components",
+          "computer programming",
+          "debug software",
+          "software architecture models"
+        ]
+      },
+      {
+        "domain_id": "D012",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming"
+        ]
+      },
+      {
+        "domain_id": "D013",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "asset management",
+          "banking activities",
+          "corporate social responsibility",
+          "financial analysis",
+          "financial management",
+          "financial statements",
+          "funding methods",
+          "investment analysis",
+          "investment banking",
+          "review investment portfolios"
+        ]
+      },
+      {
+        "domain_id": "D013",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse economic trends",
+          "analyse financial risk",
+          "asset management",
+          "commercial law",
+          "create a financial plan",
+          "financial jurisdiction",
+          "obtain financial information",
+          "protect client interests",
+          "review investment portfolios"
+        ]
+      },
+      {
+        "domain_id": "D014",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "mathematical modelling",
+          "quantitative analysis"
+        ]
+      },
+      {
+        "domain_id": "D014",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "actuarial science",
+          "insurance law",
+          "insurance market",
+          "obtain financial information",
+          "principles of insurance",
+          "synthesise financial information",
+          "types of insurance"
+        ]
+      },
+      {
+        "domain_id": "D014",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "actuarial science",
+          "analyse claim files",
+          "claims procedures",
+          "insurance law",
+          "obtain financial information",
+          "principles of insurance",
+          "review insurance process",
+          "types of insurance"
+        ]
+      },
+      {
+        "domain_id": "D015",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse financial performance of a company",
+          "budgetary principles",
+          "company policies",
+          "evaluate budgets",
+          "fraud detection",
+          "prepare financial auditing reports",
+          "prepare tax returns forms"
+        ]
+      },
+      {
+        "domain_id": "D015",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on grants application",
+          "allocate bills",
+          "bookkeeping regulations",
+          "depreciation",
+          "financial management"
+        ]
+      },
+      {
+        "domain_id": "D015",
+        "isco_submajor": "43",
+        "kind": "foundation_overlap",
+        "skills": [
+          "banking activities",
+          "handle paperwork",
+          "maintain records of financial transactions",
+          "office software",
+          "perform clerical duties"
+        ]
+      },
+      {
+        "domain_id": "D060",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply credit risk policy",
+          "corporate social responsibility",
+          "enforce financial policies",
+          "insolvency law",
+          "securities"
+        ]
+      },
+      {
+        "domain_id": "D060",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "actuarial science",
+          "advise on financial matters",
+          "analyse loans",
+          "apply credit risk policy",
+          "corporate social responsibility",
+          "decide on loan applications",
+          "enforce financial policies",
+          "insolvency law",
+          "interpret financial statements"
+        ]
+      },
+      {
+        "domain_id": "D060",
+        "isco_submajor": "42",
+        "kind": "foundation_overlap",
+        "skills": [
+          "communicate with customers",
+          "debt collection techniques",
+          "financial jurisdiction",
+          "financial products",
+          "provide financial product information"
+        ]
+      },
+      {
+        "domain_id": "D060",
+        "isco_submajor": "43",
+        "kind": "foundation_overlap",
+        "skills": [
+          "electronic communication",
+          "handle paperwork",
+          "office software",
+          "perform clerical duties"
+        ]
+      },
+      {
+        "domain_id": "D062",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "banking activities",
+          "corporate social responsibility",
+          "financial analysis",
+          "financial management",
+          "financial statements",
+          "funding methods",
+          "investment analysis",
+          "investment banking",
+          "review investment portfolios"
+        ]
+      },
+      {
+        "domain_id": "D062",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse economic trends",
+          "analyse financial risk",
+          "commercial law",
+          "create a financial plan",
+          "financial jurisdiction",
+          "protect client interests",
+          "review investment portfolios"
+        ]
+      },
+      {
+        "domain_id": "D158",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "accounting techniques",
+          "banking activities"
+        ]
+      },
+      {
+        "domain_id": "D158",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "accounting department processes",
+          "accounting entries",
+          "accounting techniques",
+          "actuarial science",
+          "analyse market financial trends",
+          "asset management",
+          "economics",
+          "financial markets",
+          "fundamental analysis",
+          "modern portfolio theory",
+          "quantitative analysis",
+          "stock market"
+        ]
+      },
+      {
+        "domain_id": "D159",
+        "isco_submajor": "24",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D159",
+        "isco_submajor": "33",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D016",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D016",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D017",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D017",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D018",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D018",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D019",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D019",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D019",
+        "isco_submajor": "74",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D020",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D020",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D020",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D021",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D021",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D022",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "deal with pressure from unexpected circumstances",
+          "electricity",
+          "manage emergency procedures",
+          "manage staff",
+          "mining engineering"
+        ]
+      },
+      {
+        "domain_id": "D022",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "chemistry",
+          "communicate on minerals issues",
+          "electricity",
+          "ensure compliance with environmental legislation",
+          "examine geochemical samples",
+          "maintain records of mining operations",
+          "metal and metal ore products",
+          "mining engineering",
+          "prepare scientific reports",
+          "supervise staff",
+          "types of metal"
+        ]
+      },
+      {
+        "domain_id": "D022",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "alloys of precious metals",
+          "collect samples",
+          "ferrous metal processing",
+          "maintain records of mining operations",
+          "non ferrous metal processing",
+          "types of metal"
+        ]
+      },
+      {
+        "domain_id": "D022",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "work ergonomically"
+        ]
+      },
+      {
+        "domain_id": "D069",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "air traffic control operations",
+          "aviation meteorology",
+          "civil aviation regulations",
+          "electrical systems used in transportation",
+          "electronics",
+          "ensure ongoing compliance with regulations",
+          "operate radio equipment",
+          "operate radio navigation instruments",
+          "pre flight procedures for ifr flights",
+          "use different communication channels",
+          "use meteorological information",
+          "visual flight rules"
+        ]
+      },
+      {
+        "domain_id": "D069",
+        "isco_submajor": "51",
+        "kind": "foundation_overlap",
+        "skills": [
+          "communicate verbal instructions",
+          "comply with food safety and hygiene"
+        ]
+      },
+      {
+        "domain_id": "D069",
+        "isco_submajor": "72",
+        "kind": "foundation_overlap",
+        "skills": [
+          "aircraft mechanics",
+          "airport safety regulations",
+          "electrical engineering",
+          "electrical wiring plans",
+          "electricity",
+          "electromechanics",
+          "electronics",
+          "engineering processes",
+          "mechanics",
+          "technical drawings"
+        ]
+      },
+      {
+        "domain_id": "D072",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply statistical analysis techniques",
+          "cartography",
+          "create thematic maps",
+          "geographic information systems",
+          "geology",
+          "mathematics",
+          "prepare scientific reports"
+        ]
+      },
+      {
+        "domain_id": "D147",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust engineering designs",
+          "automation technology",
+          "computer engineering",
+          "design drawings",
+          "electrical engineering",
+          "electronics",
+          "engineering principles",
+          "mathematics",
+          "mechanical engineering",
+          "mechatronics",
+          "physics"
+        ]
+      },
+      {
+        "domain_id": "D156",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cartography",
+          "geographic information systems",
+          "geomatics",
+          "mathematics",
+          "perform surveying calculations",
+          "process collected survey data",
+          "record survey data",
+          "surveying methods"
+        ]
+      },
+      {
+        "domain_id": "D164",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "civil engineering",
+          "engineering principles",
+          "engineering processes",
+          "ensure compliance with environmental legislation",
+          "environmental policy",
+          "technical drawings",
+          "urban planning"
+        ]
+      },
+      {
+        "domain_id": "D023",
+        "isco_submajor": "13",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D023",
+        "isco_submajor": "22",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D023",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D024",
+        "isco_submajor": "22",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D024",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D024",
+        "isco_submajor": "53",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D026",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "mathematics"
+        ]
+      },
+      {
+        "domain_id": "D027",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "draft scientific or academic papers and technical documentation",
+          "manage research data",
+          "perform scientific research"
+        ]
+      },
+      {
+        "domain_id": "D066",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "applied zoology",
+          "aquatic species",
+          "biology",
+          "botany",
+          "fish biology",
+          "food legislation",
+          "laboratory techniques",
+          "microbiology bacteriology",
+          "molecular biology",
+          "virology"
+        ]
+      },
+      {
+        "domain_id": "D066",
+        "isco_submajor": "22",
+        "kind": "foundation_overlap",
+        "skills": [
+          "animal production science",
+          "fundamental veterinary sciences",
+          "prepare animal therapy equipment",
+          "protect health and safety when handling animals",
+          "veterinary clinical sciences"
+        ]
+      },
+      {
+        "domain_id": "D066",
+        "isco_submajor": "32",
+        "kind": "foundation_overlap",
+        "skills": [
+          "control animal movement",
+          "cryopreservation"
+        ]
+      },
+      {
+        "domain_id": "D068",
+        "isco_submajor": "22",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D068",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D028",
+        "isco_submajor": "11",
+        "kind": "foundation_overlap",
+        "skills": [
+          "company policies",
+          "conclude business agreements",
+          "financial statements",
+          "integrate strategic foundation in daily performance",
+          "lead managers of company departments"
+        ]
+      },
+      {
+        "domain_id": "D028",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "company policies",
+          "cost management",
+          "financial analysis",
+          "financial department processes",
+          "financial forecasting",
+          "financial management",
+          "financial statements",
+          "integrate strategic foundation in daily performance",
+          "manage staff",
+          "manage supplies",
+          "manufacturing processes",
+          "strive for company growth"
+        ]
+      },
+      {
+        "domain_id": "D028",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply change management",
+          "business analysis",
+          "business processes",
+          "management consulting"
+        ]
+      },
+      {
+        "domain_id": "D029",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "capacity building",
+          "cooperate with colleagues",
+          "coordinate events",
+          "data protection",
+          "project management"
+        ]
+      },
+      {
+        "domain_id": "D029",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on personnel management",
+          "apply teaching strategies",
+          "assessment processes",
+          "coach employees",
+          "company policies",
+          "curriculum objectives",
+          "interview people",
+          "recruit employees"
+        ]
+      },
+      {
+        "domain_id": "D029",
+        "isco_submajor": "44",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assess character",
+          "observe confidentiality",
+          "use communication techniques"
+        ]
+      },
+      {
+        "domain_id": "D030",
+        "isco_submajor": "12",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D030",
+        "isco_submajor": "24",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D031",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "manage budgets",
+          "sales strategies"
+        ]
+      },
+      {
+        "domain_id": "D031",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "answer requests for quotation",
+          "implement marketing strategies",
+          "manage schedule of tasks",
+          "sales promotion techniques"
+        ]
+      },
+      {
+        "domain_id": "D031",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assess supplier risks",
+          "comprehend financial business terminology",
+          "consumer goods industry",
+          "have computer literacy",
+          "identify customer s needs",
+          "identify suppliers",
+          "initiate contact with buyers",
+          "initiate contact with sellers",
+          "monitor international market performance",
+          "negotiate sales contracts",
+          "sales strategies"
+        ]
+      },
+      {
+        "domain_id": "D031",
+        "isco_submajor": "52",
+        "kind": "foundation_overlap",
+        "skills": [
+          "carry out products preparation",
+          "e commerce systems",
+          "examine merchandise",
+          "maintain relationship with suppliers",
+          "operate cash register",
+          "provide customer guidance on product selection",
+          "sales argumentation"
+        ]
+      },
+      {
+        "domain_id": "D032",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "business law",
+          "business management principles",
+          "cooperate with colleagues",
+          "cost management",
+          "integrate strategic foundation in daily performance",
+          "leadership principles",
+          "manage staff",
+          "organisational policies",
+          "project management",
+          "risk management"
+        ]
+      },
+      {
+        "domain_id": "D032",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply change management",
+          "business processes",
+          "management consulting"
+        ]
+      },
+      {
+        "domain_id": "D032",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "contract law",
+          "office software",
+          "perform business research",
+          "perform office routine activities",
+          "support managers",
+          "use different communication channels",
+          "use office systems"
+        ]
+      },
+      {
+        "domain_id": "D033",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "business analysis",
+          "company policies",
+          "integrate strategic foundation in daily performance",
+          "manage budgets",
+          "manage staff",
+          "market research",
+          "organisational policies",
+          "project management",
+          "risk management",
+          "strategic planning"
+        ]
+      },
+      {
+        "domain_id": "D033",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply change management",
+          "business analysis",
+          "business processes",
+          "strategic planning"
+        ]
+      },
+      {
+        "domain_id": "D033",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming",
+          "define technology strategy",
+          "digital data processing",
+          "digital systems",
+          "keep up with the latest information systems solutions",
+          "legal requirements of ict products",
+          "provide ict consulting advice",
+          "statistics",
+          "systems development life cycle",
+          "use an application specific interface",
+          "visual presentation techniques"
+        ]
+      },
+      {
+        "domain_id": "D034",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "embargo regulations",
+          "ensure customs compliance",
+          "export control principles",
+          "freight transport methods",
+          "hazardous freight regulations",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "manage freight payment methods",
+          "perform multiple tasks at the same time",
+          "perform risk analysis",
+          "track shipments"
+        ]
+      },
+      {
+        "domain_id": "D034",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "apply export strategies",
+          "create import export commercial documentation",
+          "embargo regulations",
+          "general principles of food law",
+          "handle quotes from prospective shippers",
+          "import export regulations of dangerous chemicals",
+          "international business",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "regulations on substances",
+          "speak different languages"
+        ]
+      },
+      {
+        "domain_id": "D035",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "create solutions to problems",
+          "embargo regulations",
+          "ensure customs compliance",
+          "export control principles",
+          "freight transport methods",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "manage freight payment methods",
+          "monitor international market performance",
+          "perform risk analysis",
+          "track shipments"
+        ]
+      },
+      {
+        "domain_id": "D035",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "apply export strategies",
+          "create import export commercial documentation",
+          "create solutions to problems",
+          "embargo regulations",
+          "general principles of food law",
+          "handle quotes from prospective shippers",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "regulations on substances",
+          "speak different languages"
+        ]
+      },
+      {
+        "domain_id": "D035",
+        "isco_submajor": "83",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management"
+        ]
+      },
+      {
+        "domain_id": "D036",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "create solutions to problems",
+          "embargo regulations",
+          "ensure customs compliance",
+          "export control principles",
+          "freight transport methods",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "manage freight payment methods",
+          "manage staff",
+          "perform risk analysis",
+          "track shipments"
+        ]
+      },
+      {
+        "domain_id": "D036",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assess supplier risks",
+          "comprehend financial business terminology",
+          "create solutions to problems",
+          "embargo regulations",
+          "identify customer s needs",
+          "initiate contact with sellers",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "monitor international market performance",
+          "negotiate sales contracts",
+          "product comprehension",
+          "sales strategies"
+        ]
+      },
+      {
+        "domain_id": "D076",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "engineering principles"
+        ]
+      },
+      {
+        "domain_id": "D076",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "european classification of inland waterways",
+          "inland waterway ship building",
+          "international regulations for cargo handling",
+          "national regulations on handling cargo",
+          "physical parts of the vessel",
+          "principles of cargo stowage",
+          "use water navigation devices",
+          "vessel stability principles"
+        ]
+      },
+      {
+        "domain_id": "D076",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "comply with the planned time for the depth of the dive",
+          "diving equipment",
+          "diving operation requirements",
+          "fisheries legislation"
+        ]
+      },
+      {
+        "domain_id": "D076",
+        "isco_submajor": "83",
+        "kind": "foundation_overlap",
+        "skills": [
+          "code of conduct for responsible fisheries",
+          "fisheries legislation",
+          "fishing vessels",
+          "international regulations for cargo handling",
+          "pollution prevention",
+          "principles of combustion engines"
+        ]
+      },
+      {
+        "domain_id": "D079",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "create solutions to problems",
+          "embargo regulations",
+          "ensure customs compliance",
+          "export control principles",
+          "freight transport methods",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "manage freight payment methods",
+          "manage staff",
+          "perform risk analysis",
+          "track shipments"
+        ]
+      },
+      {
+        "domain_id": "D079",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "apply export strategies",
+          "create import export commercial documentation",
+          "create solutions to problems",
+          "embargo regulations",
+          "general principles of food law",
+          "handle quotes from prospective shippers",
+          "international commercial transactions rules",
+          "international import export regulations",
+          "protective measures against the introduction of organisms",
+          "regulations on substances",
+          "speak different languages"
+        ]
+      },
+      {
+        "domain_id": "D037",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse legal evidence",
+          "civil law",
+          "facilitate official agreement",
+          "interpret law",
+          "legal case management",
+          "present arguments persuasively",
+          "present legal arguments",
+          "protect client interests",
+          "show impartiality"
+        ]
+      },
+      {
+        "domain_id": "D037",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assist judge",
+          "civil law",
+          "civil process order",
+          "comply with legal regulations",
+          "ensure public safety and security",
+          "handle case evidence",
+          "legal case management",
+          "maintain court order",
+          "respond to enquiries"
+        ]
+      },
+      {
+        "domain_id": "D038",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "business analysis",
+          "company policies",
+          "corporate social responsibility",
+          "integrate strategic foundation in daily performance",
+          "strategic planning"
+        ]
+      },
+      {
+        "domain_id": "D038",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on legislative acts",
+          "create solutions to problems",
+          "establish collaborative relations",
+          "government policy",
+          "liaise with local authorities",
+          "maintain relations with local representatives",
+          "maintain relationships with government agencies",
+          "manage government policy implementation",
+          "project management principles",
+          "scientific research methodology"
+        ]
+      },
+      {
+        "domain_id": "D038",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply knowledge of human behaviour",
+          "compile legal documents",
+          "comply with legal regulations"
+        ]
+      },
+      {
+        "domain_id": "D038",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply technical communication skills",
+          "check official documents",
+          "conduct research interview",
+          "government social security programmes",
+          "protect client interests",
+          "respond to enquiries",
+          "undertake inspections"
+        ]
+      },
+      {
+        "domain_id": "D157",
+        "isco_submajor": "24",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D157",
+        "isco_submajor": "33",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D039",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assist in the organisation of school events",
+          "cooperate with education professionals",
+          "curriculum standards",
+          "education law",
+          "pedagogy",
+          "project management"
+        ]
+      },
+      {
+        "domain_id": "D039",
+        "isco_submajor": "23",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt teaching to student s capabilities",
+          "apply teaching strategies",
+          "assess students",
+          "assign homework",
+          "compile course material",
+          "facilitate teamwork between students",
+          "interact professionally in research and professional environments",
+          "learning difficulties",
+          "liaise with educational support staff",
+          "manage student relationships",
+          "teach in academic or vocational contexts",
+          "teamwork principles"
+        ]
+      },
+      {
+        "domain_id": "D040",
+        "isco_submajor": "23",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt teaching to student s capabilities",
+          "apply teaching strategies",
+          "assess students",
+          "common aviation safety regulations",
+          "customer service",
+          "geographic areas",
+          "health and safety measures in transportation",
+          "pedagogy",
+          "use different communication channels"
+        ]
+      },
+      {
+        "domain_id": "D040",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt training to labour market",
+          "apply teaching strategies",
+          "coach employees",
+          "give constructive feedback"
+        ]
+      },
+      {
+        "domain_id": "D040",
+        "isco_submajor": "53",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assess the development of youth",
+          "assist children in developing personal skills",
+          "assist students with equipment",
+          "handle children s problems",
+          "implement care programmes for children",
+          "maintain students discipline",
+          "support the positiveness of youths"
+        ]
+      },
+      {
+        "domain_id": "D041",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "disseminate results to the scientific community",
+          "draft scientific or academic papers and technical documentation",
+          "interact professionally in research and professional environments",
+          "manage research data",
+          "operate open source software"
+        ]
+      },
+      {
+        "domain_id": "D041",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply safety procedures in laboratory",
+          "biology",
+          "laboratory techniques",
+          "maintain laboratory equipment",
+          "perform laboratory tests",
+          "perform scientific research",
+          "stem cells"
+        ]
+      },
+      {
+        "domain_id": "D078",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "disseminate results to the scientific community",
+          "draft scientific or academic papers and technical documentation",
+          "interact professionally in research and professional environments",
+          "manage research data",
+          "mathematics",
+          "operate open source software",
+          "scientific research methodology",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D078",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "disseminate results to the scientific community",
+          "empirical analysis",
+          "manage research data",
+          "research design",
+          "scientific research methodology",
+          "sociology",
+          "statistics"
+        ]
+      },
       {
         "domain_id": "D042",
         "isco_submajor": "11",
@@ -112,30 +2279,1914 @@
         "kind": "empty_cluster_skills"
       },
       {
+        "domain_id": "D042",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "art history",
+          "manage budgets"
+        ]
+      },
+      {
+        "domain_id": "D042",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "art history",
+          "attend rehearsals",
+          "consult with production director",
+          "follow time cues",
+          "intellectual property law",
+          "labour legislation",
+          "manage budgets",
+          "manage feedback",
+          "musical theory",
+          "perform live",
+          "study roles from scripts"
+        ]
+      },
+      {
+        "domain_id": "D042",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt to artists creative demands",
+          "attend rehearsals",
+          "draw up artistic production",
+          "perform quality control of design during a run",
+          "safeguard artistic quality of performance",
+          "use personal protection equipment",
+          "work safely with machines"
+        ]
+      },
+      {
+        "domain_id": "D042",
+        "isco_submajor": "35",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt artistic plan to location",
+          "adapt to artists creative demands",
+          "audiovisual equipment",
+          "audiovisual products",
+          "follow work schedule",
+          "perform quality control of design during a run",
+          "safeguard artistic quality of performance",
+          "use personal protection equipment",
+          "work safely with machines"
+        ]
+      },
+      {
+        "domain_id": "D043",
+        "isco_submajor": "26",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D044",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse music score",
+          "analyse the artistic concept based on stage actions",
+          "analyse the scenography",
+          "copyright legislation",
+          "finish project within budget",
+          "ict software specifications",
+          "monitor developments in technology used for design",
+          "monitor sociological trends",
+          "perform quality control of design during a run",
+          "safeguard artistic quality of performance",
+          "use specialised design software",
+          "work ergonomically"
+        ]
+      },
+      {
+        "domain_id": "D044",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "copyright legislation",
+          "create artwork",
+          "maintain an artistic portfolio",
+          "select artistic materials to create artworks"
+        ]
+      },
+      {
+        "domain_id": "D044",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "copyright legislation"
+        ]
+      },
+      {
+        "domain_id": "D071",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt teaching to student s capabilities",
+          "adapt teaching to target group",
+          "apply risk management in sports",
+          "assess performance in sport events",
+          "assess physical conditions of clients",
+          "correct potentially harmful movements",
+          "demonstrate when teaching",
+          "give constructive feedback",
+          "instruct in sport",
+          "organise training",
+          "personalise sports programme",
+          "promote healthy fitness environment"
+        ]
+      },
+      {
+        "domain_id": "D080",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D080",
+        "isco_submajor": "34",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D153",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "develop musical ideas",
+          "manage feedback",
+          "manage musical staff",
+          "music literature",
+          "musical genres",
+          "musical instruments",
+          "rewrite musical scores",
+          "study music",
+          "study roles from scripts",
+          "subject of music coaching",
+          "transpose music"
+        ]
+      },
+      {
+        "domain_id": "D153",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "acoustics",
+          "adapt to artists creative demands",
+          "coordinate audio system programmes",
+          "musical instruments",
+          "understand artistic concepts",
+          "work ergonomically"
+        ]
+      },
+      {
+        "domain_id": "D153",
+        "isco_submajor": "35",
+        "kind": "foundation_overlap",
+        "skills": [
+          "audio editing software",
+          "audiovisual equipment",
+          "audiovisual products",
+          "coordinate audio system programmes",
+          "maintain audiovisual equipment",
+          "manage sound quality",
+          "mix multi track recordings",
+          "understand artistic concepts",
+          "work ergonomically"
+        ]
+      },
+      {
+        "domain_id": "D045",
+        "isco_submajor": "11",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse legislation",
+          "budgetary principles",
+          "create solutions to problems",
+          "good governance",
+          "government representation",
+          "legislation procedure",
+          "liaise with local authorities",
+          "maintain relationships with government agencies",
+          "manage budgets",
+          "manage staff"
+        ]
+      },
+      {
+        "domain_id": "D045",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on legislative acts",
+          "create solutions to problems",
+          "establish collaborative relations",
+          "government policy",
+          "liaise with local authorities",
+          "maintain relations with local representatives",
+          "maintain relationships with government agencies",
+          "manage government policy implementation"
+        ]
+      },
+      {
+        "domain_id": "D045",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply technical communication skills",
+          "check official documents",
+          "conduct research interview",
+          "respond to enquiries",
+          "undertake inspections"
+        ]
+      },
+      {
+        "domain_id": "D046",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adolescent psychological development",
+          "client centred counselling",
+          "cognitive behavioural therapy",
+          "counselling methods",
+          "crisis intervention",
+          "draft scientific or academic papers and technical documentation",
+          "meet standards of practice in social services",
+          "older adults needs",
+          "psychology",
+          "reflexion",
+          "research design",
+          "supervision of persons"
+        ]
+      },
+      {
+        "domain_id": "D046",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adolescent psychological development",
+          "assist individuals with disabilities in community activities",
+          "customer service",
+          "meet standards of practice in social services",
+          "older adults needs",
+          "support harmed social service users"
+        ]
+      },
+      {
+        "domain_id": "D063",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on legislative acts",
+          "business strategy concepts",
+          "competition law",
+          "create solutions to problems",
+          "government policy implementation",
+          "maintain relations with local representatives",
+          "maintain relationships with government agencies",
+          "market analysis"
+        ]
+      },
+      {
+        "domain_id": "D063",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "financial forecasting",
+          "market analysis",
+          "mathematical economics",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D073",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "art history",
+          "coordinate operational activities",
+          "create solutions to problems",
+          "data quality assessment",
+          "develop solutions to information issues",
+          "establish high standards of collections care",
+          "manage budgets",
+          "manage digital libraries",
+          "provide project information on exhibitions",
+          "work with cultural venue specialists"
+        ]
+      },
+      {
+        "domain_id": "D073",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on art handling"
+        ]
+      },
+      {
+        "domain_id": "D073",
+        "isco_submajor": "44",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse library users queries",
+          "arrange interlibrary loans",
+          "copyright legislation",
+          "provide library information"
+        ]
+      },
+      {
+        "domain_id": "D077",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "examine crime scenes",
+          "handle case evidence",
+          "law enforcement",
+          "legal use of force"
+        ]
+      },
+      {
+        "domain_id": "D077",
+        "isco_submajor": "54",
+        "kind": "foundation_overlap",
+        "skills": [
+          "fire fighting systems",
+          "fire prevention procedures",
+          "fire safety regulations",
+          "first aid",
+          "hydraulics",
+          "illegal substances",
+          "law enforcement",
+          "legal use of force",
+          "provide first aid",
+          "react calmly in stressful situations",
+          "restrain individuals",
+          "surveillance methods"
+        ]
+      },
+      {
+        "domain_id": "D128",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "legal requirements in the social sector",
+          "social justice",
+          "social sciences"
+        ]
+      },
+      {
+        "domain_id": "D128",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "legal requirements in the social sector",
+          "social justice",
+          "social sciences"
+        ]
+      },
+      {
+        "domain_id": "D128",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "legal requirements in the social sector",
+          "social justice",
+          "social sciences"
+        ]
+      },
+      {
+        "domain_id": "D128",
+        "isco_submajor": "53",
+        "kind": "foundation_overlap",
+        "skills": [
+          "legal requirements in the social sector"
+        ]
+      },
+      {
+        "domain_id": "D143",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "attack vectors",
+          "cyber attack counter measures",
+          "ethical hacking principles",
+          "ict network security risks",
+          "ict safety",
+          "ict security standards",
+          "security engineering"
+        ]
+      },
+      {
         "domain_id": "D150",
         "isco_submajor": "34",
         "kind": "empty_cluster_skills"
       },
       {
-        "domain_id": "D155",
+        "domain_id": "D047",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "environmental legislation",
+          "fish biology",
+          "fish identification and classification",
+          "fishing industry"
+        ]
+      },
+      {
+        "domain_id": "D047",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "biology",
+          "biotechnology",
+          "botany",
+          "ecology",
+          "environmental legislation",
+          "fish biology",
+          "fish identification and classification",
+          "laboratory techniques",
+          "life sciences",
+          "microbiology bacteriology",
+          "molecular biology",
+          "scientific literature"
+        ]
+      },
+      {
+        "domain_id": "D047",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "laboratory techniques"
+        ]
+      },
+      {
+        "domain_id": "D047",
+        "isco_submajor": "61",
+        "kind": "foundation_overlap",
+        "skills": [
+          "animal nutrition",
+          "crop production principles",
+          "fertilisation principles",
+          "health and safety regulations",
+          "livestock reproduction",
+          "livestock species",
+          "plant disease control",
+          "plant species",
+          "provide nutrition to animals",
+          "signs of animal illness",
+          "soil structure",
+          "types of storage facilities"
+        ]
+      },
+      {
+        "domain_id": "D048",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "biotechnology",
+          "quality assurance methodologies"
+        ]
+      },
+      {
+        "domain_id": "D048",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "food and beverage industry",
+          "food safety principles",
+          "quality assurance methodologies"
+        ]
+      },
+      {
+        "domain_id": "D048",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "animal anatomy for food production",
+          "ensure refrigeration of food in the supply chain",
+          "food and beverage industry",
+          "food storage",
+          "legislation about animal origin products",
+          "maintain cutting equipment",
+          "mark differences in colours",
+          "tolerate strong smells"
+        ]
+      },
+      {
+        "domain_id": "D048",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adhere to organisational guidelines",
+          "administer ingredients in food production",
+          "apply gmp",
+          "check processing parameters",
+          "disassemble equipment",
+          "ensure public safety and security",
+          "follow hygienic procedures during food processing",
+          "follow written instructions",
+          "food safety principles",
+          "lift heavy weights",
+          "temperature scales",
+          "tolerate strong smells"
+        ]
+      },
+      {
+        "domain_id": "D049",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cad software",
+          "electric motors",
+          "electrical engineering",
+          "industrial engineering",
+          "manufacturing processes",
+          "principles of mechanical engineering",
+          "production processes",
+          "troubleshoot",
+          "vehicle electrical systems"
+        ]
+      },
+      {
+        "domain_id": "D049",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust engineering designs",
+          "cae software",
+          "create solutions to problems",
+          "hydraulics",
+          "mechanics of motor vehicles",
+          "troubleshoot"
+        ]
+      },
+      {
+        "domain_id": "D049",
+        "isco_submajor": "72",
+        "kind": "foundation_overlap",
+        "skills": [
+          "car controls",
+          "perform technical tasks with great care",
+          "principles of mechanical engineering",
+          "types of vehicles",
+          "vehicle electrical systems"
+        ]
+      },
+      {
+        "domain_id": "D050",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "engineering principles",
+          "engineering processes",
+          "mathematics",
+          "mechanical engineering",
+          "mechanics",
+          "technical drawings"
+        ]
+      },
+      {
+        "domain_id": "D075",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "dyeing technology",
+          "health and safety in the textile industry",
+          "maintain work standards",
+          "textile finishing technology",
+          "textile printing technology",
+          "use textile technique for hand made products"
+        ]
+      },
+      {
+        "domain_id": "D075",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "textile printing technology"
+        ]
+      },
+      {
+        "domain_id": "D075",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply assembling techniques for cemented footwear construction",
+          "buttonholing",
+          "cad for garment manufacturing",
+          "coordinate manufacturing production activities",
+          "create patterns for garments",
+          "decorate textile articles",
+          "evaluate garment quality",
+          "footwear quality",
+          "sew textile based articles"
+        ]
+      },
+      {
+        "domain_id": "D075",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "dyeing technology",
+          "footwear components",
+          "footwear equipments",
+          "footwear machinery",
+          "footwear manufacturing technology",
+          "footwear materials",
+          "footwear quality",
+          "maintain work standards",
+          "textile chemistry",
+          "textile finishing technology"
+        ]
+      },
+      {
+        "domain_id": "D052",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "construction product regulation",
+          "ensure compliance with environmental legislation"
+        ]
+      },
+      {
+        "domain_id": "D052",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "civil engineering",
+          "construction methods",
+          "engineering principles",
+          "engineering processes",
+          "ensure compliance with environmental legislation",
+          "technical drawings",
+          "types of pipelines"
+        ]
+      },
+      {
+        "domain_id": "D052",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise on construction materials",
+          "answer requests for quotation",
+          "building codes",
+          "energy conservation",
+          "energy performance of buildings",
+          "evaluate employees work",
+          "mechanical systems",
+          "mechanical tools",
+          "plan resource allocation",
+          "plan shifts of employees",
+          "prevent damage to utility infrastructure"
+        ]
+      },
+      {
+        "domain_id": "D052",
+        "isco_submajor": "71",
+        "kind": "foundation_overlap",
+        "skills": [
+          "secure working area",
+          "transport construction supplies"
+        ]
+      },
+      {
+        "domain_id": "D053",
+        "isco_submajor": "14",
+        "kind": "foundation_overlap",
+        "skills": [
+          "corporate social responsibility",
+          "create solutions to problems",
+          "ensure infrastructure accessibility",
+          "implement marketing strategies",
+          "manage health and safety standards",
+          "manage supplies",
+          "monitor financial accounts",
+          "recreation activities",
+          "recruit employees"
+        ]
+      },
+      {
+        "domain_id": "D053",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "ensure maintenance of kitchen equipment",
+          "food storage",
+          "food waste monitoring systems",
+          "store raw food materials",
+          "types of whisks",
+          "use food preparation techniques",
+          "work in a hospitality team"
+        ]
+      },
+      {
+        "domain_id": "D053",
+        "isco_submajor": "51",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assist customers",
+          "greet guests",
+          "handover the food preparation area",
+          "maintain relationship with customers",
+          "order supplies",
+          "receive kitchen supplies",
+          "serve food in table service",
+          "store raw food materials",
+          "upsell products",
+          "use food preparation techniques",
+          "work in a hospitality team"
+        ]
+      },
+      {
+        "domain_id": "D054",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "deal with pressure from unexpected circumstances",
+          "ensure compliance with environmental legislation",
+          "ensure compliance with safety legislation",
+          "fuel gas",
+          "manage staff",
+          "natural gas",
+          "write production reports"
+        ]
+      },
+      {
+        "domain_id": "D054",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "chemistry",
+          "ensure compliance with environmental legislation",
+          "geology",
+          "interpret extraction data",
+          "well testing operations"
+        ]
+      },
+      {
+        "domain_id": "D054",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "chemistry",
+          "conduct inter shift communication",
+          "coordinate remote communications",
+          "electronics",
+          "ensure compliance with safety legislation",
+          "write production reports"
+        ]
+      },
+      {
+        "domain_id": "D054",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "guide drill pipes",
+          "inspect water wells",
+          "keep task records",
+          "maintain mechanical equipment",
+          "mechanical tools",
+          "operate pumping equipment",
+          "use rigging equipment"
+        ]
+      },
+      {
+        "domain_id": "D055",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analytical chemistry",
+          "basic chemicals",
+          "chemical processes",
+          "engineering principles",
+          "engineering processes",
+          "manufacturing processes"
+        ]
+      },
+      {
+        "domain_id": "D055",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "basic chemicals",
+          "ensure correct gas pressure",
+          "fuel gas",
+          "good manufacturing practices",
+          "operate gas extraction equipment"
+        ]
+      },
+      {
+        "domain_id": "D055",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply health and safety standards",
+          "control temperature",
+          "keep task records",
+          "measure chemical substance viscosity",
+          "mix treating materials",
+          "monitor valves",
+          "prepare chemical samples",
+          "transfer chemicals",
+          "troubleshoot",
+          "wear appropriate protective gear",
+          "write batch record documentation"
+        ]
+      },
+      {
+        "domain_id": "D148",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D148",
         "isco_submajor": "31",
         "kind": "empty_cluster_skills"
       },
       {
+        "domain_id": "D056",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "computer programming"
+        ]
+      },
+      {
+        "domain_id": "D057",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise policy makers in healthcare",
+          "budgetary principles",
+          "communicate in healthcare",
+          "delegate emergency care",
+          "health care legislation",
+          "health care system",
+          "healthcare administration",
+          "manage healthcare staff"
+        ]
+      },
+      {
+        "domain_id": "D059",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "geostationary satellites"
+        ]
+      },
+      {
+        "domain_id": "D082",
+        "isco_submajor": "33",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D082",
+        "isco_submajor": "42",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D083",
+        "isco_submajor": "42",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D083",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D084",
+        "isco_submajor": "33",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D084",
+        "isco_submajor": "43",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D085",
+        "isco_submajor": "52",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D086",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply conflict management",
+          "follow ethical code of conduct of gambling",
+          "handle customer complaints",
+          "legal standards in gambling",
+          "responsible gambling"
+        ]
+      },
+      {
+        "domain_id": "D086",
+        "isco_submajor": "14",
+        "kind": "foundation_overlap",
+        "skills": [
+          "display betting information",
+          "follow ethical code of conduct of gambling",
+          "manage staff",
+          "prevent money laundering in gambling"
+        ]
+      },
+      {
+        "domain_id": "D086",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "games rules",
+          "legal standards in gambling"
+        ]
+      },
+      {
+        "domain_id": "D086",
+        "isco_submajor": "42",
+        "kind": "foundation_overlap",
+        "skills": [
+          "casino game rules",
+          "casino policies",
+          "communicate gambling rules",
+          "communicate with customers",
+          "display betting information",
+          "follow ethical code of conduct of gambling",
+          "follow safety precautions in a gaming room",
+          "games rules",
+          "maintain customer service",
+          "mathematics",
+          "monitor casino finances",
+          "sports competition information"
+        ]
+      },
+      {
+        "domain_id": "D087",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D088",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D089",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D090",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D091",
+        "isco_submajor": "23",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D091",
+        "isco_submajor": "51",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D092",
+        "isco_submajor": "51",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse trends in the food and beverage industries",
+          "apply haccp",
+          "assist customers",
+          "clear the bar at closing time",
+          "handle customer complaints",
+          "handle glassware",
+          "handover the service area",
+          "maintain relationship with customers"
+        ]
+      },
+      {
+        "domain_id": "D092",
+        "isco_submajor": "52",
+        "kind": "foundation_overlap",
+        "skills": [
+          "greet guests",
+          "handle customer complaints",
+          "maintain personal hygiene standards"
+        ]
+      },
+      {
+        "domain_id": "D092",
+        "isco_submajor": "94",
+        "kind": "foundation_overlap",
+        "skills": [
+          "clean surfaces",
+          "ensure cleanliness of food preparation area",
+          "greet guests",
+          "maintain personal hygiene standards",
+          "take food and beverage orders from customers"
+        ]
+      },
+      {
+        "domain_id": "D093",
+        "isco_submajor": "74",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D094",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D094",
+        "isco_submajor": "74",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D097",
+        "isco_submajor": "72",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D098",
+        "isco_submajor": "72",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply company policies",
+          "precision mechanics"
+        ]
+      },
+      {
+        "domain_id": "D098",
+        "isco_submajor": "73",
+        "kind": "foundation_overlap",
+        "skills": [
+          "attach clock cases",
+          "blueprints",
+          "components of clocks",
+          "wear appropriate protective gear"
+        ]
+      },
+      {
+        "domain_id": "D098",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "create solutions to problems",
+          "electrical equipment regulations",
+          "electrical testing methods",
+          "electricity principles",
+          "electronic equipment standards",
+          "electronics",
+          "interpret circuit diagrams",
+          "manage health and safety standards",
+          "monitor manufacturing quality standards",
+          "read standard blueprints",
+          "use testing equipment"
+        ]
+      },
+      {
+        "domain_id": "D100",
+        "isco_submajor": "71",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D101",
+        "isco_submajor": "71",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D102",
+        "isco_submajor": "71",
+        "kind": "foundation_overlap",
+        "skills": [
+          "follow health and safety procedures in construction",
+          "manipulate glass",
+          "snap chalk line",
+          "transport construction supplies",
+          "work in a construction team"
+        ]
+      },
+      {
+        "domain_id": "D102",
+        "isco_submajor": "73",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply wood finishes"
+        ]
+      },
+      {
+        "domain_id": "D102",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "construction products",
+          "dispose of cutting waste material",
+          "perform test run",
+          "remove inadequate workpieces",
+          "remove processed workpiece",
+          "sanding techniques",
+          "technical drawings",
+          "troubleshoot",
+          "wear appropriate protective gear",
+          "work safely with machines"
+        ]
+      },
+      {
+        "domain_id": "D104",
+        "isco_submajor": "73",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D105",
+        "isco_submajor": "73",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D106",
+        "isco_submajor": "75",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "create patterns for footwear",
+          "create solutions to problems",
+          "footwear creation process",
+          "health and safety in the workplace",
+          "innovate in footwear and leather goods industry"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "create solutions to problems",
+          "health and safety in the workplace",
+          "innovate in footwear and leather goods industry",
+          "manage staff",
+          "physico chemical properties of crust leather",
+          "physico chemical properties of hides and skins",
+          "reduce environmental impact of footwear manufacturing",
+          "use communication techniques"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "14",
+        "kind": "foundation_overlap",
+        "skills": [
+          "manage staff"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "ergonomics in footwear and leather goods design",
+          "footwear creation process",
+          "innovate in footwear and leather goods industry",
+          "reduce environmental impact of footwear manufacturing",
+          "use communication techniques"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply footwear and leather goods quality control techniques",
+          "communicate commercial and technical issues in foreign languages",
+          "create solutions to problems",
+          "footwear equipments",
+          "footwear finishing techniques",
+          "footwear machinery",
+          "manual cutting processes for leather",
+          "physico chemical properties of hides and skins",
+          "reduce environmental impact of footwear manufacturing",
+          "use communication techniques"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "create solutions to problems"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "43",
+        "kind": "foundation_overlap",
+        "skills": [
+          "use it tools"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "73",
+        "kind": "foundation_overlap",
+        "skills": [
+          "manual cutting processes for leather"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply basic rules of maintenance to leather goods and footwear machinery",
+          "create patterns for footwear",
+          "footwear equipments",
+          "footwear machinery",
+          "manual cutting processes for leather",
+          "use communication techniques",
+          "use it tools",
+          "work in textile manufacturing teams"
+        ]
+      },
+      {
+        "domain_id": "D107",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adapt to changing situations",
+          "apply basic rules of maintenance to leather goods and footwear machinery",
+          "footwear equipments",
+          "footwear machinery",
+          "pre stitching processes and techniques for footwear and leather goods",
+          "use communication techniques",
+          "work in textile manufacturing teams"
+        ]
+      },
+      {
+        "domain_id": "D108",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D108",
+        "isco_submajor": "73",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D109",
+        "isco_submajor": "81",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D110",
+        "isco_submajor": "81",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "13",
+        "kind": "foundation_overlap",
+        "skills": [
+          "challenging issues in the textile industry",
+          "coordinate manufacturing production activities"
+        ]
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "braiding technology",
+          "convert textile fibres into sliver",
+          "evaluate textile characteristics",
+          "health and safety in the textile industry",
+          "staple spinning machine technology",
+          "textile chemistry",
+          "textile technologies",
+          "use textile finishing machine technologies"
+        ]
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "72",
+        "kind": "foundation_overlap",
+        "skills": [
+          "braiding technology",
+          "staple spinning machine technology",
+          "textile finishing technology",
+          "use weft preparation technologies"
+        ]
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "73",
+        "kind": "foundation_overlap",
+        "skills": [
+          "decorate textile articles",
+          "dyeing technology",
+          "evaluate textile characteristics",
+          "textile chemistry",
+          "textile finishing technology"
+        ]
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "challenging issues in the textile industry",
+          "health and safety in the textile industry",
+          "textile technologies"
+        ]
+      },
+      {
+        "domain_id": "D111",
+        "isco_submajor": "81",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust filament tension",
+          "develop specifications of technical textiles",
+          "dyeing technology",
+          "evaluate textile characteristics",
+          "maintain equipment",
+          "manufacture wearing apparel products",
+          "sew textile based articles",
+          "tend spinning machines",
+          "textile chemistry",
+          "textile techniques",
+          "use textile finishing machine technologies",
+          "use weft preparation technologies"
+        ]
+      },
+      {
+        "domain_id": "D112",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D112",
+        "isco_submajor": "81",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D113",
+        "isco_submajor": "74",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D113",
+        "isco_submajor": "81",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D114",
+        "isco_submajor": "82",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D115",
+        "isco_submajor": "83",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D116",
+        "isco_submajor": "83",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D118",
+        "isco_submajor": "61",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D118",
+        "isco_submajor": "92",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D120",
+        "isco_submajor": "62",
+        "kind": "foundation_overlap",
+        "skills": [
+          "animal welfare legislation",
+          "aquaculture reproduction",
+          "assessment of risks and threats",
+          "code of conduct for responsible fisheries",
+          "deterioration of fish products",
+          "fish grading",
+          "fish identification and classification",
+          "fishing gear",
+          "international regulations for preventing collisions at sea",
+          "monitor larval growth",
+          "plankton production",
+          "use water disinfection equipment"
+        ]
+      },
+      {
+        "domain_id": "D120",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "monitor aquaculture stock health standards"
+        ]
+      },
+      {
+        "domain_id": "D120",
+        "isco_submajor": "92",
+        "kind": "foundation_overlap",
+        "skills": [
+          "assess cage water quality",
+          "fish welfare regulations",
+          "handle fish harvesting waste",
+          "monitor aquaculture stock health standards",
+          "rope manipulation",
+          "stock fish"
+        ]
+      },
+      {
+        "domain_id": "D123",
+        "isco_submajor": "22",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D123",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D124",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D124",
+        "isco_submajor": "53",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D126",
+        "isco_submajor": "22",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D126",
+        "isco_submajor": "32",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D129",
+        "isco_submajor": "11",
+        "kind": "foundation_overlap",
+        "skills": [
+          "advise superiors on military operations",
+          "camouflage",
+          "defend human rights",
+          "devise military tactics",
+          "ensure compliance with policies",
+          "ensure compliance with types of weapons",
+          "give instructions to staff",
+          "manage administrative systems",
+          "military logistics",
+          "operate radio equipment",
+          "train military troops"
+        ]
+      },
+      {
+        "domain_id": "D129",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "camouflage",
+          "devise military tactics",
+          "ensure compliance with types of weapons",
+          "ensure information security",
+          "geographic information systems",
+          "give battle commands",
+          "handle surveillance equipment",
+          "monitor military equipment use",
+          "operate radio equipment",
+          "use geographic information systems"
+        ]
+      },
+      {
+        "domain_id": "D129",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "air force operations",
+          "geographic information systems",
+          "handle surveillance equipment",
+          "operate radio equipment"
+        ]
+      },
+      {
+        "domain_id": "D131",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cad software",
+          "cae software",
+          "computer simulation",
+          "physics",
+          "principles of mechanical engineering",
+          "project management"
+        ]
+      },
+      {
+        "domain_id": "D131",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "project management"
+        ]
+      },
+      {
+        "domain_id": "D131",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analyse the need for technical resources",
+          "communicate problems to senior colleagues",
+          "create solutions to problems",
+          "electronic equipment standards",
+          "electronics",
+          "ensure finished product meet requirements",
+          "evaluate employees work",
+          "inspect quality of products",
+          "interpret circuit diagrams",
+          "oversee production requirements",
+          "plan shifts of employees"
+        ]
+      },
+      {
+        "domain_id": "D132",
+        "isco_submajor": "21",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D132",
+        "isco_submajor": "31",
+        "kind": "empty_cluster_skills"
+      },
+      {
+        "domain_id": "D133",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust jewellery",
+          "art history",
+          "monitor sociological trends",
+          "monitor textile manufacturing developments",
+          "properties of textile materials",
+          "repair jewellery"
+        ]
+      },
+      {
+        "domain_id": "D133",
+        "isco_submajor": "73",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust jewellery",
+          "assemble jewellery parts",
+          "characteristics of precious metals",
+          "create jewellery",
+          "ensure conformance to jewel design specifications",
+          "gemstones",
+          "heat jewellery metals",
+          "record jewel weight",
+          "repair jewellery",
+          "select gems for jewellery",
+          "select metals for jewellery",
+          "smoothen rough jewel parts"
+        ]
+      },
+      {
+        "domain_id": "D133",
+        "isco_submajor": "75",
+        "kind": "foundation_overlap",
+        "skills": [
+          "apply a protective layer",
+          "create smooth wood surface",
+          "distinguish accessories",
+          "fasten components",
+          "furniture trends",
+          "join wood elements",
+          "manufacture wearing apparel products",
+          "properties of textile materials",
+          "sand wood",
+          "types of wood",
+          "upholstery tools"
+        ]
+      },
+      {
+        "domain_id": "D166",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "business requirements techniques",
+          "create software design",
+          "data models",
+          "ict system user requirements"
+        ]
+      },
+      {
+        "domain_id": "D138",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "adjust engineering designs",
+          "biology",
+          "engineering principles",
+          "engineering processes",
+          "medical devices materials",
+          "perform scientific research",
+          "technical drawings"
+        ]
+      },
+      {
+        "domain_id": "D138",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "biomedical engineering",
+          "mechanics",
+          "medical devices",
+          "medical devices materials"
+        ]
+      },
+      {
+        "domain_id": "D142",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "genomics",
+          "laboratory techniques",
+          "manage research data",
+          "statistics"
+        ]
+      },
+      {
+        "domain_id": "D144",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "conduct research on climate processes",
+          "perform data analysis",
+          "use specialised computer models for weather forecasting"
+        ]
+      },
+      {
+        "domain_id": "D155",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "analytical chemistry",
+          "disseminate results to the scientific community",
+          "draft scientific or academic papers and technical documentation",
+          "green chemistry",
+          "interact professionally in research and professional environments",
+          "manage research data",
+          "oxidation",
+          "scientific research methodology"
+        ]
+      },
+      {
+        "domain_id": "D155",
+        "isco_submajor": "31",
+        "kind": "foundation_overlap",
+        "skills": [
+          "cleanroom protocols photolithography deposition equipment metrology tools"
+        ]
+      },
+      {
+        "domain_id": "D167",
+        "isco_submajor": "21",
+        "kind": "foundation_overlap",
+        "skills": [
+          "3d content development",
+          "immersive experience design",
+          "spatial thinking",
+          "user testing"
+        ]
+      },
+      {
         "domain_id": "D167",
         "isco_submajor": "24",
-        "kind": "empty_cluster_skills"
+        "kind": "foundation_overlap",
+        "skills": [
+          "cross functional collaboration",
+          "immersive experience planning",
+          "innovation facilitation",
+          "requirements translation"
+        ]
+      },
+      {
+        "domain_id": "D167",
+        "isco_submajor": "25",
+        "kind": "foundation_overlap",
+        "skills": [
+          "interactive systems",
+          "software development",
+          "testing and debugging"
+        ]
+      },
+      {
+        "domain_id": "D167",
+        "isco_submajor": "35",
+        "kind": "foundation_overlap",
+        "skills": [
+          "troubleshooting",
+          "user assistance"
+        ]
+      },
+      {
+        "domain_id": "D168",
+        "isco_submajor": "12",
+        "kind": "foundation_overlap",
+        "skills": [
+          "event management"
+        ]
+      },
+      {
+        "domain_id": "D168",
+        "isco_submajor": "24",
+        "kind": "foundation_overlap",
+        "skills": [
+          "audience engagement",
+          "community management",
+          "content planning"
+        ]
+      },
+      {
+        "domain_id": "D168",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "broadcast production",
+          "content creation",
+          "journalism",
+          "live commentary",
+          "live event workflow"
+        ]
+      },
+      {
+        "domain_id": "D168",
+        "isco_submajor": "33",
+        "kind": "foundation_overlap",
+        "skills": [
+          "operations planning",
+          "player support"
+        ]
+      },
+      {
+        "domain_id": "D168",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "coaching",
+          "competitive game performance",
+          "fair play",
+          "performance analysis"
+        ]
+      },
+      {
+        "domain_id": "D070",
+        "isco_submajor": "26",
+        "kind": "foundation_overlap",
+        "skills": [
+          "artistic direction",
+          "audience communication",
+          "choreography",
+          "dance technique",
+          "dramaturgy",
+          "performance practice"
+        ]
+      },
+      {
+        "domain_id": "D070",
+        "isco_submajor": "34",
+        "kind": "foundation_overlap",
+        "skills": [
+          "production planning and scheduling",
+          "risk assessment for production"
+        ]
       }
     ],
     "source_layer": [
       {
         "kind": "source_backed_foundation_overlap",
-        "overlap_skill_count": 35868,
-        "subgroup_count": 508,
+        "overlap_skill_count": 38719,
+        "subgroup_count": 540,
         "detail": "domain_skill_provenance currently repeats domain foundation skills inside subgroup skill maps."
       }
     ],
-    "role_counts": [],
+    "role_counts": [
+      {
+        "domain_id": "D004",
+        "stored": 16,
+        "canonical": 17
+      },
+      {
+        "domain_id": "D005",
+        "stored": 17,
+        "canonical": 18
+      },
+      {
+        "domain_id": "D074",
+        "stored": 19,
+        "canonical": 20
+      },
+      {
+        "domain_id": "D156",
+        "stored": 9,
+        "canonical": 11
+      },
+      {
+        "domain_id": "D067",
+        "stored": 10,
+        "canonical": 12
+      },
+      {
+        "domain_id": "D165",
+        "stored": 14,
+        "canonical": 15
+      },
+      {
+        "domain_id": "D163",
+        "stored": 7,
+        "canonical": 8
+      },
+      {
+        "domain_id": "D065",
+        "stored": 11,
+        "canonical": 12
+      },
+      {
+        "domain_id": "D160",
+        "stored": 16,
+        "canonical": 17
+      },
+      {
+        "domain_id": "D063",
+        "stored": 14,
+        "canonical": 17
+      },
+      {
+        "domain_id": "D084",
+        "stored": 14,
+        "canonical": 15
+      },
+      {
+        "domain_id": "D096",
+        "stored": 13,
+        "canonical": 15
+      },
+      {
+        "domain_id": "D099",
+        "stored": 17,
+        "canonical": 20
+      },
+      {
+        "domain_id": "D105",
+        "stored": 14,
+        "canonical": 15
+      },
+      {
+        "domain_id": "D123",
+        "stored": 11,
+        "canonical": 13
+      },
+      {
+        "domain_id": "D166",
+        "stored": 10,
+        "canonical": 14
+      },
+      {
+        "domain_id": "D137",
+        "stored": 8,
+        "canonical": 9
+      },
+      {
+        "domain_id": "D144",
+        "stored": 5,
+        "canonical": 14
+      },
+      {
+        "domain_id": "D145",
+        "stored": 9,
+        "canonical": 12
+      },
+      {
+        "domain_id": "D155",
+        "stored": 12,
+        "canonical": 16
+      },
+      {
+        "domain_id": "D168",
+        "stored": 15,
+        "canonical": 17
+      }
+    ],
     "runtime": [
       {
         "kind": "phantom_subgroup_demand_path",
@@ -147,19 +4198,6 @@
         "detail": "No role-demand dataset is available yet; roles must not be ordered by an unavailable demand metric. Preserve source/insertion order until a validated demand table is introduced."
       }
     ],
-    "schema": [
-      {
-        "kind": "field_missing_from_migration",
-        "field": "what_people_do"
-      },
-      {
-        "kind": "field_missing_from_migration",
-        "field": "work_context"
-      },
-      {
-        "kind": "field_missing_from_migration",
-        "field": "display_order"
-      }
-    ]
+    "schema": []
   }
 }

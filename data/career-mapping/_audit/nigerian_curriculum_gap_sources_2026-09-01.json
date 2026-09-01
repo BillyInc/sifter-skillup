@@ -1,0 +1,89 @@
+{
+  "schema_version": "2026-09-01.nigerian-curriculum-gap-sources.v1",
+  "purpose": "Record official Nigerian curriculum sources checked for candidate programme-to-domain gaps. These records provide Nigerian field or bridge context; they do not replace the student's own CCMAS course/outcome evidence.",
+  "source_rule": "A source may support a mapping gap only when its exact Nigerian curriculum content is relevant to the claim. A target-field curriculum is context or bridge evidence, not proof that another programme teaches that field.",
+  "sources": [
+    {
+      "source_id": "nigeria_oou_logistics_scm_curriculum_2026",
+      "name": "Olabisi Onabanjo University B.Sc. Logistics and Supply Chain Management",
+      "url": "https://main.oouagoiwoye.edu.ng/colleges/faculties/ams/transport/b-sc-logistics-supply-chain/",
+      "source_type": "Nigerian university curriculum",
+      "supports": ["logistics planning", "procurement", "transport operations", "warehouse management", "inventory control", "supply-chain analytics", "global trade"],
+      "use_in_mapping": "Nigerian domain context and corroboration for D079; not a substitute for the student's CCMAS curriculum."
+    },
+    {
+      "source_id": "nigeria_unilag_crffn_freight_curriculum_2026",
+      "name": "University of Lagos Institute of Maritime Studies Diploma in Freight Forwarding and Supply Chain Management",
+      "url": "https://ims.unilag.edu.ng/pgd_freight_forwarding.html",
+      "source_type": "Nigerian university and CRFFN-accredited curriculum",
+      "supports": ["customs planning and procedures", "freight forwarding", "warehousing", "logistics and supply chain management", "multimodal transport"],
+      "use_in_mapping": "Nigerian domain/regulatory context for D079; the current LSM CCMAS evidence is still the programme-fit anchor."
+    },
+    {
+      "source_id": "nigeria_unn_ece_embedded_curriculum_2023",
+      "name": "University of Nigeria Nsukka Electronic and Computer Engineering curriculum",
+      "url": "https://engineering.unn.edu.ng/wp-content/uploads/sites/4/2023/05/ECE-UG.pdf",
+      "source_type": "Nigerian university curriculum",
+      "supports": ["embedded systems", "microcontrollers", "digital input/output", "serial interfaces", "embedded software", "industrial electronics"],
+      "use_in_mapping": "Nigerian target-domain bridge context for D006 Internet of Things; it does not prove that Physics with Electronics teaches IoT as a complete specialization."
+    },
+    {
+      "source_id": "nigeria_baze_iot_curriculum_2025",
+      "name": "Baze University Computer Engineering handbook, IoT curriculum section",
+      "url": "https://babaahmeduniversity.edu.ng/static/media/baze_computer_engineering_handbook.bbece1b3598dea2ee3f2.pdf",
+      "source_type": "Nigerian university curriculum",
+      "supports": ["IoT", "sensors and actuators", "IoT protocols", "connectivity", "embedded systems", "wireless networking", "IoT security"],
+      "use_in_mapping": "Nigerian target-domain boundary and bridge context for D006; not a substitute for Physics with Electronics course anchors."
+    },
+    {
+      "source_id": "nigeria_nuc_science_lab_bmas_2015",
+      "name": "National Universities Commission Science Laboratory Technology BMAS",
+      "url": "https://nuc.edu.ng/wp-content/uploads/2015/09/Sciences%20Draft%20BMAS.pdf",
+      "source_type": "Nigerian regulatory curriculum standard",
+      "supports": ["laboratory technology", "laboratory and workshop management", "science-based experiments", "biology/microbiology/biotechnology techniques", "physiology/pharmacology techniques"],
+      "use_in_mapping": "Nigerian boundary context for D122 Medical Laboratory Technology and related laboratory domains; it does not prove that every biological-science programme is a medical-laboratory programme."
+    },
+    {
+      "source_id": "nigeria_unn_medlab_scope_2026",
+      "name": "University of Nigeria Nsukka Medical Laboratory Science department scope",
+      "url": "https://medlabtech.unn.edu.ng/about-us/",
+      "source_type": "Nigerian university programme scope",
+      "supports": ["clinical chemistry", "haematology and blood transfusion", "histopathology", "medical microbiology", "immunology", "instrumentation", "pharmacology"],
+      "use_in_mapping": "Nigerian target-domain boundary and bridge requirements for D122; it is not evidence that Microbiology, Zoology, Biotechnology, Biochemistry, or Pharmacology automatically maps directly to D122."
+    },
+    {
+      "source_id": "nigeria_oou_bmls_curriculum_2026",
+      "name": "Olabisi Onabanjo University Bachelor of Medical Laboratory Science",
+      "url": "https://main.oouagoiwoye.edu.ng/colleges/oachs/bcs/medical-microbiology/bmls/",
+      "source_type": "Nigerian university curriculum",
+      "supports": ["clinical chemistry", "haematology", "histopathology", "medical microbiology", "immunology", "blood group serology"],
+      "use_in_mapping": "Nigerian target-domain requirements for D122; it is comparator evidence for the bridge and not a substitute for the student's programme curriculum."
+    }
+  ],
+  "gap_dispositions": [
+    {
+      "domain_id": "D001",
+      "domain_name": "Software Engineering",
+      "programme_ref": "Administration and Management::Project Management",
+      "disposition": "retain_review_required",
+      "reason": "The Nigerian Project Management CCMAS extract contains computer-use and project-management courses, but no sufficient software-engineering course anchor was established. Do not infer software engineering from the word computer alone.",
+      "next_evidence": "A Nigerian programme outcome or professional curriculum must explicitly connect the programme's taught content to software-engineering preparation; otherwise remove the candidate link."
+    },
+    {
+      "domain_id": "D006",
+      "domain_name": "Internet of Things",
+      "programme_refs": ["Sciences::Physics with Electronics", "Sciences::Physics with Electronics::Electrons"],
+      "disposition": "retain_review_required",
+      "reason": "Nigerian embedded/IoT curricula establish the target field boundary, while the Physics with Electronics CCMAS extract visibly contains Digital Electronics and computing/physics content. The current evidence does not yet meet the two-anchor gate for a certified IoT link.",
+      "next_evidence": "Verify an exact Nigerian CCMAS outcome or course anchor for embedded systems, sensors, microcontrollers, IoT, or equivalent; otherwise present IoT as a bridge possibility only."
+    },
+    {
+      "domain_id": "D122",
+      "domain_name": "Medical Laboratory Technology",
+      "programme_refs": ["Sciences::Microbiology", "Sciences::Zoology", "Sciences::Biotechnology", "Sciences::Biochemistry", "Allied Health Sciences::Pharmacology", "Sciences::Forensic Science", "Sciences::Zoology::Parasitology and Entomology", "Sciences::Biotechnology::BIOINFORMATICS"],
+      "disposition": "retain_review_required",
+      "reason": "Nigerian medical-laboratory curricula define additional clinical requirements such as clinical chemistry, haematology, histopathology, medical microbiology and immunology. The source is useful for explaining the bridge, but biological or pharmacological study alone must not be treated as medical-laboratory preparation.",
+      "next_evidence": "Find exact programme-specific Nigerian course/outcome evidence for clinical laboratory practice or remove the candidate link from the certified set."
+    }
+  ]
+}

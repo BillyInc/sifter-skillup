@@ -1,0 +1,77 @@
+{
+  "schema_version": "2026-09-01.review-state-inventory.v1",
+  "purpose": "Repository-wide inventory of explicit review, unresolved, pending, partial and unavailable states before source completion and final SQL generation.",
+  "scan_boundary": {
+    "root": "career-mapping",
+    "json_files_with_findings": 4,
+    "parse_error_count": 0,
+    "excluded_directories": [
+      "_prof_bodies",
+      "_source_downloads",
+      "_source_extracts",
+      "learning_resource_population_parts",
+      "role_tools_parts_gz"
+    ],
+    "max_scanned_file_bytes": 20000000,
+    "excluded_files": [
+      "domain_skill_provenance.json",
+      "jamb_brochure_source_rules_2026-08-19.json",
+      "jamb_skills_nuance.json",
+      "review_state_dispositions_2026-09-01.json",
+      "source_backed_layer_report.json",
+      "wef_role_normalization_2026-09-01.json"
+    ],
+    "historical_before_state_files": [
+      "ccmas_external_domain_complements_2026-09-01.json",
+      "jamb_ccmas_inheritance_canonical_2026-08-17.json"
+    ],
+    "excluded_large_projections": true
+  },
+  "total_token_counts": {
+    "partial": 220,
+    "not_established": 6
+  },
+  "parse_errors": [],
+  "files": [
+    {
+      "file": "_audit\\_domain_defs_table.json",
+      "finding_count": 110,
+      "token_counts": {
+        "partial": 110
+      },
+      "samples": [],
+      "scan_mode": "structured_exact_state_values",
+      "file_size": 20213
+    },
+    {
+      "file": "_audit\\cluster_map.json",
+      "finding_count": 110,
+      "token_counts": {
+        "partial": 110
+      },
+      "samples": [],
+      "scan_mode": "structured_exact_state_values",
+      "file_size": 21089
+    },
+    {
+      "file": "nigerian_entity_review_ledger_2026-08-25.json",
+      "finding_count": 4,
+      "token_counts": {
+        "not_established": 4
+      },
+      "samples": [],
+      "scan_mode": "structured_exact_state_values",
+      "file_size": 11357889
+    },
+    {
+      "file": "nigerian_fresh_web_enrichment_2026-08-26.json",
+      "finding_count": 2,
+      "token_counts": {
+        "not_established": 2
+      },
+      "samples": [],
+      "scan_mode": "structured_exact_state_values",
+      "file_size": 868706
+    }
+  ]
+}
