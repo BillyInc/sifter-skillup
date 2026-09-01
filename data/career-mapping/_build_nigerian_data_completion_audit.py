@@ -5,8 +5,8 @@ This report deliberately distinguishes:
 * inherited Nigerian domain/sector context; and
 * global or remote evidence.
 
-It is a completion-audit artifact, not a seed generator. SQL generation stays
-closed until the exhaustive-search declaration is changed after review.
+It is a completion-audit artifact, not a seed generator. SQL generation is
+allowed only when the current population gate says it is allowed.
 """
 
 from __future__ import annotations
@@ -91,7 +91,7 @@ def main() -> None:
             "direct_local_evidence": "An exact or defensible Nigerian role/subgroup profile match with item-level provenance.",
             "domain_context": "Separate Nigerian sector or domain evidence that can guide a role without claiming the item is role-specific.",
             "no_direct": "No exact match in the checked Nigerian profiles; never an absence claim. The row retains global evidence and domain context where available.",
-            "sql": "Do not regenerate SQL while exhaustive_search_declaration is false, even when the integrity gate passes.",
+            "sql": "Regenerate SQL only when exhaustive_search_declaration and sql_regeneration_allowed are true in the current population gate.",
         },
         "domains_ranked_by_unresolved_roles": domain_rows,
     }
@@ -100,7 +100,7 @@ def main() -> None:
     lines = [
         "# Nigerian data completion audit",
         "",
-        "Status: **IN PROGRESS**",
+        f"Status: **{'COMPLETE' if payload['completion_status'] == 'complete' else 'IN PROGRESS'}**",
         "",
         "This is the authoritative completion audit for the 2024-2026 Nigerian enrichment pass. SQL generation is permitted only when the population gate reports it allowed.",
         "",
@@ -118,9 +118,9 @@ def main() -> None:
         "",
         f"- Integrity gate passed: **{'YES' if payload['integrity_gate']['integrity_gate_passed'] else 'NO'}**",
         f"- Exhaustive 2024-2026 search declaration: **{'YES' if payload['exhaustive_search_declaration'] else 'NO'}**",
-        "- SQL regeneration allowed: **NO**",
+        f"- SQL regeneration allowed: **{'YES' if payload['sql_regeneration_allowed'] else 'NO'}**",
         "- Direct local evidence and domain context are separate fields.",
-        "- A no-direct row is not an absence claim; it remains explicitly limited and requires the final search declaration before completion.",
+        "- A no-direct row is not an absence claim; it remains explicitly limited and is not promoted to a fabricated local counterpart.",
         "",
         "## Domains with the most unresolved exact-role matches",
         "",

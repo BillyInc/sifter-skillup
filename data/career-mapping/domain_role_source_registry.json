@@ -17,12 +17,12 @@
       "notes": "Primary global occupation/skill spine; use preferred and non-preferred terms as normalized titles and aliases."
     },
     "global_onet": {
-      "name": "O*NET 30.3 Database",
+      "name": "O*NET 31.0 Database",
       "region": "global_proxy",
       "evidence_type": "occupation_taxonomy_and_job_titles",
       "url": "https://www.onetcenter.org/database.html",
       "access": "public_download_api",
-      "notes": "US-economy source used as a global proxy for occupation descriptions, alternate titles, tasks and technology skills; do not label US counts as Nigerian demand."
+      "notes": "US-economy source used as a global proxy for occupation descriptions, alternate titles, tasks and technology skills; repository pinned to O*NET 31.0 as of 2026-08-31; do not label US counts as Nigerian demand."
     },
     "global_isco": {
       "name": "ILO ISCO-08",

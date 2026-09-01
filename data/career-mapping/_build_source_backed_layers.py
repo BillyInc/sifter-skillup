@@ -20,7 +20,7 @@ from _role_overlay_loader import load_overlay_roles
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
 MEDICAL_TOOLS = {"epic systems", "meditech software"}
-TOOL_SOURCE = os.path.join(HERE, "_source_extracts", "onet_30_3", "Software Skills.txt")
+TOOL_SOURCE = os.path.join(HERE, "_source_extracts", "onet_31_0", "Software Skills.txt")
 DOMAIN_TOOLS = os.path.join(HERE, "domain_tools.json")
 DOMAIN_META = os.path.join(HERE, "domain_meta.json")
 DOMAIN_STRUCTURE = os.path.join(HERE, "domain_structure.json")
@@ -137,7 +137,7 @@ def main():
             output["source"] = output.get("source") or "onet"
             output["source_confidence"] = "high"
             output["data_state"] = "source_backed"
-            output["provenance"] = {"source": "onet_30_3_software_skills", "element_names": [item["element_name"] for item in categories]}
+            output["provenance"] = {"source": "onet_31_0_software_skills", "element_names": [item["element_name"] for item in categories]}
         elif output.get("source"):
             output["element_name"] = None
             output["element_id"] = None

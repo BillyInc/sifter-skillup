@@ -22,6 +22,7 @@ import {
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 import type { CertificationV2Enriched } from "../../types/career";
 import { Badge } from "../ui";
+import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 export interface CertPlacementListProps {
   gateway?: CertificationV2Enriched[];
@@ -106,9 +107,17 @@ function CertRow({
   const { colors } = useTheme();
   const price = formatPrice(cert.price, cert.currency);
   const hasUrl = !!cert.officialUrl;
+  const [notice, setNotice] = useState<string | null>(null);
 
-  const openUrl = () => {
-    if (cert.officialUrl) Linking.openURL(cert.officialUrl).catch(() => {});
+  const openUrl = async () => {
+    if (!cert.officialUrl) return;
+    setNotice(null);
+    if (!(await hasInternetConnection())) {
+      setNotice(OFFLINE_LINK_NOTICE);
+      return;
+    }
+    const opened = await Linking.openURL(cert.officialUrl).then(() => true).catch(() => false);
+    if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
   };
 
   return (
@@ -130,18 +139,23 @@ function CertRow({
             { color: hasUrl ? colors.accent : colors.text },
             hasUrl ? styles.certNameLink : null,
           ]}
+          accessibilityRole={hasUrl ? "link" : undefined}
+          accessibilityLabel={hasUrl ? `Open certification source for ${cert.name}` : undefined}
           numberOfLines={2}
         >
           {cert.name}
           {hasUrl ? " ↗" : ""}
         </Text>
-        {cert.body ? (
+          {cert.body ? (
           <Text
             style={[styles.certBody, { color: colors.textMuted }]}
             numberOfLines={1}
           >
             {cert.body}
           </Text>
+          ) : null}
+        {notice ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>{notice}</Text>
         ) : null}
         {price || cert.tierType ? (
           <View style={styles.certFacts}>

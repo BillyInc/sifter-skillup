@@ -83,6 +83,122 @@ check succeeds.
 - **Opportunities**: the canonical future employment/opportunity name. It stays
   separate from role guidance until live data is available.
 
+## Refined taxonomy and curriculum-evidence decisions
+
+The programme-to-domain relationship is derived from the source-backed CCMAS
+curriculum, not from the programme title alone. The existing **Skills taught**
+arrays remain the concise curriculum representation shown in the product. They
+do not replace the underlying evidence used for audit and explanation.
+
+The evidence layers are combined according to the relationship being tested:
+
+- **Direct:** P3/P5 purpose, curriculum and outcomes closely match the domain's
+  foundation and occupational anchors. The active evidence gate requires at
+  least two specific CCMAS course or objective anchors.
+- **Functional:** P5/P14 courses and objectives teach capabilities materially
+  used in the domain, but do not constitute the domain's complete occupational
+  foundation. The active evidence gate also requires at least two specific
+  CCMAS course or objective anchors.
+- **Adjacent:** P7/P8 transferable competencies are relevant and there is at
+  least one domain-relevant conceptual prerequisite in P5/P14. The UI must
+  explain the bridge before specialization.
+
+“Strong” has one consistent meaning: the relationship is supported by named,
+source-backed curriculum anchors rather than generic word overlap. The two/
+one thresholds are minimum evidence gates, not similarity scores or guarantees
+of employment. Every active mapping must retain the CCMAS source, page or
+section, course/outcome text, matched domain anchor, relationship class, and
+review state.
+
+The current domain, subgroup, role, skill, competency, tool and certification
+library is preserved. This reconciliation does not rebuild role or skill
+scoring. It only re-audits programme-to-domain links against the corrected,
+source-traceable domain identity and reattaches downstream records when a
+reviewed domain identity genuinely changes.
+
+The source-lineage work must freeze one canonical ISIC revision, preserve every
+raw source code, and record crosswalks for historical or alternate revisions.
+ISIC anchors industry context; ISCO, ESCO, O*NET, WEF, ILO, specialist and
+Nigerian sources support occupational identity, boundaries and enrichment.
+Domain labels must be marked as exact source terminology, source-supported
+umbrella labels, or curated additions with a documented boundary reason.
+
+## Source-layer review gate
+
+Before a domain identity or programme-to-domain link is promoted, each source
+layer must be reviewed for the claim it can actually support. A source's
+presence in a registry is not evidence that its records were ingested or that
+it proves Nigerian demand.
+
+- **ISIC Rev.5:** review industry sections, divisions, groups, explanatory
+  notes, and the official Rev.4-to-Rev.5 correspondence. It anchors the
+  economic context and completeness survey; it does not define occupations,
+  skills, or programme suitability.
+- **ISCO-08:** validate major, sub-major, minor, and unit-group codes and
+  occupational descriptions. It anchors the kind of work and occupational
+  structure; it does not by itself establish a Sifter domain name.
+- **ESCO:** validate preferred occupation labels, alternative labels, stable
+  URIs, descriptions, ISCO links, and occupation-skill relations. It supports
+  normalized role and skill evidence.
+- **O*NET 31.0:** validate tasks, work activities, tools/software, preparation,
+  job zone, work context, job titles, and the updated essential/transferable
+  skill layers. It is global/US proxy evidence and must not be presented as
+  Nigerian demand. The repository records the archive hash and keeps the prior
+  30.3 archive for comparison.
+- **ILO:** validate international occupational and employment context. It must
+  not be converted into a Nigerian market claim without Nigerian evidence.
+- **WEF:** validate future-of-work, growing/declining role, and skills signals.
+  It is a trend source, not a complete occupation dictionary or local vacancy
+  source.
+- **Specialist frameworks:** validate emerging or sector-specific vocabulary,
+  competencies, and role families where the general taxonomies are too broad.
+- **Nigerian sources:** validate Nigerian terminology, institutions,
+  regulators, certifications, professional scope, curriculum context, and
+  local demand only where the checked source directly shows it.
+
+Current audit status: the eight ISCO values absent from the supplied ISCO-08
+workbook now have explicit non-silent dispositions and valid parent/sibling
+candidates recorded. No inferred replacement has been promoted into the
+taxonomy; source-meaning review remains required for any canonical correction.
+
+An O*NET occupation that has no ESCO or ISCO equivalent is an enrichment
+candidate, not an automatic insertion. It may be promoted only when it is
+within product scope, is not a duplicate, has a defensible domain placement,
+and retains its exact O*NET code and source metadata. O*NET does not supply the
+product's subgroup taxonomy; where no defensible subgroup exists, the product
+may use a documented domain-to-role path. A candidate that fails these checks
+remains in review and is excluded from generated seed data.
+
+The review artifact must retain the source file or URL, version/date, hash when
+available, exact source record or page, claim type, affected domain/subgroup/
+role, reviewer decision, and any limitation. Existing role and skill decisions
+are not reopened merely because a source-layer review is being documented.
+
+For Nigerian students, the programme-fit evidence rule is stricter: a global
+domain or occupational source cannot repair a weak programme-to-domain link.
+The complement audit is retained as the before-state diagnostic: it joined the
+86 canonical JAMB rows to exact Nigerian CCMAS course codes, titles, learning
+outcomes, and content summaries and recorded 547 sufficient, 153 insufficient,
+and 11 missing-anchor occurrences. The completed Nigerian disposition layer
+reviewed all 711 occurrences: 547 are certified, 163 are explicit guided
+bridges, and one unsupported candidate was removed. No source-gap disposition
+remains. The active JAMB map uses this reviewed overlay; full evidence and
+decisions are in
+`data/career-mapping/_audit/ccmas_nigerian_reviewed_links_2026-09-01.json`.
+
+The reviewed-link map is materialized by
+`data/career-mapping/_materialize_jamb_domain_map_from_canonical.py`; it keeps
+the full course/outcome/source evidence in the audit artifact and carries only
+compact review metadata into the active map. The downstream impact audit found
+no invalid domain references or display-label mismatches after normalization.
+
+The full review queue is inventoried in
+`data/career-mapping/_audit/REVIEW_STATE_INVENTORY_2026-09-01.md`. It includes
+domain naming, JAMB brochure variants, CCMAS inheritance, WEF normalization,
+Nigerian local-counterpart states, subgroup/role source anchors, and explicit
+not-established records. Counts in that inventory are visibility controls, not
+proof that a queue is complete.
+
 ## User flows
 
 ### SS1 and SS2
@@ -624,13 +740,22 @@ without connectivity.
   intents for component details, and re-lock the offline session after an
   inactivity timeout. These are mitigations, not absolute guarantees.
 
-## Final audit snapshot — 2026-08-31
+## Final audit snapshot — 2026-09-01
 
-The programme-to-career content and transition slice is now represented in the
-current source and generated seed:
+The programme-to-career content and transition slice is represented in the
+repository, but its source and seed snapshots must not be treated as the same
+state:
 
-- 160 visible domains, 542 source-backed ISCO subgroups, 5,050 roles, 48,188
-  tools and 5,050 role work profiles are emitted by the current generator.
+- The current `domain_meta.json` contains 168 domain records, of which 167 are
+  not marked excluded. The companion source audit covers 555 subgroups and
+  5,209 merged role records, with source distinctions recorded in the audit
+  artifacts below. The visible Nigerian scope contains 542 subgroups and
+  5,093 role-context entries.
+- The newly generated `seed_career_v2_2026-09-01_parts_gz/` transport contains
+  160 visible domains, 542 supported subgroups, 5,093 roles, 48,585 tools,
+  240 certifications, 5,090 role work profiles, and 23 ordered gzip parts.
+  Its manifest records the source and per-part SHA-256 checksums. The
+  2026-08-31 transport remains an earlier snapshot.
 - The former 35 structural review cases are resolved by materializing supported
   roles' existing ISCO sub-major ownership and reconciling role counts after
   canonical deduplication. Roles without a supported subgroup mapping retain a
@@ -643,10 +768,14 @@ current source and generated seed:
 - Source-backed explanations expose provenance and clickable source/resource
   links where the source data supplies a URL. Offline external links remain a
   Connect to view state.
-- The current seed transport is
-  `backend/seed_career_v2_2026-08-31_parts_gz/` (22 ordered gzip parts, each
-  below 41 MB). It has been generated and locally audited, but has not been
-  applied to Supabase.
+- The full review-state disposition audit covers 1,538 findings with zero
+  follow-up records. Four visible role entries remain intentionally global-only
+  because no direct Nigerian counterpart was supported; they are displayed with
+  that limitation rather than assigned an invented local counterpart.
+- The existing compressed seed transports, including
+  `backend/seed_career_v2_2026-08-31_parts_gz/`, are earlier snapshots. The
+  2026-09-01 transport is the regenerated candidate; it has not been applied
+  to Supabase and must still pass deployment preflight and execution checks.
 
 The population gate and role-completeness audit pass for the repaired source
 state. This proves local content and referential readiness; it does not prove
@@ -659,38 +788,66 @@ secure-window behavior and Android end-to-end testing remain deployment work.
 The following order is authoritative. Content enrichment and product behavior
 must be reviewed before deployment or platform integration.
 
-1. Audit the current source-backed domain, subgroup, and role fields and
-   reconcile conflicting audit snapshots before treating any layer as complete.
+### Evidence packet required before the final freeze
+
+The release packet must include the [academic methodology](CAREER_TAXONOMY_ACADEMIC_METHODOLOGY.md),
+the [personal handoff](CAREER_TAXONOMY_PERSONAL_HANDOFF.md), and the
+[complete source and behavior inventory](CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md).
+The academic packet is intended for reviewers without repository access: it
+names the actual JAMB and CCMAS documents, records page/section examples,
+lists every routed global and Nigerian source family, explains the source-fact
+to rule to mapping decision, and states whether each source was checked in an
+extract, checked in a source document, or retained only as a registry route.
+The PDFs are generated from these revised documents after the text and links
+are verified; they are not evidence that SQL has been regenerated.
+
+1. Freeze and distribute the authoritative source inventory and audit the
+   current source-backed domain, subgroup, and role fields, including
+   WEF trend annotations and source-version crosswalks, and reconcile
+   conflicting audit snapshots before treating any layer as complete. Review
+   every explicit under-review, unresolved, unavailable, partial, and
+   not-established record in the full authoritative data set. Reconcile the
+   historical 153 CCMAS/JAMB insufficient occurrences and any remaining
+   bounded records through explicit source-backed dispositions; do not erase
+   them or turn them into unsupported exact matches. WEF signals remain
+   explanatory trend evidence, never a Nigerian priority score.
 2. Add only source-backed explanatory fields for domains, subgroups, and roles:
    field meaning, work context, outputs, bridge/foundation explanation,
-   progression, Nigerian/global evidence, and explicit unknown states.
-3. Make the admission programme result show a compact canonical programme
+   progression, Nigerian/global evidence, and explicit unknown states. For
+   programme-fit gaps, use Nigerian CCMAS/NUC/JAMB, professional-body, or
+   Nigerian-university curriculum evidence with exact course/outcome locators;
+   global sources remain domain-context evidence only.
+3. Verify the academic examples and the JAMB-only, O-level-only, and combined
+   matcher behavior against the source documents and current implementation;
+   confirm university offerings remain downstream of the canonical programme
+   identity.
+4. Make the admission programme result show a compact canonical programme
    preview with Skills taught; do not add domains to that preview.
-4. Make the programme detail screen distinguish canonical programme content
+5. Make the programme detail screen distinguish canonical programme content
    from university-specific requirements.
-5. Remove the universal university gate for SS1/SS2 career exploration while
+6. Remove the universal university gate for SS1/SS2 career exploration while
    retaining university-specific requirement context.
-6. Apply the domain/subgroup/role summary -> prioritized set -> See all pattern,
+7. Apply the domain/subgroup/role summary -> prioritized set -> See all pattern,
    including the explanatory language for direct routes and possible pivots.
-7. Sort and label subgroup roles by verified entry/mid/senior tier.
-8. Implement admin target selection, journey modes, organization scope,
+8. Sort and label subgroup roles by verified entry/mid/senior tier.
+9. Implement admin target selection, journey modes, organization scope,
    class/stream filters, consent boundaries, and anonymous sessions.
-9. Verify all in-scope user types, direct/functional/adjacent choices, primary
+10. Verify all in-scope user types, direct/functional/adjacent choices, primary
    and secondary routes, and mobile/web rendering.
-10. Verify loading, empty, error, unavailable-evidence, saving, saved,
+11. Verify loading, empty, error, unavailable-evidence, saving, saved,
     selected, view-only, back, resume, feedback, accessibility, and reduced
     motion behavior.
-11. Finalize the content/schema contract and source-link model. Generate the
+12. Finalize the content/schema contract and source-link model. Generate the
     canonical SQL seed once from that frozen state; do not regenerate during
     offline or Android work unless the schema or source data genuinely changes.
-12. Reconcile migration order and run-book instructions, then apply and verify
+13. Reconcile migration order and run-book instructions, then apply and verify
     the frozen SQL in a controlled Supabase environment before packaging
     offline data.
-13. Implement paid online report authorization and the offline content policy:
+14. Implement paid online report authorization and the offline content policy:
     encrypted account-scoped caching, signed entitlement/session envelopes,
     offline saves/resume, queue idempotency, clock/account/device checks,
     reconnect revocation, and honest partial-cache recovery.
-14. Build and test Android against the verified backend, including online
+15. Build and test Android against the verified backend, including online
     sign-in, offline access to the synchronised catalogue, World saves,
     account switching, entitlement expiry, reconnect, secure-window behavior,
     and unavailable offline report/export actions.

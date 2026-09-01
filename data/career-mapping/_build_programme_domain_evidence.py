@@ -32,6 +32,12 @@ EXTRA_ANCHORS = {
     "D048": ["food science", "food technology", "brewing", "food processing", "food microbiology", "food chemistry"],
     "D075": ["fashion", "textile", "garment", "clothing", "apparel", "dress", "pattern", "sewing"],
     "D076": ["marine", "maritime", "ocean", "seamanship", "navigation", "ship", "vessel"],
+    # The Nigerian LSM curriculum names global trade, customs regulations,
+    # freight, warehousing and supply-chain operations explicitly. These are
+    # domain concepts from D079's definition/foundation, not generated
+    # synonyms, and prevent a valid CCMAS anchor from being missed because
+    # "Customs, Trade" is not a contiguous phrase in the course title.
+    "D079": ["customs", "customs regulations", "global trade", "import export", "freight", "warehousing", "forwarding", "supply chain"],
     "D045": ["public administration", "government", "public policy", "civil service", "public sector"],
     "D073": ["library", "librarianship", "archive", "archival", "information resource", "records management"],
     "D081": ["office administration", "secretarial", "office practice", "shorthand", "typing", "administrative practice"],
@@ -71,6 +77,22 @@ REVIEW_SOURCE_STATES = {
     "extraction_gap",
     "table_omitted",
     "programme_conflict",
+}
+
+# The CCMAS extraction stores transferable curriculum evidence separately from
+# discipline/technical skills.  Keep the gate conservative: only retain an
+# item when the source text contains a recognizable transferable-competency
+# signal.  The item itself is always copied from CCMAS; these terms only
+# classify evidence and do not create new curriculum content.
+TRANSFERABLE_COMPETENCY_TERMS = {
+    "communication": ("communicat", "presentation", "public speaking", "listening", "writing", "report"),
+    "analysis_and_reasoning": ("analytical", "analysis", "critical reasoning", "critical thinking", "problem solving", "problem-solving", "logic", "reasoning"),
+    "research_and_evidence": ("research", "evidence", "evaluate", "evaluation", "data analysis", "interpret data"),
+    "planning_and_delivery": ("project", "planning", "organis", "organiz", "time management", "process"),
+    "collaboration_and_leadership": ("team", "collaborat", "leadership", "negotiat", "interpersonal"),
+    "digital_and_technology": ("digital", "computer", "information technology", "technology", "software"),
+    "entrepreneurship_and_innovation": ("entrepreneur", "innovation", "business", "enterprise", "commercial"),
+    "professional_and_ethical_practice": ("ethical", "professional", "integrity", "responsib", "sustainab"),
 }
 
 # These conflicts were checked against the original NUC CCMAS PDFs.  The
@@ -153,7 +175,39 @@ def text_tokens(value: str) -> set[str]:
 
 
 def as_text(value) -> str:
-    return value if isinstance(value, str) else ""
+    if not isinstance(value, str):
+        return ""
+    value = value.strip()
+    # Extracted JSON contains literal NaN placeholders for missing fields in
+    # some older taxonomy rows. They are not curriculum evidence and must
+    # never become substring anchors ("nan" matches unrelated words such as
+    # Nigerian and management).
+    if value.lower() in {"nan", "none", "null"}:
+        return ""
+    return value
+
+
+def transferable_evidence(programme: dict) -> list[dict]:
+    """Return only source-provided, recognizable transferable evidence.
+
+    This is deliberately not a generated capability list.  The extracted
+    CCMAS item remains the evidence, while the category is an audit aid for
+    the Adjacent mapping gate.
+    """
+    results = []
+    for raw in programme.get("skills_profile_transferable", []) or []:
+        text = as_text(raw)
+        if not text:
+            continue
+        lowered = text.lower()
+        categories = [
+            category
+            for category, terms in TRANSFERABLE_COMPETENCY_TERMS.items()
+            if any(term in lowered for term in terms)
+        ]
+        if categories:
+            results.append({"evidence": text, "categories": categories})
+    return results
 
 
 def load_programmes() -> tuple[dict, dict[str, str]]:
@@ -180,6 +234,7 @@ def main() -> None:
         programme = programmes[programme_key]
         discipline, programme_name = programme_key.split("::", 1)
         courses = programme.get("courses", [])
+        transferable_items = transferable_evidence(programme)
         programme_source_flags = []
         if programme_source_review_required(discipline, programme_name, programme):
             programme_source_flags.append({
@@ -208,7 +263,11 @@ def main() -> None:
                     *[item.get("skill", "") for item in domain_structure.get("foundation_skills", [])[:20]],
                 ]
             )
-            anchor_phrases = [phrase.lower().strip() for phrase in anchor_phrases if isinstance(phrase, str) and len(phrase.strip()) > 2]
+            anchor_phrases = sorted({
+                phrase.lower().strip()
+                for phrase in anchor_phrases
+                if as_text(phrase) and len(as_text(phrase)) > 2
+            }, key=lambda phrase: (-len(phrase), phrase))
             course_anchors = []
             source_flagged_courses = []
             for course in courses:
@@ -225,7 +284,17 @@ def main() -> None:
                         source_flagged_courses.append(item)
                     course_anchors.append(item)
 
-            if len(course_anchors) >= 2:
+            # The active mapping rule requires at least two specific,
+            # source-backed course/objective anchors for Direct or Functional
+            # links. Adjacent links use one domain-specific conceptual
+            # prerequisite together with transferable-competency evidence.
+            # These are evidence gates, not similarity scores.
+            match_type = link.get("match_type")
+            if match_type in {"direct", "functional"}:
+                strong_evidence = len(course_anchors) >= 2
+            else:
+                strong_evidence = len(course_anchors) >= 1 and bool(transferable_items)
+            if strong_evidence:
                 quality = "strong"
             elif len(course_anchors) == 1:
                 quality = "moderate"
@@ -246,10 +315,21 @@ def main() -> None:
                 "course_anchor_quality": quality,
                 "course_anchor_count": len(course_anchors),
                 "course_anchors": course_anchors[:12],
+                "transferable_evidence_count": len(transferable_items),
+                "transferable_evidence": transferable_items[:12],
+                "adjacent_evidence_gate": (
+                    "one_domain_course_anchor_plus_transferable_evidence"
+                    if match_type == "adjacent" else None
+                ),
                 "source_review_required": bool(source_flagged_courses or programme_source_flags),
                 "source_flagged_courses": source_flagged_courses[:12],
                 "programme_source_flags": programme_source_flags[:12],
-                "review_required": quality == "weak" or (link.get("match_type") == "direct" and quality != "strong") or bool(source_flagged_courses or programme_source_flags),
+                # A link is not certified merely because it has one or two
+                # textual hits. Direct links require strong evidence; a
+                # Functional/Adjacent link with weak or moderate evidence is
+                # also held for review until the named CCMAS course/outcome
+                # and the specialist gap are confirmed.
+                "review_required": quality != "strong" or bool(source_flagged_courses or programme_source_flags),
             }
 
     OUTPUT_PATH.write_text(json.dumps(evidence, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

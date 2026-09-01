@@ -1,0 +1,39 @@
+{
+  "schema_version": "2026-09-01.ilostat-nigeria-occupation-context.v1",
+  "purpose": "Preserve an exact ILOSTAT Nigeria labour-context extract for review; it is not a role-vacancy or role-priority seed.",
+  "source": {
+    "provider": "International Labour Organization",
+    "dataset_label": "Employment by sex and occupation -- ILO modelled estimates, Nov. 2025 (thousands)",
+    "indicator_id": "EMP_2EMP_SEX_OCU_NB_A",
+    "reference_area": "NGA",
+    "sex": "SEX_T",
+    "classification": "ISCO-08 major groups",
+    "year": 2025,
+    "source_label": "ILO - Modelled Estimates",
+    "api_url": "https://rplumber.ilo.org/data/indicator/?id=EMP_2EMP_SEX_OCU_NB_A&ref_area=NGA&type=label&format=.csv",
+    "catalogue_url": "https://ilostat.ilo.org/data/",
+    "retrieved_at": "2026-09-01"
+  },
+  "observations_thousands": [
+    {"isco_major_group": "TOTAL", "label": "Total", "value": 113008.914},
+    {"isco_major_group": "1", "label": "Managers", "value": 798.672},
+    {"isco_major_group": "2", "label": "Professionals", "value": 5343.783},
+    {"isco_major_group": "3", "label": "Technicians and associate professionals", "value": 2479.818},
+    {"isco_major_group": "4", "label": "Clerical support workers", "value": 1110.903},
+    {"isco_major_group": "5", "label": "Service and sales workers", "value": 33604.758},
+    {"isco_major_group": "7", "label": "Craft and related trades workers", "value": 13556.003},
+    {"isco_major_group": "8", "label": "Plant and machine operators, and assemblers", "value": 6214.688},
+    {"isco_major_group": "96", "label": "Elementary occupations and skilled agricultural, forestry and fishery workers", "value": 49900.287}
+  ],
+  "permitted_use": [
+    "Broad Nigerian labour-context display or research context.",
+    "A signal for deciding where a detailed, role-level Nigerian demand study may be worthwhile.",
+    "Cross-checking that domain explanations do not imply that all Nigerian work is formal professional employment."
+  ],
+  "limitations": [
+    "These are modelled estimates, not a direct vacancy count or employer preference dataset.",
+    "The extract is at ISCO major-group level and cannot identify demand for an individual Sifter role, subgroup, skill, tool, certification, or programme.",
+    "It must not by itself reorder entry, mid, or senior roles or be displayed as evidence that a specific role is locally available.",
+    "Detailed observed Nigerian labour evidence requires the exact underlying national survey extract, period, classification level, and mapping record."
+  ]
+}
