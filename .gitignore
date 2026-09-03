@@ -11,6 +11,13 @@ dist/
 # Metro and tsc from walking it when it does.
 .expo-web-test/
 
+# A Windows virtualenv (Lib/, Scripts/, pyvenv.cfg) that was committed whole:
+# 450 files of vendored pip. Nothing imports it -- metro.config.js,
+# __tests__/sourceEncoding.test.ts and .woodpecker/security.yml each had to
+# exclude it by name, which is the tell. Those exclusions stay: the directory
+# still regenerates locally, it just no longer ships in the repo.
+litellm-env/
+
 # Jest coverage output. `--coverage` is how CI runs the suite, so anyone who
 # reproduces CI locally generates this; without the ignore it shows up in
 # `git status` and gets committed by accident (PR #108 carries 113 such files,
