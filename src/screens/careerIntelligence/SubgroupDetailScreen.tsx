@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { CertPlacementList, DetailScaffold, GuidanceEvidenceBlock, LearningResourcesBlock, MethodEvidenceBlock, NigerianContextBlock, SectionLabel, TierBadgeView, ToolGroupsBlock } from "@/components/careerIntelligence";
+import { CertPlacementList, ContextualItemList, DetailScaffold, GuidanceEvidenceBlock, LearningResourcesBlock, MethodEvidenceBlock, NigerianContextBlock, SectionLabel, TierBadgeView, ToolGroupsBlock } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { careerRoleTierLabel, compareCareerRoles } from "@/lib/careerRoleOrdering";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -34,7 +34,7 @@ export default function SubgroupDetailScreen() {
   const roles = (state.data?.roles.filter((role) => role.subgroupId === subgroupId) ?? []).sort(compareCareerRoles);
   const inheritedFoundation = (state.data?.foundationSkills ?? []).slice(0, 3);
 
-  return <DetailScaffold eyebrow="SUBGROUP" title={subgroup?.name ?? "Subgroup"} backLabel={`Back to ${state.data?.name ?? "domain"}`} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Subgroup", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} state={state} onRetry={loadDomain}>
+  return <DetailScaffold eyebrow="SUBGROUP" title={subgroup?.name ?? "Subgroup"} backLabel={`Back to ${state.data?.name ?? "domain"}`} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Subgroup", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} state={state} onRetry={loadDomain} requiresAccountForDetails guestDescription={subgroup?.whatPeopleDo || subgroup?.description}>
     {() => subgroup ? <View style={styles.body}>
       <SectionLabel>Overview</SectionLabel>
       <Text style={[styles.heading, { color: colors.textRole.primary }]}>What people do in this area</Text>
@@ -47,6 +47,7 @@ export default function SubgroupDetailScreen() {
       </View> : null}
       {subgroup.workContext?.length ? <View style={styles.detail}><SectionLabel>Typical work context</SectionLabel><Text style={[styles.copy, { color: colors.textRole.muted }]}>These context signals come from the attached occupational evidence. They describe the work setting, not a promise about every employer.</Text>{subgroup.workContext.map((context) => <Text key={`${context.name}-${context.frequency ?? ""}`} style={[styles.copy, { color: colors.textRole.secondary }]}>• {context.name}{context.frequency ? ` — ${context.frequency}` : ""}</Text>)}</View> : null}
       {subgroup.clusterSkills.length ? <View style={styles.detail}><SectionLabel>New skills and competencies for this specialization</SectionLabel><Text style={[styles.copy, { color: colors.textRole.muted }]}>Start with the capabilities shown first. The remaining capabilities are available when you want the full picture.</Text><View style={styles.skillList}>{(skillsExpanded ? subgroup.clusterSkills : subgroup.clusterSkills.slice(0, 3)).map((skill) => <Text key={skill} style={[styles.skill, { color: colors.textRole.secondary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>{skill}</Text>)}</View>{subgroup.clusterSkills.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.more, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer subgroup skills" : `See all ${subgroup.clusterSkills.length} subgroup skills`}</Text></TouchableOpacity> : null}</View> : null}
+      <ContextualItemList items={subgroup.contextItems} title="What each item does in this specialization" />
       <ToolGroupsBlock tools={subgroup.tools} title="Tools for this specialization" />
       <MethodEvidenceBlock methods={subgroup.methodEvidence} title="Competencies and methods connected to this specialization" />
       <GuidanceEvidenceBlock evidence={subgroup.guidanceEvidence} />

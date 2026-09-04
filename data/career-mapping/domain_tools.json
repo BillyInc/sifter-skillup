@@ -4320,11 +4320,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Oracle PL/SQL",
@@ -4982,11 +4988,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Apache Spark",
@@ -5592,11 +5604,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Linux",
@@ -8240,11 +8258,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Microsoft SQL Server Reporting Services SSRS",
@@ -9627,11 +9651,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Oracle PL/SQL",
@@ -18134,11 +18164,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Microsoft Visual Basic for Applications VBA",
@@ -18721,11 +18757,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -20327,11 +20369,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Microsoft SQL Server",
@@ -21070,11 +21118,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Microsoft Power BI",
@@ -21656,11 +21710,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -22058,11 +22118,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Apache Hive",
@@ -24306,11 +24372,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "SAP Concur",
@@ -24869,11 +24941,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "SAP Concur",
@@ -25211,11 +25289,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Yardi software",
@@ -25494,11 +25578,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Yardi software",
@@ -25758,11 +25848,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Oracle PeopleSoft",
@@ -26443,11 +26539,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "PyTorch",
@@ -26745,11 +26847,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Microsoft Edge",
@@ -27006,11 +27114,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      }
     ],
     "common": [
@@ -27147,11 +27261,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -28638,11 +28758,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -29042,11 +29168,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Marketo Marketing Automation",
@@ -29627,11 +29759,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -30029,11 +30167,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Apache Hive",
@@ -30255,11 +30399,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Alteryx software",
@@ -30881,11 +31031,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Workday software",
@@ -31183,11 +31339,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Alteryx software",
@@ -31507,11 +31669,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Alteryx software",
@@ -32193,11 +32361,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "PyTorch",
@@ -32475,11 +32649,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Workday software",
@@ -38449,11 +38629,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Transact-SQL",
@@ -39570,11 +39756,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Transact-SQL",
@@ -45291,11 +45483,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Transact-SQL",
@@ -45754,11 +45952,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Transact-SQL",
@@ -53538,11 +53742,17 @@
       "in_demand": true,
       "domain_spread": 8,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Customer relationship management CRM software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "HubSpot software",
@@ -53903,11 +54113,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Transact-SQL",
@@ -54693,11 +54909,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Transact-SQL",
@@ -64859,11 +65081,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "SAP ERP",
@@ -66430,11 +66658,17 @@
     "in_demand": true,
     "domain_spread": 8,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Customer relationship management CRM software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Customer relationship management CRM software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Yardi software",
@@ -67772,11 +68006,17 @@
       "in_demand": true,
       "domain_spread": 8,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Customer relationship management CRM software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Google Angular",
@@ -68036,11 +68276,17 @@
       "in_demand": true,
       "domain_spread": 8,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Customer relationship management CRM software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "HubSpot software",
@@ -68421,11 +68667,17 @@
     "in_demand": true,
     "domain_spread": 9,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Project management software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Project management software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Oracle PeopleSoft",
@@ -69070,11 +69322,17 @@
       "in_demand": true,
       "domain_spread": 9,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Project management software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Project management software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Asana",
@@ -69720,11 +69978,17 @@
       "in_demand": true,
       "domain_spread": 9,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Project management software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Project management software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Content management systems CMS",
@@ -74568,11 +74832,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Slack",
@@ -76043,11 +76313,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Transact-SQL",
@@ -80438,11 +80714,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Transact-SQL",
@@ -82525,11 +82807,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Apache Hive",
@@ -83668,11 +83956,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Google Workspace software",
@@ -84181,11 +84475,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Alteryx software",
@@ -84745,11 +85045,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "SAP Concur",
@@ -86667,11 +86973,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Spring Boot",
@@ -89141,11 +89453,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Transact-SQL",
@@ -106649,11 +106967,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Adobe After Effects",
@@ -122402,11 +122726,17 @@
       "in_demand": true,
       "domain_spread": 8,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Customer relationship management CRM software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Border Gateway Protocol BGP",
@@ -123796,11 +124126,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      }
     ],
     "common": [
@@ -124142,11 +124478,17 @@
     "in_demand": true,
     "domain_spread": 9,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Project management software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Project management software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Bentley MicroStation",
@@ -125432,11 +125774,17 @@
       "in_demand": true,
       "domain_spread": 9,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Project management software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Project management software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Procore software",
@@ -138904,11 +139252,17 @@
     "in_demand": true,
     "domain_spread": 18,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Accounting software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Accounting software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Yardi software",
@@ -139426,11 +139780,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Yardi software",
@@ -139709,11 +140069,17 @@
       "in_demand": true,
       "domain_spread": 18,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Accounting software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Accounting software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Google Sheets",
@@ -140032,11 +140398,17 @@
     "in_demand": true,
     "domain_spread": 50,
     "group": "distinctive",
-    "element_name": null,
+    "element_name": "Operating system software",
     "element_id": null,
-    "source_confidence": "unsourced",
-    "data_state": "unsourced",
-    "provenance": {}
+    "source_confidence": "high",
+    "data_state": "source_backed",
+    "provenance": {
+     "source": "onet_31_0_software_skills",
+     "element_names": [
+      "Operating system software"
+     ]
+    },
+    "source": "onet"
    },
    {
     "tool": "Eclipse IDE",
@@ -140494,11 +140866,17 @@
       "in_demand": true,
       "domain_spread": 50,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Operating system software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Operating system software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Eclipse IDE",
@@ -140568,11 +140946,17 @@
       "in_demand": true,
       "domain_spread": 8,
       "group": "distinctive",
-      "element_name": null,
+      "element_name": "Customer relationship management CRM software",
       "element_id": null,
-      "source_confidence": "unsourced",
-      "data_state": "unsourced",
-      "provenance": {}
+      "source_confidence": "high",
+      "data_state": "source_backed",
+      "provenance": {
+       "source": "onet_31_0_software_skills",
+       "element_names": [
+        "Customer relationship management CRM software"
+       ]
+      },
+      "source": "onet"
      },
      {
       "tool": "Mozilla Firefox",

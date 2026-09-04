@@ -141,10 +141,14 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
 
   const handleGuest = async () => {
     setError("");
+    // Guest entry is not a login submission. Clear any credentials the user
+    // may have typed before navigating so the browser does not interpret the
+    // guest action as a successful credential submission or offer to save it.
+    resetLoginFields();
     setGuestLoading(true);
     try {
       await signInGuest();
-      router.replace("/(tabs)/settings/my-school?from=guest" as any);
+      router.replace("/(tabs)/explore" as any);
     } catch (e) {
       setError(friendlyAuthError(e, "Could not continue as guest."));
     } finally {
@@ -450,7 +454,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
                 keyboardType="email-address"
                 placeholder="you@example.com"
                 autoFocus
-                autoComplete="username"
+                autoComplete="off"
               />
 
               <AuthField
@@ -459,7 +463,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
                 onChangeText={setPassword}
                 secure
                 placeholder="Password"
-                autoComplete="current-password"
+                autoComplete="off"
               />
               <AuthField
                 label="School code (optional)"
@@ -524,31 +528,6 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
                 </Text>
               </TouchableOpacity>
 
-              <View
-                style={[
-                  styles.authDivider,
-                  { borderTopColor: colors.borderRole.subtle },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.authDividerText,
-                    { color: colors.textRole.muted },
-                    CompassFonts.body,
-                  ]}
-                >
-                  or
-                </Text>
-              </View>
-
-              <SifterButton
-                label="Continue as Guest"
-                onPress={handleGuest}
-                loading={guestLoading}
-                variant="ghost"
-                size="lg"
-                fullWidth
-              />
             </Animated.View>
 
             <LegalFooter

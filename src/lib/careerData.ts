@@ -40,6 +40,7 @@ import {
   type DomainV2,
   type DomainRoleV2,
   type CareerSearchResult,
+  type SearchIntent,
   type SkillDiscoveryResult,
   type JambDomainResult,
   type PivotResult,
@@ -603,11 +604,17 @@ export const careerData = {
     );
   },
 
-  /** Disambiguation search: domains, roles (+aliases), programmes. */
-  async searchCareer(query: string): Promise<DataState<CareerSearchResult>> {
+  /** Context-aware search for a concrete user task, not a flat keyword dump. */
+  async searchCareer(query: string, intent?: SearchIntent, userType?: string | null, schoolId?: string | null): Promise<DataState<CareerSearchResult>> {
+    const normalizedQuery = query.trim().toLowerCase();
+    const cacheIntent = intent ?? "undecided";
+    const cacheUserType = userType ?? "unknown";
+    const cacheSchool = schoolId ?? "none";
     return readThrough(
-      `search_${query.trim().toLowerCase()}`,
-      () => request<DataState<CareerSearchResult>>(`/api/career/search?q=${encodeURIComponent(query)}`),
+      `search_${cacheIntent}_${cacheUserType}_${cacheSchool}_${normalizedQuery}`,
+      () => request<DataState<CareerSearchResult>>(
+        `/api/career/search?q=${encodeURIComponent(query)}${intent ? `&intent=${encodeURIComponent(intent)}` : ""}${userType ? `&user_type=${encodeURIComponent(userType)}` : ""}${schoolId ? `&school_id=${encodeURIComponent(schoolId)}` : ""}`,
+      ),
       "Search is temporarily unavailable.",
       SEARCH_TTL_MS,
     );
@@ -1236,7 +1243,7 @@ export const careerData = {
   },
 
   // ─── Phase 7: elite pathways · bridge · special flows ────────
-  /** The elite domains (see ELITE_DOMAIN_COUNT), for the Elite Pathways hub. */
+  /** Evidence-gated elite routes for the Elite Pathways hub; no fixed count. */
   async getElitePathways(): Promise<DataState<ElitePathwaySummary[]>> {
     try {
       return await request<DataState<ElitePathwaySummary[]>>(

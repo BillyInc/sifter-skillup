@@ -67,6 +67,21 @@ function formatPrice(
   return `${symbol}${amount}`;
 }
 
+function credentialTypeLabel(type: CertificationV2Enriched["credentialType"]): string | null {
+  switch (type) {
+    case "professional_registration_or_licence":
+      return "Professional registration or licence";
+    case "membership_or_accreditation":
+      return "Membership or accreditation";
+    case "training_or_course":
+      return "Training or course";
+    case "certification_or_qualification":
+      return "Certification or qualification";
+    default:
+      return null;
+  }
+}
+
 function TierChip({ tier }: { tier?: number }) {
   const { colors } = useTheme();
   if (tier == null) return null;
@@ -109,16 +124,18 @@ function CertRow({
   const hasUrl = !!cert.officialUrl;
   const [notice, setNotice] = useState<string | null>(null);
 
-  const openUrl = async () => {
-    if (!cert.officialUrl) return;
+  const openLink = async (url?: string | null) => {
+    if (!url) return;
     setNotice(null);
     if (!(await hasInternetConnection())) {
       setNotice(OFFLINE_LINK_NOTICE);
       return;
     }
-    const opened = await Linking.openURL(cert.officialUrl).then(() => true).catch(() => false);
+    const opened = await Linking.openURL(url).then(() => true).catch(() => false);
     if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
   };
+
+  const openUrl = () => openLink(cert.officialUrl);
 
   return (
     <View
@@ -146,7 +163,7 @@ function CertRow({
           {cert.name}
           {hasUrl ? " ↗" : ""}
         </Text>
-          {cert.body ? (
+        {cert.body ? (
           <Text
             style={[styles.certBody, { color: colors.textMuted }]}
             numberOfLines={1}
@@ -154,10 +171,33 @@ function CertRow({
             {cert.body}
           </Text>
           ) : null}
+        {cert.availabilityStatus && cert.availabilityStatus !== "active" ? (
+          <Text
+            style={[styles.certBody, { color: colors.textMuted }]}
+            accessibilityLabel={`${cert.name} is ${cert.availabilityStatus.replaceAll("_", " ")}`}
+          >
+            {cert.availabilityNote || (cert.availabilityStatus === "temporarily_unavailable"
+              ? "Currently unavailable; check the issuer for reopening."
+              : cert.availabilityStatus === "superseded"
+                ? "Replaced by a newer issuer route."
+                : "Retired by the issuer.")}
+          </Text>
+        ) : null}
+        {cert.replacementName ? (
+          <TouchableOpacity
+            accessibilityRole="link"
+            accessibilityLabel={`Open current route: ${cert.replacementName}`}
+            onPress={() => openLink(cert.replacementUrl || cert.officialUrl)}
+          >
+            <Text style={[styles.certBody, styles.certNameLink, { color: colors.accent }]}>
+              Current route: {cert.replacementName} â†—
+            </Text>
+          </TouchableOpacity>
+        ) : null}
         {notice ? (
           <Text style={[styles.certBody, { color: colors.textMuted }]}>{notice}</Text>
         ) : null}
-        {price || cert.tierType ? (
+        {price || cert.tierType || cert.credentialType ? (
           <View style={styles.certFacts}>
             {price ? (
               <Text style={[styles.price, { color: colors.textSoft }]}>
@@ -167,6 +207,11 @@ function CertRow({
             {cert.tierType ? (
               <Text style={[styles.tierType, { color: colors.textMuted }]}>
                 {cert.tierType === "ladder" ? "Ladder" : "Stages"}
+              </Text>
+            ) : null}
+            {credentialTypeLabel(cert.credentialType) ? (
+              <Text style={[styles.tierType, { color: colors.textMuted }]}>
+                {credentialTypeLabel(cert.credentialType)}
               </Text>
             ) : null}
           </View>

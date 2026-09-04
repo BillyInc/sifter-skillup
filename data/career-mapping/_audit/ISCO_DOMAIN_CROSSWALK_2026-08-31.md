@@ -1,6 +1,8 @@
 # ISCO domain-code reconciliation — 2026-08-31
 
-The domain-definition library contains eight four-digit values absent from the supplied ISCO-08 workbook. This report preserves those raw values, shows valid parent/sibling candidates, and records a non-silent disposition for each. It does not promote an inferred replacement.
+> **Superseded:** This historical report is not the current disposition. A fresh official ILO search source-closed all eight values. See [ISCO_DOMAIN_CODE_SOURCE_CLOSURE_2026-09-04.md](ISCO_DOMAIN_CODE_SOURCE_CLOSURE_2026-09-04.md); it records zero records left pending.
+
+The domain-definition library contained eight four-digit values absent from the supplied ISCO-08 workbook. This historical report preserves the raw values and the earlier conservative candidates. Use the source-closed report above for the current result.
 
 - Missing raw codes: **8**.
 - Affected domains: **4**.

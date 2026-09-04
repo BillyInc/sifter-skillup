@@ -162,6 +162,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const isViewOnly = Boolean(viewOnly || routeViewOnly);
   const activeJourneyMode = journeyMode || (Array.isArray(routeParams.journey_mode) ? routeParams.journey_mode[0] : routeParams.journey_mode) || "";
   const universityOptionsOnly = activeJourneyMode === "universities_only";
+  const undergraduateContext = userType === "student" || activeJourneyMode === "undergraduate_career" || activeJourneyMode === "undergraduate_programmes";
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
   const [tab, setTab] = useState<ProgrammeTab>("overview");
@@ -312,15 +313,20 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   };
 
   const header = (
-    <TextTabs
+      <TextTabs
       value={tab}
       onChange={setTab}
-      tabs={[
-        { value: "overview", label: "Overview" },
-        { value: "requirements", label: "Requirements" },
-        { value: "schools", label: "Universities" },
-        { value: "career", label: "Career guidance" },
-      ]}
+       tabs={undergraduateContext
+         ? [
+           { value: "overview", label: "Overview" },
+           { value: "career", label: "Career guidance" },
+         ]
+         : [
+           { value: "overview", label: "Overview" },
+           { value: "requirements", label: "Requirements" },
+           { value: "schools", label: "Universities" },
+           { value: "career", label: "Career guidance" },
+         ]}
       style={styles.tabs}
     />
   );
@@ -336,6 +342,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       state={state.status === "real" ? state : { ...state, data: state.data ?? PLACEHOLDER }}
       onRetry={loadProgramme}
       header={header}
+      requiresAccountForDetails
+      guestDescription={programme?.overview}
     >
       {(data) => (
         <ProgrammeDetailBody
@@ -346,7 +354,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
           schools={visibleSchools}
           selectedSchool={selectedSchool}
           selectedSchoolId={selectedSchoolId}
-          earlySecondary={userType === "senior_secondary"}
+           earlySecondary={userType === "senior_secondary"}
+           undergraduateContext={undergraduateContext}
           notice={notice}
           savingSchool={savingSchool}
           onSelectSchool={selectSchool}
@@ -381,6 +390,7 @@ function ProgrammeDetailBody({
   selectedSchool,
   selectedSchoolId,
   earlySecondary,
+  undergraduateContext,
   notice,
   savingSchool,
   onSelectSchool,
@@ -401,6 +411,7 @@ function ProgrammeDetailBody({
   selectedSchool: JambProgrammeSchool | null;
   selectedSchoolId: string | null;
   earlySecondary: boolean;
+  undergraduateContext: boolean;
   notice: string | null;
   savingSchool: string | null;
   onSelectSchool: (school: JambProgrammeSchool) => void;
@@ -454,10 +465,11 @@ function ProgrammeDetailBody({
           )}
           <DegreeSkills technical={data.skillsTechnical} transferable={data.skillsTransferable} total={data.skillsCount} />
           {data.skillsCount ? <DataSourceBadge verification="verified" source="CCMAS/JAMB learning outcomes" /> : null}
-          {selectedSchool || earlySecondary ? (
+          {selectedSchool || earlySecondary || undergraduateContext ? (
              <View style={styles.block}>
-               {earlySecondary && !selectedSchool ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>You can continue into domain guidance without choosing a university. The university list remains available whenever you want to inspect a school&apos;s requirements.</Text> : null}
-               {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a review-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
+                {earlySecondary && !selectedSchool ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>You can continue into domain guidance without choosing a university. The university list remains available whenever you want to inspect a school&apos;s requirements.</Text> : null}
+                {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
+                {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a review-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
               {showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceStudentId, focusedGuidance)} onContinue={onContinueCareer} /> : <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><SectionLabel>University options review</SectionLabel><Text style={[styles.body, { color: colors.textRole.secondary }]}>You have reviewed this university offering and its requirements. Career guidance is not part of this session mode.</Text><TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Change university</Text></TouchableOpacity></View>}
              </View>
            ) : (

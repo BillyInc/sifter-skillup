@@ -23,6 +23,7 @@ import {
   NigerianContextBlock,
   LearningResourcesBlock,
   RoleWorkEvidenceBlock,
+  ContextualItemList,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -96,6 +97,8 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
       targetStudentId={targetStudentId}
       state={state}
       onRetry={loadRole}
+      requiresAccountForDetails
+      guestDescription={state.data?.description}
     >
       {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />}
     </DetailScaffold>
@@ -249,6 +252,7 @@ function RoleBody({
            {(hiddenSkillCount > 0 || skillsExpanded) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer role skills" : `See all ${essential.length + optional.length} role skills`}</Text></TouchableOpacity> : null}
         </View>
       ) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>No role skill list is attached to this source record yet. Do not treat the absence as proof that no preparation is needed.</Text>}
+      <ContextualItemList items={role.contextItems} title="What each skill and tool does in this role" />
 
       <MethodEvidenceBlock methods={role.computationalMethods} title="Methods connected to this role" />
       <GuidanceEvidenceBlock evidence={role.guidanceEvidence} />

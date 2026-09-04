@@ -2,7 +2,7 @@
  * ExploreScreen — the core entry point (and the guest landing).
  *
  * Editorial front page with:
- *  1. Scoped disambiguation search (domains, roles, programmes)
+ *  1. Scoped disambiguation search across the public career catalogue
  *  2. Hero cluster carousel (8 signature clusters with signature colours)
  *  3. Browse clusters / pathways / admission intelligence / elite pathways
  *  4. Typed search results grouped by domain → role → programme
@@ -31,22 +31,23 @@ import {
   DataStateView,
   LockedPill,
   TierBadgeView,
-  InfoTooltip,
-  CoachMark,
+  ExploreGuide,
   FilterChip,
   ListRow,
   SearchBar,
+  SearchResultsGroup,
   SectionLabel,
 } from "@/components/careerIntelligence";
 import { SifterButton, SifterCard, PressableCard } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav, type ExploreNav } from "@/lib/exploreNav";
-import { locked, type DataState, type CareerSearchResult } from "@/types/career";
+import { locked, type DataState, type CareerSearchResult, type SearchResult } from "@/types/career";
 import { useAuth } from "@/hooks/useAuth";
 import { useResponsive } from "@/hooks/useResponsive";
 import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscoveryPanel";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
+import { getStartingPoint } from "@/lib/startingPoint";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -69,22 +70,22 @@ const CLUSTER_HEROES: {
   { id: "creative",name: "Creative",         color: "#F5A65B", icon: "star",          route: "Creative" },
 ];
 
-const PATHWAYS = [
-  { key: "phd",     label: "PhD & Research",   icon: "book" as const },
-  { key: "change",  label: "Career Change",     icon: "repeat" as const },
-  { key: "creds",   label: "Credentials",       icon: "award" as const },
-  { key: "upgrade", label: "Qualification Upgrades", icon: "arrow-up" as const },
-  { key: "entre",   label: "Entrepreneurship",  icon: "briefcase" as const },
-];
-
 const MIN_QUERY = 2;
 const TIERS: readonly TierType[] = ["entry", "mid", "senior"];
-type ResultFilter = "all" | "domains" | "roles" | "programmes";
+type ResultFilter = "all" | "programmes" | "universities" | "domains" | "subgroups" | "roles" | "skills" | "tools" | "certifications" | "opportunities";
 const asTier = (t?: string): TierType | undefined =>
   t && (TIERS as readonly string[]).includes(t) ? (t as TierType) : undefined;
 
 const isEmptyResult = (r: CareerSearchResult): boolean =>
-  r.domains.length === 0 && r.roles.length === 0 && r.programmes.length === 0;
+  r.domains.length === 0 &&
+  r.roles.length === 0 &&
+  r.programmes.length === 0 &&
+  (r.universities?.length ?? 0) === 0 &&
+  (r.subgroups?.length ?? 0) === 0 &&
+  (r.skills?.length ?? 0) === 0 &&
+  (r.tools?.length ?? 0) === 0 &&
+  (r.certifications?.length ?? 0) === 0 &&
+  (r.opportunities?.length ?? 0) === 0;
 
 export interface ExploreScreenProps {
   /**
@@ -113,12 +114,14 @@ export default function ExploreScreen({
   adminType,
 }: ExploreScreenProps = {}) {
   const { colors } = useTheme();
-  const { user, signInGuest } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const exploreNav = useExploreNav();
   const responsive = useResponsive();
   const isGuest = !user || user.auth_provider === "guest";
   const hasSession = Boolean(user);
+  const [searchUserType, setSearchUserType] = useState<string | null>(null);
+  const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
 
   const searchRef = useRef<TextInput>(null);
   const [query, setQuery] = useState(initialQuery);
@@ -133,6 +136,21 @@ export default function ExploreScreen({
   const [results, setResults] = useState<DataState<CareerSearchResult> | null>(
     null,
   );
+
+  useEffect(() => {
+    let active = true;
+    if (!user?.id || isGuest) {
+      setSearchUserType(null);
+      setSearchSchoolId(null);
+      return () => { active = false; };
+    }
+    void getStartingPoint(user.id).then((profile) => {
+      if (!active) return;
+      setSearchUserType(profile?.userType ?? null);
+      setSearchSchoolId(profile?.preferredSchoolId ?? null);
+    });
+    return () => { active = false; };
+  }, [isGuest, user?.id]);
 
   useEffect(() => {
     const q = query.trim();
@@ -152,7 +170,7 @@ export default function ExploreScreen({
     let active = true;
     setLoading(true);
     const t = setTimeout(async () => {
-      const state = await careerData.searchCareer(q);
+      const state = await careerData.searchCareer(q, undefined, searchUserType, searchSchoolId);
       if (active) {
         setResults(state);
         setLoading(false);
@@ -163,16 +181,22 @@ export default function ExploreScreen({
       clearTimeout(t);
       setLoading(false);
     };
-  }, [hasSession, query]);
+  }, [hasSession, isGuest, query, searchSchoolId, searchUserType]);
 
   const trimmed = query.trim();
   const searching = trimmed.length >= MIN_QUERY;
   const filters = useMemo(
     () => [
       { value: "all" as const, label: "All" },
-      { value: "domains" as const, label: "Domains" },
-      { value: "roles" as const, label: "Roles" },
       { value: "programmes" as const, label: "Programmes" },
+      { value: "universities" as const, label: "Universities" },
+      { value: "domains" as const, label: "Domains" },
+      { value: "subgroups" as const, label: "Subgroups" },
+      { value: "roles" as const, label: "Roles" },
+      { value: "skills" as const, label: "Skills" },
+      { value: "tools" as const, label: "Tools" },
+      { value: "certifications" as const, label: "Credentials" },
+      { value: "opportunities" as const, label: "Opportunities" },
     ],
     [],
   );
@@ -205,11 +229,9 @@ export default function ExploreScreen({
         <Text style={[styles.title, { color: colors.textRole.primary }]}>
           {heading ?? `Find your domain, role\nor programme`}
         </Text>
-        <InfoTooltip
-          label="Domain, role, programme"
-          text="A domain is an area of work. A role is a specific path within it. A programme is what you study. Search any of them — we'll show how they connect."
-        />
       </View>
+
+      {!adminAudience ? <ExploreGuide isGuest={isGuest} /> : null}
 
       {isGuest ? (
         <View
@@ -225,16 +247,6 @@ export default function ExploreScreen({
             You&apos;re browsing as a guest. Create an account to save matches and
             get alerts.
           </Text>
-          {!hasSession ? (
-            <SifterButton
-              label="Continue as guest"
-              onPress={() => void signInGuest()}
-              variant="track"
-              color={colors.accentRole.action}
-              size="sm"
-              fullWidth={false}
-            />
-          ) : null}
         </View>
       ) : null}
 
@@ -243,20 +255,15 @@ export default function ExploreScreen({
       <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
 
       {/* ── Search ────────────────────────────────────────────── */}
-      <CoachMark
-        storageKey="explore-intro-v1"
-        text="Search a programme, domain or role here — or scroll down and pick a starting point that fits where you are."
-      >
-        <SearchBar
-          ref={searchRef}
-          value={query}
-          onChangeText={setQuery}
-          scope={filters.find((item) => item.value === filter)?.label ?? "All"}
-          placeholder="Search programmes, domains or roles"
-          loading={loading}
-          onSubmitEditing={rememberSearch}
-        />
-      </CoachMark>
+      <SearchBar
+        ref={searchRef}
+        value={query}
+        onChangeText={setQuery}
+        scope={filters.find((item) => item.value === filter)?.label ?? "All"}
+        placeholder="Search programmes, universities, domains, roles or skills"
+        loading={loading}
+        onSubmitEditing={rememberSearch}
+      />
 
       <View style={styles.filterRow}>
         {filters.map((item) => (
@@ -298,7 +305,7 @@ export default function ExploreScreen({
         // even though the fetch had already succeeded. Every other gate in this
         // file (the search effect at 135, the banner CTA at 219) already uses
         // hasSession; this was the one that drifted.
-        <GuestLimitedSearch query={trimmed} onStartGuest={() => void signInGuest()} />
+        <GuestLimitedSearch query={trimmed} />
       ) : loading ? (
         <SearchLoadingRows />
       ) : searching && results ? (
@@ -313,7 +320,7 @@ export default function ExploreScreen({
               {(filter === "all" || filter === "domains") && data.domains.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Domains</SectionLabel>
-                  {data.domains.map((d, i) => (
+                  {(isGuest ? data.domains.slice(0, 2) : data.domains).map((d, i) => (
                     <StaggerReveal key={d.id} index={i}>
                       <ListRow
                         onPress={() => exploreNav.domain(router, d.id)}
@@ -330,7 +337,7 @@ export default function ExploreScreen({
               {(filter === "all" || filter === "roles") && data.roles.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Roles</SectionLabel>
-                  {data.roles.map((r, ri) => {
+                  {(isGuest ? data.roles.slice(0, 2) : data.roles).map((r, ri) => {
                     const single = r.domains.length === 1 ? r.domains[0] : undefined;
                     const roleBody = (
                       <View>
@@ -416,12 +423,14 @@ export default function ExploreScreen({
                       <Text style={[styles.compareText, { color: colors.textRole.muted }]}>Sign in to compare</Text>
                     )}
                   </View>
-                  {data.programmes.map((p, i) => {
+                  {(isGuest ? data.programmes.slice(0, 2) : data.programmes).map((p, i) => {
                     const meta = p.discipline ?? p.institutionType;
                     return (
                       <StaggerReveal key={p.id} index={i}>
                         <ListRow
-                          onPress={() => exploreNav.programme(router, p.id)}
+                          onPress={() => exploreNav.programme(router, p.id, searchUserType === "student"
+                            ? { userType: "student", schoolId: searchSchoolId ?? undefined, journeyMode: "undergraduate_career" }
+                            : undefined)}
                           icon="book-open"
                           title={p.name}
                           subtitle={meta}
@@ -432,6 +441,27 @@ export default function ExploreScreen({
                   })}
                 </View>
               ) : null}
+              {isGuest && (
+                data.domains.length > 2 || data.roles.length > 2 || data.programmes.length > 2 ||
+                (data.universities?.length ?? 0) > 2 || (data.subgroups?.length ?? 0) > 2 ||
+                (data.skills?.length ?? 0) > 2 || (data.tools?.length ?? 0) > 2 ||
+                (data.certifications?.length ?? 0) > 2 || (data.opportunities?.length ?? 0) > 2
+              ) ? <GuestSearchPrompt onSignIn={() => router.push("/(auth)/sign-in" as any)} /> : null}
+              {buildExtendedSearchGroups(data, exploreNav.base)
+                .filter((group) => filter === "all" || filter === group.scope)
+                .map((group) => (
+                  <SearchResultsGroup
+                    key={group.label}
+                    label={group.label}
+                    results={group.items}
+                    query={trimmed}
+                    onResultPress={(item) => {
+                      if (item.href) router.push(item.href as any);
+                    }}
+                    onMorePress={isGuest ? () => router.push("/(auth)/sign-in" as any) : undefined}
+                    maxRows={isGuest ? 2 : undefined}
+                  />
+                ))}
             </View>
           )}
         </DataStateView>
@@ -552,26 +582,27 @@ function ExploreIdle({
           style={hScroll}
           contentContainerStyle={styles.pathwayCarousel}
         >
-          {PATHWAYS.map((p, i) => (
-            <StaggerReveal key={p.key} index={i}>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => nav.pathways(router)}
-                style={[
-                  styles.pathwayCard,
-                  {
-                    backgroundColor: colors.surface.raised,
-                    borderColor: colors.borderRole.subtle,
-                  },
-                ]}
-              >
-                <Feather name={p.icon} size={16} color={colors.accentRole.action} />
-                <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>
-                  {p.label}
-                </Text>
-              </TouchableOpacity>
-            </StaggerReveal>
-          ))}
+          <StaggerReveal index={0}>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={() => nav.pathways(router)}
+              style={[
+                styles.pathwayCard,
+                styles.unifiedPathwayCard,
+                {
+                  backgroundColor: colors.surface.raised,
+                  borderColor: colors.borderRole.subtle,
+                },
+              ]}
+            >
+              <Feather name="map" size={16} color={colors.accentRole.action} />
+              <View style={styles.unifiedPathwayCopy}>
+                <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>Career pathways</Text>
+                <Text style={[styles.unifiedPathwayBody, { color: colors.textRole.secondary }]}>Explore one guided product for research, career change, credentials, qualification upgrades and entrepreneurship.</Text>
+              </View>
+              <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
+            </TouchableOpacity>
+          </StaggerReveal>
         </ScrollView>
       </View> : null}
 
@@ -606,23 +637,6 @@ function ExploreIdle({
       </TouchableOpacity> : null}
 
       {/* ── Elite pathways gold strip ─────────────────────────── */}
-      {!adminAudience ? <TouchableOpacity
-        activeOpacity={0.85}
-        onPress={() => nav.elitePathways(router)}
-        style={[styles.eliteStrip, { backgroundColor: "#B8860B10", borderColor: "#B8860B30" }]}
-      >
-        <Feather name="award" size={18} color="#B8860B" />
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.eliteTitle, { color: "#B8860B" }]}>
-            Elite pathways
-          </Text>
-          <Text style={[styles.eliteSub, { color: colors.textRole.muted }]}>
-            The 1% routes — medicine, law, engineering &amp; finance
-          </Text>
-        </View>
-        <Feather name="chevron-right" size={16} color="#B8860B" />
-      </TouchableOpacity> : null}
-
       {/* ── Suggested searches ─────────────────────────────────── */}
       {!adminAudience ? <View style={styles.section}>
         <SectionLabel>Suggested searches</SectionLabel>
@@ -779,10 +793,8 @@ function SearchLoadingRows() {
 
 function GuestLimitedSearch({
   query,
-  onStartGuest,
 }: {
   query: string;
-  onStartGuest: () => void;
 }) {
   const { colors } = useTheme();
   return (
@@ -797,16 +809,28 @@ function GuestLimitedSearch({
         Limited results for &ldquo;{query}&rdquo;
       </Text>
       <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>
-        Start a guest session to see preview rows. Create an account later to save,
-        compare and unlock full browsing.
+        Search is available from a guest session or an account. Create an account
+        later to save, compare and unlock full guidance.
       </Text>
       <View style={styles.guestRows}>
         <ListRow title="Programme matches" subtitle="Preview available after guest session" meta="Limited" icon="book-open" locked />
         <ListRow title="Role matches" subtitle="Preview available after guest session" meta="Limited" icon="briefcase" locked />
       </View>
+    </View>
+  );
+}
+
+function GuestSearchPrompt({ onSignIn }: { onSignIn: () => void }) {
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.guestPanel, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <SectionLabel>Continue your search</SectionLabel>
+      <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>
+        You are seeing a short public preview. Create an account to see all matches, follow the full guidance route, and save your direction.
+      </Text>
       <SifterButton
-        label="Start guest preview"
-        onPress={onStartGuest}
+        label="Sign in or create account"
+        onPress={onSignIn}
         variant="track"
         color={colors.accentRole.action}
         size="sm"
@@ -835,6 +859,99 @@ function DataLimitedState() {
 }
 
 // ─── Styles ──────────────────────────────────────────────────────
+
+function buildExtendedSearchGroups(
+  data: CareerSearchResult,
+  base: string,
+): { label: string; scope: ResultFilter; items: SearchResult[] }[] {
+  const basePath = base || "/(tabs)/explore";
+  const undergraduate = data.userType === "student";
+  return [
+    {
+      label: "Universities",
+      scope: "universities" as const,
+      items: (data.universities ?? []).map((item) => ({
+        id: item.id,
+        type: "university" as const,
+        title: item.name,
+        subtitle: [item.city, item.state].filter(Boolean).join(", ") || "University",
+        meta: undergraduate ? "Explore programmes" : "View programmes and requirements",
+        actionLabel: undergraduate ? "Explore university programmes" : "Check university requirements",
+        contextHint: undergraduate
+          ? "Open a programme to follow its domains, subgroups, roles, and next skills."
+          : "Review this university's programmes and admission requirements.",
+        href: undergraduate
+          ? `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}&user_type=student&journey=undergraduate_programmes`
+          : `${basePath}/admission?mode=school&school_id=${encodeURIComponent(item.id)}`,
+        icon: "building",
+      })),
+    },
+    {
+      label: "Subgroups",
+      scope: "subgroups" as const,
+      items: (data.subgroups ?? []).map((item) => ({
+        id: item.id,
+        type: "subgroup" as const,
+        title: item.name,
+        subtitle: item.domainName ? `In ${item.domainName}` : "Subgroup",
+        href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}/subgroup/${encodeURIComponent(item.id)}` : undefined,
+        icon: "layers",
+      })),
+    },
+    {
+      label: "Skills",
+      scope: "skills" as const,
+      items: (data.skills ?? []).map((item) => ({
+        id: item.id,
+        type: "skill" as const,
+        title: item.name,
+        subtitle: item.domainName ? `Used in ${item.domainName}` : "Career skill",
+        meta: item.context,
+        href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}` : undefined,
+        icon: "zap",
+      })),
+    },
+    {
+      label: "Tools",
+      scope: "tools" as const,
+      items: (data.tools ?? []).map((item) => ({
+        id: item.id,
+        type: "tool" as const,
+        title: item.name,
+        subtitle: item.domainName ? `Used in ${item.domainName}` : "Career tool",
+        meta: item.group,
+        href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}` : undefined,
+        icon: "tool",
+      })),
+    },
+    {
+      label: "Credentials",
+      scope: "certifications" as const,
+      items: (data.certifications ?? []).map((item) => ({
+        id: item.id,
+        type: "certification" as const,
+        title: item.name,
+        subtitle: item.domainName ? `Relevant to ${item.domainName}` : "Career credential",
+        meta: [item.region, item.level].filter(Boolean).join(" · ") || undefined,
+        href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}` : undefined,
+        icon: "award",
+      })),
+    },
+    {
+      label: "Opportunities",
+      scope: "opportunities" as const,
+      items: (data.opportunities ?? []).map((item) => ({
+        id: item.id,
+        type: "opportunity" as const,
+        title: item.title,
+        subtitle: [item.type, item.scope].filter(Boolean).join(" · ") || "Opportunity",
+        meta: item.region ?? undefined,
+        href: `/(tabs)/opportunities/opportunity/${encodeURIComponent(item.id)}`,
+        icon: "star",
+      })),
+    },
+  ];
+}
 
 const CLUSTER_CARD_W = 120;
 
@@ -978,6 +1095,18 @@ const styles = StyleSheet.create({
   pathwayLabel: {
     fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
+  },
+  unifiedPathwayCard: {
+    borderRadius: Radius.md,
+    flex: 1,
+  },
+  unifiedPathwayCopy: {
+    flex: 1,
+    gap: 3,
+  },
+  unifiedPathwayBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.45,
   },
 
   // Admission card

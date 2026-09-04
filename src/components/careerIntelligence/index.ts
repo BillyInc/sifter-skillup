@@ -75,6 +75,7 @@ export type { ReadinessBadgeViewProps } from "./ReadinessBadgeView";
 // ── Phase 9 enrichment display ────────────────────────────────
 export { FoundationSkillsBlock } from "./FoundationSkillsBlock";
 export type { FoundationSkillsBlockProps } from "./FoundationSkillsBlock";
+export { ContextualItemList } from "./ContextualItemList";
 export { ToolGroupsBlock } from "./ToolGroupsBlock";
 export type { ToolGroupsBlockProps } from "./ToolGroupsBlock";
 export { LearningResourcesBlock } from "./LearningResourcesBlock";
@@ -146,6 +147,7 @@ export { NotesFab } from "./NotesFab";
 export type { NotesFabProps } from "./NotesFab";
 export { CoachMark } from "./CoachMark";
 export type { CoachMarkProps } from "./CoachMark";
+export { ExploreGuide } from "./ExploreGuide";
 
 // ── Metric tooltip (relocated from admin/) ────────────────────
 export { MetricTooltip } from "./MetricTooltip";
