@@ -18,6 +18,32 @@ clone:
       partial: true
 
 steps:
+  # WHY THIS EXISTS: `list_domain_clusters` shipped referencing an undefined
+  # `published_domain_ids`. The NameError was raised inside the endpoint's own
+  # `except Exception`, so it logged and degraded to `coming_soon` instead of
+  # crashing -- the Domain Explorer was empty in production and the only signal
+  # was a line in the server log. `ruff check --select F821` flags it exactly,
+  # in under a second, and nothing in CI was running ruff at all.
+  #
+  # Deliberately NOT the full default rule set: that reports 179 findings
+  # across the backend (unused imports, star-import shadowing, import
+  # placement) and gating on them would mean a red pipeline for reasons
+  # unrelated to correctness. These are the rules where a hit is a bug rather
+  # than a style opinion, and every one of them is already at zero. Widening
+  # the set is a separate piece of work with its own cleanup.
+  - name: lint
+    image: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+    directory: backend
+    commands:
+      # No `uv sync` -- ruff is a standalone binary and this step needs no
+      # project dependencies, which keeps it fast and independent of the test
+      # step's environment.
+      # E999 is deliberately absent: it was removed from ruff, which now always
+      # reports syntax errors, and selecting it is a hard failure
+      # ("Rule `E999` was removed and cannot be selected") rather than a no-op.
+      - uv tool run ruff check --exclude .venv
+        --select F821,F822,F823,F811,F632,F702,F706,F707,B018 .
+
   - name: tests
     # Ships uv on top of the interpreter, replacing the setup-uv +
     # setup-python action pair. Pinned to 3.13 to match CI; pyproject only
