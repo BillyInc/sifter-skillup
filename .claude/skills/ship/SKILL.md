@@ -189,11 +189,36 @@ ssh storytime 'docker logs --since <ISO-ts> woodpecker-agent 2>&1 |
   grep -vE "Pull complete|Download complete|Extracting|Waiting|Verifying" | tail -20'
 ```
 
-`failed to extend workflow lease ... queue: task not found` means the server
-dropped the task while the agent still held it — the step never ran. It has
-recurred on this box (pipelines 19, 66, 77, 80), and a first-time image pull of
-a large container on this small, slow host is enough to outlast the lease.
-Restart the pipeline; the image is cached by then.
+`failed to extend workflow lease ... queue: task not found` has recurred on this
+box (pipelines 19, 66, 77, 80). It is a real symptom but often *not* the cause
+of a red step — check the step's own exit code before blaming it.
+
+**Read the exit code and log from the server's SQLite** when the GitHub check
+only says "Pipeline failed". Woodpecker keeps them; the container is reaped
+within seconds and the agent log stops at the image pull. `sqlite3` is not
+installed on storytime — use `python3`.
+
+```bash
+ssh storytime 'sudo cp /var/lib/docker/volumes/woodpecker_woodpecker-server-data/_data/woodpecker.sqlite \
+  /tmp/wp.sqlite && sudo chown ubuntu /tmp/wp.sqlite'
+#   select id,name,state,exit_code from steps where pipeline_id=(select max(id) from pipelines)
+#   select line,data from log_entries where step_id=? order by line
+```
+
+**Never let a step hide its own failure.** `--quiet` plus `|| true` on the
+Semgrep steps meant both exited non-zero having printed nothing, while the
+advisory step reported *success* — a green tick over a step that scanned
+nothing. A non-gating step should echo its exit code, not discard it.
+
+**A local run does not verify a containerised step.** The Semgrep gate failed
+across two pipelines while the identical command exited 0 on a laptop: the
+`semgrep/semgrep` image aborts with exit 2 unless the code is at `/src`
+(`adjust_for_docker()`), and the pip package has no such check. When a step
+fails only in CI, reproduce it **on the CI host, in the CI image**:
+
+```bash
+ssh storytime 'docker run --rm -v /tmp/x:/work -w /work <image> sh -c "<step command>"'
+```
 
 ## 7. Machine constraints
 
