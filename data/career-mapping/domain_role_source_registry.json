@@ -56,6 +56,102 @@
       "access": "public",
       "notes": "Cybersecurity work roles, tasks, knowledge and skills; use as a role framework, not as a Nigeria vacancy count."
     },
+    "global_ecsf": {
+      "name": "European Cybersecurity Skills Framework",
+      "region": "global",
+      "evidence_type": "cybersecurity_role_and_competence_framework",
+      "url": "https://www.enisa.europa.eu/topics/skills-and-competences/skills-development/european-cybersecurity-skills-framework-ecsf",
+      "access": "public",
+      "version": "v1; web tool edited 2025-04-11",
+      "notes": "ENISA role profiles, tasks, deliverables, skills, knowledge and e-competences. It enriches cybersecurity role identity and progression; it is not Nigerian demand or a Nigerian licence."
+    },
+    "global_nist_iot": {
+      "name": "NIST Internet of Things and Networks of Things guidance",
+      "region": "global",
+      "evidence_type": "iot_architecture_security_and_privacy_guidance",
+      "urls": [
+        "https://www.nist.gov/internet-things-iot",
+        "https://csrc.nist.gov/pubs/sp/800/183/final",
+        "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+      ],
+      "access": "public",
+      "notes": "Supports the meaning of connected-device work, including sensing, computing, communication, actuation, trustworthiness, security, privacy, architecture and lifecycle support. It does not establish Nigerian demand or a local licence."
+    },
+    "global_hl7_fhir": {
+      "name": "HL7 FHIR health information exchange standard",
+      "region": "global",
+      "evidence_type": "health_data_interoperability_and_workflow_standard",
+      "url": "https://hl7.org/fhir/",
+      "access": "public",
+      "notes": "Supports health-data exchange, clinical workflows, diagnostics, medications, interoperability, privacy, consent, provenance and audit concepts."
+    },
+    "global_iaea_medical_imaging": {
+      "name": "International Atomic Energy Agency medical imaging and radiation-protection resources",
+      "region": "global",
+      "evidence_type": "medical_imaging_and_radiation_safety_guidance",
+      "urls": [
+        "https://nucleus.iaea.org/Pages/rpop.aspx",
+        "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation"
+      ],
+      "access": "public",
+      "notes": "Supports diagnostic imaging, computed tomography, magnetic resonance imaging, mammography, fluoroscopy, nuclear medicine, dose management and patient/worker safety. It is not a Nigerian registration rule."
+    },
+    "global_who_pharmacy": {
+      "name": "World Health Organization good pharmacy practice and pharmaceutical quality guidance",
+      "region": "global",
+      "evidence_type": "pharmacy_practice_patient_safety_and_pharmacovigilance_guidance",
+      "urls": [
+        "https://www.who.int/publications/m/item/annex-8-trs-961",
+        "https://www.who.int/publications/i/item/9789240099425",
+        "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance"
+      ],
+      "access": "public",
+      "notes": "Supports dispensing, medication therapy, quality assurance, pharmaceutical regulation, safety monitoring and pharmacovigilance. Nigerian practice and registration still require Pharmacy Council of Nigeria evidence."
+    },
+    "global_who_laboratory_quality": {
+      "name": "World Health Organization laboratory quality-management guidance",
+      "region": "global",
+      "evidence_type": "laboratory_quality_sampling_testing_and_reporting_guidance",
+      "urls": [
+        "https://www.who.int/publications/i/item/9789241548274",
+        "https://extranet.who.int/hslp/content/LQMS-training-toolkit"
+      ],
+      "access": "public",
+      "notes": "Supports sample handling, laboratory safety, microscopy, quality control, result validation, documentation and competency assessment."
+    },
+    "global_who_public_health": {
+      "name": "World Health Organization outbreak investigation and risk-communication guidance",
+      "region": "global",
+      "evidence_type": "public_health_surveillance_investigation_and_communication_guidance",
+      "urls": [
+        "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+        "https://www.who.int/publications/i/item/9789241597449"
+      ],
+      "access": "public",
+      "notes": "Supports surveillance, outbreak investigation, case definition, analysis, response planning, stakeholder engagement and public-health communication."
+    },
+    "global_cipd_people_profession": {
+      "name": "Chartered Institute of Personnel and Development Profession Map",
+      "region": "global",
+      "evidence_type": "people_profession_role_and_competency_framework",
+      "urls": [
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+        "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+      ],
+      "access": "public",
+      "notes": "Supports resourcing, candidate sourcing, interviewing, assessment, workforce planning, candidate experience and levelled people-profession work. It is not Nigerian labour-demand evidence."
+    },
+    "global_nist_nanotechnology": {
+      "name": "National Institute of Standards and Technology nanotechnology measurement resources",
+      "region": "global",
+      "evidence_type": "nanomaterials_characterization_and_measurement_guidance",
+      "urls": [
+        "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+        "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+      ],
+      "access": "public",
+      "notes": "Supports nanomaterial synthesis and characterization, thin-film and semiconductor measurement, microscopy, instrumentation, reproducibility and safety-related measurement practice."
+    },
     "global_supply_chain": {
       "name": "ASCM supply-chain body of knowledge",
       "region": "global",
@@ -804,12 +900,12 @@
   },
   "default_sources": ["global_esco", "global_onet", "global_isco", "global_wef", "ng_jobberman", "ng_myjobmag", "ng_nbs"],
   "cluster_sources": {
-    "Information & Communication Technology": ["global_sfia", "ng_cpn", "ng_telecom"],
+    "Information & Communication Technology": ["global_sfia", "global_nist_iot", "global_hl7_fhir", "ng_cpn", "ng_telecom"],
     "Data & Analytics": ["global_sfia", "ng_cpn"],
     "Financial Services": ["ng_finance"],
     "Engineering & Built Environment": ["global_built_environment", "ng_engineering", "ng_built_environment"],
-    "Health & Biomedical": ["global_health", "ng_health"],
-    "Business & Management": ["global_project_management", "ng_business"],
+    "Health & Biomedical": ["global_health", "global_who_pharmacy", "global_who_laboratory_quality", "global_who_public_health", "global_hl7_fhir", "global_iaea_medical_imaging", "ng_health"],
+    "Business & Management": ["global_project_management", "global_cipd_people_profession", "ng_business"],
     "Supply Chain & Logistics": ["global_supply_chain", "global_cips", "ng_supply_chain"],
     "Legal & Compliance": ["global_wipo", "ng_legal"],
     "Education & Research": ["global_unesco", "ng_nuc", "ng_education"],
@@ -837,12 +933,12 @@
     "Community Health & Paramedical": ["global_health", "ng_health"],
     "Childcare & Early Learning": ["ng_education"],
     "Defence & Military": ["ng_jobberman", "ng_myjobmag"],
-    "Advanced Science & Engineering": ["global_nuclear", "ng_engineering"],
+    "Advanced Science & Engineering": ["global_nuclear", "global_nist_nanotechnology", "global_iaea_medical_imaging", "ng_engineering"],
     "High-Performance Engineering": ["ng_engineering", "ng_aviation_maritime"],
     "Public Sector & Social Services": ["ng_nbs", "ng_jobberman", "ng_myjobmag"]
   },
   "domain_overrides": {
-    "D004": ["global_nice"],
+    "D004": ["global_nice", "global_ecsf"],
     "D070": ["nac_arts_technical_theatre", "skills_england_live_event", "mqa_performing_arts", "global_creative", "ng_creative"],
     "D054": ["global_energy", "ng_energy"],
     "D055": ["global_energy", "ng_energy"],
@@ -858,9 +954,12 @@
     "D157": ["global_wipo", "ng_finance", "ng_legal"],
     "D003": ["global_sfia", "global_wef", "ng_national_ai", "ng_cpn"],
     "D005": ["global_sfia", "ng_cpn", "ng_telecom"],
-    "D006": ["global_sfia", "ng_cpn", "ng_telecom", "ng_engineering"],
+    "D006": ["global_sfia", "global_nist_iot", "ng_cpn", "ng_telecom", "ng_engineering"],
     "D012": ["global_sfia", "global_wipo", "ng_finance", "ng_cpn"],
-    "D025": ["global_health", "ng_health"],
+    "D025": ["global_health", "global_who_pharmacy", "ng_health"],
+    "D026": ["global_health", "global_who_public_health", "ng_health"],
+    "D029": ["global_cipd_people_profession", "ng_business"],
+    "D155": ["global_nist_nanotechnology", "global_nuclear", "ng_engineering"],
     "D051": ["global_built_environment", "ng_built_environment"],
     "D057": ["global_health", "ng_health", "ng_nuc"],
     "D058": ["global_unesco", "ng_nuc", "ng_education"],

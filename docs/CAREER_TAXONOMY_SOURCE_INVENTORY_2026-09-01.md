@@ -208,6 +208,7 @@ whether the source was actually checked in an extract or source document.
 | `global_wef` | World Economic Forum Future of Jobs 2025 | [WEF](https://www.weforum.org/publications/the-future-of-jobs-report-2025/) |
 | `global_sfia` | SFIA 9 | [SFIA](https://sfia-online.org/en/sfia-9) |
 | `global_nice` | NIST NICE Workforce Framework | [NICE](https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center) |
+| `global_ecsf` | European Cybersecurity Skills Framework (ENISA), v1 with web-tool edit dated 11 April 2025 | [ENISA ECSF](https://www.enisa.europa.eu/topics/skills-and-competences/skills-development/european-cybersecurity-skills-framework-ecsf) |
 | `global_supply_chain` | ASCM supply-chain body of knowledge | [ASCM](https://www.ascm.org/) |
 | `global_cips` | CIPS Global Standard for Procurement and Supply | [CIPS](https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply) |
 | `global_project_management` | Project Management Institute standards | [PMI](https://www.pmi.org/standards) |

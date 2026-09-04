@@ -78,9 +78,19 @@ flowchart TD
 | `DOMAIN-CLASS` | Exact, source-supported umbrella, or curated addition | [Naming provenance](../data/career-mapping/_audit/DOMAIN_NAMING_PROVENANCE_AUDIT_2026-08-31.md) |
 | `DOMAIN-LIMIT` | Revision/code mismatch or evidence limitation | [ISIC crosswalk](../data/career-mapping/_audit/ISIC_DOMAIN_CROSSWALK_2026-08-31.md), [ISCO crosswalk](../data/career-mapping/_audit/ISCO_DOMAIN_CROSSWALK_2026-08-31.md) |
 
-The eight invalid/missing raw ISCO values have been explicitly dispositioned
-with official parent/sibling candidates. Do not silently replace `2121`,
-`2213`–`2216`, `2311`, `2321`, or `3330` with a guessed child code.
+Historical note: the earlier report described the eight raw ISCO values using
+official parent/sibling candidates. That report has been superseded; the
+source-closed decisions documented below.
+
+## Source-closed correction of eight occupational values
+
+The eight previously questionable occupational values have now been closed by
+an official International Labour Organization source review. Two were mapped
+from the older ISCO-88 classification to valid ISCO-08 groups, one was removed
+from a domain where it did not belong, and five invalid values were removed
+from canonical anchors. No value remains pending. See the [source closure
+report](../data/career-mapping/_audit/ISCO_DOMAIN_CODE_SOURCE_CLOSURE_2026-09-04.md)
+for the decisions and evidence links.
 
 ## 4. Nigerian curriculum handoff
 
