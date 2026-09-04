@@ -97,14 +97,19 @@ steps:
           --max-memory 800 \
           --max-target-bytes 1000000 \
           --metrics off \
-          --disable-version-check \
-          --quiet
+          --disable-version-check
 
   # Advisory only -- prints the WARNING-level backlog so it is visible in the
   # log without gating the build. `|| true` is the entire point of the step:
   # this is a report, not a check. 43 first-party WARNINGs at time of writing.
   # If this ever becomes noise nobody reads, delete the step rather than
   # letting it decay into a green tick that means nothing.
+  #
+  # `|| true` masks HOW it failed as well as THAT it failed, so the exit code
+  # is echoed explicitly. On the first run of this file both steps exited
+  # non-zero having printed nothing at all -- `--quiet` had swallowed the
+  # error and `|| true` had swallowed the status, so the advisory step reported
+  # success while producing no report. Neither step is quiet any more.
   - name: semgrep-advisory
     image: semgrep/semgrep:1.176.0
     # Runs even when the gating step above fails, so a single ERROR does not
@@ -126,5 +131,4 @@ steps:
           --max-memory 800 \
           --max-target-bytes 1000000 \
           --metrics off \
-          --disable-version-check \
-          --quiet || true
+          --disable-version-check || echo "semgrep-advisory exited $? (not gating)"
