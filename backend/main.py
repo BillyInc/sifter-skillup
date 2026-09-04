@@ -31,6 +31,58 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION, lifespan=lifespan)
 
+
+def _is_supabase_service_restriction(exc: Exception) -> bool:
+    """Identify the provider response that otherwise gets misreported as CORS."""
+    message = str(exc).lower()
+    return (
+        "exceed_egress_quota" in message
+        or "service for this project is restricted" in message
+    )
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    """Return a CORS-compatible JSON error for failed upstream services.
+
+    Starlette's CORS middleware cannot add headers after an exception escapes
+    the application stack. Without this handler, a Supabase 402 appears in a
+    browser as a misleading CORS/Failed-to-fetch error.
+    """
+    log.error(
+        "Unhandled API exception",
+        error=exc,
+        endpoint=request.url.path,
+        method=request.method,
+    )
+    # Exception responses can be generated outside the normal CORS response
+    # path. Mirror the same allow-list here so the browser can read the useful
+    # error instead of reducing it to a generic CORS failure.
+    origin = request.headers.get("origin")
+    cors_headers = {}
+    if origin and origin in settings.ALLOWED_ORIGINS:
+        cors_headers = {
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Credentials": "true",
+            "Vary": "Origin",
+        }
+    if _is_supabase_service_restriction(exc):
+        return JSONResponse(
+            status_code=503,
+            content={
+                "detail": (
+                    "The connected data service is temporarily unavailable. "
+                    "Please restore the Supabase project quota and try again."
+                )
+            },
+            headers=cors_headers,
+        )
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "The server could not complete this request. Please try again."},
+        headers=cors_headers,
+    )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,

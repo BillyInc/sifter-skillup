@@ -6,6 +6,8 @@
 --
 -- Tables ship EMPTY: the routes return coming_soon envelopes until real
 -- content rows are added (owner rule: live data only, no mock rows).
+-- Elite publication also requires migration_elite_evidence_gate.sql and a
+-- published, source-backed review; active=true alone is not sufficient.
 -- ============================================================
 
 -- ── 1. Bridge plans (Model 5 — the honest 6-layer engine) ────
@@ -22,7 +24,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.bridge_plans (
     updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- ── 2. Elite pathways (the 17 elite domains) ─────────────────
+-- ── 2. Elite pathways (evidence-gated; no fixed domain count) ──
 CREATE TABLE IF NOT EXISTS skillup_dev.elite_pathways (
     id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     domain_id          UUID REFERENCES skillup_dev.domains(id) ON DELETE SET NULL,
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.opportunities (
     title             TEXT NOT NULL,
     organisation_id   UUID REFERENCES skillup_dev.organisations(id) ON DELETE SET NULL,
     opp_type          TEXT NOT NULL CHECK (opp_type IN
-                        ('internship','graduate_trainee','entry_level','fellowship','contract')),
+                         ('internship','graduate_trainee','entry_level','fellowship','contract','scholarship')),
     scope             TEXT NOT NULL CHECK (scope IN ('local','global','remote')),
     work_mode         TEXT CHECK (work_mode IN ('onsite','hybrid','remote','field','shift')),
     eligible_institution_types TEXT[] NOT NULL DEFAULT '{}',
@@ -84,6 +86,9 @@ CREATE TABLE IF NOT EXISTS skillup_dev.opportunities (
 CREATE INDEX IF NOT EXISTS idx_opportunities_active ON skillup_dev.opportunities(active);
 CREATE INDEX IF NOT EXISTS idx_opportunities_domains ON skillup_dev.opportunities USING gin (domain_keys);
 CREATE INDEX IF NOT EXISTS idx_opportunities_scope ON skillup_dev.opportunities(scope, opp_type);
+ALTER TABLE skillup_dev.opportunities DROP CONSTRAINT IF EXISTS opportunities_opp_type_check;
+ALTER TABLE skillup_dev.opportunities ADD CONSTRAINT opportunities_opp_type_check
+    CHECK (opp_type IN ('internship','graduate_trainee','entry_level','fellowship','contract','scholarship'));
 
 -- ── 5. Scholarships ──────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS skillup_dev.scholarships (

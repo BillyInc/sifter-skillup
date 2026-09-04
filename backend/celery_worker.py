@@ -244,14 +244,25 @@ def _prestige_score(svc, role_name, elite_status):
 
 @celery.task
 def compute_elite_composite():
-    """Phase 7f — elite composite (barrier + compensation + scarcity + prestige).
+    """Keep proxy scoring out of the elite publication path.
 
-    DATA-DERIVED, never hand-listed. The four dimensions are assembled from
-    in-DB signals already present (taxonomy barrier via ISCO/tier; compensation
-    + scarcity via the populated demand tables; prestige via expert confirms).
-    When a dimension has no data it scores 0 and the composite simply stays
-    below threshold — the role is not flagged elite.
+    Barrier, compensation, scarcity, and feedback can help an editor decide
+    what to investigate, but they cannot establish an elite domain, role, or
+    route. Publication requires an explicit source-backed row in
+    ``elite_evidence_reviews`` with every mandatory criterion satisfied.
+    Until that review workflow is populated, this scheduled task is a no-op
+    and must not turn ``elite_flag`` into ``verified``.
     """
+    log.info("compute_elite_composite blocked: explicit evidence review required")
+    return {
+        "status": "blocked",
+        "detail": "explicit_elite_evidence_review_required",
+        "scored": 0,
+    }
+
+    # The historical proxy scoring implementation below is intentionally
+    # unreachable. It remains for audit history only and must not be enabled
+    # as a substitute for the evidence review gate.
     if not _DEMAND_INGESTION_READY:
         log.info("compute_elite_composite skipped: source-backed demand unavailable")
         return {

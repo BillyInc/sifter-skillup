@@ -21,6 +21,7 @@
 #   GET/POST/DELETE /api/career/subscriptions
 # ============================================================
 from typing import Any, Optional
+import re
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
@@ -36,6 +37,133 @@ _SCHEMA = "skillup_dev"
 _MIN_PUBLIC_QUERY_LEN = 2
 _PUBLIC_SEARCH_LIMIT = 20
 _PROGRAMME_SEARCH_LIMIT = 25
+_SEARCH_INTENT_COPY = {
+    "programme_guidance": (
+        "Find a programme",
+        "Start with the programme preview, then choose a university and review its requirements.",
+    ),
+    "university_requirements": (
+        "Check a university",
+        "Review the university's programmes, location, and admission requirements.",
+    ),
+    "career_exploration": (
+        "Understand a domain or role",
+        "Follow the field from domain to subgroup and role, including what to learn next.",
+    ),
+    "skills_and_tools": (
+        "Find skills or tools",
+        "See what each item does in its domain, subgroup, or role context.",
+    ),
+    "opportunities": (
+        "Find opportunities",
+        "Review relevant opportunities, eligibility, and the next action.",
+    ),
+}
+
+
+def _search_intent_copy(intent_key: Optional[str], user_type: Optional[str]) -> Optional[dict[str, str]]:
+    """Return plain-language search guidance for the selected persona.
+
+    A current undergraduate is already enrolled, so programme and university
+    searches must lead to learning-to-career guidance rather than an admission
+    requirements decision.
+    """
+    if not intent_key or intent_key not in _SEARCH_INTENT_COPY:
+        return None
+    if user_type == "student" and intent_key == "programme_guidance":
+        return {
+            "label": "Find your programme",
+            "guidance": "See what your programme teaches, then follow it through domains, subgroups, roles, and what to learn next.",
+        }
+    if user_type == "student" and intent_key == "university_requirements":
+        return {
+            "label": "Explore your university",
+            "guidance": "See the programmes connected to your university and open one to follow its career guidance.",
+        }
+    label, guidance = _SEARCH_INTENT_COPY[intent_key]
+    return {"label": label, "guidance": guidance}
+_UNIVERSITY_ALIASES = {
+    "unilag": "university of lagos",
+    "lasu": "lagos state university",
+    "ui": "university of ibadan",
+    "unn": "university of nigeria",
+    "oau": "obafemi awolowo university",
+    "uniben": "university of benin",
+    "abu": "ahmadu bello university",
+}
+
+_CERT_LIFECYCLE_OVERRIDES = {
+    "tensorflow developer certificate": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "temporarily_unavailable",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": True,
+        "availability_note": "The provider has closed the exam while evaluating the next step. Existing credentials remain valid for three years from the date passed. Check the provider for a future route.",
+        "official_url": "https://www.tensorflow.org/certificate",
+        "status_source_url": "https://www.tensorflow.org/certificate",
+    },
+    "aws certified machine learning specialty": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "retired",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": False,
+        "availability_note": "AWS retired this exam on 31 March 2026. Existing certifications remain active for three years from the date earned. New learners should consider AWS Certified Machine Learning Engineer - Associate.",
+        "official_url": "https://aws.amazon.com/certification/certified-machine-learning-specialty/",
+        "status_source_url": "https://aws.amazon.com/certification/certified-machine-learning-specialty/",
+        "replacement_name": "AWS Certified Machine Learning Engineer - Associate",
+        "replacement_url": "https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/",
+    },
+    "microsoft certified azure data engineer associate": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "retired",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": False,
+        "availability_note": "Microsoft retired this certification and its renewal assessment on 31 March 2025. Existing badges may remain valid until their individual expiry, but new learners should use the current Microsoft Fabric data-engineering route.",
+        "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-engineer/renew/",
+        "status_source_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-engineer/renew/",
+        "replacement_name": "Microsoft Certified: Fabric Data Engineer Associate",
+        "replacement_url": "https://learn.microsoft.com/en-us/credentials/certifications/fabric-data-engineer-associate/",
+    },
+    "microsoft certified azure ai engineer associate": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "retired",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": False,
+        "availability_note": "Microsoft retired this certification on 30 June 2026. Existing credentials follow Microsoft's retirement and expiry rules; new learners should use the current Azure AI applications and agents route.",
+        "official_url": "https://learn.microsoft.com/en-us/credentials/support/credential-retirement",
+        "status_source_url": "https://learn.microsoft.com/en-us/credentials/support/credential-retirement",
+        "replacement_name": "Microsoft Certified: Azure AI Apps and Agents Developer Associate",
+        "replacement_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-apps-and-agents-developer-associate",
+    },
+    "microsoft certified azure developer associate": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "retired",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": False,
+        "availability_note": "Microsoft retired this certification on 31 July 2026. Existing credentials follow Microsoft's retirement and expiry rules; new learners should use the current Azure AI cloud developer route where it matches their goal.",
+        "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/renew/",
+        "status_source_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/renew/",
+        "replacement_name": "Microsoft Certified: Azure AI Cloud Developer Associate",
+        "replacement_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-cloud-developer-associate/",
+    },
+    "salesforce certified associate retail crm adjacent": {
+        "credential_type": "certification_or_qualification",
+        "availability_status": "superseded",
+        "current_recommendation": False,
+        "retain_in_catalogue": True,
+        "reopen_possible": False,
+        "availability_note": "Salesforce now presents this entry-level route as Salesforce Certified Platform Foundations. The older Associate name is retained as historical identity, while new learners should follow the current Platform Foundations route.",
+        "official_url": "https://trailhead.salesforce.com/en/credentials/associate",
+        "status_source_url": "https://trailhead.salesforce.com/en/credentials/associate",
+        "replacement_name": "Salesforce Certified Platform Foundations",
+        "replacement_url": "https://trailhead.salesforce.com/en/credentials/associate",
+    },
+}
 
 
 def _coming_soon(notice: Optional[str] = None) -> dict:
@@ -61,6 +189,33 @@ def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
 
+def _published_elite_entity_ids(entity_level: str) -> set[str]:
+    """Return only explicitly published elite records.
+
+    The legacy ``elite_domain`` and ``elite_flag`` columns are retained as
+    audit inputs, but they are not publication evidence. During a rolling
+    migration this helper safely returns an empty set until the evidence-gate
+    table exists and contains a published review.
+    """
+    try:
+        rows = (
+            _svc().table("elite_evidence_reviews")
+            .select("entity_id, domain_id")
+            .eq("entity_level", entity_level)
+            .eq("decision", "published")
+            .execute().data or []
+        )
+        ids: set[str] = set()
+        for row in rows:
+            for key in ("entity_id", "domain_id"):
+                if row.get(key):
+                    ids.add(str(row[key]))
+        return ids
+    except Exception as exc:  # noqa: BLE001
+        log.debug("elite evidence gate unavailable", entity_level=entity_level, error=str(exc))
+        return set()
+
+
 def _clean_public_query(q: Optional[str]) -> str:
     """Normalize public search text and remove wildcard characters.
 
@@ -68,6 +223,28 @@ def _clean_public_query(q: Optional[str]) -> str:
     export endpoints. Removing `%` and `_` prevents wildcard-only scraping.
     """
     return (q or "").replace("%", "").replace("_", "").strip()
+
+
+def _search_terms(term: str) -> tuple[str, str]:
+    """Return the subject and institution parts of a natural-language query.
+
+    This keeps searches such as ``Computer Science at UNILAG`` coherent: the
+    career catalogue receives ``Computer Science`` while the university group
+    receives ``UNILAG``. Descriptors such as ``roles`` and ``universities`` are
+    not treated as entity names.
+    """
+    parts = re.split(r"\s+(?:at|in|for|near)\s+", term, maxsplit=1, flags=re.IGNORECASE)
+    subject = parts[0].strip()
+    institution = parts[1].strip() if len(parts) > 1 else term
+    subject = re.sub(
+        r"\b(programme|programmes|university|universities|role|roles|skill|skills|tool|tools|job|jobs)\b$",
+        "",
+        subject,
+        flags=re.IGNORECASE,
+    ).strip()
+    if not subject:
+        subject = institution if len(parts) > 1 else term
+    return subject, institution
 
 
 def _student_programme_name(value: Any) -> Optional[str]:
@@ -221,6 +398,8 @@ def _guidance_evidence(context: Any) -> dict:
 
 def _cert(row: dict) -> dict:
     """Map a domain_certifications row → CertificationV2Enriched (camelCase)."""
+    key = re.sub(r"[^a-z0-9]+", " ", str(row.get("name") or "").lower()).strip()
+    override = _CERT_LIFECYCLE_OVERRIDES.get(key) or {}
     return {
         "name": row.get("name"),
         "body": row.get("body"),
@@ -228,13 +407,25 @@ def _cert(row: dict) -> dict:
         "level": row.get("level"),
         "gateReason": row.get("gate_reason"),
         # Phase 9 enrichment
-        "officialUrl": row.get("official_url"),
+        "officialUrl": override.get("official_url") or row.get("official_url"),
         "seniorityTier": row.get("seniority_tier"),
         "tierType": row.get("tier_type"),
         "price": _num(row.get("price")),
         "currency": row.get("currency"),
         "priceAsOf": _date_str(row.get("price_as_of")),
         "priceSource": row.get("price_source"),
+        # Evergreen lifecycle fields. A retained record is not necessarily a
+        # currently actionable recommendation (for example, a closed exam).
+        "credentialType": override.get("credential_type") or row.get("credential_type"),
+        "availabilityStatus": override.get("availability_status") or row.get("availability_status") or "active",
+        "currentRecommendation": override.get("current_recommendation") if "current_recommendation" in override else row.get("current_recommendation", True),
+        "retainInCatalogue": override.get("retain_in_catalogue") if "retain_in_catalogue" in override else row.get("retain_in_catalogue", True),
+        "reopenPossible": override.get("reopen_possible") if "reopen_possible" in override else row.get("reopen_possible"),
+        "availabilityNote": override.get("availability_note") or row.get("availability_note"),
+        "statusSourceUrl": override.get("status_source_url") or row.get("status_source_url"),
+        "statusCheckedAt": _date_str(row.get("status_checked_at")) or override.get("status_checked_at") or ("2026-09-04" if override else None),
+        "replacementName": override.get("replacement_name") or row.get("replacement_name"),
+        "replacementUrl": override.get("replacement_url") or row.get("replacement_url"),
     }
 
 
@@ -319,6 +510,62 @@ def _career_resources(
         return [_career_resource(row) for row in rows]
     except Exception as exc:  # noqa: BLE001
         log.debug("career resource layer unavailable", error=str(exc))
+        return []
+
+
+def _context_item(row: dict) -> dict:
+    """Map a source-backed contextual item row to the frontend contract."""
+    return {
+        "contextLevel": row.get("context_level"),
+        "contextKey": row.get("context_key"),
+        "domainId": row.get("domain_key"),
+        "itemType": row.get("item_type"),
+        "itemKey": row.get("item_key"),
+        "name": row.get("name"),
+        "plainMeaning": row.get("plain_meaning"),
+        "contextualUse": row.get("contextual_use"),
+        "expectedOutput": row.get("expected_output"),
+        "priority": row.get("priority"),
+        "priorityReason": row.get("priority_reason"),
+        "prerequisites": row.get("prerequisites") or [],
+        "relatedItems": row.get("related_items") or [],
+        "sourceIds": row.get("source_ids") or [],
+        "sourceReferences": row.get("source_references") or [],
+        "sourceLocators": row.get("source_locators") or [],
+        "geographicScope": row.get("geographic_scope"),
+        "evidenceLimitations": row.get("evidence_limitations") or [],
+        "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
+        "sourceConfidence": row.get("source_confidence"),
+        "dataState": row.get("data_state") or "source_backed",
+        "verifiedAt": _date_str(row.get("verified_at")),
+    }
+
+
+def _career_context_items(
+    svc: Any,
+    *,
+    context_level: str,
+    context_key: str,
+) -> list[dict]:
+    """Read the additive context catalogue without breaking older databases."""
+    try:
+        rows = (
+            svc.table("career_context_items")
+            .select("*")
+            .eq("context_level", context_level)
+            .eq("context_key", context_key)
+            .order("priority")
+            .order("item_type")
+            .order("name")
+            .execute()
+            .data
+            or []
+        )
+        return [_context_item(row) for row in rows]
+    except Exception as exc:  # noqa: BLE001
+        # The migration is additive. A pre-migration installation keeps the
+        # existing domain/role view rather than failing the whole endpoint.
+        log.debug("career contextual item layer unavailable", error=str(exc))
         return []
 
 
@@ -480,6 +727,7 @@ async def get_programme(programme_id: str):
     """
     try:
         svc = _svc()
+        published_domain_ids = _published_elite_entity_ids("domain")
         res = (
             svc.table("programmes")
             .select("*")
@@ -491,6 +739,7 @@ async def get_programme(programme_id: str):
             return ResponseModel(data=_coming_soon("Programme not found."))
         r = res.data[0]
         duration = r.get("duration_years")
+        published_domain_ids = _published_elite_entity_ids("domain")
 
         # Domain links for this programme (Phase 2 mapping).
         pd_res = (
@@ -520,7 +769,10 @@ async def get_programme(programme_id: str):
                         "domainId": d.get("domain_key") or d["id"],
                         "domainName": d.get("name"),
                         "matchType": link.get("match_type") or "adjacent",
-                        "eliteFlag": bool(link.get("elite_flag")),
+                        "eliteFlag": bool(link.get("elite_flag")) and (
+                            str(link.get("domain_id")) in published_domain_ids
+                            or str(d.get("domain_key")) in published_domain_ids
+                        ),
                     }
                 )
 
@@ -622,7 +874,9 @@ async def list_domain_clusters():
                 # The domain route keys on domain_key, not the uuid.
                 "id": r.get("domain_key") or r["id"],
                 "name": r.get("name"),
-                "eliteFlag": bool(r.get("elite_domain")),
+                "eliteFlag": bool(r.get("elite_domain"))
+                and str(r.get("id")) in published_domain_ids
+                or (bool(r.get("elite_domain")) and str(r.get("domain_key")) in published_domain_ids),
             }
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
@@ -654,6 +908,8 @@ async def get_domain(domain_id: str):
             return ResponseModel(data=_coming_soon("Domain not found."))
         domain = dres.data[0]
         domain_uuid = domain["id"]
+        published_domain_ids = _published_elite_entity_ids("domain")
+        published_role_ids = _published_elite_entity_ids("role")
 
         # Subgroups, roles, tools, certs (each scoped to the domain).
         sg_res = (
@@ -752,6 +1008,9 @@ async def get_domain(domain_id: str):
         tool_rows = tool_res.data or []
         cert_rows = cert_res.data or []
         resource_rows = _career_resources(svc, domain_id=domain_uuid, include_role=False)
+        domain_context_items = _career_context_items(
+            svc, context_level="domain", context_key=domain_id
+        )
         resources_by_subgroup: dict[str, list[dict]] = {}
         resources_by_role: dict[str, list[dict]] = {}
         domain_resources: list[dict] = []
@@ -833,8 +1092,11 @@ async def get_domain(domain_id: str):
                      "methodEvidence": methods_by_subgroup.get(sg_id, []),
                       "tools": _tool_groups(sg_tools),
                      "certifications": sg_certs,
-                     "resources": resources_by_subgroup.get(sg_id, []),
-                 }
+                      "resources": resources_by_subgroup.get(sg_id, []),
+                      "contextItems": _career_context_items(
+                          svc, context_level="subgroup", context_key=f"{domain_id}|sg:{sg.get('isco_submajor')}"
+                      ),
+                  }
             )
 
         roles = [
@@ -848,7 +1110,11 @@ async def get_domain(domain_id: str):
                 "nigerianContext": role_context_by_key.get(r.get("role_key"), {}),
                 "guidanceEvidence": _guidance_evidence(role_context_by_key.get(r.get("role_key"), {})),
                 "computationalSubgroups": computational_links_by_role.get(r.get("role_key"), []),
-                "eliteStatus": r.get("elite_status"),
+                "eliteStatus": (
+                    r.get("elite_status")
+                    if str(r.get("role_key")) in published_role_ids
+                    else "deferred"
+                ),
                  "crossDomainFamily": (
                     {
                         "key": family_by_role[r["role_key"]].get("family_key"),
@@ -872,7 +1138,10 @@ async def get_domain(domain_id: str):
             "clusters": domain.get("clusters") or [],
             "description": domain.get("description"),
             "institutionType": domain.get("institution_type") or [],
-            "eliteDomain": bool(domain.get("elite_domain")),
+            "eliteDomain": bool(domain.get("elite_domain")) and (
+                str(domain.get("id")) in published_domain_ids
+                or str(domain.get("domain_key")) in published_domain_ids
+            ),
             "foundationSkills": _foundation_skills(domain),
             "foundationSkillUris": domain.get("foundation_skill_uris") or {},
              "sourceConfidence": domain.get("source_confidence"),
@@ -888,7 +1157,8 @@ async def get_domain(domain_id: str):
             "subgroups": subgroups,
              "roles": roles,
              "resources": domain_resources,
-         }
+             "contextItems": domain_context_items,
+          }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
         log.error("career get_domain failed", error=str(exc))
@@ -903,6 +1173,7 @@ async def get_role(role_id: str):
     envelope, degrading to `coming_soon` on miss/error."""
     try:
         svc = _svc()
+        published_role_ids = _published_elite_entity_ids("role")
         rres = (
             svc.table("domain_roles")
             .select("*")
@@ -914,6 +1185,9 @@ async def get_role(role_id: str):
             return ResponseModel(data=_coming_soon("Role not found."))
         role = rres.data[0]
         resource_rows = _career_resources(svc, role_id=role.get("id"))
+        role_context_items = _career_context_items(
+            svc, context_level="role", context_key=role_id
+        )
         role_tools: list[dict] = []
         role_certs: list[dict] = []
         role_work_profile: dict | None = None
@@ -928,9 +1202,8 @@ async def get_role(role_id: str):
                 .execute().data or []
             )
             role_certs = (
-                svc.table("role_certifications").select(
-                    "name, body, region, level, gate_reason, source"
-                ).eq("role_key", role_id).order("name").execute().data or []
+                svc.table("role_certifications").select("*")
+                .eq("role_key", role_id).order("name").execute().data or []
             )
         except Exception as enrichment_exc:  # noqa: BLE001
             # The role enrichment migration is additive. Existing installations
@@ -1096,7 +1369,11 @@ async def get_role(role_id: str):
             "alsoKnownAs": role.get("also_known_as") or [],
             "iscoGroup": role.get("isco_group"),
             "escoCode": role.get("esco_code"),
-            "eliteStatus": role.get("elite_status"),
+            "eliteStatus": (
+                role.get("elite_status")
+                if str(role.get("role_key")) in published_role_ids
+                else "deferred"
+            ),
             "escoOccupationUris": role.get("esco_occupation_uris") or [],
             "onetOccupationCodes": role.get("onet_occupation_codes") or [],
             "onetEssentialSkills": [
@@ -1150,14 +1427,7 @@ async def get_role(role_id: str):
                 for t in role_tools if t.get("tool_name")
             ],
             "certifications": [
-                {
-                    "name": c.get("name"),
-                    "body": c.get("body"),
-                    "region": c.get("region"),
-                    "level": c.get("level"),
-                    "gateReason": c.get("gate_reason"),
-                    "source": c.get("source"),
-                }
+                {**_cert(c), "source": c.get("source")}
                 for c in role_certs if c.get("name")
             ],
             "essentialSkillUris": essential_uri_list,
@@ -1169,6 +1439,7 @@ async def get_role(role_id: str):
             "currencyVerifiedAt": _date_str(role.get("currency_verified_at")),
             "currencySource": role.get("currency_source"),
             "resources": resource_rows,
+            "contextItems": role_context_items,
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001
@@ -1627,6 +1898,71 @@ async def discover_by_skills(
         tool_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
         cert_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
 
+        # Turn a match into a small, actionable next-step route. Suggestions
+        # come only from skills already attached to a matched domain/role; they
+        # are not generated from free-form model text. Essential role skills
+        # are shown before optional skills, and duplicates are removed.
+        suggestions: list[dict] = []
+        seen_suggestions: set[tuple[str, str]] = set()
+        for domain, matched in matched_domains:
+            domain_id = domain.get("id")
+            domain_key = domain.get("domain_key")
+            known = {term.casefold() for term in terms}
+            foundation = unique(_skill_text(domain.get("foundation_skills")))
+            for skill in foundation:
+                if any(_contains_skill([skill], term) for term in terms):
+                    continue
+                identity = ("domain", skill.casefold())
+                if identity in seen_suggestions:
+                    continue
+                seen_suggestions.add(identity)
+                suggestions.append({
+                    "name": skill,
+                    "itemType": "skill",
+                    "contextLevel": "domain",
+                    "contextKey": domain_key,
+                    "domainId": domain_key,
+                    "domainName": domain.get("name"),
+                    "priority": "start_here",
+                    "why": f"It is part of the foundation for {domain.get('name')}; build it before narrowing into a role.",
+                    "sourceBacked": True,
+                })
+                if len(suggestions) >= 12:
+                    break
+            if len(suggestions) >= 12:
+                break
+        if len(suggestions) < 18:
+            for domain, _matched in matched_domains:
+                domain_id = domain.get("id")
+                domain_key = domain.get("domain_key")
+                ranked_roles = sorted(roles_by_domain.get(domain_id, []), key=lambda row: ({"entry": 0, "mid": 1, "senior": 2}.get(row.get("tier"), 3), row.get("role_name") or ""))
+                for role in ranked_roles[:5]:
+                    for skill in _skill_text(role.get("essential_skills")):
+                        if any(_contains_skill([skill], term) for term in terms):
+                            continue
+                        identity = ("role", skill.casefold())
+                        if identity in seen_suggestions:
+                            continue
+                        seen_suggestions.add(identity)
+                        suggestions.append({
+                            "name": skill,
+                            "itemType": "skill",
+                            "contextLevel": "role",
+                            "contextKey": role.get("role_key"),
+                            "domainId": domain_key,
+                            "domainName": domain.get("name"),
+                            "roleName": role.get("role_name"),
+                            "priority": "build_next",
+                            "why": f"It is essential preparation for the entry-first role route {role.get('role_name')}.",
+                            "sourceBacked": True,
+                        })
+                        if len(suggestions) >= 18:
+                            break
+                    if len(suggestions) >= 18:
+                        break
+                if len(suggestions) >= 18:
+                    break
+
         audience = "student"
         if normalized_admin_type == "university":
             audience = "university_curriculum"
@@ -1649,6 +1985,7 @@ async def discover_by_skills(
             "roles": role_out,
             "tools": tool_out,
             "certifications": cert_out,
+            "suggestedNext": suggestions,
         }, "No matching graph evidence is available for those skills yet." if terms and not matched_domains else None))
     except Exception as exc:  # noqa: BLE001
         log.error("career skill discovery failed", error=str(exc))
@@ -1670,19 +2007,42 @@ async def discover_by_skills_post(payload: dict = Body(...)):
 
 
 @router.get("/search", response_model=ResponseModel)
-async def search_career(q: Optional[str] = None):
-    """Grouped disambiguation search → CareerSearchResult (domains/roles/programmes)."""
+async def search_career(
+    q: Optional[str] = None,
+    intent: Optional[str] = Query(None),
+    user_type: Optional[str] = Query(None),
+    school_id: Optional[str] = Query(None),
+):
+    """Public, grouped search across the connected career catalogue.
+
+    The result deliberately keeps entity types separate. A query such as
+    ``computer science`` can therefore show the programme as the primary
+    interpretation while still exposing related domains, skills and roles
+    without mixing them into one ambiguous list. Optional enrichment tables
+    are read defensively because this endpoint must remain usable during a
+    rolling migration.
+    """
     term = _clean_public_query(q)
+    intent_key = intent if intent in _SEARCH_INTENT_COPY else None
+    intent_copy = _search_intent_copy(intent_key, user_type)
     if len(term) < _MIN_PUBLIC_QUERY_LEN:
         return ResponseModel(
             data=_real(
-                {"domains": [], "roles": [], "programmes": []},
+                {
+                    "searchIntent": intent_key,
+                    "userType": user_type,
+                    "schoolId": school_id,
+                    "searchContext": intent_copy,
+                    "domains": [], "roles": [], "programmes": [],
+                },
                 "Type at least two characters to search. Bulk graph listing is not exposed.",
             )
         )
     try:
         svc = _svc()
-        like = f"%{term}%"
+        subject_term, institution_term = _search_terms(term)
+        like = f"%{subject_term}%"
+        institution_like = f"%{institution_term}%"
 
         dres = (
             svc.table("domains")
@@ -1778,14 +2138,55 @@ async def search_career(q: Optional[str] = None):
         except Exception as family_exc:  # noqa: BLE001
             log.debug("career role-family search unavailable", error=str(family_exc))
 
-        pres = (
+        programme_query = (
             svc.table("programmes")
             .select("id, name, institution_type, discipline")
             .ilike("name", like)
-            .order("name")
-            .limit(_PUBLIC_SEARCH_LIMIT)
-            .execute()
         )
+        if user_type == "student" and school_id:
+            # An undergraduate's programme search is anchored to the
+            # university already recorded in their starting point. The
+            # school_programmes -> programme_mapping hop turns the JAMB
+            # offering identity into the canonical programme id used by the
+            # career detail route. This prevents a national programme hit
+            # from silently opening a course that their university does not
+            # offer.
+            try:
+                offering_rows = (
+                    svc.table("school_programmes")
+                    .select("jamb_programme_id")
+                    .eq("school_id", school_id)
+                    .execute()
+                ).data or []
+                jamb_ids = [
+                    row.get("jamb_programme_id")
+                    for row in offering_rows
+                    if row.get("jamb_programme_id")
+                ]
+                canonical_ids: list[str] = []
+                if jamb_ids:
+                    mapping_rows = (
+                        svc.table("programme_mapping")
+                        .select("programme_id")
+                        .in_("jamb_programme_id", jamb_ids)
+                        .execute()
+                    ).data or []
+                    canonical_ids = list(dict.fromkeys(
+                        row.get("programme_id")
+                        for row in mapping_rows
+                        if row.get("programme_id")
+                    ))
+                # Fail closed for an enrolled student when the selected
+                # university has no mapped offering for the query. A national
+                # result would misrepresent their actual university context.
+                programme_query = programme_query.in_(
+                    "id",
+                    canonical_ids or ["00000000-0000-0000-0000-000000000000"],
+                )
+            except Exception as programme_scope_exc:  # noqa: BLE001
+                log.debug("undergraduate programme scope unavailable", error=str(programme_scope_exc))
+                programme_query = programme_query.in_("id", ["00000000-0000-0000-0000-000000000000"])
+        pres = programme_query.order("name").limit(_PUBLIC_SEARCH_LIMIT).execute()
         programmes = [
             {
                 "id": p.get("id"),
@@ -1796,7 +2197,200 @@ async def search_career(q: Optional[str] = None):
             for p in (pres.data or [])
         ]
 
-        return ResponseModel(data=_real({"domains": domains, "roles": roles, "roleFamilies": role_families, "programmes": programmes}))
+        def safe_query(label: str, builder):
+            try:
+                return builder().data or []
+            except Exception as query_exc:  # noqa: BLE001
+                log.debug("optional career search group unavailable", group=label, error=str(query_exc))
+                return []
+
+        subgroup_rows = safe_query(
+            "subgroups",
+            lambda: svc.table("domain_subgroups")
+            .select("id, domain_id, label, description")
+            .ilike("label", like)
+            .order("label")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        tool_rows = safe_query(
+            "tools",
+            lambda: svc.table("domain_tools")
+            .select("id, domain_id, tool_name, tool_group")
+            .ilike("tool_name", like)
+            .order("tool_name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        certification_rows = safe_query(
+            "certifications",
+            lambda: svc.table("domain_certifications")
+            .select("id, domain_id, name, level, region")
+            .ilike("name", like)
+            .order("name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        bridge_skill_rows = safe_query(
+            "skills",
+            lambda: svc.table("domain_bridge_skills")
+            .select("id, domain_id, skill_name, category")
+            .ilike("skill_name", like)
+            .order("skill_name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        role_bridge_skill_rows = safe_query(
+            "role skills",
+            lambda: svc.table("role_bridge_skills")
+            .select("id, domain_id, skill_name, category")
+            .ilike("skill_name", like)
+            .order("skill_name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        adjacent_skill_rows = safe_query(
+            "adjacent skills",
+            lambda: svc.table("adjacent_prerequisites")
+            .select("id, domain_id, skill_name, category")
+            .ilike("skill_name", like)
+            .order("skill_name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        university_rows = safe_query(
+            "universities",
+            lambda: svc.table("schools")
+            .select("id, name, institution_type")
+            .eq("institution_type", "university")
+            .ilike("name", institution_like)
+            .order("name")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+        if not university_rows:
+            alias_target = _UNIVERSITY_ALIASES.get(institution_term.lower().replace(" ", ""))
+            if alias_target:
+                university_rows = safe_query(
+                    "university alias",
+                    lambda: svc.table("schools")
+                    .select("id, name, institution_type")
+                    .eq("institution_type", "university")
+                    .ilike("name", f"%{alias_target}%")
+                    .order("name")
+                    .limit(_PUBLIC_SEARCH_LIMIT),
+                )
+        opportunity_rows = safe_query(
+            "opportunities",
+            lambda: svc.table("opportunities")
+            .select("id, title, opp_type, scope, region")
+            .eq("active", True)
+            .ilike("title", like)
+            .order("title")
+            .limit(_PUBLIC_SEARCH_LIMIT),
+        )
+
+        # Resolve the domain context for secondary search groups. The context
+        # is what makes a result such as ``risk analysis`` actionable rather
+        # than just another unlabelled keyword hit.
+        context_ids = {
+            row.get("domain_id")
+            for row in [*subgroup_rows, *tool_rows, *certification_rows,
+                        *bridge_skill_rows, *role_bridge_skill_rows,
+                        *adjacent_skill_rows]
+            if row.get("domain_id")
+        }
+        if context_ids:
+            context_rows = safe_query(
+                "domain context",
+                lambda: svc.table("domains")
+                .select("id, domain_key, name")
+                .in_("id", list(context_ids)),
+            )
+            dmap.update({row.get("id"): row for row in context_rows if row.get("id")})
+
+        subgroups = [
+            {
+                "id": row.get("id"),
+                "name": row.get("label"),
+                "domainId": (dmap.get(row.get("domain_id")) or {}).get("domain_key"),
+                "domainName": (dmap.get(row.get("domain_id")) or {}).get("name"),
+            }
+            for row in subgroup_rows
+            if row.get("id") and row.get("label")
+        ]
+        tools = [
+            {
+                "id": row.get("id"),
+                "name": row.get("tool_name"),
+                "domainId": (dmap.get(row.get("domain_id")) or {}).get("domain_key"),
+                "domainName": (dmap.get(row.get("domain_id")) or {}).get("name"),
+                "group": row.get("tool_group"),
+            }
+            for row in tool_rows
+            if row.get("id") and row.get("tool_name")
+        ]
+        certifications = [
+            {
+                "id": row.get("id"),
+                "name": row.get("name"),
+                "domainId": (dmap.get(row.get("domain_id")) or {}).get("domain_key"),
+                "domainName": (dmap.get(row.get("domain_id")) or {}).get("name"),
+                "level": row.get("level"),
+                "region": row.get("region"),
+            }
+            for row in certification_rows
+            if row.get("id") and row.get("name")
+        ]
+
+        skill_source_rows = [*bridge_skill_rows, *role_bridge_skill_rows, *adjacent_skill_rows]
+        seen_skills: set[tuple[str, str]] = set()
+        skills = []
+        for row in skill_source_rows:
+            name = row.get("skill_name")
+            domain = dmap.get(row.get("domain_id")) or {}
+            key = (str(name or "").strip().lower(), str(domain.get("domain_key") or ""))
+            if not name or key in seen_skills:
+                continue
+            seen_skills.add(key)
+            skills.append({
+                "id": row.get("id"),
+                "name": name,
+                "domainId": domain.get("domain_key"),
+                "domainName": domain.get("name"),
+                "context": row.get("category"),
+            })
+
+        universities = [
+            {
+                "id": row.get("id"),
+                "name": row.get("name"),
+                "institutionType": row.get("institution_type") or "university",
+            }
+            for row in university_rows
+            if row.get("id") and row.get("name")
+        ]
+        opportunities = [
+            {
+                "id": row.get("id"),
+                "title": row.get("title"),
+                "type": row.get("opp_type"),
+                "scope": row.get("scope"),
+                "region": row.get("region"),
+            }
+            for row in opportunity_rows
+            if row.get("id") and row.get("title")
+        ]
+
+        return ResponseModel(data=_real({
+            "searchIntent": intent_key,
+            "userType": user_type,
+            "schoolId": school_id,
+            "searchContext": intent_copy,
+            "domains": domains,
+            "subgroups": subgroups,
+            "roles": roles,
+            "roleFamilies": role_families,
+            "programmes": programmes,
+            "universities": universities,
+            "skills": skills,
+            "tools": tools,
+            "certifications": certifications,
+            "opportunities": opportunities,
+        }))
     except Exception as exc:  # noqa: BLE001
         log.error("career search failed", error=str(exc))
         return ResponseModel(data=_coming_soon("Search is temporarily unavailable."))
