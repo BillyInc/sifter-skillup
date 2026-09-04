@@ -24,6 +24,7 @@ import { Badge, SifterButton, SifterCard } from '@/components/ui';
 import TrackScene from '@/components/artwork/TrackIsometricScene';
 import IslandGlobe, { DEFAULT_ISLAND_PINS } from '@/components/artwork/IslandGlobe';
 import { useResponsive } from '@/hooks/useResponsive';
+import { useAuth } from '@/hooks/useAuth';
 import { xpEngine, type XPSnapshot } from '@/lib/XPEngine';
 import { resolveTrackContext } from '@/lib/trackContext';
 // Home links to the fourth destination; it must call it whatever the nav calls it.
@@ -281,6 +282,8 @@ function QuickAction({
 export default function HomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === 'guest';
   const resp = useResponsive();
   const go = useCallback((href: string) => router.push(href as any), [router]);
   const trackContext = useMemo(() => resolveTrackContext(null), []);
@@ -471,7 +474,7 @@ export default function HomeScreen() {
             </WebCard>
           )}
 
-          <WebRow>
+          {!isGuest ? <WebRow>
             <WebCol weight={2}>
               <WebCard title="Saved guidance" accentBar accentColor={colors.accentRole.action}>
                 <WebListRow icon="WORLD" title={WORLD_NAV.label} sub="Saved programmes, domains, roles, and notes" onPress={() => go('/(tabs)/myworld')} />
@@ -493,10 +496,10 @@ export default function HomeScreen() {
               </WebCard>
               <WebCard title="Signals" accentBar accentColor={colors.accentRole.success}>
                 <WebListRow icon="MAP" title="Explore guidance" sub="Programmes, universities, domains, and roles" onPress={() => go('/(tabs)/explore')} />
-                <WebListRow icon="WORLD" title={WORLD_NAV.label} sub="Saved programmes, domains, roles, and notes" badge={WORLD_NAV.label === 'Saved' ? undefined : 'Saved'} badgeColor={accentColor} onPress={() => go('/(tabs)/myworld')} />
+                {!isGuest ? <WebListRow icon="WORLD" title={WORLD_NAV.label} sub="Saved programmes, domains, roles, and notes" badge={WORLD_NAV.label === 'Saved' ? undefined : 'Saved'} badgeColor={accentColor} onPress={() => go('/(tabs)/myworld')} /> : null}
               </WebCard>
             </WebCol>
-          </WebRow>
+          </WebRow> : null}
 
           <WebRow>
             <WebCol weight={2}>
@@ -530,7 +533,7 @@ export default function HomeScreen() {
                 {[
                   { emoji: 'MAP', label: 'Explore Pathways', sub: 'Browse programmes, roles, and pathways', route: '/(tabs)/explore' },
                   { emoji: 'WORLD', label: WORLD_NAV.label, sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
-                ].map((item) => (
+                ].filter((item) => !isGuest || item.emoji !== 'WORLD').map((item) => (
                   <WebListRow
                     key={item.label}
                     icon={item.emoji}
@@ -568,15 +571,11 @@ export default function HomeScreen() {
               {trackContext.mode === 'track' ? trackContext.tagline : 'Guidance, XP, and next actions in one place.'}
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => go('/(tabs)/profile')}
-            activeOpacity={0.85}
-            style={[styles.mobileActionBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
-          >
+          <View style={[styles.mobileActionBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.webBoltLabel, { color: accentColor }, CompassFonts.bodyBold]}>
               {trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}
             </Text>
-          </TouchableOpacity>
+          </View>
         </Animated.View>
 
         {/* ── Hero: Your Route card ── */}
@@ -690,7 +689,7 @@ export default function HomeScreen() {
           <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
           <QuickAction iconLabel="MAP" label="Explore guidance" sub="Browse programmes, universities, domains, and roles" color={accentColor} onPress={() => go(continueHref)} />
           <QuickAction iconLabel="MAP" label="Explore Pathways" sub="Browse programmes, roles, and pathways" color={colors.accentRole.success} onPress={() => go('/(tabs)/explore')} />
-          <QuickAction iconLabel="WORLD" label={WORLD_NAV.label} sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} />
+          {!isGuest ? <QuickAction iconLabel="WORLD" label={WORLD_NAV.label} sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} /> : null}
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

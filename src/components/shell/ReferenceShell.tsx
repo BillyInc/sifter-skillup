@@ -25,7 +25,8 @@ import { WORLD_NAV } from '@/lib/worldNav';
 import { toSearchGroups, resolveSearchHref } from '@/lib/searchResults';
 import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
 import { useSidebarNav } from '@/hooks/useResponsive';
-import type { CareerSearchResult, SearchScope } from '@/types/career';
+import type { CareerSearchResult, SearchIntent, SearchScope } from '@/types/career';
+import { getStartingPoint } from '@/lib/startingPoint';
 
 type NavId =
   | 'home'
@@ -180,10 +181,14 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const { width } = useWindowDimensions();
   const { colors, isDark, toggle } = useTheme();
   const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === 'guest';
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [overlayScope, setOverlayScope] = useState<SearchScope>("all");
+  const [searchIntent, setSearchIntent] = useState<SearchIntent | null>(null);
+  const [searchUserType, setSearchUserType] = useState<string | null>(null);
+  const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
   // These two were previously destructured WITHOUT setters, so results were
   // permanently [] and the overlay could never return anything.
   const [searchPayload, setSearchPayload] = useState<CareerSearchResult | null>(null);
@@ -210,6 +215,26 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const focusedGuidance = (Array.isArray(params.journey) ? params.journey[0] : params.journey) === 'guided_subject_discovery'
     || (Array.isArray(params.focus) ? params.focus[0] : params.focus) === 'guidance'
     || (Array.isArray(params.guided) ? params.guided[0] : params.guided) === '1';
+
+  useEffect(() => {
+    let active = true;
+    if (!user?.id || isGuest) {
+      setSearchUserType(null);
+      setSearchSchoolId(null);
+      return () => { active = false; };
+    }
+    // Account type identifies the student shell, while the starting-point
+    // profile distinguishes an undergraduate from JAMB and secondary users.
+    setSearchUserType(user.account_type === 'student' ? 'student' : null);
+    setSearchSchoolId(null);
+    void getStartingPoint(user.id).then((profile) => {
+      if (active) {
+        setSearchUserType(profile?.userType ?? (user.account_type === 'student' ? 'student' : null));
+        setSearchSchoolId(profile?.preferredSchoolId ?? null);
+      }
+    });
+    return () => { active = false; };
+  }, [isGuest, user?.account_type, user?.id]);
 
   // Load the user's real search history when the overlay opens. Empty until
   // they have actually searched -- the overlay hides the section in that case.
@@ -240,7 +265,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
     setOverlayLoading(true);
     const timer = setTimeout(() => {
       careerData
-        .searchCareer(term)
+        .searchCareer(term, searchIntent ?? undefined, searchUserType, searchSchoolId)
         .then((res) => {
           if (generation !== searchGeneration.current) return;
           setSearchPayload(res.status === 'real' ? res.data ?? null : null);
@@ -255,11 +280,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
     }, 250);
 
     return () => clearTimeout(timer);
-  }, [searchQuery, overlayVisible]);
+  }, [searchIntent, searchQuery, overlayVisible, searchSchoolId, searchUserType]);
 
   const overlayResults = useMemo(
-    () => toSearchGroups(searchPayload, overlayScope),
-    [searchPayload, overlayScope],
+    () => toSearchGroups(searchPayload, overlayScope, searchIntent),
+    [searchIntent, searchPayload, overlayScope],
   );
 
   const tabDotX = useSharedValue(0);
@@ -312,21 +337,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
           <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
-          <View style={[styles.sidebarFooter, { borderTopColor: colors.borderRole.subtle }]}>
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={() => router.push('/(tabs)/profile' as any)}
-              style={[styles.profileMini, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
-            >
-              <View style={[styles.profileMiniAvatar, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Feather name="user" size={14} color={colors.textRole.muted} />
-              </View>
-              <View>
-                <Text style={[styles.profileMiniLabel, { color: colors.textRole.primary }]}>Profile</Text>
-                <Text style={[styles.profileMiniSub, { color: colors.textRole.muted }]}>Account & saved</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
         </View>
       )}
 
@@ -376,12 +386,14 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             {isWide && (
               <View style={styles.searchWrap}>
                 <SearchBar
-                  value=""
-                  onChangeText={() => setOverlayVisible(true)}
-                  placeholder="Search programmes, domains and roles…"
-                  editable={false}
-                  pointerEvents="none"
-                  style={styles.searchStub}
+                  value={searchQuery}
+                  onChangeText={(value) => {
+                    setSearchQuery(value);
+                    setOverlayVisible(true);
+                  }}
+                  onFocus={() => setOverlayVisible(true)}
+                   placeholder="What do you want to find or do?"
+                   style={styles.searchStub}
                 />
               </View>
             )}
@@ -391,7 +403,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 activeOpacity={0.85}
                 onPress={() => setOverlayVisible(true)}
                 accessibilityRole="button"
-                accessibilityLabel="Search programmes, domains and roles"
+                accessibilityLabel="Open contextual search"
                 style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
               >
                 <Feather name="search" size={18} color={colors.textRole.primary} />
@@ -408,15 +420,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.textRole.primary} />
             </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={() => router.push('/(tabs)/profile' as any)}
-              accessibilityRole="button"
-              accessibilityLabel="Profile"
-              style={[styles.avatarBtn, { backgroundColor: colors.textRole.primary }]}
-            >
-              <Feather name="user" size={15} color={colors.textRole.inverse} />
-            </TouchableOpacity>
             </> : null}
           </View>
         </View>
@@ -526,19 +529,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <ScrollView showsVerticalScrollIndicator={false}>
               <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
-              <View style={[styles.drawerSecondary, { borderTopColor: colors.borderRole.subtle }]}>
-                <TouchableOpacity
-                  activeOpacity={0.85}
-                  onPress={() => {
-                    setDrawerOpen(false);
-                    router.push('/(tabs)/profile' as any);
-                  }}
-                  style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
-                >
-                  <Feather name="user" size={16} color={colors.textRole.muted} />
-                  <Text style={[styles.secondaryBtnLabel, { color: colors.textRole.primary }]}>Profile</Text>
-                </TouchableOpacity>
-              </View>
             </ScrollView>
           </Pressable>
         </Pressable>
@@ -546,11 +536,15 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
       <SearchOverlay
         visible={overlayVisible}
-        onClose={() => { setOverlayVisible(false); setSearchQuery(""); }}
+        onClose={() => { setOverlayVisible(false); setSearchQuery(""); setSearchIntent(null); setOverlayScope("all"); }}
         value={searchQuery}
         onChangeText={setSearchQuery}
         scope={overlayScope}
         onScopeChange={setOverlayScope}
+        intent={searchIntent}
+        onIntentChange={(intent) => { setSearchIntent(intent); setOverlayScope("all"); }}
+        userType={searchUserType}
+        searchContext={searchPayload?.searchContext}
         loading={overlayLoading}
         results={overlayResults}
         onResultPress={(result) => {
@@ -568,7 +562,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         onRecentPress={(term) => setSearchQuery(term)}
         suggestions={SEARCH_SUGGESTIONS}
         onSuggestionPress={(term) => setSearchQuery(term)}
-        isGuest={!user}
+        isGuest={isGuest}
         onSignIn={() => {
           setOverlayVisible(false);
           router.push("/(auth)/sign-in" as any);
@@ -734,10 +728,13 @@ const styles = StyleSheet.create({
   },
   searchWrap: {
     position: 'relative',
+    width: 420,
+    maxWidth: '45vw',
   },
   searchStub: {
-    minWidth: 260,
-    maxWidth: 340,
+    width: '100%',
+    minWidth: 360,
+    maxWidth: 480,
   },
   topbarIconBtn: {
     width: 34,

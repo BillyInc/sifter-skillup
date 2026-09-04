@@ -31,6 +31,7 @@ import { PdfExportButton } from "./PdfExportButton";
 import { ShareExportButton } from "./ShareExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
 import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceReportButton";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
@@ -63,6 +64,9 @@ export interface DetailScaffoldProps<T> {
   scrollRef?: RefObject<ScrollView | null>;
   /** Scroll event handler (for section nav active tracking). */
   onScroll?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  /** Gate the full entity body behind an account while leaving a useful preview. */
+  requiresAccountForDetails?: boolean;
+  guestDescription?: string | null;
 }
 
 export function DetailScaffold<T>({
@@ -83,9 +87,13 @@ export function DetailScaffold<T>({
   disclaimer = true,
   scrollRef,
   onScroll,
+  requiresAccountForDetails = false,
+  guestDescription,
 }: DetailScaffoldProps<T>) {
   const router = useRouter();
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
   const goBack = () => {
     if (router.canGoBack()) {
       router.back();
@@ -145,9 +153,9 @@ export function DetailScaffold<T>({
                 compact
               />
             ) : null}
-            {reportSelection ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
-            {pdf ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
-            {pdfPath ? <ShareExportButton documentPath={pdfPath} fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`} /> : null}
+            {reportSelection && !isGuest ? <GuidanceReportButton selection={reportSelection} targetStudentId={targetStudentId} /> : null}
+            {pdf && !isGuest ? <PdfExportButton title={pdfTitle ?? (pdfPath ? "Open / print report" : "Save as PDF")} documentPath={pdfPath} /> : null}
+            {pdfPath && !isGuest ? <ShareExportButton documentPath={pdfPath} fileName={`${(pdfTitle ?? title).replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-report.html`} /> : null}
           </View>
         </View>
       </View>
@@ -156,7 +164,15 @@ export function DetailScaffold<T>({
 
       <View style={styles.bodyWrap}>
         <DataStateView state={state} empty={empty} spinnerOnPending={!state.data} onRetry={onRetry}>
-          {children}
+          {isGuest && requiresAccountForDetails
+            ? () => (
+                <GuestDetailPreview
+                  eyebrow={eyebrow}
+                  description={guestDescription}
+                  onContinue={() => router.push("/(auth)/sign-in" as never)}
+                />
+              )
+            : children}
         </DataStateView>
       </View>
 
@@ -166,6 +182,32 @@ export function DetailScaffold<T>({
 }
 
 export default DetailScaffold;
+
+function GuestDetailPreview({
+  eyebrow,
+  description,
+  onContinue,
+}: {
+  eyebrow?: string;
+  description?: string | null;
+  onContinue: () => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.guestPreview, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <Feather name="lock" size={20} color={colors.accentRole.action} />
+      <Text style={[styles.guestEyebrow, { color: colors.textRole.muted }]}>{eyebrow ?? "PREVIEW"}</Text>
+      <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>You are viewing a public preview</Text>
+      {description ? <Text style={[styles.guestDescription, { color: colors.textRole.secondary }]}>{description}</Text> : null}
+      <Text style={[styles.guestDescription, { color: colors.textRole.secondary }]}>
+        Create an account to open the full explanation, priority preparation, connected items, and guided next steps.
+      </Text>
+      <TouchableOpacity onPress={onContinue} activeOpacity={0.8} style={[styles.guestCta, { backgroundColor: colors.accentRole.action }]}>
+        <Text style={[styles.guestCtaText, { color: colors.textRole.inverse }]}>Sign in or create account</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   scroll: {
@@ -201,6 +243,18 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     minHeight: 36,
   },
+  guestPreview: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+    alignItems: "flex-start",
+  },
+  guestEyebrow: { fontSize: FontSize.xs, fontWeight: "700", letterSpacing: 0.9 },
+  guestTitle: { fontSize: FontSize.lg, fontWeight: "800" },
+  guestDescription: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  guestCta: { minHeight: 44, borderRadius: Radius.full, paddingHorizontal: Spacing.lg, justifyContent: "center", marginTop: Spacing.xs },
+  guestCtaText: { fontSize: FontSize.sm, fontWeight: "800" },
   eyebrow: {
     fontSize: FontSize.xs,
     fontWeight: "600",

@@ -1,0 +1,22 @@
+{
+ "schemaVersion": 1,
+ "generatedOn": "2026-09-04",
+ "purpose": "Source-backed learner explanations for every visible domain, subgroup and role item emitted by this build.",
+ "method": "Join exact ESCO skill and occupation descriptions, O*NET occupation/software/content-model rows, recorded Nigerian source URLs and the certification source-closure registry. Explanations are concise source-supported syntheses.",
+ "sourceAuthority": {
+  "esco": "https://esco.ec.europa.eu/en/classification",
+  "onet": "https://www.onetcenter.org/database.html",
+  "onetSoftwareDictionary": "https://www.onetcenter.org/dictionary/31.0/csv/software_skills.html",
+  "iloIsco": "https://isco.ilo.org/en/isco-08/"
+ },
+ "counts": {
+  "domain_skill": 30638,
+  "subgroup_skill": 38848,
+  "subgroup_tool": 5116,
+  "role_skill": 80546,
+  "role_tool": 40352,
+  "domain_certification": 240
+ },
+ "recordCount": 195248,
+ "releaseRule": "Only records with at least one claim-specific public source URL are emitted. No unsupported item receives a guessed explanation."
+}

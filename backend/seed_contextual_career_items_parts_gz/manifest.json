@@ -1,0 +1,55 @@
+{
+  "format": "json-object-parts-v1",
+  "source": "contextual_career_items.json",
+  "source_sha256": "cc24d3757046c7c7b561888eb6fed2f42fedfe2582bc1b9539a6c791a5586db5",
+  "max_part_bytes": 40000000,
+  "compressed": true,
+  "parts": [
+    {
+      "path": "part-001.json.gz",
+      "bytes": 3703604,
+      "sha256": "617af0d73d99a2cda2d214d5923d9fee333b2ec4c7c9cd5a9c0451dae813fdfa"
+    },
+    {
+      "path": "part-002.json.gz",
+      "bytes": 2723120,
+      "sha256": "854fe5edc8da22c26124b3d1a2f6a87ee67dee16cb2c3e342ceca25301243c2e"
+    },
+    {
+      "path": "part-003.json.gz",
+      "bytes": 2402986,
+      "sha256": "0f4de18290d05691a868709913b62e201da8494246ee21d4545e42bd8f6ec981"
+    },
+    {
+      "path": "part-004.json.gz",
+      "bytes": 2501481,
+      "sha256": "1cb088ce5c526730fb029c641b7ba688afb607af4f16c2a86783bd9355d54948"
+    },
+    {
+      "path": "part-005.json.gz",
+      "bytes": 2524077,
+      "sha256": "5c60e497f247ae3988c5c820413bd21787b1a0119bd897f7746337ff9ee96352"
+    },
+    {
+      "path": "part-006.json.gz",
+      "bytes": 2474049,
+      "sha256": "14ebe642a264b4eab97de6cae42463fbcf15fd3c002a193e8e86133e63609165"
+    },
+    {
+      "path": "part-007.json.gz",
+      "bytes": 2400722,
+      "sha256": "79b5e29e7dba79b9fedb306b3a7fdf62993d057f09b3748ad59451cc29d340ff"
+    },
+    {
+      "path": "part-008.json.gz",
+      "bytes": 3129387,
+      "sha256": "716e39d50f743bcb8a207140e59232d26682ec28e7f7c62ea5f1e9506ce6bd7c"
+    },
+    {
+      "path": "part-009.json.gz",
+      "bytes": 2703080,
+      "sha256": "2637acbedcb6c77e47f62a781df10aa2950650476590963783afac98ac0a0675"
+    }
+  ],
+  "reassemble": "merge part files in numeric filename order as one top-level object"
+}

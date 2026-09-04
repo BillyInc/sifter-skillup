@@ -2,9 +2,10 @@
  * CareerProfileScreen - the LevelUp Profile tab (career intelligence).
  *
  * This is the career-side profile: the user's starting point, everything they
- * have saved/bookmarked, their notes (grouped by category), their opportunity
- * subscriptions, notification preferences, account actions, and an "About"
- * blurb. The gamified learning profile (worker character / XP / portfolio) is
+ * have saved/bookmarked, their notes (grouped by category), account actions,
+ * and an "About" blurb. Opportunity subscriptions and notification controls
+ * are deliberately absent until delivery is live. The gamified learning profile
+ * (worker character / XP / portfolio) is
  * the legacy ProfileScreen and folds into My World in a later phase - it is
  * intentionally preserved and NOT shown here.
  *
@@ -18,8 +19,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Switch,
-  Platform,
   Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -35,14 +34,12 @@ import {
 } from "@/theme";
 import { DataStateView, LockedPill } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
-import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
+import { getStartingPoint } from "@/lib/startingPoint";
 import {
   type DataState,
   type SavedItem,
   type Note,
-  type Subscription,
   type SavedEntityType,
-  type SubscriptionTarget,
 } from "../types/career";
 import type {
   StartingPointProfile,
@@ -72,18 +69,6 @@ const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
   elite_pathway: { icon: "ELT", label: "Pathway" },
   resource: { icon: "RES", label: "Resource" },
 };
-const SUBSCRIPTION_META: Record<SubscriptionTarget, { icon: string; label: string }> = {
-  opportunity: { icon: "OPP", label: "Opportunity" },
-  organisation: { icon: "ORG", label: "Employer" },
-  application_window: { icon: "WIN", label: "Application window" },
-};
-const NOTIF_LABELS: { key: string; label: string; fallback: boolean }[] = [
-  { key: "internships", label: "Internship openings", fallback: true },
-  { key: "graduate_deadlines", label: "Graduate programme deadlines", fallback: true },
-  { key: "scholarships", label: "Scholarship alerts", fallback: true },
-  { key: "weekly_tips", label: "Weekly career tips", fallback: false },
-];
-
 const UNCATEGORISED = "Uncategorised";
 
 export default function CareerProfileScreen() {
@@ -97,21 +82,26 @@ export default function CareerProfileScreen() {
   const [profile, setProfile] = useState<StartingPointProfile | null>(null);
   const [saved, setSaved] = useState<DataState<SavedItem[]> | null>(null);
   const [notes, setNotes] = useState<DataState<Note[]> | null>(null);
-  const [subs, setSubs] = useState<DataState<Subscription[]> | null>(null);
+  // Notifications and opportunity subscriptions stay out of this screen
+  // until their delivery and preference contract is live.
 
   const loadProfileData = useCallback(async (isActive: () => boolean) => {
-    const [sp, savedState, notesState, subsState] = await Promise.all([
+    if (isGuest) {
+      setProfile(null);
+      setSaved(null);
+      setNotes(null);
+      return;
+    }
+    const [sp, savedState, notesState] = await Promise.all([
       getStartingPoint(user?.id),
       careerData.getSavedItems(),
       careerData.getAllNotes(),
-      careerData.getSubscriptions(),
     ]);
     if (!isActive()) return;
     setProfile(sp);
     setSaved(savedState);
     setNotes(notesState);
-    setSubs(subsState);
-  }, [user?.id]);
+  }, [isGuest, user?.id]);
 
   useFocusEffect(
     useCallback(() => {
@@ -126,25 +116,6 @@ export default function CareerProfileScreen() {
   const displayName =
     user?.username && user.username !== "Student" ? user.username : null;
 
-  // Notifications: edit the local profile copy and persist it (only when a
-  // starting-point profile already exists - we don't fabricate one here).
-  const notifValue = (key: string) =>
-    profile?.notifications?.[key] ??
-    NOTIF_LABELS.find((n) => n.key === key)?.fallback ??
-    false;
-
-  const onToggleNotif = (key: string, val: boolean) => {
-    setProfile((prev) => {
-      if (!prev) return prev;
-      const next: StartingPointProfile = {
-        ...prev,
-        notifications: { ...(prev.notifications ?? {}), [key]: val },
-      };
-      void saveStartingPoint(next, user?.id);
-      return next;
-    });
-  };
-
   const runAccountAction = useCallback(async () => {
     if (!accountAction || actionBusy) return;
     setActionBusy(true);
@@ -157,6 +128,8 @@ export default function CareerProfileScreen() {
       setActionBusy(false);
     }
   }, [accountAction, actionBusy, deleteAccount, router, signOut]);
+
+  if (isGuest) return <GuestProfileView />;
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
@@ -284,72 +257,6 @@ export default function CareerProfileScreen() {
           ) : null}
         </Section>
 
-        {/*  My subscriptions  */}
-        <Section title="My subscriptions">
-          {subs ? (
-            <DataStateView
-              state={subs}
-              onRetry={() => { void loadProfileData(() => true); }}
-              empty={(items) => items.length === 0}
-              emptyTitle="No subscriptions yet"
-              emptyBody="Subscribe to an opportunity or employer to get alerts here."
-            >
-              {(items) => (
-                <View style={styles.list}>
-                  {items.map((s) => (
-                    <SubscriptionRow key={s.id} sub={s} />
-                  ))}
-                </View>
-              )}
-            </DataStateView>
-          ) : null}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => router.push("/(tabs)/opportunities")}
-            style={styles.linkBtn}
-          >
-            <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
-              Browse opportunities 
-            </Text>
-          </TouchableOpacity>
-        </Section>
-
-        {/*  Notifications  */}
-        <Section title="Notifications">
-          <View
-            style={[
-              styles.card,
-              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-            ]}
-          >
-            {!profile ? (
-              <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
-                Complete onboarding to save your notification preferences.
-              </Text>
-            ) : null}
-            {NOTIF_LABELS.map((n) => (
-              <View key={n.key} style={styles.toggleRow}>
-                <Text style={[styles.toggleLabel, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
-                  {n.label}
-                </Text>
-                <Switch
-                  value={notifValue(n.key)}
-                  disabled={!profile}
-                  onValueChange={(val) => onToggleNotif(n.key, val)}
-                  trackColor={{ true: colors.accentRole.action, false: colors.borderRole.subtle }}
-                  thumbColor={
-                    Platform.OS === "android"
-                      ? notifValue(n.key)
-                        ? colors.textRole.inverse
-                        : "#f4f3f4"
-                      : undefined
-                  }
-                />
-              </View>
-            ))}
-          </View>
-        </Section>
-
         {/*  My World (locked)  */}
         <Section title="My World">
           <TouchableOpacity
@@ -435,6 +342,48 @@ export default function CareerProfileScreen() {
           </View>
         </View>
       </Modal>
+    </SafeAreaView>
+  );
+}
+
+/** Guest Profile is an account entry point, not a partially loaded student profile. */
+function GuestProfileView() {
+  const router = useRouter();
+  const { colors } = useTheme();
+  return (
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
+      <ScrollView
+        contentContainerStyle={[styles.scroll, webContainer as object]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>PROFILE</Text>
+        <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Guest browsing</Text>
+        <Text style={[styles.subtle, { color: colors.textRole.secondary }]}>You are exploring Sifter LevelUp without an account.</Text>
+
+        <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>Read-only preview</Text>
+          <Text style={[styles.subtle, { color: colors.textRole.secondary }]}>Browse programmes, universities, domains, subgroups and roles. Create an account when you want to save guidance, write notes or keep your place.</Text>
+          <View style={styles.modalActions}>
+            <TouchableOpacity onPress={() => router.push('/(auth)/signup' as any)} style={[styles.modalButton, { backgroundColor: colors.accentRole.action, borderColor: colors.accentRole.action }]}>
+              <Text style={[styles.modalButtonText, { color: colors.textRole.inverse }]}>Create account</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/(auth)/sign-in' as any)} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
+              <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Sign in</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <Section title="Account">
+          <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle, gap: 0 }]}>
+            <AccountRow
+              icon="SET"
+              label="Settings"
+              sub="Theme, legal and app preferences"
+              onPress={() => router.push('/(tabs)/settings' as any)}
+            />
+          </View>
+        </Section>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -533,30 +482,6 @@ function SavedRow({ item }: { item: SavedItem }) {
           {meta.label}
         </Text>
       </View>
-    </View>
-  );
-}
-
-function SubscriptionRow({ sub }: { sub: Subscription }) {
-  const { colors } = useTheme();
-  const meta = SUBSCRIPTION_META[sub.target];
-  return (
-    <View
-      style={[
-        styles.row,
-        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-      ]}
-    >
-      <Text style={styles.rowIcon}>{meta.icon}</Text>
-      <View style={{ flex: 1 }}>
-        <Text style={[styles.rowTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]} numberOfLines={1}>
-          {meta.label}
-        </Text>
-        <Text style={[styles.rowMeta, { color: colors.textRole.muted }]} numberOfLines={1}>
-          {sub.targetId}
-        </Text>
-      </View>
-      <Text style={[styles.rowMeta, { color: colors.accentRole.success }]}>On</Text>
     </View>
   );
 }
@@ -691,18 +616,6 @@ const styles = StyleSheet.create({
   },
   noteEntity: { fontSize: FontSize.xs },
   noteBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  toggleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: Spacing.sm,
-    minHeight: 44,
-  },
-  toggleLabel: {
-    flex: 1,
-    fontSize: FontSize.md,
-    paddingRight: Spacing.md,
-  },
   lockedHead: {
     flexDirection: "row",
     alignItems: "center",

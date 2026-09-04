@@ -50,10 +50,12 @@ schema files in this order before the preview seed:
 10. `backend/migration_market_intelligence_v1.sql`
 11. `backend/migration_role_detail_enrichment.sql` when role-owned
     certification/detail data is being used
-12. `backend/migration_career_resources_v1.sql` when resource data is being
+12. `backend/migration_certification_lifecycle.sql` — retain closed or
+    superseded credentials while exposing their current availability.
+13. `backend/migration_career_resources_v1.sql` when resource data is being
     used
-13. `backend/migration_saved_resource_support.sql` after `saved_items` exists
-14. Decompressed current SQL parts in
+14. `backend/migration_saved_resource_support.sql` after `saved_items` exists
+15. Decompressed current SQL parts in
     `backend/seed_career_v2_2026-09-01_parts_gz/`, in numeric order
 
 The `.sql.gz` files are not executable by Supabase. Before applying the
@@ -78,6 +80,17 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
 If the SQL Editor must be used, decompress and run the numbered parts
 separately in numeric order. Each part is a complete transaction. Do not paste
 or upload `.sql.gz` bytes to Supabase.
+
+After the career seed has completed, run
+`backend/seed_certification_lifecycle.sql`. It applies the evergreen status
+overlay to the loaded domain and role credential rows. This includes the
+temporarily unavailable TensorFlow Developer Certificate, retired AWS and
+Microsoft Azure routes, the Salesforce Associate name that was superseded by
+Platform Foundations, and the retained training and membership records.
+Names are matched after lower-casing and removing punctuation, so typographic
+dashes, slashes, and parentheses in the seed cannot prevent a lifecycle update.
+Re-running it is safe. “Recheck” means a scheduled provider-status refresh; it
+does not mean that the record is pending or missing a source.
 
 The preview must not be run before `migration_source_backed_career_layers.sql`:
 its domain, subgroup, role and tool inserts use the source-confidence,
@@ -111,7 +124,9 @@ not a substitute for production deployment verification.
 | 9 | `backend/migration_enrichment_v1.sql` | Phase 9 enrichment **columns** (additive) on `domain_certifications`, `domains`/`domain_subgroups`/`domain_roles`, and `domain_tools`. | #5 and #6 |
 | 10 | `backend/migration_market_intelligence_v1.sql` | Source registry, market metric provenance, posting windows, value/demand bands and volume x value quadrants. | #5 |
 | 11 | `backend/migration_role_detail_enrichment.sql` | Role-owned certification/detail tables. | #5 and #7 |
+| 11a | `backend/migration_certification_lifecycle.sql` | Retains changing credentials and records credential type, availability, current recommendation, reopening possibility, and status evidence for domain and role-owned credentials. | #9 and #11 |
 | 12 | `backend/migration_career_resources_v1.sql` | Source-backed learning-resource table and indexes. | #5 and #8 |
+| 12a | `backend/migration_contextual_career_items.sql` | Adds the learner-facing contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
 | 13 | `backend/migration_provisioning.sql` | Institution provisioning, school codes, claim codes, student affiliations/consents, merge candidates. | #5 |
 | 14 | `backend/migration_student_pipeline_live.sql` | Student starting points, selected subjects, structured subject options, pathway choices, JAMB/cutoff views. | #4, #6, #13 |
 | 14a | `backend/migration_ss3_secondary_starting_point_patch.sql` | Existing-project patch that allows the split `ss3_secondary` starting-point type. | #14 |
@@ -126,6 +141,16 @@ The consolidated patch adds `users.account_type_selected_at`. This is required
 to distinguish an old completed account that inherited the historical `student`
 default from a student who explicitly selected that persona. Apply it before
 testing login or finishing onboarding with the updated backend.
+
+### Contextual career item transport
+
+After applying migration **12a**, load the nine ordered gzip parts in
+`backend/seed_contextual_career_items_parts_gz/` in numeric order through the
+repository's normal seed loader. The parts contain 195,248 source-backed
+records. Reassemble or decompress them only in the controlled migration
+environment; do not commit an uncompressed copy. Confirm that the loader
+reports 195,248 rows and that every row has `data_state = 'source_backed'` and
+at least one public source URL before treating the migration as complete.
 
 > **Do NOT run `migration_career_intelligence.sql`.** It is superseded and mixed
 > obsolete taxonomy tables with the base `schools`/`programmes` registry. Use

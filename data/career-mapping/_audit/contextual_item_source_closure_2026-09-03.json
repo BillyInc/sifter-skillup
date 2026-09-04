@@ -1,0 +1,2380 @@
+{
+ "schema_version": 1,
+ "generated_on": "2026-09-03",
+ "purpose": "Claim-level source closure for visible composite skills and competencies, plus a gate for visible tools.",
+ "method": "Split composite labels into atomic components, attach authoritative source packs, and label the displayed sentence as a source-supported synthesis. Existing exact ESCO/O*NET/framework evidence is retained.",
+ "skill_counts": {
+  "already_source_backed": 69486
+ },
+ "composite_labels_closed": 44,
+ "skill_rows_closed": 88,
+ "visible_tool_rows_checked": 8916,
+ "visible_tool_rows_without_source": 0,
+ "source_packs": {
+  "iot": {
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ]
+  },
+  "pharmacy": {
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ]
+  },
+  "public_health": {
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ]
+  },
+  "recruitment": {
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ]
+  },
+  "digital_health": {
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ]
+  },
+  "laboratory": {
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ]
+  },
+  "medical_imaging": {
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ]
+  },
+  "nanotechnology": {
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ]
+  }
+ },
+ "records": [
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "IoT architecture; cloud platforms; protocol design; system integration",
+   "components": [
+    "IoT architecture",
+    "cloud platforms",
+    "protocol design",
+    "system integration"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "IoT security; firmware security; penetration testing; cryptography",
+   "components": [
+    "IoT security",
+    "firmware security",
+    "penetration testing",
+    "cryptography"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "data analysis; time-series analytics; Python/R; IoT data pipelines",
+   "components": [
+    "data analysis",
+    "time-series analytics",
+    "Python",
+    "R",
+    "IoT data pipelines"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "edge computing; containerisation; network protocols; real-time processing",
+   "components": [
+    "edge computing",
+    "containerisation",
+    "network protocols",
+    "real-time processing"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "embedded C/C++; RTOS; microcontroller programming; hardware-software co-design",
+   "components": [
+    "embedded C",
+    "C++",
+    "RTOS",
+    "microcontroller programming",
+    "hardware-software co-design"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "systems integration; API development; hardware commissioning; testing and validation",
+   "components": [
+    "systems integration",
+    "API development",
+    "hardware commissioning",
+    "testing and validation"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "embedded C/C++; RTOS; microcontroller programming; hardware-software co-design",
+   "components": [
+    "embedded C",
+    "C++",
+    "RTOS",
+    "microcontroller programming",
+    "hardware-software co-design"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "IoT architecture; cloud platforms; protocol design; system integration",
+   "components": [
+    "IoT architecture",
+    "cloud platforms",
+    "protocol design",
+    "system integration"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "IoT security; firmware security; penetration testing; cryptography",
+   "components": [
+    "IoT security",
+    "firmware security",
+    "penetration testing",
+    "cryptography"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "data analysis; time-series analytics; Python/R; IoT data pipelines",
+   "components": [
+    "data analysis",
+    "time-series analytics",
+    "Python",
+    "R",
+    "IoT data pipelines"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "edge computing; containerisation; network protocols; real-time processing",
+   "components": [
+    "edge computing",
+    "containerisation",
+    "network protocols",
+    "real-time processing"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D006",
+   "domain_name": "Internet of Things",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "systems integration; API development; hardware commissioning; testing and validation",
+   "components": [
+    "systems integration",
+    "API development",
+    "hardware commissioning",
+    "testing and validation"
+   ],
+   "source_pack": "iot",
+   "source_ids": [
+    "global_nist_iot"
+   ],
+   "supports": "Connected-device work involving sensing, computing, communication, actuation, architecture, integration, trustworthiness, security, privacy and lifecycle support.",
+   "source_urls": [
+    "https://www.nist.gov/internet-things-iot",
+    "https://csrc.nist.gov/pubs/sp/800/183/final",
+    "https://www.nist.gov/itl/applied-cybersecurity/nist-cybersecurity-iot-program/nistir-8259-series"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "adverse event reporting; signal detection; regulatory writing; risk management plans",
+   "components": [
+    "adverse event reporting",
+    "signal detection",
+    "regulatory writing",
+    "risk management plans"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "dispensing; patient counselling; drug interaction checking; health promotion",
+   "components": [
+    "dispensing",
+    "patient counselling",
+    "drug interaction checking",
+    "health promotion"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "pharmacokinetics; clinical trial design; drug safety; pharmacodynamics",
+   "components": [
+    "pharmacokinetics",
+    "clinical trial design",
+    "drug safety",
+    "pharmacodynamics"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "pharmacy management; staff supervision; inventory control; regulatory compliance",
+   "components": [
+    "pharmacy management",
+    "staff supervision",
+    "inventory control",
+    "regulatory compliance"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "regulatory submissions; dossier preparation; pharmacovigilance; clinical trial regulations",
+   "components": [
+    "regulatory submissions",
+    "dossier preparation",
+    "pharmacovigilance",
+    "clinical trial regulations"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "subgroup:13",
+   "item_type": "skill_or_competency",
+   "label": "pharmacy management; staff supervision; inventory control; regulatory compliance",
+   "components": [
+    "pharmacy management",
+    "staff supervision",
+    "inventory control",
+    "regulatory compliance"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "adverse event reporting; signal detection; regulatory writing; risk management plans",
+   "components": [
+    "adverse event reporting",
+    "signal detection",
+    "regulatory writing",
+    "risk management plans"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "dispensing; patient counselling; drug interaction checking; health promotion",
+   "components": [
+    "dispensing",
+    "patient counselling",
+    "drug interaction checking",
+    "health promotion"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "pharmacokinetics; clinical trial design; drug safety; pharmacodynamics",
+   "components": [
+    "pharmacokinetics",
+    "clinical trial design",
+    "drug safety",
+    "pharmacodynamics"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D025",
+   "domain_name": "Pharmacy",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "regulatory submissions; dossier preparation; pharmacovigilance; clinical trial regulations",
+   "components": [
+    "regulatory submissions",
+    "dossier preparation",
+    "pharmacovigilance",
+    "clinical trial regulations"
+   ],
+   "source_pack": "pharmacy",
+   "source_ids": [
+    "global_who_pharmacy",
+    "ng_pcn"
+   ],
+   "supports": "Pharmacy practice, dispensing, medication counselling, medicine safety, pharmacovigilance, pharmaceutical quality, regulatory work and pharmacy operations. Nigerian registration is separately governed by the Pharmacy Council of Nigeria.",
+   "source_urls": [
+    "https://www.who.int/publications/m/item/annex-8-trs-961",
+    "https://www.who.int/publications/i/item/9789240099425",
+    "https://www.who.int/teams/regulation-prequalification/regulation-and-safety/pharmacovigilance/guidance",
+    "https://pcn.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "epidemiology; health policy; disease surveillance; public health programme management",
+   "components": [
+    "epidemiology",
+    "health policy",
+    "disease surveillance",
+    "public health programme management"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "health economics; cost-effectiveness analysis; health technology assessment; policy analysis",
+   "components": [
+    "health economics",
+    "cost-effectiveness analysis",
+    "health technology assessment",
+    "policy analysis"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "health messaging; media relations; social marketing; behaviour change communication",
+   "components": [
+    "health messaging",
+    "media relations",
+    "social marketing",
+    "behaviour change communication"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "programme planning; monitoring and evaluation; stakeholder engagement; health communication",
+   "components": [
+    "programme planning",
+    "monitoring and evaluation",
+    "stakeholder engagement",
+    "health communication"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "statistical analysis; clinical trial design; R/SAS; epidemiological methods",
+   "components": [
+    "statistical analysis",
+    "clinical trial design",
+    "R",
+    "SAS",
+    "epidemiological methods"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "surveillance systems; data reporting; outbreak investigation; case definition",
+   "components": [
+    "surveillance systems",
+    "data reporting",
+    "outbreak investigation",
+    "case definition"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "vector biology; insecticide application; community engagement; surveillance methods",
+   "components": [
+    "vector biology",
+    "insecticide application",
+    "community engagement",
+    "surveillance methods"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "health messaging; media relations; social marketing; behaviour change communication",
+   "components": [
+    "health messaging",
+    "media relations",
+    "social marketing",
+    "behaviour change communication"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "statistical analysis; clinical trial design; R/SAS; epidemiological methods",
+   "components": [
+    "statistical analysis",
+    "clinical trial design",
+    "R",
+    "SAS",
+    "epidemiological methods"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "epidemiology; health policy; disease surveillance; public health programme management",
+   "components": [
+    "epidemiology",
+    "health policy",
+    "disease surveillance",
+    "public health programme management"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "surveillance systems; data reporting; outbreak investigation; case definition",
+   "components": [
+    "surveillance systems",
+    "data reporting",
+    "outbreak investigation",
+    "case definition"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:22",
+   "item_type": "skill_or_competency",
+   "label": "vector biology; insecticide application; community engagement; surveillance methods",
+   "components": [
+    "vector biology",
+    "insecticide application",
+    "community engagement",
+    "surveillance methods"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:24",
+   "item_type": "skill_or_competency",
+   "label": "programme planning; monitoring and evaluation; stakeholder engagement; health communication",
+   "components": [
+    "programme planning",
+    "monitoring and evaluation",
+    "stakeholder engagement",
+    "health communication"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D026",
+   "domain_name": "Public Health",
+   "context": "subgroup:26",
+   "item_type": "skill_or_competency",
+   "label": "health economics; cost-effectiveness analysis; health technology assessment; policy analysis",
+   "components": [
+    "health economics",
+    "cost-effectiveness analysis",
+    "health technology assessment",
+    "policy analysis"
+   ],
+   "source_pack": "public_health",
+   "source_ids": [
+    "global_who_public_health",
+    "global_health"
+   ],
+   "supports": "Epidemiology, surveillance, case definition, outbreak investigation, programme planning, monitoring and evaluation, health communication and stakeholder engagement.",
+   "source_urls": [
+    "https://www.who.int/emergencies/outbreak-toolkit/standardized-data-collection-tools/investigating-outbreak-of-unknown-disease",
+    "https://www.who.int/publications/i/item/9789241597449",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "EHR systems; data migration; clinical workflow mapping; user training",
+   "components": [
+    "EHR systems",
+    "data migration",
+    "clinical workflow mapping",
+    "user training"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "health information systems; HL7/FHIR; clinical workflows; data governance",
+   "components": [
+    "health information systems",
+    "HL7",
+    "FHIR",
+    "clinical workflows",
+    "data governance"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "mobile app development; health data APIs; HIPAA compliance; UI/UX for health",
+   "components": [
+    "mobile app development",
+    "health data APIs",
+    "HIPAA compliance",
+    "UI",
+    "UX for health"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "product management; agile methodology; clinical requirements; regulatory strategy",
+   "components": [
+    "product management",
+    "agile methodology",
+    "clinical requirements",
+    "regulatory strategy"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "telehealth platforms; patient scheduling; clinical coordination; digital health regulations",
+   "components": [
+    "telehealth platforms",
+    "patient scheduling",
+    "clinical coordination",
+    "digital health regulations"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "subgroup:24",
+   "item_type": "skill_or_competency",
+   "label": "product management; agile methodology; clinical requirements; regulatory strategy",
+   "components": [
+    "product management",
+    "agile methodology",
+    "clinical requirements",
+    "regulatory strategy"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "EHR systems; data migration; clinical workflow mapping; user training",
+   "components": [
+    "EHR systems",
+    "data migration",
+    "clinical workflow mapping",
+    "user training"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "health information systems; HL7/FHIR; clinical workflows; data governance",
+   "components": [
+    "health information systems",
+    "HL7",
+    "FHIR",
+    "clinical workflows",
+    "data governance"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "subgroup:25",
+   "item_type": "skill_or_competency",
+   "label": "mobile app development; health data APIs; HIPAA compliance; UI/UX for health",
+   "components": [
+    "mobile app development",
+    "health data APIs",
+    "HIPAA compliance",
+    "UI",
+    "UX for health"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D057",
+   "domain_name": "Digital Health",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "telehealth platforms; patient scheduling; clinical coordination; digital health regulations",
+   "components": [
+    "telehealth platforms",
+    "patient scheduling",
+    "clinical coordination",
+    "digital health regulations"
+   ],
+   "source_pack": "digital_health",
+   "source_ids": [
+    "global_hl7_fhir",
+    "global_health"
+   ],
+   "supports": "Health information systems, interoperable health data, clinical workflows, scheduling, patient coordination, data governance, health-data application interfaces and digital-health delivery.",
+   "source_urls": [
+    "https://hl7.org/fhir/",
+    "https://fhir.hl7.org/fhir/overview.html",
+    "https://www.who.int/teams/health-workforce"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "PCR techniques; DNA extraction; sequencing; molecular assay development",
+   "components": [
+    "PCR techniques",
+    "DNA extraction",
+    "sequencing",
+    "molecular assay development"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "clinical chemistry analysis; automated analyser operation; result interpretation; quality control",
+   "components": [
+    "clinical chemistry analysis",
+    "automated analyser operation",
+    "result interpretation",
+    "quality control"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "cytological screening; microscopy; cell morphology; quality assurance",
+   "components": [
+    "cytological screening",
+    "microscopy",
+    "cell morphology",
+    "quality assurance"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "laboratory analysis; quality control; specimen handling; analytical instrumentation",
+   "components": [
+    "laboratory analysis",
+    "quality control",
+    "specimen handling",
+    "analytical instrumentation"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "microbial culture; gram staining; antibiotic sensitivity testing; biosafety protocols",
+   "components": [
+    "microbial culture",
+    "gram staining",
+    "antibiotic sensitivity testing",
+    "biosafety protocols"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "routine testing; specimen processing; microscopy; laboratory safety",
+   "components": [
+    "routine testing",
+    "specimen processing",
+    "microscopy",
+    "laboratory safety"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "tissue processing; microtomy; histochemical staining; cryostat operation",
+   "components": [
+    "tissue processing",
+    "microtomy",
+    "histochemical staining",
+    "cryostat operation"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "PCR techniques; DNA extraction; sequencing; molecular assay development",
+   "components": [
+    "PCR techniques",
+    "DNA extraction",
+    "sequencing",
+    "molecular assay development"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "clinical chemistry analysis; automated analyser operation; result interpretation; quality control",
+   "components": [
+    "clinical chemistry analysis",
+    "automated analyser operation",
+    "result interpretation",
+    "quality control"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "cytological screening; microscopy; cell morphology; quality assurance",
+   "components": [
+    "cytological screening",
+    "microscopy",
+    "cell morphology",
+    "quality assurance"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "laboratory analysis; quality control; specimen handling; analytical instrumentation",
+   "components": [
+    "laboratory analysis",
+    "quality control",
+    "specimen handling",
+    "analytical instrumentation"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "microbial culture; gram staining; antibiotic sensitivity testing; biosafety protocols",
+   "components": [
+    "microbial culture",
+    "gram staining",
+    "antibiotic sensitivity testing",
+    "biosafety protocols"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "routine testing; specimen processing; microscopy; laboratory safety",
+   "components": [
+    "routine testing",
+    "specimen processing",
+    "microscopy",
+    "laboratory safety"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D122",
+   "domain_name": "Medical Laboratory Technology",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "tissue processing; microtomy; histochemical staining; cryostat operation",
+   "components": [
+    "tissue processing",
+    "microtomy",
+    "histochemical staining",
+    "cryostat operation"
+   ],
+   "source_pack": "laboratory",
+   "source_ids": [
+    "global_who_laboratory_quality",
+    "ng_mls"
+   ],
+   "supports": "Laboratory analysis, specimen collection and handling, microscopy, testing, quality control, biosafety, result validation, instrumentation and molecular laboratory practice.",
+   "source_urls": [
+    "https://www.who.int/publications/i/item/9789241548274",
+    "https://extranet.who.int/hslp/content/LQMS-training-toolkit",
+    "https://mlscn.gov.ng/publications/mlscn-approved-documents"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "CT scanning protocols; contrast media administration; radiation protection; image post-processing",
+   "components": [
+    "CT scanning protocols",
+    "contrast media administration",
+    "radiation protection",
+    "image post-processing"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "MRI safety protocols; patient screening; image acquisition; coil selection",
+   "components": [
+    "MRI safety protocols",
+    "patient screening",
+    "image acquisition",
+    "coil selection"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "fluoroscopy technique; radiation dose management; sterile field maintenance; contrast imaging",
+   "components": [
+    "fluoroscopy technique",
+    "radiation dose management",
+    "sterile field maintenance",
+    "contrast imaging"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "mammography technique; breast positioning; image quality control; patient communication",
+   "components": [
+    "mammography technique",
+    "breast positioning",
+    "image quality control",
+    "patient communication"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "radiopharmaceutical preparation; SPECT/PET imaging; radiation safety; patient care",
+   "components": [
+    "radiopharmaceutical preparation",
+    "SPECT",
+    "PET imaging",
+    "radiation safety",
+    "patient care"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "ultrasound imaging; probe technique; Doppler assessment; anatomy knowledge",
+   "components": [
+    "ultrasound imaging",
+    "probe technique",
+    "Doppler assessment",
+    "anatomy knowledge"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "CT scanning protocols; contrast media administration; radiation protection; image post-processing",
+   "components": [
+    "CT scanning protocols",
+    "contrast media administration",
+    "radiation protection",
+    "image post-processing"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "MRI safety protocols; patient screening; image acquisition; coil selection",
+   "components": [
+    "MRI safety protocols",
+    "patient screening",
+    "image acquisition",
+    "coil selection"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "fluoroscopy technique; radiation dose management; sterile field maintenance; contrast imaging",
+   "components": [
+    "fluoroscopy technique",
+    "radiation dose management",
+    "sterile field maintenance",
+    "contrast imaging"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "mammography technique; breast positioning; image quality control; patient communication",
+   "components": [
+    "mammography technique",
+    "breast positioning",
+    "image quality control",
+    "patient communication"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "radiopharmaceutical preparation; SPECT/PET imaging; radiation safety; patient care",
+   "components": [
+    "radiopharmaceutical preparation",
+    "SPECT",
+    "PET imaging",
+    "radiation safety",
+    "patient care"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D123",
+   "domain_name": "Radiography, Medical Imaging",
+   "context": "subgroup:32",
+   "item_type": "skill_or_competency",
+   "label": "ultrasound imaging; probe technique; Doppler assessment; anatomy knowledge",
+   "components": [
+    "ultrasound imaging",
+    "probe technique",
+    "Doppler assessment",
+    "anatomy knowledge"
+   ],
+   "source_pack": "medical_imaging",
+   "source_ids": [
+    "global_iaea_medical_imaging",
+    "ng_nnra"
+   ],
+   "supports": "Computed tomography, magnetic resonance imaging, mammography, ultrasound, fluoroscopy, nuclear medicine, image acquisition, dose management, patient communication and radiation safety.",
+   "source_urls": [
+    "https://nucleus.iaea.org/Pages/rpop.aspx",
+    "https://www.who.int/publications/m/item/radiation-protection-and-safety-in-medical-uses-ionizing-radiation",
+    "https://nnra.gov.ng/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "brand strategy; content creation; social media; candidate experience design",
+   "components": [
+    "brand strategy",
+    "content creation",
+    "social media",
+    "candidate experience design"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "candidate sourcing; interviewing; ATS management; employer branding",
+   "components": [
+    "candidate sourcing",
+    "interviewing",
+    "ATS management",
+    "employer branding"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "executive networking; competency-based assessment; market mapping; client relationship management",
+   "components": [
+    "executive networking",
+    "competency-based assessment",
+    "market mapping",
+    "client relationship management"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "subgroup:24",
+   "item_type": "skill_or_competency",
+   "label": "brand strategy; content creation; social media; candidate experience design",
+   "components": [
+    "brand strategy",
+    "content creation",
+    "social media",
+    "candidate experience design"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "subgroup:33",
+   "item_type": "skill_or_competency",
+   "label": "candidate sourcing; interviewing; ATS management; employer branding",
+   "components": [
+    "candidate sourcing",
+    "interviewing",
+    "ATS management",
+    "employer branding"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D130",
+   "domain_name": "Recruitment, Employment",
+   "context": "subgroup:33",
+   "item_type": "skill_or_competency",
+   "label": "executive networking; competency-based assessment; market mapping; client relationship management",
+   "components": [
+    "executive networking",
+    "competency-based assessment",
+    "market mapping",
+    "client relationship management"
+   ],
+   "source_pack": "recruitment",
+   "source_ids": [
+    "global_cipd_people_profession"
+   ],
+   "supports": "Workforce planning, candidate sourcing, interviewing, assessment and selection, employer branding, candidate experience, market mapping and levelled people-profession work.",
+   "source_urls": [
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/explore-the-profession-map/specialist-knowledge/resourcing/",
+    "https://www.cipd.org/en/the-people-profession/the-profession-map/how-it-works/for-selecting-assessing-interviewing-people-professionals/"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "cleanroom protocols; photolithography; deposition equipment; metrology tools",
+   "components": [
+    "cleanroom protocols",
+    "photolithography",
+    "deposition equipment",
+    "metrology tools"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "materials characterisation; XRD/SEM/TEM; materials modelling; research publication",
+   "components": [
+    "materials characterisation",
+    "XRD",
+    "SEM",
+    "TEM",
+    "materials modelling",
+    "research publication"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "nanomaterial synthesis; characterisation techniques; materials science; safety handling",
+   "components": [
+    "nanomaterial synthesis",
+    "characterisation techniques",
+    "materials science",
+    "safety handling"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "semiconductor fabrication; device physics; thin film deposition; electron microscopy",
+   "components": [
+    "semiconductor fabrication",
+    "device physics",
+    "thin film deposition",
+    "electron microscopy"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "domain",
+   "item_type": "skill_or_competency",
+   "label": "surface analysis; thin film deposition; tribology; contact angle measurement",
+   "components": [
+    "surface analysis",
+    "thin film deposition",
+    "tribology",
+    "contact angle measurement"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "materials characterisation; XRD/SEM/TEM; materials modelling; research publication",
+   "components": [
+    "materials characterisation",
+    "XRD",
+    "SEM",
+    "TEM",
+    "materials modelling",
+    "research publication"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "nanomaterial synthesis; characterisation techniques; materials science; safety handling",
+   "components": [
+    "nanomaterial synthesis",
+    "characterisation techniques",
+    "materials science",
+    "safety handling"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "semiconductor fabrication; device physics; thin film deposition; electron microscopy",
+   "components": [
+    "semiconductor fabrication",
+    "device physics",
+    "thin film deposition",
+    "electron microscopy"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "subgroup:21",
+   "item_type": "skill_or_competency",
+   "label": "surface analysis; thin film deposition; tribology; contact angle measurement",
+   "components": [
+    "surface analysis",
+    "thin film deposition",
+    "tribology",
+    "contact angle measurement"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  },
+  {
+   "domain_id": "D155",
+   "domain_name": "Nanotechnology, Advanced Materials",
+   "context": "subgroup:31",
+   "item_type": "skill_or_competency",
+   "label": "cleanroom protocols; photolithography; deposition equipment; metrology tools",
+   "components": [
+    "cleanroom protocols",
+    "photolithography",
+    "deposition equipment",
+    "metrology tools"
+   ],
+   "source_pack": "nanotechnology",
+   "source_ids": [
+    "global_nist_nanotechnology"
+   ],
+   "supports": "Nanomaterial synthesis, materials characterization, semiconductor and thin-film work, microscopy, metrology, cleanroom practice, deposition and reproducible measurement.",
+   "source_urls": [
+    "https://www.nist.gov/programs-projects/nanometrology-composition-and-structure-nanomaterials",
+    "https://www.nist.gov/mml/nanotechnology-measurement-protocols"
+   ],
+   "evidence_status": "source_backed_synthesis",
+   "user_display_rule": "Display in the compact priority view and See more panel; do not describe it as a verbatim quotation."
+  }
+ ],
+ "release_rule": "No visible item in this pass remains source-free. A future item without a claim-specific source must be excluded from the user-facing catalogue until a source pack is added."
+}

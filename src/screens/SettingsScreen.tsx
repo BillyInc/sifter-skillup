@@ -54,6 +54,7 @@ export default function SettingsScreen() {
   const [mfaCode, setMfaCode] = useState('');
   const [mfaMessage, setMfaMessage] = useState<string | null>(null);
   const [mfaBusy, setMfaBusy] = useState(false);
+  const isGuest = user?.auth_provider === 'guest';
   const isAdmin = isAdminAccount(user?.account_type);
   useEffect(() => {
     if (!isAdmin) return;
@@ -122,6 +123,15 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => router.replace('/(tabs)/profile' as any)}
+          accessibilityRole="button"
+          accessibilityLabel="Back to profile"
+          style={styles.backButton}
+        >
+          <Text style={[styles.backButtonText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>‹ Back to Profile</Text>
+        </TouchableOpacity>
         <View style={[styles.hero, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
           <Text style={[styles.heroEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>Settings</Text>
           <Text style={[styles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Light mode is the default. Dark mode is opt-in.</Text>
@@ -129,6 +139,22 @@ export default function SettingsScreen() {
             Your account preferences, notifications, school link, and privacy controls live here.
           </Text>
         </View>
+
+        {isGuest ? (
+          <View style={[styles.card, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Guest settings</Text>
+            <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              You can change appearance and read our policies here. Create an account to save guidance, notes, and your place.
+            </Text>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={() => router.replace('/(auth)/signup' as any)}
+              style={[styles.linkBtn, { backgroundColor: colors.accentRole.action, borderColor: colors.accentRole.action }]}
+            >
+              <Text style={[styles.linkBtnText, { color: colors.textRole.inverse }, CompassFonts.bodyBold]}>Create account</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
 
         <SettingsCard title="APPEARANCE">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Theme</Text>
@@ -146,12 +172,12 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </SettingsCard>
 
-        <SettingsCard title="ACCOUNT">
+        {!isGuest ? <SettingsCard title="ACCOUNT">
           <Row label="Name" value={user?.username ?? 'Student'} />
           <Row label="Email" value={user?.email || 'Not set'} />
-        </SettingsCard>
+        </SettingsCard> : null}
 
-        <SettingsCard title="MY SCHOOL">
+        {!isGuest ? <SettingsCard title="MY SCHOOL">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Claim or link your school</Text>
           <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Redeem a claim code from your school, or link your school by its code.
@@ -164,7 +190,7 @@ export default function SettingsScreen() {
           >
             <Text style={[styles.linkBtnText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Open My School</Text>
           </TouchableOpacity>
-        </SettingsCard>
+        </SettingsCard> : null}
 
         {isAdmin ? (
           <SettingsCard title="ADMIN SECURITY">
@@ -222,13 +248,6 @@ export default function SettingsScreen() {
           </SettingsCard>
         ) : null}
 
-        <SettingsCard title="NOTIFICATIONS">
-          <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Notification controls</Text>
-          <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Alerts for deadlines, saved programmes and school updates will appear here once those features are live.
-          </Text>
-        </SettingsCard>
-
         <SettingsCard title="LEGAL">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Privacy and terms</Text>
           <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
@@ -251,20 +270,20 @@ export default function SettingsScreen() {
           </View>
         </SettingsCard>
 
-        <TouchableOpacity
+        {!isGuest ? <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => setAccountAction('sign-out')}
           style={[styles.signOutBtn, { backgroundColor: colors.accentRole.danger }]}
         >
           <Text style={[styles.signOutBtnText, CompassFonts.bodyBold]}>Sign Out</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </TouchableOpacity> : null}
+        {!isGuest ? <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => setAccountAction('delete')}
           style={[styles.deleteAccountBtn, { borderColor: colors.accentRole.danger }]}
         >
           <Text style={[styles.deleteAccountBtnText, { color: colors.accentRole.danger }, CompassFonts.bodyBold]}>Delete account</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </ScrollView>
       <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
         <View style={styles.modalOverlay}>
@@ -296,6 +315,16 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+    minHeight: 44,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    paddingHorizontal: Spacing.xs,
+    marginBottom: Spacing.xs,
+  },
+  backButtonText: {
+    fontSize: FontSize.sm,
+  },
   safe: { flex: 1 },
   scroll: {
     ...webContainer,

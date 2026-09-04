@@ -1,0 +1,195 @@
+{
+  "schema_version": "2026-09-04.isco-domain-code-source-closure.v1",
+  "purpose": "Source-backed closure of all eight raw occupational-code values recorded in the domain-definition library.",
+  "canonical_rule": "Only valid ISCO-08 unit groups remain canonical. Legacy ISCO-88 values may be retained only with an official ILO correspondence and a semantic check. Invalid values are removed from canonical anchors and preserved in this audit.",
+  "sources": {
+    "ilo_isco08_volume_and_correspondence": "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+    "ilo_isco08_structure": "https://isco.ilo.org/en/isco-08/",
+    "ilo_isco88_structure": "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+  },
+  "summary": {
+    "raw_codes_closed": 8,
+    "legacy_codes_mapped": 2,
+    "cross_domain_anchors_removed": 1,
+    "invalid_codes_removed": 5,
+    "records_left_pending": 0
+  },
+  "records": [
+    {
+      "raw_library_code": "2121",
+      "affected_domains": [
+        {
+          "domain_id": "D003",
+          "domain_name": "Artificial Intelligence"
+        }
+      ],
+      "source_version": "ISCO-88",
+      "source_title": "Mathematicians and Related Professionals",
+      "canonical_code": "2120",
+      "canonical_title": "Mathematicians, Actuaries and Statisticians",
+      "status": "closed_legacy_code_mapped",
+      "action": "Replace the legacy anchor with ISCO-08 2120 in the canonical occupational evidence layer.",
+      "reason": "The ILO correspondence table maps ISCO-88 2121 to ISCO-08 2120. The old value is therefore not an unexplained guess; it is a legacy code with an official correspondence.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2213",
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "source_version": "ISCO-88",
+      "source_title": "Agronomists and Related Professionals",
+      "canonical_code": "2132",
+      "canonical_title": "Farming, Forestry and Fisheries Advisers",
+      "status": "closed_cross_domain_anchor_removed",
+      "action": "Remove 2213 from Medicine. Retain its source meaning for Agriculture only where the role/domain evidence independently supports that placement.",
+      "reason": "The ILO correspondence table maps ISCO-88 2213 to ISCO-08 2132. Its source meaning is agricultural, so mapping it into Medicine would be a semantic error.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2214",
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "source_version": "none",
+      "source_title": null,
+      "canonical_code": null,
+      "canonical_title": null,
+      "status": "closed_invalid_code_removed",
+      "action": "Remove from the canonical occupational anchor list; preserve the raw value only in the audit history.",
+      "reason": "The official ILO ISCO-08 structure contains 2211 Medical Doctors, 222 Nursing and Midwifery Professionals, and related groups, but no unit group 2214. The supplied ISCO-88 structure also does not establish this value.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2215",
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "source_version": "none",
+      "source_title": null,
+      "canonical_code": null,
+      "canonical_title": null,
+      "status": "closed_invalid_code_removed",
+      "action": "Remove from the canonical occupational anchor list; preserve the raw value only in the audit history.",
+      "reason": "The official ILO ISCO-08 structure contains 2211 Medical Doctors, 222 Nursing and Midwifery Professionals, and related groups, but no unit group 2215. The supplied ISCO-88 structure also does not establish this value.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2216",
+      "affected_domains": [
+        {
+          "domain_id": "D023",
+          "domain_name": "Medicine"
+        }
+      ],
+      "source_version": "none",
+      "source_title": null,
+      "canonical_code": null,
+      "canonical_title": null,
+      "status": "closed_invalid_code_removed",
+      "action": "Remove from the canonical occupational anchor list; preserve the raw value only in the audit history.",
+      "reason": "The official ILO ISCO-08 structure contains 2211 Medical Doctors, 222 Nursing and Midwifery Professionals, and related groups, but no unit group 2216. The supplied ISCO-88 structure also does not establish this value.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2311",
+      "affected_domains": [
+        {
+          "domain_id": "D039",
+          "domain_name": "Higher Education"
+        }
+      ],
+      "source_version": "none",
+      "source_title": null,
+      "canonical_code": null,
+      "canonical_title": null,
+      "status": "closed_invalid_code_removed",
+      "action": "Remove from the canonical occupational anchor list; retain 2310 for University and Higher Education Teachers.",
+      "reason": "The ILO ISCO-08 structure defines 2310 University and Higher Education Teachers, not 2311. The source library already contains the valid 2310 anchor.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "2321",
+      "affected_domains": [
+        {
+          "domain_id": "D039",
+          "domain_name": "Higher Education"
+        }
+      ],
+      "source_version": "none",
+      "source_title": null,
+      "canonical_code": null,
+      "canonical_title": null,
+      "status": "closed_invalid_code_removed",
+      "action": "Remove from the canonical occupational anchor list; retain 2320 for Vocational Education Teachers.",
+      "reason": "The ILO ISCO-08 structure defines 2320 Vocational Education Teachers, not 2321. The source library already contains the valid 2320 anchor.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    },
+    {
+      "raw_library_code": "3330",
+      "affected_domains": [
+        {
+          "domain_id": "D040",
+          "domain_name": "Vocational"
+        }
+      ],
+      "source_version": "ISCO-88",
+      "source_title": "Special Education Teaching Associate Professionals",
+      "canonical_code": "2352",
+      "canonical_title": "Special Needs Teachers",
+      "status": "closed_legacy_code_mapped",
+      "action": "Remove 3330 from the general Vocational domain anchor list. Use ISCO-08 2352 only where a separately evidenced special-needs-teaching role is present; do not treat it as a general vocational-training code.",
+      "reason": "The ILO correspondence table maps ISCO-88 3330 to ISCO-08 2352. The correspondence is partial and the current affected record is a general Vocational domain, so replacing it there would broaden the source meaning incorrectly.",
+      "evidence_urls": [
+        "https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08/ISCO-08%20EN%20Vol%201.pdf",
+        "https://isco.ilo.org/en/isco-08/",
+        "https://webapps.ilo.org/public/french/bureau/stat/isco/isco88/"
+      ],
+      "evidence_note": "The official ILO correspondence table is used where a legacy ISCO-88 meaning exists. Absence from the official unit-group structure is treated as a closed invalid-code finding, not as permission to invent a replacement."
+    }
+  ]
+}

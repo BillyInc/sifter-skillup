@@ -117,12 +117,18 @@ def main():
     # One normalized O*NET tool name can have one or more official categories;
     # retain all categories rather than guessing from the product name.
     onet_categories = defaultdict(list)
+    onet_category_labels = {}
     with open(TOOL_SOURCE, encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle, delimiter="\t")
         for row in reader:
             name = norm(row.get("Workplace Example"))
             category = text(row.get("Element Name"))
-            if not name or not category:
+            if not category:
+                continue
+            category_key = norm(category)
+            if category_key:
+                onet_category_labels[category_key] = category
+            if not name:
                 continue
             value = {"element_name": category, "element_id": text(row.get("Element ID"))}
             if value not in onet_categories[name]:
@@ -130,7 +136,17 @@ def main():
 
     def annotate(tool, domain_id):
         output = dict(tool)
-        categories = onet_categories.get(norm(tool.get("tool")), [])
+        tool_key = norm(tool.get("tool"))
+        categories = onet_categories.get(tool_key, [])
+        # O*NET's software file contains both named workplace examples and
+        # reusable software-category labels. The old pass only matched the
+        # former, leaving valid category labels such as "Operating system
+        # software" and "Accounting software" falsely marked unsourced.
+        if not categories and tool_key in onet_category_labels:
+            categories = [{
+                "element_name": onet_category_labels[tool_key],
+                "element_id": None,
+            }]
         if categories:
             output["element_name"] = categories[0]["element_name"]
             output["element_id"] = categories[0]["element_id"] or None
@@ -222,7 +238,31 @@ def main():
             # A framework overlay owns the displayed role skill list even when
             # the title also happens to resolve to an ESCO occupation. Keep
             # that provenance distinct from supplemental ESCO/O*NET signals.
-            role_source = "framework" if has_framework_signal else ("esco" if esco.get("occupation_uris") else ("onet" if onet.get("essential_skills") or has_onet_tools else "unsourced"))
+            recorded_source = norm(role.get("source"))
+            if recorded_source == "esco/onet":
+                recorded_sources = ("global_esco", "global_onet")
+            elif recorded_source == "esco":
+                recorded_sources = ("global_esco",)
+            elif recorded_source == "onet":
+                recorded_sources = ("global_onet",)
+            elif recorded_source == "wef":
+                recorded_sources = ("global_wef",)
+            elif recorded_source == "qt framework":
+                recorded_sources = ("qt_cfqt",)
+            else:
+                recorded_sources = ()
+
+            # The role library's source and classification code are the
+            # authoritative role-level record. Preserve it when the derived
+            # role_tools join is sparse; otherwise valid ESCO/O*NET roles were
+            # incorrectly downgraded to unsourced.
+            role_source = "framework" if has_framework_signal else (
+                "esco" if esco.get("occupation_uris") else (
+                    "onet" if onet.get("essential_skills") or has_onet_tools else (
+                        recorded_sources[0] if recorded_sources else "unsourced"
+                    )
+                )
+            )
             for skill in skill_values(role.get("essential_skills")):
                 add_skill_evidence(domain_skill_bucket, skill, role_source)
                 subgroup = text(role.get("isco_group"))[:2]
