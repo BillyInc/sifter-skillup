@@ -11,6 +11,13 @@ dist/
 # Metro and tsc from walking it when it does.
 .expo-web-test/
 
+# A Windows virtualenv (Lib/, Scripts/, pyvenv.cfg) that was committed whole:
+# 450 files of vendored pip. Nothing imports it -- metro.config.js,
+# __tests__/sourceEncoding.test.ts and .woodpecker/security.yml each had to
+# exclude it by name, which is the tell. Those exclusions stay: the directory
+# still regenerates locally, it just no longer ships in the repo.
+litellm-env/
+
 # Jest coverage output. `--coverage` is how CI runs the suite, so anyone who
 # reproduces CI locally generates this; without the ignore it shows up in
 # `git status` and gets committed by accident (PR #108 carries 113 such files,
@@ -82,6 +89,10 @@ data/career-mapping/role_tools_malformed_2026-08-26.json
 # Large generated career preview SQL is reconstructed locally from the tracked
 # gzip parts; never add the monolithic output to GitHub.
 backend/seed_career_v2_preview_*.sql
+# The dated transport dirs reassemble to ~660 MB monoliths whose names do not
+# match the _preview_ pattern above; without this the join output lands as an
+# untracked-but-not-ignored file that can be committed by accident.
+backend/seed_career_v2_[0-9]*.sql
 nul
 
 # Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks

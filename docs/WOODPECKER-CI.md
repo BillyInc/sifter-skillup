@@ -112,7 +112,7 @@ schedule work on the agent.
 ## Trigger parity
 
 The GitHub workflows also cover deploys (`deploy-backend`, `deploy-frontend`,
-`deploy-prod`, `codeql`, `cert-expiry`). **Only CI is ported here.** Deploys
+`deploy-prod`, `cert-expiry`). **Only CI is ported here.** Deploys
 still reference `secrets.SSH_PRIVATE_KEY` and friends and are a separate piece
 of work; until they are ported or Actions is restored, dev deploys on push to
 `main` and prod deploys on `v*` tags are **not running**.
@@ -215,8 +215,17 @@ headroom — not raising the threshold.
 
 Prod (`v*` tags) stays on GitHub Actions. It needs the `production` approval
 gate and an `ENV_FILE` secret that does not exist in either system yet, so
-porting it would produce a deploy that fails at the first tag. `codeql` and
-`cert-expiry` are also still Actions-only.
+porting it would produce a deploy that fails at the first tag.
+
+`codeql` has been **deleted**: CodeQL requires GitHub Advanced Security, which
+is not available on a private repo on this plan, so every run failed with
+`Advanced Security must be enabled for this repository to use code scanning`.
+Three permanently-red checks on every PR train people to ignore red checks.
+`.woodpecker/security.yml` (Semgrep OSS) is the replacement.
+
+`cert-expiry` is Actions-only but no longer runs on a schedule — it was
+demoted to `workflow_dispatch` and the daily check now runs from cron on
+storytime. See `docs/CERT_EXPIRY_CRON.md`.
 
 ### Web is NOT deployed from here — it builds on EAS
 
