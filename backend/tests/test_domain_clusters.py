@@ -57,7 +57,13 @@ def _svc_with(domains, metrics, reviews):
             payload = reviews
         else:
             payload = metrics
-        t.execute.return_value = MagicMock(data=payload)
+        # Passing an exception makes that table's query raise, so a failure can
+        # be injected at the database boundary and travel through the real
+        # error handling instead of around it.
+        if isinstance(payload, BaseException):
+            t.execute.side_effect = payload
+        else:
+            t.execute.return_value = MagicMock(data=payload)
         return t
 
     return MagicMock(table=table)
@@ -146,15 +152,21 @@ class TestDomainClusters:
         assert by_name["Alpha Systems"]["eliteFlag"] is True
 
     def test_elite_gate_failure_does_not_take_the_endpoint_down(self):
-        # _published_elite_entity_ids swallows its own errors and returns an
-        # empty set. This asserts the endpoint still answers `real` in that
-        # case -- fail closed on the flag, not on the whole explorer. The
-        # regression this file exists to catch was the opposite: the elite
-        # lookup was missing entirely, the resulting NameError was swallowed by
-        # the endpoint's own except, and every request answered `coming_soon`.
-        with patch.object(cr, "_published_elite_entity_ids", side_effect=RuntimeError("boom")):
-            out = _call()
-        assert out["status"] == "coming_soon"
+        # The failure is injected at the database boundary, not by patching
+        # _published_elite_entity_ids -- patching the helper would jump over
+        # the very error handling under test and would still pass if that
+        # handling were deleted.
+        #
+        # The helper swallows a query error and returns an empty set, so the
+        # explorer must still answer `real` and simply mark nothing elite:
+        # fail closed on the flag, not on the whole screen. The regression this
+        # file exists to catch was the opposite -- the elite lookup was missing
+        # altogether, the NameError was swallowed by the endpoint's own except,
+        # and every request answered `coming_soon`.
+        out = _call(reviews=RuntimeError("elite_evidence_reviews unavailable"))
+        assert out["status"] == "real"
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Alpha Systems"]["eliteFlag"] is False
 
     def test_empty_table_degrades_instead_of_lying(self):
         out = _call(domains=[], metrics=[])
