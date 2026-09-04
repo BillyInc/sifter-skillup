@@ -234,7 +234,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
           ) : null}
 
           {state?.status === "pending" || state?.status === "coming_soon" ? <ActivityIndicator color={colors.accentRole.action} /> : null}
-          {data ? <SkillResults data={data} intent={intent} colors={colors} admin={isAdmin} /> : null}
+          {data ? <SkillResults data={data} intent={intent} colors={colors} admin={isAdmin} onAdd={addSkillValue} /> : null}
           {state?.meta?.notice && !data ? <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>{state.meta.notice}</Text> : null}
         </View>
       ) : null}
@@ -242,11 +242,19 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   );
 }
 
-function SkillResults({ data, intent, colors, admin }: { data: SkillDiscoveryResult; intent: Intent; colors: ReturnType<typeof useTheme>["colors"]; admin?: boolean }) {
+function SkillResults({ data, intent, colors, admin, onAdd }: { data: SkillDiscoveryResult; intent: Intent; colors: ReturnType<typeof useTheme>["colors"]; admin?: boolean; onAdd: (value: string) => void }) {
   const hasTerms = data.terms.length > 0;
   return (
     <View style={{ gap: Spacing.md }}>
       {hasTerms ? <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>Results update as you add or remove skills. Match scores show how closely each item maps to the current selection.</Text> : <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>Choose a category or add a skill to start mapping the graph.</Text>}
+      {hasTerms && data.suggestedNext?.length ? <View style={{ gap: Spacing.xs }}>
+        <SectionLabel>Possible next steps</SectionLabel>
+        <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>These are source-backed options connected to what you entered. Add one to refine the route.</Text>
+        {data.suggestedNext.slice(0, 8).map((item) => <TouchableOpacity key={`${item.contextKey}-${item.name}`} onPress={() => onAdd(item.name)} style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.sm, backgroundColor: colors.surface.raised }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={{ color: colors.textRole.primary, fontWeight: "800", flex: 1 }}>{item.name}</Text><Text style={{ color: colors.accentRole.action, fontWeight: "800" }}>Add</Text></View>
+          <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{item.why}</Text>
+        </TouchableOpacity>)}
+      </View> : null}
       {data.domains.map((item) => (
         <View key={item.id} style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm, backgroundColor: colors.surface.raised }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary, flex: 1 }]}>{item.name}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View>

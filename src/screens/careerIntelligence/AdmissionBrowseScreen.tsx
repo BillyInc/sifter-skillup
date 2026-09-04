@@ -200,6 +200,7 @@ export default function AdmissionBrowseScreen() {
   const adminType = readParam(params.admin_type);
   const guidanceStudentId = readParam(params.guidance_student_id);
   const journeyMode = readParam(params.journey);
+  const undergraduateContext = userType === "student" || journeyMode === "undergraduate_programmes";
   const learnerAudience: AdminLearnerAudience | null = adminLearnerAudienceForOrg(adminType);
   const [contextClass, setContextClass] = useState(readParam(params.class_name));
   const [stream, setStream] = useState(readParam(params.stream));
@@ -890,6 +891,8 @@ export default function AdmissionBrowseScreen() {
             : "Options from your subject plan"
           : earlySecondary
             ? "Plan subjects and programmes"
+            : undergraduateContext
+              ? "Explore your university programmes"
             : "Find a programme, university or subject plan"}
       </Text>
 
@@ -922,9 +925,9 @@ export default function AdmissionBrowseScreen() {
       ) : null}
 
        {showAdmissionEditor ? <View style={styles.modeRow}>
-         {showSchoolMode ? <ModeButton label="My university" active={mode === "school"} onPress={() => { markAdminGuidanceInProgress(); setMode("school"); }} /> : null}
-        <ModeButton label="Programme" active={mode === "programme"} onPress={() => { markAdminGuidanceInProgress(); setMode("programme"); }} />
-        <ModeButton label="Subjects" active={mode === "subjects"} onPress={() => { markAdminGuidanceInProgress(); setMode("subjects"); }} />
+         {showSchoolMode ? <ModeButton label={undergraduateContext ? "My university programmes" : "My university"} active={mode === "school"} onPress={() => { markAdminGuidanceInProgress(); setMode("school"); }} /> : null}
+        <ModeButton label={undergraduateContext ? "Find a programme" : "Programme"} active={mode === "programme"} onPress={() => { markAdminGuidanceInProgress(); setMode("programme"); }} />
+        {!undergraduateContext ? <ModeButton label="Subjects" active={mode === "subjects"} onPress={() => { markAdminGuidanceInProgress(); setMode("subjects"); }} /> : null}
       </View> : null}
 
       {showAdmissionEditor ? (
@@ -958,8 +961,9 @@ export default function AdmissionBrowseScreen() {
             </TouchableOpacity>
           </View>
           <Text style={[styles.hint, { color: colors.textMuted }]}>
-            Already studying? Pick your university and choose your course from
-            its own list — under the name your school uses.
+            {undergraduateContext
+              ? "Pick your university and choose a programme from its own list. Open the programme to follow what it teaches into domains, subgroups and roles."
+              : "Already studying? Pick your university and choose your course from its own list — under the name your school uses."}
           </Text>
 
           {!chosenSchool && schoolMatches.length ? (
@@ -1044,7 +1048,7 @@ export default function AdmissionBrowseScreen() {
                           >
                             {o.jambName}
                           </Text>
-                          {o.hasUniversityException ? (
+                          {!undergraduateContext && o.hasUniversityException ? (
                             <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
                               University-specific admission note available
                             </Text>
@@ -1087,9 +1091,9 @@ export default function AdmissionBrowseScreen() {
             </TouchableOpacity>
           </View>
           <Text style={[styles.hint, { color: colors.textMuted }]}>
-             Programme search is based on the programme name. Open a result to
-             understand the programme first, then inspect university-specific
-             requirements. Use Subjects when you want subject-based matching.
+             {undergraduateContext
+               ? "Search by programme name, open the programme learning profile, and follow its connected domains, subgroups, roles and next skills."
+               : "Programme search is based on the programme name. Open a result to understand the programme first, then inspect university-specific requirements. Use Subjects when you want subject-based matching."}
           </Text>
         </View>
       ) : (
@@ -1261,7 +1265,7 @@ export default function AdmissionBrowseScreen() {
             {selectedSubjectDetails?.olevelMatchedSubjects?.length ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>O-level subjects checked: {selectedSubjectDetails.olevelMatchedSubjects.join(", ")}</Text> : null}
           </View>
           {!selectedAdmissionSchool ? (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>Choose a university to open the university-aware programme overview. National and university-specific requirements will appear there, not before the university is selected.</Text>
+            <Text style={[styles.hint, { color: colors.textMuted }]}>{undergraduateContext ? "Choose your university to open the programme learning profile and continue into career guidance." : "Choose a university to open the university-aware programme overview. National and university-specific requirements will appear there, not before the university is selected."}</Text>
           ) : null}
            <TouchableOpacity
              accessibilityRole="button"
@@ -1271,7 +1275,11 @@ export default function AdmissionBrowseScreen() {
            >
              <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme{schools.length ? ` (${schools.length})` : ""}</Text>
              <Text style={[styles.hint, { color: colors.textMuted }]}>
-               {universityOptionsExpanded ? (earlySecondary ? "Choose a university to explore its requirements. This does not commit you to a school." : "Choose a university to open its programme overview and requirements.") : (earlySecondary ? "Explore universities when you are ready; this is optional." : "See university options and choose one to continue.")}
+               {universityOptionsExpanded
+                 ? (undergraduateContext
+                   ? "Choose a university to open its programme learning profile and career guidance."
+                   : earlySecondary ? "Choose a university to explore its requirements. This does not commit you to a school." : "Choose a university to open its programme overview and requirements.")
+                 : (undergraduateContext ? "See the universities offering this programme when you need to change context." : earlySecondary ? "Explore universities when you are ready; this is optional." : "See university options and choose one to continue.")}
              </Text>
              <Text style={[styles.link, { color: Brand.primary }]}>{universityOptionsExpanded ? "Hide university options" : "See universities offering this programme"}</Text>
            </TouchableOpacity>
@@ -1305,12 +1313,12 @@ export default function AdmissionBrowseScreen() {
                   <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
                     {school.year ? `${school.year} cycle` : "Offering listed"}
                   </Text>
-                  {school.hasUniversityException ? (
+                  {!undergraduateContext && school.hasUniversityException ? (
                     <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]}>University-specific admission note available</Text>
                   ) : null}
                 </View>
                 <Text style={[styles.score, { color: colors.text }]}>
-                   {selectedAdmissionSchool?.schoolId === school.schoolId ? (earlySecondary ? "Viewing" : "Selected") : (earlySecondary ? "View details" : "Choose")}
+                    {selectedAdmissionSchool?.schoolId === school.schoolId ? (earlySecondary ? "Viewing" : undergraduateContext ? "Selected" : "Selected") : (earlySecondary ? "View details" : undergraduateContext ? "Open guidance" : "Choose")}
                 </Text>
               </TouchableOpacity>
             ))
@@ -1330,7 +1338,7 @@ export default function AdmissionBrowseScreen() {
               })}
               style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
             >
-              <Text style={styles.actionText}>{earlySecondary ? "Explore programme details" : "View programme details"}</Text>
+                <Text style={styles.actionText}>{earlySecondary ? "Explore programme details" : undergraduateContext ? "Open career guidance" : "View programme details"}</Text>
             </TouchableOpacity>
            ) : null}
            </> : null}

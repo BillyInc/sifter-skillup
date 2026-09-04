@@ -46,6 +46,7 @@ import {
   RouteLine,
   MappingFeedbackButton,
   SectionLabel,
+  ContextualItemList,
 } from "@/components/careerIntelligence";
 
 const SECTIONS = [
@@ -105,6 +106,8 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       state={state}
       onRetry={loadDomain}
       scrollRef={scrollRef}
+      requiresAccountForDetails
+      guestDescription={state.data?.description}
     >
       {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} matchType={matchType} scrollRef={scrollRef} />}
     </DetailScaffold>
@@ -270,6 +273,7 @@ function DomainBody({
           skills={domain.foundationSkills ?? []}
           title="Portable foundation: what to build first"
         />
+        <ContextualItemList items={domain.contextItems} title="What each skill, tool and certification does in this domain" />
         <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The route keeps Nigerian, remote and global possibilities visible. A local signal does not cancel a portable skill, and a global signal does not establish a Nigerian licence or requirement.</Text>
         <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
         <NigerianContextBlock context={domain.nigerianContext} level="domain" />

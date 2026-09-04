@@ -165,11 +165,35 @@ export const CAREER_CHANGER_ROUTE_DEFINITIONS: {
 ];
 
 /**
- * The number of elite domains the product covers. Single source of truth for
- * any user-facing copy that states the count, so the number can never drift
- * out of sync with the data again.
+ * Elite is a derived, evidence-gated destination label. It is not a fixed
+ * catalogue count and it is not inferred from salary, popularity, or a single
+ * role flag. Scope is stored separately because Nigerian and global evidence
+ * cannot be substituted for one another.
  */
-export const ELITE_DOMAIN_COUNT = 10;
+export type EliteScope = "nigeria" | "global" | "nigeria_to_global";
+export type EliteEntityLevel = "domain" | "subgroup" | "role" | "route";
+export type ElitePublicationStatus = "not_established" | "provisional" | "published";
+
+export interface EliteEvidenceProfile {
+  scope: EliteScope;
+  entityLevel: EliteEntityLevel;
+  publicationStatus: ElitePublicationStatus;
+  specialistIdentity: boolean;
+  entryBarrier: boolean;
+  recognisedOutcome: boolean;
+  documentedRoute: boolean;
+  sourceIds: string[];
+  explanation: string;
+}
+
+/** Every published elite record must satisfy all mandatory tests. */
+export const ELITE_PUBLICATION_CRITERIA = [
+  "specialist_identity",
+  "real_entry_barrier",
+  "recognised_or_scarce_outcome",
+  "documented_route",
+  "scope_specific_sources",
+] as const;
 
 /**
  * The bridge layers a guide MUST populate before release. Layer 6

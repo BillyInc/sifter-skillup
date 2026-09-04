@@ -42,7 +42,7 @@ const PAYLOAD: CareerSearchResult = {
 describe("toSearchGroups", () => {
   it("maps every section of a real payload", () => {
     const groups = toSearchGroups(PAYLOAD, "all");
-    expect(groups.map((g) => g.label)).toEqual(["Programmes", "Fields", "Roles"]);
+    expect(groups.map((g) => g.label)).toEqual(["Programmes", "Domains", "Roles"]);
     expect(countResults(groups)).toBe(1 + 1 + 2);
   });
 
@@ -67,7 +67,7 @@ describe("toSearchGroups", () => {
   });
 
   it("honours the scope control", () => {
-    expect(toSearchGroups(PAYLOAD, "domains").map((g) => g.label)).toEqual(["Fields"]);
+    expect(toSearchGroups(PAYLOAD, "domains").map((g) => g.label)).toEqual(["Domains"]);
     expect(toSearchGroups(PAYLOAD, "programmes").map((g) => g.label)).toEqual(["Programmes"]);
   });
 
@@ -82,6 +82,40 @@ describe("toSearchGroups", () => {
   it("survives a null or partial payload", () => {
     expect(toSearchGroups(null)).toEqual([]);
     expect(toSearchGroups({} as CareerSearchResult)).toEqual([]);
+  });
+
+  it("sends an undergraduate programme search into career guidance", () => {
+    const groups = toSearchGroups({
+      ...PAYLOAD,
+      userType: "student",
+      schoolId: "U1",
+    }, "all", "programme_guidance");
+    const programme = groups[0].items[0];
+    expect(programme.actionLabel).toBe("Open programme-to-career guidance");
+    expect(programme.contextHint).toContain("domains");
+    expect(programme.href).toContain("user_type=student");
+    expect(programme.href).toContain("journey_mode=undergraduate_career");
+    expect(programme.href).toContain("school_id=U1");
+  });
+
+  it("keeps admission requirements for non-undergraduate university searches", () => {
+    const jamb = toSearchGroups({
+      ...PAYLOAD,
+      universities: [{ id: "U1", name: "University of Lagos", institutionType: "university" }],
+      userType: "jamb",
+    }, "all", "university_requirements");
+    expect(jamb[0].items[0].actionLabel).toBe("Check university requirements");
+    expect(jamb[0].items[0].contextHint).toContain("admission requirements");
+
+    const undergraduate = toSearchGroups({
+      ...PAYLOAD,
+      universities: [{ id: "U1", name: "University of Lagos", institutionType: "university" }],
+      userType: "student",
+    }, "all", "university_requirements");
+    expect(undergraduate[0].items[0].actionLabel).toBe("Explore university programmes");
+    expect(undergraduate[0].items[0].contextHint).toContain("domains");
+    expect(undergraduate[0].items[0].href).toContain("journey=undergraduate_programmes");
+    expect(undergraduate[0].items[0].href).not.toContain("requirements");
   });
 });
 
