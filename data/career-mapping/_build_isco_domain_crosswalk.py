@@ -1,4 +1,10 @@
-"""Record missing ISCO-08 library codes and their valid source candidates."""
+"""Historical ISCO crosswalk builder.
+
+This builder is retained for audit history only. The eight-code question was
+closed by the source-backed closure report dated 2026-09-04. Do not run this
+historical builder as the current gate because it preserves the old
+conservative dispositions.
+"""
 
 from __future__ import annotations
 
@@ -57,6 +63,9 @@ def disposition(code: str) -> dict:
 
 
 def main() -> None:
+    print("This historical builder is superseded. Use _close_isco_domain_codes_2026-09-04.py.")
+    return
+
     trace = json.loads(TRACE.read_text(encoding="utf-8"))
     codes, titles = source_codes(ISCO_XLSX, 1, 2)
     missing = sorted({

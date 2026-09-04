@@ -33,1338 +33,1443 @@
   </style>
 </head>
 <body>
-<h1 id="sifter-career-taxonomy-academic-methodology">Sifter Career Taxonomy — Academic Methodology</h1>
-<p><strong>Document ID:</strong> <code>METHODOLOGY-2026-09-01</code><br>
-<strong>Status:</strong> working methodology and reproducibility handoff<br>
-<strong>Scope:</strong> domain identity, Nigerian programme-to-domain mapping, subgroups,
-roles, enrichment, and evidence boundaries</p>
-<h2 id="0-how-to-read-this-document">0. How to read this document</h2>
-<p>This document is organised as a traceable chain. Every important decision has a
-stable key that can be searched in the audit JSON files and followed into the
-product data path.</p>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">External and Nigerian sources</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Extracted source records</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Domain identity and boundary decision</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Programme curriculum mapping</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Subgroup and role lineage</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Enrichment and priority metadata</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Product display and guidance behavior</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Audit, review disposition, and SQL gate</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
-  S[External and Nigerian sources] --&gt; X[Extracted source records]
-  X --&gt; D[Domain identity and boundary decision]
-  D --&gt; P[Programme curriculum mapping]
-  D --&gt; R[Subgroup and role lineage]
-  P --&gt; E[Enrichment and priority metadata]
-  R --&gt; E
-  E --&gt; U[Product display and guidance behavior]
-  U --&gt; V[Audit, review disposition, and SQL gate]</pre></details>
-
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Stable key</th>
-<th>Authoritative detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source</td>
-<td><code>SRC-*</code></td>
-<td><a href="#1-source-register">§1 Source register</a></td>
-</tr>
-<tr>
-<td>Domain identity</td>
-<td><code>DOM-*</code></td>
-<td><a href="#2-domain-derivation-and-identity">§2 Domain derivation</a></td>
-</tr>
-<tr>
-<td>Programme mapping</td>
-<td><code>MAP-*</code></td>
-<td><a href="#3-programme-to-domain-evidence">§3 Programme-to-domain evidence</a></td>
-</tr>
-<tr>
-<td>Entity enrichment</td>
-<td><code>ENT-*</code></td>
-<td><a href="#4-subgroup-role-and-nigerian-context">§4 Subgroup, role, and Nigerian context</a></td>
-</tr>
-<tr>
-<td>Review disposition</td>
-<td><code>REV-*</code></td>
-<td><a href="#5-review-closure">§5 Review closure</a></td>
-</tr>
-<tr>
-<td>Verification</td>
-<td><code>CHK-*</code></td>
-<td><a href="#6-reproducibility-and-release-gate">§6 Reproducibility and release gate</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="1-source-register">1. Source register</h2>
-<p><a id="src-isic"></a></p>
-<table>
-<thead>
-<tr>
-<th>Source key</th>
-<th>Canonical source/version</th>
-<th>What it supports</th>
-<th>What it does not prove</th>
-<th>Repository/audit detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>SRC-ISIC</code></td>
-<td><a href="https://unstats.un.org/unsd/classifications/Econ/ISIC.cshtml">UNSD ISIC Rev.5</a>, with Rev.4 correspondence retained</td>
-<td>Industry context, activity boundaries, completeness survey</td>
-<td>Occupations, skills, programme suitability, or Nigerian demand</td>
-<td><a href="../data/career-mapping/_audit/ISIC_DOMAIN_CROSSWALK_2026-08-31.md">ISIC crosswalk</a></td>
-</tr>
-<tr>
-<td><code>SRC-ISCO</code></td>
-<td><a href="https://isco.ilo.org/en/isco-08/">ILO ISCO-08</a></td>
-<td>Occupational hierarchy, work-function and skill-level anchors</td>
-<td>Sifter domain names, local demand, or learner readiness</td>
-<td><a href="../data/career-mapping/_audit/ISCO_DOMAIN_CROSSWALK_2026-08-31.md">ISCO crosswalk</a></td>
-</tr>
-<tr>
-<td><code>SRC-ESCO</code></td>
-<td>ESCO v1.2.1 classification archive</td>
-<td>Normalised occupation labels, aliases, URIs, descriptions, and skills</td>
-<td>Nigerian licensing or demand</td>
-<td><a href="../data/career-mapping/_audit/DOMAIN_SOURCE_TRACEABILITY_AUDIT_2026-08-31.md">Source traceability</a></td>
-</tr>
-<tr>
-<td><code>SRC-ONET</code></td>
-<td><a href="https://www.onetcenter.org/database.html">O*NET 31.0</a></td>
-<td>Tasks, tools, work activities, preparation, job zones, and skill proxies</td>
-<td>Nigerian requirements or demand</td>
-<td><a href="../data/career-mapping/_audit/ONET_VERSION_RECONCILIATION_2026-08-31.md">O*NET reconciliation</a></td>
-</tr>
-<tr>
-<td><code>SRC-ILO</code></td>
-<td><a href="https://ilostat.ilo.org/data/">ILO/ILOSTAT</a></td>
-<td>International occupational and labour-statistics context</td>
-<td>A Nigerian role or vacancy without a Nigeria-specific series</td>
-<td><a href="../data/career-mapping/_audit/SOURCE_LAYER_ENRICHMENT_REVIEW_2026-09-01.md">Source-layer review</a></td>
-</tr>
-<tr>
-<td><code>SRC-WEF</code></td>
-<td><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/">WEF Future of Jobs 2025</a></td>
-<td>Global trend, emerging-role, and future-skill signals</td>
-<td>A complete occupation list or Nigerian market demand</td>
-<td><a href="../data/career-mapping/_audit/WEF_ROLE_NORMALIZATION_2026-09-01.md">WEF normalization</a></td>
-</tr>
-<tr>
-<td><code>SRC-CCMAS</code></td>
-<td>NUC/CCMAS extracts and JAMB-linked programme data</td>
-<td>What a Nigerian programme teaches and its stated outcomes</td>
-<td>Automatic eligibility beyond the applicable JAMB/university rules</td>
-<td><a href="../data/career-mapping/_audit/CCMAS_NIGERIAN_REVIEWED_LINKS_2026-09-01.md">CCMAS reviewed links</a></td>
-</tr>
-<tr>
-<td><code>SRC-NG</code></td>
-<td>Nigerian regulators, professional bodies, universities, and checked local sources</td>
-<td>Nigerian terminology, institutions, regulation, credentials, curriculum, and directly shown local signals</td>
-<td>A local demand claim when the source does not show demand</td>
-<td><a href="../data/career-mapping/_audit/NIGERIAN_CONTEXT_COVERAGE_REPORT.md">Nigerian coverage</a></td>
-</tr>
-</tbody>
-</table>
-<p>Source registration is not ingestion proof. A published claim must point to the
-source record, file, page, section, URL, or exact extracted row that supports it.
-The complete 96-entry source catalog, all JAMB/CCMAS source-file names, and
-available source hashes,
-and layer-by-layer source ownership are reproduced in the standalone
-<a href="CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md">source and behavior inventory</a>.
-The academic handoff packet must distribute that inventory with this document;
-the links below are the public source locations and the inventory identifies
-which local source files were actually checked.</p>
-<h3 id="complete-source-family-register-for-the-academic-packet">Complete source-family register for the academic packet</h3>
-<p>The following register is reproduced here so this methodology remains useful
-when read without repository access. It is the source-family register used for
-domain, subgroup, role, skill, competency, tool, certification, resource, and
-Nigerian-enrichment routing. A routed source is not automatically an extracted
-fact; the evidence state is recorded separately.</p>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Source family</th>
-<th>Public reference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>global_esco</code></td>
-<td>ESCO occupations and skills</td>
-<td><a href="https://esco.ec.europa.eu/en/use-esco">ESCO</a></td>
-</tr>
-<tr>
-<td><code>global_onet</code></td>
-<td>O*NET 31.0 Database</td>
-<td><a href="https://www.onetcenter.org/database.html">O*NET</a></td>
-</tr>
-<tr>
-<td><code>global_isco</code></td>
-<td>ILO ISCO-08</td>
-<td><a href="https://isco.ilo.org/en/isco-08/">ISCO</a></td>
-</tr>
-<tr>
-<td><code>global_wef</code></td>
-<td>World Economic Forum Future of Jobs 2025</td>
-<td><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/">WEF</a></td>
-</tr>
-<tr>
-<td><code>global_sfia</code></td>
-<td>SFIA 9</td>
-<td><a href="https://sfia-online.org/en/sfia-9">SFIA</a></td>
-</tr>
-<tr>
-<td><code>global_nice</code></td>
-<td>NIST NICE Workforce Framework</td>
-<td><a href="https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center">NICE</a></td>
-</tr>
-<tr>
-<td><code>global_supply_chain</code></td>
-<td>ASCM supply-chain body of knowledge</td>
-<td><a href="https://www.ascm.org/">ASCM</a></td>
-</tr>
-<tr>
-<td><code>global_cips</code></td>
-<td>CIPS Global Standard for Procurement and Supply</td>
-<td><a href="https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply">CIPS</a></td>
-</tr>
-<tr>
-<td><code>global_project_management</code></td>
-<td>Project Management Institute standards</td>
-<td><a href="https://www.pmi.org/standards">PMI</a></td>
-</tr>
-<tr>
-<td><code>global_health</code></td>
-<td>WHO health workforce resources</td>
-<td><a href="https://www.who.int/teams/health-workforce">WHO</a></td>
-</tr>
-<tr>
-<td><code>global_fao</code></td>
-<td>FAO agriculture and food-systems resources</td>
-<td><a href="https://www.fao.org/">FAO</a></td>
-</tr>
-<tr>
-<td><code>global_woah</code></td>
-<td>WOAH animal-health standards</td>
-<td><a href="https://www.woah.org/">WOAH</a></td>
-</tr>
-<tr>
-<td><code>global_icao_iata</code></td>
-<td>ICAO and IATA aviation standards</td>
-<td><a href="https://www.icao.int/">ICAO</a> / <a href="https://www.iata.org/">IATA</a></td>
-</tr>
-<tr>
-<td><code>global_imo_imarest</code></td>
-<td>IMO and IMarEST maritime standards</td>
-<td><a href="https://www.imo.org/">IMO</a> / <a href="https://www.imarest.org/">IMarEST</a></td>
-</tr>
-<tr>
-<td><code>global_built_environment</code></td>
-<td>RICS built-environment and property standards</td>
-<td><a href="https://www.rics.org/">RICS</a></td>
-</tr>
-<tr>
-<td><code>global_energy</code></td>
-<td>SPE petroleum-engineering competency resources</td>
-<td><a href="https://www.spe.org/en/training/competency-management/">SPE</a></td>
-</tr>
-<tr>
-<td><code>global_nuclear</code></td>
-<td>IAEA nuclear and radiation resources</td>
-<td><a href="https://www.iaea.org/">IAEA</a></td>
-</tr>
-<tr>
-<td><code>global_unesco</code></td>
-<td>UNESCO education, science, and culture resources</td>
-<td><a href="https://www.unesco.org/">UNESCO</a></td>
-</tr>
-<tr>
-<td><code>global_creative</code></td>
-<td>ScreenSkills creative-industry role profiles</td>
-<td><a href="https://www.screenskills.com/">ScreenSkills</a></td>
-</tr>
-<tr>
-<td><code>global_game_dev</code></td>
-<td>International Game Developers Association resources</td>
-<td><a href="https://igda.org/resources/">IGDA</a></td>
-</tr>
-<tr>
-<td><code>tesda_psf_game_development</code></td>
-<td>Philippine Skills Framework for Game Development</td>
-<td><a href="https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf">TESDA</a></td>
-</tr>
-<tr>
-<td><code>global_xr</code></td>
-<td>Khronos Group open standards</td>
-<td><a href="https://www.khronos.org/">Khronos</a></td>
-</tr>
-<tr>
-<td><code>qt_cfqt</code></td>
-<td>European Competence Framework for Quantum Technologies v3.0</td>
-<td><a href="https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf">Quantum Flagship</a></td>
-</tr>
-<tr>
-<td><code>nac_arts_technical_theatre</code></td>
-<td>Singapore National Arts Council technical-theatre framework</td>
-<td><a href="https://www.skillsfuture.gov.sg/docs/default-source/skills-framework/skills-framework-for-arts-%28technical-theatre-production%29.pdf">Skills Framework</a></td>
-</tr>
-<tr>
-<td><code>skills_england_live_event</code></td>
-<td>Skills England Live Event Technician standard</td>
-<td><a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1297A">Skills England</a></td>
-</tr>
-<tr>
-<td><code>mqa_performing_arts</code></td>
-<td>Malaysian Qualifications Agency Performing Arts standards</td>
-<td><a href="https://www2.mqa.gov.my/qad/v2/pekeliling/2025/Programme%20Standards_Performing%20Arts%20FINAL_26.3.25.pdf">MQA</a></td>
-</tr>
-<tr>
-<td><code>jff_xr</code></td>
-<td>JFF XR and Immersive Learning career pathways</td>
-<td><a href="https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/">JFF</a></td>
-</tr>
-<tr>
-<td><code>arm_robotics_career</code></td>
-<td>ARM RoboticsCareer competency pathways</td>
-<td><a href="https://www.roboticscareer.org/careers">RoboticsCareer</a></td>
-</tr>
-<tr>
-<td><code>skills_england_robotics</code></td>
-<td>Skills England Robotics Engineer maps</td>
-<td><a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1317">Robotics</a></td>
-</tr>
-<tr>
-<td><code>british_esports</code></td>
-<td>British Esports career pathways</td>
-<td><a href="https://britishesports.org/esports-and-education/career-pathways/">British Esports</a></td>
-</tr>
-<tr>
-<td><code>pearson_esports</code></td>
-<td>Pearson BTEC Esports career pathways</td>
-<td><a href="https://qualifications.pearson.com/content/dam/pdf/BTEC-Higher-Nationals/esport/2024/specification-and-sample-assessments/9781292467900-btec-hnc-hnd-l45-esports-spc.pdf">Pearson</a></td>
-</tr>
-<tr>
-<td><code>global_esports</code></td>
-<td>Hitmarker esports and gaming jobs</td>
-<td><a href="https://hitmarker.net/">Hitmarker</a></td>
-</tr>
-<tr>
-<td><code>global_music</code></td>
-<td>IFPI global music-industry resources</td>
-<td><a href="https://www.ifpi.org/">IFPI</a></td>
-</tr>
-<tr>
-<td><code>global_wipo</code></td>
-<td>WIPO intellectual-property resources</td>
-<td><a href="https://www.wipo.int/">WIPO</a></td>
-</tr>
-<tr>
-<td><code>global_cfa_finance</code></td>
-<td>CFA Institute investment-profession resources</td>
-<td><a href="https://www.cfainstitute.org/">CFA</a></td>
-</tr>
-<tr>
-<td><code>global_garp_risk</code></td>
-<td>Global Association of Risk Professionals</td>
-<td><a href="https://www.garp.org/">GARP</a></td>
-</tr>
-<tr>
-<td><code>global_driver_training</code></td>
-<td>DVSA National Standard for Driver and Rider Training</td>
-<td><a href="https://www.gov.uk/government/publications/national-standard-for-driver-and-rider-training/national-standard-for-driver-and-rider-training">DVSA</a></td>
-</tr>
-<tr>
-<td><code>ng_jobberman</code></td>
-<td>Jobberman Nigeria jobs</td>
-<td><a href="https://www.jobberman.com/jobs">Jobberman</a></td>
-</tr>
-<tr>
-<td><code>ng_myjobmag</code></td>
-<td>MyJobMag Nigeria feeds</td>
-<td><a href="https://www.myjobmag.com/feeds">MyJobMag</a></td>
-</tr>
-<tr>
-<td><code>ng_nbs</code></td>
-<td>National Bureau of Statistics Labour Force Survey</td>
-<td><a href="https://microdata.nigerianstat.gov.ng/index.php/catalog/151/study-description">NBS</a></td>
-</tr>
-<tr>
-<td><code>ng_national_ai</code></td>
-<td>Nigeria National Artificial Intelligence Strategy 2025</td>
-<td>Local checked source document</td>
-</tr>
-<tr>
-<td><code>ng_nbte</code></td>
-<td>NBTE National Occupational Standards and curricula</td>
-<td><a href="https://web.nbte.gov.ng/downloads">NBTE</a></td>
-</tr>
-<tr>
-<td><code>ng_cpn_syllabus_2021</code></td>
-<td>CPN 2021 Examination Syllabus</td>
-<td><a href="https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf">CPN syllabus</a></td>
-</tr>
-<tr>
-<td><code>ng_ncs</code></td>
-<td>Nigeria Computer Society</td>
-<td><a href="https://www.ncs.org.ng/">NCS</a></td>
-</tr>
-<tr>
-<td><code>ng_nsqf_nos</code></td>
-<td>NBTE NSQF and National Occupational Standards</td>
-<td><a href="https://www.web.nbte.gov.ng/nsqf">NSQF</a></td>
-</tr>
-<tr>
-<td><code>ng_cieeen</code></td>
-<td>Council for Innovative Engineering and Emerging Engineering</td>
-<td><a href="https://cieeen.gov.ng/">CIEEEN</a></td>
-</tr>
-<tr>
-<td><code>ng_health_ministry</code></td>
-<td>Federal Ministry of Health and Social Welfare</td>
-<td><a href="https://health.gov.ng/hospital-services/">FMoHSW</a></td>
-</tr>
-<tr>
-<td><code>ng_mls</code></td>
-<td>Medical Laboratory Science Council of Nigeria</td>
-<td><a href="https://mlscn.gov.ng/publications/mlscn-approved-documents">MLSCN</a></td>
-</tr>
-<tr>
-<td><code>ng_clmis_corbon</code></td>
-<td>CORBON construction labour-market information and NOS</td>
-<td><a href="https://www.clmis.corbon.gov.ng/nos">CORBON</a></td>
-</tr>
-<tr>
-<td><code>ng_qsrbn</code></td>
-<td>Quantity Surveyors Registration Board of Nigeria</td>
-<td><a href="https://qsrbn.gov.ng/registration/">QSRBN</a></td>
-</tr>
-<tr>
-<td><code>ng_nnra</code></td>
-<td>Nigerian Nuclear Regulatory Authority</td>
-<td><a href="https://nnra.gov.ng/">NNRA</a></td>
-</tr>
-<tr>
-<td><code>ng_trcn</code></td>
-<td>Teachers Registration Council of Nigeria</td>
-<td><a href="https://trcn.gov.ng/">TRCN</a></td>
-</tr>
-<tr>
-<td><code>ng_nogicjqs</code></td>
-<td>Nigerian Oil and Gas Industry Content Joint Qualification System</td>
-<td><a href="https://nogicjqs.gov.ng/">NOGIC JQS</a></td>
-</tr>
-<tr>
-<td><code>ng_cmd</code></td>
-<td>Centre for Management Development Nigeria</td>
-<td><a href="https://www.cmd.gov.ng/">CMD</a></td>
-</tr>
-<tr>
-<td><code>ng_nasrda</code></td>
-<td>National Space Research and Development Agency</td>
-<td><a href="https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/">NASRDA</a></td>
-</tr>
-<tr>
-<td><code>ng_nema</code></td>
-<td>National Emergency Management Agency</td>
-<td><a href="https://nema.gov.ng/">NEMA</a></td>
-</tr>
-<tr>
-<td><code>ng_fmacce</code></td>
-<td>Federal Ministry of Arts, Culture and Creative Economy</td>
-<td><a href="https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece">FMaCCE</a></td>
-</tr>
-<tr>
-<td><code>ng_ican_syllabus</code></td>
-<td>Institute of Chartered Accountants of Nigeria 2026 syllabus</td>
-<td><a href="https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf">ICAN</a></td>
-</tr>
-<tr>
-<td><code>ng_cibn</code></td>
-<td>Chartered Institute of Bankers of Nigeria competency framework</td>
-<td><a href="https://portal.cibng.org/cb_competencyframework.asp">CIBN</a></td>
-</tr>
-<tr>
-<td><code>ng_nuj</code></td>
-<td>Nigeria Union of Journalists professional ethics</td>
-<td><a href="https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/">NUJ</a></td>
-</tr>
-<tr>
-<td><code>ng_nla</code></td>
-<td>Nigerian Library Association and LRCN context</td>
-<td><a href="https://nla.org.ng/public/">NLA</a></td>
-</tr>
-<tr>
-<td><code>ng_nicfost</code></td>
-<td>Nigerian Council of Food Science and Technology</td>
-<td><a href="https://nicfost.gov.ng/">NICFOST</a></td>
-</tr>
-<tr>
-<td><code>ng_nihotour</code></td>
-<td>NIHOTOUR RIVAC registration portal</td>
-<td><a href="https://rivac.nihotour.gov.ng/">RIVAC</a></td>
-</tr>
-<tr>
-<td><code>ng_fmafs</code></td>
-<td>Federal Ministry of Agriculture and Food Security</td>
-<td><a href="https://agriculture.gov.ng/about-us/">FMAFS</a></td>
-</tr>
-<tr>
-<td><code>ng_npa_psychology</code></td>
-<td>Nigerian Psychological Association</td>
-<td><a href="https://npafct.org/">NPA</a></td>
-</tr>
-<tr>
-<td><code>ng_fashion_council</code></td>
-<td>Nigerian Fashion Council and FADAN</td>
-<td><a href="https://fadan.ng/registration/">FADAN</a></td>
-</tr>
-<tr>
-<td><code>ng_sports_context</code></td>
-<td>Nigeria Olympic Committee sports-sector context</td>
-<td><a href="https://nigeriaolympic.org/athletes-commission/commissions/">NOC</a></td>
-</tr>
-<tr>
-<td><code>ng_public_health_context</code></td>
-<td>NPHCDA and Nigerian public-health sources</td>
-<td><a href="https://nphcda.gov.ng/brief-history-mandate/">NPHCDA</a></td>
-</tr>
-<tr>
-<td><code>ng_nemet</code></td>
-<td>Nigeria Meteorological Agency (legacy registry key)</td>
-<td><a href="https://nimet.gov.ng/foi">NiMet</a></td>
-</tr>
-<tr>
-<td><code>ng_nimet</code></td>
-<td>Nigerian Meteorological Agency</td>
-<td><a href="https://nimet.gov.ng/foi">NiMet</a></td>
-</tr>
-<tr>
-<td><code>ng_nmdpra</code></td>
-<td>Nigerian upstream and midstream petroleum regulators</td>
-<td><a href="https://www.nuprc.gov.ng/">NUPRC</a> / <a href="https://www.nmdpra.gov.ng/">NMDPRA</a></td>
-</tr>
-<tr>
-<td><code>ng_legal_context</code></td>
-<td>Nigerian legal, immigration, diplomacy, and IP source set</td>
-<td><a href="https://nigerianbar.org.ng/">NBA</a></td>
-</tr>
-<tr>
-<td><code>ng_cipsmn</code></td>
-<td>Chartered Institute of Purchasing and Supply Management of Nigeria</td>
-<td><a href="https://www.cipsmn.org.ng/about">CIPSMN</a></td>
-</tr>
-<tr>
-<td><code>ng_nas_research</code></td>
-<td>Nigerian Academy of Science and national research sources</td>
-<td><a href="https://nas.org.ng/">NAS</a></td>
-</tr>
-<tr>
-<td><code>ng_nuc</code></td>
-<td>National Universities Commission CCMAS and standards</td>
-<td><a href="https://www.nuc.edu.ng/">NUC</a></td>
-</tr>
-<tr>
-<td><code>ng_cpn</code></td>
-<td>Computer Professionals Registration Council of Nigeria</td>
-<td><a href="https://www.cpn.gov.ng/">CPN</a></td>
-</tr>
-<tr>
-<td><code>ng_telecom</code></td>
-<td>NCC and NITDA ICT ecosystem sources</td>
-<td><a href="https://www.ncc.gov.ng/">NCC</a> / <a href="https://nitda.gov.ng/">NITDA</a></td>
-</tr>
-<tr>
-<td><code>ng_engineering</code></td>
-<td>COREN and Nigerian Society of Engineers</td>
-<td><a href="https://coren.gov.ng/">COREN</a> / <a href="https://www.nse.org.ng/">NSE</a></td>
-</tr>
-<tr>
-<td><code>ng_built_environment</code></td>
-<td>Nigerian built-environment regulators and bodies</td>
-<td><a href="https://arcon.gov.ng/">ARCON</a> / <a href="https://surcon.org.ng/">SURCON</a></td>
-</tr>
-<tr>
-<td><code>ng_health</code></td>
-<td>Nigerian health-profession regulators</td>
-<td><a href="https://www.mdcn.gov.ng/">MDCN</a> / <a href="https://www.nmcn.gov.ng/">NMCN</a></td>
-</tr>
-<tr>
-<td><code>ng_finance</code></td>
-<td>Nigerian finance and accounting bodies/regulators</td>
-<td><a href="https://sec.gov.ng/">SEC</a> / <a href="https://www.cbn.gov.ng/">CBN</a></td>
-</tr>
-<tr>
-<td><code>ng_business</code></td>
-<td>CIPM Nigeria and Nigerian Institute of Management</td>
-<td><a href="https://cipmnigeria.org/">CIPM</a></td>
-</tr>
-<tr>
-<td><code>ng_supply_chain</code></td>
-<td>CILT Nigeria and Nigerian supply-chain bodies</td>
-<td><a href="https://ciltnigeria.org/">CILT Nigeria</a></td>
-</tr>
-<tr>
-<td><code>ng_legal</code></td>
-<td>Nigerian Bar Association and legal regulators</td>
-<td><a href="https://nigerianbar.org.ng/">NBA</a></td>
-</tr>
-<tr>
-<td><code>ng_education</code></td>
-<td>NUC, NCCE and Nigerian education standards</td>
-<td><a href="https://ncce.gov.ng/">NCCE</a></td>
-</tr>
-<tr>
-<td><code>ng_agriculture</code></td>
-<td>Nigerian agriculture, food and veterinary authorities</td>
-<td><a href="https://www.nafdac.gov.ng/">NAFDAC</a> / <a href="https://vcn.gov.ng/">VCN</a></td>
-</tr>
-<tr>
-<td><code>ng_energy</code></td>
-<td>Nigerian upstream, midstream and downstream energy regulators</td>
-<td><a href="https://www.nuprc.gov.ng/">NUPRC</a></td>
-</tr>
-<tr>
-<td><code>ng_aviation_maritime</code></td>
-<td>Nigerian aviation and maritime authorities</td>
-<td><a href="https://ncaa.gov.ng/">NCAA</a> / <a href="https://nimasa.gov.ng/">NIMASA</a></td>
-</tr>
-<tr>
-<td><code>ng_creative</code></td>
-<td>Nigerian creative-industry and media sources</td>
-<td><a href="https://www.nfvcb.gov.ng/">NFVCB</a> / <a href="https://www.nuj.org.ng/">NUJ</a></td>
-</tr>
-<tr>
-<td><code>ng_gaming</code></td>
-<td>National Lottery Regulatory Commission and gaming ecosystem</td>
-<td><a href="https://nlrc-gov.ng/">NLRC</a></td>
-</tr>
-<tr>
-<td><code>ng_environment</code></td>
-<td>NESREA and Nigerian environmental regulators</td>
-<td><a href="https://nesrea.gov.ng/">NESREA</a></td>
-</tr>
-<tr>
-<td><code>ng_surcon</code></td>
-<td>Surveyors Council of Nigeria</td>
-<td><a href="https://www.surcon.gov.ng/">SURCON</a></td>
-</tr>
-<tr>
-<td><code>ng_mdcn</code></td>
-<td>Medical and Dental Council of Nigeria</td>
-<td><a href="https://www.mdcn.gov.ng/">MDCN</a></td>
-</tr>
-<tr>
-<td><code>ng_transport</code></td>
-<td>Federal Ministry of Transportation</td>
-<td><a href="https://transportation.gov.ng/about/">Transportation Ministry</a></td>
-</tr>
-<tr>
-<td><code>ng_aviation</code></td>
-<td>Federal Ministry of Aviation and Aerospace Development</td>
-<td><a href="https://aviation.gov.ng/index.php/about">Aviation Ministry</a></td>
-</tr>
-<tr>
-<td><code>ng_choice_game_developer_2026</code></td>
-<td>Choice Talents Nigeria game-developer vacancy</td>
-<td><a href="https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421">Dated listing</a></td>
-</tr>
-</tbody>
-</table>
-<p>The source registry also contains the local JAMB brochure set and the original
-CCMAS PDF set. The exact filenames are listed in the <a href="CAREER_TAXONOMY_SOURCE_INVENTORY_2026-09-01.md">source and behavior
-inventory</a>, alongside hashes and
-the distinction between a checked source document, a checked extract, and a
-registry-only route.</p>
-<p>For a standalone academic copy, the primary Nigerian document inputs are also
-listed here.</p>
-<p><strong>JAMB/IBASS brochure files:</strong> <code>Administration.pdf</code>, <code>Agriculture.pdf</code>, <code>Arts _
-Humanities.pdf</code>, <code>Education.pdf</code>, <code>Engineering _ Enviromental _ Technology.pdf</code>,
-<code>Law.pdf</code>, <code>Medica_Pharmaceutical Health Science.pdf</code>, <code>Sciences.pdf</code>, <code>Social
-Management Science.pdf</code>, and <code>Specific Entry Requirements.pdf</code>.</p>
-<p><strong>Original CCMAS/NUC files:</strong></p>
-<pre><code class="language-text">Administration-and-Management.pdf
-Agriculture-2023.pdf
-Allied-Health-Sciences-2023.pdf
-Architecture-CCMAS-2023-FINAL.pdf
-Arts-CCMAS-2023-FINAL.pdf
-Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf
-Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf
-Computing-CCMAS-2023-FINAL.pdf
-Education-CCMAS-2023-New.pdf
-Engineering-Technology-CCMAS-2023-FINAL.pdf
-Environmental-Sciences-CCMAS-2023-FINAL.pdf
-Law-ALL.pdf
-Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf
-Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf
-Sciences-CCMAS-2023-FINAL.pdf
-Social-Sciences-CCMAS-FINAL-2023-A.pdf
-Veterinary-Medicine-CCMAS-2023-FINAL.pdf
+<h1 id="sifter-career-intelligence-evidence-mapping-and-guidance-methodology">Sifter Career Intelligence: Evidence, Mapping and Guidance Methodology</h1>
+<p><strong>Status:</strong> Integrated methodology for academic review and product explanation<br>
+<strong>Audience:</strong> academic reviewers, curriculum partners, product reviewers, data reviewers, and future maintainers</p>
+<h2 id="1-what-this-document-explains">1. What this document explains</h2>
+<p>Sifter connects two decisions that are often kept separate:</p>
+<ol>
+<li><strong>Admission and programme decisions:</strong> which programmes a learner may
+   investigate from O'Level subjects, Unified Tertiary Matriculation Examination
+   subjects, or both, and which universities offer the selected programme.</li>
+<li><strong>Career understanding and planning:</strong> what the programme teaches, which
+   professional domains it connects to, which specialisations and roles exist
+   inside those domains, and what skills, competencies, tools, credentials and
+   evidence a learner may need to build.</li>
+</ol>
+<p>The complete relationship is:</p>
+<pre><code>learner type and study stage
+  -&gt; O'Level and/or Unified Tertiary Matriculation Examination evidence
+  -&gt; national Joint Admissions and Matriculation Board programme identity
+  -&gt; university offering and university-specific requirements
+  -&gt; Nigerian Universities Commission curriculum evidence
+  -&gt; programme capabilities and skills taught
+  -&gt; related professional domains
+  -&gt; subgroups or a direct domain-to-role route
+  -&gt; roles and progression stage
+  -&gt; competencies, skills, tools, certifications, resources and opportunities
+  -&gt; a saved, explainable guidance plan
 </code></pre>
-<p>The original documents are the authoritative material; the checked-in JSON
-and text files are extraction and audit artifacts that preserve the relevant
-course codes, source text, outcomes, and locators.</p>
-<h2 id="2-domain-derivation-and-identity">2. Domain derivation and identity</h2>
-<h3 id="21-derivation-flow">2.1 Derivation flow</h3>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Survey ISIC sectors and divisions</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Identify professional work worlds</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Anchor work with ISCO groups</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Test vocabulary with ESCO occupations and skills</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Enrich tasks and preparation with O*NET, ILO, WEF, and specialist sources</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Check Nigerian terminology, institutions, and regulation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Record label class, boundary reason, and limitation</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
-  A[Survey ISIC sectors and divisions] --&gt; B[Identify professional work worlds]
-  B --&gt; C[Anchor work with ISCO groups]
-  C --&gt; D[Test vocabulary with ESCO occupations and skills]
-  D --&gt; E[Enrich tasks and preparation with O*NET, ILO, WEF, and specialist sources]
-  E --&gt; F[Check Nigerian terminology, institutions, and regulation]
-  F --&gt; G[Record label class, boundary reason, and limitation]</pre></details>
-
-<p>The domain library is a product ontology, not a replacement for an official
-classification. ISIC provides the economic completeness anchor; ISCO, ESCO,
-O*NET, ILO, WEF, specialist frameworks, and Nigerian evidence support different
-occupational or contextual claims.</p>
-<h3 id="22-domain-identity-row-contract">2.2 Domain identity row contract</h3>
-<p><a id="dom-row"></a></p>
+<p>This is not a claim that a subject combination guarantees admission, that a
+programme guarantees a job, or that a domain relationship guarantees
+competence. It is an evidence-based guidance model that explains what each
+relationship means and what remains to be built.</p>
+<h2 id="2-the-central-evidence-principle">2. The central evidence principle</h2>
+<p>Every important statement has three separate parts:</p>
+<ol>
+<li><strong>Source fact:</strong> what a document, framework, regulator, curriculum, or market
+   source actually says.</li>
+<li><strong>Derived relationship:</strong> the documented rule used to connect that fact to
+   another layer of the product.</li>
+<li><strong>User explanation:</strong> the plain-language conclusion shown to the learner.</li>
+</ol>
+<p>For example:</p>
 <table>
 <thead>
 <tr>
-<th>Row key</th>
-<th>Required fields</th>
-<th>Decision question</th>
-<th>Downstream links</th>
+<th>Layer</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>DOM-D001</code> … <code>DOM-D166</code></td>
-<td>Sifter ID, current label, source-library label, cluster, ISIC raw values, ISCO raw values, ESCO role count, label class, boundary reason, limitation</td>
-<td>Is this exact source terminology, a source-supported umbrella, or a curated addition?</td>
-<td><code>domain_meta.json</code>, <code>domain_structure.json</code>, programme links, subgroup/role rows</td>
+<td>Source fact</td>
+<td>A Nigerian curriculum document lists courses and learning outcomes involving programming, algorithms, and software development.</td>
 </tr>
 <tr>
-<td><code>DOM-D167</code>, <code>DOM-D168</code></td>
-<td>Same fields plus later-addition source registry and limitation</td>
-<td>Is the later addition in scope and supported without pretending it is an official ISIC/ISCO label?</td>
-<td>Same downstream path, with curated status visible</td>
-</tr>
-</tbody>
-</table>
-<h3 id="23-boundary-classes">2.3 Boundary classes</h3>
-<table>
-<thead>
-<tr>
-<th>Class key</th>
-<th>Meaning</th>
-<th>Minimum defensible basis</th>
-<th>Product language</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DOM-EXACT</code></td>
-<td>The label occurs as the source's own terminology</td>
-<td>Exact source label plus source locator</td>
-<td>“This name is used by the source.”</td>
+<td>Derived relationship</td>
+<td>Those anchors overlap materially with the foundation of the Software Engineering domain.</td>
 </tr>
 <tr>
-<td><code>DOM-UMBRELLA</code></td>
-<td>A practitioner-facing label groups source-recognised occupations</td>
-<td>Shared learning foundation, entry route, outputs, tools, employer context, and coherent occupational anchors</td>
-<td>“This is a Sifter umbrella for related source occupations.”</td>
-</tr>
-<tr>
-<td><code>DOM-CURATED</code></td>
-<td>A product addition closes a documented coverage gap</td>
-<td>Supporting source records, explicit boundary rationale, and limitation</td>
-<td>“This is a curated product category, not an official classification.”</td>
-</tr>
-</tbody>
-</table>
-<h3 id="24-current-domain-identity-result">2.4 Current domain identity result</h3>
-<table>
-<thead>
-<tr>
-<th>Check key</th>
-<th style="text-align: right;">Result</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DOM-COUNT</code></td>
-<td style="text-align: right;">168 domain records; 160 visible in the current product scope</td>
-<td><code>domain_meta.json</code> and <a href="../data/career-mapping/_audit/domain_source_traceability_2026-08-31.json">domain traceability JSON</a></td>
-</tr>
-<tr>
-<td><code>DOM-EXACT</code></td>
-<td style="text-align: right;">7</td>
-<td><a href="../data/career-mapping/_audit/DOMAIN_NAMING_PROVENANCE_AUDIT_2026-08-31.md">Naming provenance audit</a></td>
-</tr>
-<tr>
-<td><code>DOM-UMBRELLA</code></td>
-<td style="text-align: right;">159</td>
-<td>Same audit</td>
-</tr>
-<tr>
-<td><code>DOM-CURATED</code></td>
-<td style="text-align: right;">2 later additions, D167–D168</td>
-<td>Same audit</td>
-</tr>
-<tr>
-<td><code>DOM-ISCO-RAW</code></td>
-<td style="text-align: right;">8 raw ISCO values absent from the supplied workbook</td>
-<td><a href="../data/career-mapping/_audit/ISCO_DOMAIN_CROSSWALK_2026-08-31.md">ISCO crosswalk</a>; parent/sibling candidates are recorded without silent replacement</td>
-</tr>
-</tbody>
-</table>
-<p>The eight raw ISCO values are a provenance/code-quality boundary, not evidence
-that the associated domains are invalid. The raw value and its disposition must
-remain visible until the original source meaning supports a canonical correction.</p>
-<h2 id="3-programme-to-domain-evidence">3. Programme-to-domain evidence</h2>
-<h3 id="31-mapping-flow">3.1 Mapping flow</h3>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">JAMB programme identity</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">CCMAS purpose, courses, outcomes</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Skills taught display</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Named curriculum anchors</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Relationship class</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Foundation closely matches</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Capabilities transfer; bridge needed</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Transferable base plus explicit bridge</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Domain guidance</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
-  A[JAMB programme identity] --&gt; B[CCMAS purpose, courses, outcomes]
-  B --&gt; C[Skills taught display]
-  B --&gt; D[Named curriculum anchors]
-  D --&gt; E{Relationship class}
-  E --&gt;|Direct| F[Foundation closely matches]
-  E --&gt;|Functional| G[Capabilities transfer; bridge needed]
-  E --&gt;|Adjacent| H[Transferable base plus explicit bridge]
-  F --&gt; I[Domain guidance]
-  G --&gt; I
-  H --&gt; I</pre></details>
-
-<h3 id="32-mapping-row-contract">3.2 Mapping row contract</h3>
-<p><a id="map-row"></a></p>
-<table>
-<thead>
-<tr>
-<th>Row key</th>
-<th>Nigerian evidence required</th>
-<th>Decision</th>
-<th>Student-facing explanation</th>
-<th>Stored detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>MAP-DIRECT</code></td>
-<td>At least two specific CCMAS course/objective anchors closely support the domain foundation</td>
-<td>Direct</td>
+<td>User explanation</td>
 <td>“Your programme teaches a foundation closely related to this domain.”</td>
-<td>Course code, title, outcome/content text, source locator, domain anchor, review state</td>
-</tr>
-<tr>
-<td><code>MAP-FUNCTIONAL</code></td>
-<td>At least two specific CCMAS course/objective anchors support capabilities used in the domain</td>
-<td>Functional</td>
-<td>“Your programme gives you useful preparation, but you will need additional domain-specific capability.”</td>
-<td>Same evidence fields plus bridge explanation</td>
-</tr>
-<tr>
-<td><code>MAP-ADJACENT</code></td>
-<td>At least one domain-specific prerequisite plus relevant transferable P7/P8 evidence</td>
-<td>Adjacent</td>
-<td>“This is a possible pivot. Your current foundation helps, but you need this bridge before specialising.”</td>
-<td>Same evidence fields plus explicit bridge requirement</td>
 </tr>
 </tbody>
 </table>
-<p>“Strong” means named, source-backed curriculum anchors support the relationship.
-It is not a similarity score, employment prediction, or guarantee of competence.
-Global occupational evidence can explain the target domain, but cannot repair a
-weak Nigerian programme-to-domain link.</p>
-<h3 id="33-the-153-and-remaining-ccmas-occurrences">3.3 The 153 and remaining CCMAS occurrences</h3>
-<p><a id="rev-ccmas"></a></p>
-<p>The 711 candidate-link occurrences were reviewed as follows:</p>
+<p>The existence of a source does not automatically create a relationship. The
+relationship must satisfy a stated rule, and the evidence and rule must remain
+visible to reviewers.</p>
+<h2 id="3-the-source-architecture">3. The source architecture</h2>
+<p>No single source provides the whole product. Each source is used for the kind
+of question it is qualified to answer.</p>
+<h3 id="31-nigerian-admission-and-curriculum-sources">3.1 Nigerian admission and curriculum sources</h3>
 <table>
 <thead>
 <tr>
-<th>Review key</th>
-<th style="text-align: right;">Count</th>
-<th>Final disposition</th>
-<th>Product/seed rule</th>
+<th>Source</th>
+<th>What it contributes</th>
+<th>What it does not prove</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>REV-CCMAS-CERTIFIED</code></td>
-<td style="text-align: right;">547</td>
-<td>Certified Nigerian curriculum link</td>
-<td>May publish as the applicable relationship class with source evidence</td>
+<td>Joint Admissions and Matriculation Board (JAMB) and Integrated Brochure and Syllabus System (IBASS)</td>
+<td>National programme names, Unified Tertiary Matriculation Examination combinations, O'Level requirements, direct-entry wording, and programme identity</td>
+<td>That a learner will be admitted, a university-specific exception, or a career outcome</td>
 </tr>
 <tr>
-<td><code>REV-CCMAS-BRIDGE</code></td>
-<td style="text-align: right;">163</td>
-<td>Explicit Nigerian bridge link</td>
-<td>Publish as guided preparation; never present as automatic qualification</td>
+<td>National Universities Commission (NUC) Core Curriculum and Minimum Academic Standards (CCMAS)</td>
+<td>Programme purpose, philosophy, objectives, courses, learning outcomes, course content, and graduate capabilities</td>
+<td>That every university teaches every course identically or that a programme guarantees a job</td>
 </tr>
 <tr>
-<td><code>REV-CCMAS-REMOVED</code></td>
-<td style="text-align: right;">1</td>
-<td>Unsupported candidate removed</td>
-<td>Do not seed or display as an active mapping</td>
+<td>Nigerian regulators and professional bodies</td>
+<td>Nigerian terminology, professional boundaries, registration, licensing, examinations, credential routes, and regulated practice</td>
+<td>A universal requirement unless the particular regulator or law states it</td>
 </tr>
 <tr>
-<td><code>REV-CCMAS-FOLLOWUP</code></td>
-<td style="text-align: right;">0</td>
-<td>No current follow-up records</td>
-<td>Preserve the review artifact and rerun the audit after any source change</td>
+<td>Nigerian universities and official offering information</td>
+<td>Which university offers a programme, location, university-specific notes, and local admission conditions</td>
+<td>A national rule that applies to every university</td>
+</tr>
+<tr>
+<td>Nigerian vacancy and labour sources</td>
+<td>Dated Nigerian role titles and local demand signals where the checked source directly contains them</td>
+<td>Complete Nigerian demand, future demand, or proof that a global role is absent locally</td>
 </tr>
 </tbody>
 </table>
-<p>The earlier <strong>153 insufficient</strong> count was a before-state diagnostic. It is not
-an unresolved queue: those occurrences are represented in the final
-certified/bridge/removed dispositions above.</p>
-<h3 id="34-downstream-impact-contract">3.4 Downstream impact contract</h3>
-<p><a id="impact-row"></a></p>
+<p>Admission and curriculum sources are deliberately kept separate from
+international occupation sources. A curriculum document explains what a
+programme teaches; an occupation framework explains what work is performed.</p>
+<h3 id="32-international-classification-and-occupational-sources">3.2 International classification and occupational sources</h3>
 <table>
 <thead>
 <tr>
-<th>Impact key</th>
-<th>What is checked</th>
-<th>Current result</th>
-<th>Authoritative artifact</th>
+<th>Source</th>
+<th>Full name and contribution</th>
+<th>Boundary</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>IMPACT-ID</code></td>
-<td>Domain IDs and ownership remain stable</td>
-<td>No invalid domain references</td>
-<td><a href="../data/career-mapping/_audit/DOMAIN_IDENTITY_DOWNSTREAM_IMPACT_2026-09-01.md">Downstream impact audit</a></td>
+<td>ISIC</td>
+<td>International Standard Industrial Classification of All Economic Activities. It surveys industries and economic activities so major areas of work are not overlooked.</td>
+<td>It is not an occupation, subject, skills, or programme-suitability catalogue.</td>
 </tr>
 <tr>
-<td><code>IMPACT-LABEL</code></td>
-<td>Display labels match canonical IDs</td>
-<td>No label mismatches</td>
-<td>Same audit</td>
+<td>ISCO-08</td>
+<td>International Standard Classification of Occupations, maintained by the International Labour Organization. It supplies occupational groups, work functions, and unit-group anchors.</td>
+<td>It does not name all Sifter domains or establish Nigerian demand.</td>
 </tr>
 <tr>
-<td><code>IMPACT-PROGRAMME</code></td>
-<td>Programme-domain links remain connected</td>
-<td>1,683 programme links</td>
-<td>Same audit</td>
+<td>ESCO</td>
+<td>European Skills, Competences, Qualifications and Occupations. It supplies normalized occupation labels, alternative labels, descriptions, identifiers, and occupation-skill relationships.</td>
+<td>It is international vocabulary, not Nigerian licensing or vacancy evidence.</td>
 </tr>
 <tr>
-<td><code>IMPACT-JAMB</code></td>
-<td>Reviewed JAMB overlay remains connected</td>
-<td>3,163 active JAMB links; 710 reviewed links</td>
-<td>Same audit and <a href="../data/career-mapping/_audit/ccmas_nigerian_reviewed_links_2026-09-01.json">reviewed JAMB JSON</a></td>
+<td>O*NET</td>
+<td>Occupational Information Network. It supplies tasks, work activities, skills, knowledge, abilities, technology and software signals, preparation, job zones, and work context.</td>
+<td>It is primarily a United States occupational reference and is used as a global proxy.</td>
 </tr>
 <tr>
-<td><code>IMPACT-INHERITANCE</code></td>
-<td>Skills, tools, competencies, and certification inheritance remains attached by ID</td>
-<td>No invalid downstream references reported</td>
-<td>Same audit</td>
+<td>ILO</td>
+<td>International Labour Organization occupational and labour information. It supports interpretation of ISCO and international employment context.</td>
+<td>It does not replace Nigerian regulators or local market evidence.</td>
+</tr>
+<tr>
+<td>WEF</td>
+<td>World Economic Forum Future of Jobs research. It supplies trend and skills-on-the-rise signals.</td>
+<td>It is not a complete occupation dictionary or a Nigerian vacancy source.</td>
+</tr>
+<tr>
+<td>Specialist frameworks</td>
+<td>Frameworks such as SFIA, NICE, ASCM, CIPS, PMI, health, engineering, creative, immersive technology, quantum, robotics, and esports frameworks.</td>
+<td>They enrich a professional area but do not automatically create a Nigerian programme link.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="4-subgroup-role-and-nigerian-context">4. Subgroup, role, and Nigerian context</h2>
-<h3 id="41-entity-lineage-flow">4.1 Entity lineage flow</h3>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Domain</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Supported subgroup</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Direct domain-to-role path when subgroup is not defensible</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Role</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Global occupational profile</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Nigerian domain context</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Nigerian subgroup context</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Nigerian role context or explicit global-only state</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Tasks, tools, skills, preparation</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Local terminology, regulation, credentials, demand only if shown</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
-  D[Domain] --&gt; S[Supported subgroup]
-  D --&gt; R0[Direct domain-to-role path when subgroup is not defensible]
-  S --&gt; R[Role]
-  R --&gt; G[Global occupational profile]
-  D --&gt; N[Nigerian domain context]
-  S --&gt; N2[Nigerian subgroup context]
-  R --&gt; N3[Nigerian role context or explicit global-only state]
-  G --&gt; P[Tasks, tools, skills, preparation]
-  N --&gt; Q[Local terminology, regulation, credentials, demand only if shown]
-  N2 --&gt; Q
-  N3 --&gt; Q</pre></details>
-
-<h3 id="42-entity-row-contract">4.2 Entity row contract</h3>
-<table>
-<thead>
-<tr>
-<th>Entity key</th>
-<th>Global sources</th>
-<th>Nigerian layer</th>
-<th>Safe display behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ENT-DOMAIN</code></td>
-<td>ISIC/ISCO/ESCO/O*NET/ILO/WEF as applicable</td>
-<td>Local terminology, institutions, regulation, credentials, and local signals</td>
-<td>Show domain meaning and portable foundation; separate global context from Nigerian evidence</td>
-</tr>
-<tr>
-<td><code>ENT-SUBGROUP</code></td>
-<td>ISCO/ESCO/O*NET or specialist framework</td>
-<td>Local work-family evidence where supported</td>
-<td>Explain what the specialization adds beyond the domain foundation; do not invent a subgroup for symmetry</td>
-</tr>
-<tr>
-<td><code>ENT-ROLE</code></td>
-<td>ESCO/ISCO/O*NET/WEF/specialist framework</td>
-<td>Exact local role-family evidence, or explicit reviewed global-only state</td>
-<td>Show work, outputs, preparation, progression, essential/optional items, sources, and limitation</td>
-</tr>
-</tbody>
-</table>
-<p>If no defensible subgroup exists, use <code>domain → role</code>. This is an intentional
-product route and not a data failure.</p>
-<h3 id="43-current-coverage-snapshot">4.3 Current coverage snapshot</h3>
-<table>
-<thead>
-<tr>
-<th>Check key</th>
-<th style="text-align: right;">Full/current scope</th>
-<th style="text-align: right;">Visible Nigerian scope</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ENT-SUBGROUP-PROVENANCE</code></td>
-<td style="text-align: right;">555/555</td>
-<td style="text-align: right;">542/542</td>
-<td>All visible subgroups have actual local enrichment</td>
-</tr>
-<tr>
-<td><code>ENT-ROLE-MERGED</code></td>
-<td style="text-align: right;">5,209</td>
-<td style="text-align: right;">—</td>
-<td>Every merged role has some source evidence</td>
-</tr>
-<tr>
-<td><code>ENT-ROLE-ANCHOR</code></td>
-<td style="text-align: right;">5,130 explicit source anchors; 5,090 work-profile anchors</td>
-<td style="text-align: right;">—</td>
-<td>Anchor types are retained separately</td>
-</tr>
-<tr>
-<td><code>ENT-ROLE-CONTEXT</code></td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">5,093/5,093 valid context</td>
-<td>5,089 have actual local enrichment</td>
-</tr>
-<tr>
-<td><code>ENT-ROLE-GLOBAL-ONLY</code></td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;">4</td>
-<td>Snowboard instructor, ski instructor, snow-clearing worker, and hop farmer remain explicitly global-only; no direct Nigerian counterpart is asserted</td>
-</tr>
-</tbody>
-</table>
-<p>“Actual local enrichment” means at least one source-backed local skill, tool,
-competency, credential, regulation, or role-family record. It does not mean the
-exact canonical title is a regulated Nigerian title or that demand is proven.</p>
-<h2 id="5-admission-subject-matching-method">5. Admission subject-matching method</h2>
-<p>The admission matcher is a three-mode method, not one flattened subject list.
-The same canonical JAMB programme ID is the join key throughout.</p>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Student chooses matcher mode</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Mode</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Validate four UTME subjects</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Validate five to allowed O-level subjects</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Validate four UTME plus five to allowed O-level subjects</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Match typed UTME rules only</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Match typed O-level rules only</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Match UTME and O-level independently</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Intersect by canonical JAMB programme ID</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Attach university offerings after programme match</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Show source wording, gaps, and limitation</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
-  A[Student chooses matcher mode] --&gt; B{Mode}
-  B --&gt;|JAMB-only| C[Validate four UTME subjects]
-  B --&gt;|O-level-only| D[Validate five to allowed O-level subjects]
-  B --&gt;|Combined| E[Validate four UTME plus five to allowed O-level subjects]
-  C --&gt; F[Match typed UTME rules only]
-  D --&gt; G[Match typed O-level rules only]
-  E --&gt; H[Match UTME and O-level independently]
-  H --&gt; I[Intersect by canonical JAMB programme ID]
-  F --&gt; J[Attach university offerings after programme match]
-  G --&gt; J
-  I --&gt; J
-  J --&gt; K[Show source wording, gaps, and limitation]</pre></details>
-
+<h3 id="33-public-source-references">3.3 Public source references</h3>
+<p>The principal public references used for the methodology are:</p>
 <ul>
-<li><strong>JAMB-only:</strong> Use exactly four normalized UTME subjects, including Use of
-  English. Match required items and one-of groups in typed <code>utme</code> records only.</li>
-<li><strong>O-level-only:</strong> Use five to the configured early-guidance maximum O-level
-  subjects. Match typed <code>olevel</code> records only, including named credits and the
-  total minimum where the source supplies it.</li>
-<li><strong>Combined:</strong> Match the two layers independently, intersect only on the same
-  canonical JAMB programme ID, and preserve O-level missing subjects or an
-  unparsed O-level state. Do not count a UTME match as full eligibility.</li>
+<li><a href="https://jamb.gov.ng/FAQ">JAMB</a> and <a href="https://ibass.jamb.gov.ng/">IBASS programme information</a></li>
+<li><a href="https://www.nuc.edu.ng/">National Universities Commission</a></li>
+<li><a href="https://unstats.un.org/unsd/classifications/Econ/ISIC.cshtml">International Standard Industrial Classification</a></li>
+<li><a href="https://isco.ilo.org/en/isco-08/">International Standard Classification of Occupations</a></li>
+<li><a href="https://esco.ec.europa.eu/en/use-esco">ESCO classification</a></li>
+<li><a href="https://www.onetcenter.org/database.html">O*NET database</a></li>
+<li><a href="https://www.ilo.org/">International Labour Organization</a></li>
+<li><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/">World Economic Forum Future of Jobs research</a></li>
+<li><a href="https://nitda.gov.ng/regulations/">National Digital Economy Policy and Strategy resources</a></li>
+<li><a href="https://coren.gov.ng/">Council for the Regulation of Engineering in Nigeria</a></li>
+<li><a href="https://www.nmcn.gov.ng/">Nursing and Midwifery Council of Nigeria</a></li>
+<li><a href="https://www.cpn.gov.ng/">Computer Professionals Registration Council of Nigeria</a></li>
+<li><a href="https://www.web.nbte.gov.ng/">National Board for Technical Education</a></li>
+<li><a href="https://microdata.nigerianstat.gov.ng/">National Bureau of Statistics labour information</a></li>
+<li><a href="https://www.jobberman.com/jobs">Jobberman Nigeria</a> and <a href="https://www.myjobmag.com/feeds">MyJobMag</a></li>
+<li><a href="https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf">Quantum Technology Competence Framework</a></li>
+<li><a href="https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/">JFF immersive learning and extended reality pathways</a></li>
+<li><a href="https://britishesports.org/esports-and-education/career-pathways/">British Esports career pathways</a></li>
 </ul>
-<p>The API and UI fail closed when the subject catalogue, structured options, and
-typed rule records disagree. Unparsed brochure prose remains inspectable on
-programme detail but does not become an exact subject match. After a canonical
-programme is selected, university offerings supply address, requirements, and
-notes; they do not create a new programme version. The behavior is implemented
-in <code>backend/routes/student_pipeline_routes.py</code> and
-<code>src/screens/careerIntelligence/AdmissionBrowseScreen.tsx</code>, and independently
-checked by <code>backend/tests/test_student_pipeline_match.py</code> and
-<code>docs/manual-review/subject-selection-matrix-run-2026-08-18.md</code>.</p>
-<h2 id="6-worked-source-to-rule-examples">6. Worked source-to-rule examples</h2>
-<p>These examples show the level of explanation required for every published
-relationship. Each example names the source fact, the rule applied, the link
-to the repository evidence, and the reason the result is safe to display.</p>
-<h3 id="61-domain-identity-d001-software-engineering">6.1 Domain identity: D001 Software Engineering</h3>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Evidence or decision</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source fact</td>
-<td>The supplied domain-definition library has <code>D001 · Software Engineering</code> in its Information &amp; Communication Technology cluster, with a defined boundary based on shared work outputs, learning foundation, entry routes, and occupational anchors.</td>
-</tr>
-<tr>
-<td>Industry rule</td>
-<td>ISIC is used as an industry-context completeness check, not as the literal domain name. The trace record preserves the library's raw <code>K620</code> and <code>K630</code> values and records that they require revision/granularity crosswalk review in the local Rev.5 workbook.</td>
-</tr>
-<tr>
-<td>Occupational rule</td>
-<td>The library anchors the domain to ISCO sub-major 25 and unit groups <code>2512</code>, <code>2513</code>, <code>2514</code>, and <code>2519</code>; the local ISCO workbook validates those unit groups. ESCO is then filtered under those anchors for normalized occupation and skill evidence.</td>
-</tr>
-<tr>
-<td>Repository link</td>
-<td><a href="../data/career-mapping/_audit/domain_source_traceability_2026-08-31.json">domain traceability JSON</a>, domain <code>D001</code>; <a href="../data/career-mapping/_audit/ISIC_DOMAIN_CROSSWALK_2026-08-31.md">ISIC crosswalk</a>; <a href="../data/career-mapping/domain_meta.json">domain metadata</a>.</td>
-</tr>
-<tr>
-<td>Rationale</td>
-<td>“Software Engineering” is not claimed to be an official ISIC label. It is an exact label in the supplied Sifter library, supported by a coherent occupational anchor and linked role vocabulary. The invalid/missing ISIC values stay visible until the canonical Rev.5 crosswalk is frozen; no code is silently replaced.</td>
-</tr>
-</tbody>
-</table>
-<p>This example is defensible because it distinguishes label provenance from code
-validation. It does not pretend that an ISIC code automatically generated the
-human-facing label.</p>
-<h3 id="62-domain-identity-and-occupational-boundary-d023-medicine">6.2 Domain identity and occupational boundary: D023 Medicine</h3>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Evidence or decision</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source fact</td>
-<td>The library record is <code>Medicine &amp; Clinical Practice</code>, displayed in the product as the source-supported umbrella <code>Medicine</code>, with Health &amp; Biomedical as its cluster.</td>
-</tr>
-<tr>
-<td>Industry rule</td>
-<td>The record retains the raw health-activity anchors <code>R861</code>, <code>R862</code>, and <code>R863</code> for an explicit ISIC crosswalk; the audit records that <code>R863</code> is not found as a direct value in the supplied local Rev.5 workbook.</td>
-</tr>
-<tr>
-<td>Occupational rule</td>
-<td>The record includes ISCO sub-major 22 and medical unit-group anchors. The official ISCO-08 structure identifies <code>2211 Generalist Medical Practitioners</code> and <code>2212 Specialist Medical Practitioners</code>; the supplied local workbook does not contain raw <code>2213</code>-<code>2216</code>, so those raw values remain review findings rather than invented specialist codes.</td>
-</tr>
-<tr>
-<td>Nigerian curriculum rule</td>
-<td>The reviewed JAMB/CCMAS link for <code>Medicine and Surgery (Human Medicine)</code> points to D023 as direct and retains named course anchors such as Introductory Physiology, History of Medicine, Multidisciplinary Healthcare, and Introductory Pharmacology.</td>
-</tr>
-<tr>
-<td>Repository link</td>
-<td><a href="../data/career-mapping/_audit/domain_source_traceability_2026-08-31.json">D023 traceability record</a>; <a href="../data/career-mapping/_audit/ccmas_nigerian_reviewed_links_2026-09-01.json">reviewed JAMB/CCMAS links</a>; <a href="../data/career-mapping/_audit/DOMAIN_IDENTITY_DOWNSTREAM_IMPACT_2026-09-01.md">downstream impact audit</a>.</td>
-</tr>
-<tr>
-<td>Rationale</td>
-<td>“Medicine” is a usable display umbrella because the source library explicitly groups clinical practice and the occupational anchors support the work family. The product must still distinguish doctors, technical health roles, public health, and biomedical pivots at subgroup/role level; it must not claim that every role is a doctor or that a programme guarantees licensure.</td>
-</tr>
-</tbody>
-</table>
-<p>The official ISCO-08 PDF gives an independent locator for the occupational fact:
-Volume 1, printed PDF page 36 lists the Health Professionals structure, and
-the unit-group definition for <code>2211</code> appears on printed pages 135-136. The
-repository crosswalk is the controlling record for the absent raw values.</p>
-<h3 id="63-programme-to-domain-mapping-computer-science-to-software-engineering">6.3 Programme-to-domain mapping: Computer Science to Software Engineering</h3>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Source fact -&gt; rule -&gt; link -&gt; rationale</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source fact</td>
-<td><code>Computing-CCMAS-2023-FINAL.pdf</code>, extracted as <code>data/career-mapping/_ccmas_txt/computing.txt</code>, B.Sc. Computer Science overview, printed page 27, says the programme covers computer programming, networking, algorithms, computing systems, and software development. Its objectives include a broad foundation, problem solving with appropriate tools, software/algorithm design, teamwork, communication, and lifelong learning.</td>
-</tr>
-<tr>
-<td>Rule</td>
-<td>A Direct relationship requires at least two specific Nigerian CCMAS course or objective anchors closely supporting the destination domain foundation.</td>
-</tr>
-<tr>
-<td>Applied link</td>
-<td>The reviewed map links <code>Computing::Computer Science</code> to <code>D001 Software Engineering</code> using <code>COS 201 Computer Programming I</code>, <code>COS 202 Computer Programming II</code>, and <code>SEN 201 Introduction to Software Engineering</code>; the occurrence is <code>certified_nigerian_curriculum_link</code>.</td>
-</tr>
-<tr>
-<td>Rationale</td>
-<td>The mapping is not based on the words “Computer Science” alone. The named programming and software-engineering courses are direct curriculum evidence. The domain card can therefore explain the connection, while still saying the student may need role-specific practice and evidence.</td>
-</tr>
-</tbody>
-</table>
-<p>The same programme maps functionally to Data Science using mathematics,
-statistics, and project-management anchors, and to Robotics Engineering using
-mathematics, physics, software engineering, and project-management anchors.
-Those are separate links because the curriculum supports useful capabilities
-without being the complete foundation for those occupations. See the
-<a href="../data/career-mapping/jamb_domain_map.json">active reviewed map</a> under
-<code>Computer Science</code> and the <a href="../data/career-mapping/_ccmas_txt/computing.txt">CCMAS extracted source</a>,
-printed pages 27-28 and 50.</p>
-<h3 id="64-programme-alias-and-nigerian-source-handling-criminology-and-security-studies">6.4 Programme alias and Nigerian source handling: Criminology and Security Studies</h3>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Source fact -&gt; rule -&gt; link -&gt; rationale</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source fact</td>
-<td>The JAMB brochure audit finds the canonical name in the Arts/Humanities brochure page 126, Law brochure page 13, and Social Management Sciences brochure pages 1, 36, 39, 41, 42, 44, 45, 49, and 50. One catalogue row is printed under a Law faculty block.</td>
-</tr>
-<tr>
-<td>Rule</td>
-<td>Preserve the canonical JAMB programme identity; treat the faculty-placement wording as a declared display alias, not as a new programme. Preserve source variants when their requirements differ.</td>
-</tr>
-<tr>
-<td>Applied link</td>
-<td>The reviewed map links the programme directly to <code>D151 Criminology, Criminal Justice</code> using named CCMAS courses including Introduction to Criminology and Security Studies, Introduction to Criminal Justice System, Nigerian Law Enforcement and Security System, Criminal Procedure and Evidence, Forensic Science, and Intelligence and Investigation Management.</td>
-</tr>
-<tr>
-<td>Rationale</td>
-<td>This prevents a catalogue layout error from changing the academic identity. The student sees one programme, the source variants remain inspectable, and the destination domain is justified by actual course anchors rather than the word “Law” in a faculty block.</td>
-</tr>
-</tbody>
-</table>
-<p>Evidence: <code>Social Management Science.pdf</code>, <code>Arts _ Humanities.pdf</code>, and <code>Law.pdf</code>
-in the local JAMB brochure set; <a href="../data/career-mapping/_audit/jamb_brochure_source_audit_2026-08-17.json">JAMB brochure source audit</a>,
-<a href="../data/career-mapping/_audit/ccmas_nigerian_reviewed_links_2026-09-01.json">reviewed link record</a>,
-and <a href="../data/career-mapping/jamb_domain_map.json">the active map</a>.</p>
-<h3 id="65-the-historical-153-and-remaining-bounded-records">6.5 The historical 153 and remaining bounded records</h3>
-<p>The earlier complement audit reported 547 sufficient, 153 insufficient, and
-11 missing-anchor occurrences. Those numbers were diagnostic findings, not a
-final publication state. The reviewed artifact now accounts for all 711
-occurrences: 547 certified, 163 explicit Nigerian bridge links, and one
-unsupported candidate removed. The bridge links are explanatory routes, not
-automatic qualifications. The eleven missing-anchor cases were not fabricated
-into exact links; the review either resolved them through a supported bridge or
-preserved the limitation.</p>
-<p>The same rule applies to the remaining entity records. “No source candidate,”
-“partial definition,” “global-only,” “unavailable Nigerian evidence,” and
-“ambiguous trend signal” are valid bounded dispositions only when the audit
-stores the source search, decision, limitation, and safe display language. A
-reviewed record is not necessarily a complete record.</p>
-<p><a id="5-review-closure"></a>
-<a id="6-review-closure"></a></p>
-<h2 id="6-review-closure">6. Review closure</h2>
-<h3 id="66-review-state-flow">6.6 Review-state flow</h3>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Observed review token</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Evidence supports correction?</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Source-resolved disposition</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Explicit partial/unavailable/no-counterpart state</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Exclude or remove</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Publish with provenance</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Publish with limitation and safe language</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Keep in audit; do not seed</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart LR
-  A[Observed review token] --&gt; B{Evidence supports correction?}
-  B --&gt;|Yes| C[Source-resolved disposition]
-  B --&gt;|No, but bounded state is useful| D[Explicit partial/unavailable/no-counterpart state]
-  B --&gt;|No and candidate unsupported| E[Exclude or remove]
-  C --&gt; F[Publish with provenance]
-  D --&gt; G[Publish with limitation and safe language]
-  E --&gt; H[Keep in audit; do not seed]</pre></details>
-
-<p><a id="rev-summary"></a></p>
-<table>
-<thead>
-<tr>
-<th>Review key</th>
-<th style="text-align: right;">Count</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>REV-ALL</code></td>
-<td style="text-align: right;">1,538 dispositioned records</td>
-<td>Every inventoried finding has an explicit treatment</td>
-</tr>
-<tr>
-<td><code>REV-FOLLOWUP</code></td>
-<td style="text-align: right;">0</td>
-<td>No record remains marked for follow-up by its source ledger</td>
-</tr>
-<tr>
-<td><code>REV-PARTIAL</code></td>
-<td style="text-align: right;">220</td>
-<td>Intentional partial source definitions, not fabricated completeness</td>
-</tr>
-<tr>
-<td><code>REV-VARIANTS</code></td>
-<td style="text-align: right;">445</td>
-<td>Conflicting university/source variants preserved for institution-specific display</td>
-</tr>
-<tr>
-<td><code>REV-NO-CANDIDATE</code></td>
-<td style="text-align: right;">135</td>
-<td>No source candidate explicitly preserved</td>
-</tr>
-<tr>
-<td><code>REV-WEF-UNMATCHED</code></td>
-<td style="text-align: right;">26</td>
-<td>Retained as WEF signals; no role creation</td>
-</tr>
-<tr>
-<td><code>REV-WEF-AMBIGUOUS</code></td>
-<td style="text-align: right;">2</td>
-<td>Retained as WEF signals; no role assignment</td>
-</tr>
-<tr>
-<td><code>REV-GLOBAL-ONLY</code></td>
-<td style="text-align: right;">4</td>
-<td>Global role retained; no direct Nigerian counterpart asserted</td>
-</tr>
-</tbody>
-</table>
-<p>Full detail: <a href="../data/career-mapping/_audit/REVIEW_STATE_DISPOSITIONS_2026-09-01.md">review-state dispositions</a> and <a href="../data/career-mapping/_audit/REVIEW_STATE_INVENTORY_2026-09-01.md">review-state inventory</a>.</p>
-<p><a id="6-reproducibility-and-release-gate"></a>
-<a id="7-reproducibility-and-release-gate"></a></p>
-<h2 id="7-reproducibility-and-release-gate">7. Reproducibility and release gate</h2>
-<h3 id="71-verification-flow">7.1 Verification flow</h3>
-<div class="flow-strip" role="img" aria-label="Flow diagram"><span class="flow-node">Run source traceability</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run CCMAS/JAMB review</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run entity extraction and ledger</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run review dispositions</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run subgroup/role attribution</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Run downstream identity impact</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Population gate</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Freeze source/content contract</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Keep SQL closed; repair or document</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Generate SQL once</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-node">Audit and apply in controlled Supabase</span></div>
-<details class="flow-source"><summary>View diagram definition</summary><pre>flowchart TD
-  A[Run source traceability] --&gt; B[Run CCMAS/JAMB review]
-  B --&gt; C[Run entity extraction and ledger]
-  C --&gt; D[Run review dispositions]
-  D --&gt; E[Run subgroup/role attribution]
-  E --&gt; F[Run downstream identity impact]
-  F --&gt; G{Population gate}
-  G --&gt;|All checks and exhaustive-search declaration| H[Freeze source/content contract]
-  G --&gt;|Any check fails or declaration absent| I[Keep SQL closed; repair or document]
-  H --&gt; J[Generate SQL once]
-  J --&gt; K[Audit and apply in controlled Supabase]</pre></details>
-
-<h3 id="72-commands">7.2 Commands</h3>
-<pre><code class="language-text">python data/career-mapping/_audit_domain_source_traceability.py
-python data/career-mapping/_build_programme_domain_evidence.py
-python data/career-mapping/_audit_ccmas_jamb_inheritance.py
-python data/career-mapping/_audit_ccmas_external_complements.py
-python data/career-mapping/_build_nigerian_entity_extraction_audit.py
-python data/career-mapping/_build_nigerian_entity_review_ledger.py
-python data/career-mapping/_audit_review_state_inventory.py
-python data/career-mapping/_audit_review_state_dispositions.py
-python data/career-mapping/_audit_subgroup_role_source_traceability.py
-python data/career-mapping/_audit_role_attribution_reconciliation.py
-python data/career-mapping/_audit_domain_identity_downstream_impact.py
-python data/career-mapping/_validate_nigerian_entity_population_gate.py
+<p>A link identifies the public source. The evidence record must additionally
+retain the source version, relevant page or section, extracted fact, and
+decision that the fact supports. A source registry or URL alone is not evidence
+that a particular claim was established.</p>
+<h2 id="4-subject-matching-the-admission-starting-point">4. Subject matching: the admission starting point</h2>
+<h3 id="41-subject-identity-and-layers">4.1 Subject identity and layers</h3>
+<p>The subject catalogue contains separate examination layers. It is not one
+large list in which every subject can be used for every examination.</p>
+<ul>
+<li><strong>O'Level subjects</strong> are subjects from the learner's secondary-school result.</li>
+<li><strong>Unified Tertiary Matriculation Examination subjects</strong> are selected for the
+  national entrance examination.</li>
+<li>Technical and trade subjects remain O'Level choices unless a checked source
+  explicitly makes them valid for the entrance examination.</li>
+<li>Aliases are normalized to one selectable subject identity. A source variation
+  such as “General Wood Work” can point to “Woodwork” without creating a
+  second selectable subject.</li>
+<li>Stream labels influence the order of choices; they do not hide a valid subject
+  or change the underlying national requirement.</li>
+</ul>
+<p>Normalization prevents duplicate subjects, false mismatches, and inconsistent
+results caused by matching printed phrases directly.</p>
+<h3 id="42-olevel-only-matching">4.2 O'Level-only matching</h3>
+<p>In O'Level-only mode, the learner supplies the configured number of normalized
+O'Level subjects. The matcher uses only O'Level requirement records.</p>
+<p>It evaluates separately:</p>
+<ol>
+<li>named required subjects;</li>
+<li>one-of or any-of alternatives;</li>
+<li>the minimum number of credits or subjects; and</li>
+<li>source-backed grade, sitting, or other conditions.</li>
+</ol>
+<p>It does not use a UTME rule to fill a missing O'Level subject. The result means
+that the learner can investigate programmes whose checked O'Level requirements
+match the supplied evidence. It is guidance, not an admission guarantee.</p>
+<h3 id="43-utme-only-matching">4.3 UTME-only matching</h3>
+<p>In UTME-only mode, the learner supplies the required four normalized UTME
+subjects, including Use of English where the national rule requires it. The
+matcher uses only typed UTME option records.</p>
+<p>Required subjects and alternatives are evaluated independently. A subject
+appearing only in an unparsed source paragraph is not treated as an exact
+match. The result means that the checked national UTME subject rule matches; it
+does not establish O'Level eligibility or university admission.</p>
+<h3 id="44-combined-olevel-and-utme-matching">4.4 Combined O'Level and UTME matching</h3>
+<p>Combined mode does not flatten the two examinations into one list. It performs
+two independent matches and joins their results through the same canonical JAMB
+programme identity:</p>
+<pre><code>O'Level subjects -&gt; O'Level requirement -&gt; canonical JAMB programme ID
+UTME subjects   -&gt; UTME requirement   -&gt; canonical JAMB programme ID
+                                                   |
+                                       intersection of programme IDs
 </code></pre>
-<h3 id="73-current-release-status">7.3 Current release status</h3>
-<p>The integrity checks pass: 5,795 audit entities reconcile to 5,795 ledger
-entities, with zero follow-up rows, zero provenance errors, zero invalid states,
-and zero unresolved context/no-direct rows. The exhaustive-search declaration
-has been reconciled to the current evidence, so the SQL gate is open for
-regeneration. This remains an honest release control: passing the population
-gate does not prove that every occupation has an exact Nigerian counterpart or
-demand signal. The newly generated SQL must still be transported, audited, and
-applied in a controlled deployment.</p>
-<h2 id="8-claims-that-must-not-be-made">8. Claims that must not be made</h2>
+<p>This distinguishes:</p>
 <ul>
-<li>The taxonomy is an official ISIC, ISCO, ESCO, O*NET, or Nigerian
-  classification.</li>
-<li>Global evidence proves Nigerian demand.</li>
-<li>A programme guarantees a career, competence, admission, or licensure.</li>
-<li>Every role is an exact Nigerian occupation or regulated title.</li>
-<li>A source URL alone is the same as extracted source content or a mapping
-  decision.</li>
+<li>a programme that matches both layers;</li>
+<li>a programme whose UTME subjects match but whose O'Level evidence has a gap;</li>
+<li>a programme whose O'Level evidence matches but whose UTME combination does
+  not; and</li>
+<li>a programme whose source rule is too ambiguous to parse safely.</li>
 </ul>
-<p>The defensible claim is narrower: Sifter is a traceable product
-classification. Its relationships are supported by identified source records,
-documented rules, explicit limitations, and reproducible audit outputs.</p>
+<p>The user sees the missing or uncertain layer rather than a misleading combined
+approval.</p>
+<h3 id="45-example-of-the-three-modes">4.5 Example of the three modes</h3>
+<p>Assume a checked programme rule requires:</p>
+<ul>
+<li>UTME: English, Chemistry, Biology, and one of Mathematics or Physics;</li>
+<li>O'Level: English, Biology, Mathematics, Chemistry, and one of Geography,
+  Health Science, Physics, or Statistics.</li>
+</ul>
+<p>A learner selecting English, Chemistry, Biology, and Physics can satisfy the
+UTME rule because Physics satisfies the alternative group. A learner with the
+required O'Level credits can satisfy the O'Level rule independently. Combined
+mode retains the programme only when the same canonical programme identity is
+present in both results, and still displays any O'Level gap.</p>
+<p>The example demonstrates the logic; it is not a claim that every programme uses
+the same subjects.</p>
+<h2 id="5-programme-identity-and-university-connection">5. Programme identity and university connection</h2>
+<h3 id="51-one-national-programme-identity">5.1 One national programme identity</h3>
+<p>The JAMB programme name is the national programme identity used to connect
+subject matching, university offerings, curriculum evidence, and later career
+guidance. A university does not become a new programme identity merely because
+it has a different admission note.</p>
+<pre><code>canonical JAMB programme
+  -&gt; universities that offer that JAMB programme
+  -&gt; address and location
+  -&gt; that university's admission requirements and notes
+  -&gt; the programme's curriculum and career explanation
+</code></pre>
+<h3 id="52-university-specific-requirements">5.2 University-specific requirements</h3>
+<p>After the national programme match, the learner sees the universities offering
+that programme. The programme preview comes first so the learner can understand
+what the programme is before choosing a university.</p>
+<p>The university layer adds:</p>
+<ul>
+<li>university name and location;</li>
+<li>confirmation that it offers the selected JAMB programme;</li>
+<li>university-specific UTME and O'Level requirements;</li>
+<li>direct-entry or sitting conditions where applicable; and</li>
+<li>a note that the requirement applies to that university offering only.</li>
+</ul>
+<p>The programme is not redefined for each university. Differences in requirements
+are attached to the university-programme pair. Raw exceptions remain visibly
+conditional until safely interpreted.</p>
+<h3 id="53-user-stage-behavior">5.3 User-stage behavior</h3>
+<ul>
+<li><strong>SS1 and SS2 learners:</strong> begin with O'Level-oriented exploration. They can
+  understand programme previews and see universities offering a programme
+  without being forced to provide a UTME combination before they are ready.</li>
+<li><strong>SS3 and JAMB candidates:</strong> can use O'Level-only, UTME-only, or combined
+  matching according to what they want to check. They see the programme preview
+  before selecting a university and then see that university's details.</li>
+<li><strong>Undergraduates:</strong> normally enter through their university and programme;
+  the admission subject matcher is not imposed as their default route.</li>
+<li><strong>Administrators guiding a student:</strong> first select the student's context and
+  applicable stream, then choose whether to inspect the full journey, the
+  admission layer, the university layer, or the career-guidance layer. The
+  administrator's own profile must not silently replace the student's context.</li>
+</ul>
+<h2 id="6-what-a-programme-means-in-the-product">6. What a programme means in the product</h2>
+<p>The programme is not merely a title and not a list of possible jobs. Its
+overview answers:</p>
+<ol>
+<li>What is this programme about?</li>
+<li>What does the school teach through it?</li>
+<li>What are the main curriculum themes?</li>
+<li>What do important learning outcomes mean in ordinary language?</li>
+<li>What should a graduate understand or be able to do by graduation?</li>
+<li>Which transferable capabilities may remain useful beyond one occupation?</li>
+<li>Which skills are explicitly taught or supported by curriculum evidence?</li>
+</ol>
+<p>The concise programme preview remains simple. It is not the place to display
+every skill, domain, or role. The detailed programme view can expand into
+curriculum themes, skills taught, outcomes, transferable capabilities, and the
+evidence behind programme-to-domain connections.</p>
+<p>The product uses <strong>skills taught</strong> as the simple learner-facing summary. It
+does not need a separate course-by-course capability catalogue in the preview.
+The underlying course and outcome evidence remains available for explanation and
+verification when the learner chooses to view more.</p>
+<h2 id="7-how-curriculum-is-connected-to-domains">7. How curriculum is connected to domains</h2>
+<h3 id="71-why-curriculum-is-the-starting-evidence">7.1 Why curriculum is the starting evidence</h3>
+<p>The programme-to-domain relationship is about what the programme prepares a
+learner to begin understanding, not merely what occupations exist in the world.
+Therefore Nigerian CCMAS evidence is the primary source for this link.</p>
+<p>Reviewers inspect the available combination of:</p>
+<ul>
+<li>programme purpose and philosophy;</li>
+<li>named courses and course content;</li>
+<li>stated learning outcomes;</li>
+<li>graduate capabilities;</li>
+<li>transferable capabilities; and</li>
+<li>domain-specific concepts or prerequisites.</li>
+</ul>
+<p>The evidence is compared with the independently defined domain foundation,
+occupational work outputs, entry routes, and boundaries. A word match is never
+enough. “Data” in a course title does not by itself prove a Data and Analytics
+relationship.</p>
+<h3 id="72-the-domain-is-the-comparison-target">7.2 The domain is the comparison target</h3>
+<p>The domain side contributes its own evidence:</p>
+<ul>
+<li>the professional problem the domain addresses;</li>
+<li>common work outputs;</li>
+<li>the portable foundation needed across roles;</li>
+<li>common tools and methods;</li>
+<li>subgroups and role families;</li>
+<li>regulated boundaries where relevant; and</li>
+<li>Nigerian and global context.</li>
+</ul>
+<p>The mapping asks two questions together:</p>
+<ol>
+<li><strong>Curriculum question:</strong> what did the programme actually teach or say a
+   graduate should be able to do?</li>
+<li><strong>Domain question:</strong> does that preparation overlap with the target domain's
+   foundation and work identity, and how much additional preparation is needed?</li>
+</ol>
+<p>This explains the link from both directions instead of relying on a curriculum-only
+similarity score.</p>
+<h3 id="73-direct-functional-and-adjacent-relationships">7.3 Direct, functional, and adjacent relationships</h3>
+<p>These labels describe the strength and kind of relationship. They do not mean
+that one student is already qualified.</p>
+<h4 id="direct">Direct</h4>
+<p>A Direct relationship exists when the programme's purpose, curriculum, or
+outcomes support a substantial part of the target domain's foundation and
+occupational direction. It requires at least two specific, source-backed
+curriculum anchors, such as named courses, objectives, or learning outcomes.</p>
+<p>The domain link must also be independently supported by occupational or
+professional evidence. Two similar course titles without a meaningful domain
+foundation are insufficient.</p>
+<p>Learner explanation:</p>
+<blockquote>
+<p>Your programme teaches a foundation closely related to this domain.</p>
+</blockquote>
+<h4 id="functional">Functional</h4>
+<p>A Functional relationship exists when the programme teaches capabilities that
+are materially useful in the target domain but does not establish the complete
+domain foundation. It also requires at least two specific, source-backed
+curriculum anchors.</p>
+<p>The capabilities are relevant; the learner must add important domain-specific
+knowledge, practice, tools, or evidence before specialising.</p>
+<p>Learner explanation:</p>
+<blockquote>
+<p>Your programme gives you useful preparation for this domain, but you will
+need to build additional domain-specific capability.</p>
+</blockquote>
+<h4 id="adjacent">Adjacent</h4>
+<p>An Adjacent relationship is a plausible pivot. The programme supplies
+transferable capabilities plus at least one specific conceptual prerequisite
+related to the target domain, but not enough of the target occupational
+foundation to call the relationship Direct or Functional.</p>
+<p>The bridge is part of the relationship. It must say what the learner would need
+to learn before specialising.</p>
+<p>Learner explanation:</p>
+<blockquote>
+<p>This is a possible pivot. Your current foundation helps, but you need this
+bridge before specialising.</p>
+</blockquote>
+<h3 id="74-the-meaning-of-strong-evidence">7.4 The meaning of strong evidence</h3>
+<p>“Strong” has one consistent meaning across the relationship classes: specific,
+source-backed curriculum anchors support the relationship, and the domain side
+has an independently supported identity and foundation.</p>
+<ul>
+<li>Direct: at least two meaningful curriculum anchors overlap with the domain
+  foundation and occupational direction.</li>
+<li>Functional: at least two meaningful anchors support useful capability, while
+  important domain preparation is missing.</li>
+<li>Adjacent: at least one domain-specific conceptual prerequisite plus relevant
+  transferable-capability evidence supports a bridge, but not a full foundation.</li>
+</ul>
+<p>These are evidence gates, not probabilities of employment, admission, or success.</p>
+<h3 id="75-programme-to-domain-example">7.5 Programme-to-domain example</h3>
+<p>Consider a Computer Science programme as an illustrative example. A checked
+curriculum may include programming, algorithms, software design, databases,
+systems, and computing ethics. Domain evidence for Software Engineering may
+describe software systems, development practices, testing, and delivery. The
+overlap in purpose, foundation, and work outputs can support a Direct link.</p>
+<p>The same programme may connect Functionally to Data and Analytics when it
+teaches programming, databases, and quantitative reasoning but does not cover
+the full analytics, experimentation, or business-intelligence foundation. A
+Cybersecurity relationship may be Direct, Functional, or Adjacent depending on
+the actual security curriculum anchors; the title alone cannot decide it.</p>
+<p>Every decision must point to the precise curriculum anchors and domain evidence
+used for the comparison.</p>
+<h2 id="8-how-domains-were-identified-named-and-bounded">8. How domains were identified, named, and bounded</h2>
+<h3 id="81-isic-is-the-completeness-survey-not-the-domain-name-generator">8.1 ISIC is the completeness survey, not the domain-name generator</h3>
+<p>The International Standard Industrial Classification begins with economic
+activities: agriculture, manufacturing, information and communication, finance,
+health, education, arts, and others. It helps ask whether an important area of
+work has been overlooked.</p>
+<p>It does not directly produce the final learner-facing domain list. One economic
+section can contain several professional worlds with different foundations,
+entry routes, outputs, and daily practice. Information and communication, for
+example, can contain software engineering, cybersecurity, data, cloud
+infrastructure, product management, and digital media.</p>
+<h3 id="82-the-defensible-domain-derivation-process">8.2 The defensible domain derivation process</h3>
+<p>For every relevant ISIC section and division, the review process is:</p>
+<ol>
+<li>identify the economic activity and people performing professional work within
+   it;</li>
+<li>collect occupational families describing that work from ISCO, ESCO, O*NET,
+   and relevant specialist frameworks;</li>
+<li>group occupations sharing a meaningful professional foundation, work
+   problem, output, entry route, employer context, and daily practice;</li>
+<li>split groups when combining them would hide materially different learning
+   foundations, regulated boundaries, or work outputs;</li>
+<li>check that the group can support a coherent domain-to-subgroup-to-role
+   pathway;</li>
+<li>choose a name that practitioners and learners can understand; and</li>
+<li>record source anchors, boundary decision, label class, and known limits.</li>
+</ol>
+<p>The result is a source-traceable synthesis, not a claim that an international
+classification uses the exact same names.</p>
+<h3 id="83-semantic-and-thematic-umbrella-method">8.3 Semantic and thematic umbrella method</h3>
+<p>An umbrella label is accepted through both semantic and thematic review.</p>
+<p><strong>Semantic review</strong> asks whether the candidate name has the same meaning as the
+source occupations and whether a learner would reasonably understand it to
+include those occupations.</p>
+<p><strong>Thematic review</strong> groups repeated evidence around:</p>
+<ul>
+<li>the professional problem being solved;</li>
+<li>the outputs delivered;</li>
+<li>knowledge and skills used;</li>
+<li>tools and methods used;</li>
+<li>work setting and employers;</li>
+<li>entry and progression routes; and</li>
+<li>legal or professional boundaries.</li>
+</ul>
+<p>The process is:</p>
+<ol>
+<li>collect exact source labels and descriptions;</li>
+<li>extract repeated themes and work outputs;</li>
+<li>compare candidate umbrella meanings with those themes;</li>
+<li>test whether the label hides a materially different occupation;</li>
+<li>validate the umbrella against occupational and specialist frameworks; and</li>
+<li>explain the label in ordinary language without presenting it as an official
+   classification title.</li>
+</ol>
+<p>This avoids copying statistical language that students do not understand and
+inventing attractive labels with no occupational basis.</p>
+<h3 id="84-three-label-classes">8.4 Three label classes</h3>
+<p>Each domain identity should state which kind of label it uses:</p>
+<ol>
+<li><strong>Exact source terminology:</strong> copied from a recognized source.</li>
+<li><strong>Source-supported umbrella:</strong> a plain-language grouping of multiple source
+   occupations or activities sharing documented themes and boundaries.</li>
+<li><strong>Curated addition:</strong> added to close a documented coverage gap, with
+   specialist evidence and a clear statement that it is a Sifter taxonomy
+   addition rather than a verbatim official label.</li>
+</ol>
+<p>The current master contains the original 166-domain library plus later,
+explicitly documented additions for Extended Reality and Immersive Technology
+and for Esports and the Creator Economy. The additions are not retroactively
+described as if they were in the original ISIC-derived library.</p>
+<h3 id="85-what-makes-the-naming-defensible">8.5 What makes the naming defensible</h3>
+<p>The defensible claim is not “ISIC named every Sifter domain.” It is:</p>
+<blockquote>
+<p>ISIC was used to survey industry coverage; occupational and professional
+sources identified the work families inside that coverage; and documented
+semantic and thematic criteria decided when those families formed separate
+learner-facing domains.</p>
+</blockquote>
+<p>The source-backed name, source-supported boundary, and editorial decision must
+be recorded together. An academic reviewer can then challenge one boundary
+without treating the whole taxonomy as unsupported.</p>
+<h2 id="9-how-subgroups-were-identified-and-named">9. How subgroups were identified and named</h2>
+<p>A subgroup is a meaningful specialization inside a domain. It is not merely a
+smaller list created to fill a screen.</p>
+<p>The subgroup boundary is supported by some combination of:</p>
+<ul>
+<li>ISCO sub-major groups or related occupational families;</li>
+<li>ESCO occupation groupings and shared skills;</li>
+<li>O*NET related occupations, tasks, and work context;</li>
+<li>specialist competency frameworks;</li>
+<li>Nigerian occupational standards and professional bodies; and</li>
+<li>the domain's shared foundation and distinct work outputs.</li>
+</ul>
+<p>The review asks:</p>
+<ol>
+<li>What work focus makes this subgroup different from the rest of the domain?</li>
+<li>Which skills, methods, tools, or knowledge are shared inside it?</li>
+<li>Which roles genuinely belong inside it?</li>
+<li>What does it add beyond the domain foundation?</li>
+<li>Can the boundary be explained without claiming it is an official government
+   classification?</li>
+</ol>
+<p>Subgroup names may be exact source terms, source-supported umbrellas, or
+documented curated labels. A subgroup must not be created merely because a role
+needs somewhere to be placed. If no defensible subgroup exists, the product
+uses the honest route:</p>
+<pre><code>programme -&gt; domain -&gt; role
+</code></pre>
+<p>rather than fabricating a subgroup.</p>
+<h2 id="10-how-roles-were-identified-and-connected">10. How roles were identified and connected</h2>
+<h3 id="101-role-identity">10.1 Role identity</h3>
+<p>Roles are connected to a domain or subgroup through their work identity, not a
+title that merely contains a related word. Principal role anchors are:</p>
+<ul>
+<li>exact ISCO-08 unit groups and occupational definitions;</li>
+<li>exact ESCO occupation labels, alternative labels, descriptions, and stable
+  identifiers;</li>
+<li>O*NET occupation profiles, tasks, work activities, preparation, and tools;</li>
+<li>specialist competency and occupational frameworks; and</li>
+<li>Nigerian regulators, professional bodies, standards, and checked local role
+  sources.</li>
+</ul>
+<p>Where a role has several valid names, aliases are normalized to one role
+identity while source labels remain available. Where a source describes a role
+but no exact occupational code or profile can be established, the record says
+so. A source-role-only record is not automatically false; it has lower identity
+precision than an exact coded occupation.</p>
+<h3 id="102-role-connection-to-subgroup-and-domain">10.2 Role connection to subgroup and domain</h3>
+<p>The relationship is supported when the role's principal work output, tasks,
+skills, tools, and work context fit the subgroup boundary and domain
+foundation. A role may belong to more than one domain only when its work
+identity and evidence justify each connection.</p>
+<pre><code>source occupational profile
+  -&gt; normalized role identity
+  -&gt; subgroup membership, where supported
+  -&gt; domain membership and foundation
+  -&gt; competencies, skills, tools, credentials, resources and evidence
+</code></pre>
+<p>A role is not a live Opportunity. <strong>Opportunities</strong> is the employment surface
+and appears only when a verified opportunity record exists.</p>
+<h3 id="103-entry-mid-and-senior-progression">10.3 Entry, mid, and senior progression</h3>
+<p>Roles are presented in preparation order so learners know what can be
+investigated or built first.</p>
+<ul>
+<li><strong>Entry:</strong> a role reasonably explored after foundational study and initial
+  evidence-building.</li>
+<li><strong>Mid:</strong> a role normally expecting meaningful experience, deeper
+  specialization, or broader independent responsibility.</li>
+<li><strong>Senior or lead:</strong> a role involving advanced judgment, strategic ownership,
+  supervision, complex delivery, or professional authority.</li>
+</ul>
+<p>The tier is derived from preparation requirements, occupational skill level,
+job-zone or experience evidence, scope of responsibility, and reviewed role
+family rules. A senior-sounding title is not enough to make a role senior, and
+an entry label is not a promise of employment.</p>
+<h2 id="11-competencies-skills-tools-and-certifications">11. Competencies, skills, tools, and certifications</h2>
+<p>These terms are deliberately separate.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning in Sifter</th>
+<th>Typical evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Competency</td>
+<td>An integrated ability to apply knowledge, skills, judgment, and behavior to a work situation</td>
+<td>Curriculum outcomes, professional standards, competency frameworks, occupational profiles</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>A specific learned ability, such as data analysis, programming, writing, or equipment operation</td>
+<td>ESCO skills, O*NET skills and tasks, curriculum outcomes, specialist frameworks</td>
+</tr>
+<tr>
+<td>Tool</td>
+<td>Software, equipment, platform, method, or technology used to perform work</td>
+<td>O*NET technology signals, role profiles, specialist frameworks, Nigerian sector evidence</td>
+</tr>
+<tr>
+<td>Certification or registration</td>
+<td>A credential, examination, membership, registration, or licence</td>
+<td>Nigerian regulator, professional body, official credential provider, or clearly labelled employer preference</td>
+</tr>
+</tbody>
+</table>
+<p>A source saying that a role uses a tool does not prove that the tool is legally
+required. A course outcome mentioning a skill does not prove every graduate has
+mastered it. A certification resource does not prove that the credential is
+mandatory in Nigeria.</p>
+<h3 id="111-how-the-inventory-is-populated">11.1 How the inventory is populated</h3>
+<ul>
+<li>ESCO occupation-skill relationships and descriptions supply normalized global
+  skills and occupation connections.</li>
+<li>O*NET supplies tasks, knowledge, abilities, work activities, software, tools,
+  preparation, and context.</li>
+<li>Specialist frameworks fill professional areas that broad classifications do
+  not describe finely enough.</li>
+<li>CCMAS outcomes and content explain which capabilities the programme teaches
+  or introduces.</li>
+<li>Nigerian standards, regulators, bodies, and local sources add local
+  terminology, regulated preparation, credentials, and context.</li>
+</ul>
+<p>No source silently changes category. A tool is not recast as a skill, a global
+skill is not recast as Nigerian demand, and a recommended course is not recast
+as a licence.</p>
+<h3 id="112-priority-and-progressive-disclosure">11.2 Priority and progressive disclosure</h3>
+<p>The product shows all available source-backed information but makes the next
+useful action clear. The rule is <strong>complete information, selective
+progression</strong>.</p>
+<p>At domain level:</p>
+<ol>
+<li>verified statutory or practice requirements, where applicable;</li>
+<li>portable foundation competencies and skills;</li>
+<li>tools used broadly across the domain;</li>
+<li>preparation that opens the selected subgroup; and</li>
+<li>specialist, advanced, optional, or context-dependent items.</li>
+</ol>
+<p>At subgroup level:</p>
+<ol>
+<li>the domain foundation that remains useful;</li>
+<li>capabilities that close the subgroup gap;</li>
+<li>tools used across that subgroup;</li>
+<li>role-specific preparation; and</li>
+<li>optional or advanced items.</li>
+</ol>
+<p>At role level:</p>
+<ol>
+<li>verified regulated preparation, where applicable;</li>
+<li>essential skills, competencies, and tools for the work;</li>
+<li>evidence-building and employability preparation;</li>
+<li>Nigerian, remote, and global evidence with its scope stated; and</li>
+<li>optional, advanced, or future-pivot preparation.</li>
+</ol>
+<p>The interface shows the starting set first and keeps the complete inventory under
+<strong>See all in this domain</strong>, <strong>See all in this subgroup</strong>, or <strong>See all for this
+role</strong>. The full list remains inside the context that explains why each item is
+relevant.</p>
+<p>Student-facing labels include:</p>
+<ul>
+<li><strong>Learn first</strong> - suggested starting foundation, not a universal checklist.</li>
+<li><strong>Build next</strong> - broadly useful preparation after the foundation.</li>
+<li><strong>Needed for this route</strong> - supported by the selected subgroup or role evidence.</li>
+<li><strong>Recommended for employability</strong> - useful but not universal.</li>
+<li><strong>Useful for a specialisation</strong> - relevant after a path is chosen.</li>
+<li><strong>Optional or advanced</strong> - useful later or in specific contexts.</li>
+<li><strong>Priority not yet verified</strong> - present in the inventory but not supported
+  strongly enough to call required or optional.</li>
+</ul>
+<p>When evidence is incomplete, the product says <strong>may need</strong> rather than <strong>need</strong>.</p>
+<h2 id="12-nigerian-remote-and-global-evidence">12. Nigerian, remote, and global evidence</h2>
+<p>These are evidence lenses, not one blended score.</p>
+<ul>
+<li><strong>Nigerian context:</strong> the field, practice, terminology, body, regulator, or
+  institution is evidenced in Nigeria.</li>
+<li><strong>Nigerian market signal:</strong> a checked Nigerian source directly contains the
+  role, tool, competency, or demand signal.</li>
+<li><strong>Remote:</strong> the source directly supports work accessible remotely; it is not
+  inferred merely because a role is digital.</li>
+<li><strong>Global:</strong> international standards, occupational profiles, or employers
+  support the explanation.</li>
+</ul>
+<p>The product must not say that a global occupation is in Nigerian demand merely
+because ESCO or O*NET contains it. A lack of a checked Nigerian vacancy must
+not erase a portable skill or global pathway. Local regulatory requirements
+receive priority where they apply, and the evidence scope is shown beside the
+explanation.</p>
+<h2 id="13-how-the-guided-experience-uses-the-mappings">13. How the guided experience uses the mappings</h2>
+<p>The learner does not receive a flat export of all joins. The product tells a
+progressive story:</p>
+<pre><code>programme preview
+  -&gt; university options and university-specific requirements
+  -&gt; programme overview and skills taught
+  -&gt; why the programme connects to these domains
+  -&gt; direct domains first
+  -&gt; functional domains
+  -&gt; adjacent domains with an explicit bridge
+  -&gt; choose one primary domain and optional secondary domains
+  -&gt; learn the domain foundation
+  -&gt; choose a subgroup, where supported
+  -&gt; see what the subgroup adds
+  -&gt; choose an entry role first, then understand mid and senior progression
+  -&gt; review skills, competencies, tools, certifications, resources and evidence
+  -&gt; save the route and continue learning
+</code></pre>
+<p>The programme-to-domain screen explains the relationship before asking the learner
+to choose a route. A secondary or adjacent domain is available for comparison or
+pivot planning, but is not presented as if the learner has the same preparation
+as for the primary route.</p>
+<p>Core guidance wording:</p>
+<blockquote>
+<p>You already have partial preparation from your programme and primary domain.
+These are the additional skills you need.</p>
+</blockquote>
+<p>For a functional or adjacent route:</p>
+<blockquote>
+<p>This is a possible pivot. Your current foundation helps, but you need this
+bridge before specialising.</p>
+</blockquote>
+<p>If evidence is incomplete:</p>
+<blockquote>
+<p>You may need these additional skills. The available evidence does not yet
+establish them as universal requirements.</p>
+</blockquote>
+<h2 id="14-what-the-learner-should-understand-at-every-level">14. What the learner should understand at every level</h2>
+<h3 id="programme">Programme</h3>
+<ul>
+<li>what the programme is about;</li>
+<li>what the school teaches, summarized as skills taught;</li>
+<li>what important curriculum outcomes mean;</li>
+<li>what a graduate should understand or be able to do;</li>
+<li>which capabilities transfer beyond one occupation; and</li>
+<li>why the programme connects to each domain category.</li>
+</ul>
+<h3 id="domain">Domain</h3>
+<ul>
+<li>what the professional world does;</li>
+<li>what work outputs it produces;</li>
+<li>the portable foundation useful across roles;</li>
+<li>what to learn first;</li>
+<li>tools and competencies used across the domain;</li>
+<li>Nigerian, remote, and global evidence;</li>
+<li>regulated boundaries and credential context; and</li>
+<li>all other source-backed items under See all.</li>
+</ul>
+<h3 id="subgroup">Subgroup</h3>
+<ul>
+<li>what specialization it represents;</li>
+<li>how it differs from other parts of the domain;</li>
+<li>what the domain foundation already covers;</li>
+<li>what it adds beyond that foundation;</li>
+<li>its skills, competencies, tools, credentials, resources, and roles; and</li>
+<li>the bridge from the domain to the specialization.</li>
+</ul>
+<h3 id="role">Role</h3>
+<ul>
+<li>what the work involves;</li>
+<li>expected outputs;</li>
+<li>what entry, mid, or senior positioning means;</li>
+<li>essential versus optional preparation;</li>
+<li>tools, skills, competencies, certifications, and proof of ability;</li>
+<li>Nigerian and global evidence with its limits; and</li>
+<li>related roles or possible pivots.</li>
+</ul>
+<p>Each explanation can link to the original source. The link should be introduced
+with a prompt such as <strong>Open the source explanation</strong> or <strong>See how this is
+defined</strong>, so the learner understands why the link is offered.</p>
+<h2 id="15-worked-end-to-end-examples">15. Worked end-to-end examples</h2>
+<h3 id="example-a-olevel-to-programme-to-university">Example A: O'Level to programme to university</h3>
+<ol>
+<li>A learner enters O'Level subjects.</li>
+<li>The matcher evaluates only O'Level rules and identifies programme names that
+   satisfy the checked national requirements.</li>
+<li>The learner opens a programme preview and learns what the programme is about
+   and what skills are taught.</li>
+<li>The learner sees all universities offering that JAMB programme.</li>
+<li>After choosing a university, the learner sees its address, requirements, and
+   notes.</li>
+<li>The programme overview explains the curriculum and connected domains.</li>
+</ol>
+<p>The university step does not rewrite the programme identity; it supplies local
+offering conditions.</p>
+<h3 id="example-b-utme-to-programme-to-career-guidance">Example B: UTME to programme to career guidance</h3>
+<ol>
+<li>A JAMB candidate enters four UTME subjects.</li>
+<li>The matcher evaluates the typed UTME rule, including required and alternative
+   subjects.</li>
+<li>The candidate sees programme previews before choosing a university.</li>
+<li>The selected university adds its requirements and exceptions.</li>
+<li>CCMAS evidence explains what the programme teaches.</li>
+<li>The curriculum is compared with domain foundations.</li>
+<li>Direct domains appear first, functional domains next, and adjacent domains
+   with a bridge explanation.</li>
+</ol>
+<h3 id="example-c-programme-to-domain-to-subgroup-to-role">Example C: Programme to domain to subgroup to role</h3>
+<ol>
+<li>Curriculum evidence supports a Direct connection to Software Engineering.</li>
+<li>The learner chooses Software Engineering as the primary domain.</li>
+<li>The domain view starts with shared programming, systems, testing, and
+   delivery foundations while keeping other items under See all.</li>
+<li>The learner chooses a supported subgroup such as application development or
+   platform engineering when the evidence supports that boundary.</li>
+<li>The subgroup view shows what is shared with the domain and what must be added.</li>
+<li>Entry roles appear before mid and senior progression roles.</li>
+<li>The selected role explains work outputs, tools, skills, competencies,
+   credentials, evidence, resources, and Nigerian or global limitations.</li>
+</ol>
+<p>If a domain has roles but no defensible subgroup taxonomy, step 4 is omitted and
+the learner goes directly from domain to role.</p>
+<h2 id="16-evidence-states-and-honest-limitations">16. Evidence states and honest limitations</h2>
+<p>The system distinguishes:</p>
+<ul>
+<li><strong>Source-backed:</strong> the source directly supports the stated fact.</li>
+<li><strong>Source-supported umbrella:</strong> multiple source records are grouped under a
+  documented, understandable label.</li>
+<li><strong>Nigerian context:</strong> the field or practice is evidenced in Nigeria.</li>
+<li><strong>Nigerian market signal:</strong> a checked local source directly supports the market
+  observation.</li>
+<li><strong>Global evidence:</strong> an international source supports the occupation, skill,
+  task, or trend.</li>
+<li><strong>Bridge required:</strong> the relationship is plausible, but additional
+  domain-specific preparation is needed.</li>
+<li><strong>No direct Nigerian counterpart found:</strong> checked Nigerian sources did not
+  establish an exact local counterpart; this is not proof that the role does not
+  exist in Nigeria.</li>
+<li><strong>Review required:</strong> the source or identity is not sufficiently resolved for
+  a stronger claim.</li>
+</ul>
+<p>An unresolved occupational code is a provenance and code-quality issue. The
+original value remains visible until its meaning is matched to a valid
+canonical code. It must not be silently replaced with a guessed code. This
+limits the strength of the occupational-code claim but does not automatically
+invalidate an otherwise supported domain or role explanation.</p>
+<p>A missing Nigerian vacancy, tool, or certification record is not silently
+converted into an optional item. The product explains the gap and preserves
+global or portable information when appropriate.</p>
+<h2 id="17-what-can-be-defended-academically">17. What can be defended academically</h2>
+<p>The strongest defensible description is:</p>
+<blockquote>
+<p>Sifter is a source-traceable, human-reviewed synthesis. It uses Nigerian
+admission and curriculum documents to establish learner entry and programme
+context; uses the International Standard Industrial Classification to survey
+industry coverage; uses the International Standard Classification of
+Occupations and the European Skills, Competences, Qualifications and
+Occupations classification to structure and normalize occupational identity;
+uses the Occupational Information Network, International Labour Organization,
+World Economic Forum, and specialist frameworks to enrich work, skills, tools,
+preparation, and trends; and uses Nigerian regulators, professional bodies,
+universities, and market sources to add local context. Learner-facing names
+and links are derived through explicit semantic, thematic, occupational,
+curriculum, and boundary rules rather than copied from one classification or
+generated without evidence.</p>
+</blockquote>
+<p>This claim is appropriately modest. It does not say every source agrees, every
+role has a Nigerian counterpart, every credential is mandatory, or a
+curriculum-to-domain link guarantees employment.</p>
+<h2 id="18-review-questions-for-every-mapping">18. Review questions for every mapping</h2>
+<p>A reviewer should be able to ask these questions about any subject rule,
+programme, domain, subgroup, role, competency, tool, or credential:</p>
+<ol>
+<li>What exactly is the identity of this record?</li>
+<li>Which source established that identity?</li>
+<li>Which page, section, URL, or source passage supports the claim?</li>
+<li>Is the label copied, an evidence-supported umbrella, or curated?</li>
+<li>What rule created the relationship to the next layer?</li>
+<li>What evidence supports the other side of the relationship?</li>
+<li>Is this Nigerian context, Nigerian market evidence, remote evidence, or
+   global evidence?</li>
+<li>What does the learner already have, and what bridge is still required?</li>
+<li>Is the item required, essential for the route, recommended, optional, or not
+   yet verified?</li>
+<li>What should the learner see if the evidence is missing, disputed, or
+    unavailable?</li>
+</ol>
+<p>If these questions cannot be answered, the relationship should be weakened,
+labelled under review, or excluded from a stronger user-facing claim.</p>
+<h2 id="19-final-summary">19. Final summary</h2>
+<p>The product's logic is not:</p>
+<pre><code>subjects -&gt; similar programme name -&gt; list of jobs
+</code></pre>
+<p>It is:</p>
+<pre><code>subject evidence
+  -&gt; checked national programme requirement
+  -&gt; canonical programme identity
+  -&gt; university-specific offering context
+  -&gt; Nigerian curriculum and skills taught
+  -&gt; independently evidenced domain identity and foundation
+  -&gt; evidence-based Direct, Functional, or Adjacent relationship
+  -&gt; supported subgroup or honest direct domain-to-role route
+  -&gt; normalized role and progression stage
+  -&gt; prioritized competencies, skills, tools, credentials and resources
+  -&gt; Nigerian/global evidence and explicit limitations
+  -&gt; guided, saved, explainable learner plan
+</code></pre>
+<p>The learner sees all available information, but the product explains what to
+start with, why it matters, what can wait, and what evidence supports the
+connection. That is the basis on which the mappings can be reviewed,
+challenged, improved, and responsibly used before implementation or release.
++</p>
+<h2 id="20-teaching-examples-at-every-layer">20. Teaching examples at every layer</h2>
+<p>The following examples show how the method works. They are explanatory
+examples of the rules; a production mapping is accepted only when its own
+source passage and evidence record satisfy the same rule.</p>
+<h3 id="201-example-olevel-matching">20.1 Example: O'Level matching</h3>
+<p>Suppose a learner has English Language, Mathematics, Biology, Chemistry, and
+Physics at O'Level.</p>
+<p>The matcher does not ask whether those subjects “sound related” to a
+programme. It retrieves the programme's checked O'Level rule and evaluates:</p>
+<ul>
+<li>the named required subjects;</li>
+<li>any alternative group;</li>
+<li>the required number of subjects or credits; and</li>
+<li>any grade, sitting, or condition printed in the source.</li>
+</ul>
+<p>If a programme requires English, Mathematics, Biology, Chemistry, and one of
+Physics or Geography, this learner satisfies the subject pattern. The product
+may show the programme as an O'Level match, but it must not say that admission
+is guaranteed.</p>
+<p>If the learner has English, Biology, Chemistry, and Physics but no Mathematics,
+the product should show the missing requirement. It must not use a UTME
+Mathematics rule to hide the O'Level gap.</p>
+<h3 id="202-example-utme-only-matching">20.2 Example: UTME-only matching</h3>
+<p>Suppose a checked UTME rule requires English, Chemistry, Biology, and one of
+Mathematics or Physics.</p>
+<p>A candidate selecting English, Chemistry, Biology, and Physics satisfies the
+UTME subject combination. The result is a UTME programme match only. It does
+not certify the candidate's O'Level result, university-specific requirement, or
+admission outcome.</p>
+<p>This distinction matters because a programme can be a valid UTME match while
+the candidate still has an O'Level deficiency.</p>
+<h3 id="203-example-combined-matching">20.3 Example: combined matching</h3>
+<p>A candidate's O'Level result matches a programme, and the candidate's UTME
+combination also matches it. The system joins the two results by the same
+canonical JAMB programme identity.</p>
+<p>It does not join by a similar title. For example, a programme with a longer
+university display name must still resolve to the same national programme
+identity before the two examination layers are intersected.</p>
+<p>The result can then say:</p>
+<ul>
+<li>“Your O'Level and UTME evidence match the checked national requirements”; or</li>
+<li>“Your UTME subjects match, but an O'Level requirement still needs attention.”</li>
+</ul>
+<h3 id="204-example-programme-preview-and-university-choice">20.4 Example: programme preview and university choice</h3>
+<p>A learner first sees:</p>
+<ul>
+<li>the JAMB programme name;</li>
+<li>a short explanation of what the programme is about; and</li>
+<li>the concise “skills taught” summary.</li>
+</ul>
+<p>Only after understanding that preview does the learner see the universities
+offering that programme. After selecting a university, the learner sees the
+university's location, requirements, and university-specific notes.</p>
+<p>If University A requires a particular O'Level grade and University B does not,
+that difference belongs to the university-programme offering. It does not
+create two unrelated programme identities.</p>
+<h3 id="205-example-programme-curriculum-explanation">20.5 Example: programme curriculum explanation</h3>
+<p>For an Accounting programme, the curriculum may contain financial reporting,
+cost accounting, taxation, auditing, economics, business law, and information
+systems.</p>
+<p>The product can explain these in plain language:</p>
+<ul>
+<li>financial reporting means preparing and interpreting records of an
+  organisation's financial activity;</li>
+<li>auditing means examining records and controls to assess whether they are
+  reliable and compliant;</li>
+<li>taxation means understanding how tax obligations are calculated and managed;</li>
+<li>information systems means using structured systems and data to support
+  financial work.</li>
+</ul>
+<p>The source fact comes from the curriculum. The plain-language sentence is an
+explanation of that fact, not a new claim about the learner's competence.</p>
+<h3 id="206-example-a-curriculum-to-domain-direct-link">20.6 Example: a curriculum-to-domain Direct link</h3>
+<p>A Computer Science curriculum that includes programming, algorithms, software
+design, databases, systems, testing, and computing ethics may support a Direct
+relationship to Software Engineering.</p>
+<p>The decision is not caused by the words “computer” or “software” alone. It is
+caused by the overlap between:</p>
+<ul>
+<li>the programme's documented learning anchors;</li>
+<li>the Software Engineering domain foundation;</li>
+<li>the domain's work outputs, such as designing, building, testing, and
+  maintaining software systems; and</li>
+<li>occupational evidence describing that work.</li>
+</ul>
+<p>The learner sees:</p>
+<blockquote>
+<p>Your programme teaches a foundation closely related to this domain.</p>
+</blockquote>
+<h3 id="207-example-a-curriculum-to-domain-functional-link">20.7 Example: a curriculum-to-domain Functional link</h3>
+<p>An Economics curriculum may contain quantitative analysis, statistics,
+research, markets, and decision-making. Those capabilities can support a
+Functional relationship to Data and Analytics when the programme does not
+provide the full technical foundation of data engineering, programming,
+experimentation, or production analytics.</p>
+<p>The learner sees:</p>
+<blockquote>
+<p>Your programme gives you useful preparation for this domain, but you will
+need to build additional domain-specific capability.</p>
+</blockquote>
+<p>The missing preparation is part of the mapping. It may include programming,
+data tooling, data modelling, or portfolio evidence, but each item must have its
+own supporting source and evidence state.</p>
+<h3 id="208-example-a-curriculum-to-domain-adjacent-link">20.8 Example: a curriculum-to-domain Adjacent link</h3>
+<p>A Biology programme may teach scientific reasoning, laboratory practice,
+measurement, and interpretation of evidence. Those capabilities can support an
+Adjacent relationship to Health Data and Medical Informatics when the
+programme contains a relevant health or data prerequisite but does not teach
+the full informatics foundation.</p>
+<p>The learner sees:</p>
+<blockquote>
+<p>This is a possible pivot. Your current foundation helps, but you need this
+bridge before specialising.</p>
+</blockquote>
+<p>The bridge might include health-information standards, data management,
+statistics, or software practice, depending on the actual evidence. The
+bridge cannot be invented from the domain title.</p>
+<h3 id="209-example-domain-identity-and-definition">20.9 Example: domain identity and definition</h3>
+<p>For a Finance domain, the identity review may find:</p>
+<ul>
+<li>ISIC financial and insurance activities as the industry context;</li>
+<li>ISCO occupations for financial analysts, advisers, risk specialists, and
+  related work;</li>
+<li>ESCO occupation names, descriptions, and skills;</li>
+<li>O*NET tasks, preparation, tools, and work context;</li>
+<li>CFA Institute or Global Association of Risk Professionals material for
+  specialist boundaries; and</li>
+<li>Nigerian Central Bank, Securities and Exchange Commission, Institute of
+  Chartered Accountants of Nigeria, Chartered Institute of Bankers of Nigeria,
+  and local market sources for Nigerian context.</li>
+</ul>
+<p>The learner-facing name “Finance and Investment” can be a source-supported
+umbrella when those sources describe a coherent work family. It is not claimed
+to be the official name of ISIC or ISCO.</p>
+<p>For a Health domain, the same method may distinguish clinical practice,
+public health, health data, pharmacy, and mental health because their
+foundations, regulated boundaries, work outputs, and entry routes differ.</p>
+<p>For Extended Reality and Immersive Technology, the identity is a documented
+specialist addition supported by immersive-learning, standards, and
+occupational sources. It must not be described as though ISIC originally
+contained that exact learner-facing label.</p>
+<h3 id="2010-example-subgroup-derivation">20.10 Example: subgroup derivation</h3>
+<p>Inside a Data and Analytics domain, a subgroup might represent data
+engineering when its roles share data pipelines, storage, modelling, quality,
+and platform operations.</p>
+<p>Inside a Creative domain, a subgroup might represent technical theatre and
+production when its roles share live-event systems, staging, technical
+coordination, and production safety.</p>
+<p>The subgroup is accepted only when:</p>
+<ul>
+<li>source occupational families support the work focus;</li>
+<li>the roles share a meaningful foundation;</li>
+<li>the subgroup adds something beyond the parent domain; and</li>
+<li>the boundary can be explained to a learner.</li>
+</ul>
+<p>If a domain has credible roles but no such boundary, the product uses
+domain-to-role navigation. It does not invent a subgroup to make the screen
+look uniform.</p>
+<h3 id="2011-example-role-identity">20.11 Example: role identity</h3>
+<p>A role such as Data Analyst is connected through its work, not merely because
+the word “data” appears in its title. Reviewers compare:</p>
+<ul>
+<li>the exact or normalized occupational label;</li>
+<li>tasks and outputs;</li>
+<li>required or commonly used skills;</li>
+<li>tools and work context;</li>
+<li>preparation level; and</li>
+<li>its relationship to the subgroup and domain.</li>
+</ul>
+<p>A role such as Medical Laboratory Scientist also requires local boundary
+review. International occupational evidence may explain laboratory work, but
+the Medical Laboratory Science Council of Nigeria determines which Nigerian
+registration or practice claims can be made.</p>
+<p>A role such as Game Developer may be supported by game-development frameworks,
+O*NET or ESCO-related evidence, specialist industry sources, and a Nigerian
+vacancy or creative-industry source where available. A global role source does
+not become Nigerian demand simply because it is in the role library.</p>
+<h3 id="2012-example-skills-tools-and-certifications">20.12 Example: skills, tools, and certifications</h3>
+<p>For a Procurement subgroup:</p>
+<ul>
+<li>procurement planning is a competency or integrated capability;</li>
+<li>supplier evaluation is a skill;</li>
+<li>an enterprise resource planning system is a tool;</li>
+<li>Chartered Institute of Procurement and Supply preparation is a credential
+  route; and</li>
+<li>a Nigerian professional-body requirement, if explicitly stated, is local
+  regulatory or professional evidence.</li>
+</ul>
+<p>These should not be merged into one “job readiness” score. The learner needs
+to know what each item is, why it appears, and whether it is required,
+recommended, optional, or not yet verified.</p>
+<p>For an Engineering role:</p>
+<ul>
+<li>engineering analysis may be a role competency;</li>
+<li>computer-aided design may be a skill or method;</li>
+<li>a design application may be a tool; and</li>
+<li>Council for the Regulation of Engineering in Nigeria registration may be a
+  regulated professional requirement.</li>
+</ul>
+<p>The product must explain that learning a tool is not the same as obtaining
+professional registration.</p>
+<h3 id="2013-example-priority-inside-a-domain-subgroup-and-role">20.13 Example: priority inside a domain, subgroup, and role</h3>
+<p>For a Cybersecurity domain, the domain page may first show security principles,
+networking, operating systems, identity, and safe investigation. It keeps
+specialist penetration-testing tools, advanced cloud security, and niche
+certifications under See all unless the learner chooses that route.</p>
+<p>After selecting a defensive-security subgroup, the page shows what the domain
+foundation already covers, then adds incident response, monitoring, detection,
+and evidence handling.</p>
+<p>After selecting an entry security analyst role, the page shows role essentials
+and starter evidence before mid-level threat hunting and senior security
+architecture. This is progressive disclosure, not deletion of information.</p>
+<h3 id="2014-example-nigerian-and-global-evidence">20.14 Example: Nigerian and global evidence</h3>
+<p>For a finance role, a Nigerian banking or regulatory source can establish local
+terminology, local practice, or a regulatory boundary. CFA Institute material
+can explain an international investment pathway. A Jobberman listing can
+provide a dated Nigerian market signal for a role title.</p>
+<p>Those three facts are not interchangeable:</p>
+<ul>
+<li>professional practice in Nigeria is not the same as a vacancy count;</li>
+<li>an international credential is not automatically a Nigerian licence; and</li>
+<li>one vacancy is not proof of universal demand.</li>
+</ul>
+<p>The interface must show the evidence lens next to the explanation.</p>
+<h2 id="21-complete-public-source-reference-register">21. Complete public source reference register</h2>
+<p>This register names every source family currently included in the source
+inventory. It states why each source is relevant and links to its public
+location where one is available. A source being listed means it is an
+authorized source route; the evidence record must still say whether the
+document or extract was actually checked for the particular claim.</p>
+<h3 id="211-admission-and-nigerian-curriculum">21.1 Admission and Nigerian curriculum</h3>
+<ul>
+<li><strong>Joint Admissions and Matriculation Board:</strong> national admission
+  information, <a href="https://jamb.gov.ng/FAQ">JAMB Frequently Asked Questions</a>.</li>
+<li><strong>Integrated Brochure and Syllabus System:</strong> programme names and admission
+  subject rules, <a href="https://ibass.jamb.gov.ng/">IBASS</a>.</li>
+<li><strong>National Universities Commission:</strong> university standards and CCMAS,
+  <a href="https://www.nuc.edu.ng/">NUC</a>.</li>
+<li><strong>National Board for Technical Education:</strong> technical curricula and National
+  Occupational Standards, <a href="https://web.nbte.gov.ng/downloads">NBTE downloads</a>
+  and <a href="https://www.web.nbte.gov.ng/nsqf">National Skills Qualification Framework resources</a>.</li>
+<li><strong>National Bureau of Statistics:</strong> Nigerian labour-force context,
+  <a href="https://microdata.nigerianstat.gov.ng/index.php/catalog/151/study-description">NBS microdata catalogue</a>.</li>
+<li><strong>Nigerian National Artificial Intelligence Strategy:</strong> checked national
+  strategy document used for local artificial-intelligence context. Its
+  public hosting must be recorded with the document version when a claim uses
+  it; a registry entry alone is not sufficient evidence.</li>
+<li><strong>Nigerian university offering pages:</strong> institution, programme, location,
+  local requirements, and notes. The university's official page is the source
+  for its own offering and is not treated as a national rule.</li>
+</ul>
+<p>The admission input set includes the official JAMB brochure sections for
+Administration, Agriculture, Arts and Humanities, Education, Engineering and
+Environmental Technology, Law, Medical and Pharmaceutical Health Science,
+Sciences, Social and Management Science, and Specific Entry Requirements.</p>
+<p>The curriculum input set includes the NUC CCMAS families for Administration
+and Management, Agriculture, Allied Health Sciences, Architecture, Arts, Basic
+Medical Sciences, Communication and Media Studies, Computing, Education,
+Engineering and Technology, Environmental Sciences, Law, Medicine and
+Dentistry, Pharmacy and Pharmaceutical Sciences, Sciences, Social Sciences,
+and Veterinary Medicine.</p>
+<h3 id="212-international-classifications">21.2 International classifications</h3>
+<ul>
+<li><strong>United Nations International Standard Industrial Classification of All
+  Economic Activities:</strong> industry and activity completeness context,
+  <a href="https://unstats.un.org/unsd/classifications/Econ/ISIC.cshtml">UN ISIC classification page</a>.</li>
+<li><strong>United Nations ISIC explanatory notes:</strong> activity definitions and
+  revision interpretation, <a href="https://unstats.un.org/UNSDWebsite/statcom/session_55/documents/BG-4e-ISIC5_Exp_Notes-E.pdf">ISIC explanatory notes</a>.</li>
+<li><strong>International Labour Organization International Standard Classification
+  of Occupations:</strong> occupational hierarchy and work-function anchors,
+  <a href="https://isco.ilo.org/en/isco-08/">ISCO-08</a>.</li>
+<li><strong>International Labour Organization ISCO-08 Volume 1:</strong> definitions and
+  structure, <a href="https://webapps.ilo.org/ilostat-files/ISCO/newdocs-08-2021/ISCO-08%20EN%20Vol%201.pdf">ISCO-08 Volume 1</a>.</li>
+<li><strong>European Skills, Competences, Qualifications and Occupations:</strong> normalized
+  occupations, skills, descriptions, and identifiers,
+  <a href="https://esco.ec.europa.eu/en/use-esco">ESCO use and classification resources</a>.</li>
+<li><strong>Occupational Information Network:</strong> tasks, skills, tools, preparation, and
+  work context, <a href="https://www.onetcenter.org/database.html">O*NET database</a>.</li>
+<li><strong>International Labour Organization:</strong> international labour and occupational
+  context, <a href="https://www.ilo.org/">ILO</a>.</li>
+<li><strong>World Economic Forum Future of Jobs 2025:</strong> future work and skills trends,
+  <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/">WEF report</a>.</li>
+</ul>
+<p>ISIC is the industry-context survey. ISCO, ESCO, and O*NET provide occupational
+structure and enrichment. None of them alone generates the complete Sifter
+domain list or proves Nigerian demand.</p>
+<h3 id="213-global-professional-and-specialist-sources">21.3 Global professional and specialist sources</h3>
+<ul>
+<li><strong>SFIA 9:</strong> digital and information-technology skills,
+  <a href="https://sfia-online.org/en/sfia-9">SFIA</a>.</li>
+<li><strong>NIST NICE Workforce Framework:</strong> cybersecurity work and competency
+  language, <a href="https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center">NICE Framework</a>.</li>
+<li><strong>Association for Supply Chain Management:</strong> supply-chain body of knowledge,
+  <a href="https://www.ascm.org/">ASCM</a>.</li>
+<li><strong>Chartered Institute of Procurement and Supply:</strong> procurement and supply
+  standard, <a href="https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply">CIPS Global Standard</a>.</li>
+<li><strong>Project Management Institute:</strong> project-management standards,
+  <a href="https://www.pmi.org/standards">PMI standards</a>.</li>
+<li><strong>World Health Organization:</strong> health-workforce context,
+  <a href="https://www.who.int/teams/health-workforce">WHO health workforce</a>.</li>
+<li><strong>Food and Agriculture Organization:</strong> agriculture and food systems,
+  <a href="https://www.fao.org/">FAO</a>.</li>
+<li><strong>World Organisation for Animal Health:</strong> animal-health standards,
+  <a href="https://www.woah.org/">WOAH</a>.</li>
+<li><strong>International Civil Aviation Organization and International Air Transport
+  Association:</strong> aviation standards, <a href="https://www.icao.int/">ICAO</a> and
+  <a href="https://www.iata.org/">IATA</a>.</li>
+<li><strong>International Maritime Organization and Institute of Marine Engineering,
+  Science and Technology:</strong> maritime standards, <a href="https://www.imo.org/">IMO</a>
+  and <a href="https://www.imarest.org/">IMarEST</a>.</li>
+<li><strong>Royal Institution of Chartered Surveyors:</strong> property and built-environment
+  standards, <a href="https://www.rics.org/">RICS</a>.</li>
+<li><strong>Society of Petroleum Engineers:</strong> petroleum engineering competencies,
+  <a href="https://www.spe.org/en/training/competency-management/">SPE competency management</a>.</li>
+<li><strong>International Atomic Energy Agency:</strong> nuclear and radiation work,
+  <a href="https://www.iaea.org/">IAEA</a>.</li>
+<li><strong>United Nations Educational, Scientific and Cultural Organization:</strong>
+  education, science, and culture context, <a href="https://www.unesco.org/">UNESCO</a>.</li>
+<li><strong>ScreenSkills:</strong> creative-industry role profiles,
+  <a href="https://www.screenskills.com/">ScreenSkills</a>.</li>
+<li><strong>International Game Developers Association:</strong> game-development professional
+  resources, <a href="https://igda.org/resources/">IGDA</a>.</li>
+<li><strong>Philippine Skills Framework for Game Development:</strong> game-development
+  progression and skills, <a href="https://www.tesda.gov.ph/Uploads/File/Philippine%20Skills%20Framework/PSF%20-%20Game%20Development.pdf">TESDA framework</a>.</li>
+<li><strong>Khronos Group:</strong> open standards relevant to immersive and graphics work,
+  <a href="https://www.khronos.org/">Khronos</a>.</li>
+<li><strong>European Competence Framework for Quantum Technologies:</strong> quantum
+  technology competencies, <a href="https://qt.eu/media/pdf/Competence_Framework_for_QT_v3.0_2025_official-version.pdf">Quantum Flagship framework</a>.</li>
+<li><strong>Singapore National Arts Council technical theatre and production
+  framework:</strong> technical theatre work, <a href="https://www.skillsfuture.gov.sg/docs/default-source/skills-framework/skills-framework-for-arts-%28technical-theatre-production%29.pdf">Skills Framework</a>.</li>
+<li><strong>Skills England Live Event Technician standard:</strong> live-event work,
+  <a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1297A">Skills England</a>.</li>
+<li><strong>Malaysian Qualifications Agency Performing Arts standards:</strong> performing
+  arts programme and role context, <a href="https://www2.mqa.gov.my/qad/v2/pekeliling/2025/Programme%20Standards_Performing%20Arts%20FINAL_26.3.25.pdf">MQA standards</a>.</li>
+<li><strong>Jobs for the Future immersive-learning and extended-reality pathways:</strong>
+  immersive careers, <a href="https://www.jff.org/idea/immersive-learning-xr-technology-skills-and-careers/">JFF XR pathways</a>.</li>
+<li><strong>RoboticsCareer:</strong> robotics competency pathways,
+  <a href="https://www.roboticscareer.org/careers">RoboticsCareer</a>.</li>
+<li><strong>Skills England Robotics Engineer maps:</strong> robotics work and progression,
+  <a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1317">Robotics Engineer</a>
+  and <a href="https://occupational-maps.skillsengland.education.gov.uk/maps/occupation/OCC1381">Advanced Robotics</a>.</li>
+<li><strong>British Esports:</strong> esports education and career pathways,
+  <a href="https://britishesports.org/esports-and-education/career-pathways/">British Esports</a>.</li>
+<li><strong>Pearson BTEC Esports:</strong> esports roles and programme pathways,
+  <a href="https://qualifications.pearson.com/content/dam/pdf/BTEC-Higher-Nationals/esport/2024/specification-and-sample-assessments/9781292467900-btec-hnc-hnd-l45-esports-spc.pdf">Pearson esports specification</a>.</li>
+<li><strong>Hitmarker:</strong> esports and gaming employment vocabulary,
+  <a href="https://hitmarker.net/">Hitmarker</a>.</li>
+<li><strong>International Federation of the Phonographic Industry:</strong> music-industry
+  context, <a href="https://www.ifpi.org/">IFPI</a>.</li>
+<li><strong>World Intellectual Property Organization:</strong> intellectual-property context,
+  <a href="https://www.wipo.int/">WIPO</a>.</li>
+<li><strong>CFA Institute:</strong> investment-profession preparation,
+  <a href="https://www.cfainstitute.org/">CFA Institute</a>.</li>
+<li><strong>Global Association of Risk Professionals:</strong> risk-profession preparation,
+  <a href="https://www.garp.org/">GARP</a>.</li>
+<li><strong>Driver and Vehicle Standards Agency:</strong> driver and rider training standard,
+  <a href="https://www.gov.uk/government/publications/national-standard-for-driver-and-rider-training/national-standard-for-driver-and-rider-training">DVSA standard</a>.</li>
+</ul>
+<h3 id="214-nigerian-regulators-professional-bodies-and-sector-sources">21.4 Nigerian regulators, professional bodies, and sector sources</h3>
+<ul>
+<li><strong>Jobberman Nigeria:</strong> dated Nigerian vacancy and role-title signals,
+  <a href="https://www.jobberman.com/jobs">Jobberman</a>.</li>
+<li><strong>MyJobMag Nigeria:</strong> dated Nigerian vacancy and role-title signals,
+  <a href="https://www.myjobmag.com/feeds">MyJobMag feeds</a>.</li>
+<li><strong>Nigeria Computer Society:</strong> Nigerian computing context,
+  <a href="https://www.ncs.org.ng/">NCS</a>.</li>
+<li><strong>Computer Professionals Registration Council of Nigeria:</strong> computing
+  professional context and examination material,
+  <a href="https://www.cpn.gov.ng/">CPN</a> and <a href="https://www.cpn.gov.ng/download/2021_CPN_Examination_Syllabus%28Reviewed%29.pdf">CPN syllabus</a>.</li>
+<li><strong>Council for Innovative Engineering and Emerging Engineering:</strong> Nigerian
+  emerging-engineering context, <a href="https://cieeen.gov.ng/">CIEEEN</a>.</li>
+<li><strong>Federal Ministry of Health and Social Welfare:</strong> Nigerian health-service
+  context, <a href="https://health.gov.ng/hospital-services/">hospital services</a>.</li>
+<li><strong>Medical Laboratory Science Council of Nigeria:</strong> laboratory-science
+  practice and approved documents, <a href="https://mlscn.gov.ng/publications/mlscn-approved-documents">MLSCN</a>.</li>
+<li><strong>Council of Registered Builders of Nigeria:</strong> construction standards and
+  labour-market information, <a href="https://www.clmis.corbon.gov.ng/nos">CORBON</a>.</li>
+<li><strong>Quantity Surveyors Registration Board of Nigeria:</strong> quantity-surveying
+  registration, <a href="https://qsrbn.gov.ng/registration/">QSRBN</a>.</li>
+<li><strong>Nigerian Nuclear Regulatory Authority:</strong> nuclear and radiation regulation,
+  <a href="https://nnra.gov.ng/">NNRA</a>.</li>
+<li><strong>Teachers Registration Council of Nigeria:</strong> teaching registration,
+  <a href="https://trcn.gov.ng/">TRCN</a>.</li>
+<li><strong>Nigerian Oil and Gas Industry Content Joint Qualification System:</strong> local
+  oil-and-gas competency and qualification context, <a href="https://nogicjqs.gov.ng/">NOGIC JQS</a>.</li>
+<li><strong>Centre for Management Development:</strong> Nigerian management development,
+  <a href="https://www.cmd.gov.ng/">CMD</a>.</li>
+<li><strong>National Space Research and Development Agency:</strong> Nigerian space and
+  space-science context, <a href="https://central.nasrda.gov.ng/departments/institute-of-space-science-engineering/">NASRDA</a>.</li>
+<li><strong>National Emergency Management Agency:</strong> emergency-management context,
+  <a href="https://nema.gov.ng/">NEMA</a>.</li>
+<li><strong>Federal Ministry of Arts, Culture and Creative Economy:</strong> Nigerian
+  creative-economy context, <a href="https://www.fmacce.gov.ng/department/entertainment-and-creative-economy-ece">FMaCCE</a>.</li>
+<li><strong>Institute of Chartered Accountants of Nigeria:</strong> Nigerian accounting
+  preparation, <a href="https://icanig.org/ican/assets/docs/ICAN_SYLLABUS_2026_Final_Updated_NEW.pdf">ICAN syllabus</a>.</li>
+<li><strong>Chartered Institute of Bankers of Nigeria:</strong> Nigerian banking competencies,
+  <a href="https://portal.cibng.org/cb_competencyframework.asp">CIBN competency framework</a>.</li>
+<li><strong>Nigeria Union of Journalists:</strong> Nigerian journalism ethics,
+  <a href="https://nuj.org.ng/code-of-ethics-for-nigerian-journalists/">NUJ code of ethics</a>.</li>
+<li><strong>Nigerian Library Association and Librarians Registration Council of
+  Nigeria:</strong> library and information-profession context,
+  <a href="https://nla.org.ng/public/">NLA</a>.</li>
+<li><strong>Nigerian Council of Food Science and Technology:</strong> food-science context,
+  <a href="https://nicfost.gov.ng/">NICFOST</a>.</li>
+<li><strong>National Institute for Hospitality and Tourism:</strong> hospitality registration
+  context, <a href="https://rivac.nihotour.gov.ng/">NIHOTOUR RIVAC</a>.</li>
+<li><strong>Federal Ministry of Agriculture and Food Security:</strong> Nigerian agriculture
+  and food systems, <a href="https://agriculture.gov.ng/about-us/">FMAFS</a>.</li>
+<li><strong>Nigerian Psychological Association:</strong> psychology context,
+  <a href="https://npafct.org/">NPA</a>.</li>
+<li><strong>Nigerian Fashion Council and Fashion Designers Association of Nigeria:</strong>
+  fashion context and registration, <a href="https://fadan.ng/registration/">FADAN</a>.</li>
+<li><strong>Nigeria Olympic Committee:</strong> Nigerian sports context,
+  <a href="https://nigeriaolympic.org/athletes-commission/commissions/">NOC athletes commission</a>.</li>
+<li><strong>National Primary Health Care Development Agency:</strong> Nigerian public-health
+  context, <a href="https://nphcda.gov.ng/brief-history-mandate/">NPHCDA</a>.</li>
+<li><strong>Nigeria Meteorological Agency:</strong> meteorology context,
+  <a href="https://nimet.gov.ng/foi">NiMet</a>.</li>
+<li><strong>Nigerian Upstream Regulatory Commission and Nigerian Midstream and
+  Downstream Petroleum Regulatory Authority:</strong> energy regulation,
+  <a href="https://www.nuprc.gov.ng/">NUPRC</a> and <a href="https://www.nmdpra.gov.ng/">NMDPRA</a>.</li>
+<li><strong>Nigerian Bar Association:</strong> Nigerian legal context,
+  <a href="https://nigerianbar.org.ng/">NBA</a>.</li>
+<li><strong>Chartered Institute of Purchasing and Supply Management of Nigeria:</strong>
+  Nigerian procurement context, <a href="https://www.cipsmn.org.ng/about">CIPSMN</a>.</li>
+<li><strong>Nigerian Academy of Science:</strong> Nigerian research context,
+  <a href="https://nas.org.ng/">NAS</a>.</li>
+<li><strong>National Communications Commission and National Information Technology
+  Development Agency:</strong> Nigerian telecommunications and digital ecosystem,
+  <a href="https://www.ncc.gov.ng/">NCC</a> and <a href="https://nitda.gov.ng/">NITDA</a>.</li>
+<li><strong>Council for the Regulation of Engineering in Nigeria and Nigerian Society
+  of Engineers:</strong> Nigerian engineering practice,
+  <a href="https://coren.gov.ng/">COREN</a> and <a href="https://www.nse.org.ng/">NSE</a>.</li>
+<li><strong>Architects Registration Council of Nigeria and Surveyors Council of
+  Nigeria:</strong> built-environment professional boundaries,
+  <a href="https://arcon.gov.ng/">ARCON</a> and <a href="https://surcon.org.ng/">SURCON</a>.</li>
+<li><strong>Medical and Dental Council of Nigeria, Nursing and Midwifery Council of
+  Nigeria, and Pharmacists Council of Nigeria:</strong> Nigerian health-profession
+  boundaries, <a href="https://www.mdcn.gov.ng/">MDCN</a>, <a href="https://www.nmcn.gov.ng/">NMCN</a>,
+  and <a href="https://www.pcn.gov.ng/">PCN</a>.</li>
+<li><strong>Institute of Chartered Accountants of Nigeria, Securities and Exchange
+  Commission, and Central Bank of Nigeria:</strong> Nigerian finance and accounting
+  context, <a href="https://icanig.org/">ICAN</a>, <a href="https://sec.gov.ng/">SEC</a>, and
+  <a href="https://www.cbn.gov.ng/">CBN</a>.</li>
+<li><strong>Chartered Institute of Personnel Management of Nigeria and Nigerian
+  Institute of Management:</strong> Nigerian people and management context,
+  <a href="https://cipmnigeria.org/">CIPM</a>.</li>
+<li><strong>Chartered Institute of Logistics and Transport Nigeria:</strong> Nigerian
+  logistics context, <a href="https://ciltnigeria.org/">CILT Nigeria</a>.</li>
+<li><strong>National Commission for Colleges of Education:</strong> Nigerian education
+  standards, <a href="https://ncce.gov.ng/">NCCE</a>.</li>
+<li><strong>National Agency for Food and Drug Administration and Control and Veterinary
+  Council of Nigeria:</strong> Nigerian agriculture, food, and veterinary boundaries,
+  <a href="https://www.nafdac.gov.ng/">NAFDAC</a> and <a href="https://vcn.gov.ng/">VCN</a>.</li>
+<li><strong>Nigerian Civil Aviation Authority and Nigerian Maritime Administration and
+  Safety Agency:</strong> aviation and maritime context, <a href="https://ncaa.gov.ng/">NCAA</a>
+  and <a href="https://nimasa.gov.ng/">NIMASA</a>.</li>
+<li><strong>National Film and Video Censors Board:</strong> Nigerian creative and media
+  context, <a href="https://www.nfvcb.gov.ng/">NFVCB</a>.</li>
+<li><strong>National Lottery Regulatory Commission:</strong> Nigerian gaming and lottery
+  regulation, <a href="https://nlrc-gov.ng/">NLRC</a>.</li>
+<li><strong>National Environmental Standards and Regulations Enforcement Agency:</strong>
+  Nigerian environmental regulation, <a href="https://nesrea.gov.ng/">NESREA</a>.</li>
+<li><strong>Federal Ministry of Transportation:</strong> Nigerian transportation context,
+  <a href="https://transportation.gov.ng/about/">Transportation Ministry</a>.</li>
+<li><strong>Federal Ministry of Aviation and Aerospace Development:</strong> Nigerian
+  aviation and aerospace context, <a href="https://aviation.gov.ng/index.php/about">Aviation Ministry</a>.</li>
+<li><strong>Choice Talents Nigeria game-developer listing:</strong> one dated local role
+  signal, <a href="https://ng.linkedin.com/jobs/view/game-developer-at-choice-talents-ltd-4453073421">LinkedIn listing</a>.</li>
+</ul>
+<p>Some source families appear under more than one Nigerian institutional name
+because they answer different questions. For example, a regulator may establish
+a practice boundary while a vacancy source establishes only a dated market
+signal. They must not be merged into one claim.</p>
+<h2 id="22-record-level-provenance-what-must-be-retained">22. Record-level provenance: what must be retained</h2>
+<p>A complete record for a subject rule, programme, domain, subgroup, role,
+competency, tool, or credential should retain:</p>
+<ol>
+<li>the canonical identity and any source aliases;</li>
+<li>the source name and version;</li>
+<li>the public source link, when available;</li>
+<li>the page, section, table, or other locator;</li>
+<li>the relevant source text or a faithful summary;</li>
+<li>the evidence type: admission, curriculum, occupation, skill, tool,
+   credential, Nigerian context, Nigerian market, remote, or global;</li>
+<li>the relationship created from that evidence;</li>
+<li>the rule applied;</li>
+<li>the label class: exact, source-supported umbrella, or curated addition;</li>
+<li>the confidence or review state;</li>
+<li>the bridge or limitation a learner must see; and</li>
+<li>the last review date.</li>
+</ol>
+<p>This structure lets a reviewer trace a learner-facing sentence back through its
+relationship to the source. It also prevents a source link from being mistaken
+for proof of every field on the record.</p>
+<h2 id="23-what-the-product-says-and-does-not-say">23. What the product says and does not say</h2>
+<p>The product may say:</p>
+<ul>
+<li>“This programme matches the checked O'Level requirement.”</li>
+<li>“This programme matches the checked UTME requirement.”</li>
+<li>“This university offers this national programme.”</li>
+<li>“This curriculum teaches or introduces these skills.”</li>
+<li>“This domain is a Direct, Functional, or Adjacent relationship under the
+  stated evidence rule.”</li>
+<li>“These are the first capabilities to build for this route.”</li>
+<li>“This source provides Nigerian context.”</li>
+<li>“This checked Nigerian source contains this market signal.”</li>
+<li>“This role has global evidence, but no direct Nigerian counterpart was found
+  in the checked sources.”</li>
+</ul>
+<p>The product must not say:</p>
+<ul>
+<li>that a subject match guarantees admission;</li>
+<li>that a programme guarantees employment;</li>
+<li>that a global role is automatically in Nigerian demand;</li>
+<li>that every tool is required;</li>
+<li>that every certification is a Nigerian licence;</li>
+<li>that a learner has mastered every skill listed in a curriculum; or</li>
+<li>that an unresolved source code has been corrected when it has not.</li>
+</ul>
+<h2 id="24-closing-explanation">24. Closing explanation</h2>
+<p>Sifter is best understood as a chain of justified translations:</p>
+<ul>
+<li>examination language is translated into a checked programme possibility;</li>
+<li>a national programme name is translated into a university-specific offering;</li>
+<li>curriculum language is translated into plain-language skills taught and
+  graduate capabilities;</li>
+<li>economic activity and occupational language are translated into
+  learner-facing domains;</li>
+<li>occupational families are translated into supported subgroups and roles;</li>
+<li>source skills and professional standards are translated into competencies,
+  tools, certifications, resources, and preparation;</li>
+<li>the evidence is translated into an ordered guidance route without hiding the
+  full inventory.</li>
+</ul>
+<p>At every translation, the source, rule, example, limitation, and learner
+meaning must remain clear. That is what makes the product explainable rather
+than a collection of unexplained labels or similarity scores.</p>
 </body>
 </html>

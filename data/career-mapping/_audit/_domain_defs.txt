@@ -1762,7 +1762,7 @@ Cross-sector deployment: finance (L), health (R), manufacturing (C), public admi
 ISCO Sub-major
 25
 ISCO Unit Groups
-2121, 2511, 2519
+2120, 2511, 2519
 O*NET Entre. Score
 44.6 — O*NET 30.2 — Work Values (Independence 1.B.2.f, Achievement 1.B.2.a), Work Styles (Innovation 1.D.1.a, Initiative 1.D.1.e), Work Context (Freedom to Decide 4.C.3.a.4), Interests (Enterprising 1.B.1.e). US Department of Labor, Bureau of Labor Statistics.
 ILO Nigeria Self-Employ
@@ -2686,7 +2686,7 @@ Hospitals (R861), medical/dental practices (R862), other human health (R869)
 ISCO Sub-major
 22
 ISCO Unit Groups
-1342, 2211, 2212, 2213, 2214, 2215, 2216, 3211, 3212, 3214, 3256
+1342, 2211, 2212, 3211, 3212, 3214, 3256
 O*NET Entre. Score
 67.1 — O*NET 30.2 — Work Values (Independence 1.B.2.f, Achievement 1.B.2.a), Work Styles (Innovation 1.D.1.a, Initiative 1.D.1.e), Work Context (Freedom to Decide 4.C.3.a.4), Interests (Enterprising 1.B.1.e). US Department of Labor, Bureau of Labor Statistics.
 ILO Nigeria Self-Employ
@@ -3446,7 +3446,7 @@ Universities (Q854), R&amp;D institutions (N72-N73); government research (P84)
 ISCO Sub-major
 23
 ISCO Unit Groups
-1345, 2310, 2311, 2320, 2321, 2341, 2342, 2351, 2352, 2353, 2354, 2355, 2359
+1345, 2310, 2320, 2341, 2342, 2351, 2352, 2353, 2354, 2355, 2359
 O*NET Entre. Score
 73.5 — O*NET 30.2 — Work Values (Independence 1.B.2.f, Achievement 1.B.2.a), Work Styles (Innovation 1.D.1.a, Initiative 1.D.1.e), Work Context (Freedom to Decide 4.C.3.a.4), Interests (Enterprising 1.B.1.e). US Department of Labor, Bureau of Labor Statistics.
 ILO Nigeria Self-Employ
@@ -3473,7 +3473,7 @@ Technical and vocational schools (Q853), other education activities (Q855); corp
 ISCO Sub-major
 23
 ISCO Unit Groups
-2320, 2353, 2356, 2424, 3330, 5312
+2320, 2353, 2356, 2424, 5312
 O*NET Entre. Score
 73.9 — O*NET 30.2 — Work Values (Independence 1.B.2.f, Achievement 1.B.2.a), Work Styles (Innovation 1.D.1.a, Initiative 1.D.1.e), Work Context (Freedom to Decide 4.C.3.a.4), Interests (Enterprising 1.B.1.e). US Department of Labor, Bureau of Labor Statistics.
 ILO Nigeria Self-Employ

@@ -3,8 +3,8 @@
 Domains evaluated: **160** (hidden domains excluded: D086, D087, D088, D089, D100, D101, D108, D113)
 Domain/subgroup tool rows annotated: **8916**
 Medical-context tool rows removed from non-health domains: **0**
-Roles with any source signal (ESCO, O*NET or specialist framework): **5145 / 5209**
-Roles with specialist framework provenance: **526 / 5209**
+Roles with any source signal (ESCO, O*NET or specialist framework): **5142 / 5209**
+Roles with specialist framework provenance: **523 / 5209**
 
 Role evidence remains role-owned. Domain and subgroup rows are only annotated with provenance and are not populated by copying role tools or certifications.
 
@@ -137,7 +137,7 @@ Role evidence remains role-owned. Domain and subgroup rows are only annotated wi
 | D131 Motorsport Engineering | 26 | 26 | 22 | 0 | 26 | source_backed / high |
 | D132 Space Science, Exploration | 8 | 6 | 7 | 7 | 8 | source_backed / medium |
 | D133 Luxury | 33 | 33 | 30 | 0 | 33 | source_backed / high |
-| D134 Naval Architecture, Marine Engineering | 20 | 17 | 15 | 6 | 17 | source_backed / medium |
+| D134 Naval Architecture, Marine Engineering | 20 | 20 | 18 | 9 | 20 | source_backed / medium |
 | D135 Nuclear Engineering, Radiation Science | 15 | 9 | 14 | 11 | 15 | source_backed / medium |
 | D136 Aeronautical | 20 | 20 | 18 | 13 | 20 | source_backed / medium |
 | D137 Medical Physics, Radiation Therapy | 9 | 7 | 8 | 6 | 9 | source_backed / medium |
