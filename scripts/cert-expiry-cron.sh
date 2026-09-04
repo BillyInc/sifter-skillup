@@ -35,7 +35,28 @@ rc=$?
 
 # The check prints nothing when every hostname is healthy, so the log only grows
 # on a bad day and stays readable for years.
-[ -z "$out" ] || printf '%s\n' "$out" >> "$LOG"
+#
+# But a write that fails must not pass for health. If the append is ignored, a
+# full disk or an unwritable log sends a success ping on every healthy day --
+# and the whole argument for a dead-man's switch over email is that storage and
+# scheduling failures raise the same alarm as an expiring certificate. So a
+# failed write is folded into both the payload and the exit status.
+log_failed=0
+if [ -n "$out" ]; then
+  printf '%s\n' "$out" >> "$LOG" || log_failed=1
+else
+  # Nothing to report, so nothing would be written -- and an untested write is
+  # an untested failure mode. The heartbeat is a fixed-size file rewritten in
+  # place, which exercises the filesystem for real (a full disk fails on write,
+  # not on open) without growing the log on healthy days.
+  printf '%s ok\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "${LOG%.log}.heartbeat" || log_failed=1
+fi
+
+if [ "$log_failed" -ne 0 ]; then
+  out="${out:+$out
+}levelup-cert-expiry-cron: FAILED writing under $(dirname "$LOG") -- disk full or permissions. Certificate status above (if any) was still measured."
+  [ "$rc" -eq 0 ] && rc=1
+fi
 
 # No URL configured yet: the local log is the whole mechanism. Exit with the
 # check's own status so a manual run still reports the truth.
