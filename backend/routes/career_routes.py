@@ -868,15 +868,31 @@ async def list_domain_clusters():
         # scale (13..56 in production), not a percentage -- a meter that
         # assumed 0..10 drew all 160 domains as full demand, including the 108
         # the data calls low. Ship the source's own band, not a derived bar.
+        # The elite gate: legacy `elite_domain` is an audit input, not
+        # publication evidence, so it is only honoured for domains that also
+        # have a published review. Every other caller of this helper resolves
+        # it before use; this one did not, and the resulting NameError was
+        # swallowed by the except below -- so the endpoint answered
+        # `coming_soon` on every request and the Domain Explorer this function
+        # exists to fill stayed permanently empty.
+        published_domain_ids = _published_elite_entity_ids("domain")
+
         grouped: dict[str, list] = {}
         for r in rows:
             entry = {
                 # The domain route keys on domain_key, not the uuid.
                 "id": r.get("domain_key") or r["id"],
                 "name": r.get("name"),
+                # Written as an explicit `and (... or ...)`. The previous form
+                # relied on `and` binding tighter than `or` to mean the same
+                # thing, which reads as a precedence bug even though it was not
+                # one. A domain may be keyed by either uuid or domain_key in
+                # the reviews table, hence both lookups.
                 "eliteFlag": bool(r.get("elite_domain"))
-                and str(r.get("id")) in published_domain_ids
-                or (bool(r.get("elite_domain")) and str(r.get("domain_key")) in published_domain_ids),
+                and (
+                    str(r.get("id")) in published_domain_ids
+                    or str(r.get("domain_key")) in published_domain_ids
+                ),
             }
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
