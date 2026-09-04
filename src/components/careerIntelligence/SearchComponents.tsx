@@ -24,7 +24,7 @@ import {
   hScroll,
 } from "../../theme";
 import { SearchBar } from "./RedesignPrimitives";
-import type { SearchResult, SearchResultType, SearchScope } from "../../types/career";
+import type { SearchIntent, SearchResult, SearchResultType, SearchScope } from "../../types/career";
 
 // ── ScopeChip ─────────────────────────────────────────────────
 // Horizontal filter chip for scope filtering (All / Programmes / Domains / Roles).
@@ -176,6 +176,14 @@ export function SearchResultRow({
             {result.subtitle}
           </Text>
         ) : null}
+        {result.contextHint ? (
+          <Text
+            style={[styles.resultContext, { color: colors.textRole.secondary }]}
+            numberOfLines={1}
+          >
+            {result.contextHint}
+          </Text>
+        ) : null}
         <View style={styles.resultMetaRow}>
           {result.meta ? (
             <Text
@@ -193,6 +201,14 @@ export function SearchResultRow({
               {result.source}
             </Text>
           ) : null}
+          {result.actionLabel ? (
+            <Text
+              style={[styles.resultAction, { color: colors.accentRole.action }]}
+              numberOfLines={1}
+            >
+              {result.actionLabel}
+            </Text>
+          ) : null}
         </View>
       </View>
       {result.locked ? (
@@ -208,7 +224,11 @@ function defaultIcon(type: SearchResultType): string {
   switch (type) {
     case "programme": return "book-open";
     case "domain": return "grid";
+    case "subgroup": return "layers";
     case "role": return "briefcase";
+    case "skill": return "zap";
+    case "tool": return "tool";
+    case "certification": return "award";
     case "university": return "building";
     case "scholarship": return "award";
     case "opportunity": return "star";
@@ -224,6 +244,7 @@ export function SearchResultsGroup({
   results,
   query,
   onResultPress,
+  onMorePress,
   maxRows,
   style,
 }: {
@@ -231,6 +252,7 @@ export function SearchResultsGroup({
   results: SearchResult[];
   query?: string;
   onResultPress?: (result: SearchResult) => void;
+  onMorePress?: () => void;
   maxRows?: number;
   style?: StyleProp<ViewStyle>;
 }) {
@@ -259,9 +281,18 @@ export function SearchResultsGroup({
         />
       ))}
       {remaining > 0 ? (
-        <Text style={[styles.groupMore, { color: colors.textRole.muted }]}>
-          +{remaining} more
-        </Text>
+        onMorePress ? (
+          <TouchableOpacity
+            activeOpacity={0.78}
+            onPress={onMorePress}
+            accessibilityRole="button"
+            style={styles.groupMoreButton}
+          >
+            <Text style={[styles.groupMore, { color: colors.accentRole.action }]}>See all {results.length} {label.toLowerCase()}</Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={[styles.groupMore, { color: colors.textRole.muted }]}>+{remaining} more</Text>
+        )
       ) : null}
     </View>
   );
@@ -327,7 +358,7 @@ export function SearchEmptyState({
     : "Search Sifter LevelUp";
   const message = query
     ? "Try a different search term or broaden your scope."
-    : "Explore programmes, domains, roles, and opportunities.";
+    : "Explore programmes, universities, domains, roles, skills, and opportunities.";
 
   return (
     <View style={[styles.emptyState, style]}>
@@ -343,7 +374,7 @@ export function SearchEmptyState({
           style={[styles.emptyCta, { backgroundColor: colors.accentRole.action }]}
         >
           <Text style={[styles.emptyCtaText, { color: colors.textRole.inverse }]}>
-            Sign in for full results
+            Create an account for the full catalogue
           </Text>
         </TouchableOpacity>
       ) : null}
@@ -363,6 +394,12 @@ interface SearchOverlayProps {
   onChangeText: (v: string) => void;
   scope?: SearchScope;
   onScopeChange?: (scope: SearchScope) => void;
+  intent?: SearchIntent | null;
+  onIntentChange?: (intent: SearchIntent | null) => void;
+  /** Starting-point persona used to explain what a result will do. */
+  userType?: string | null;
+  /** Server-provided explanation for the selected task, when available. */
+  searchContext?: { label: string; guidance: string };
   loading?: boolean;
   error?: boolean;
   results?: { label: string; items: SearchResult[] }[];
@@ -378,8 +415,22 @@ interface SearchOverlayProps {
 const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
   { value: "all", label: "All" },
   { value: "programmes", label: "Programmes" },
+  { value: "universities", label: "Universities" },
   { value: "domains", label: "Domains" },
+  { value: "subgroups", label: "Subgroups" },
   { value: "roles", label: "Roles" },
+  { value: "skills", label: "Skills" },
+  { value: "tools", label: "Tools" },
+  { value: "certifications", label: "Credentials" },
+  { value: "opportunities", label: "Opportunities" },
+];
+
+const INTENT_OPTIONS: { value: SearchIntent; label: string; description: string }[] = [
+  { value: "programme_guidance", label: "Find a programme", description: "Preview what it teaches, then choose a university." },
+  { value: "university_requirements", label: "Check a university", description: "See programmes and admission requirements." },
+  { value: "career_exploration", label: "Understand a domain or role", description: "Follow the field from domain to role." },
+  { value: "skills_and_tools", label: "Find skills or tools", description: "See what each item does in its career context." },
+  { value: "opportunities", label: "Find opportunities", description: "See relevant opportunities and eligibility." },
 ];
 
 export function SearchOverlay({
@@ -389,6 +440,10 @@ export function SearchOverlay({
   onChangeText,
   scope = "all",
   onScopeChange,
+  intent = null,
+  onIntentChange,
+  userType,
+  searchContext,
   loading,
   error,
   results = [],
@@ -408,6 +463,15 @@ export function SearchOverlay({
   const showSkeleton = loading && hasQuery;
   const showEmpty = hasQuery && !loading && !hasResults;
   const showIdle = !hasQuery && !loading;
+  const isUndergraduate = userType === "student";
+  const selectedIntent = INTENT_OPTIONS.find((item) => item.value === intent);
+  const selectedIntentDescription = searchContext?.guidance ?? (
+    isUndergraduate && intent === "programme_guidance"
+      ? "Open your programme to see what it teaches, then follow it into domains, subgroups, roles, and what to learn next."
+      : isUndergraduate && intent === "university_requirements"
+        ? "Explore the programmes connected to your university and open one to follow its career guidance."
+        : selectedIntent?.description
+  );
 
   const handleClose = useCallback(() => {
     onChangeText("");
@@ -426,7 +490,7 @@ export function SearchOverlay({
             ref={inputRef}
             value={value}
             onChangeText={onChangeText}
-            placeholder="Search programmes, domains, roles…"
+            placeholder="Search programmes, universities, domains, roles or skills…"
             loading={loading}
             error={error}
             style={styles.overlaySearchBar}
@@ -441,22 +505,38 @@ export function SearchOverlay({
             </Text>
           </TouchableOpacity>
         </View>
-        {/* Scope chips */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={hScroll}
-          contentContainerStyle={styles.overlayScopes}
-        >
-          {SCOPE_OPTIONS.map((opt) => (
-            <ScopeChip
-              key={opt.value}
-              label={opt.label}
-              active={scope === opt.value}
-              onPress={() => onScopeChange?.(opt.value)}
-            />
-          ))}
-        </ScrollView>
+        {/* Choose the task first. Result groups then follow that task instead of
+            making the user interpret unrelated programme/domain/role hits. */}
+        <View style={styles.intentHeader}>
+          <Text style={[styles.intentPrompt, { color: colors.textRole.secondary }]}>What are you trying to do?</Text>
+          {intent ? (
+            <View style={styles.selectedIntentRow}>
+              <ScopeChip
+                label={isUndergraduate && intent === "university_requirements"
+                  ? "Explore my university"
+                  : selectedIntent?.label ?? "Search task"}
+                active
+                onPress={() => onIntentChange?.(null)}
+              />
+              <TouchableOpacity onPress={() => onIntentChange?.(null)} hitSlop={8}>
+                <Text style={[styles.changeIntent, { color: colors.accentRole.action }]}>Change</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={hScroll} contentContainerStyle={styles.overlayScopes}>
+              {INTENT_OPTIONS.map((opt) => (
+                <ScopeChip key={opt.value} label={opt.label} onPress={() => onIntentChange?.(opt.value)} />
+              ))}
+            </ScrollView>
+          )}
+        </View>
+        {!intent ? (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={hScroll} contentContainerStyle={styles.overlayScopes}>
+            {SCOPE_OPTIONS.map((opt) => (
+              <ScopeChip key={opt.value} label={opt.label} active={scope === opt.value} onPress={() => onScopeChange?.(opt.value)} />
+            ))}
+          </ScrollView>
+        ) : null}
       </View>
 
       {/* Results area */}
@@ -468,6 +548,14 @@ export function SearchOverlay({
       >
         {showIdle && (
           <>
+            {intent ? (
+              <View style={styles.intentExplanation}>
+                <Text style={[styles.idleLabel, { color: colors.textRole.muted }]}>Search guidance</Text>
+                <Text style={[styles.intentExplanationText, { color: colors.textRole.secondary }]}>
+                  {selectedIntentDescription}
+                </Text>
+              </View>
+            ) : null}
             {recentSearches.length > 0 && (
               <View style={styles.idleSection}>
                 <Text style={[styles.idleLabel, { color: colors.textRole.muted }]}>
@@ -528,7 +616,8 @@ export function SearchOverlay({
                   results={group.items}
                   query={value}
                   onResultPress={onResultPress}
-                  maxRows={5}
+                  onMorePress={isGuest ? onSignIn : undefined}
+                  maxRows={isGuest ? 2 : 5}
                 />
               ) : null,
             )}
@@ -540,7 +629,7 @@ export function SearchOverlay({
                     Sign in for full results
                   </Text>
                   <Text style={[styles.guestCtaMessage, { color: colors.textRole.secondary }]}>
-                    Guest accounts see limited previews.
+                    Guests see a short public preview. Create an account to see all matches and save your direction.
                   </Text>
                 </View>
                 {onSignIn ? (
@@ -634,6 +723,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     lineHeight: FontSize.xs * 1.4,
   },
+  resultContext: {
+    fontSize: 11,
+    lineHeight: 15,
+  },
   resultMetaRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -647,6 +740,11 @@ const styles = StyleSheet.create({
   resultSource: {
     fontSize: 10,
     letterSpacing: 0,
+  },
+  resultAction: {
+    fontSize: 10,
+    fontWeight: FontWeight.semibold,
+    marginLeft: "auto",
   },
   // SearchResultsGroup
   resultsGroup: {
@@ -674,6 +772,12 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
     textAlign: "center",
     marginTop: Spacing.sm,
+  },
+  groupMoreButton: {
+    minHeight: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: Spacing.xs,
   },
   // SearchLoadingSkeleton
   skeletonGroup: {
@@ -783,6 +887,32 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.sm,
     gap: Spacing.sm,
   },
+  intentHeader: {
+    paddingHorizontal: Spacing.md,
+    paddingTop: Spacing.sm,
+    gap: Spacing.xs,
+  },
+  intentPrompt: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+  },
+  selectedIntentRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+  },
+  changeIntent: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+  },
+  intentExplanation: {
+    marginBottom: Spacing.lg,
+    gap: Spacing.xs,
+  },
+  intentExplanationText: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+  },
   overlayBody: {
     flex: 1,
   },
@@ -851,8 +981,9 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   webPanel: {
-    width: 640,
-    maxHeight: 520,
+    width: 760,
+    maxWidth: "calc(100% - 32px)",
+    maxHeight: 680,
     borderRadius: Radius.lg,
     borderWidth: 1,
     overflow: "hidden",

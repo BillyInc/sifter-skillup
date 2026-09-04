@@ -24,6 +24,9 @@ import type { DomainMatchType, RoleMatchType } from "../theme";
 
 export type { DomainMatchType, RoleMatchType };
 import type {
+  EliteScope,
+  EliteEntityLevel,
+  ElitePublicationStatus,
   EliteVerificationCheckKey,
   NigerianUserTypeKey,
 } from "../lib/elitePathwayPolicy";
@@ -249,7 +252,8 @@ export type OpportunityType =
   | "graduate_trainee"
   | "entry_level"
   | "fellowship"
-  | "contract";
+  | "contract"
+  | "scholarship";
 
 export type WorkMode = "onsite" | "hybrid" | "remote" | "field" | "shift";
 export type OpportunityScope = "local" | "global" | "remote";
@@ -288,6 +292,11 @@ export interface Opportunity {
   skills?: string[];
   certifications?: string[];
   meta?: DataMeta;
+  /** Funding-opportunity fields when type === scholarship. */
+  funded?: "full" | "partial";
+  level?: string;
+  disciplines?: string[];
+  opensLabel?: string;
 }
 
 /** Filters for the Opportunities hub. Undefined / empty = no filter. */
@@ -400,7 +409,7 @@ export interface ProgrammeSearchResult {
 // No mock rows are introduced here.
 // ══════════════════════════════════════════════════════════════
 
-// ─── Elite pathways (see ELITE_DOMAIN_COUNT) ──────────────────
+// ─── Elite pathways (evidence-gated; no fixed count) ──────────
 export interface ElitePathwaySummary {
   id: string;
   name: string;
@@ -412,6 +421,14 @@ export interface ElitePathwaySummary {
   /** True when Nigerians have a structural edge into this path. */
   nigerianAdvantage?: boolean;
   eliteFlag?: true;
+  /** Evidence scope: local, global, or a documented Nigeria-to-global route. */
+  eliteScope?: EliteScope;
+  /** Whether the label is merely under review or safe to publish. */
+  publicationStatus?: ElitePublicationStatus;
+  /** Whether the label applies to a domain, subgroup, role, or route. */
+  entityLevel?: EliteEntityLevel;
+  /** Plain-language explanation shown beside the label. */
+  evidenceExplanation?: string;
 }
 
 /** A stage in the Formation → Pinnacle progression for an elite path. */
@@ -554,6 +571,26 @@ export interface CertificationV2 {
   level?: "foundation" | "professional" | "advanced";
   /** Why it gates at its placement level (gateway/subgroup/role_hint). */
   gateReason?: string;
+  /** What the record is; these are not interchangeable credential types. */
+  credentialType?:
+    | "certification_or_qualification"
+    | "professional_registration_or_licence"
+    | "membership_or_accreditation"
+    | "training_or_course";
+  /** Provider lifecycle, separate from catalogue retention. */
+  availabilityStatus?:
+    | "active"
+    | "temporarily_unavailable"
+    | "retired"
+    | "superseded";
+  currentRecommendation?: boolean;
+  retainInCatalogue?: boolean;
+  reopenPossible?: boolean | null;
+  availabilityNote?: string | null;
+  statusSourceUrl?: string | null;
+  statusCheckedAt?: string | null;
+  replacementName?: string | null;
+  replacementUrl?: string | null;
 }
 
 export interface ToolV2 extends SourceBackedFields {
@@ -569,6 +606,44 @@ export interface ToolV2 extends SourceBackedFields {
 export interface ToolGroups {
   distinctive: ToolV2[];
   common: ToolV2[];
+}
+
+/**
+ * A learner-facing explanation of an item in its selected context.  The same
+ * skill or tool may appear more than once because its use can change between
+ * a domain, subgroup and role.
+ */
+export type ContextItemPriority = "start_here" | "build_next" | "useful_later" | "optional";
+
+export interface CareerContextItem {
+  contextLevel: "domain" | "subgroup" | "role";
+  contextKey: string;
+  domainId: string;
+  itemType: "skill" | "competency" | "tool" | "certification";
+  itemKey: string;
+  name: string;
+  plainMeaning: string;
+  contextualUse: string;
+  expectedOutput?: string | null;
+  priority: ContextItemPriority;
+  priorityReason: string;
+  prerequisites: string[];
+  relatedItems: string[];
+  sourceIds: string[];
+  sourceReferences: Array<{
+    id?: string;
+    title?: string;
+    url: string;
+    region?: string | null;
+    evidenceType?: string | null;
+  }>;
+  sourceLocators: Array<Record<string, unknown>>;
+  geographicScope: "nigeria" | "global" | "nigeria_to_global";
+  evidenceLimitations: string[];
+  evidenceType: "source_supported_synthesis";
+  sourceConfidence: SourceConfidence;
+  dataState: "source_backed";
+  verifiedAt: string;
 }
 
 /** A source-backed method or concept. This is not proof that a student has
@@ -601,6 +676,7 @@ export interface SubgroupV2 extends SourceBackedFields {
   tools: ToolGroups;
   certifications: CertificationV2[]; // specialization certs
   resources?: CareerLearningResource[];
+  contextItems?: CareerContextItem[];
 }
 
 export interface DomainRoleSummary {
@@ -677,6 +753,7 @@ export interface DomainV2 extends SourceBackedFields {
   subgroups: SubgroupV2[];
   roles: DomainRoleSummary[];
   resources?: CareerLearningResource[];
+  contextItems?: CareerContextItem[];
 }
 
 export interface DomainRoleV2 extends SourceBackedFields {
@@ -716,6 +793,7 @@ export interface DomainRoleV2 extends SourceBackedFields {
   roleBridgeSkills?: { name: string; covered?: boolean }[];
   careerLadder?: string[];
   resources?: CareerLearningResource[];
+  contextItems?: CareerContextItem[];
 }
 
 /** A programme→domain→role readiness row (from programme_role_score). */
@@ -731,7 +809,23 @@ export interface RoleReadiness {
 
 // ─── Disambiguation search (grouped) ──────────────────────────
 export interface CareerSearchResult {
+  /** The user's chosen task for this search, when the command centre supplied one. */
+  searchIntent?: SearchIntent;
+  /** Starting-point persona used to select the correct destination. */
+  userType?: string | null;
+  /** Current undergraduate university, when the starting-point profile has one. */
+  schoolId?: string | null;
+  searchContext?: {
+    label: string;
+    guidance: string;
+  };
   domains: { id: string; name: string; cluster?: string }[];
+  subgroups?: {
+    id: string;
+    name: string;
+    domainId?: string;
+    domainName?: string;
+  }[];
   roles: {
     name: string;
     tier?: string;
@@ -739,6 +833,43 @@ export interface CareerSearchResult {
     domains: { domainId: string; domainName: string; roleKey: string }[];
   }[];
   programmes: ProgrammeSearchResult[];
+  universities?: {
+    id: string;
+    name: string;
+    institutionType?: string;
+    address?: string | null;
+    city?: string | null;
+    state?: string | null;
+  }[];
+  skills?: {
+    id: string;
+    name: string;
+    domainId?: string;
+    domainName?: string;
+    context?: string;
+  }[];
+  tools?: {
+    id: string;
+    name: string;
+    domainId?: string;
+    domainName?: string;
+    group?: string;
+  }[];
+  certifications?: {
+    id: string;
+    name: string;
+    domainId?: string;
+    domainName?: string;
+    level?: string;
+    region?: string;
+  }[];
+  opportunities?: {
+    id: string;
+    title: string;
+    type?: string;
+    scope?: string;
+    region?: string | null;
+  }[];
 }
 
 export interface RoleToolV2 extends SourceBackedFields {
@@ -799,6 +930,18 @@ export interface SkillDiscoveryResult {
   }[];
   tools: { name?: string | null; group?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
   certifications: { name?: string | null; body?: string | null; level?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
+  suggestedNext: {
+    name: string;
+    itemType: "skill" | "competency" | "tool" | "certification";
+    contextLevel: "domain" | "subgroup" | "role";
+    contextKey: string;
+    domainId?: string | null;
+    domainName?: string | null;
+    roleName?: string | null;
+    priority: ContextItemPriority;
+    why: string;
+    sourceBacked: boolean;
+  }[];
 }
 
 // ─── JAMB name → domains (student entry) ──────────────────────
@@ -1054,13 +1197,35 @@ export interface MappingFeedback {
 export type SearchResultType =
   | "programme"
   | "domain"
+  | "subgroup"
   | "role"
+  | "skill"
+  | "tool"
+  | "certification"
   | "university"
   | "scholarship"
   | "opportunity"
   | "admin";
 
-export type SearchScope = "all" | "programmes" | "domains" | "roles";
+export type SearchScope =
+  | "all"
+  | "programmes"
+  | "universities"
+  | "domains"
+  | "subgroups"
+  | "roles"
+  | "skills"
+  | "tools"
+  | "certifications"
+  | "opportunities";
+
+/** The job the user is asking the global search to help them complete. */
+export type SearchIntent =
+  | "programme_guidance"
+  | "university_requirements"
+  | "career_exploration"
+  | "skills_and_tools"
+  | "opportunities";
 
 export interface SearchResult {
   id: string;
@@ -1079,4 +1244,10 @@ export interface SearchResult {
   locked?: boolean;
   /** When true, the row is not navigable. */
   disabled?: boolean;
+  /** Optional entity-specific route, used for contextual skill/tool matches. */
+  href?: string;
+  /** Plain-language next action shown beneath a search hit. */
+  actionLabel?: string;
+  /** Why this result is relevant in the selected search context. */
+  contextHint?: string;
 }
