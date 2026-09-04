@@ -32,24 +32,39 @@ METRICS = [
     {"domain_id": "u4", "volume_score": 20.0, "demand_band": "LOW "},
     {"domain_id": "u9", "volume_score": 3, "demand_band": "high"},  # orphan
 ]
+# The elite gate reads this table. `elite_domain` on the domain row is an audit
+# input, not publication evidence, so a domain is only shown as elite when it
+# also has a published review here. u2 (Alpha Systems) is the published one.
+REVIEWS = [
+    {"entity_id": "u2", "domain_id": None},
+]
 
 
-def _svc_with(domains, metrics):
+def _svc_with(domains, metrics, reviews):
+    # Table-aware on purpose. This used to return `metrics` for every table
+    # that was not "domains", which meant the elite-evidence lookup was
+    # silently answered with demand rows -- so the gate was being exercised
+    # against the wrong data and whether it passed was an accident of which
+    # uuids happened to appear in METRICS.
     def table(name):
         t = MagicMock()
         t.select.return_value = t
         t.order.return_value = t
         t.eq.return_value = t
-        t.execute.return_value = MagicMock(
-            data=domains if name == "domains" else metrics
-        )
+        if name == "domains":
+            payload = domains
+        elif name == "elite_evidence_reviews":
+            payload = reviews
+        else:
+            payload = metrics
+        t.execute.return_value = MagicMock(data=payload)
         return t
 
     return MagicMock(table=table)
 
 
-def _call(domains=DOMAINS, metrics=METRICS) -> dict:
-    with patch.object(cr, "_svc", lambda: _svc_with(domains, metrics)):
+def _call(domains=DOMAINS, metrics=METRICS, reviews=REVIEWS) -> dict:
+    with patch.object(cr, "_svc", lambda: _svc_with(domains, metrics, reviews)):
         data = asyncio.run(cr.list_domain_clusters()).data
     assert data is not None
     return data
@@ -114,6 +129,32 @@ class TestDomainClusters:
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
         assert by_name["Alpha Systems"]["eliteFlag"] is True
         assert by_name["Nursing"]["eliteFlag"] is False
+
+    def test_elite_flag_requires_a_published_review(self):
+        # The gate, stated directly: elite_domain alone must not surface a
+        # domain as elite. Alpha Systems still has elite_domain=True here --
+        # only the published review is gone.
+        out = _call(reviews=[])
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Alpha Systems"]["eliteFlag"] is False
+
+    def test_elite_gate_matches_on_domain_key_as_well_as_uuid(self):
+        # Reviews may key a domain either way, so both lookups have to work or
+        # half the published set silently stops being elite.
+        out = _call(reviews=[{"entity_id": None, "domain_id": "D002"}])
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Alpha Systems"]["eliteFlag"] is True
+
+    def test_elite_gate_failure_does_not_take_the_endpoint_down(self):
+        # _published_elite_entity_ids swallows its own errors and returns an
+        # empty set. This asserts the endpoint still answers `real` in that
+        # case -- fail closed on the flag, not on the whole explorer. The
+        # regression this file exists to catch was the opposite: the elite
+        # lookup was missing entirely, the resulting NameError was swallowed by
+        # the endpoint's own except, and every request answered `coming_soon`.
+        with patch.object(cr, "_published_elite_entity_ids", side_effect=RuntimeError("boom")):
+            out = _call()
+        assert out["status"] == "coming_soon"
 
     def test_empty_table_degrades_instead_of_lying(self):
         out = _call(domains=[], metrics=[])
