@@ -116,15 +116,25 @@ coderabbit review --plain --type uncommitted     # before committing
 coderabbit review --plain --base main            # whole branch vs main
 ```
 
-**CodeRabbit is on the free tier: one review per hour**, and it refuses any
-diff over **150 files**. Both limits produce a *green* check that reviewed
-nothing — "Review skipped: N files exceed the limit of 150", or a silent
-rate-limit. Never read a passing CodeRabbit check as "reviewed".
+**The CLI is the only real review. The PR bot never reviews the code.** This
+org is on CodeRabbit's Free plan, which by its own description "will generate a
+high-level summary and a walkthrough for each pull request" — line-by-line
+review requires a paid plan. So the `CodeRabbit` check on a PR is *never*
+evidence the code was examined, even when it says "Review completed" and was
+not rate-limited. Verified on #148 and #149: both "completed", both zero review
+comments.
 
+The bot has two further ways to pass while doing even less:
+
+- **rate limit** — 1 review/hour, and the CLI shares the quota. Reports
+  "Review rate limited" as a *passing* check (#147).
+- **150-file cap** — "Review skipped: N files exceed the limit of 150",
+  also passing (#146, where 450 `litellm-env` deletions blew the cap).
+
+So: run the CLI before opening the PR, and never treat the check as a gate.
 When a PR is over the file limit because of bulk deletions or generated files,
-review the substance separately: cherry-pick the meaningful commits onto a
-scratch branch off `main`, review that, then delete it. If it was merely
-rate-limited, comment `full review` once the hour is up.
+review the substance separately — cherry-pick the meaningful commits onto a
+scratch branch off `main`, review that, then delete it.
 
 Treat its output as a colleague's opinion, not a gate: verify each finding
 against the code before acting. Fix what is real, say plainly what you are
