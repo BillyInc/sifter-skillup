@@ -550,7 +550,7 @@ must be documented rather than silently deleted:
 - Legacy learning/game: `WorldScreen`, `IslandMapScreen`, `LessonScreen`,
   `TrackRoomScreen`, `TrackSetupScreen`, `StreaksScreen`,
   `PostIslandTrackSelection`, `LearnMoreScreen`, `CairoBuilderTrackScreen`,
-  `EcosystemTrackScreen`, `StarknetTrackScreen`, and related routes. These use
+  `StarknetTrackScreen`, and related routes. These use
   content manifests, lesson mechanics, XP, badges, streaks, and feature gates.
 - Commerce/other: `MerchandiseScreen` and merchandise routes are reward/commerce
   surfaces and are not part of the core admission-to-career path.
@@ -1657,13 +1657,16 @@ can change what the user sees or does is specified before Figma implementation.
 - Acceptance/status/Figma: legacy learning remains compatible and does not
   replace career guidance; implemented/partial; Figma missing.
 
-#### `PostIslandTrackSelection`, `LearnMoreScreen`, `EcosystemTrackScreen`, `CairoBuilderTrackScreen`, and `StarknetTrackScreen`
+#### `PostIslandTrackSelection`, `LearnMoreScreen`, `CairoBuilderTrackScreen`, and `StarknetTrackScreen`
 
-- Route/evidence: `app/(tabs)/map/*`, `app/ecosystem-track/index.tsx:1-7`,
+- Route/evidence: `app/(tabs)/map/*`,
   `app/cairo-builder-track/index.tsx:1-5`, `app/starknet-track/index.tsx:1-7`;
   `src/screens/PostIslandTrackSelection.tsx:98`, `LearnMoreScreen.tsx:45`,
-  `EcosystemTrackScreen.tsx:128`, `CairoBuilderTrackScreen.tsx:110`,
-  `StarknetTrackScreen.tsx:195`.
+  `CairoBuilderTrackScreen.tsx:110`, `StarknetTrackScreen.tsx:195`.
+- `EcosystemTrackScreen` no longer exists. `app/ecosystem-track/index.tsx`
+  renders `DisabledLearningScreen` (disconnected in `9bf84f0`), which left the
+  screen unrouted and unreferenced; it was deleted rather than kept as dead
+  code that could re-import a 1.1MB lesson corpus into the web entry chunk.
 - Persona/entry/purpose: learner chooses a next track or opens a specialised
   legacy ecosystem/build/wallet path.
 - UI/components: track choice cards, about/resources/terms tabs, specialised

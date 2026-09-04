@@ -319,7 +319,6 @@ auth component library.
 - `src/screens/TrackSetupScreen.tsx`
 - `src/screens/PostIslandTrackSelection.tsx`
 - `src/screens/LearnMoreScreen.tsx`
-- `src/screens/EcosystemTrackScreen.tsx`
 - `src/screens/CairoBuilderTrackScreen.tsx`
 - `src/screens/StarknetTrackScreen.tsx`
 - `src/screens/StreaksScreen.tsx`

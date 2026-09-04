@@ -11,6 +11,21 @@ const hyperlaneAliases = new Map([
   ['@hyperlane-xyz/sdk', path.resolve(__dirname, 'src/shims/hyperlane/sdk.ts')],
   ['@hyperlane-xyz/registry', path.resolve(__dirname, 'src/shims/hyperlane/registry.ts')],
   ['@hyperlane-xyz/utils', path.resolve(__dirname, 'src/shims/hyperlane/utils.ts')],
+  // lucide-react's barrel re-exports ~1,600 icons and Metro does not
+  // tree-shake it, so all of them reach the web entry chunk for the sake of
+  // the 29 that @privy-io/react-auth actually imports. The shim re-exports
+  // exactly those 29 from their own module paths. Only the bare specifier is
+  // aliased -- deep 'lucide-react/dist/esm/...' paths still resolve to the
+  // real package, which is what lets the shim import from it without cycling.
+  ['lucide-react', path.resolve(__dirname, 'src/shims/lucide-react.ts')],
+  // Same barrel problem, same package pulling it in: three @privy-io/react-auth
+  // modules import '@heroicons/react/24/outline' as a barrel (everything else
+  // in Privy uses deep per-icon paths), which drags all 367 outline icons into
+  // the entry chunk for the sake of 5. Deep
+  // The shim's own deep imports are children of this specifier and would
+  // re-enter the alias; the originModulePath guard in resolveRequest below is
+  // what stops that recursing into a stack overflow.
+  ['@heroicons/react/24/outline', path.resolve(__dirname, 'src/shims/heroicons-24-outline.ts')],
   ['abitype', path.resolve(__dirname, 'node_modules/abitype')],
   ['isows', path.resolve(__dirname, 'node_modules/isows')],
   ['ox', path.resolve(__dirname, 'node_modules/ox')],
@@ -84,7 +99,14 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   }
 
   const aliased = hyperlaneAliases.get(moduleName);
-  if (aliased) {
+  // A shim that narrows a barrel has to import from the package it is standing
+  // in for. When the shim's own deep imports resolve back through the aliased
+  // specifier, the alias fires again and Metro recurses until the stack blows
+  // -- an unhandled SIGSEGV during "Starting Metro Bundler", with no JS error
+  // to read. Skipping the alias when the request comes from the alias target
+  // breaks that loop and costs nothing: the shim is the one module that must
+  // always see the real package.
+  if (aliased && context.originModulePath !== aliased) {
     const resolver = previousResolveRequest ?? context.resolveRequest;
     return resolver(context, aliased, platform);
   }
