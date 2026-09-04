@@ -196,7 +196,8 @@ Run each file in the order below. Keep each SQL file's transaction intact.
 9. `backend/migration_enrichment_v1.sql`
 10. `backend/migration_market_intelligence_v1.sql`
 11. `backend/migration_role_detail_enrichment.sql`
-12. `backend/migration_career_resources_v1.sql`
+12. `backend/migration_certification_lifecycle.sql`
+13. `backend/migration_career_resources_v1.sql`
 
 For the current career preview, the dependency-critical subset is:
 
@@ -208,9 +209,11 @@ migration_career_v2.sql
   -> migration_enrichment_v1.sql
   -> migration_market_intelligence_v1.sql
   -> migration_role_detail_enrichment.sql (when role detail data is used)
+  -> migration_certification_lifecycle.sql
   -> migration_career_resources_v1.sql (when resource data is used)
   -> migration_saved_resource_support.sql (after saved_items exists)
   -> seed_career_v2_preview_2026-08-26_parts_gz/ (reconstruct locally; development only)
+  -> seed_certification_lifecycle.sql (apply provider lifecycle statuses and replacements after credential rows load; name matching is punctuation-normalized)
 ```
 
 `migration_role_tools.sql` must precede
