@@ -82,6 +82,18 @@ steps:
       # --exclude data: generated career-mapping SQL/JSON artifacts, some of
       # them hundreds of MB. Not source.
       - |
+        # The semgrep image refuses to scan unless the code is bind-mounted at
+        # /src: adjust_for_docker() iterates /src and aborts with exit 2 if it
+        # is empty, BEFORE any scanning happens. Woodpecker mounts the
+        # workspace elsewhere and cds into it, so /src is untouched and the
+        # step died having printed nothing. Pointing /src at the workspace is
+        # what `-v "$PWD:/src"` does, expressed without control over the
+        # docker run flags. Do not drop these two lines.
+        #
+        # Note this failure cannot be reproduced with the pip package, which
+        # has no such check -- only the container behaves this way.
+        rmdir /src 2>/dev/null || true
+        ln -sfn "$(pwd)" /src
         semgrep scan \
           --config p/default \
           --config p/python \
@@ -118,6 +130,9 @@ steps:
       - status: [success, failure]
     commands:
       - |
+        # Same /src requirement as the gating step above.
+        rmdir /src 2>/dev/null || true
+        ln -sfn "$(pwd)" /src
         semgrep scan \
           --config p/default \
           --config p/python \
