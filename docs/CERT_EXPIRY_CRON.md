@@ -136,7 +136,7 @@ with `crontab -e`. Replace the placeholder — do **not** commit the real URL:
 # PING_URL is a secret: anyone holding it can suppress your alerts.
 # Replace <HEALTHCHECKS-PING-URL> with the check's URL, e.g.
 #   https://hc-ping.com/00000000-0000-0000-0000-000000000000
-0 7 * * * out=$(/usr/local/bin/levelup-check-cert-expiry 2>&1); rc=$?; printf '%s' "$out" >> /var/log/levelup-cert-expiry.log; curl -fsS -m 10 --retry 3 --data-raw "$out" "<HEALTHCHECKS-PING-URL>/$rc" > /dev/null
+0 7 * * * out=$(/usr/local/bin/levelup-check-cert-expiry 2>&1); rc=$?; [ -z "$out" ] || printf '%s\n' "$out" >> /var/log/levelup-cert-expiry.log; curl -fsS -m 10 --retry 3 --data-raw "$out" "<HEALTHCHECKS-PING-URL>/$rc" > /dev/null
 ```
 
 What each part does:
@@ -153,13 +153,21 @@ What each part does:
 - Output still goes to the log file, so the on-box history is unchanged.
 
 Because the URL is a secret, keep it out of git. If you would rather not have it
-in the crontab either, put it in a root-owned file and source it:
+in the crontab either, put it in a file owned by the crontab user and source it:
 
 ```cron
-0 7 * * * . /etc/levelup-cert-ping.env; out=$(/usr/local/bin/levelup-check-cert-expiry 2>&1); rc=$?; printf '%s' "$out" >> /var/log/levelup-cert-expiry.log; curl -fsS -m 10 --retry 3 --data-raw "$out" "$PING_URL/$rc" > /dev/null
+0 7 * * * . /etc/levelup-cert-ping.env; out=$(/usr/local/bin/levelup-check-cert-expiry 2>&1); rc=$?; [ -z "$out" ] || printf '%s\n' "$out" >> /var/log/levelup-cert-expiry.log; curl -fsS -m 10 --retry 3 --data-raw "$out" "$PING_URL/$rc" > /dev/null
 ```
 
-with `/etc/levelup-cert-ping.env` containing `PING_URL=...`, mode `0600`.
+with `/etc/levelup-cert-ping.env` containing `PING_URL=...`. Mode `0600` is
+right, but the owner must be the user whose crontab this is — a root-owned
+`0600` file is unreadable from a user crontab, and `.` failing there leaves
+`PING_URL` unset, so the ping silently goes to a URL with no UUID:
+
+```bash
+sudo install -o "$USER" -g "$USER" -m 0600 /dev/null /etc/levelup-cert-ping.env
+sudo -u "$USER" tee /etc/levelup-cert-ping.env <<< 'PING_URL=<HEALTHCHECKS-PING-URL>'
+```
 
 Verify the wiring end to end before trusting it: run the command by hand and
 confirm the check goes green in the Healthchecks UI, then confirm the *absence*
