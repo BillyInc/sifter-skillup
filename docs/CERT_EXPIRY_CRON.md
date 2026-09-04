@@ -59,6 +59,11 @@ sudo install -m 0755 /path/to/sifter-skillup/scripts/cert-expiry-cron.sh \
   /usr/local/bin/levelup-cert-expiry-cron
 sudo touch /var/log/levelup-cert-expiry.log
 sudo chown "$USER" /var/log/levelup-cert-expiry.log
+# /var/log is root-owned, so both files must be pre-created for the crontab
+# user. Miss this one and every healthy run fails on the heartbeat write --
+# which is the check working correctly, but for the wrong reason.
+sudo install -o "$USER" -g "$USER" -m 0644 /dev/null \
+  /var/log/levelup-cert-expiry.heartbeat
 ```
 
 Then add the cron entry with `crontab -e`:
@@ -140,6 +145,7 @@ As of 4 Sep 2026, on storytime:
 | `/usr/local/bin/levelup-check-cert-expiry` | installed, `root:root` 0755 |
 | `/usr/local/bin/levelup-cert-expiry-cron` | installed, `root:root` 0755 |
 | `/var/log/levelup-cert-expiry.log` | exists, owned by `ubuntu`, currently empty |
+| `/var/log/levelup-cert-expiry.heartbeat` | exists, owned by `ubuntu`, rewritten each run |
 | `ubuntu` crontab | `0 7 * * * /usr/local/bin/levelup-cert-expiry-cron` |
 | `/etc/letsencrypt/renewal-hooks/deploy/10-reload-nginx.sh` | installed, `root:root` 0755 |
 | `/etc/levelup-cert-ping.env` | exists, `ubuntu:ubuntu` 0600, **`PING_URL` empty** |
@@ -188,6 +194,14 @@ How the wrapper uses it (`scripts/cert-expiry-cron.sh`):
   grace period covers the rest.
 - A failed ping is logged but does **not** change the exit status, so the
   monitoring path can never mask the thing being monitored.
+- A **failed log write does** change the exit status, and says so in the ping
+  payload. Without that, a full disk or an unwritable log would send a success
+  ping on every healthy day — which would quietly falsify the main argument for
+  choosing a dead-man's switch in the first place.
+- On healthy days there is nothing to log, so instead the wrapper rewrites
+  `/var/log/levelup-cert-expiry.heartbeat` in place. That exercises the
+  filesystem for real — a full disk fails on write, not on open — without
+  growing the log. It is a fixed-size file; it never needs rotating.
 - With `PING_URL` empty the wrapper skips the ping entirely and behaves exactly
   like the old plain cron line — which is why it was safe to install ahead of
   the URL.
