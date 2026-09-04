@@ -33,6 +33,15 @@ ENV_FILE="${ENV_FILE:-/etc/levelup-cert-ping.env}"
 out=$("$CHECK" 2>&1)
 rc=$?
 
+# A non-zero exit with nothing on stdout is the check failing to run at all --
+# missing, not executable, killed. Left as-is that lands in the healthy branch
+# below and writes an "ok" heartbeat, so with no PING_URL configured a check
+# that never ran is indistinguishable from five healthy certificates. Give it
+# words so it logs, pings, and reads correctly.
+if [ "$rc" -ne 0 ] && [ -z "$out" ]; then
+  out="levelup-cert-expiry-cron: $CHECK exited $rc with no output (missing, not executable, or killed?)"
+fi
+
 # The check prints nothing when every hostname is healthy, so the log only grows
 # on a bad day and stays readable for years.
 #
