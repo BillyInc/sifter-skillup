@@ -11,9 +11,35 @@
 
 name: Web PR preview
 
+# A preview is only worth building when the running app can actually differ.
+# Without a path filter this fired on every PR: #146 was certbot hooks and CI
+# YAML, #148 was a single markdown file, and both triggered a full web deploy.
+# `synchronize` also fires on every push, so one PR that is pushed to four times
+# costs four deploys -- which is exactly what happened while fixing #146.
+#
+# `synchronize` is kept deliberately: reviewers look at the preview after review
+# fixes are pushed, and a preview pinned to the PR's first commit is worse than
+# no preview. The path filter is what removes the waste.
+#
+# Keep this list in step with anything Metro reads. If a PR changes app code and
+# no preview appears, a path is missing here rather than the workflow being
+# broken.
 on:
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - 'app/**'            # expo-router routes
+      - 'src/**'            # components, screens, shims, lib
+      - 'assets/**'         # fonts and images resolved into the bundle
+      - 'public/**'         # index.html and static web files
+      - 'package.json'
+      - 'pnpm-lock.yaml'    # a dependency bump changes the bundle
+      - 'app.json'          # expo config: plugins, web output, scheme
+      - 'eas.json'          # build/deploy profiles
+      - 'metro.config.js'   # resolver aliases and the barrel shims
+      - 'babel.config.js'
+      - 'tsconfig.json'     # path aliases Metro resolves through
+      - '.eas/workflows/preview-web.yml'
 
 jobs:
   preview:
