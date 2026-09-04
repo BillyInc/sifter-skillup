@@ -64,6 +64,12 @@ sudo chown "$USER" /var/log/levelup-cert-expiry.log
 # which is the check working correctly, but for the wrong reason.
 sudo install -o "$USER" -g "$USER" -m 0644 /dev/null \
   /var/log/levelup-cert-expiry.heartbeat
+# Same reasoning for /etc: the ping URL goes in a file the crontab user must be
+# able to read, and `sudo -u "$USER" tee` in the alerting section below can only
+# write a file that already exists -- an unprivileged user cannot create one
+# under /etc. Created empty here; the wrapper treats an empty PING_URL as
+# "log only, do not ping", so this is inert until the URL is filled in.
+sudo install -o "$USER" -g "$USER" -m 0600 /dev/null /etc/levelup-cert-ping.env
 ```
 
 Then add the cron entry with `crontab -e`:
@@ -173,8 +179,10 @@ PING_URL=https://hc-ping.com/00000000-0000-0000-0000-000000000000
 EOF
 ```
 
-The file is already created with the right owner and mode; keep it
-`ubuntu:ubuntu` `0600`. **The owner matters**: a root-owned `0600` file is
+This writes into the file created by the install steps above — `tee` run as an
+unprivileged user can only update a file that already exists, so on a fresh host
+run those first. Keep it `ubuntu:ubuntu` `0600`.
+**The owner matters**: a root-owned `0600` file is
 unreadable from the `ubuntu` crontab, and the wrapper would then run with
 `PING_URL` unset — logging normally while silently never pinging.
 
