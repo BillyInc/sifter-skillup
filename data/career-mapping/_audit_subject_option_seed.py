@@ -45,6 +45,16 @@ CODE_RE = re.compile(r"FROM subject_catalog sc WHERE sc\.code = '([^']+)'\s+"
 
 def source_codes(text: str, exam_type: str) -> set[str]:
     """Return explicitly named subject codes in an emitted source sentence."""
+    # Do not require names that belong only to a conditional NBC/NTC/TC-II
+    # clause. The executable option represents the ordinary applicant rule;
+    # conditional text remains available in source_text for review.
+    text = re.split(
+        r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
+        r"(?:holders?|candidates?)?\b",
+        text,
+        maxsplit=1,
+        flags=re.I,
+    )[0]
     normalized = re.sub(r"[^a-z0-9]+", " ", text.replace("''", "'").lower())
     allowed = _parser.UTME_CODES if exam_type == "utme" else _parser.OLEVEL_CODES
     matches: list[tuple[str, str]] = []

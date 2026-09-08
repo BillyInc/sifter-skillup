@@ -94,7 +94,7 @@ import {
   isStarknetSepoliaRpcConfigured,
   starknetSepoliaRpcCall,
 } from '../../../../lib/starknetRpc';
-import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
+import { useAuth as useAppAuth } from '@/hooks/useAuth';
 import { Colors, Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 import {
   STARKNET_SEPOLIA_CONFIG,

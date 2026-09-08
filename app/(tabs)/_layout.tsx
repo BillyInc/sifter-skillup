@@ -2,7 +2,7 @@ import { Tabs, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
 import { ReferenceShell } from "../../src/components/shell/ReferenceShell";
-import { useAuth } from "../../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useEffectiveAccountType, needsLegacyTypeSelection } from "../../src/lib/accountType";
 
 export const unstable_settings = {

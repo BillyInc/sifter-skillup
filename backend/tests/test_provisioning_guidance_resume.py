@@ -84,5 +84,7 @@ def test_guidance_report_keeps_selected_path_and_explains_focus_order():
     assert "Software" in report
     assert "Developer" in report
     assert "What you selected" in report
+    assert "Subject check status" in report
+    assert "Subject matching was not used for this programme search." in report
     assert "Data notes" in report
     assert "Unselected domain" not in report

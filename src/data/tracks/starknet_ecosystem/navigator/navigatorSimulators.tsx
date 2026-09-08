@@ -53,7 +53,7 @@ import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
+import { useAuth as useAppAuth } from '@/hooks/useAuth';
 import {
   StarknetAddressBanner, StarknetTxLink,
   STARKNET_SEPOLIA_CONFIG,

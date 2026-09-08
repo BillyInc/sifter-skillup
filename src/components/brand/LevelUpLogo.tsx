@@ -9,7 +9,7 @@
  * iOS, Android and web. No raster asset required.
  */
 import React, { useEffect, useRef } from "react";
-import { Animated, type ViewStyle } from "react-native";
+import { Animated, Platform, View, type ViewStyle } from "react-native";
 import Svg, { Rect, Path } from "react-native-svg";
 import { Brand } from "../../theme";
 
@@ -34,17 +34,49 @@ export function LevelUpLogo({
   animated = false,
   style,
 }: LevelUpLogoProps) {
-  const t = useRef(new Animated.Value(animated ? 0 : 1)).current;
+  // React Native Web cannot reliably serialize Animated transform arrays into
+  // CSSStyleDeclaration. Keep the logo static on web; native platforms retain
+  // the spring entrance animation.
+  const shouldAnimate = animated && Platform.OS !== "web";
+  const t = useRef(new Animated.Value(shouldAnimate ? 0 : 1)).current;
 
   useEffect(() => {
-    if (!animated) return;
+    if (!shouldAnimate) return;
     Animated.spring(t, {
       toValue: 1,
       tension: 70,
       friction: 9,
       useNativeDriver: true,
     }).start();
-  }, [animated, t]);
+  }, [shouldAnimate, t]);
+
+  const logo = (
+    <Svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      {BARS.map((bar, i) => (
+        <Rect
+          key={`bar-${i}`}
+          x={bar.x}
+          y={bar.y}
+          width={bar.w}
+          height={bar.h}
+          rx={5}
+          fill={color}
+          opacity={bar.opacity}
+        />
+      ))}
+      {/* Peak chevron / arrowhead crowning the tallest bar */}
+      <Path
+        d="M55 30 L78 8 L92 22"
+        stroke={color}
+        strokeWidth={9}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </Svg>
+  );
+
+  if (!shouldAnimate) return <View style={style}>{logo}</View>;
 
   return (
     <Animated.View
@@ -69,29 +101,7 @@ export function LevelUpLogo({
         style,
       ]}
     >
-      <Svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-        {BARS.map((bar, i) => (
-          <Rect
-            key={`bar-${i}`}
-            x={bar.x}
-            y={bar.y}
-            width={bar.w}
-            height={bar.h}
-            rx={5}
-            fill={color}
-            opacity={bar.opacity}
-          />
-        ))}
-        {/* Peak chevron / arrowhead crowning the tallest bar */}
-        <Path
-          d="M55 30 L78 8 L92 22"
-          stroke={color}
-          strokeWidth={9}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </Svg>
+      {logo}
     </Animated.View>
   );
 }

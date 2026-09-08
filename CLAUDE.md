@@ -700,11 +700,23 @@ Then apply the subject data in this order:
 4. `backend/seed_subject_options.sql`
 
 Current generated coverage is 46 catalog subjects, 420 JAMB programme names,
-9,130 unique university offerings, 596 national matcher options, 7,793 option
+9,130 unique university offerings, 604 national matcher options, 8,007 option
 items, and 1,260 typed requirement records. The typed records preserve
 conditions, cross-references, direct-entry requirements, source variants, and
-14 explicitly source-missing layers. Only directly matchable records become
+25 explicitly source-missing layers. Only directly matchable records become
 subject-picker options; missing source text must never be guessed.
+
+Subject wording policy is explicit. “Any other subject” is an open slot over
+the active exam catalogue, including trade/vocational subjects, unless the
+university-specific special-consideration text narrows it. “Relevant”,
+“suitable”, and “appropriate” are not categories by themselves: they become
+matchable only when the same source row names a list/category or a narrow
+same-programme exam-layer rule supplies the scope. A broad unrestricted rule
+must never be used as that cross-layer scope. Conditional NBC/NTC/TC-II text
+is retained for review but cannot add subjects to the ordinary national rule.
+Separate subject groups are assigned distinct slots so one selected subject
+cannot satisfy two requirements. Direct-entry wording never supplies UTME or
+O-level scope.
 
 `seed_subject_options.sql` is a replacement transaction for the two national
 matcher tables. It is not an ordinary additive seed and requires a backup or
@@ -718,6 +730,12 @@ career seed, and that every option agrees with a matchable typed rule record.
 A passing generator run alone is not sufficient. The runtime matcher also
 fails closed when the typed rule layer is absent or stale, so both replacement
 subject seeds must be deployed together.
+
+Then run `python data/career-mapping/_audit_subject_match_exhaustive.py`.
+This constructs valid selections and negative mutations for every emitted
+UTME/O-level option and compares the runtime matcher with an independent
+rule oracle. A release is not verified until it reports zero oracle
+mismatches.
 
 After applying the SQL, verify the counts and foreign-key checks in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. A successful local generator

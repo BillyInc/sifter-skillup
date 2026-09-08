@@ -26,12 +26,13 @@ import {
   CompassFonts,
   webContainer,
 } from "../theme";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { LevelUpLogo } from "../components/brand/LevelUpLogo";
 import { DataStateView } from "../components/careerIntelligence";
 import { StaggerReveal } from "../components/animations/StaggerReveal";
 import { careerData } from "../lib/careerData";
 import { getStartingPoint } from "../lib/startingPoint";
+import { getOnboardingDraft } from "../lib/onboardingDraft";
 import type { GuidanceReportPath } from "../lib/careerData";
 import {
   comingSoon,
@@ -245,13 +246,20 @@ export default function CareerHomeScreen() {
     setStartingLoaded(false);
     let active = true;
     void (async () => {
-      const [sp, items] = await Promise.all([
+      const [sp, items, draft] = await Promise.all([
         getStartingPoint(user?.id),
         careerData.getSavedItems(),
+        getOnboardingDraft(user?.id),
       ]);
       const path = await careerData.getGuidancePath();
       if (!active) return;
-      setStarting(sp);
+      const draftProfile = draft?.studentProfile && draft.choice !== "educator"
+        ? {
+            ...(draft.studentProfile as StartingPointProfile),
+            userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
+          }
+        : null;
+      setStarting(sp ?? draftProfile);
       setStartingLoaded(true);
       setSaved(items);
       setGuidance(path);
@@ -351,11 +359,12 @@ export default function CareerHomeScreen() {
 
       {realGuidance && (
         activeProgrammeNames.length || activeUniversityName || activeDomainNames.length ||
-        activeSubgroupNames.length || activeRoleNames.length || activeSubjects.length
+        activeSubgroupNames.length || activeRoleNames.length || activeSubjects.length ||
+        realGuidance.path.resume?.status === "in_progress"
       ) ? (
         <View style={[styles.contextCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
           <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-            Your saved guidance
+            {realGuidance.path.resume?.status === "in_progress" ? "Guidance in progress" : "Your saved guidance"}
           </Text>
           {activeProgrammeNames.length ? (
             <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
@@ -385,6 +394,11 @@ export default function CareerHomeScreen() {
           {activeRoleNames.length ? (
             <Text style={[styles.contextMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
               Roles: {activeRoleNames.join(", ")}
+            </Text>
+          ) : null}
+          {realGuidance.path.resume?.status === "in_progress" ? (
+            <Text style={[styles.contextMeta, { color: colors.textRole.muted }, CompassFonts.body]}>
+              Your unfinished choices are saved. Continue from the last completed step.
             </Text>
           ) : null}
           <TouchableOpacity activeOpacity={0.7} onPress={() => nextAction && router.push(nextAction.href as any)}>

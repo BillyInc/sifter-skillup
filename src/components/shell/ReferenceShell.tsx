@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  type DimensionValue,
   useWindowDimensions,
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
@@ -27,6 +28,7 @@ import { getRecentSearches, addRecentSearch } from '@/lib/recentSearches';
 import { useSidebarNav } from '@/hooks/useResponsive';
 import type { CareerSearchResult, SearchIntent, SearchScope } from '@/types/career';
 import { getStartingPoint } from '@/lib/startingPoint';
+import { SearchLauncherProvider } from '@/components/shell/searchLauncher';
 
 type NavId =
   | 'home'
@@ -313,6 +315,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
+    <SearchLauncherProvider onOpen={(query) => { if (query !== undefined) setSearchQuery(query); setOverlayVisible(true); }}>
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {!focusedGuidance && isWide && (
         <View
@@ -569,6 +572,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         }}
       />
     </View>
+    </SearchLauncherProvider>
   );
 }
 
@@ -729,7 +733,7 @@ const styles = StyleSheet.create({
   searchWrap: {
     position: 'relative',
     width: 420,
-    maxWidth: '45vw',
+    maxWidth: '45vw' as DimensionValue,
   },
   searchStub: {
     width: '100%',

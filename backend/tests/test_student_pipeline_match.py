@@ -348,6 +348,147 @@ def test_incomplete_structured_option_cannot_match_missing_named_olevel_subject(
     assert out == []
 
 
+def test_olevel_any_other_subject_accepts_trade_subject(monkeypatch):
+    tables = {
+        "programme_subject_options": [{
+            "id": "opt1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "olevel",
+            "option_label": "5 credit passes",
+            "min_required": 5,
+            "source_text": (
+                "Five (5) SSC credit passes in English Language, Mathematics, "
+                "Physics, Chemistry and any other subject."
+            ),
+        }],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+            _item("opt1", "required", "Physics"),
+            _item("opt1", "required", "Chemistry"),
+            _item("opt1", "one_of", "Auto Mechanics", group_key="g1", min_from_group=1),
+            _item("opt1", "one_of", "Catering Craft Practice", group_key="g1", min_from_group=1),
+            _item("opt1", "one_of", "Woodwork", group_key="g1", min_from_group=1),
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"english language", "mathematics", "physics", "chemistry", "auto mechanics"},
+        limit=10,
+        exam_type="olevel",
+    )
+    assert len(out) == 1
+    assert "Auto Mechanics" in out[0]["matchedSubjects"]
+
+
+def test_generic_olevel_scope_cannot_match_catalogue_as_exact_requirement(monkeypatch):
+    # A parser must not turn an unresolved "relevant subjects" sentence into
+    # permission for every remaining subject.
+    names = ["English Language", "Mathematics"] + [f"Subject {i}" for i in range(25)]
+    tables = {
+        "programme_subject_options": [{
+            "id": "opt1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "olevel",
+            "option_label": "5 credit passes",
+            "min_required": 5,
+            "source_text": "Five (5) SSC credit passes including English Language, Mathematics and any other relevant subjects.",
+        }],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+            *[_item("opt1", "one_of", name, group_key="g1", min_from_group=3) for name in names[2:]],
+        ],
+        "subject_catalog": [{"name": name, "code": name[:3].upper()} for name in names],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_structured_subject_options(
+        {"english language", "mathematics", "subject 1", "subject 2", "subject 3"},
+        limit=10,
+        exam_type="olevel",
+    ) == []
+
+
+def test_relevant_olevel_scope_cannot_turn_arabic_and_trade_subjects_into_a_match(monkeypatch):
+    # This is the reported false-positive shape: the brochure names English
+    # and Mathematics, then says "any other relevant subjects", while an old
+    # parser seed expanded that unknown scope to the entire catalogue.
+    names = [
+        "English Language",
+        "Mathematics",
+        "Arabic",
+        "Agricultural Science",
+        "Animal Husbandry",
+    ] + [f"Subject {i}" for i in range(25)]
+    tables = {
+        "programme_subject_options": [{
+            "id": "opt1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "olevel",
+            "option_label": "5 credit passes",
+            "min_required": 5,
+            "source_text": "Five credit passes including English Language, Mathematics and any other relevant subjects.",
+        }],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+            *[_item("opt1", "one_of", name, group_key="g1", min_from_group=3) for name in names[2:]],
+        ],
+        "subject_catalog": [{"name": name, "code": name[:3].upper()} for name in names],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_structured_subject_options(
+        {"english language", "mathematics", "arabic", "agricultural science", "animal husbandry"},
+        limit=10,
+        exam_type="olevel",
+    ) == []
+
+
+def test_use_of_english_alias_is_canonicalized_for_utme():
+    assert spr._canonical_subject_name("Use of English") == "English Language"
+    assert spr._canonical_subject_name("use of english language") == "English Language"
+
+
+def test_arabic_can_match_a_real_utme_rule_without_broad_olevel_inference(monkeypatch):
+    tables = {
+        "programme_subject_options": [{
+            "id": "opt1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "utme",
+            "option_label": "Arabic, Literature and one other",
+            "min_required": 3,
+            "source_text": "Use of English, Arabic, Literature in English and one other relevant subject.",
+        }],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Arabic"),
+            _item("opt1", "required", "Literature in English"),
+            _item("opt1", "one_of", "Government", group_key="g1", min_from_group=1),
+            _item("opt1", "one_of", "History", group_key="g1", min_from_group=1),
+        ],
+        "subject_catalog": [
+            {"name": name, "code": name[:3].upper()}
+            for name in ["English Language", "Arabic", "Literature in English", "Government", "History"]
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"english language", "arabic", "literature in english", "government"},
+        limit=10,
+        exam_type="utme",
+    )
+    assert [row["jambProgrammeId"] for row in out] == ["jp1"]
+    assert "Arabic" in out[0]["matchedSubjects"]
+
+
 def test_stale_options_without_typed_rule_authority_cannot_match(monkeypatch):
     tables = {
         "programme_subject_options": [
@@ -434,6 +575,32 @@ def test_combined_match_keeps_utme_result_and_reports_olevel_gap(monkeypatch):
     assert row["jambProgrammeId"] == "jp1"
     assert row["eligibilityStatus"] == "utme_match_olevel_gap"
     assert row["olevelMissingSubjects"] == ["Biology"]
+
+
+def test_combined_match_marks_both_layers_eligible(monkeypatch):
+    def fake_structured(selected, limit, exam_type="utme", require_full=True):
+        return [{
+            "jambProgrammeId": "jp1",
+            "matchedSubjectCount": 4 if exam_type == "utme" else 5,
+            "matchedSubjects": ["English Language", "Mathematics", "Arabic", "Government"]
+            if exam_type == "utme"
+            else ["English Language", "Arabic", "Government", "History", "Literature in English"],
+            "missingSubjects": [],
+            "requirementText": "Arabic and two Arts subjects; five O-level credits including English and Arabic",
+        }]
+
+    monkeypatch.setattr(spr, "_match_structured_subject_options", fake_structured)
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *_args: items)
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Arabic, Government, History",
+            olevel_subjects="English Language, Arabic, Government, History, Literature in English",
+            exam_type="combined",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert result.data["data"][0]["eligibilityStatus"] == "eligible"
 
 
 def test_invalid_subject_exam_mode_does_not_default_to_utme():

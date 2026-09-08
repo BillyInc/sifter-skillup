@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme, Spacing, Radius, FontSize, Brand } from "../../theme";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { SifterButton } from "../ui";
 
 export function OnboardingBackGuard() {

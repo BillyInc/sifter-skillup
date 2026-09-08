@@ -884,6 +884,7 @@ export interface RoleToolV2 extends SourceBackedFields {
 export interface SkillDiscoveryResult {
   terms: string[];
   matchMode: "both" | "either";
+  intent?: "learned" | "intended";
   userType?: string | null;
   adminType?: string | null;
   allowedUserTypes?: string[];
@@ -930,6 +931,22 @@ export interface SkillDiscoveryResult {
   }[];
   tools: { name?: string | null; group?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
   certifications: { name?: string | null; body?: string | null; level?: string | null; domainId?: string | null; domainName?: string | null; matchedSkills: string[]; matchScore: number; matchLabel: string }[];
+  /** Source-backed graph routes surfaced from the selected skills. */
+  paths: {
+    domainId: string;
+    domainName: string;
+    domainMatchScore: number;
+    subgroupId?: string | null;
+    subgroupName?: string | null;
+    roleKey?: string | null;
+    roleName?: string | null;
+    tier?: string | null;
+    matchedSkills: string[];
+    gaps: string[];
+    matchScore: number;
+    matchLabel: string;
+    explanation: string;
+  }[];
   suggestedNext: {
     name: string;
     itemType: "skill" | "competency" | "tool" | "certification";
@@ -941,6 +958,11 @@ export interface SkillDiscoveryResult {
     priority: ContextItemPriority;
     why: string;
     sourceBacked: boolean;
+    plainMeaning?: string | null;
+    contextualUse?: string | null;
+    expectedOutput?: string | null;
+    sourceReferences?: Array<{ title?: string; url: string }>;
+    geographicScope?: "nigeria" | "global" | "nigeria_to_global" | null;
   }[];
 }
 

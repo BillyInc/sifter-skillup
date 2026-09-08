@@ -12,17 +12,11 @@ name: Certificate expiry
 # nginx was never reloaded to pick up still serves the old one, and only an
 # external check sees it.
 
-# Manual-only. The daily check now runs on storytime itself via cron —
-# see scripts/check-cert-expiry.sh and docs/CERT_EXPIRY_CRON.md. Running it
-# there is strictly better: it is the box certbot renews on, so a failing
-# renewal is visible in the same place as the timer that should have fixed it.
-# This workflow stays dispatchable so the check can also be run from outside
-# the box (e.g. to confirm what the public internet actually sees).
-#
-# To restore the hosted schedule, put back:
-#   schedule:
-#     - cron: '0 7 * * *'
 on:
+  schedule:
+    # 07:00 UTC daily. Certbot renews at 30 days remaining, so a daily check
+    # gives many chances to notice before the threshold below trips.
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 permissions:

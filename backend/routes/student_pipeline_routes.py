@@ -126,6 +126,8 @@ def _canonical_subject_name(value: str) -> str:
     lower = _normalise_subject(value)
     aliases = {
         "english": "English Language",
+        "use of english": "English Language",
+        "use of english language": "English Language",
         "math": "Mathematics",
         "maths": "Mathematics",
         "agric science": "Agricultural Science",
@@ -1562,7 +1564,7 @@ async def programmes_by_subjects(
         if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
             return ResponseModel(
                 data=_coming_soon(
-                    "Subject matching data is not fully deployed yet. Apply the current subject rule and option seeds before matching programmes."
+                    "Subject matching is unavailable because the structured subject rules are not fully deployed or are under review. You can still browse programmes by name, compare university offerings and read each university's requirements; try subject matching again after the subject data is updated."
                 )
             )
         if structured:
@@ -1575,12 +1577,16 @@ async def programmes_by_subjects(
         # where it is labelled as source text and review status.
         notice = (
             "No exact structured subject match was found. Some brochure requirements "
-            "still need review and are not shown as matches here."
+            "still need review and are not shown as matches here. You can browse programmes by name or compare university offerings instead."
         )
         return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("Subject-to-programme matching is temporarily unavailable."))
+        return ResponseModel(
+            data=_coming_soon(
+                "Subject matching is temporarily unavailable. You can still browse programmes by name, compare university offerings and read university requirements."
+            )
+        )
 
 
 def _match_structured_subject_options(
@@ -1709,7 +1715,14 @@ def _match_structured_subject_options(
             _normalise_subject((i.get("subject_catalog") or {}).get("name") or "")
             for i in items
         }
-        source_norm = _normalise_subject(opt.get("source_text") or "")
+        source_for_subjects = re.split(
+            r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
+            r"(?:holders?|candidates?)?\b",
+            str(opt.get("source_text") or ""),
+            maxsplit=1,
+            flags=re.I,
+        )[0]
+        source_norm = _normalise_subject(source_for_subjects)
         source_subjects = [
             subject
             for subject in catalog_subjects
@@ -1759,6 +1772,45 @@ def _match_structured_subject_options(
             group_min[key] = int(i.get("min_from_group") or 1)
             if i.get("distinct_group_key"):
                 group_distinct[key] = str(i["distinct_group_key"])
+
+        # A generic brochure sentence such as "five credits including English
+        # and Mathematics" is not enough evidence to decide which three other
+        # O-level subjects are relevant. Older generated seeds represented that
+        # missing scope as a one-of group containing almost the whole subject
+        # catalogue, which made combinations such as Agriculture + Animal
+        # Husbandry + Arabic appear as exact Social Work/Library Science
+        # matches. Keep the offering visible in programme search, but fail
+        # closed for eligibility matching until the source supplies the actual
+        # subject scope.
+        broad_group = any(len(names) >= 20 for names in grouped.values())
+        source_lower = str(opt.get("source_text") or "").lower()
+        # A national rule can be followed by a separate NBC/NTC/TC-II
+        # condition. The condition may use "relevant subjects" even when the
+        # ordinary applicant rule explicitly says "any other subject". Scope
+        # the fail-closed guard to the ordinary rule, matching the parser.
+        source_scope_text = re.split(
+            r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
+            r"(?:holders?|candidates?)?\b",
+            source_lower,
+            maxsplit=1,
+            flags=re.I,
+        )[0]
+        # A broad catalogue group is safe only when the source explicitly
+        # permits any remaining subject. Words such as “relevant”, “suitable”
+        # or “appropriate” are an unresolved subject scope: the parser cannot
+        # know which subjects are relevant to that programme. Treating the
+        # whole catalogue as executable creates false positives (for example
+        # Arabic + Agriculture + Animal Husbandry appearing to qualify for an
+        # unrelated programme). Keep those rows available to name/university
+        # search and require source review before eligibility matching.
+        unresolved_scope = re.search(
+            r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
+            r"\bshares?\s+(?:the\s+)?block\b",
+            source_scope_text,
+        )
+        generic_olevel_scope = exam_type == "olevel" and broad_group and bool(unresolved_scope)
+        if generic_olevel_scope:
+            continue
         # A stale or hand-edited SQL seed can retain only the named items while
         # leaving the option's credit/combination minimum unchanged. Such a row
         # is not an exact rule and must never match in either full or partial

@@ -7,14 +7,13 @@
  *  3. Browse clusters / pathways / admission intelligence / elite pathways
  *  4. Typed search results grouped by domain → role → programme
  */
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -34,7 +33,6 @@ import {
   ExploreGuide,
   FilterChip,
   ListRow,
-  SearchBar,
   SearchResultsGroup,
   SectionLabel,
 } from "@/components/careerIntelligence";
@@ -48,6 +46,7 @@ import { StaggerReveal } from "@/components/animations/StaggerReveal";
 import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscoveryPanel";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { getStartingPoint } from "@/lib/startingPoint";
+import { useSearchLauncher } from "@/components/shell/searchLauncher";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -118,12 +117,18 @@ export default function ExploreScreen({
   const router = useRouter();
   const exploreNav = useExploreNav();
   const responsive = useResponsive();
+  const openSearch = useSearchLauncher();
+  const launchSearch = (term?: string) => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("sifter:open-global-search", { detail: term ?? "" }));
+    }
+    openSearch(term);
+  };
   const isGuest = !user || user.auth_provider === "guest";
   const hasSession = Boolean(user);
   const [searchUserType, setSearchUserType] = useState<string | null>(null);
   const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
 
-  const searchRef = useRef<TextInput>(null);
   const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState<ResultFilter>("all");
   const [loading, setLoading] = useState(false);
@@ -252,18 +257,8 @@ export default function ExploreScreen({
 
       {intro}
 
-      <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
-
       {/* ── Search ────────────────────────────────────────────── */}
-      <SearchBar
-        ref={searchRef}
-        value={query}
-        onChangeText={setQuery}
-        scope={filters.find((item) => item.value === filter)?.label ?? "All"}
-        placeholder="Search programmes, universities, domains, roles or skills"
-        loading={loading}
-        onSubmitEditing={rememberSearch}
-      />
+      <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text>
 
       <View style={styles.filterRow}>
         {filters.map((item) => (
@@ -275,6 +270,10 @@ export default function ExploreScreen({
           />
         ))}
       </View>
+
+      {/* Skills Match is an independent optional tool. Keep the main search
+          primary and expose this flipped-discovery route after its scope. */}
+      <SkillDiscoveryPanel adminType={adminType ?? adminAudience ?? null} />
 
       {trimmed.length > 0 && trimmed.length < MIN_QUERY ? (
         <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>
@@ -291,9 +290,9 @@ export default function ExploreScreen({
           nav={exploreNav}
           onPick={(term) => {
             setQuery(term);
-            searchRef.current?.focus();
+            launchSearch(term);
           }}
-          onFocusSearch={() => searchRef.current?.focus()}
+          onFocusSearch={launchSearch}
           adminAudience={adminAudience}
           adminType={adminType}
         />

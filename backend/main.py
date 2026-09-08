@@ -834,8 +834,11 @@ def _update_user_returning(service, user_id: str, updates: dict) -> dict:
 
 @app.get("/api/users/me", response_model=ResponseModel)
 async def get_me(current_user: dict = Depends(Auth.get_current_user)):
-    rank_result = db.get_client().rpc("get_user_rank", {"user_id": current_user["id"]}).execute()
-    current_user["rank"] = rank_result.data if rank_result.data else None
+    # Session restoration must not depend on the legacy game leaderboard RPC.
+    # That function is absent or slow on some deployed databases, while rank
+    # is unrelated to the identity/profile data needed to open the workspace.
+    # Guild/leaderboard routes can resolve rank when those screens are opened.
+    current_user["rank"] = None
     current_user.pop("password_hash", None)
     # Legacy accounts may have completed the old flow without a persona.
     # Keep them pending so the client routes them to user-type selection.

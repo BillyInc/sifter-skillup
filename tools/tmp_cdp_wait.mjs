@@ -1,0 +1,12 @@
+const pages = await (await fetch("http://127.0.0.1:9222/json/list")).json();
+const page = pages.find((item) => item.type === "page" && item.url.includes("127.0.0.1:5173"));
+const socket = new WebSocket(page.webSocketDebuggerUrl);
+let nextId = 0;
+const waiters = new Map();
+socket.onmessage = (event) => { const message = JSON.parse(event.data); const resolve = waiters.get(message.id); if (resolve) { waiters.delete(message.id); resolve(message); } };
+await new Promise((resolve, reject) => { socket.onopen = resolve; socket.onerror = reject; });
+const call = (method, params = {}) => new Promise((resolve) => { const id = ++nextId; waiters.set(id, resolve); socket.send(JSON.stringify({ id, method, params })); });
+const evaluate = async (expression) => (await call("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true })).result?.result?.value;
+await new Promise((resolve) => setTimeout(resolve, 18000));
+console.log(JSON.stringify(await evaluate(`(() => ({ url: location.href, text: document.body.innerText.slice(0, 1000), sidebar: Boolean(document.querySelector(".platform-sidebar")), search: Boolean(document.querySelector(".global-search")), token: Boolean(localStorage.getItem("sifter_auth_token_v2")) }))()`)));
+socket.close();

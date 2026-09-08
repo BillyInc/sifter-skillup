@@ -299,8 +299,10 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
       if (saved) {
         invalidateGuidancePathCache();
         setSelectedSchoolId(school.schoolId);
-        setNotice(school.hasUniversityException
-          ? `${school.schoolName}: ${school.universityNote || "This university has an additional admission note. Check its current notice."}`
+      const exceptionText = school.universityNote
+        || school.universityRequirementExceptions?.find((row) => row.text)?.text;
+      setNotice(exceptionText
+          ? `${school.schoolName}: ${exceptionText}`
           : `${school.schoolName} is saved in your guidance path.`);
       } else {
         setNotice(saveNotice ?? "Create an account to save this guidance path.");
@@ -535,7 +537,7 @@ function ProgrammeDetailBody({
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{selectedSchool.address}</Text>
                 </View>
               ) : null}
-              {selectedSchool.hasUniversityException ? (
+              {selectedSchool.hasUniversityException && !selectedSchool.universityNote && !selectedSchool.universityRequirementExceptions?.some((row) => row.text) ? (
                 <Text style={[styles.body, { color: colors.textRole.muted }]}>Some university-specific wording may still need confirmation. Check the university&apos;s current admission notice before applying.</Text>
               ) : null}
             </View>
@@ -554,7 +556,7 @@ function ProgrammeDetailBody({
                   <Text style={[styles.schoolName, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
                   {school.studentName || school.jambName ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{school.studentName ?? school.jambName}</Text> : null}
                   {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
-                  {school.hasUniversityException ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>University-specific admission note available</Text> : null}
+                  {school.universityNote ? <Text style={[styles.meta, { color: colors.accentRole.action }]} numberOfLines={2}>{school.universityNote}</Text> : null}
                 </View>
                 <TouchableOpacity onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
                   <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Opening..." : selectedSchoolId === school.schoolId ? (earlySecondary ? "Viewing" : "Selected") : (earlySecondary ? "View details" : "Choose")}</Text>

@@ -130,7 +130,7 @@ import {
   isStarkzapAvailable,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
+import { useAuth as useAppAuth } from '@/hooks/useAuth';
 import {
   getStarknetSepoliaRpcConfigError,
   isStarknetSepoliaRpcConfigured,

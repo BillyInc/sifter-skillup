@@ -1,7 +1,7 @@
 import { useGlobalSearchParams, usePathname, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { API } from "../lib/api";
 import {
   useEffectiveAccountType,

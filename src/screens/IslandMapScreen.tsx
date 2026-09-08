@@ -14,7 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, webContainer } from '../theme';
 import { ISLANDS, getIsland, isIslandUnlocked, type Island } from '../data/islands';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { TrackChoiceScreen } from './PostIslandTrackSelection';
 import { WebPageHeader, WebShell, useIsWebWide } from '../components/web/WebGrid';
 
