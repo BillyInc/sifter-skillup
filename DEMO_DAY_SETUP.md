@@ -188,6 +188,7 @@ Zero Anthropic calls in the scoring path. `/api/ai/score` → `deterministic_sco
 screens/
   AuthScreen.tsx              Privy sheet → Starknet wallet → Island 18
   StarknetTrackScreen.tsx     DeFi Navigator
+  EcosystemTrackScreen.tsx    Ecosystem Deep Dive
   CairoBuilderTrackScreen.tsx Cairo Builder
   WorldScreen.tsx             Island / lab map
   LessonScreen.tsx            Level runner + boss

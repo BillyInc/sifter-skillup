@@ -7,7 +7,7 @@ import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLessonEngine, type Question } from '../hooks/useLessonEngine';
 import { useProgress } from '../hooks/useProgress';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { useResume } from '../hooks/useResume';
 import { API, API_BASE } from '../lib/api';
 import { findTrackById } from '../lib/trackContext';

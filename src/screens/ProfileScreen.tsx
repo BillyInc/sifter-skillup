@@ -1,552 +1,169 @@
 /**
- * Sifter LevelUp — Profile Screen (Phase 2)
- * Worker character + XP stage ring + DeskScene.
- * Account, guidance context, admin access, and account actions.
+ * Profile for the career-intelligence workspace.
+ *
+ * XP, stages, workstation art and merchandise belong to the legacy learning
+ * game. They must not appear in the career guidance account surface.
  */
+import React, { useCallback, useEffect, useState } from "react";
+import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import { useTheme, CompassFonts, FontSize, Radius, Spacing, webContainer } from "@/theme";
+import { useAuth } from "@/hooks/useAuth";
+import { getStartingPoint } from "@/lib/startingPoint";
+import type { StartingPointProfile, UserType } from "@/types/onboarding";
+import { isAdminAccount } from "@/lib/accountType";
+import { getEducatorProfile } from "@/lib/educatorProfile";
+import { adminHomeForProfile } from "@/lib/adminAudience";
+import { WebCard, WebCol, WebDivider, WebPageHeader, WebRow, WebShell, useIsWebWide } from "@/components/web/WebGrid";
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Modal,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect, useRouter } from 'expo-router';
-import {
-  useTheme, Spacing, Radius, FontSize, Shadow,
-  AnimPreset, XP_STAGES, webContainer, CompassFonts,
-} from '@/theme';
-import { WorkerCharacter, DeskScene } from '@/components/CharacterSystem';
-import {
-  WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebStatTile, WebDivider, useIsWebWide,
-} from '@/components/web/WebGrid';
-import { xpEngine, type XPSnapshot }      from '@/lib/XPEngine';
-import { useAuth } from '@/hooks/useAuth';
-import { resolveTrackContext } from '@/lib/trackContext';
-import { isAdminAccount } from '@/lib/accountType';
-import { getEducatorProfile } from '@/lib/educatorProfile';
-import { adminHomeForProfile } from '@/lib/adminAudience';
+const USER_TYPE_LABEL: Record<UserType, string> = {
+  senior_secondary: "Senior secondary student",
+  ss3_secondary: "SS3 student",
+  jamb: "JAMB / UTME candidate",
+  student: "Undergraduate student",
+  skilled_worker: "Skilled worker",
+  professional: "Professional",
+  graduate: "Graduate",
+};
 
-// ─── XP stage ring ─────────────────────────────────────────────────────────────
-
-function StageRing({ progress, color, size = 140 }: { progress: number; color: string; size?: number }) {
-  const fillAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(fillAnim, { toValue: progress, duration: 800, useNativeDriver: false }).start();
-  }, [fillAnim, progress]);
-
-  // Simple progress arc via border trick
-  const borderWidth = 5;
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {/* Background ring */}
-      <View style={[styles.ringBg, {
-        width: size, height: size, borderRadius: size / 2,
-        borderWidth,
-        borderColor: color + '25',
-      }]} />
-      {/* Progress arc — approximated with a colored overlay */}
-      <Animated.View
-        style={[
-          styles.ringFg,
-          {
-            width: size - borderWidth * 2,
-            height: size - borderWidth * 2,
-            borderRadius: (size - borderWidth * 2) / 2,
-            borderWidth,
-            borderColor: color,
-            borderTopColor: fillAnim.interpolate({
-              inputRange: [0, 0.25, 0.5, 0.75, 1],
-              outputRange: ['transparent', color, color, color, color],
-            }) as any,
-            borderRightColor: fillAnim.interpolate({
-              inputRange: [0, 0.25, 0.5, 0.75, 1],
-              outputRange: ['transparent', 'transparent', color, color, color],
-            }) as any,
-            borderBottomColor: fillAnim.interpolate({
-              inputRange: [0, 0.25, 0.5, 0.75, 1],
-              outputRange: ['transparent', 'transparent', 'transparent', color, color],
-            }) as any,
-            borderLeftColor: fillAnim.interpolate({
-              inputRange: [0, 0.25, 0.5, 0.75, 1],
-              outputRange: ['transparent', 'transparent', 'transparent', 'transparent', color],
-            }) as any,
-            transform: [{ rotate: '-90deg' }],
-            position: 'absolute',
-          },
-        ]}
-      />
-    </View>
-  );
-}
-
-// ─── Skill bar ────────────────────────────────────────────────────────────────
-
-function SkillBar({ label, value, color }: { label: string; value: number; color: string }) {
-  const { colors } = useTheme();
-  const widthAnim  = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(widthAnim, { toValue: value / 100, duration: 700, useNativeDriver: false }).start();
-  }, [value, widthAnim]);
-
-  return (
-    <View style={styles.skillBarRow}>
-      <Text style={[styles.skillBarLabel, { color: colors.textRole.secondary }, CompassFonts.bodySemibold]}>{label}</Text>
-      <View style={styles.skillBarTrack}>
-        <View style={[styles.skillBarBg, { backgroundColor: colors.surface.subtle }]} />
-        <Animated.View style={[
-          styles.skillBarFill,
-          { backgroundColor: color, width: widthAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) },
-        ]} />
-      </View>
-      <Text style={[styles.skillBarPct, { color }, CompassFonts.displayBold]}>{value}%</Text>
-    </View>
-  );
-}
-
-// ─── Section card ─────────────────────────────────────────────────────────────
-
-function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+function AccountRow({ label, sub, onPress, danger = false }: { label: string; sub?: string; onPress: () => void; danger?: boolean }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.sectionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
-      <Text style={[styles.sectionCardTitle, { color: colors.textRole.muted }, CompassFonts.displayBold]}>{title}</Text>
-      {children}
-    </View>
-  );
-}
-
-// ─── Account row ─────────────────────────────────────────────────────────────
-
-function AccountRow({ emoji, label, sub, onPress, color }: {
-  emoji: string; label: string; sub?: string; onPress: () => void; color?: string;
-}) {
-  const { colors } = useTheme();
-  return (
-    <TouchableOpacity style={styles.accountRow} onPress={onPress} activeOpacity={0.7}>
-      <Text style={styles.accountRowEmoji}>{emoji}</Text>
+    <TouchableOpacity style={styles.accountRow} onPress={onPress} activeOpacity={0.75}>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.accountRowLabel, { color: color ?? colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text>
-        {sub && <Text style={[styles.accountRowSub, { color: colors.textRole.muted }]}>{sub}</Text>}
+        <Text style={[styles.accountLabel, { color: danger ? colors.accentRole.danger : colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text>
+        {sub ? <Text style={[styles.accountSub, { color: colors.textRole.muted }]}>{sub}</Text> : null}
       </View>
-      <Text style={[styles.accountRowArrow, { color: colors.textRole.muted }]}>›</Text>
+      <Text style={[styles.arrow, { color: colors.textRole.muted }]}>›</Text>
     </TouchableOpacity>
   );
 }
 
-// ─── Screen ────────────────────────────────────────────────────────────────────
+function startingPointSummary(starting: StartingPointProfile | null): string {
+  if (!starting) return "Not selected yet";
+  const values: string[] = [];
+  if (starting.ssClass) values.push(starting.ssClass.toUpperCase());
+  if (starting.stream) values.push(`${starting.stream} stream`);
+  if (starting.programmeName || starting.intendedProgramme) values.push(starting.programmeName || starting.intendedProgramme || "");
+  if (starting.schoolName || starting.preferredSchool) values.push(starting.schoolName || starting.preferredSchool || "");
+  return values.filter(Boolean).join(" · ") || USER_TYPE_LABEL[starting.userType] || "Guidance profile saved";
+}
 
 export default function ProfileScreen() {
-  const navigation = useRouter();
+  const router = useRouter();
   const { colors } = useTheme();
-  const { signOut, deleteAccount, user } = useAuth();
-  const [accountAction, setAccountAction] = useState<'sign-out' | 'delete' | null>(null);
-  const [actionBusy, setActionBusy] = useState(false);
-  const go = useCallback((href: string) => navigation.push(href as any), [navigation]);
-  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
-  const isGuest = user?.auth_provider === 'guest';
+  const { user, signOut, deleteAccount } = useAuth();
+  const [starting, setStarting] = useState<StartingPointProfile | null>(null);
+  const [accountAction, setAccountAction] = useState<"sign-out" | "delete" | null>(null);
+  const [busy, setBusy] = useState(false);
+  const isWide = useIsWebWide();
   const isAdmin = isAdminAccount(user?.account_type);
+  const isGuest = user?.auth_provider === "guest";
 
-  const runAccountAction = useCallback(async () => {
-    if (!accountAction || actionBusy) return;
-    setActionBusy(true);
-    try {
-      if (accountAction === 'delete') await deleteAccount();
-      else await signOut();
-      setAccountAction(null);
-      navigation.replace('/(auth)/sign-in');
-    } finally {
-      setActionBusy(false);
-    }
-  }, [accountAction, actionBusy, deleteAccount, navigation, signOut]);
+  useEffect(() => {
+    let active = true;
+    if (!user?.id || isGuest) return () => { active = false; };
+    void getStartingPoint(user.id).then((value) => { if (active) setStarting(value); });
+    return () => { active = false; };
+  }, [isGuest, user?.id]);
 
-  const handleAdminWorkspace = useCallback(async () => {
+  const go = useCallback((href: string) => router.push(href as never), [router]);
+  const handleAdmin = useCallback(async () => {
     const profile = await getEducatorProfile(user?.id);
     go(adminHomeForProfile(profile));
   }, [go, user?.id]);
+  const runAction = useCallback(async () => {
+    if (!accountAction || busy) return;
+    setBusy(true);
+    try {
+      if (accountAction === "delete") await deleteAccount();
+      else await signOut();
+      setAccountAction(null);
+      router.replace("/(auth)/sign-in" as never);
+    } finally {
+      setBusy(false);
+    }
+  }, [accountAction, busy, deleteAccount, router, signOut]);
 
-  const [xp, setXp]         = useState<XPSnapshot | null>(null);
+  const context = (
+    <View style={[styles.context, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.contextLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>GUIDANCE CONTEXT</Text>
+      <Text style={[styles.contextTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        {starting ? USER_TYPE_LABEL[starting.userType] : user?.account_type === "student" ? "Student" : "Account context not selected"}
+      </Text>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>
+        {starting ? startingPointSummary(starting) : "Choose a user type to tailor the questions, subjects and results shown to you."}
+      </Text>
+      {starting?.olevelSubjects?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>O-level subjects: {starting.olevelSubjects.join(", ")}</Text> : null}
+      {starting?.jambSubjects?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>UTME subjects: {starting.jambSubjects.join(", ")}</Text> : null}
+      <TouchableOpacity onPress={() => go(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")} style={styles.inlineAction}>
+        <Text style={[styles.inlineActionText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>{starting ? "Change guidance context" : "Choose guidance context"}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
-  const entranceAnim = useRef(new Animated.Value(0)).current;
+  const account = (
+    <View style={[styles.context, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.contextLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>ACCOUNT</Text>
+      <Text style={[styles.body, { color: colors.textRole.primary }]}>{user?.email || "Guest session"}</Text>
+      {isGuest ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Guest browsing does not save guidance until you create an account.</Text> : null}
+      {isAdmin ? <AccountRow label="Admin workspace" sub="Organisation tools and student guidance" onPress={handleAdmin} /> : null}
+      <AccountRow label="Explore guidance" sub="Programmes, universities, domains and roles" onPress={() => go("/(tabs)/explore")} />
+      <AccountRow label="Settings" sub="Notifications, legal choices and account settings" onPress={() => go("/(tabs)/settings")} />
+      {!isGuest ? <AccountRow label="Delete account" sub="Start the account deletion cooldown" onPress={() => setAccountAction("delete")} danger /> : null}
+      <WebDivider />
+      <AccountRow label="Sign out" onPress={() => setAccountAction("sign-out")} danger />
+    </View>
+  );
 
-  useFocusEffect(useCallback(() => {
-    (async () => {
-      const xpSnap = await xpEngine.snapshot();
-      setXp(xpSnap);
-    })();
+  const content = (
+    <>
+      {context}
+      {account}
+    </>
+  );
 
-    entranceAnim.setValue(0);
-    Animated.timing(entranceAnim, { toValue: 1, ...AnimPreset.enter }).start();
-  }, [entranceAnim]));
-
-  const stage     = xp?.stage.stage ?? 1;
-  const stageName = xp?.stage.name  ?? 'Raw Recruit';
-  const progress  = xp?.progress    ?? 0;
-  const workspaceHref = '/(tabs)/explore';
-  const workspaceLabel = 'Career guidance';
-  const workspaceBody = 'Explore programmes, universities, domains, roles, and saved guidance.';
-  const trackId = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'default';
-
-  // Mock skill bars — replace with real data from user profile
-  const skillBars = [
-    { label: 'Programme mapping', value: 82, color: colors.accentRole.success },
-    { label: 'Domain exploration', value: 65, color: colors.accentRole.action },
-    { label: 'Role discovery', value: 48, color: colors.accentRole.warning },
-    { label: 'Opportunity readiness', value: 30, color: colors.accentRole.status },
-  ];
-
-  const allStages  = XP_STAGES;
-  const isWebWide  = useIsWebWide();
-
-  // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
-  if (isWebWide) {
-    return (
-      <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
-        <WebShell>
-          <WebPageHeader title="Profile" subtitle={`${workspaceLabel} · ${stageName} · Stage ${stage}/8`} accentColor={colors.accentRole.action}
-            right={
-              <TouchableOpacity onPress={() => go('/(tabs)/settings')}
-                style={{ padding: 8, borderRadius: Radius.md, backgroundColor: colors.surface.raised }}>
-                <Text style={{ fontSize: 20 }}>⚙️</Text>
-              </TouchableOpacity>
-            }
-          />
-
-          {/* Row 1: Character hero (1/3) + Stats + Skills (2/3) */}
-          <WebRow>
-            <WebCol weight={1}>
-              <WebCard accentBar accentColor={colors.accentRole.action}>
-                <View style={{ alignItems: 'center', paddingVertical: 12 }}>
-                  <View style={{ position: 'relative', width: 150, height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                    <StageRing progress={progress} color={colors.accentRole.action} size={150} />
-                    <View style={{ position: 'absolute' }}>
-                      <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
-                    </View>
-                  </View>
-                  <Text style={[styles.stageName, { color: colors.textRole.primary, textAlign: 'center', marginTop: 12 }, CompassFonts.displayBold]}>{stageName}</Text>
-                  <Text style={[styles.stageDesc, { color: colors.textRole.secondary, textAlign: 'center', marginTop: 4 }]}>
-                    {xp?.stage.description ?? 'Building the foundation.'}
-                  </Text>
-                </View>
-                <WebDivider />
-                <AccountRow
-                  emoji="M"
-                  label="Merchandise"
-                  sub="Spend merch credits on apparel and shoes"
-                  onPress={() => go('/merchandise')}
-                />
-                <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accentRole.action} />
-              </WebCard>
-            </WebCol>
-
-            <WebCol weight={2}>
-              <WebCard title="Career Stages" accentBar accentColor={colors.accentRole.status} style={{ marginBottom: 20 }}>
-                {allStages.map(s => {
-                  const isActive   = s.stage === stage;
-                  const isComplete = s.stage < stage;
-                  return (
-                    <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.md }]}>
-                      <View style={[styles.stageDot, { backgroundColor: isComplete ? colors.accentRole.success : isActive ? colors.accentRole.action : colors.surface.sunken, borderColor: isActive ? colors.accentRole.action : colors.borderRole.subtle }]}>
-                        <Text style={[{ fontSize: 10, color: isComplete || isActive ? colors.surface.inverse : colors.textRole.muted }, CompassFonts.displayBold]}>{isComplete ? '✓' : s.stage}</Text>
-                      </View>
-                      <View style={{ flex: 1 }}>
-                        <Text style={[styles.stageRowName, { color: isActive ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodyBold]}>{s.name}</Text>
-                        <Text style={[styles.stageRowRange, { color: colors.textRole.muted }]}>{s.minXp}–{s.maxXp} XP</Text>
-                      </View>
-                      {isActive && <View style={[styles.activeTag, { backgroundColor: colors.accentRole.action }]}><Text style={[styles.activeTagText, CompassFonts.displayBold]}>NOW</Text></View>}
-                    </View>
-                  );
-                })}
-              </WebCard>
-
-              <WebCard title="Current Focus" accentBar accentColor={colors.accentRole.success}>
-                <Text style={[styles.supportingCopy, { color: colors.textRole.secondary }]}>
-                  These focus areas show what this workspace is currently emphasizing.
-                </Text>
-                {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
-              </WebCard>
-            </WebCol>
-          </WebRow>
-
-          {/* Row 2: Desk scene (2/3) + Account actions (1/3) */}
-          <WebRow>
-            <WebCol weight={2}>
-              <WebCard title="Your Workstation" accentBar accentColor={colors.accentRole.action}>
-                <DeskScene stage={stage} trackId={trackId} width={480} height={200} />
-                <Text style={[styles.deskLabel, { color: colors.textRole.muted, marginTop: 10 }]}>
-                  Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
-                </Text>
-              </WebCard>
-            </WebCol>
-
-            <WebCol weight={1}>
-              <WebCard title="Workspace + Account" accentBar accentColor={colors.accentRole.status}>
-                <Text style={[styles.workspaceLabel, { color: colors.textRole.muted }, CompassFonts.displayBold]}>ACTIVE WORKSPACE</Text>
-                <Text style={[styles.workspaceTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{workspaceLabel}</Text>
-                <Text style={[styles.workspaceBody, { color: colors.textRole.secondary }]}>{workspaceBody}</Text>
-                <WebDivider />
-                {isGuest ? (
-                  <AccountRow
-                    emoji="G"
-                    label="Guest session"
-                    sub="Explore is open; saves, notes and alerts require an account"
-                    onPress={() => go('/(auth)/signup')}
-                  />
-                ) : null}
-                {isAdmin ? (
-                  <AccountRow
-                    emoji="A"
-                    label="Admin workspace"
-                    sub="Organisation profile, team access, and guidance intelligence"
-                    onPress={handleAdminWorkspace}
-                  />
-                ) : null}
-                <AccountRow
-                  emoji="W"
-                  label="Explore guidance"
-                  sub="Compare programmes, universities, domains, and roles"
-                  onPress={() => go(workspaceHref)}
-                />
-                <AccountRow
-                  emoji="S"
-                  label="Settings"
-                  sub="Theme, notifications, and account state"
-                  onPress={() => go('/(tabs)/settings')}
-                />
-                <WebDivider />
-                <AccountRow
-                  emoji="O"
-                  label="Sign Out"
-                  onPress={() => setAccountAction('sign-out')}
-                  color={colors.accentRole.danger}
-                />
-              </WebCard>
-            </WebCol>
-          </WebRow>
-        </WebShell>
-        <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
-          <View style={styles.modalOverlay}>
-            <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-              <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}</Text>
-              <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}</Text>
-              <View style={styles.modalActions}>
-                <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text></TouchableOpacity>
-                <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}><Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text></TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </SafeAreaView>
-    );
-  }
-
-  // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-
-        {/* ── Hero: worker character ── */}
-        <Animated.View
-          style={[
-            styles.heroSection,
-            {
-              opacity: entranceAnim,
-              transform: [{ translateY: entranceAnim.interpolate({ inputRange: [0, 1], outputRange: [24, 0] }) }],
-            },
-          ]}
-        >
-          {/* Settings gear */}
-          <TouchableOpacity style={styles.settingsBtn} onPress={() => go('/(tabs)/settings')}>
-            <Text style={[styles.settingsBtnText, { color: colors.textRole.muted }]}>⚙</Text>
-          </TouchableOpacity>
-
-          {/* Character with stage ring overlay */}
-          <View style={styles.characterWrap}>
-            <StageRing progress={progress} color={colors.accentRole.action} size={150} />
-            <View style={styles.characterOverlay}>
-              <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
-            </View>
-          </View>
-
-          <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.displayBold]}>{workspaceLabel.toUpperCase()}</Text>
-          <Text style={[styles.stageName, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{stageName}</Text>
-          <Text style={[styles.stageDesc, { color: colors.textRole.secondary }]}>
-            {xp?.stage.description ?? workspaceBody}
-          </Text>
-
-        </Animated.View>
-
-        {/* ── Desk scene ── */}
-        <Animated.View style={{ opacity: entranceAnim }}>
-          <SectionCard title="YOUR WORKSTATION">
-            <DeskScene stage={stage} trackId={trackId} width={320} height={160} />
-            <Text style={[styles.deskLabel, { color: colors.textRole.muted }]}>
-              Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
-            </Text>
-          </SectionCard>
-        </Animated.View>
-
-        {/* ── Stage progress ── */}
-        <SectionCard title="CAREER STAGES">
-          {allStages.map((s) => {
-            const isActive   = s.stage === stage;
-            const isComplete = s.stage < stage;
-            return (
-              <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.md }]}>
-                <View style={[styles.stageDot, {
-                  backgroundColor: isComplete ? colors.accentRole.success : isActive ? colors.accentRole.action : colors.surface.sunken,
-                  borderColor: isActive ? colors.accentRole.action : colors.borderRole.subtle,
-                }]}>
-                  <Text style={[{ fontSize: 10, color: isComplete || isActive ? colors.surface.inverse : colors.textRole.muted }, CompassFonts.displayBold]}>
-                    {isComplete ? '✓' : s.stage}
-                  </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.stageRowName, { color: isActive ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodyBold]}>{s.name}</Text>
-                  <Text style={[styles.stageRowRange, { color: colors.textRole.muted }]}>{s.minXp}–{s.maxXp} XP</Text>
-                </View>
-                {isActive && (
-                  <View style={[styles.activeTag, { backgroundColor: colors.accentRole.action }]}>
-                    <Text style={[styles.activeTagText, CompassFonts.displayBold]}>NOW</Text>
-                  </View>
-                )}
-              </View>
-            );
-          })}
-        </SectionCard>
-
-        {/* ── Skills ── */}
-        <SectionCard title="CURRENT FOCUS">
-          <Text style={[styles.supportingCopy, { color: colors.textRole.secondary }]}>
-            These focus areas reflect the direction of your current workspace.
-          </Text>
-          {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
-        </SectionCard>
-
-        {/* Account actions */}
-        <SectionCard title="WORKSPACE + ACCOUNT">
-          {isGuest ? (
-            <AccountRow
-              emoji="G"
-              label="Guest session"
-              sub="Explore is open; saves, notes and alerts require an account"
-              onPress={() => go('/(auth)/signup')}
-            />
-          ) : null}
-          {isAdmin ? (
-            <AccountRow
-              emoji="A"
-              label="Admin workspace"
-              sub="Organisation profile, team access, and guidance intelligence"
-              onPress={handleAdminWorkspace}
-            />
-          ) : null}
-          <AccountRow
-            emoji="E" label="Explore guidance"
-            sub="Compare programmes, universities, domains, and roles"
-            onPress={() => go('/(tabs)/explore')}
-          />
-          <AccountRow
-            emoji="W" label="My World"
-            sub="Your gated learning space"
-            onPress={() => go('/(tabs)/myworld')}
-          />
-          <AccountRow
-            emoji="S" label="Settings"
-            sub="Theme, notifications, and account state"
-            onPress={() => go('/(tabs)/settings')}
-          />
-          <AccountRow
-            emoji="●" label="Sign Out"
-            onPress={() => setAccountAction('sign-out')}
-            color={colors.accentRole.danger}
-          />
-        </SectionCard>
-
-        <View style={{ height: Spacing.xxxl }} />
-      </ScrollView>
+      {isWide ? (
+        <WebShell>
+          <WebPageHeader title="Profile" subtitle="Your account and guidance context" accentColor={colors.accentRole.action} />
+          <WebRow><WebCol weight={1}>{content}</WebCol><WebCol weight={1}><WebCard title="Career guidance" accentBar accentColor={colors.accentRole.action}><Text style={[styles.body, { color: colors.textRole.secondary }]}>Your guidance is kept here as a connected path: subjects, programmes, universities, domains, subgroups and roles.</Text><TouchableOpacity onPress={() => go("/(tabs)/explore")} style={styles.primaryAction}><Text style={styles.primaryActionText}>Open Explore</Text></TouchableOpacity></WebCard></WebCol></WebRow>
+        </WebShell>
+      ) : (
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}><Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Profile</Text>{content}</ScrollView>
+      )}
       <Modal visible={accountAction !== null} transparent animationType="fade" onRequestClose={() => setAccountAction(null)}>
-        <View style={styles.modalOverlay}>
-          <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-              {accountAction === 'delete' ? 'Delete your account?' : 'Sign out?'}
-            </Text>
-            <Text style={[styles.modalBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-              {accountAction === 'delete' ? 'Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately, so another account cannot be created from this device until it ends.' : 'You will need to log in again to continue.'}
-            </Text>
-            <View style={styles.modalActions}>
-              <TouchableOpacity onPress={() => setAccountAction(null)} disabled={actionBusy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}>
-                <Text style={[styles.modalButtonText, { color: colors.textRole.primary }]}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={runAccountAction} disabled={actionBusy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger, opacity: actionBusy ? 0.6 : 1 }]}>
-                <Text style={[styles.modalButtonText, { color: '#fff' }]}>{accountAction === 'delete' ? 'Delete account' : 'Sign out'}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <View style={styles.modalOverlay}><View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{accountAction === "delete" ? "Delete your account?" : "Sign out?"}</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{accountAction === "delete" ? "Your account will be marked for deletion and the recovery cooldown will start immediately." : "You will need to log in again to continue."}</Text>
+          <View style={styles.modalActions}><TouchableOpacity onPress={() => setAccountAction(null)} disabled={busy} style={[styles.modalButton, { borderColor: colors.borderRole.subtle }]}><Text style={{ color: colors.textRole.primary }}>Cancel</Text></TouchableOpacity><TouchableOpacity onPress={runAction} disabled={busy} style={[styles.modalButton, { backgroundColor: colors.accentRole.danger, borderColor: colors.accentRole.danger }]}><Text style={{ color: "#fff" }}>{accountAction === "delete" ? "Delete account" : "Sign out"}</Text></TouchableOpacity></View>
+        </View></View>
       </Modal>
     </SafeAreaView>
   );
 }
 
-// ─── Styles ────────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
-  screen:           { flex: 1 },
-  scroll:           { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-
-  heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
-  settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },
-  settingsBtnText:  { fontSize: 18 },
-  eyebrow:          { fontSize: FontSize.xs, letterSpacing: 0.8, marginTop: Spacing.md },
-  characterWrap:    { position: 'relative', alignItems: 'center', justifyContent: 'center', width: 150, height: 150 },
-  characterOverlay: { position: 'absolute' },
-  ringBg:           { position: 'absolute' },
-  ringFg:           {},
-  stageName:        { fontSize: FontSize.lg, marginTop: Spacing.md },
-  stageDesc:        { fontSize: FontSize.sm, textAlign: 'center', maxWidth: 280, marginTop: 4, lineHeight: 18 },
-  heroStats:        { flexDirection: 'row', alignItems: 'center', marginTop: Spacing.md, gap: 0 },
-  heroStat:         { flex: 1, alignItems: 'center' },
-  heroStatValue:    { fontSize: FontSize.lg },
-  heroStatLabel:    { fontSize: FontSize.xs, marginTop: 2 },
-  heroStatDivider:  { width: 1, height: 32 },
-
-  sectionCard:      { borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1, gap: Spacing.md },
-  sectionCardTitle: { fontSize: FontSize.xs, letterSpacing: 0.8, marginBottom: Spacing.xs },
-  supportingCopy:   { fontSize: FontSize.xs, lineHeight: 18 },
-
-  deskLabel:        { fontSize: FontSize.xs, textAlign: 'center', marginTop: Spacing.sm },
-
-  stageRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: 10, paddingHorizontal: Spacing.sm },
-  stageDot:         { width: 28, height: 28, borderRadius: 14, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
-  stageRowName:     { fontSize: FontSize.sm },
-  stageRowRange:    { fontSize: FontSize.xs, marginTop: 1 },
-  activeTag:        { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
-  activeTagText:    { fontSize: 9, color: '#fff' },
-
-  skillBarRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  skillBarLabel:    { fontSize: FontSize.xs, width: 130 },
-  skillBarTrack:    { flex: 1, height: 7, borderRadius: Radius.full, position: 'relative', overflow: 'hidden' },
-  skillBarBg:       { ...StyleSheet.absoluteFillObject },
-  skillBarFill:     { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
-  skillBarPct:      { fontSize: FontSize.xs, width: 34, textAlign: 'right' },
-
-  accountRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm },
-  accountRowEmoji:  { fontSize: 18 },
-  accountRowLabel:  { fontSize: FontSize.sm },
-  accountRowSub:    { fontSize: FontSize.xs, marginTop: 2 },
-  accountRowArrow:  { fontSize: FontSize.lg },
-  workspaceLabel:   { fontSize: FontSize.xs, letterSpacing: 0.8 },
-  workspaceTitle:   { fontSize: FontSize.md },
-  workspaceBody:    { fontSize: FontSize.sm, lineHeight: 20 },
-  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
-  modalCard: { width: '100%', maxWidth: 420, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.md },
+  screen: { flex: 1 },
+  scroll: { ...webContainer, padding: Spacing.lg, gap: Spacing.md },
+  title: { fontSize: FontSize.xxl, marginBottom: Spacing.sm },
+  context: { borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.sm },
+  contextLabel: { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  contextTitle: { fontSize: FontSize.lg },
+  body: { fontSize: FontSize.sm, lineHeight: 21 },
+  meta: { fontSize: FontSize.xs, lineHeight: 18 },
+  inlineAction: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  inlineActionText: { fontSize: FontSize.sm },
+  primaryAction: { alignSelf: "flex-start", marginTop: Spacing.md, borderRadius: Radius.md, backgroundColor: "#f59e0b", paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
+  primaryActionText: { color: "#fff", fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  accountRow: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, paddingVertical: Spacing.sm },
+  accountLabel: { fontSize: FontSize.sm },
+  accountSub: { fontSize: FontSize.xs, marginTop: 2 },
+  arrow: { fontSize: FontSize.lg },
+  modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,.45)", alignItems: "center", justifyContent: "center", padding: Spacing.xl },
+  modalCard: { width: "100%", maxWidth: 420, borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   modalTitle: { fontSize: FontSize.xl },
-  modalBody: { fontSize: FontSize.sm, lineHeight: 20 },
-  modalActions: { flexDirection: 'row', gap: Spacing.sm },
-  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.xl, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.sm },
-  modalButtonText: { fontSize: FontSize.sm, fontWeight: '800' },
+  modalActions: { flexDirection: "row", gap: Spacing.sm },
+  modalButton: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },
 });

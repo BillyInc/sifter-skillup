@@ -1,16 +1,11 @@
 name: Deploy Backend (dev)
 
-# Manual-only. .woodpecker/deploy-dev.yml deploys backend and frontend together
-# to the same box on every push to main, so the push trigger here was a second
-# deploy racing the first. Kept dispatchable as a fallback path.
-#
-# To restore automatic runs, put back:
-#   push:
-#     branches: [main]
-#     paths:
-#       - 'backend/**'
-#       - '.github/workflows/deploy-backend.yml'
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
   workflow_dispatch:
 
 # Single fixed group shared with deploy-frontend.yml: both workflows rsync to the

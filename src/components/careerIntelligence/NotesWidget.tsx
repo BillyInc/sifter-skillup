@@ -21,7 +21,7 @@ import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import { SifterButton } from "../ui";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface NotesWidgetProps {
   entityType: SavedEntityType;

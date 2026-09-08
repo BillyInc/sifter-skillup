@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import { Redirect } from "expo-router";
-import { useAuth } from "../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { isAdminAccount, needsLegacyTypeSelection, useEffectiveAccountType } from "../src/lib/accountType";
 import { getEducatorProfile } from "../src/lib/educatorProfile";
 import { adminHomeForProfile } from "../src/lib/adminAudience";

@@ -50,6 +50,7 @@ const TYPE_LABEL: Record<OpportunityType, string> = {
   entry_level: "Entry-level",
   fellowship: "Fellowship",
   contract: "Contract",
+  scholarship: "Scholarship",
 };
 
 const WORK_MODE_LABEL: Record<WorkMode, string> = {

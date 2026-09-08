@@ -24,7 +24,6 @@ import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
 import { clearOnboardingDraft } from "@/lib/onboardingDraft";
 import { useAuth } from "@/hooks/useAuth";
 import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
-import { DegreeSkills } from "@/components/careerIntelligence/DegreeSkills";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
@@ -209,7 +208,6 @@ export default function AdmissionBrowseScreen() {
   const [selected, setSelected] = useState<Candidate | null>(null);
   const [schools, setSchools] = useState<JambProgrammeSchool[]>([]);
   const [selectedAdmissionSchool, setSelectedAdmissionSchool] = useState<JambProgrammeSchool | null>(null);
-  const [universityOptionsExpanded, setUniversityOptionsExpanded] = useState(false);
   const [domains, setDomains] = useState<JambDomainResult | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [selectedSubjectMatch, setSelectedSubjectMatch] = useState<SubjectProgrammeMatch | null>(null);
@@ -433,9 +431,11 @@ export default function AdmissionBrowseScreen() {
         },
       );
       const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];
+      const matcherAvailable = state.status === "real" || state.status === "fallback";
+      setSubjectMatchStatus(matcherAvailable ? "real" : "unavailable");
       setCandidates(nextCandidates);
       setNotice(
-        nextCandidates.length === 0 && (state.status === "real" || state.status === "fallback")
+        nextCandidates.length === 0 && matcherAvailable
           ? "No programmes match this subject combination yet. Try a different valid combination, or use programme search if you already have a programme in mind."
           : state.status === "fallback"
           ? "We found possible programmes from the published requirement text. Confirm each university's current requirements before deciding."
@@ -676,7 +676,6 @@ export default function AdmissionBrowseScreen() {
     setSelected(candidate);
     setSchools([]);
     setSelectedAdmissionSchool(null);
-    setUniversityOptionsExpanded(false);
     setDomains(null);
     setProgrammeDetail(null);
     setSelectedSubjectMatch(null);
@@ -758,7 +757,8 @@ export default function AdmissionBrowseScreen() {
       (validationStatus === "loading" ||
         validationStatus === "unavailable" ||
         !validationMatch ||
-        validationMatch.eligibilityStatus === "utme_match_olevel_gap")
+        (validationMatch.eligibilityStatus === "utme_match_olevel_gap" ||
+          validationMatch.eligibilityStatus === "utme_match_olevel_unparsed"))
     ) {
       // A subject gap changes eligibility, not the learner's right to inspect
       // the university offering. Mark the selection as view-only; the detail
@@ -803,6 +803,21 @@ export default function AdmissionBrowseScreen() {
         },
         discoveryDoor: mode,
         subjects: { olevel: olevelSubjects, utme: subjects },
+        subjectMatch: {
+          status: subjectMatchStatus === "real" && selectedSubjectMatch &&
+            selectedSubjectMatch.eligibilityStatus !== "utme_match_olevel_gap" &&
+            selectedSubjectMatch.eligibilityStatus !== "utme_match_olevel_unparsed"
+            ? "verified"
+            : subjectMatchStatus === "idle"
+              ? "not_checked"
+              : subjectMatchStatus === "unavailable"
+                ? "unavailable"
+                : "partial",
+          examType: subjectExamType,
+          notice: subjectMatchStatus === "unavailable"
+            ? "The structured subject requirement check was unavailable or under review when this path was selected."
+            : undefined,
+        },
         programme: {
           id,
           name: candidateDisplayName(candidate),
@@ -872,6 +887,22 @@ export default function AdmissionBrowseScreen() {
     } finally {
       if (guidanceStudentId) finalizingGuidanceRef.current = false;
     }
+  };
+
+  // A university offering is the next decision after the single national
+  // JAMB programme result. Open its programme detail immediately so the
+  // student sees the school-aware overview and requirements in one flow.
+  const openUniversityDetails = async (school: JambProgrammeSchool) => {
+    if (!selected) return;
+    await finalizeAdmissionChoice(selected, school);
+    exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
+      jambProgrammeId: selected.jambProgrammeId || selected.id,
+      schoolId: school.schoolId,
+      userType: userType || undefined,
+      focused: readParam(params.focus) === "guidance" || readParam(params.journey) === "guided_subject_discovery",
+      viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
+      journeyMode: journeyMode || undefined,
+    });
   };
 
   return (
@@ -1189,7 +1220,15 @@ export default function AdmissionBrowseScreen() {
 
       {loading ? <ActivityIndicator color={Brand.primary} /> : null}
 
-      {mode === "subjects" && !loading && subjectMatchAttempted && !candidates.length && !subjectLimitExceeded ? (
+      {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus === "unavailable" ? (
+        <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}66` }]}>
+          <Text style={[styles.section, { color: Brand.primaryDeep, marginTop: 0 }]}>Subject matching is unavailable</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>We did not turn your subjects into a programme match because the structured requirement data is missing or still under review.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities that offer it, and open each university's published requirements. Your subject choices remain available when the matcher is ready.</Text>
+        </View>
+      ) : null}
+
+      {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus !== "unavailable" && !candidates.length && !subjectLimitExceeded ? (
         <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
           <Text style={[styles.noticeText, { color: colors.text }]}>No programme matches were found for these subjects. You can adjust the subjects and try again.</Text>
         </View>
@@ -1246,19 +1285,10 @@ export default function AdmissionBrowseScreen() {
               {`${candidateDisplayName(selected)} is a programme option from your selected subjects. Open the programme overview to see what the programme teaches.`}
             </Text>
           </View>
-          {(selected.skillsTechnical?.length || selected.skillsTransferable?.length || selected.skillsCount) ? (
-            <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-              <Text style={[styles.section, { color: colors.text }]}>Skills taught</Text>
-              <Text style={[styles.requirementText, { color: colors.textSoft }]}>A short preview of the source-backed learning profile for this JAMB programme.</Text>
-              <DegreeSkills
-                technical={selected.skillsTechnical}
-                transferable={selected.skillsTransferable}
-                total={selected.skillsCount}
-                variant="teaser"
-                color={colors.textSoft}
-              />
-            </View>
-          ) : null}
+          {/* The learning profile belongs to the university-aware programme
+              detail. Showing raw curriculum outcomes before a university is
+              chosen made the result look like a final programme explanation
+              and hid the actual next decision: which university offers it. */}
           <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
             <Text style={[styles.section, { color: colors.text }]}>Why this programme appeared</Text>
             <Text style={[styles.requirementText, { color: colors.textSoft }]}>Matched subjects: {selectedSubjectDetails?.matchedSubjects?.length ? selectedSubjectDetails.matchedSubjects.join(", ") : "The available programme rule matched this selection."}</Text>
@@ -1267,23 +1297,17 @@ export default function AdmissionBrowseScreen() {
           {!selectedAdmissionSchool ? (
             <Text style={[styles.hint, { color: colors.textMuted }]}>{undergraduateContext ? "Choose your university to open the programme learning profile and continue into career guidance." : "Choose a university to open the university-aware programme overview. National and university-specific requirements will appear there, not before the university is selected."}</Text>
           ) : null}
-           <TouchableOpacity
-             accessibilityRole="button"
-             accessibilityState={{ expanded: universityOptionsExpanded }}
-             onPress={() => setUniversityOptionsExpanded((value) => !value)}
-             style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}
-           >
-             <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme{schools.length ? ` (${schools.length})` : ""}</Text>
-             <Text style={[styles.hint, { color: colors.textMuted }]}>
-               {universityOptionsExpanded
-                 ? (undergraduateContext
-                   ? "Choose a university to open its programme learning profile and career guidance."
-                   : earlySecondary ? "Choose a university to explore its requirements. This does not commit you to a school." : "Choose a university to open its programme overview and requirements.")
-                 : (undergraduateContext ? "See the universities offering this programme when you need to change context." : earlySecondary ? "Explore universities when you are ready; this is optional." : "See university options and choose one to continue.")}
-             </Text>
-             <Text style={[styles.link, { color: Brand.primary }]}>{universityOptionsExpanded ? "Hide university options" : "See universities offering this programme"}</Text>
-           </TouchableOpacity>
-           {universityOptionsExpanded ? <>
+            <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+              <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme{schools.length ? ` (${schools.length})` : ""}</Text>
+              <Text style={[styles.hint, { color: colors.textMuted }]}>
+                {undergraduateContext
+                  ? "Choose a university to open its programme learning profile and career guidance."
+                  : earlySecondary
+                    ? "Choose a university to explore its requirements. This does not commit you to a school."
+                    : "Choose a university to open its programme overview and requirements."}
+              </Text>
+            </View>
+            <>
           {hasSubjectContext ? (
             <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
               <Text style={[styles.noticeText, { color: colors.text }]}>
@@ -1302,7 +1326,7 @@ export default function AdmissionBrowseScreen() {
               <TouchableOpacity
                 key={`${school.schoolId}-${school.form ?? "offer"}`}
                 activeOpacity={0.8}
-                onPress={() => finalizeAdmissionChoice(selected, school)}
+                onPress={() => { void openUniversityDetails(school); }}
                 style={[styles.infoRow, { backgroundColor: colors.card, borderColor: colors.border }]}
               >
                 <View style={{ flex: 1 }}>
@@ -1313,8 +1337,8 @@ export default function AdmissionBrowseScreen() {
                   <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
                     {school.year ? `${school.year} cycle` : "Offering listed"}
                   </Text>
-                  {!undergraduateContext && school.hasUniversityException ? (
-                    <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]}>University-specific admission note available</Text>
+                  {school.universityNote ? (
+                    <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]} numberOfLines={2}>{school.universityNote}</Text>
                   ) : null}
                 </View>
                 <Text style={[styles.score, { color: colors.text }]}>
@@ -1333,7 +1357,7 @@ export default function AdmissionBrowseScreen() {
                 schoolId: selectedAdmissionSchool.schoolId,
                 userType: userType || undefined,
                 focused: readParam(params.focus) === "guidance" || readParam(params.journey) === "guided_subject_discovery",
-                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap")),
+                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
                 journeyMode: journeyMode || undefined,
               })}
               style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
@@ -1341,7 +1365,7 @@ export default function AdmissionBrowseScreen() {
                 <Text style={styles.actionText}>{earlySecondary ? "Explore programme details" : undergraduateContext ? "Open career guidance" : "View programme details"}</Text>
             </TouchableOpacity>
            ) : null}
-           </> : null}
+            </>
 
         </View>
        ) : null}

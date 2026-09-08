@@ -23,7 +23,7 @@ import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import { Spring, useReducedMotion } from "../../theme/motion";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface SaveButtonProps {
   entityType: SavedEntityType;

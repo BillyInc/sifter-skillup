@@ -179,7 +179,6 @@ CATEGORY_PATTERNS = [
     (r"sciences?\b", SCIENCE),
     (r"arts?\b", ARTS),
     (r"commercial", COMMERCIAL),
-    (r"subjects?", ALL_UTME),
 ]
 
 NUM_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5}
@@ -244,6 +243,13 @@ def category_codes(phrase, allowed_codes=None):
     # rule; numbered variants are handled by parse_segment before this helper.
     if re.search(r"\bother\s+subjects?\b", p):
         return None
+    # A bare "subject(s)" phrase means the active exam catalogue.  It must
+    # not be hard-wired to UTME: O-level rules may explicitly allow any
+    # passing subject, including trade/vocational subjects.  The caller passes
+    # the layer-specific catalogue; the no-context fallback remains UTME for
+    # legacy callers that parse an untyped fragment.
+    if re.fullmatch(r"(?:any\s+)?subjects?", p):
+        return sorted(set(allowed_codes or ALL_UTME))
     for pat, codes in CATEGORY_PATTERNS:
         if re.search(pat, p):
             if allowed_codes is None:
@@ -383,16 +389,120 @@ def preclean(seg):
     return re.sub(r"\s+", " ", seg).strip()
 
 
-def parse_segment(seg, allowed_codes=None):
+def parse_segment(seg, allowed_codes=None, context_codes=None):
     """One ';'-separated segment -> list of ('required', code) | ('one_of', n, [codes])
     Returns None if the segment cannot be represented faithfully."""
     seg = preclean(seg.strip(" .;,"))
     # normalize brochure connectors/filler
     seg = re.sub(r"\bplus\b", "and", seg, flags=re.I)
     seg = re.sub(r"\b(?:of|from)\s+the\s+following:?\s*", "of ", seg, flags=re.I)
+
+    # Resolve a qualifier when the source gives the exact named/category
+    # scope in the same sentence, e.g. “one relevant subject from Government,
+    # History or Geography”. Do this before removing the word “relevant”; the
+    # generic fallback must never turn an unresolved qualifier into the entire
+    # exam catalogue.
+    qualified = re.search(
+        r"(?:\b(?:and|,|;)\s*)?(?P<number>one|two|three|four|1|2|3|4)\s+"
+        r"(?:other\s+)?(?:relevant|suitable|appropriate|related|cognate|pertinent)\s+"
+        r"subjects?\s+(?:could\s+be\s+)?(?:from|of)\s+(?:any\s+of\s+)?"
+        r"(?P<scope>.+)$",
+        seg,
+        re.I | re.S,
+    )
+    if qualified:
+        head = seg[:qualified.start()].strip(" .;,\t")
+        head = re.sub(r"\b(?:and|any)\s*$", "", head, flags=re.I).strip(" .;,")
+        results = parse_head(head, allowed_codes)
+        codes = []
+        scope = qualified.group("scope")
+        category = category_codes(scope, allowed_codes)
+        if category:
+            codes.extend(category)
+        else:
+            for token in split_list(scope):
+                resolved = resolve_token(token, allowed_codes)
+                if not resolved:
+                    category = category_codes(token, allowed_codes)
+                    if not category:
+                        codes = []
+                        break
+                    resolved = category
+                codes.extend(resolved)
+        if results is not None and codes:
+            required_codes = {part[1] for part in results if part[0] == "required"}
+            codes = sorted(set(codes) - required_codes)
+            minimum = NUM_WORDS[qualified.group("number").lower()]
+            if codes and minimum <= len(codes):
+                return results + [("one_of", minimum, codes)]
+
+    # If the sentence names a qualifier but omits its list, use a narrow,
+    # programme-level scope supplied by the other exam layer when one exists.
+    # The caller deliberately withholds catalogue-wide scopes, so this cannot
+    # turn “relevant” into “every subject”.
+    if context_codes:
+        contextual = re.search(
+            r"(?:\b(?:and|,|;)\s*)(?:any\s+)?"
+            r"(?P<number>one|two|three|four|1|2|3|4)\s*(?:\(\s*\d\s*\))?\s+"
+            r"(?:other\s+)?(?:relevant|suitable|appropriate|related|cognate|pertinent)\s+"
+            r"subjects?\b",
+            seg,
+            re.I,
+        )
+        if contextual:
+            head = seg[:contextual.start()].strip(" .;,\t")
+            head = re.sub(r"\b(?:and|any)\s*$", "", head, flags=re.I).strip(" .;,")
+            results = parse_head(head, allowed_codes)
+            if results is not None:
+                required_codes = {part[1] for part in results if part[0] == "required"}
+                codes = sorted(set(context_codes) - required_codes)
+                minimum = NUM_WORDS[contextual.group("number").lower()]
+                if codes and minimum <= len(codes):
+                    return results + [("one_of", minimum, codes)]
+
+    # An unresolved qualifier is not a licence to use every subject in the
+    # catalogue. Category wording such as “relevant Social Science subjects”
+    # is handled below by category_codes; only the nameless form is rejected.
+    if re.search(
+        r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\s*subjects?\b",
+        seg,
+        re.I,
+    ):
+        return None
     seg = re.sub(r"\brelevant\s+", "", seg, flags=re.I)
     if not seg:
         return []
+
+    # Compact category-plus-open-slot form: "Two Arts subjects including CRS
+    # and any other subject."  The category count and the open slot are two
+    # separate requirements; the latter remains catalogue-wide because the
+    # source says "any", not "relevant".
+    compact = re.match(
+        r"^(?P<number>one|two|three|four|1|2|3|4)\s+"
+        r"(?P<category>arts?|social\s+sciences?|science|sciences?|commercial)\s+"
+        r"subjects?\s+including\s+(?P<include>.+?)\s+and\s+(?:any\s+)?other\s+subject$",
+        seg,
+        re.I | re.S,
+    )
+    if compact:
+        total = NUM_WORDS[compact.group("number").lower()]
+        category = category_codes(compact.group("category"), allowed_codes)
+        include = parse_head(compact.group("include"), allowed_codes)
+        include_codes = (
+            [part[1] for part in include if part[0] == "required"]
+            + [code for part in include if part[0] == "one_of" for code in part[2]]
+            if include is not None
+            else []
+        )
+        if category and include_codes and total > len(include_codes):
+            category_choices = sorted(set(category) - set(include_codes))
+            unrestricted = sorted(set(allowed_codes or ALL_UTME) - set(include_codes))
+            if category_choices and unrestricted:
+                return [
+                    *(('required', code) for code in include_codes),
+                    ('one_of', total - len(include_codes), category_choices, 'distinct_1'),
+                    ('one_of', 1, unrestricted, 'distinct_1'),
+                ]
 
     def group_codes(text):
         """Resolve a numbered group's named subjects/categories."""
@@ -615,13 +725,45 @@ def parse_segment(seg, allowed_codes=None):
             head = seg[:m.start()].strip(" .;,")
             head = re.sub(r"\b(?:and|any)\s*$", "", head, flags=re.I).strip(" .;,")
             results = parse_head(head, allowed_codes)
-            if results is None:
-                return None
-            required_codes = {p[1] for p in results if p[0] == "required"}
-            cat = sorted(set(cat) - required_codes)
-            if not cat:
-                return None
-            return results + [("one_of", n, cat)]
+            if results is not None:
+                required_codes = {p[1] for p in results if p[0] == "required"}
+                cat = sorted(set(cat) - required_codes)
+                if cat:
+                    return results + [("one_of", n, cat)]
+    # A compact form used in some brochure cells is: "Two Arts subjects
+    # including CRS and any other subject."  The first clause means two Arts
+    # subjects in total, one of which is CRS; the final clause is a separate,
+    # unrestricted additional subject.  Do not collapse the latter into the
+    # Arts category unless the source says "relevant" or names a category.
+    m = re.match(
+        r"^(?P<number>one|two|three|four|1|2|3|4)\s+"
+        r"(?P<category>arts?|social\s+sciences?|science|sciences?|commercial)\s+"
+        r"subjects?\s+including\s+(?P<include>.+?)\s+and\s+(?:any\s+)?other\s+subject$",
+        seg,
+        re.I | re.S,
+    )
+    if m:
+        total = NUM_WORDS[m.group("number").lower()]
+        category = category_codes(m.group("category"), allowed_codes)
+        include = parse_head(m.group("include"), allowed_codes)
+        include_codes = (
+            [part[1] for part in include if part[0] == "required"]
+            + [code for part in include if part[0] == "one_of" for code in part[2]]
+            if include is not None
+            else []
+        )
+        if category and include_codes and total > len(include_codes):
+            category_choices = sorted(set(category) - set(include_codes))
+            unrestricted = sorted(set(allowed_codes or ALL_UTME) - set(include_codes))
+            if category_choices and unrestricted:
+                head = [
+                    ("required", code)
+                    for code in include_codes
+                ]
+                return head + [
+                    ("one_of", total - len(include_codes), category_choices, "distinct_1"),
+                    ("one_of", 1, unrestricted, "distinct_1"),
+                ]
     # "any other Science subject" / "one other Arts subject" (bare category, no number list)
     m = re.match(r"^(?:and\s+)?(?:any|one)\s+other\s+(.+?subjects?)$", seg, re.I)
     if m:
@@ -689,7 +831,7 @@ def parse_segment(seg, allowed_codes=None):
 CROSS_REF_RE = re.compile(r"^\s*(?:same\s+)?as\s+(?:in\s+|for\s+)?([A-Za-z][\w ,&/-]{2,60}?)\s*(?:[.;(]|$)", re.I)
 
 
-def parse_utme(text, allowed_codes=None):
+def parse_utme(text, allowed_codes=None, context_codes=None):
     """Full utme text -> list of parts, ('ref', name) for a pure cross-reference,
     or None (needs_review)."""
     # A parenthetical note such as "(same as in Arabic Studies)" does not
@@ -704,7 +846,7 @@ def parse_utme(text, allowed_codes=None):
         return None
     parts = []
     for seg in re.split(r";", clean_text):
-        r = parse_segment(seg, allowed_codes or UTME_CODES)
+        r = parse_segment(seg, allowed_codes or UTME_CODES, context_codes=context_codes)
         if r is None:
             return None
         parts.extend(r)
@@ -742,7 +884,7 @@ OLEVEL_COUNT_RE = re.compile(
 )
 
 
-def parse_olevel(text):
+def parse_olevel(text, context_codes=None):
     """Return (total_credit_minimum, structured parts) for a national O-level rule.
 
     The total credit count is not itself a subject. Named subjects and
@@ -751,7 +893,28 @@ def parse_olevel(text):
     institution-level exceptions stays on the text/manual-review path.
     """
     if not text or len(text) > 500 or REJECT_MARKERS.search(text):
+        inline_same_as = re.match(
+            r"^\s*same\s+as\s+in\s+[^()]+\((?P<body>.+)\)\s*[.]?\s*$",
+            text or "",
+            re.I | re.S,
+        )
+        if inline_same_as:
+            return parse_olevel(inline_same_as.group("body"), context_codes=context_codes)
         return None
+
+    # A brochure cell can contain a general applicant rule followed by a
+    # conditional rule for NBC/NTC/TC-II holders.  The conditional list must
+    # not be applied to ordinary applicants, but it must not poison the valid
+    # general rule either.  Parse the general clause here and retain the full
+    # original text in the seed for detail/review display.
+    general_clause = re.split(
+        r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+(?:holders?|candidates?)?\b",
+        text,
+        maxsplit=1,
+        flags=re.I,
+    )[0].strip(" .;,:-")
+    if general_clause and general_clause != text.strip(" .;,:-"):
+        return parse_olevel(general_clause, context_codes=context_codes)
     count = OLEVEL_COUNT_RE.search(text)
     if not count:
         return None
@@ -761,13 +924,13 @@ def parse_olevel(text):
     tail = text[count.end():].strip(" .;,:-")
     tail = re.sub(r"\s+or\s+equivalents?$", "", tail, flags=re.I)
     tail = re.sub(
-        r"^(?:passes?|credits?)?\s*(?:to\s+include|including|in|from|to\s+contain|"
+        r"^(?:pass(?:es)?|credit(?:s)?)?\s*(?:to\s+include|including|in|from|to\s+contain|"
         r"which\s+must\s+include|with)\s*",
         "",
         tail,
         flags=re.I,
     )
-    tail = re.sub(r"^(?:passes?|credits?)\s+", "", tail, flags=re.I)
+    tail = re.sub(r"^(?:pass(?:es)?|credit(?:s)?)\s+", "", tail, flags=re.I)
     # The national matcher models credit requirements only. A lower-level
     # pass, sitting/equivalence rule, or similar qualification condition
     # cannot be represented by the subject-credit schema without changing the
@@ -823,6 +986,98 @@ def parse_olevel(text):
             if number > 0 and number <= len(category):
                 return n_min, head + [("one_of", number, category)]
 
+    # Resolve a vague qualifier when the same source sentence supplies its
+    # exact scope, for example: “two other relevant subjects could be from
+    # any of Accounting, Commerce and Office Practice”.  This is different
+    # from “two other relevant subjects” with no list, which remains review.
+    explicit_scope = re.match(
+        r"^(?P<head>.+?)\s+(?:and|,)\s+(?:any\s+)?"
+        r"(?:(?P<number>one|two|three|four|1|2|3|4)\s+)?"
+        r"(?:other\s+)?(?:relevant|suitable|appropriate|related|cognate|pertinent)\s+"
+        r"subjects?\s+(?:could\s+be\s+)?(?:from|of)\s+(?:any\s+of\s+)?"
+        r"(?P<scope>.+?)\.?$",
+        tail,
+        re.I | re.S,
+    )
+    if explicit_scope:
+        head = parse_head(explicit_scope.group("head"), OLEVEL_CODES)
+        scope_text = explicit_scope.group("scope")
+        scope_codes = []
+        category = category_codes(scope_text, OLEVEL_CODES)
+        if category:
+            scope_codes.extend(category)
+        else:
+            for token in split_list(scope_text):
+                resolved = resolve_token(token, OLEVEL_CODES)
+                if not resolved:
+                    category = category_codes(token, OLEVEL_CODES)
+                    if not category:
+                        scope_codes = []
+                        break
+                    resolved = category
+                scope_codes.extend(resolved)
+        if head is not None and scope_codes:
+            required_codes = {part[1] for part in head if part[0] == "required"}
+            scope_codes = sorted(set(scope_codes) - required_codes)
+            explicit_count = sum(
+                1 if part[0] == "required" else int(part[1])
+                for part in head
+            )
+            number = (
+                NUM_WORDS[explicit_scope.group("number").lower()]
+                if explicit_scope.group("number")
+                else n_min - explicit_count
+            )
+            if number > 0 and number <= len(scope_codes):
+                return n_min, head + [("one_of", number, scope_codes)]
+
+    # Resolve an unlisted qualifier from a narrow programme-level scope
+    # supplied by the UTME rule. This is the contextual bridge for rows such
+    # as “English, Arabic and three other relevant subjects” when the same
+    # programme explicitly defines its UTME choices as Arts/Social Science
+    # subjects. A scope that is broad enough to mean “the whole catalogue” is
+    # never passed here by the generator.
+    if context_codes:
+        contextual = re.search(
+            r"(?:\b(?:and|,|;)\s*)(?:any\s+)?"
+            r"(?:(?P<number>one|two|three|four|1|2|3|4)\s*(?:\(\s*\d\s*\))?\s+)?"
+            r"(?:other\s+)?(?:relevant|suitable|appropriate|related|cognate|pertinent)\s+"
+            r"subjects?\b",
+            tail,
+            re.I,
+        )
+        if contextual:
+            head = tail[:contextual.start()].strip(" .;,")
+            head = re.sub(r"\b(?:and|any)\s*$", "", head, flags=re.I).strip(" .;,")
+            results = parse_head(head, OLEVEL_CODES)
+            if results is not None:
+                required_codes = {part[1] for part in results if part[0] == "required"}
+                scope_codes = sorted(set(context_codes) - required_codes)
+                explicit_count = sum(
+                    1 if part[0] == "required" else int(part[1])
+                    for part in results
+                )
+                number = (
+                    NUM_WORDS[contextual.group("number").lower()]
+                    if contextual.group("number")
+                    else n_min - explicit_count
+                )
+                if number > 0 and number <= len(scope_codes):
+                    return n_min, results + [("one_of", number, scope_codes)]
+
+    # “Relevant”, “suitable”, and similar wording is not a subject category.
+    # The brochure does not tell the matcher which catalogue subjects qualify,
+    # so expanding it to the entire O-level catalogue would create false
+    # positives. Keep the official requirement text and typed review record,
+    # but do not emit an executable option until the scope is source-resolved.
+    if re.search(
+        r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\s+subjects?\b"
+        r"|\bshares?\s+(?:the\s+)?block\b",
+        tail,
+        re.I,
+    ):
+        return None
+
     # A named head followed by an explicitly numbered but unqualified set of
     # relevant/other subjects means the remaining credits are unrestricted by
     # subject family.  Keep the count exact rather than dropping the group.
@@ -847,7 +1102,7 @@ def parse_olevel(text):
             if number > 0 and number <= len(choices):
                 return n_min, head + [("one_of", number, choices)]
 
-    parts = parse_segment(tail, OLEVEL_CODES)
+    parts = parse_segment(tail, OLEVEL_CODES, context_codes=context_codes)
     if not parts:
         # Some university exceptions constrain the entire credit count to a
         # category without using the numbered-group grammar, e.g. ``two
@@ -959,7 +1214,7 @@ def main():
     parsed_names, review_names = [], []
 
     # ── pass 1: parse every programme's UTME text ────────────────
-    utme_text, olevel_text, parsed, refs = {}, {}, {}, {}
+    utme_text, olevel_text, parsed, refs, olevel_refs = {}, {}, {}, {}, {}
     olevel_rules = {}
     for jname, p in progs.items():
         utme = p.get("utme_subjects")
@@ -975,6 +1230,13 @@ def main():
                 parsed[jname] = r
         if olevel_text[jname]:
             olevel_rules[jname] = parse_olevel(olevel_text[jname])
+            same_as = re.match(
+                r"^\s*same\s+as\s+(?:in|for)\s+([^(.]+?)(?:\s*\(|\s*$)",
+                olevel_text[jname],
+                re.I,
+            )
+            if same_as:
+                olevel_refs[jname] = same_as.group(1).strip()
 
     # ── pass 2: resolve "as in X" cross-references (<=2 hops) ────
     by_lower = {n.lower(): n for n in progs}
@@ -986,6 +1248,69 @@ def main():
                 utme_text[jname] += f"  [resolved: as in {t}]"
                 del refs[jname]
                 stats["ref_resolved"] += 1
+
+    # O-level columns use the same cross-reference convention but can carry
+    # the inherited sentence in parentheses. Resolve both forms before trying
+    # to infer a qualifier from the programme's UTME context.
+    for _ in range(2):
+        for jname, target in list(olevel_refs.items()):
+            t = by_lower.get(target.lower())
+            if t and olevel_rules.get(t):
+                olevel_rules[jname] = olevel_rules[t]
+                del olevel_refs[jname]
+                stats["olevel_ref_resolved"] += 1
+
+    def narrow_scope(parts, allowed_codes, source_codes):
+        """Return a useful cross-layer scope, never a catalogue-wide one."""
+        if not parts:
+            return None
+        codes = {
+            part[1]
+            for part in parts
+            if part[0] == "required"
+        }
+        codes.update(
+            code
+            for part in parts
+            if part[0] == "one_of"
+            for code in part[2]
+        )
+        codes &= set(allowed_codes)
+        source_coverage = len(codes & set(source_codes)) / max(1, len(source_codes))
+        # A scope that covers most of the source exam catalogue is effectively
+        # “any subject”; it is not useful context for the other exam layer.
+        if not codes or source_coverage >= 0.70:
+            return None
+        return codes
+
+    # Resolve undefined “relevant/suitable/appropriate” wording from the same
+    # programme's other exam layer when that layer has a narrow, executable
+    # subject/category rule. This is what turns Arabic's O-level “relevant”
+    # wording into its documented Arts/Social-Science scope without applying
+    # unrelated science/trade subjects. Never use a university waiver as the
+    # national scope.
+    for jname in sorted(progs):
+        if olevel_text[jname] and not olevel_rules.get(jname):
+            context = narrow_scope(parsed.get(jname), OLEVEL_CODES, UTME_CODES)
+            if context:
+                candidate = parse_olevel(olevel_text[jname], context_codes=context)
+                if candidate:
+                    olevel_rules[jname] = candidate
+                    stats["olevel_context_resolved"] += 1
+        if utme_text[jname] and not parsed.get(jname):
+            context = narrow_scope(
+                [
+                    ("required", part[1]) if part[0] == "required" else part
+                    for part in (olevel_rules.get(jname)[1] if olevel_rules.get(jname) else [])
+                ],
+                UTME_CODES,
+                OLEVEL_CODES,
+            )
+            if context:
+                candidate = parse_utme(utme_text[jname], context_codes=context)
+                if candidate and not (isinstance(candidate, tuple) and candidate[0] == "ref"):
+                    parsed[jname] = candidate
+                    stats["utme_context_resolved"] += 1
 
     # Do not promote the first parseable brochure variant into the national
     # matcher. A source variant can belong to a university-specific offering or

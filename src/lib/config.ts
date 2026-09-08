@@ -6,10 +6,20 @@
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 
+type RuntimeEnv = Record<string, string | undefined>;
+
+// Metro provides process.env for native builds, while a browser does not have
+// a process global. Keep the shared config safe in both runtimes; Vite can
+// still inject EXPO_PUBLIC_* values when they are present.
+const runtimeEnv: RuntimeEnv =
+  typeof process !== 'undefined' && process.env
+    ? (process.env as RuntimeEnv)
+    : {};
+
 // Uvicorn is started on IPv4 (0.0.0.0) in the local workflow. On Windows,
 // `localhost` can resolve to ::1 first, producing an opaque Failed to fetch
 // even while 127.0.0.1:8000 is healthy. An explicit env URL still wins.
-const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim() || 'http://127.0.0.1:8000';
+const configuredApiUrl = runtimeEnv.EXPO_PUBLIC_API_URL?.trim() || 'http://127.0.0.1:8000';
 
 function deployedWebApiUrl(): string | null {
   if (typeof window === 'undefined') return null;
@@ -49,12 +59,12 @@ function resolveApiBase(): string {
 
 export const API_BASE = resolveApiBase();
 
-export const PRIVY_APP_ID = process.env.EXPO_PUBLIC_PRIVY_APP_ID || '';
-export const PRIVY_CLIENT_ID = process.env.EXPO_PUBLIC_PRIVY_CLIENT_ID || '';
+export const PRIVY_APP_ID = runtimeEnv.EXPO_PUBLIC_PRIVY_APP_ID || '';
+export const PRIVY_CLIENT_ID = runtimeEnv.EXPO_PUBLIC_PRIVY_CLIENT_ID || '';
 export const PRIVY_WEB_CLIENT_ID =
-  process.env.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID || PRIVY_CLIENT_ID;
+  runtimeEnv.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID || PRIVY_CLIENT_ID;
 export const PRIVY_NATIVE_CLIENT_ID =
-  process.env.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID || PRIVY_CLIENT_ID;
+  runtimeEnv.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID || PRIVY_CLIENT_ID;
 
 export const PRIVY_CONFIGURED =
   PRIVY_APP_ID.length > 0 && PRIVY_APP_ID !== 'your_privy_app_id_here';

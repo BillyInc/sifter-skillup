@@ -1,10 +1,12 @@
 /**
- * DegreeSkills - "what this programme helps you build".
+ * DegreeSkills - the source-backed learning profile for a programme.
  *
  * The data comes from `jamb_programmes.skills_technical` and
  * `jamb_programmes.skills_transferable`, built from the saved CCMAS/JAMB
  * mapping pipeline. This component keeps the source honest while presenting it
- * as guidance instead of a raw technical dump.
+ * as guidance instead of claiming that curriculum outcomes are already-held
+ * skills. The current CCMAS/JAMB fields contain learning outcomes, so the
+ * student-facing label must say what they will study.
  */
 import React, { useMemo, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -70,8 +72,8 @@ export function DegreeSkills({
         style={[styles.teaser, { color: color ?? colors.textRole.muted }]}
         numberOfLines={2}
       >
-        Skills taught preview: {preview}
-        {total > TEASER_MAX ? ` +${total - TEASER_MAX} more` : ""}
+        Study preview: {preview}
+        {total > TEASER_MAX ? ` and more in the programme details` : ""}
       </Text>
     );
   }
@@ -79,7 +81,7 @@ export function DegreeSkills({
   if (!total) {
     return (
       <View style={styles.block}>
-        <SectionLabel>Skills taught</SectionLabel>
+        <SectionLabel>What you&apos;ll study</SectionLabel>
         <Text style={[styles.empty, { color: colors.textRole.muted }]}>
           We do not have a verified skills profile for this programme yet.
         </Text>
@@ -92,10 +94,11 @@ export function DegreeSkills({
 
   return (
     <View style={styles.block}>
-       <SectionLabel>Skills taught</SectionLabel>
+      <SectionLabel>What you&apos;ll study</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        These are source-backed learning outcomes connected to this programme.
-        They describe the direction of study, not a promise of proficiency.
+        This is a source-backed summary of the programme curriculum. It shows
+        topics and learning outcomes connected to the programme; it does not
+        mean you already have these skills.
       </Text>
 
       {tech.length ? (
@@ -141,7 +144,7 @@ export function DegreeSkills({
               { color: colors.textRole.muted },
             ]}
           >
-            Transferable skills
+            Related study outcomes
           </Text>
           <View style={styles.chips}>
             {soft.map((skill, i) => (

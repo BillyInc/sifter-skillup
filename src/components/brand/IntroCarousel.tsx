@@ -65,6 +65,7 @@ const SLIDES: Slide[] = [
 export function IntroCarousel({ onDone }: { onDone: () => void }) {
   const router = useRouter();
   const { colors, isDark } = useTheme();
+  const isWeb = Platform.OS === "web";
   const [index, setIndex] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -129,21 +130,21 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
       >
         {SLIDES.map((slide, i) => {
           // Parallax: logo drifts slightly slower than the page.
-          const translateX = scrollX.interpolate({
-            inputRange: [(i - 1) * W, i * W, (i + 1) * W],
-            outputRange: [W * 0.25, 0, -W * 0.25],
-            extrapolate: "clamp",
-          });
-          const opacity = scrollX.interpolate({
-            inputRange: [(i - 1) * W, i * W, (i + 1) * W],
-            outputRange: [0.3, 1, 0.3],
-            extrapolate: "clamp",
-          });
+          const translateX = isWeb ? 0 : scrollX.interpolate({
+              inputRange: [(i - 1) * W, i * W, (i + 1) * W],
+              outputRange: [W * 0.25, 0, -W * 0.25],
+              extrapolate: "clamp",
+            });
+          const opacity = isWeb ? 1 : scrollX.interpolate({
+              inputRange: [(i - 1) * W, i * W, (i + 1) * W],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: "clamp",
+            });
           return (
             <View key={i} style={[styles.slide, { width: W }]}>
               <Animated.View
                 style={{
-                  transform: [{ translateX }],
+                  transform: isWeb ? undefined : [{ translateX }],
                   opacity,
                   alignItems: "center",
                 }}
@@ -167,16 +168,16 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
       {/* Dots */}
       <View style={styles.dots}>
         {SLIDES.map((_, i) => {
-          const w = scrollX.interpolate({
-            inputRange: [(i - 1) * W, i * W, (i + 1) * W],
-            outputRange: [8, 22, 8],
-            extrapolate: "clamp",
-          });
-          const o = scrollX.interpolate({
-            inputRange: [(i - 1) * W, i * W, (i + 1) * W],
-            outputRange: [0.3, 1, 0.3],
-            extrapolate: "clamp",
-          });
+          const w = isWeb ? (i === index ? 22 : 8) : scrollX.interpolate({
+              inputRange: [(i - 1) * W, i * W, (i + 1) * W],
+              outputRange: [8, 22, 8],
+              extrapolate: "clamp",
+            });
+          const o = isWeb ? (i === index ? 1 : 0.3) : scrollX.interpolate({
+              inputRange: [(i - 1) * W, i * W, (i + 1) * W],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: "clamp",
+            });
           return (
             <Animated.View
               key={i}

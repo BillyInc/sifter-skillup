@@ -7,7 +7,7 @@ import { CompassFonts, FontSize, Spacing, useTheme, webContainer } from "../../.
 import { SifterButton } from "../../../../src/components/ui";
 import LocalLegalNotice from "../../../../src/components/LocalLegalNotice";
 import { getEducatorProfile } from "../../../../src/lib/educatorProfile";
-import { useAuth } from "../../../../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { provisioningData } from "../../../../src/lib/provisioningData";
 
 export default function AdminStudentGuidancePage() {

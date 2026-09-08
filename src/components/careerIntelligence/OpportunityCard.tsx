@@ -47,6 +47,7 @@ const TYPE_LABEL: Record<OpportunityType, string> = {
   entry_level: "Entry-level",
   fellowship: "Fellowship",
   contract: "Contract",
+  scholarship: "Scholarship",
 };
 
 const SCOPE_META: Record<OpportunityScope, { glyph: string; label: string }> = {

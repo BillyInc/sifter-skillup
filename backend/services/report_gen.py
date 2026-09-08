@@ -171,6 +171,19 @@ def _guidance_requirement_rows(path: dict) -> list[tuple[str, str]]:
     return rows
 
 
+def _subject_match_status(path: dict) -> tuple[str, str]:
+    """Make the evidence state visible instead of implying eligibility."""
+    payload = path.get("subjectMatch") if isinstance(path.get("subjectMatch"), dict) else {}
+    status = str(payload.get("status") or "not_checked").lower()
+    if status == "verified":
+        return "Checked", "The selected subjects were checked against the structured rule available for this path."
+    if status == "partial":
+        return "Partial check", "The subject check was partial. Review the requirement gaps before treating this as a possible fit."
+    if status == "unavailable":
+        return "Unavailable", "Structured subject matching was unavailable or under review. This report is not eligibility confirmation."
+    return "Not checked", "Subject matching was not used for this programme search."
+
+
 def _report_access_block(access_code: object) -> str:
     """Render a real provisioned-student handoff, when one exists."""
     if not access_code:
@@ -232,6 +245,11 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
         f"<div class='row'><strong>{e(label)}</strong><span>{e(value)}</span></div>"
         for label, value in _guidance_requirement_rows(path)
     ) or "<p class='muted'>The published requirement details were not available for this selection.</p>"
+    subject_status, subject_status_text = _subject_match_status(path)
+    subject_status_html = (
+        f"<div class='row'><strong>{e(subject_status)}</strong>"
+        f"<span>{e(subject_status_text)}</span></div>"
+    )
     domain_blocks = []
     for domain in domains:
         domain_sg = domain.get("subgroups") or []
@@ -308,6 +326,7 @@ ul {{ margin:5px 0 10px; padding-left:22px; }} li {{ margin:3px 0; }} .muted {{ 
 <h2>Subjects you entered</h2><div>{subject_rows or '<p class="muted">No subjects were recorded.</p>'}</div>
 <h2>Programmes you saved</h2>{programme_html}<p class='muted'>Current guidance path: {e(str(programme.get('name') or 'Programme not confirmed'))} at {e(str(university.get('name') or 'Not confirmed'))}.</p>
 <h2>Admission requirements</h2><div>{requirement_rows}</div>
+<h2>Subject check status</h2><div>{subject_status_html}</div>
 <h2>Selected intelligence path</h2>{domains_html}
 <h2>Data notes</h2><ul>{data_notes_html}</ul>
 {access_block}
@@ -598,6 +617,10 @@ def build_full_guidance_report_docx(ctx: ReportContext) -> bytes:
             parts.append(_p(f"{label}: {value}"))
     else:
         parts.append(_p("Published requirement details were not available for this selection."))
+
+    subject_status, subject_status_text = _subject_match_status(path)
+    parts.append(_p("Subject check status", bold=True, size=26, heading=True))
+    parts.append(_p(f"{subject_status}: {subject_status_text}"))
 
     parts.append(_p("Selected intelligence path", bold=True, size=26, heading=True))
     for domain in path.get("domains") or []:

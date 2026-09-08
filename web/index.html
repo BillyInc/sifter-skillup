@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f59e0b" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content="Sifter LevelUp — guidance for students and institutions." />
+    <title>Sifter LevelUp</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // A few React Native web dependencies still read the Node-style global
+      // object during module evaluation. Define the browser equivalent before
+      // Vite loads the application entry.
+      globalThis.global = globalThis;
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
