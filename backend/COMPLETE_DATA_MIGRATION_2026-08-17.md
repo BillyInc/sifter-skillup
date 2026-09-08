@@ -37,8 +37,8 @@ variants.
 |---|---:|
 | `seed_career_pilot.sql` | 243 CCMAS/custom programmes, 861 schools, 420 JAMB programme names, 420 mappings, 9,130 unique university offerings, 420 national requirement rows, 3,884 university exceptions, 2,031 university subject options, 12,213 university option items, 2,706 brochure source variants |
 | `seed_subject_catalog.sql` | 46 canonical subjects |
-| `seed_subject_options.sql` | 596 national subject options and 7,793 national option items; replacement seed for directly matchable subject combinations |
-| `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 676 matchable, 137 structured source rules, 3 cross-references, 420 direct-entry records, 24 explicit source-missing records |
+| `seed_subject_options.sql` | 604 national subject options and 8,007 national option items; replacement seed for directly matchable subject combinations |
+| `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 678 matchable, 135 structured source rules, 2 cross-references, 420 direct-entry records, 25 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
 | `seed_career_v2_preview_2026-08-26_parts_gz/` | Development preview transport: 20 ordered gzip parts for 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, and 4,000 overlaps; 11 reviewed no-direct-local-match rows remain explicit |
 | `seed_career_v2_2026-09-01_parts_gz/` | Current development/staging transport: 23 ordered gzip parts for 160 visible domains, 542 supported subgroups, 5,093 roles, 48,585 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,163 JAMB-domain links, 4,000 overlaps, and 5,090 role work profiles |
@@ -286,11 +286,15 @@ Run after the schema above:
 
 `seed_subject_rule_records.sql` replaces the complete typed rule-record layer.
 `seed_subject_options.sql` deliberately deletes and replaces the national
-parsed-option tables before inserting the current 596 options and 7,793
+parsed-option tables before inserting the current 604 options and 8,007
 items. Run both after `seed_career_pilot.sql`; take a backup before using the
 replacement seed on an existing production database. The rule-record layer
 preserves every source condition and blank cell; only matchable records become
-subject-picker rows.
+subject-picker rows. “Any other subject” is an explicit open slot across the
+active catalogue; “relevant”, “suitable”, and “appropriate” require an
+explicit source/category scope or a narrow same-programme exam-layer scope.
+Conditional NBC/NTC/TC-II wording is not merged into the ordinary national
+rule, and one subject cannot satisfy two distinct groups.
 
 `seed_career_v2.sql` already contains the complete current
 `jamb_programme_domain` population. Do not run the JAMB refresh after it in the
@@ -427,7 +431,7 @@ FROM (
 ```
 
 Expected current counts are 46 subjects, 420 JAMB programmes, 420 national
-requirement rows, 596 national subject options, 7,793 national option items,
+   requirement rows, 604 national subject options, 8,007 national option items,
 1,260 typed subject-rule records,
 861 schools, 9,130 unique school-programme offerings, 3,884 university
 exceptions, 2,031 university subject options, 12,213 university option items,
@@ -435,7 +439,7 @@ exceptions, 2,031 university subject options, 12,213 university option items,
 2,058 programme-domain links, 709 JAMB-domain links, and 160,914 resource
 rows. The 9,130 offering pairs and all 420 mapping chains were independently
 audited with zero structural errors. The typed rule layer covers every
-national requirement layer; 14 rows are explicitly source-missing and are not
+national requirement layer; 25 rows are explicitly source-missing and are not
 invented into subject combinations.
 All three orphan checks must return zero.
 
@@ -446,6 +450,8 @@ All three orphan checks must return zero.
 - JAMB inheritance audit: 420/420 names resolved; zero stale names and zero
   component mismatches.
 - Seed regeneration: all 420 programme mappings link to a programme; the
-  subject-option completeness audit passed for all 596 emitted options.
+  subject-option completeness audit passed for all 604 emitted options.
+- Exhaustive subject matcher audit: 226 O-level options and 378 UTME options,
+  220 negative mutations, and zero independent-oracle mismatches.
 - Python compilation and JSON parsing passed for the generators and canonical
   artifacts.

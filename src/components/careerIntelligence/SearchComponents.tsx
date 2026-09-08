@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  type DimensionValue,
   type StyleProp,
   type TextStyle,
   type ViewStyle,
@@ -982,7 +983,7 @@ const styles = StyleSheet.create({
   },
   webPanel: {
     width: 760,
-    maxWidth: "calc(100% - 32px)",
+    maxWidth: "calc(100% - 32px)" as DimensionValue,
     maxHeight: 680,
     borderRadius: Radius.lg,
     borderWidth: 1,

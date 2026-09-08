@@ -21,6 +21,7 @@ from _parse_subject_options import (
     SUBJECT_CODES,
     SOURCE_RULES_PATH,
     SOURCE_URL,
+    UTME_CODES,
     parse_olevel,
     parse_utme,
     source_variant_texts,
@@ -116,7 +117,96 @@ def category_hints(text):
     return labels
 
 
-def source_rule(text, exam_type):
+def resolve_contextual_rules(programmes):
+    """Resolve programme-level qualifier scope exactly like option generation.
+
+    The typed source-rule seed must agree with the executable option seed. In
+    particular, Arabic's O-level ``relevant subjects`` is resolved from the
+    same programme's narrow Arts/Social-Science UTME scope, while direct-entry
+    wording is never used as O-level/UTME scope.
+    """
+    utme_text, olevel_text, utme_rules, olevel_rules = {}, {}, {}, {}
+    utme_refs, olevel_refs = {}, {}
+    for name, programme in programmes.items():
+        utme = programme.get("utme_subjects")
+        if isinstance(utme, list):
+            utme = "; ".join(str(item) for item in utme)
+        utme_text[name] = as_text(utme)
+        olevel_text[name] = as_text(programme.get("olevel_requirement"))
+        if utme_text[name]:
+            parsed = parse_utme(utme_text[name])
+            if isinstance(parsed, tuple) and parsed[0] == "ref":
+                utme_refs[name] = parsed[1]
+            elif parsed:
+                utme_rules[name] = parsed
+        if olevel_text[name]:
+            olevel_rules[name] = parse_olevel(olevel_text[name])
+            same_as = re.match(
+                r"^\s*same\s+as\s+(?:in|for)\s+([^(.]+?)(?:\s*\(|\s*$)",
+                olevel_text[name],
+                re.I,
+            )
+            if same_as:
+                olevel_refs[name] = same_as.group(1).strip()
+
+    by_lower = {name.lower(): name for name in programmes}
+    for _ in range(2):
+        for name, target in list(utme_refs.items()):
+            resolved_name = by_lower.get(target.lower())
+            if resolved_name and resolved_name in utme_rules:
+                utme_rules[name] = utme_rules[resolved_name]
+                del utme_refs[name]
+        for name, target in list(olevel_refs.items()):
+            resolved_name = by_lower.get(target.lower())
+            if resolved_name and olevel_rules.get(resolved_name):
+                olevel_rules[name] = olevel_rules[resolved_name]
+                del olevel_refs[name]
+
+    def narrow_scope(parts, allowed_codes, source_codes):
+        if not parts:
+            return None
+        codes = {part[1] for part in parts if part[0] == "required"}
+        codes.update(
+            code
+            for part in parts
+            if part[0] == "one_of"
+            for code in part[2]
+        )
+        codes &= set(allowed_codes)
+        source_coverage = len(codes & set(source_codes)) / max(1, len(source_codes))
+        if not codes or source_coverage >= 0.70:
+            return None
+        return codes
+
+    for name in sorted(programmes):
+        if olevel_text[name] and not olevel_rules.get(name):
+            scope = narrow_scope(utme_rules.get(name), OLEVEL_CODES, UTME_CODES)
+            if scope:
+                candidate = parse_olevel(olevel_text[name], context_codes=scope)
+                if candidate:
+                    olevel_rules[name] = candidate
+        if utme_text[name] and not utme_rules.get(name):
+            resolved_olevel = olevel_rules.get(name)
+            scope = narrow_scope(
+                resolved_olevel[1] if resolved_olevel else None,
+                UTME_CODES,
+                OLEVEL_CODES,
+            )
+            if scope:
+                candidate = parse_utme(utme_text[name], context_codes=scope)
+                if candidate and not (isinstance(candidate, tuple) and candidate[0] == "ref"):
+                    utme_rules[name] = candidate
+
+    return {
+        name: {
+            "utme": utme_rules.get(name),
+            "olevel": olevel_rules.get(name),
+        }
+        for name in programmes
+    }
+
+
+def source_rule(text, exam_type, parsed_override=None):
     text = as_text(text)
     if exam_type == "direct_entry":
         return {
@@ -125,7 +215,11 @@ def source_rule(text, exam_type):
             "rule_json": {"version": 1, "examType": exam_type, "raw": text},
         }
     allowed = OLEVEL_CODES if exam_type == "olevel" else None
-    parsed = parse_olevel(text) if exam_type == "olevel" else parse_utme(text)
+    parsed = (
+        parsed_override
+        if parsed_override is not None
+        else (parse_olevel(text) if exam_type == "olevel" else parse_utme(text))
+    )
     if parsed and not (isinstance(parsed, tuple) and parsed[0] == "ref"):
         if exam_type == "olevel":
             minimum, parts = parsed
@@ -167,6 +261,7 @@ def source_rule(text, exam_type):
 
 def main():
     programmes = load_programmes()
+    contextual_rules = resolve_contextual_rules(programmes)
     report = json.load(open(SOURCE_RULES_PATH, encoding="utf-8")) if os.path.exists(SOURCE_RULES_PATH) else {}
     sql = [
         "-- AUTO-GENERATED by data/career-mapping/_gen_subject_rule_records.py — DO NOT EDIT",
@@ -180,7 +275,11 @@ def main():
         for exam_type, field in (("utme", "utme_subjects"), ("olevel", "olevel_requirement"), ("direct_entry", "direct_entry")):
             text = as_text(programme.get(field))
             variants = source_variant_texts(report, name, exam_type)
-            primary = source_rule(text, exam_type)
+            primary = source_rule(
+                text,
+                exam_type,
+                contextual_rules.get(name, {}).get(exam_type),
+            )
             rule = primary
             if primary["rule_status"] in {"source_missing", "structured_source", "cross_reference"} and variants:
                 parsed_variants = [source_rule(variant, exam_type) for variant in variants]

@@ -30,6 +30,7 @@ import {
 } from "@/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { studentAccountApi } from "@/lib/provisioningData";
+import { friendlyLoginError, isValidEmail } from "@/lib/authMessages";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SifterButton } from "@/components/ui";
 import { LevelUpLogo } from "@/components/brand/LevelUpLogo";
@@ -42,14 +43,6 @@ import {
 } from "@/screens/auth/authShared";
 
 type Mode = "welcome" | "login" | "connecting";
-
-function friendlyAuthError(error: unknown, fallback: string) {
-  const message = error instanceof Error ? error.message : String(error || "");
-  if (!message) return fallback;
-  if (/unauthorized/i.test(message)) return "Invalid email or password.";
-  if (/bad request/i.test(message)) return fallback;
-  return message;
-}
 
 export default function AuthScreen({ initialMode = "login" }: { initialMode?: Exclude<Mode, "connecting"> }) {
   const router = useRouter();
@@ -81,6 +74,10 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
   const cardAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    if (Platform.OS === "web") {
+      cardAnim.setValue(1);
+      return;
+    }
     Animated.timing(cardAnim, {
       toValue: 1,
       duration: 420,
@@ -88,17 +85,19 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
     }).start();
   }, [cardAnim]);
 
-  const cardStyle = {
-    opacity: cardAnim,
-    transform: [
-      {
-        translateY: cardAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [24, 0],
-        }),
-      },
-    ],
-  };
+  const cardStyle = Platform.OS === "web"
+    ? undefined
+    : {
+        opacity: cardAnim,
+        transform: [
+          {
+            translateY: cardAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [24, 0],
+            }),
+          },
+        ],
+      };
 
   const resetLoginFields = () => {
     setEmail("");
@@ -150,7 +149,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
       await signInGuest();
       router.replace("/(tabs)/explore" as any);
     } catch (e) {
-      setError(friendlyAuthError(e, "Could not continue as guest."));
+      setError(friendlyLoginError(e, "Could not continue as guest."));
     } finally {
       setGuestLoading(false);
     }
@@ -158,13 +157,22 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
 
   const handleLogin = async () => {
     setError("");
-    if (!email.trim() || !password) {
-      setError("Enter your email and password.");
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail) {
+      setError("Enter your email address.");
+      return;
+    }
+    if (!isValidEmail(normalizedEmail)) {
+      setError("Enter a valid email address, such as name@example.com.");
+      return;
+    }
+    if (!password) {
+      setError("Enter your password.");
       return;
     }
     setEmailLoading(true);
     try {
-      await signInEmail(email.trim(), password);
+      await signInEmail(normalizedEmail, password);
       if (schoolCode.trim()) {
         try { await studentAccountApi.affiliate(schoolCode.trim()); } catch { /* login remains successful; code can be linked later */ }
       }
@@ -179,7 +187,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
         router.replace("/(tabs)/home");
       }
     } catch (e) {
-      setError(friendlyAuthError(e, "Could not sign you in."));
+      setError(friendlyLoginError(e));
     } finally {
       setEmailLoading(false);
     }

@@ -868,31 +868,15 @@ async def list_domain_clusters():
         # scale (13..56 in production), not a percentage -- a meter that
         # assumed 0..10 drew all 160 domains as full demand, including the 108
         # the data calls low. Ship the source's own band, not a derived bar.
-        # The elite gate: legacy `elite_domain` is an audit input, not
-        # publication evidence, so it is only honoured for domains that also
-        # have a published review. Every other caller of this helper resolves
-        # it before use; this one did not, and the resulting NameError was
-        # swallowed by the except below -- so the endpoint answered
-        # `coming_soon` on every request and the Domain Explorer this function
-        # exists to fill stayed permanently empty.
-        published_domain_ids = _published_elite_entity_ids("domain")
-
         grouped: dict[str, list] = {}
         for r in rows:
             entry = {
                 # The domain route keys on domain_key, not the uuid.
                 "id": r.get("domain_key") or r["id"],
                 "name": r.get("name"),
-                # Written as an explicit `and (... or ...)`. The previous form
-                # relied on `and` binding tighter than `or` to mean the same
-                # thing, which reads as a precedence bug even though it was not
-                # one. A domain may be keyed by either uuid or domain_key in
-                # the reviews table, hence both lookups.
                 "eliteFlag": bool(r.get("elite_domain"))
-                and (
-                    str(r.get("id")) in published_domain_ids
-                    or str(r.get("domain_key")) in published_domain_ids
-                ),
+                and str(r.get("id")) in published_domain_ids
+                or (bool(r.get("elite_domain")) and str(r.get("domain_key")) in published_domain_ids),
             }
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
@@ -1693,6 +1677,7 @@ async def list_application_windows(limit: int = 60):
 async def discover_by_skills(
     skills: Optional[str] = Query(None),
     match: str = Query("both"),
+    intent: str = Query("learned"),
     category: Optional[str] = Query(None),
     user_type: Optional[str] = Query(None),
     admin_type: Optional[str] = Query(None),
@@ -1726,6 +1711,9 @@ async def discover_by_skills(
     match_mode = (match or "both").strip().lower()
     if match_mode not in {"both", "either"}:
         return ResponseModel(success=False, message="Match must be both or either.", data=None)
+    intent_mode = (intent or "learned").strip().lower()
+    if intent_mode not in {"learned", "intended"}:
+        return ResponseModel(success=False, message="Skill intent must be learned or intended.", data=None)
     if category:
         category = category.strip().casefold()
     try:
@@ -1821,6 +1809,26 @@ async def discover_by_skills(
             matched_domains.append((domain, matched))
         matched_ids = {domain.get("id") for domain, _ in matched_domains}
 
+        contextual_rows: list[dict] = []
+        if matched_domains and terms:
+            try:
+                contextual_rows = (
+                    svc.table("career_context_items")
+                    .select(
+                        "context_level, context_key, domain_key, item_type, item_key, name, "
+                        "plain_meaning, contextual_use, expected_output, priority, priority_reason, "
+                        "source_references, geographic_scope, data_state"
+                    )
+                    .in_("domain_key", [domain.get("domain_key") for domain, _ in matched_domains])
+                    .limit(5000)
+                    .execute()
+                    .data
+                    or []
+                )
+            except Exception as exc:  # noqa: BLE001
+                # This additive layer may not exist on older installations.
+                log.debug("career skill contextual suggestions unavailable", error=str(exc))
+
         role_out = []
         tool_out = []
         cert_out = []
@@ -1861,7 +1869,7 @@ async def discover_by_skills(
             for group in groups_by_domain.get(domain_id, []):
                 group_values = _skill_text(group.get("cluster_skills"))
                 group_matches = [term for term in terms if _contains_skill(group_values, term)]
-                if not terms or group_matches or domain_id in matched_ids:
+                if not terms or group_matches:
                     subgroup_out.append({
                         "id": group.get("id"),
                         "name": group.get("label"),
@@ -1880,7 +1888,7 @@ async def discover_by_skills(
             for role in roles_by_domain.get(domain_id, []):
                 role_values = _skill_text(role.get("essential_skills")) + _skill_text(role.get("optional_skills"))
                 role_matches = [term for term in terms if _contains_skill(role_values, term)]
-                if not terms or match_mode == "either" or not role_matches or len(role_matches) == len(terms):
+                if not terms or (match_mode == "both" and len(role_matches) == len(terms)) or (match_mode == "either" and bool(role_matches)):
                     role_required = _skill_text(role.get("essential_skills"))
                     role_gaps = [skill for skill in role_required if not any(_contains_skill([term], skill) for term in terms)]
                     role_out.append({
@@ -1901,11 +1909,11 @@ async def discover_by_skills(
                     })
             for tool in tools_by_domain.get(domain_id, []):
                 tool_matches = [term for term in terms if _contains_skill([str(tool.get("tool_name") or "")], term)]
-                if not terms or tool_matches or domain_id in matched_ids:
+                if not terms or tool_matches:
                     tool_out.append({"name": tool.get("tool_name"), "group": tool.get("tool_group"), "domainId": domain_key, "domainName": domain.get("name"), "matchedSkills": tool_matches, "matchScore": score_for(tool_matches), "matchLabel": match_label(score_for(tool_matches), bool(tool_matches))})
             for cert in certs_by_domain.get(domain_id, []):
                 cert_matches = [term for term in terms if _contains_skill([str(cert.get("name") or "")], term)]
-                if not terms or cert_matches or domain_id in matched_ids:
+                if not terms or cert_matches:
                     cert_out.append({"name": cert.get("name"), "body": cert.get("body"), "level": cert.get("level"), "domainId": domain_key, "domainName": domain.get("name"), "matchedSkills": cert_matches, "matchScore": score_for(cert_matches), "matchLabel": match_label(score_for(cert_matches), bool(cert_matches))})
 
         domain_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
@@ -1914,16 +1922,111 @@ async def discover_by_skills(
         tool_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
         cert_out.sort(key=lambda row: row.get("matchScore", 0), reverse=True)
 
+        # A skill match is more useful when it explains the route it opens.
+        # These routes are composed only from the stored domain, subgroup, and
+        # role relationships; no role is invented from the free-form query.
+        subgroup_by_id = {
+            row.get("id"): row
+            for row in subgroups
+            if row.get("id")
+        }
+        tier_order = {"entry": 0, "junior": 0, "mid": 1, "senior": 2}
+        paths: list[dict] = []
+        for domain, matched in matched_domains:
+            domain_id = domain.get("id")
+            domain_key = domain.get("domain_key")
+            domain_score = next(
+                (row.get("matchScore", 0) for row in domain_out if row.get("id") == domain_key),
+                0,
+            )
+            candidate_roles = []
+            for role in roles_by_domain.get(domain_id, []):
+                role_values = _skill_text(role.get("essential_skills")) + _skill_text(role.get("optional_skills"))
+                role_matches = [term for term in terms if _contains_skill(role_values, term)]
+                role_required = _skill_text(role.get("essential_skills"))
+                role_gaps = [
+                    skill for skill in role_required
+                    if not any(_contains_skill([term], skill) for term in terms)
+                ]
+                candidate_roles.append((role, role_matches, role_gaps))
+            candidate_roles.sort(
+                key=lambda item: (
+                    -score_for(item[1]),
+                    tier_order.get(str(item[0].get("tier") or "").casefold(), 3),
+                    str(item[0].get("role_name") or ""),
+                )
+            )
+            for role, role_matches, role_gaps in candidate_roles[:8]:
+                group = subgroup_by_id.get(role.get("subgroup_id"))
+                role_name = role.get("role_name")
+                group_name = group.get("label") if group else None
+                if role_matches:
+                    explanation = "Your selected skills are used in this route; build the listed gaps next."
+                else:
+                    explanation = "Your skills connect to this domain; this is a possible specialization, but its foundation still needs to be built."
+                paths.append({
+                    "domainId": domain_key,
+                    "domainName": domain.get("name"),
+                    "domainMatchScore": domain_score,
+                    "subgroupId": role.get("subgroup_id"),
+                    "subgroupName": group_name,
+                    "roleKey": role.get("role_key"),
+                    "roleName": role_name,
+                    "tier": role.get("tier"),
+                    "matchedSkills": role_matches,
+                    "gaps": role_gaps,
+                    "matchScore": score_for(role_matches),
+                    "matchLabel": match_label(score_for(role_matches), len(role_matches) == len(terms) and bool(role_matches)),
+                    "explanation": explanation,
+                })
+
         # Turn a match into a small, actionable next-step route. Suggestions
         # come only from skills already attached to a matched domain/role; they
         # are not generated from free-form model text. Essential role skills
         # are shown before optional skills, and duplicates are removed.
         suggestions: list[dict] = []
-        seen_suggestions: set[tuple[str, str]] = set()
+        seen_suggestions: set[tuple[str, ...]] = set()
+        priority_order = {"start_here": 0, "build_next": 1, "useful_later": 2, "optional": 3}
+        for row in sorted(
+            contextual_rows,
+            key=lambda item: (
+                priority_order.get(str(item.get("priority") or "optional"), 4),
+                {"domain": 0, "subgroup": 1, "role": 2}.get(str(item.get("context_level") or "role"), 3),
+                str(item.get("name") or ""),
+            ),
+        ):
+            name = str(row.get("name") or "").strip()
+            if not name or any(_contains_skill([name], term) for term in terms):
+                continue
+            identity = (str(row.get("context_key") or ""), str(row.get("item_type") or ""), name.casefold())
+            if identity in seen_suggestions:
+                continue
+            seen_suggestions.add(identity)
+            references = row.get("source_references") or []
+            suggestions.append({
+                "name": name,
+                "itemType": row.get("item_type") or "skill",
+                "contextLevel": row.get("context_level") or "domain",
+                "contextKey": row.get("context_key") or row.get("domain_key"),
+                "domainId": row.get("domain_key"),
+                "domainName": next(
+                    (domain.get("name") for domain, _ in matched_domains if domain.get("domain_key") == row.get("domain_key")),
+                    None,
+                ),
+                "priority": row.get("priority") or "useful_later",
+                "why": row.get("priority_reason") or row.get("contextual_use") or "It is connected to this route in the source-backed catalogue.",
+                "sourceBacked": row.get("data_state") == "source_backed" and bool(references),
+                "plainMeaning": row.get("plain_meaning"),
+                "contextualUse": row.get("contextual_use"),
+                "expectedOutput": row.get("expected_output"),
+                "sourceReferences": references,
+                "geographicScope": row.get("geographic_scope"),
+            })
+            if len(suggestions) >= 18:
+                break
         for domain, matched in matched_domains:
             domain_id = domain.get("id")
             domain_key = domain.get("domain_key")
-            known = {term.casefold() for term in terms}
             foundation = unique(_skill_text(domain.get("foundation_skills")))
             for skill in foundation:
                 if any(_contains_skill([skill], term) for term in terms):
@@ -1989,6 +2092,7 @@ async def discover_by_skills(
         return ResponseModel(data=_real({
             "terms": terms,
             "matchMode": match_mode,
+            "intent": intent_mode,
             "userType": normalized_user_type,
             "adminType": normalized_admin_type,
             "allowedUserTypes": list(allowed_user_types),
@@ -2001,6 +2105,7 @@ async def discover_by_skills(
             "roles": role_out,
             "tools": tool_out,
             "certifications": cert_out,
+            "paths": paths,
             "suggestedNext": suggestions,
         }, "No matching graph evidence is available for those skills yet." if terms and not matched_domains else None))
     except Exception as exc:  # noqa: BLE001
@@ -2016,6 +2121,7 @@ async def discover_by_skills_post(payload: dict = Body(...)):
     return await discover_by_skills(
         skills=",".join(str(item) for item in skills if str(item).strip()),
         match=str(payload.get("match") or "both"),
+        intent=str(payload.get("intent") or "learned"),
         category=payload.get("category"),
         user_type=payload.get("userType") or payload.get("user_type"),
         admin_type=payload.get("adminType") or payload.get("admin_type"),

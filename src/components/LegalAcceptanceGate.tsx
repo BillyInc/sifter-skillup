@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useTheme, Brand, CompassFonts, FontSize, Radius, Spacing } from "../theme";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { API } from "../lib/api";
 import { isCurrentLegalAcceptance, PRIVACY_VERSION, TERMS_VERSION } from "../lib/legal";
 import { SifterButton } from "./ui";

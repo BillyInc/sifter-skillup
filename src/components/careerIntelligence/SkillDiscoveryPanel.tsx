@@ -1,51 +1,77 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useTheme, CompassFonts, FontSize, Radius, Spacing } from "@/theme";
 import { careerData } from "@/lib/careerData";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useAuth } from "@/hooks/useAuth";
 import { adminLearnerAudienceForOrg } from "@/lib/adminLearnerAudience";
+import { useExploreNav } from "@/lib/exploreNav";
+import { useResponsive } from "@/hooks/useResponsive";
 import type { DataState, SkillDiscoveryResult } from "@/types/career";
 import { SectionLabel } from "./index";
 
 type Intent = "learned" | "intended";
+type SkillPath = SkillDiscoveryResult["paths"][number];
+type ThemeColors = ReturnType<typeof useTheme>["colors"];
+
+const QUICK_STARTS = ["Python", "Excel", "Communication", "Data analysis"];
+const PRIORITY_LABEL: Record<string, string> = {
+  start_here: "Start here",
+  build_next: "Build next",
+  useful_later: "Useful later",
+  optional: "Optional",
+};
 
 function labelForIntent(intent: Intent) {
-  return intent === "learned" ? "Already learned" : "I want to learn";
+  return intent === "learned" ? "I already know" : "I want to build";
 }
 
-function EvidenceChips({ values, color }: { values: string[]; color: string }) {
+function EvidenceChips({ values, color, limit }: { values: string[]; color: string; limit?: number }) {
   if (!values.length) return null;
+  const visible = limit ? values.slice(0, limit) : values;
   return (
-    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }}>
-      {values.map((value) => (
-        <View key={value} style={{ borderWidth: 1, borderColor: color, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3 }}>
+    <View style={styles.chips}>
+      {visible.map((value) => (
+        <View key={value} style={[styles.chip, { borderColor: color }]}>
           <Text style={{ color, fontSize: FontSize.xs }}>{value}</Text>
         </View>
       ))}
+      {limit && values.length > limit ? (
+        <Text style={{ color, fontSize: FontSize.xs, alignSelf: "center" }}>+{values.length - limit} more</Text>
+      ) : null}
     </View>
   );
 }
 
 function MatchMeta({ score, label, explanation, color }: { score: number; label: string; explanation?: string; color: string }) {
   return (
-    <View style={{ gap: 2 }}>
+    <View style={styles.matchMeta}>
       <Text style={[CompassFonts.data, { color, fontSize: FontSize.xs, fontWeight: "800" }]}>
-        {score ? `${Math.round(score * 100)}% · ` : ""}{label}
+        {score > 0 ? `${Math.round(score * 100)}% · ` : ""}{label}
       </Text>
-      {explanation ? <Text style={{ color, fontSize: FontSize.xs }}>{explanation}</Text> : null}
+      {explanation ? <Text style={{ color, fontSize: FontSize.xs, textAlign: "right", maxWidth: 190 }}>{explanation}</Text> : null}
     </View>
   );
 }
 
-function GapList({ values, intent, color, admin }: { values: string[]; intent: Intent; color: string; admin?: boolean }) {
-  if (!values.length) return null;
+function PriorityBadge({ priority, colors }: { priority?: string; colors: ThemeColors }) {
+  if (!priority) return null;
   return (
-    <View style={{ gap: Spacing.xs }}>
-      <Text style={{ color, fontSize: FontSize.xs, fontWeight: "800" }}>
-        {admin ? "Guidance gaps" : intent === "learned" ? "Gaps to build" : "Additional competencies"}
+    <View style={[styles.priorityBadge, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+      <Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "800" }}>
+        {PRIORITY_LABEL[priority] ?? priority}
       </Text>
-      <EvidenceChips values={values} color={color} />
     </View>
   );
 }
@@ -57,7 +83,10 @@ export interface SkillDiscoveryPanelProps {
 
 export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   const { colors } = useTheme();
+  const { isMobile } = useResponsive();
   const { user } = useAuth();
+  const router = useRouter();
+  const exploreNav = useExploreNav();
   const adminAudience = adminLearnerAudienceForOrg(adminType);
   const isAdmin = Boolean(adminAudience);
   const [userType, setUserType] = useState<string | undefined>();
@@ -68,7 +97,6 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   const [match, setMatch] = useState<"both" | "either">("both");
   const [category, setCategory] = useState<string | undefined>();
   const [state, setState] = useState<DataState<SkillDiscoveryResult> | null>(null);
-  const [expanded, setExpanded] = useState(false);
 
   const effectiveUserType = isAdmin
     ? adminLearnerType ?? adminAudience?.learnerTypes[0]
@@ -95,12 +123,13 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   }, [adminType, user?.id]);
 
   useEffect(() => {
-    if (!expanded) return;
     let active = true;
+    setState(null);
     const timer = setTimeout(() => {
       careerData.discoverBySkills({
         skills: selected,
         match,
+        intent,
         category,
         userType: effectiveUserType,
         adminType: adminType ?? undefined,
@@ -112,14 +141,14 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
       active = false;
       clearTimeout(timer);
     };
-  }, [adminType, category, effectiveUserType, expanded, match, selected]);
+  }, [adminType, category, effectiveUserType, intent, match, selected]);
 
   const audienceCopy = useMemo(() => {
-    if (adminType === "university") return "Map skills to undergraduate curriculum domains, subgroups, roles and credentials.";
-    if (adminType === "tutorial_centre" || adminType === "jamb_cafe") return "Find the skills, tools and credentials to discuss in a JAMB student session.";
-    if (adminType === "secondary_school") return "Use a student's skills to guide the next subject and career step.";
-    if (userType === "skilled_worker" || userType === "professional" || userType === "graduate") return "Map what you know to adjacent fields and the competencies that would strengthen each route.";
-    return "Search skills, tools, frameworks or certifications and see what they can unlock.";
+    if (adminType === "university") return "Guide an undergraduate from the skills they have to curriculum domains, subgroups and roles.";
+    if (adminType === "tutorial_centre" || adminType === "jamb_cafe") return "Use a student's interests or skills to explain realistic next study and career routes.";
+    if (adminType === "secondary_school") return "Use a student's skills to make the next subject, programme and career step easier to understand.";
+    if (userType === "student") return "See how your skills connect to domains, subgroups, entry roles and what to learn next.";
+    return "Add one or more skills to see the domains, subgroups and roles they can connect to.";
   }, [adminType, userType]);
 
   const addSkillValue = (rawValue: string) => {
@@ -127,152 +156,301 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
     if (!value || selected.some((item) => item.toLowerCase() === value.toLowerCase())) return;
     setSelected((current) => [...current, value]);
     setDraft("");
-    setExpanded(true);
   };
 
-  const addSkill = () => addSkillValue(draft);
-
   const removeSkill = (value: string) => setSelected((current) => current.filter((item) => item !== value));
+  const clearSkills = () => {
+    setSelected([]);
+    setDraft("");
+  };
   const data = state?.status === "real" ? state.data : null;
 
-  return (
-    <View style={{ gap: Spacing.md }}>
-      <TouchableOpacity
-        onPress={() => setExpanded((current) => !current)}
-        activeOpacity={0.8}
-        style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: colors.surface.raised, gap: Spacing.xs }}
-      >
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary, fontSize: FontSize.md }]}>Match a skill</Text>
-          <Text style={{ color: colors.accentRole.action, fontWeight: "800" }}>{expanded ? "Hide" : "Open"}</Text>
-        </View>
-        <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>{audienceCopy}</Text>
-      </TouchableOpacity>
+  const openDomain = (id: string) => exploreNav.domain(router, id);
+  const openSubgroup = (domainId: string, subgroupId: string) => exploreNav.subgroup(router, domainId, subgroupId);
+  const openRole = (roleId: string) => exploreNav.role(router, roleId);
+  const openPath = (path: SkillPath) => {
+    if (path.roleKey) return openRole(path.roleKey);
+    if (path.subgroupId) return openSubgroup(path.domainId, path.subgroupId);
+    return openDomain(path.domainId);
+  };
 
-      {expanded ? (
-        <View style={{ gap: Spacing.md }}>
+  return (
+    <View style={styles.container}>
+      <View style={[styles.hero, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <View style={styles.heroHeading}>
+          <View style={[styles.iconBox, { backgroundColor: colors.surface.subtle }]}>
+            <Feather name="compass" size={20} color={colors.accentRole.action} />
+          </View>
+          <View style={{ flex: 1, gap: 3 }}>
+            <Text style={[styles.eyebrow, { color: colors.accentRole.action }]}>SKILL MATCHER</Text>
+            <Text style={[CompassFonts.displaySemi, styles.heroTitle, { color: colors.textRole.primary }]}>See where your skills can take you</Text>
+          </View>
+        </View>
+        <Text style={[styles.heroBody, { color: colors.textRole.secondary }]}>{audienceCopy}</Text>
+        <View style={[styles.steps, isMobile && styles.stepsMobile]}>
+          {[
+            ["1", "Choose a skill", "A capability you use or want to learn"],
+            ["2", "Read the connection", "Domain → subgroup → role"],
+            ["3", "Choose what to learn", "Start with the most useful next step"],
+          ].map(([number, title, body]) => (
+            <View key={number} style={styles.step}>
+              <View style={[styles.stepNumber, { backgroundColor: colors.accentRole.action }]}><Text style={{ color: colors.textRole.inverse, fontWeight: "900", fontSize: FontSize.xs }}>{number}</Text></View>
+              <View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs, fontWeight: "800" }}>{title}</Text><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{body}</Text></View>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View style={[styles.workspace, { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle }]}>
           {isAdmin ? (
-            <View style={{ gap: Spacing.xs }}>
-              <SectionLabel>Guiding student type</SectionLabel>
-              <View style={{ flexDirection: "row", gap: Spacing.xs, flexWrap: "wrap" }}>
+            <View style={styles.field}>
+              <SectionLabel>WHO ARE YOU GUIDING?</SectionLabel>
+              <Text style={[styles.help, { color: colors.textRole.muted }]}>The same skill can mean different next steps for a secondary student, JAMB candidate or undergraduate.</Text>
+              <View style={styles.optionRow}>
                 {(adminAudience?.learnerTypes ?? []).map((item) => (
-                  <TouchableOpacity key={item} onPress={() => setAdminLearnerType(item)} style={{ borderWidth: 1, borderColor: adminLearnerType === item ? colors.accentRole.action : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, backgroundColor: adminLearnerType === item ? colors.accentRole.action : colors.surface.raised }}>
+                  <TouchableOpacity key={item} onPress={() => setAdminLearnerType(item)} accessibilityRole="radio" accessibilityState={{ selected: adminLearnerType === item }} style={[styles.option, { borderColor: adminLearnerType === item ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: adminLearnerType === item ? colors.accentRole.action : colors.surface.raised }]}>
                     <Text style={{ color: adminLearnerType === item ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{item === "undergraduate" ? "Undergraduate" : item.toUpperCase()}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
             </View>
           ) : (
-          <View style={{ flexDirection: "row", gap: Spacing.xs, flexWrap: "wrap" }}>
-            {(["learned", "intended"] as Intent[]).map((item) => (
-              <TouchableOpacity key={item} onPress={() => setIntent(item)} style={{ borderWidth: 1, borderColor: intent === item ? colors.textRole.primary : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, backgroundColor: intent === item ? colors.textRole.primary : "transparent" }}>
-                <Text style={{ color: intent === item ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{labelForIntent(item)}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          )}
-
-          <View style={{ gap: Spacing.xs }}>
-            <Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "800" }}>How should skills match?</Text>
-            <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>Match all requires every selected skill in the same result. Match any shows results containing at least one selected skill.</Text>
-            <View style={{ flexDirection: "row", gap: Spacing.xs, flexWrap: "wrap" }}>
-              {(["both", "either"] as const).map((option) => (
-                <TouchableOpacity key={option} onPress={() => setMatch(option)} style={{ borderWidth: 1, borderColor: match === option ? colors.accentRole.action : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, backgroundColor: match === option ? colors.accentRole.action : colors.surface.raised }}>
-                  <Text style={{ color: match === option ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{option === "both" ? "Match all" : "Match any"}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center", gap: Spacing.xs }}>
-            <TextInput
-              value={draft}
-              onChangeText={setDraft}
-              onSubmitEditing={addSkill}
-              placeholder="Add a skill, tool, framework or certification"
-              placeholderTextColor={colors.textRole.muted}
-              style={{ flex: 1, borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, color: colors.textRole.primary, backgroundColor: colors.surface.base }}
-            />
-            <TouchableOpacity onPress={addSkill} style={{ borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, backgroundColor: colors.accentRole.action }}>
-              <Text style={{ color: colors.textRole.inverse, fontWeight: "800" }}>Match skill</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ gap: Spacing.xs }}>
-            <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs, fontWeight: "800" }}>Quick searches</Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }}>
-              {["Python", "Excel", "Communication", "Data analysis"].map((example) => (
-                <TouchableOpacity key={example} onPress={() => addSkillValue(example)} style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 5, backgroundColor: colors.surface.raised }}>
-                  <Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "700" }}>{example}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {selected.length ? (
-            <View style={{ gap: Spacing.xs }}>
-              <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>Selected ({selected.length})</Text>
-              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs }}>
-                {selected.map((item) => (
-                  <TouchableOpacity key={item} onPress={() => removeSkill(item)} style={{ flexDirection: "row", gap: Spacing.xs, alignItems: "center", borderWidth: 1, borderColor: colors.accentRole.action, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 4 }}>
-                    <Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs }}>{item}</Text>
-                    <Text style={{ color: colors.accentRole.action, fontWeight: "900" }}>×</Text>
+            <View style={styles.field}>
+              <SectionLabel>WHAT DOES THIS MEAN?</SectionLabel>
+              <View style={styles.optionRow}>
+                {(["learned", "intended"] as Intent[]).map((item) => (
+                  <TouchableOpacity key={item} onPress={() => setIntent(item)} accessibilityRole="radio" accessibilityState={{ selected: intent === item }} style={[styles.option, { borderColor: intent === item ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: intent === item ? colors.accentRole.action : colors.surface.raised }]}>
+                    <Text style={{ color: intent === item ? colors.textRole.inverse : colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{labelForIntent(item)}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
+              <Text style={[styles.help, { color: colors.textRole.muted }]}>{intent === "learned" ? "We will treat these as skills you can already use, then show the routes and gaps that come next." : "We will treat these as skills you want to build, then show the fields and supporting skills where they are useful."}</Text>
             </View>
-          ) : null}
+          )}
+
+          <View style={styles.field}>
+            <SectionLabel>ADD SKILLS TO YOUR MAP</SectionLabel>
+            <View style={styles.inputRow}>
+              <View style={[styles.inputWrap, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+                <Feather name="search" size={17} color={colors.textRole.muted} />
+                <TextInput value={draft} onChangeText={setDraft} onSubmitEditing={() => addSkillValue(draft)} returnKeyType="done" placeholder="e.g. Python, Excel or communication" placeholderTextColor={colors.textRole.muted} accessibilityLabel="Add a skill" style={[styles.input, { color: colors.textRole.primary }]} />
+              </View>
+              <TouchableOpacity onPress={() => addSkillValue(draft)} disabled={!draft.trim()} accessibilityRole="button" style={[styles.addButton, { backgroundColor: draft.trim() ? colors.accentRole.action : colors.borderRole.subtle }]}>
+                <Feather name="plus" size={17} color={draft.trim() ? colors.textRole.inverse : colors.textRole.muted} />
+                {!isMobile ? <Text style={{ color: draft.trim() ? colors.textRole.inverse : colors.textRole.muted, fontSize: FontSize.sm, fontWeight: "800" }}>Add</Text> : null}
+              </TouchableOpacity>
+            </View>
+            <Text style={[styles.help, { color: colors.textRole.muted }]}>Data analysis is a specific skill. Communication is a transferable skill used in many domains. Select one or more and the results will appear below without leaving this workspace.</Text>
+          </View>
+
+          {!selected.length ? (
+            <View style={styles.field}>
+              <Text style={[styles.helpStrong, { color: colors.textRole.secondary }]}>Start with a common skill</Text>
+              <View style={styles.chips}>
+                {QUICK_STARTS.map((example) => <TouchableOpacity key={example} onPress={() => addSkillValue(example)} style={[styles.chip, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "700" }}>{example}</Text></TouchableOpacity>)}
+              </View>
+            </View>
+          ) : (
+            <View style={styles.field}>
+              <View style={styles.sectionHeading}><Text style={[styles.helpStrong, { color: colors.textRole.secondary }]}>Your selected skills ({selected.length})</Text><TouchableOpacity onPress={clearSkills} accessibilityRole="button"><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "800" }}>Clear all</Text></TouchableOpacity></View>
+              <View style={styles.chips}>
+                {selected.map((item) => <TouchableOpacity key={item} onPress={() => removeSkill(item)} accessibilityRole="button" accessibilityLabel={`Remove ${item}`} style={[styles.selectedChip, { borderColor: colors.accentRole.action, backgroundColor: colors.surface.subtle }]}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs, fontWeight: "700" }}>{item}</Text><Feather name="x" size={13} color={colors.accentRole.action} /></TouchableOpacity>)}
+              </View>
+            </View>
+          )}
+
+          <View style={styles.field}>
+            <View style={styles.sectionHeading}><View style={{ flex: 1 }}><Text style={[styles.helpStrong, { color: colors.textRole.secondary }]}>How should we use your selected skills?</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{match === "both" ? "Show routes where every selected skill appears together." : "Show routes where at least one selected skill appears."}</Text></View></View>
+            <View style={styles.optionRow}>
+              {(["both", "either"] as const).map((option) => <TouchableOpacity key={option} onPress={() => setMatch(option)} accessibilityRole="radio" accessibilityState={{ selected: match === option }} style={[styles.option, { borderColor: match === option ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: match === option ? colors.surface.subtle : colors.surface.raised }]}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, fontWeight: "700" }}>{option === "both" ? "Use all selected skills" : "Use any selected skill"}</Text></TouchableOpacity>)}
+            </View>
+          </View>
 
           {data?.categories?.length ? (
-            <View style={{ gap: Spacing.xs }}>
-              <SectionLabel>Browse categories</SectionLabel>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: Spacing.xs }}>
-                <TouchableOpacity onPress={() => setCategory(undefined)} style={{ borderWidth: 1, borderColor: !category ? colors.textRole.primary : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 5 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs }}>All</Text></TouchableOpacity>
-                {data.categories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={{ borderWidth: 1, borderColor: category === item ? colors.textRole.primary : colors.borderRole.subtle, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 5 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs }}>{item}</Text></TouchableOpacity>)}
+            <View style={styles.field}>
+              <SectionLabel>FILTER BY DOMAIN CLUSTER</SectionLabel>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                <TouchableOpacity onPress={() => setCategory(undefined)} style={[styles.chip, { borderColor: !category ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: !category ? colors.surface.subtle : colors.surface.raised }]}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs, fontWeight: "700" }}>All clusters</Text></TouchableOpacity>
+                {data.categories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.chip, { borderColor: category === item ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: category === item ? colors.surface.subtle : colors.surface.raised }]}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.xs, fontWeight: "700" }}>{item}</Text></TouchableOpacity>)}
               </ScrollView>
             </View>
           ) : null}
 
-          {state?.status === "pending" || state?.status === "coming_soon" ? <ActivityIndicator color={colors.accentRole.action} /> : null}
-          {data ? <SkillResults data={data} intent={intent} colors={colors} admin={isAdmin} onAdd={addSkillValue} /> : null}
-          {state?.meta?.notice && !data ? <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>{state.meta.notice}</Text> : null}
-        </View>
-      ) : null}
+          {state?.status === "pending" ? <View style={styles.loading}><ActivityIndicator color={colors.accentRole.action} /><Text style={[styles.help, { color: colors.textRole.muted }]}>Following your skills through the career map…</Text></View> : null}
+          {data ? <SkillResults data={data} colors={colors} intent={intent} onAdd={addSkillValue} onOpenDomain={openDomain} onOpenSubgroup={openSubgroup} onOpenRole={openRole} onOpenPath={openPath} /> : null}
+          {state && state.status !== "real" && state.meta?.notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{state.meta.notice}</Text> : null}
+      </View>
     </View>
   );
 }
 
-function SkillResults({ data, intent, colors, admin, onAdd }: { data: SkillDiscoveryResult; intent: Intent; colors: ReturnType<typeof useTheme>["colors"]; admin?: boolean; onAdd: (value: string) => void }) {
+function SkillResults({
+  data,
+  colors,
+  intent,
+  onAdd,
+  onOpenDomain,
+  onOpenSubgroup,
+  onOpenRole,
+  onOpenPath,
+}: {
+  data: SkillDiscoveryResult;
+  colors: ThemeColors;
+  intent: Intent;
+  onAdd: (value: string) => void;
+  onOpenDomain: (id: string) => void;
+  onOpenSubgroup: (domainId: string, subgroupId: string) => void;
+  onOpenRole: (id: string) => void;
+  onOpenPath: (path: SkillPath) => void;
+}) {
+  const [showAllPaths, setShowAllPaths] = useState(false);
+  const [showAllSuggestions, setShowAllSuggestions] = useState(false);
+  const [showAllEntities, setShowAllEntities] = useState(false);
+  const [openSuggestion, setOpenSuggestion] = useState<string | null>(null);
   const hasTerms = data.terms.length > 0;
+  const suggestions = useMemo(() => data.suggestedNext ?? [], [data.suggestedNext]);
+  const paths = useMemo(() => data.paths ?? [], [data.paths]);
+  const visiblePaths = showAllPaths ? paths : paths.slice(0, 4);
+  const visibleSuggestions = showAllSuggestions ? suggestions : suggestions.slice(0, 4);
+  const visibleDomains = showAllEntities ? data.domains : data.domains.slice(0, 3);
+  const visibleSubgroups = showAllEntities ? data.subgroups : data.subgroups.slice(0, 4);
+  const visibleRoles = showAllEntities ? data.roles : data.roles.slice(0, 5);
+  const visibleTools = showAllEntities ? data.tools : data.tools.slice(0, 5);
+  const visibleCertifications = showAllEntities ? data.certifications : data.certifications.slice(0, 5);
+
   return (
-    <View style={{ gap: Spacing.md }}>
-      {hasTerms ? <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>Results update as you add or remove skills. Match scores show how closely each item maps to the current selection.</Text> : <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>Choose a category or add a skill to start mapping the graph.</Text>}
-      {hasTerms && data.suggestedNext?.length ? <View style={{ gap: Spacing.xs }}>
-        <SectionLabel>Possible next steps</SectionLabel>
-        <Text style={{ color: colors.textRole.muted, fontSize: FontSize.sm }}>These are source-backed options connected to what you entered. Add one to refine the route.</Text>
-        {data.suggestedNext.slice(0, 8).map((item) => <TouchableOpacity key={`${item.contextKey}-${item.name}`} onPress={() => onAdd(item.name)} style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.sm, backgroundColor: colors.surface.raised }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={{ color: colors.textRole.primary, fontWeight: "800", flex: 1 }}>{item.name}</Text><Text style={{ color: colors.accentRole.action, fontWeight: "800" }}>Add</Text></View>
-          <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{item.why}</Text>
-        </TouchableOpacity>)}
-      </View> : null}
-      {data.domains.map((item) => (
-        <View key={item.id} style={{ borderWidth: 1, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm, backgroundColor: colors.surface.raised }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary, flex: 1 }]}>{item.name}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View>
-          {item.cluster ? <Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{item.cluster}</Text> : null}
-          <EvidenceChips values={item.matchedSkills} color={colors.accentRole.success} />
-          <GapList values={item.gaps} intent={intent} color={colors.textRole.muted} admin={admin} />
+    <View style={styles.results}>
+      <View style={[styles.resultIntro, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+        <View style={styles.resultIntroIcon}><Feather name="map" size={18} color={colors.accentRole.action} /></View>
+        <View style={{ flex: 1, gap: 3 }}>
+          <Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary, fontSize: FontSize.md }]}>{hasTerms ? "Your skills, translated into routes" : "Explore the skill map"}</Text>
+          <Text style={[styles.help, { color: colors.textRole.secondary }]}>{hasTerms ? intent === "learned" ? "These are not promises of employment. They are source-backed connections in the career catalogue, with the preparation still needed shown underneath." : "These routes show where the skill is used. Use the suggested additions to build a more complete foundation." : "Choose a cluster or add a skill to see the connected career graph."}</Text>
         </View>
-      ))}
-      {data.subgroups.length ? <SectionLabel>Subgroups</SectionLabel> : null}
-      {data.subgroups.map((item) => <View key={item.id} style={{ gap: Spacing.xs }}><View style={{ flexDirection: "row", justifyContent: "space-between" }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed subgroup"}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{item.domainName}</Text><EvidenceChips values={item.matchedSkills} color={colors.accentRole.success} /><GapList values={item.gaps} intent={intent} color={colors.textRole.muted} admin={admin} /></View>)}
-      {data.roles.length ? <SectionLabel>Roles</SectionLabel> : null}
-      {data.roles.map((item) => <View key={item.key ?? item.name} style={{ gap: Spacing.xs }}><View style={{ flexDirection: "row", justifyContent: "space-between" }}><Text style={{ color: colors.textRole.primary, fontWeight: "800", flex: 1 }}>{item.name ?? "Unnamed role"}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{item.domainName}</Text><EvidenceChips values={item.matchedSkills} color={colors.accentRole.success} /><GapList values={item.gaps} intent={intent} color={colors.textRole.muted} admin={admin} /></View>)}
-      {data.tools.length ? <SectionLabel>Tools and frameworks</SectionLabel> : null}
-      {data.tools.map((item) => <View key={`${item.domainId}-${item.name}`} style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={{ color: colors.textRole.primary, flex: 1 }}>{item.name ?? "Unnamed tool"} · {item.domainName}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}
-      {data.certifications.length ? <SectionLabel>Certifications</SectionLabel> : null}
-      {data.certifications.map((item) => <View key={`${item.domainId}-${item.name}`} style={{ flexDirection: "row", justifyContent: "space-between", gap: Spacing.sm }}><Text style={{ color: colors.textRole.primary, flex: 1 }}>{item.name ?? "Unnamed certification"} · {item.domainName}</Text><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}
+      </View>
+
+      {hasTerms && paths.length ? (
+        <View style={styles.resultSection}>
+          <SectionLabel>POSSIBLE ROUTES FROM YOUR SKILLS</SectionLabel>
+           <Text style={[styles.help, { color: colors.textRole.muted }]}>A route shows how your selected skills connect to a domain, then to a subgroup and role. Entry-level routes are placed first.</Text>
+          <View style={styles.pathList}>
+            {visiblePaths.map((path, index) => (
+              <TouchableOpacity key={`${path.domainId}-${path.roleKey ?? path.subgroupId ?? index}`} onPress={() => onOpenPath(path)} accessibilityRole="button" style={[styles.pathCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+                <View style={styles.pathTop}><View style={[styles.pathIndex, { backgroundColor: colors.surface.subtle }]}><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "900" }}>{index + 1}</Text></View><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs, fontWeight: "700" }}>{path.domainName}</Text><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{path.subgroupName ? `${path.subgroupName} → ` : ""}{path.roleName ?? "Explore this domain"}</Text></View><Feather name="arrow-up-right" size={17} color={colors.accentRole.action} /></View>
+                <View style={styles.routeMeta}><Text style={{ color: colors.textRole.muted, fontSize: FontSize.xs }}>{path.tier ? `${path.tier} route` : "Domain route"}</Text><MatchMeta score={path.matchScore} label={path.matchLabel} color={colors.accentRole.action} /></View>
+                <Text style={[styles.help, { color: colors.textRole.secondary }]}>{path.explanation}</Text>
+                {path.matchedSkills.length ? <EvidenceChips values={path.matchedSkills} color={colors.accentRole.success} limit={3} /> : null}
+                {path.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Preparation still needed: {path.gaps.slice(0, 3).join(", ")}{path.gaps.length > 3 ? ` +${path.gaps.length - 3} more` : ""}</Text> : null}
+              </TouchableOpacity>
+            ))}
+          </View>
+          {paths.length > 4 ? <TouchableOpacity onPress={() => setShowAllPaths((current) => !current)} accessibilityRole="button"><Text style={[styles.link, { color: colors.accentRole.action }]}>{showAllPaths ? "Show fewer routes" : `See all ${paths.length} routes`}</Text></TouchableOpacity> : null}
+        </View>
+      ) : null}
+
+      {hasTerms && suggestions.length ? (
+        <View style={styles.resultSection}>
+          <SectionLabel>WHAT TO BUILD NEXT</SectionLabel>
+          <Text style={[styles.help, { color: colors.textRole.muted }]}>Start with the domain foundation before narrowing into a role. These suggestions come from competencies already attached to the matched graph.</Text>
+          <View style={styles.suggestionList}>
+            {visibleSuggestions.map((item) => {
+              const key = `${item.contextKey}-${item.itemType}-${item.name}`;
+              const isOpen = openSuggestion === key;
+              return <View key={key} style={[styles.suggestion, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+                <TouchableOpacity onPress={() => setOpenSuggestion(isOpen ? null : key)} accessibilityRole="button" accessibilityState={{ expanded: isOpen }} style={{ flex: 1, gap: 4 }}>
+                  <View style={styles.sectionHeading}><Text style={{ color: colors.textRole.primary, fontWeight: "800", flex: 1 }}>{item.name}</Text><PriorityBadge priority={item.priority} colors={colors} /><Feather name={isOpen ? "chevron-up" : "chevron-down"} size={16} color={colors.textRole.muted} /></View>
+                  <Text style={[styles.help, { color: colors.textRole.muted }]}>{item.contextLevel} · {item.domainName}{item.roleName ? ` · ${item.roleName}` : ""}</Text>
+                  <Text style={[styles.help, { color: colors.textRole.secondary }]}>{item.why}</Text>
+                  {item.sourceBacked ? <Text style={{ color: colors.accentRole.success, fontSize: FontSize.xs, fontWeight: "700" }}>In the source-backed catalogue</Text> : null}
+                  {isOpen ? <View style={[styles.suggestionDetail, { borderTopColor: colors.borderRole.subtle }]}>
+                    {item.plainMeaning ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>What it means: </Text>{item.plainMeaning}</Text> : null}
+                    {item.contextualUse ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>Why it matters here: </Text>{item.contextualUse}</Text> : null}
+                    {item.expectedOutput ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>What it helps you produce: </Text>{item.expectedOutput}</Text> : null}
+                    {item.sourceReferences?.length ? <View style={{ gap: 3 }}><Text style={[styles.help, { color: colors.textRole.muted, fontWeight: "800" }]}>Evidence</Text>{item.sourceReferences.slice(0, 3).map((source) => <Text key={source.url} accessibilityRole="link" onPress={() => void Linking.openURL(source.url)} style={[styles.help, { color: colors.accentRole.action, textDecorationLine: "underline" }]}>{source.title ?? source.url}</Text>)}</View> : null}
+                  </View> : null}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onAdd(item.name)} accessibilityRole="button" accessibilityLabel={`Add ${item.name} to the skill map`} style={styles.addSuggestion}><Feather name="plus-circle" size={19} color={colors.accentRole.action} /><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "800" }}>Add</Text></TouchableOpacity>
+              </View>;
+            })}
+          </View>
+          {suggestions.length > 4 ? <TouchableOpacity onPress={() => setShowAllSuggestions((current) => !current)} accessibilityRole="button"><Text style={[styles.link, { color: colors.accentRole.action }]}>{showAllSuggestions ? "Show fewer suggestions" : `See all ${suggestions.length} suggestions`}</Text></TouchableOpacity> : null}
+        </View>
+      ) : null}
+
+      {data.domains.length ? (
+        <View style={styles.resultSection}>
+          <SectionLabel>DOMAINS</SectionLabel>
+          {visibleDomains.map((item) => <TouchableOpacity key={item.id} onPress={() => onOpenDomain(item.id)} accessibilityRole="button" style={[styles.entityCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={styles.entityTop}><View style={{ flex: 1, gap: 3 }}><Text style={{ color: colors.textRole.primary, fontSize: FontSize.md, fontWeight: "800" }}>{item.name}</Text>{item.cluster ? <Text style={[styles.help, { color: colors.textRole.muted }]}>{item.cluster}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} explanation={item.matchExplanation} color={colors.accentRole.action} /></View>{item.description ? <Text style={[styles.help, { color: colors.textRole.secondary }]}>{item.description}</Text> : null}{item.matchedSkills.length ? <EvidenceChips values={item.matchedSkills} color={colors.accentRole.success} limit={4} /> : null}{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Foundation gaps: {item.gaps.slice(0, 3).join(", ")}{item.gaps.length > 3 ? ` +${item.gaps.length - 3} more` : ""}</Text> : null}<Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain explanation →</Text></TouchableOpacity>)}
+        </View>
+      ) : null}
+
+      {data.subgroups.length ? (
+         <View style={styles.resultSection}><SectionLabel>SUBGROUPS</SectionLabel>{visibleSubgroups.map((item) => <TouchableOpacity key={item.id} onPress={() => item.domainId && onOpenSubgroup(item.domainId, item.id)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed subgroup"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Next gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
+      ) : null}
+
+      {data.roles.length ? (
+        <View style={styles.resultSection}><SectionLabel>ROLES</SectionLabel><Text style={[styles.help, { color: colors.textRole.muted }]}>Roles are shown after the domain route. Entry-level roles are prioritized so the next step remains realistic.</Text>{visibleRoles.map((item) => <TouchableOpacity key={item.key ?? item.name} onPress={() => item.key && onOpenRole(item.key)} accessibilityRole="button" style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1, gap: 2 }}><Text style={{ color: colors.textRole.primary, fontWeight: "800" }}>{item.name ?? "Unnamed role"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.domainName ?? "Domain route"}{item.tier ? ` · ${item.tier}` : ""}</Text>{item.gaps.length ? <Text style={[styles.help, { color: colors.textRole.muted }]}>Essential gaps: {item.gaps.slice(0, 2).join(", ")}</Text> : null}</View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></TouchableOpacity>)}</View>
+      ) : null}
+
+      {data.tools.length || data.certifications.length ? (
+        <View style={styles.resultSection}><SectionLabel>TOOLS AND CERTIFICATIONS</SectionLabel><Text style={[styles.help, { color: colors.textRole.muted }]}>These are connected catalogue items. Open the domain or role to read what each one does in that context before deciding whether it belongs in your plan.</Text>{visibleTools.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1 }}><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed tool"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.group ?? "Tool"} · {item.domainName ?? "Domain"}</Text></View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}{visibleCertifications.map((item) => <View key={`${item.domainId}-${item.name}`} style={[styles.entityRow, { borderBottomColor: colors.borderRole.subtle }]}><View style={{ flex: 1 }}><Text style={{ color: colors.textRole.primary, fontWeight: "700" }}>{item.name ?? "Unnamed certification"}</Text><Text style={[styles.help, { color: colors.textRole.muted }]}>{item.body ?? "Certification"}{item.level ? ` · ${item.level}` : ""} · {item.domainName ?? "Domain"}</Text></View><MatchMeta score={item.matchScore} label={item.matchLabel} color={colors.accentRole.action} /></View>)}</View>
+      ) : null}
+
+      {(data.domains.length > 3 || data.subgroups.length > 4 || data.roles.length > 5 || data.tools.length > 5 || data.certifications.length > 5) ? <TouchableOpacity onPress={() => setShowAllEntities((current) => !current)} accessibilityRole="button"><Text style={[styles.link, { color: colors.accentRole.action }]}>{showAllEntities ? "Show fewer catalogue items" : "See all connected catalogue items"}</Text></TouchableOpacity> : null}
+      {!data.domains.length && hasTerms ? <View style={[styles.empty, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><Feather name="search" size={18} color={colors.textRole.muted} /><Text style={[styles.help, { color: colors.textRole.secondary }]}>No source-backed route matched those terms yet. Try one of the suggested skills, remove a term, or choose “Use any selected skill.”</Text></View> : null}
+      <View style={styles.sourceNote}><Feather name="info" size={15} color={colors.textRole.muted} /><Text style={[styles.help, { color: colors.textRole.muted }]}>Matches are computed from the current career catalogue. They are guidance connections, not a promise that one skill alone qualifies someone for a role.</Text></View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { gap: Spacing.md },
+  hero: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
+  heroHeading: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  iconBox: { width: 42, height: 42, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },
+  eyebrow: { fontSize: FontSize.xs, fontWeight: "900", letterSpacing: 1.1 },
+  heroTitle: { fontSize: FontSize.lg, lineHeight: FontSize.lg * 1.2 },
+  heroBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5, maxWidth: 760 },
+  steps: { flexDirection: "row", gap: Spacing.sm },
+  stepsMobile: { flexDirection: "column" },
+  step: { flex: 1, flexDirection: "row", alignItems: "flex-start", gap: Spacing.xs },
+  stepNumber: { width: 22, height: 22, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },
+  workspace: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.lg },
+  field: { gap: Spacing.sm },
+  optionRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
+  option: { minHeight: 42, borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, justifyContent: "center" },
+  help: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
+  helpStrong: { fontSize: FontSize.sm, fontWeight: "800" },
+  inputRow: { flexDirection: "row", alignItems: "center", gap: Spacing.xs },
+  inputWrap: { minHeight: 48, flex: 1, borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
+  input: { flex: 1, minHeight: 44, fontSize: FontSize.sm },
+  addButton: { minHeight: 48, minWidth: 48, borderRadius: Radius.md, paddingHorizontal: Spacing.md, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: Spacing.xs },
+  chips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs, alignItems: "center" },
+  chip: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 6 },
+  selectedChip: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 7, flexDirection: "row", alignItems: "center", gap: 5 },
+  sectionHeading: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: Spacing.sm },
+  loading: { alignItems: "center", gap: Spacing.sm, paddingVertical: Spacing.md },
+  notice: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  results: { gap: Spacing.lg },
+  resultIntro: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  resultIntroIcon: { width: 32, height: 32, borderRadius: Radius.full, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(255,255,255,0.55)" },
+  resultSection: { gap: Spacing.sm },
+  pathList: { gap: Spacing.sm },
+  pathCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  pathTop: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  pathIndex: { width: 26, height: 26, borderRadius: Radius.full, alignItems: "center", justifyContent: "center" },
+  routeMeta: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: Spacing.sm },
+  matchMeta: { alignItems: "flex-end", gap: 2 },
+  suggestionList: { gap: Spacing.xs },
+  suggestion: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  suggestionDetail: { borderTopWidth: 1, paddingTop: Spacing.sm, marginTop: Spacing.xs, gap: Spacing.xs },
+  addSuggestion: { minHeight: 36, flexDirection: "row", alignItems: "center", gap: 4 },
+  priorityBadge: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 4 },
+  entityCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  entityTop: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  entityRow: { paddingVertical: Spacing.sm, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  link: { fontSize: FontSize.sm, fontWeight: "800" },
+  empty: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm },
+  sourceNote: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.xs },
+});
 
 export default SkillDiscoveryPanel;

@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams, usePathname, useRouter } from "expo-router
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
-import { useAuth } from "../../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Colors } from "../../src/theme";
 import { consumePendingPostAuthRedirect } from "../../src/lib/postAuthRedirect";
 import { useEffectiveAccountType, isAdminAccount, needsLegacyTypeSelection } from "../../src/lib/accountType";

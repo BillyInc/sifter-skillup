@@ -4,7 +4,7 @@ import { useTheme, FontSize, Spacing } from "../../theme";
 import { SifterButton } from "../ui";
 import { careerData } from "../../lib/careerData";
 import { provisioningData } from "../../lib/provisioningData";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 type BranchKind = "domains" | "subgroups" | "roles";
 type GuidanceListItem = { id: string };

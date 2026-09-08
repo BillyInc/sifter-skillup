@@ -124,6 +124,12 @@ export interface GuidanceReportPath {
     /** Saved programme/university choices; `programme` remains the active one. */
     programmes?: Record<string, unknown>[];
     university?: Record<string, unknown>;
+    /** Evidence state for the subject check used to reach the programme. */
+    subjectMatch?: {
+      status?: "verified" | "partial" | "unavailable" | "not_checked" | string;
+      examType?: "utme" | "olevel" | "combined" | string;
+      notice?: string;
+    };
     universityRequirements?: Record<string, unknown>;
     requirements?: Record<string, unknown>;
     domains?: GuidanceDomainSelection[];
@@ -676,6 +682,7 @@ export const careerData = {
   async discoverBySkills(params: {
     skills?: string[];
     match?: "both" | "either";
+    intent?: "learned" | "intended";
     category?: string;
     userType?: string;
     adminType?: string;
@@ -689,6 +696,7 @@ export const careerData = {
           body: JSON.stringify({
             skills,
             match: params.match ?? "both",
+            intent: params.intent ?? "learned",
             category: params.category ?? null,
             userType: params.userType ?? null,
             adminType: params.adminType ?? null,

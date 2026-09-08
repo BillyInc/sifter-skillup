@@ -31,7 +31,7 @@ import { PdfExportButton } from "./PdfExportButton";
 import { ShareExportButton } from "./ShareExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
 import { GuidanceReportButton, type GuidanceReportSelection } from "./GuidanceReportButton";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;

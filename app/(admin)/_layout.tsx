@@ -2,7 +2,7 @@ import { ActivityIndicator, View } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ScreenErrorBoundary } from "../../src/components/ScreenErrorBoundary";
-import { useAuth } from "../../src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { isAdminAccount, needsLegacyTypeSelection, useEffectiveAccountType } from "../../src/lib/accountType";
 import { Colors } from "../../src/theme";
 

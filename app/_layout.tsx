@@ -8,7 +8,7 @@ import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from '../src/hooks/useAuth';
+import { AuthProvider } from '@/hooks/useAuth';
 import { ErrorBoundary } from '../src/components/ErrorBoundary';
 import { OfflineBanner } from '../src/components/OfflineBanner';
 import { DatabaseProvider } from '../src/components/DatabaseProvider';

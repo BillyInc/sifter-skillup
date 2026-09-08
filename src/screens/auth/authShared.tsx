@@ -88,6 +88,10 @@ export function AuthScaffold({
   const fade = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    if (Platform.OS === "web") {
+      fade.setValue(1);
+      return;
+    }
     Animated.timing(fade, {
       toValue: 1,
       duration: 420,
@@ -98,17 +102,19 @@ export function AuthScaffold({
   const gradient: [string, string] = isDark
     ? ["#0B0B10", "#13100A"]
     : [colors.surface.base, colors.surface.subtle];
-  const cardStyle = {
-    opacity: fade,
-    transform: [
-      {
-        translateY: fade.interpolate({
-          inputRange: [0, 1],
-          outputRange: [24, 0],
-        }),
-      },
-    ],
-  };
+  const cardStyle = Platform.OS === "web"
+    ? undefined
+    : {
+        opacity: fade,
+        transform: [
+          {
+            translateY: fade.interpolate({
+              inputRange: [0, 1],
+              outputRange: [24, 0],
+            }),
+          },
+        ],
+      };
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>

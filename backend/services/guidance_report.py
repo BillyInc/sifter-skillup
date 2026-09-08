@@ -245,6 +245,7 @@ def resolve_guidance_report_context(
         "programmes": path.get("programmes") if isinstance(path.get("programmes"), list) else [],
         "university": university,
         "requirements": requirements,
+        "subjectMatch": path.get("subjectMatch") if isinstance(path.get("subjectMatch"), dict) else {"status": "not_checked"},
         "accessCode": access_code,
         "domains": domains,
         "selectedCounts": {
