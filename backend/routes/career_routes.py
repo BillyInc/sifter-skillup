@@ -22,6 +22,7 @@
 # ============================================================
 from typing import Any, Optional
 import re
+import time
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
@@ -282,22 +283,54 @@ def _date_str(v: Any) -> Optional[str]:
     return str(v)
 
 
+_SKILL_DELIMITERS = re.compile(r"[|;]")
+
+
+def _split_skill_string(value: str) -> list[str]:
+    """Split the delimiter-joined skill strings used by part of the v2 seed.
+
+    ``domain_roles.essential_skills`` is a JSONB array for some rows and a
+    single ``"a | b | c"`` string for most of them (4330 of 5093 rows in dev
+    use ``|``, another 65 use ``;``; 16 domain foundation skills use ``;``).
+    Treating that string as one skill produced 200-character pseudo-skills, so
+    the delimiters are honoured here rather than at every call site. No seeded
+    skill name contains either character in its own right.
+    """
+    return [part.strip() for part in _SKILL_DELIMITERS.split(value) if part.strip()]
+
+
 def _skill_text(value: Any) -> list[str]:
     """Flatten the JSON/text shapes used by imported skills data."""
     if isinstance(value, str):
-        return [value.strip()] if value.strip() else []
+        return _split_skill_string(value)
     if isinstance(value, list):
         out: list[str] = []
         for item in value:
             if isinstance(item, str) and item.strip():
-                out.append(item.strip())
+                out.extend(_split_skill_string(item))
             elif isinstance(item, dict):
                 for key in ("skill", "name", "label", "term"):
                     if isinstance(item.get(key), str) and item[key].strip():
-                        out.append(item[key].strip())
+                        out.extend(_split_skill_string(item[key]))
                         break
         return out
     return []
+
+
+def _is_missing_relation(exc: BaseException) -> bool:
+    """True when a PostgREST/Postgres error is 'relation does not exist'.
+
+    Undefined-table is SQLSTATE 42P01; PostgREST reports it as ``PGRST205``
+    ("Could not find the table ... in the schema cache") when the schema cache
+    has already been reloaded without it.
+    """
+    text = str(getattr(exc, "args", None) or exc)
+    code = str(getattr(exc, "code", "") or "")
+    haystack = f"{code} {text}".casefold()
+    return any(
+        marker in haystack
+        for marker in ("42p01", "pgrst205", "does not exist", "could not find the table")
+    )
 
 
 def _contains_skill(values: list[str], term: str) -> bool:
@@ -2128,6 +2161,118 @@ async def discover_by_skills_post(payload: dict = Body(...)):
     )
 
 
+_SKILL_INDEX_TTL_SECONDS = 900.0
+_skill_index_cache: Optional[tuple[float, list[dict]]] = None
+
+
+def _reset_skill_index_cache() -> None:
+    """Drop the cached skill index (used by tests and after a reseed)."""
+    global _skill_index_cache
+    _skill_index_cache = None
+
+
+def _build_skill_index(svc) -> list[dict]:
+    """Flatten the v2 JSONB skill layers into searchable rows.
+
+    ``domain_bridge_skills`` and ``role_bridge_skills`` were dropped by
+    migration_career_v2.sql; v2 stores the same information as JSONB on the
+    taxonomy rows instead of as its own tables:
+
+      * ``domains.foundation_skills``        — L1, the domain-wide skills
+        (the successor of domain_bridge_skills)
+      * ``domain_subgroups.cluster_skills``  — L2, the sub-group delta layer
+        (new in v2, no pre-sweep equivalent)
+      * ``domain_roles.essential_skills`` / ``optional_skills`` — L3, the
+        per-role skills (the successor of role_bridge_skills)
+
+    PostgREST cannot substring-match inside a JSONB array, so the three layers
+    are flattened once and searched in memory. The taxonomy is static seed
+    data, so the flattened index is cached for ``_SKILL_INDEX_TTL_SECONDS``
+    rather than refetched (~3 MB) on every keystroke.
+    """
+    global _skill_index_cache
+    now = time.monotonic()
+    if _skill_index_cache and now - _skill_index_cache[0] < _SKILL_INDEX_TTL_SECONDS:
+        return _skill_index_cache[1]
+
+    domains = svc.table("domains").select(
+        "id, foundation_skills"
+    ).limit(1000).execute().data or []
+    subgroups = svc.table("domain_subgroups").select(
+        "id, domain_id, label, cluster_skills"
+    ).limit(5000).execute().data or []
+    roles = svc.table("domain_roles").select(
+        "role_key, role_name, domain_id, essential_skills, optional_skills"
+    ).limit(10000).execute().data or []
+
+    rows: dict[tuple[str, str], dict] = {}
+
+    def add(skill: str, domain_id: Optional[str], context: str, ident: str) -> None:
+        name = (skill or "").strip()
+        if not name or not domain_id:
+            return
+        key = (name.casefold(), str(domain_id))
+        # A skill that appears at more than one layer keeps its first (widest)
+        # context: a domain foundation skill is a better search answer than the
+        # same string repeated on forty roles.
+        rows.setdefault(key, {
+            "id": ident,
+            "domain_id": domain_id,
+            "skill_name": name,
+            "category": context,
+        })
+
+    for domain in domains:
+        did = domain.get("id")
+        for skill in _skill_text(domain.get("foundation_skills")):
+            add(skill, did, "Foundation skill", f"foundation:{did}:{skill.casefold()}")
+    for group in subgroups:
+        did = group.get("domain_id")
+        label = group.get("label") or "Sub-group"
+        for skill in _skill_text(group.get("cluster_skills")):
+            add(skill, did, f"Sub-group skill — {label}", f"subgroup:{group.get('id')}:{skill.casefold()}")
+    for role in roles:
+        did = role.get("domain_id")
+        role_name = role.get("role_name") or "role"
+        role_key = role.get("role_key")
+        for skill in _skill_text(role.get("essential_skills")):
+            add(skill, did, f"Role skill — {role_name}", f"role:{role_key}:{skill.casefold()}")
+        for skill in _skill_text(role.get("optional_skills")):
+            add(skill, did, f"Role skill (optional) — {role_name}", f"role:{role_key}:{skill.casefold()}")
+
+    index = sorted(rows.values(), key=lambda r: r["skill_name"].casefold())
+    _skill_index_cache = (now, index)
+    return index
+
+
+_MAX_DOMAINS_PER_SKILL = 2
+
+
+def _search_skill_layers(svc, term: str, limit: int) -> list[dict]:
+    """Substring search over the flattened v2 skill layers.
+
+    A common skill such as ``financial statements`` is attached to dozens of
+    domains. Capping how many domains one skill name may contribute keeps the
+    group varied instead of spending the whole result budget on one string.
+    """
+    needle = (term or "").strip().casefold()
+    if not needle:
+        return []
+    out: list[dict] = []
+    per_name: dict[str, int] = {}
+    for row in _build_skill_index(svc):
+        name = row["skill_name"].casefold()
+        if needle not in name:
+            continue
+        if per_name.get(name, 0) >= _MAX_DOMAINS_PER_SKILL:
+            continue
+        per_name[name] = per_name.get(name, 0) + 1
+        out.append(row)
+        if len(out) >= limit:
+            break
+    return out
+
+
 @router.get("/search", response_model=ResponseModel)
 async def search_career(
     q: Optional[str] = None,
@@ -2321,9 +2466,25 @@ async def search_career(
 
         def safe_query(label: str, builder):
             try:
-                return builder().data or []
+                # `builder()` returns a PostgREST request builder, which has no
+                # `.data`: reading it raised AttributeError straight into the
+                # handler below, so every optional group here (sub-groups,
+                # tools, certifications, universities, opportunities and the
+                # domain context lookup) returned [] whatever the query.
+                return builder().execute().data or []
             except Exception as query_exc:  # noqa: BLE001
-                log.debug("optional career search group unavailable", group=label, error=str(query_exc))
+                # A missing relation is a schema regression, not an optional
+                # enrichment table that has not been migrated yet: it means the
+                # endpoint is silently serving an empty group forever. Log it
+                # loudly while still degrading rather than 500-ing.
+                if _is_missing_relation(query_exc):
+                    log.error(
+                        "career search group queries a relation that does not exist",
+                        group=label,
+                        error=str(query_exc),
+                    )
+                else:
+                    log.debug("optional career search group unavailable", group=label, error=str(query_exc))
                 return []
 
         subgroup_rows = safe_query(
@@ -2350,30 +2511,16 @@ async def search_career(
             .order("name")
             .limit(_PUBLIC_SEARCH_LIMIT),
         )
-        bridge_skill_rows = safe_query(
-            "skills",
-            lambda: svc.table("domain_bridge_skills")
-            .select("id, domain_id, skill_name, category")
-            .ilike("skill_name", like)
-            .order("skill_name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
-        role_bridge_skill_rows = safe_query(
-            "role skills",
-            lambda: svc.table("role_bridge_skills")
-            .select("id, domain_id, skill_name, category")
-            .ilike("skill_name", like)
-            .order("skill_name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
-        adjacent_skill_rows = safe_query(
-            "adjacent skills",
-            lambda: svc.table("adjacent_prerequisites")
-            .select("id, domain_id, skill_name, category")
-            .ilike("skill_name", like)
-            .order("skill_name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
+        # Skills: the pre-sweep domain_bridge_skills / role_bridge_skills /
+        # adjacent_prerequisites tables were dropped by migration_career_v2.
+        # The v2 taxonomy carries the same skills as JSONB on domains,
+        # domain_subgroups and domain_roles, so all three groups are answered
+        # from the flattened index over those layers.
+        try:
+            skill_rows = _search_skill_layers(svc, subject_term, _PUBLIC_SEARCH_LIMIT)
+        except Exception as skill_exc:  # noqa: BLE001
+            log.warning("career skill layer search unavailable", error=str(skill_exc))
+            skill_rows = []
         university_rows = safe_query(
             "universities",
             lambda: svc.table("schools")
@@ -2411,8 +2558,7 @@ async def search_career(
         context_ids = {
             row.get("domain_id")
             for row in [*subgroup_rows, *tool_rows, *certification_rows,
-                        *bridge_skill_rows, *role_bridge_skill_rows,
-                        *adjacent_skill_rows]
+                        *skill_rows]
             if row.get("domain_id")
         }
         if context_ids:
@@ -2458,7 +2604,7 @@ async def search_career(
             if row.get("id") and row.get("name")
         ]
 
-        skill_source_rows = [*bridge_skill_rows, *role_bridge_skill_rows, *adjacent_skill_rows]
+        skill_source_rows = skill_rows
         seen_skills: set[tuple[str, str]] = set()
         skills = []
         for row in skill_source_rows:
