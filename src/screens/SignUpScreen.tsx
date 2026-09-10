@@ -36,12 +36,28 @@ function toIsoDate(value: string): string | null {
       date.getUTCMonth() === month - 1 &&
       date.getUTCDate() === day
     ) {
-      return `${yyyy}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      return withinDobBounds(date)
+        ? `${yyyy}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+        : null;
     }
     return null;
   }
   const iso = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  return iso ? trimmed : null;
+  if (!iso) return null;
+  const date = new Date(Date.UTC(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])));
+  return date.getUTCFullYear() === Number(iso[1]) &&
+    date.getUTCMonth() === Number(iso[2]) - 1 &&
+    date.getUTCDate() === Number(iso[3]) &&
+    withinDobBounds(date)
+    ? trimmed
+    : null;
+}
+
+function withinDobBounds(date: Date): boolean {
+  const earliest = new Date(Date.UTC(1900, 0, 1));
+  const today = new Date();
+  const latest = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  return date >= earliest && date <= latest;
 }
 
 function friendlySignupError(error: unknown, fallback: string) {
@@ -193,7 +209,7 @@ export default function SignUpScreen() {
       return false;
     }
     if (!toIsoDate(dateOfBirth)) {
-      setError("Enter date of birth as DD/MM/YYYY.");
+      setError("Enter a real date of birth as DD/MM/YYYY (from 01/01/1900 to today).");
       return false;
     }
     if (password.length < 8) {
@@ -248,7 +264,7 @@ export default function SignUpScreen() {
     try {
       const isoDob = toIsoDate(dateOfBirth);
       if (!isoDob) {
-        setError("Enter date of birth as DD/MM/YYYY.");
+        setError("Enter a real date of birth as DD/MM/YYYY (from 01/01/1900 to today).");
         return;
       }
       const profile = {
@@ -497,9 +513,12 @@ function DatePickerModal({ visible, value, onClose, onSelect }: { visible: boole
   const [month, setMonth] = useState(value.split("/")[1] || "");
   const [year, setYear] = useState(value.split("/")[2] || "");
   const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-  const years = Array.from({ length: 86 }, (_, i) => String(now.getFullYear() - i)).filter((item) => item.includes(search));
+  const years = Array.from({ length: now.getFullYear() - 1899 }, (_, i) => String(now.getFullYear() - i)).filter((item) => item.includes(search));
+  const maxDay = day && month && year ? new Date(Number(year), Number(month), 0).getDate() : 31;
+  const days = Array.from({ length: maxDay }, (_, i) => String(i + 1).padStart(2, "0"));
   const choose = () => {
-    if (day && month && year) onSelect(`${day.padStart(2, "0")}/${month}/${year}`);
+    const candidate = day && month && year ? `${day.padStart(2, "0")}/${month}/${year}` : "";
+    if (candidate && toIsoDate(candidate)) onSelect(candidate);
   };
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
@@ -509,11 +528,11 @@ function DatePickerModal({ visible, value, onClose, onSelect }: { visible: boole
           <Text style={[styles.hint, { color: colors.textRole.muted }, CompassFonts.body]}>Choose a value or search for a year.</Text>
           <View style={styles.pickerRow}>{["Day", "Month"].map((label) => <Text key={label} style={[styles.pickerLabel, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>{label}</Text>)}</View>
           <View style={styles.choiceRow}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>{Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0")).map((item) => <Pressable key={item} onPress={() => setDay(item)} style={[styles.choice, day === item && { backgroundColor: Brand.primary }]}><Text style={{ color: day === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>{days.map((item) => <Pressable key={item} onPress={() => setDay(item)} style={[styles.choice, day === item && { backgroundColor: Brand.primary }]}><Text style={{ color: day === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView>
           </View>
-          <View style={styles.choiceRow}><ScrollView horizontal showsHorizontalScrollIndicator={false}>{months.map((item) => <Pressable key={item} onPress={() => setMonth(item)} style={[styles.choice, month === item && { backgroundColor: Brand.primary }]}><Text style={{ color: month === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView></View>
+          <View style={styles.choiceRow}><ScrollView horizontal showsHorizontalScrollIndicator={false}>{months.map((item) => <Pressable key={item} onPress={() => { setMonth(item); const nextMax = year ? new Date(Number(year), Number(item), 0).getDate() : 31; if (Number(day) > nextMax) setDay(String(nextMax).padStart(2, "0")); }} style={[styles.choice, month === item && { backgroundColor: Brand.primary }]}><Text style={{ color: month === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView></View>
           <TextInput value={search} onChangeText={setSearch} placeholder="Search year" placeholderTextColor={colors.textRole.placeholder} keyboardType="number-pad" style={[styles.yearSearch, { color: colors.textRole.primary, backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]} />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ maxHeight: 44 }}>{years.map((item) => <Pressable key={item} onPress={() => setYear(item)} style={[styles.choice, year === item && { backgroundColor: Brand.primary }]}><Text style={{ color: year === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ maxHeight: 44 }}>{years.map((item) => <Pressable key={item} onPress={() => { setYear(item); if (month && Number(day) > new Date(Number(item), Number(month), 0).getDate()) setDay(String(new Date(Number(item), Number(month), 0).getDate()).padStart(2, "0")); }} style={[styles.choice, year === item && { backgroundColor: Brand.primary }]}><Text style={{ color: year === item ? "#fff" : colors.textRole.primary }}>{item}</Text></Pressable>)}</ScrollView>
           <View style={styles.modalActions}><TouchableOpacity onPress={onClose}><Text style={[{ color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Cancel</Text></TouchableOpacity><SifterButton label="Use date" onPress={choose} variant="track" color={Brand.primary} size="md" disabled={!day || !month || !year} /></View>
         </View>
       </View>

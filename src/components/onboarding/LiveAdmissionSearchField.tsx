@@ -32,9 +32,11 @@ export function LiveAdmissionSearchField({
   institutionType,
   helperText,
   schoolId,
+  faculty,
   selectedId,
   allowRegister = false,
-  programmeSource = "jamb",
+  registerAddress,
+  registerAddressRequired = false,
 }: {
   label: string;
   value: string;
@@ -44,9 +46,11 @@ export function LiveAdmissionSearchField({
   institutionType?: string;
   helperText?: string;
   schoolId?: string;
+  faculty?: string;
   selectedId?: string;
   allowRegister?: boolean;
-  programmeSource?: "jamb" | "admission";
+  registerAddress?: string;
+  registerAddressRequired?: boolean;
 }) {
   const { colors } = useTheme();
   const [query, setQuery] = React.useState(value);
@@ -87,10 +91,8 @@ export function LiveAdmissionSearchField({
       const state =
         kind === "programme"
           ? schoolId
-            ? await careerData.getSchoolProgrammes(schoolId, q)
-            : programmeSource === "admission"
-              ? await careerData.searchAdmissionProgrammes(q)
-              : await careerData.searchJambProgrammes(q)
+            ? await careerData.getSchoolProgrammes(schoolId, q, faculty)
+            : await careerData.searchJambProgrammes(q)
           : await careerData.searchAdmissionSchools(q, institutionType);
       if (!active) return;
       setLoading(false);
@@ -121,14 +123,18 @@ export function LiveAdmissionSearchField({
       active = false;
       clearTimeout(t);
     };
-  }, [query, kind, institutionType, schoolId, selected, programmeSource]);
+  }, [query, kind, institutionType, schoolId, faculty, selected]);
 
   const registerTypedInstitution = async () => {
     const name = query.trim();
     if (!name || !institutionType || registering) return;
+    if (registerAddressRequired && (registerAddress ?? "").trim().length < 8) {
+      setRegisterError("Enter the full organisation address before adding it.");
+      return;
+    }
     setRegistering(true);
     setRegisterError(null);
-    const state = await careerData.registerAdmissionSchool(name, institutionType);
+    const state = await careerData.registerAdmissionSchool(name, institutionType, registerAddress);
     setRegistering(false);
     if (state.status === "real" && state.data) {
       const item = state.data as AdmissionSuggestion;
@@ -238,7 +244,7 @@ export function LiveAdmissionSearchField({
           {kind === "school" && allowRegister ? (
             <TouchableOpacity
               activeOpacity={0.75}
-              disabled={registering}
+              disabled={registering || (registerAddressRequired && (registerAddress ?? "").trim().length < 8)}
               onPress={registerTypedInstitution}
               style={[styles.registerButton, { backgroundColor: Brand.primary }]}
             >

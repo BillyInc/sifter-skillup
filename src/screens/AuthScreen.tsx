@@ -462,7 +462,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
                 keyboardType="email-address"
                 placeholder="you@example.com"
                 autoFocus
-                autoComplete="off"
+                autoComplete="email"
               />
 
               <AuthField
@@ -471,7 +471,7 @@ export default function AuthScreen({ initialMode = "login" }: { initialMode?: Ex
                 onChangeText={setPassword}
                 secure
                 placeholder="Password"
-                autoComplete="off"
+                autoComplete="current-password"
               />
               <AuthField
                 label="School code (optional)"

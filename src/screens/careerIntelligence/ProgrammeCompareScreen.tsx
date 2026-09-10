@@ -2,7 +2,7 @@
  * ProgrammeCompareScreen — side-by-side programme comparison.
  *
  * Students search, pick up to four programmes, and see a side-by-side
- * decision view: domain match counts, top linked domains, admission signal.
+ * decision view: domain match counts, top linked domains and build paths.
  *
  * Phase 10 redesign: editorial header, responsive card grid, responsive
  * 2-column desktop layout, section nav, all legacy tokens migrated.
@@ -30,7 +30,6 @@ import { useExploreNav } from "@/lib/exploreNav";
 import { displayAward } from "@/lib/programmeAward";
 import { useResponsive } from "@/hooks/useResponsive";
 import {
-  type AdmissionInsight,
   type DataState,
   type DomainMatchType,
   type Programme,
@@ -52,7 +51,6 @@ const MIN_QUERY = 2;
 type ComparedProgramme = {
   id: string;
   programme: DataState<Programme>;
-  admission: DataState<AdmissionInsight>;
 };
 
 function readIds(raw: string | string[] | undefined): string[] {
@@ -118,7 +116,6 @@ export default function ProgrammeCompareScreen() {
         selectedIds.map(async (id) => ({
           id,
           programme: await careerData.getProgramme(id),
-          admission: await careerData.getAdmissionInsight(id),
         })),
       );
       if (active) setItems(rows);
@@ -173,8 +170,8 @@ export default function ProgrammeCompareScreen() {
           Compare programmes side by side
         </Text>
         <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
-          Pick two to four programmes and compare the domains, admission signal and
-          build paths they open. This is a decision view, not a database export.
+           Pick two to four programmes and compare the domains and build paths they
+           open. This is a decision view, not a database export.
         </Text>
       </View>
 
@@ -327,9 +324,6 @@ function ProgrammeCompareCard({
               </View>
             ) : null}
 
-            {/* Admission signal */}
-            <AdmissionLine state={item.admission} colors={colors} />
-
             {/* Actions */}
             <View style={styles.actions}>
               <TouchableOpacity
@@ -370,27 +364,6 @@ function MiniMetric({
     <View style={[styles.metric, { backgroundColor: colors.surface.subtle }]}>
       <Text style={[styles.metricValue, CompassFonts.data, { color: accent }]}>{value}</Text>
       <Text style={[styles.metricLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>{label}</Text>
-    </View>
-  );
-}
-
-function AdmissionLine({
-  state,
-  colors,
-}: {
-  state: DataState<AdmissionInsight>;
-  colors: ColorPalette;
-}) {
-  const text =
-    state.status === "real" && state.data
-      ? `${state.data.label} · ${state.data.programmeCount} cutoff row${state.data.programmeCount === 1 ? "" : "s"}`
-      : state.meta?.notice ?? "Admission signal is being compiled.";
-  return (
-    <View style={[styles.admissionLine, { backgroundColor: colors.surface.subtle }]}>
-      <Feather name="bar-chart-2" size={12} color={colors.textRole.muted} style={{ marginRight: Spacing.xs }} />
-      <Text style={[styles.admissionText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
-        {text}
-      </Text>
     </View>
   );
 }

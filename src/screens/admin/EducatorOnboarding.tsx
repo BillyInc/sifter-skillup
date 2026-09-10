@@ -373,8 +373,10 @@ export default function EducatorOnboarding({
                  }}
                 placeholder={orgType === "university" ? "Search your university" : "Search your organisation"}
                  kind="school"
-                 institutionType={orgType}
-                 allowRegister={orgType !== "university"}
+                  institutionType={orgType}
+                  allowRegister={orgType !== "university"}
+                  registerAddress={orgAddress}
+                  registerAddressRequired
                  helperText={orgType === "university"
                    ? "Choose your university from the list so its programme records stay connected."
                    : "Select your organisation if it is listed, or add its name so other educators can find it."}

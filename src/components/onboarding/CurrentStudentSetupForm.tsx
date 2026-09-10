@@ -77,6 +77,7 @@ export function CurrentStudentSetupForm({ value, onChange, onContinue }: SetupFo
           placeholder="Search this university's programmes"
           kind="programme"
           schoolId={schoolId}
+          faculty={value.discipline}
           helperText="Choose the programme name your university uses. This keeps your university and programme details connected."
         />
       ) : null}

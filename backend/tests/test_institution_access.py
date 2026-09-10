@@ -32,6 +32,7 @@ ADMIN_ONLY_PATHS = [
     "/api/institutions/me/programme-demand",
     "/api/institutions/me/domain-ranking",
     "/api/institutions/me/alerts",
+    "/api/institutions/me/programme-intelligence",
     "/api/institutions/me/skills-gap",
     "/api/institutions/me/role-demand",
     "/api/institutions/me/peers",

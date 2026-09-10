@@ -619,7 +619,7 @@ function ExploreIdle({
       >
         <View style={styles.admissionLeft}>
           <Text style={[styles.admissionEyebrow, { color: colors.textRole.muted }]}>
-            ADMISSION INTELLIGENCE
+            PROGRAMME & UNIVERSITY MATCHING
           </Text>
           <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>
             Programmes, universities{"\n"}& requirements
@@ -630,7 +630,7 @@ function ExploreIdle({
             JAMB
           </Text>
           <Text style={[styles.admissionNumeralUnit, { color: colors.textRole.muted }]}>
-            cycle data
+            requirements
           </Text>
         </View>
       </TouchableOpacity> : null}

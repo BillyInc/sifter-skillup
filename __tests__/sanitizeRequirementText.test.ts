@@ -171,9 +171,4 @@ describe("requirementFallbackText", () => {
     );
   });
 
-  it("returns the cut-off fallback", () => {
-    expect(requirementFallbackText("cutoff")).toBe(
-      "Check university website for current cut-off mark.",
-    );
-  });
 });

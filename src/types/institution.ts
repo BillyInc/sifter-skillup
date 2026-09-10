@@ -319,6 +319,20 @@ export interface ProgrammeDemandRow {
   meta?: DataMeta;
 }
 
+export interface ProgrammeIntelligenceRow {
+  id: string;
+  programmeName: string;
+  discipline?: string;
+  qualification?: string;
+  mappingSource: MappingSource;
+  domains: ProgrammeDomainBadge[];
+  domainOverflow?: number;
+  directDomains: number;
+  functionalDomains: number;
+  adjacentDomains: number;
+  sourceStatus: "recorded" | "no_mapping_recorded" | string;
+}
+
 export interface ProgrammeFilter {
   discipline?: string;
   hasGaps?: boolean;
@@ -371,6 +385,46 @@ export interface SkillGapRow {
   skill: string;
   demandPct?: number; // share of postings demanding it
   inCurriculum: boolean;
+}
+
+export type CurriculumCoverageStatus = "complete" | "source_missing" | "review_only";
+
+export interface ProgrammeResourceEvidence {
+  name: string;
+  kind: "skill" | "tool" | "certification";
+  source: "domain" | "subgroup" | "role";
+  scopeName?: string;
+  roleName?: string;
+  state: "covered" | "bridge";
+  url?: string;
+  provider?: string;
+  description?: string;
+  resourceType?: string;
+  sourceConfidence?: string;
+  dataState?: string;
+}
+
+export interface ProgrammeDomainSkillCoverage {
+  domainId: string;
+  domainName: string;
+  matchType: string;
+  curriculumSkills: string[];
+  resources: ProgrammeResourceEvidence[];
+  coveredCount: number;
+  bridgeCount: number;
+  coverageStatus: CurriculumCoverageStatus;
+  explanation: string;
+}
+
+/** Programme-first curriculum bridge: programme → mapped domain → skills. */
+export interface ProgrammeSkillCoverage {
+  programmeId: string;
+  programmeName: string;
+  curriculumSkills: string[];
+  curriculumTechnical: string[];
+  curriculumTransferable: string[];
+  curriculumStatus: "complete" | "source_missing";
+  domains: ProgrammeDomainSkillCoverage[];
 }
 
 export interface RoleDemandRow {

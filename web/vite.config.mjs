@@ -4,6 +4,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 const webRoot = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(webRoot, "..");
+const reactRoot = path.resolve(projectRoot, "node_modules/react");
+const reactDomRoot = path.resolve(projectRoot, "node_modules/react-dom");
 
 export default defineConfig(({ mode }) => ({
   root: webRoot,
@@ -20,7 +23,20 @@ export default defineConfig(({ mode }) => ({
   },
   envPrefix: ["VITE_", "EXPO_PUBLIC_"],
   resolve: {
+    // The web shell imports React through both the Vite entry and the
+    // Expo-compatible screen graph. Keep those graphs on the exact same
+    // React instances; otherwise a lazily loaded screen can see a different
+    // dispatcher and fail with "Invalid hook call" at runtime.
+    dedupe: ["react", "react-dom"],
     alias: [
+      // Resolve every React import to the workspace copy. The Expo-compatible
+      // screen graph is lazy-loaded, so package-name deduplication alone can
+      // still leave a second React dispatcher in the browser graph.
+      { find: /^react$/, replacement: path.join(reactRoot, "index.js") },
+      { find: /^react\/jsx-runtime$/, replacement: path.join(reactRoot, "jsx-runtime.js") },
+      { find: /^react\/jsx-dev-runtime$/, replacement: path.join(reactRoot, "jsx-dev-runtime.js") },
+      { find: /^react-dom$/, replacement: path.join(reactDomRoot, "index.js") },
+      { find: /^react-dom\/client$/, replacement: path.join(reactDomRoot, "client.js") },
       { find: "@react-navigation/native", replacement: path.resolve(webRoot, "./src/reactNavigation.tsx") },
       { find: /^@\/hooks\/useAuth$/, replacement: path.resolve(webRoot, "./src/webAuth.tsx") },
       { find: "@", replacement: path.resolve(webRoot, "../src") },

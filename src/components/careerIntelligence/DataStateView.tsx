@@ -109,7 +109,7 @@ function lockedPreviewFor(notice?: string): { icon: keyof typeof Feather.glyphMa
   const lower = copy?.toLowerCase() ?? "";
   const icon = lower.includes("scholarship") || lower.includes("application window")
     ? "calendar"
-    : lower.includes("admission") || lower.includes("jamb") || lower.includes("cut-off")
+    : lower.includes("admission") || lower.includes("jamb")
       ? "book-open"
       : lower.includes("elite")
         ? "award"

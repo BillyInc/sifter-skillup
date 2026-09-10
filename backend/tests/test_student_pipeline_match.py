@@ -242,6 +242,48 @@ def test_combined_match_requires_minimum_utme_and_olevel_subjects():
     assert "three other UTME" in result.data["meta"]["notice"]
 
 
+def test_olevel_route_returns_programme_possibilities_without_utme(monkeypatch):
+    def fake_structured(selected, limit, exam_type="utme", require_full=True):
+        assert exam_type == "olevel"
+        assert require_full is True
+        return [{
+            "jambProgrammeId": "jp1",
+            "matchedSubjectCount": 5,
+            "matchedSubjects": ["English Language", "Mathematics", "Physics", "Chemistry", "Biology"],
+            "missingSubjects": [],
+            "requirementText": "Five credits including English Language, Mathematics, Physics, Chemistry and Biology",
+            "matchBasis": "olevel",
+        }]
+
+    monkeypatch.setattr(spr, "_match_structured_subject_options", fake_structured)
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *_args: items)
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry, Biology",
+            exam_type="olevel",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert result.data["data"][0]["jambProgrammeId"] == "jp1"
+    assert result.data["data"][0]["matchBasis"] == "olevel"
+
+
+def test_utme_and_combined_routes_require_use_of_english():
+    for exam_type, olevel_subjects in (("utme", ""), ("combined", "English Language, Mathematics, Physics, Chemistry, Biology")):
+        result = asyncio.run(
+            spr.programmes_by_subjects(
+                subjects="Mathematics, Physics, Chemistry, Biology",
+                olevel_subjects=olevel_subjects,
+                exam_type=exam_type,
+            )
+        )
+
+        assert result.data["data"] == []
+        assert "Use of English" in result.data["meta"]["notice"]
+
+
 def test_stream_reorders_but_does_not_hide_subjects(monkeypatch):
     monkeypatch.setattr(spr, "get_json", lambda _key: None)
     monkeypatch.setattr(spr, "set_json", lambda *args: None)

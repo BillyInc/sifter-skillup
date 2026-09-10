@@ -18,6 +18,16 @@ string. The complete explanation and verification queries are in
 
 ### MANDATORY APPLY BEHAVIOUR
 
+#### User-requested manual-only mode
+
+If the user explicitly says that they will run Supabase SQL manually, this
+instruction is overridden for that task: do not execute SQL writes through the
+service client, REST, RPC, `psql`, or the Supabase SQL Editor. Local code edits,
+read-only diagnostics, SQL validation, and local smoke checks remain allowed.
+Stop after preparing the exact files and order for the user to apply. Do not
+claim that the live database has been reseeded until the user confirms that
+the SQL ran successfully.
+
 When the user asks Claude to seed, migrate, update, or prepare Supabase, this
 section is an execution instruction, not a reading list. Claude must actually
 apply every missing SQL file in the applicable order above, then verify the
@@ -117,6 +127,7 @@ backend/migration_provisioning.sql
 backend/migration_school_identity.sql
 backend/migration_institution_team_access.sql
 backend/migration_student_pipeline_live.sql
+backend/migration_school_faculty_filter_2026-09-09.sql
 backend/migration_ss3_secondary_starting_point_patch.sql
 backend/migration_provisioning_guidance_variants.sql
 backend/migration_guidance_report_paths.sql
@@ -216,6 +227,57 @@ promotion.
 
 Do not claim that this SQL was applied based on a local generator run. SQL is
 only applied through the Supabase SQL Editor or a verified `psql` connection.
+
+If Supabase was seeded from the 2026-08-31 preview or the historical standalone
+JAMB refresh, apply
+`backend/migration_jamb_domain_mapping_corrections_2026-09-08.sql` after that
+load. It repairs the 147 adjacent links that older transport mislabelled as
+functional and removes one extra Project Management link. The authoritative
+2026-09-01 seed already has the corrected values, and the repair is idempotent.
+
+After `backend/migration_student_pipeline_live.sql`, apply
+`backend/migration_school_faculty_filter_2026-09-09.sql`. The undergraduate
+setup reads faculties from `jamb_programmes` and filters the selected
+university's programme typeahead by that same `jamb_faculty` value. The patch
+appends the view column to preserve PostgreSQL view-column order; do not
+recreate the view with reordered existing columns.
+
+### Current live partial-seed evidence and manual recovery order
+
+The last read-only preflight found a partially applied project, not a complete
+career deployment:
+
+```text
+domains                         0
+domain_roles                    0
+domain_subgroups                460
+jamb_programme_domain           3164
+v_jamb_programme_domain_paths   missing
+v_school_jamb_programmes        present, but old shape without jamb_faculty
+```
+
+This explains why Sociology can have a stored JAMB-domain row while its domain
+detail and subgroup/role pages remain unavailable. Do not call this a complete
+seed. `migration_career_v2.sql` is a staging/rebuild migration and drops
+taxonomy tables; do not run it against a populated project without a backup and
+explicit approval. On an approved staging rebuild, apply the current career
+schema files, the 2026-09-01 compressed career seed parts in numeric order, and
+then the live pipeline/view migrations. On the current project, the user must
+first decide whether that controlled taxonomy rebuild is approved; the app-side
+faculty fallback works even before the faculty view patch is applied.
+
+After the approved career seed/rebuild, apply these additive files in order:
+
+```text
+backend/migration_student_pipeline_live.sql
+backend/migration_school_faculty_filter_2026-09-09.sql
+backend/migration_jamb_domain_mapping_corrections_2026-09-08.sql # only when an older JAMB seed was used
+```
+
+The correction file is idempotent and repairs the older 147 adjacent links
+mislabelled as functional. The authoritative 2026-09-01 career seed already
+contains the corrected mapping, so do not apply the correction as a substitute
+for the career seed itself.
 
 ### Career seed regeneration rule
 
@@ -538,7 +600,7 @@ journeys:
 - New user: landing → onboarding → account/guest → setup → subjects → goals →
   exploration/recommendations.
 - Programme discovery: explore → search → programme → requirements → schools/
-  cut-offs → careers → pathways.
+  → careers → pathways. Cutoff data is not part of the current user-facing flow.
 - Domain/career discovery: explore → domain or role → sub-groups/skills →
   programmes → opportunities.
 - Opportunities: search/filter → result → detail → save/apply, using only

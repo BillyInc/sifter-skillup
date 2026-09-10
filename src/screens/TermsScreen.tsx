@@ -6,26 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
 import { useResponsive } from "@/hooks/useResponsive";
 import { TERMS_VERSION } from "@/lib/legal";
+import { TERMS_SECTIONS } from "@/lib/legalContent";
 
-const SECTIONS = [
-  ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
-  ['What the platform does', 'We help users explore starting points, subjects, programmes, schools, domains, subgroups, roles, skills, tools, certifications and market-intelligence signals.'],
-  ['Guidance, not a guarantee', 'Programme mappings, cut-off marks, role readiness, demand, salary and remote-work signals are guidance. They are not admission, employment, salary, migration, legal, financial or professional advice.'],
-  ['Admissions and school data', 'Cut-off marks, school requirements and formulas are historical or indicative unless clearly marked otherwise. We do not guarantee admission, eligibility, scholarship access or school placement.'],
-  ['Opportunities and market intelligence', 'Opportunity postings, salary ranges, employer lists and trend labels are estimates from available sources. Low-volume/high-value roles may be selective; high-volume roles may still have lower pay or progression limits.'],
-  ['Students and minors', 'Senior-secondary students and other minors should use LevelUp with guidance from a parent, guardian, school or counsellor. Individual student visibility for institutions requires consent where applicable.'],
-  ['Educators and institutions', 'Institution dashboards use aggregate intelligence. Verification does not by itself unlock individual student details. Student records, rosters and provisioning remain consent-gated.'],
-  ['Guest use', 'Guests may browse limited Explore surfaces. Saving, notes, alerts, student management and institution-specific features require an account and, where relevant, acceptance of these terms.'],
-  ['Acceptable use', 'Do not abuse the service, attack the platform, scrape restricted data, impersonate a school or educator, upload unlawful content, or use the platform to mislead students.'],
-  ['Your content', 'You keep ownership of notes, saved paths, feedback and any learning artifacts you create. You give us permission to store, process and display them only to operate the service.'],
-  ['Privacy, consent and Nigerian safeguards', 'We apply the Nigeria Data Protection Act 2023 and applicable NDPC guidance to personal-data handling. Consent must be a clear affirmative choice; silence is not consent, and you can withdraw consent where processing is based on consent. Optional analytics is off unless you opt in. We do not sell personal data.'],
-  ['Children, students and school roles', 'Under-18 users should use the service with a parent, guardian, school or counsellor where appropriate. Student records, grades, guardian information and school rosters are role-limited and consent-gated where required. School owners and staff must only upload or view information they are authorised to handle under applicable Nigerian and state child-protection rules.'],
-  ['Consumer fairness and complaints', 'Nothing here removes a non-waivable right under applicable consumer-protection law. We will not intentionally present guidance as a guarantee or hide material limitations. Report a concern to legal@sifter.app; privacy complaints may also be directed to the Nigeria Data Protection Commission and consumer complaints to the Federal Competition and Consumer Protection Commission where applicable.'],
-  ['Automated guidance and challenge', 'Search ranking, programme matching and career guidance are decision-support features, not admission or employment decisions. They may be incomplete or wrong. You can ask us to explain, correct or review material personal-data issues through privacy@sifter.app.'],
-  ['Third-party services', 'Some sources, schools, job boards, professional bodies, APIs and linked services have their own terms. Their data, availability and rules may change without notice.'],
-  ['Changes and suspension', 'We may change features, correct data, remove misleading content, suspend abusive accounts or restrict access where needed for security, compliance or platform integrity.'],
-  ['Governing law', 'These terms are governed by the laws of the Federal Republic of Nigeria, except where mandatory consumer protections in another jurisdiction apply.'],
-];
+const SECTIONS = TERMS_SECTIONS;
 
 interface Props {
   onClose?: () => void;
@@ -127,7 +110,7 @@ export default function TermsScreen({
           <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Terms of service</Text>
           <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Plain-language overview of the platform rules.</Text>
         </View>
-        {onClose && (!requireExplicitConfirmation || confirmed) ? (
+        {onClose ? (
           <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
             <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
           </TouchableOpacity>

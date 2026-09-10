@@ -10,8 +10,7 @@
 export type RequirementField =
   | "utme_subjects"
   | "olevel_requirement"
-  | "direct_entry"
-  | "cutoff";
+  | "direct_entry";
 
 export interface SanitizedRequirementText {
   displayable: boolean;
@@ -66,7 +65,6 @@ const REQUIREMENT_FALLBACK_TEXT: Record<RequirementField, string> = {
     "Check JAMB IBASS brochure for O'Level credit requirements for this programme.",
   direct_entry:
     "Check individual university for Direct Entry requirements for this programme.",
-  cutoff: "Check university website for current cut-off mark.",
 };
 
 export function sanitizeRequirementText(

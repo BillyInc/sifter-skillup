@@ -27,7 +27,7 @@ import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
-import { careerRoleTierLabel, compareCareerRoles } from "@/lib/careerRoleOrdering";
+import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
   type DataState,
@@ -55,11 +55,9 @@ const SECTIONS = [
   { key: "build", label: "Build / Entrepreneurship" },
   { key: "tools", label: "Tools" },
   { key: "certs", label: "Certifications" },
+  { key: "resources", label: "Resources" },
   { key: "subgroups", label: "Subgroups" },
 ] as const;
-
-/** Estimated chrome offset from scroll top to body content start. */
-const CHROME_OFFSET = 104;
 
 export interface DomainDetailScreenProps {
   /** Stable domain key (e.g. "D001"). */
@@ -67,7 +65,7 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
   const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
@@ -75,6 +73,16 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
   const matchType = Array.isArray(params.match_type) ? params.match_type[0] : params.match_type;
+  const guidanceContext: GuidanceRouteContext = {
+    programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
+    jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
+    schoolId: Array.isArray(params.school_id) ? params.school_id[0] : params.school_id,
+    userType: Array.isArray(params.user_type) ? params.user_type[0] : params.user_type,
+    journeyMode: Array.isArray(params.journey_mode) ? params.journey_mode[0] : params.journey_mode,
+    guidanceTarget: Array.isArray(params.guidance_target) ? params.guidance_target[0] : params.guidance_target,
+    guidanceStudentId: targetStudentId,
+    focused: focusedGuidance,
+  };
 
   const [state, setState] = useState<DataState<DomainV2>>(() =>
     pending<DomainV2>("Loading domain details..."),
@@ -109,7 +117,7 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} matchType={matchType} scrollRef={scrollRef} />}
+      {(domain) => <DomainBody domain={domain} domainKey={domainKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} matchType={matchType} scrollRef={scrollRef} />}
     </DetailScaffold>
   );
 }
@@ -119,6 +127,7 @@ function DomainBody({
   domainKey,
   targetStudentId,
   focusedGuidance,
+  guidanceContext,
   matchType,
   scrollRef: outerScrollRef,
 }: {
@@ -126,6 +135,7 @@ function DomainBody({
   domainKey: string;
   targetStudentId?: string;
   focusedGuidance: boolean;
+  guidanceContext: GuidanceRouteContext;
   matchType?: string;
   scrollRef: React.RefObject<ScrollView | null>;
 }) {
@@ -148,37 +158,18 @@ function DomainBody({
   // the same badge. Both props are optional now, and the badge renders nothing
   // when there is nothing to say.
   // ── Section positions for nav scrolling ──────────────────────
-  const sectionY = useRef<Record<string, number>>({});
   const [activeSection, setActiveSection] = useState("overview");
   const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
-  const [directRolesExpanded, setDirectRolesExpanded] = useState(false);
   const desktopScrollRef = useRef<ScrollView>(null);
   const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
-  const directRoles = (domain.roles ?? []).filter((role) => !role.subgroupId).sort(compareCareerRoles);
-  const visibleDirectRoles = directRolesExpanded ? directRoles : directRoles.slice(0, 6);
-
-  const onSectionLayout = useCallback((key: string, y: number) => {
-    if (sectionY.current[key] === undefined) {
-      sectionY.current[key] = CHROME_OFFSET + y;
-    }
-  }, []);
-
-  const scrollTo = useCallback((key: string) => {
-    const y = sectionY.current[key];
-    if (y !== undefined) {
-      (isDesktop ? desktopScrollRef : outerScrollRef).current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
-    }
-    setActiveSection(key);
-  }, [isDesktop, outerScrollRef]);
 
   // ── Desktop layout: section nav + content side-by-side ───────
   const content = (
     <>
       {/* Hero section */}
-      <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("overview", e.nativeEvent.layout.y)} />
+      {activeSection === "overview" ? <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
         <View style={[styles.heroIconWrap, clusterColor ? { backgroundColor: clusterColor + "15" } : undefined]}>
-          <DomainIcon cluster={cluster} size={36} />
+           <DomainIcon cluster={cluster} size={36} />
         </View>
         <View style={styles.heroText}>
           {cluster ? (
@@ -208,9 +199,9 @@ function DomainBody({
             ) : null}
           </View>
         </View>
-      </View>
+      </View> : null}
 
-      {matchType ? (
+      {activeSection === "overview" && matchType ? (
         <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <SectionLabel>Why this domain is in your route</SectionLabel>
           <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
@@ -218,15 +209,15 @@ function DomainBody({
               ? "This is a direct connection: your programme teaches knowledge that is closely related to this domain."
               : matchType === "functional"
                 ? "This is a functional connection: some of what your programme teaches can be applied here, but the work is different."
-                : matchType === "adjacent"
-                  ? "This is a possible pivot. Your current foundation helps, but you may need a bridge before specialising."
+              : matchType === "adjacent"
+                  ? "This is a possible direction outside your programme. Review this domain to see what further learning may be needed."
                   : "This domain is available in the wider career catalogue. Review its foundation before deciding whether it belongs in your route."}
           </Text>
         </View>
       ) : null}
 
       {/* Wayfinding — this domain's place on the journey */}
-      <RouteLine
+      {activeSection === "overview" ? <RouteLine
         variant="spine"
         stations={[
           { state: "you", label: "Foundations" },
@@ -234,12 +225,11 @@ function DomainBody({
           { state: "target", label: `${roleCount || ""} roles`.trim() },
         ]}
         edges={["solid", "dashed"]}
-      />
+      /> : null}
 
       {/* Domain-owned build surface. This is separate from programme skills:
           it answers what someone can create or develop within this domain. */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("build", e.nativeEvent.layout.y)} />
+      {activeSection === "build" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>What can you build in this domain?</SectionLabel>
           <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
@@ -258,17 +248,16 @@ function DomainBody({
             </View>
           ) : null}
           <TouchableOpacity
-            onPress={() => exploreNav.entrepreneurship(router, { domainId: domainKey, focused: focusedGuidance })}
+            onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })}
             style={[styles.buildButton, { borderColor: colors.accentRole.action }]}
           >
             <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build / Entrepreneurship</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> : null}
 
       {/* Foundation skills */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
+      {activeSection === "skills" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
           title="Portable foundation: what to build first"
@@ -277,17 +266,15 @@ function DomainBody({
         <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The route keeps Nigerian, remote and global possibilities visible. A local signal does not cancel a portable skill, and a global signal does not establish a Nigerian licence or requirement.</Text>
         <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
         <NigerianContextBlock context={domain.nigerianContext} level="domain" />
-      </View>
+      </View> : null}
 
       {/* Tools */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("tools", e.nativeEvent.layout.y)} />
+      {activeSection === "tools" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <ToolGroupsBlock tools={domain.tools} title="Tools used in this domain" />
-      </View>
+      </View> : null}
 
       {/* Certifications */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("certs", e.nativeEvent.layout.y)} />
+      {activeSection === "certs" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>Certifications</SectionLabel>
           <CertPlacementList
@@ -295,11 +282,14 @@ function DomainBody({
             roleHint={domain.roleHintCertifications}
           />
         </View>
-      </View>
+      </View> : null}
 
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <LearningResourcesBlock resources={domain.resources} />
-      </View>
+      {activeSection === "resources" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+        {domain.resources?.length ? <LearningResourcesBlock resources={domain.resources} /> : <View style={[styles.emptySubgroups, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+          <SectionLabel>No domain resources attached yet</SectionLabel>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>The domain catalogue is available, but source-backed learning links have not been attached to this domain yet.</Text>
+        </View>}
+      </View> : null}
 
       {/* Per-edge mapping feedback */}
       <MappingFeedbackButton
@@ -311,11 +301,9 @@ function DomainBody({
         compact
       />
 
-      {/* Use domain -> subgroup -> role where a supported subgroup taxonomy
-          exists. Roles without a supported subgroup stay directly under the
-          domain instead of being forced into an invented grouping. */}
-      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View onLayout={(e) => onSectionLayout("subgroups", e.nativeEvent.layout.y)} />
+      {/* The domain page stops at subgroups. Roles appear after a subgroup is
+          selected in the guided route, rather than beside the domain itself. */}
+      {activeSection === "subgroups" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View style={{ gap: Spacing.sm }}>
           {subgroups.length ? <>
             <SectionLabel>Subgroups in this domain</SectionLabel>
@@ -323,7 +311,7 @@ function DomainBody({
              <TouchableOpacity
               key={sg.id}
               activeOpacity={0.8}
-              onPress={() => exploreNav.subgroup(router, domainKey, sg.id, targetStudentId, focusedGuidance)}
+              onPress={() => exploreNav.subgroup(router, domainKey, sg.id, guidanceContext)}
               style={[styles.subgroupCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
             >
               <Text style={[styles.subgroupTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{sg.name}</Text>
@@ -332,34 +320,15 @@ function DomainBody({
             </TouchableOpacity>
             ))}
             {subgroups.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: subgroupsExpanded }} onPress={() => setSubgroupsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{subgroupsExpanded ? "Show fewer subgroups" : `See all ${subgroups.length} subgroups`}</Text></TouchableOpacity> : null}
-          </> : null}
-          {directRoles.length ? <View style={{ gap: Spacing.sm, marginTop: subgroups.length ? Spacing.md : 0 }}>
-            <SectionLabel>{subgroups.length ? "Roles linked directly to this domain" : "Roles in this domain"}</SectionLabel>
-            <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>
-              {subgroups.length
-                ? "These source-backed roles do not have a supported subgroup mapping, so you can open them directly from the domain."
-                : "This domain does not currently have a supported subgroup taxonomy, so roles are shown directly here."}
-            </Text>
-            {visibleDirectRoles.map((role) => (
-              <TouchableOpacity
-                key={role.key}
-                accessibilityRole="button"
-                onPress={() => exploreNav.role(router, role.key, targetStudentId, focusedGuidance)}
-                style={[styles.subgroupCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
-              >
-                <Text style={[styles.subgroupTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{role.name}</Text>
-                <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>{careerRoleTierLabel(role.tier)}</Text>
-                {role.description ? <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description}</Text> : null}
-                <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Open role details →</Text>
-              </TouchableOpacity>
-            ))}
-            {directRoles.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: directRolesExpanded }} onPress={() => setDirectRolesExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{directRolesExpanded ? "Show fewer roles" : `See all ${directRoles.length} roles`}</Text></TouchableOpacity> : null}
-          </View> : null}
+          </> : <View style={[styles.emptySubgroups, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+            <SectionLabel>No subgroups published yet</SectionLabel>
+            <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain does not currently have a supported subgroup mapping. Roles are organised in the guided route only when a source-backed subgroup is available.</Text>
+          </View>}
         </View>
-      </View>
+      </View> : null}
 
       {/* Notes stay in Career Intelligence; learning actions belong in My World. */}
-      <NotesWidget entityType="domain" entityId={domainKey} />
+      {activeSection === "overview" ? <NotesWidget entityType="domain" entityId={domainKey} /> : null}
 
     </>
   );
@@ -376,7 +345,7 @@ function DomainBody({
             {SECTIONS.map((s) => (
               <TouchableOpacity
                 key={s.key}
-               onPress={() => scrollTo(s.key)}
+               onPress={() => setActiveSection(s.key)}
                 style={[
                   styles.navItem,
                   activeSection === s.key && { backgroundColor: colors.surface.subtle },
@@ -427,11 +396,7 @@ function DomainBody({
         {SECTIONS.map((s) => (
           <TouchableOpacity
             key={s.key}
-            onPress={() => {
-              const y = sectionY.current[s.key];
-              if (y !== undefined) outerScrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
-              setActiveSection(s.key);
-            }}
+            onPress={() => setActiveSection(s.key)}
             style={[styles.mobileSectionTab, { borderColor: activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: activeSection === s.key ? colors.surface.subtle : colors.surface.raised }]}
           >
             <Text style={[styles.navLabel, { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary }, CompassFonts.bodyMedium]}>{s.label}</Text>
@@ -593,6 +558,12 @@ const styles = StyleSheet.create({
   },
   navLabel: {
     fontSize: FontSize.sm,
+  },
+  emptySubgroups: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.xs,
   },
   mobileSectionNav: { gap: Spacing.xs, paddingVertical: 2 },
   mobileSectionTab: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },

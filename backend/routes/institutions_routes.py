@@ -28,7 +28,8 @@
 #   GET  /{institution_id}/programme-demand   — list[ProgrammeDemandRow]
 #   GET  /{institution_id}/domain-ranking?scope=nigerian|global|remote — list[DomainRankItem]
 #   GET  /{institution_id}/alerts         — list[IntelligenceAlert]
-#   GET  /{institution_id}/skills-gap     — list[SkillGapRow]
+#   GET  /{institution_id}/programme-skill-coverage — programme → domain → resource bridge
+#   GET  /{institution_id}/skills-gap     — legacy demand-shaped compatibility route (empty)
 #   GET  /{institution_id}/role-demand    — list[RoleDemandRow]
 #   GET  /{institution_id}/peers          — list[PeerInstitutionRow]
 #   GET  /{institution_id}/affiliation    — AffiliationStats (aggregate, k-anonymised)
@@ -536,7 +537,12 @@ def _assert_own_institution(institution_id: str, current_user: dict) -> str:
     """
     org_id = _resolve_org(current_user)
     if institution_id in ("me", "self"):
-        return org_id or ""
+        if not org_id:
+            raise HTTPException(
+                status_code=403,
+                detail="You must be linked to an institution before viewing its intelligence.",
+            )
+        return org_id
     if org_id and str(institution_id) == str(org_id):
         return org_id
     # Deliberately 403, not 404: whether an institution id exists is not a
@@ -551,9 +557,8 @@ def _assert_own_institution(institution_id: str, current_user: dict) -> str:
 def _school_programmes(current_user: dict, cap: int = 100) -> list:
     """Programme rows for the current admin's institution.
 
-    Resolves via org membership; when that's unavailable (no org row yet) falls
-    back to a bounded ALL-programmes sample so the endpoint still demonstrates
-    real taxonomy structure rather than an empty list.
+    Resolves via org membership. It never falls back to an all-programmes sample:
+    institution intelligence must remain institution-scoped.
 
     NOTE: this used to take an `institution_id` argument that it never read.
     Callers must gate on _assert_own_institution first; the identity used here
@@ -561,6 +566,8 @@ def _school_programmes(current_user: dict, cap: int = 100) -> list:
     """
     svc = _svc()
     org_id = _resolve_org(current_user)
+    if not org_id:
+        return []
     prog_ids = _institution_programme_ids(org_id)
     try:
         query = svc.table("programmes").select("id, name, discipline, qualification")
@@ -896,6 +903,22 @@ class ProgrammeDemandRow(_InstitutionBase):
     detail: Optional[ProgrammeDemandDetail] = None
 
 
+class ProgrammeIntelligenceRow(_InstitutionBase):
+    """Institution-scoped programme structure, independent of labour demand."""
+
+    id: str
+    programme_name: str
+    discipline: Optional[str] = None
+    qualification: Optional[str] = None
+    mapping_source: str = "ccmas"
+    domains: List[ProgrammeDomainBadge] = Field(default_factory=list)
+    domain_overflow: Optional[int] = None
+    direct_domains: int = 0
+    functional_domains: int = 0
+    adjacent_domains: int = 0
+    source_status: str = "recorded"
+
+
 class DomainRankItem(_InstitutionBase):
     rank: int
     domain_id: str
@@ -923,6 +946,54 @@ class SkillGapRow(_InstitutionBase):
     skill: str
     demand_pct: Optional[float] = None
     in_curriculum: bool = False
+
+
+class ProgrammeResourceEvidence(_InstitutionBase):
+    """One source-backed skill, tool, or certification in a mapped path."""
+
+    name: str
+    kind: Literal["skill", "tool", "certification"]
+    source: Literal["domain", "subgroup", "role"]
+    scope_name: Optional[str] = None
+    role_name: Optional[str] = None
+    state: Literal["covered", "bridge"]
+    url: Optional[str] = None
+    provider: Optional[str] = None
+    description: Optional[str] = None
+    resource_type: Optional[str] = None
+    source_confidence: Optional[str] = None
+    data_state: Optional[str] = None
+
+
+class ProgrammeDomainSkillCoverage(_InstitutionBase):
+    """A programme-first skill bridge for one mapped domain.
+
+    ``bridge`` means an exact-name skill in the domain evidence that is not
+    present in the programme's recorded CCMAS/JAMB outcome list. It is not an
+    employer-demand claim and it does not infer equivalence between synonyms.
+    """
+
+    domain_id: str
+    domain_name: str
+    match_type: str
+    curriculum_skills: List[str] = Field(default_factory=list)
+    resources: List[ProgrammeResourceEvidence] = Field(default_factory=list)
+    covered_count: int = 0
+    bridge_count: int = 0
+    coverage_status: Literal["complete", "source_missing", "review_only"] = "source_missing"
+    explanation: str
+
+
+class ProgrammeSkillCoverage(_InstitutionBase):
+    """Programme intelligence arranged as programme → mapped domains."""
+
+    programme_id: str
+    programme_name: str
+    curriculum_skills: List[str] = Field(default_factory=list)
+    curriculum_technical: List[str] = Field(default_factory=list)
+    curriculum_transferable: List[str] = Field(default_factory=list)
+    curriculum_status: Literal["complete", "source_missing"] = "source_missing"
+    domains: List[ProgrammeDomainSkillCoverage] = Field(default_factory=list)
 
 
 class RoleDemandRow(_InstitutionBase):
@@ -1608,6 +1679,66 @@ async def get_programme_demand(
         return ResponseModel(data=[])
 
 
+@router.get("/{institution_id}/programme-intelligence", response_model=ResponseModel)
+async def get_programme_intelligence(
+    institution_id: str,
+    query: Optional[str] = None,
+    discipline: Optional[str] = None,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Return recorded programme-to-domain structure, not labour demand."""
+    _assert_own_institution(institution_id, current_user)
+    try:
+        programmes = _school_programmes(current_user, cap=2000)
+        if query:
+            q = query.strip().casefold()
+            programmes = [row for row in programmes if q in str(row.get("name") or "").casefold()]
+        if discipline:
+            programmes = [row for row in programmes if str(row.get("discipline") or "") == discipline]
+        programme_ids = [str(row["id"]) for row in programmes if row.get("id")]
+        links = _programme_domain_rows(programme_ids, cap=20000)
+        by_programme: dict[str, list[dict]] = {}
+        for link in links:
+            if link.get("programme_id"):
+                by_programme.setdefault(str(link["programme_id"]), []).append(link)
+        domain_map = _domain_map([str(link["domain_id"]) for link in links if link.get("domain_id")])
+        rows: list[ProgrammeIntelligenceRow] = []
+        for programme in programmes:
+            programme_id = str(programme.get("id"))
+            programme_links = by_programme.get(programme_id, [])
+            badges = [
+                ProgrammeDomainBadge(
+                    domain_id=(domain_map.get(str(link.get("domain_id")), {}).get("domain_key") or str(link.get("domain_id") or "")),
+                    short_label=(domain_map.get(str(link.get("domain_id")), {}).get("name") or "Unlabelled domain"),
+                    match_type=str(link.get("match_type") or "adjacent"),
+                )
+                for link in programme_links
+                if link.get("domain_id")
+            ]
+            counts = {
+                kind: sum(1 for link in programme_links if str(link.get("match_type") or "adjacent") == kind)
+                for kind in ("direct", "functional", "adjacent")
+            }
+            rows.append(
+                ProgrammeIntelligenceRow(
+                    id=programme_id,
+                    programme_name=str(programme.get("name") or ""),
+                    discipline=programme.get("discipline"),
+                    qualification=programme.get("qualification"),
+                    domains=badges[:8],
+                    domain_overflow=max(len(badges) - 8, 0) or None,
+                    direct_domains=counts["direct"],
+                    functional_domains=counts["functional"],
+                    adjacent_domains=counts["adjacent"],
+                    source_status="recorded" if programme_links else "no_mapping_recorded",
+                )
+            )
+        return ResponseModel(data=[row.model_dump(by_alias=True) for row in rows])
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions programme_intelligence failed", error=str(exc))
+        return ResponseModel(data=[], message="Programme intelligence is temporarily unavailable.")
+
+
 @router.get("/{institution_id}/domain-ranking", response_model=ResponseModel)
 async def get_domain_ranking(
     institution_id: str,
@@ -1682,20 +1813,313 @@ async def get_alerts(
     return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
 
 
-@router.get("/{institution_id}/skills-gap", response_model=ResponseModel)
-async def get_skills_gap(
+@router.get("/{institution_id}/programme-skill-coverage", response_model=ResponseModel)
+async def get_programme_skill_coverage(
     institution_id: str,
     current_user: dict = Depends(Auth.require_admin),
 ):
-    """Return programme skill coverage only when the required evidence exists.
+    """Return programme curriculum coverage only when source evidence exists.
 
     A domain's generic foundation skills are not proof that a programme has a
-    curriculum gap, so this route must not label them as gaps. Until curriculum
-    coverage and demand ingestion are available, return an honest empty state.
+    curriculum gap. Market demand is deliberately not joined here; it belongs
+    to the separate Market Intelligence route. Until programme curriculum
+    coverage is loaded, return an honest empty state.
     """
     _assert_own_institution(institution_id, current_user)
-    # The current schema has neither programme curriculum skill coverage nor
-    # demand percentages. Do not manufacture rows from domain taxonomy data.
+    try:
+        svc = _svc()
+        programmes = _school_programmes(current_user, cap=2000)
+        programme_ids = [str(row.get("id")) for row in programmes if row.get("id")]
+        if not programme_ids:
+            return ResponseModel(data=[])
+
+        mappings = (
+            svc.table("programme_mapping")
+            .select("programme_id, jamb_programme_id")
+            .in_("programme_id", programme_ids)
+            .limit(20000)
+            .execute()
+            .data
+        ) or []
+        jamb_ids = list({str(row.get("jamb_programme_id")) for row in mappings if row.get("jamb_programme_id")})
+        jamb_by_programme: dict[str, list[str]] = {}
+        for row in mappings:
+            if row.get("programme_id") and row.get("jamb_programme_id"):
+                jamb_by_programme.setdefault(str(row["programme_id"]), []).append(str(row["jamb_programme_id"]))
+
+        jamb_rows = (
+            svc.table("jamb_programmes")
+            .select("id, skills_technical, skills_transferable")
+            .in_("id", jamb_ids)
+            .limit(20000)
+            .execute()
+            .data
+        ) or [] if jamb_ids else []
+        jamb_skills = {str(row.get("id")): row for row in jamb_rows if row.get("id")}
+
+        domain_links = _programme_domain_rows(programme_ids, cap=20000)
+        domain_ids = list({str(row.get("domain_id")) for row in domain_links if row.get("domain_id")})
+        domain_rows = (
+            svc.table("domains")
+            .select("id, domain_key, name, foundation_skills")
+            .in_("id", domain_ids)
+            .limit(20000)
+            .execute()
+            .data
+        ) or [] if domain_ids else []
+        domain_by_id = {str(row.get("id")): row for row in domain_rows if row.get("id")}
+
+        subgroup_rows = (
+            svc.table("domain_subgroups")
+            .select("id, domain_id, label, cluster_skills")
+            .in_("domain_id", domain_ids)
+            .limit(20000)
+            .execute()
+            .data
+        ) or [] if domain_ids else []
+        subgroup_by_domain: dict[str, list[dict]] = {}
+        subgroup_names: dict[str, str] = {}
+        for row in subgroup_rows:
+            if row.get("id"):
+                subgroup_names[str(row["id"])] = str(row.get("label") or "")
+            if row.get("domain_id"):
+                subgroup_by_domain.setdefault(str(row["domain_id"]), []).append(row)
+
+        role_rows = (
+            svc.table("domain_roles")
+            .select("id, role_key, domain_id, subgroup_id, role_name, essential_skills, optional_skills")
+            .in_("domain_id", domain_ids)
+            .limit(40000)
+            .execute()
+            .data
+        ) or [] if domain_ids else []
+        roles_by_domain: dict[str, list[dict]] = {}
+        for row in role_rows:
+            if row.get("domain_id"):
+                roles_by_domain.setdefault(str(row["domain_id"]), []).append(row)
+
+        # The domain, subgroup and role resource tables are already consumed by
+        # the public detail routes. Read them here as optional evidence layers;
+        # if an additive table is absent on an older test database, that layer
+        # stays unavailable instead of becoming invented data.
+        def optional_rows(builder) -> list[dict]:
+            try:
+                return builder().execute().data or []
+            except Exception as resource_exc:  # noqa: BLE001
+                log.debug("institutions curriculum resource layer unavailable", error=str(resource_exc))
+                return []
+
+        domain_bridge_rows = optional_rows(lambda: svc.table("domain_bridge_skills").select("domain_id, skill_name, category").in_("domain_id", domain_ids).limit(40000)) if domain_ids else []
+        role_bridge_rows = optional_rows(lambda: svc.table("role_bridge_skills").select("domain_id, role_id, skill_name, category").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        tool_rows = optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        certification_rows = optional_rows(lambda: svc.table("domain_certifications").select("*").in_("domain_id", domain_ids).limit(80000)) if domain_ids else []
+        role_tool_rows = optional_rows(lambda: svc.table("domain_tools").select("*").in_("domain_id", domain_ids).eq("scope", "role").limit(80000)) if domain_ids else []
+        role_cert_rows = optional_rows(lambda: svc.table("role_certifications").select("*").limit(80000))
+        learning_resource_rows = optional_rows(
+            lambda: svc.table("career_learning_resources")
+            .select(
+                "id, domain_id, subgroup_id, role_id, resource_type, target_name, "
+                "provider, url, description, source_confidence, data_state"
+            )
+            .in_("domain_id", domain_ids)
+            .limit(150000)
+        ) if domain_ids else []
+
+        programme_names = {str(row.get("id")): str(row.get("name") or "") for row in programmes if row.get("id")}
+        links_by_programme: dict[str, list[dict]] = {}
+        for link in domain_links:
+            if link.get("programme_id") and link.get("domain_id"):
+                links_by_programme.setdefault(str(link["programme_id"]), []).append(link)
+
+        def skill_names(value: object) -> list[str]:
+            if not isinstance(value, list):
+                return []
+            return [str(item).strip() for item in value if isinstance(item, str) and item.strip()]
+
+        def unique(values: list[str]) -> list[str]:
+            seen: set[str] = set()
+            result: list[str] = []
+            for value in values:
+                key = " ".join(value.casefold().split())
+                if key and key not in seen:
+                    seen.add(key)
+                    result.append(value)
+            return result
+
+        def resource_state(kind: str, value: str) -> Literal["covered", "bridge"]:
+            # The programme profile contains learning outcomes/skills, not
+            # proof that a specific tool or certification was taught. Only a
+            # skill can therefore be marked covered by exact-name overlap;
+            # tools and certifications remain actionable bridge resources.
+            if kind == "skill" and " ".join(value.casefold().split()) in curriculum_keys:
+                return "covered"
+            return "bridge"
+
+        def learning_kind(resource_type: object) -> Literal["skill", "tool", "certification"] | None:
+            kind = str(resource_type or "").strip().casefold()
+            if kind in {"skill_reference", "skill_learning", "competency_reference"}:
+                return "skill"
+            if kind == "tool_learning":
+                return "tool"
+            if kind in {"certification_exam", "professional_body"}:
+                return "certification"
+            # Domain and role overview links explain the route but are not one
+            # of the three resource kinds in this coverage report.
+            return None
+
+        reports: list[ProgrammeSkillCoverage] = []
+        for programme_id in programme_ids:
+            technical: list[str] = []
+            transferable: list[str] = []
+            for jamb_id in jamb_by_programme.get(programme_id, []):
+                row = jamb_skills.get(jamb_id) or {}
+                technical.extend(skill_names(row.get("skills_technical")))
+                transferable.extend(skill_names(row.get("skills_transferable")))
+            technical = unique(technical)
+            transferable = unique(transferable)
+            curriculum = unique(technical + transferable)
+            curriculum_keys = {" ".join(value.casefold().split()) for value in curriculum}
+            coverage_domains: list[ProgrammeDomainSkillCoverage] = []
+            for link in links_by_programme.get(programme_id, []):
+                domain_id = str(link["domain_id"])
+                domain = domain_by_id.get(domain_id) or {}
+                domain_resources: list[ProgrammeResourceEvidence] = []
+
+                def add_learning_resource(row: dict, source: Literal["domain", "subgroup", "role"], *, scope_name: str | None = None, role_name: str | None = None) -> None:
+                    kind = learning_kind(row.get("resource_type"))
+                    value = str(row.get("target_name") or "").strip()
+                    url = str(row.get("url") or "").strip()
+                    if not kind or not value or not url:
+                        return
+                    domain_resources.append(ProgrammeResourceEvidence(
+                        name=value,
+                        kind=kind,
+                        source=source,
+                        scope_name=scope_name,
+                        role_name=role_name,
+                        state=resource_state(kind, value),
+                        url=url,
+                        provider=str(row.get("provider") or "").strip() or None,
+                        description=str(row.get("description") or "").strip() or None,
+                        resource_type=str(row.get("resource_type") or "").strip() or None,
+                        source_confidence=str(row.get("source_confidence") or "").strip() or None,
+                        data_state=str(row.get("data_state") or "").strip() or None,
+                    ))
+
+                for value in skill_names(domain.get("foundation_skills")):
+                    domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="domain", state=resource_state("skill", value)))
+                for row in domain_bridge_rows:
+                    if str(row.get("domain_id")) == domain_id and row.get("skill_name"):
+                        value = str(row["skill_name"]).strip()
+                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="domain", state=resource_state("skill", value)))
+                for row in tool_rows:
+                    if str(row.get("domain_id")) == domain_id and row.get("scope") == "domain" and row.get("tool_name"):
+                        value = str(row["tool_name"]).strip()
+                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="domain", state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                for row in certification_rows:
+                    if str(row.get("domain_id")) == domain_id and row.get("placement") in {"gateway", "role_hint"} and row.get("name"):
+                        value = str(row["name"]).strip()
+                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="domain", state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                for row in learning_resource_rows:
+                    if str(row.get("domain_id")) == domain_id and not row.get("subgroup_id") and not row.get("role_id"):
+                        add_learning_resource(row, "domain")
+                for subgroup in subgroup_by_domain.get(domain_id, []):
+                    subgroup_name = str(subgroup.get("label") or "") or None
+                    for value in skill_names(subgroup.get("cluster_skills")):
+                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="subgroup", scope_name=subgroup_name, state=resource_state("skill", value)))
+                    for row in tool_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and row.get("tool_name"):
+                            value = str(row["tool_name"]).strip()
+                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="subgroup", scope_name=subgroup_name, state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                    for row in certification_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and row.get("placement") == "subgroup" and row.get("name"):
+                            value = str(row["name"]).strip()
+                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="subgroup", scope_name=subgroup_name, state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                    for row in learning_resource_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("subgroup_id")) == str(subgroup.get("id")) and not row.get("role_id"):
+                            add_learning_resource(row, "subgroup", scope_name=subgroup_name)
+                for role in roles_by_domain.get(domain_id, []):
+                    role_name = str(role.get("role_name") or "") or None
+                    subgroup_name = subgroup_names.get(str(role.get("subgroup_id"))) or None
+                    for value in skill_names(role.get("essential_skills")) + skill_names(role.get("optional_skills")):
+                        domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("skill", value)))
+                    for row in role_bridge_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) in {str(role.get("id")), str(role.get("role_key"))} and row.get("skill_name"):
+                            value = str(row["skill_name"]).strip()
+                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="skill", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("skill", value)))
+                    for row in role_tool_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) == str(role.get("id")) and row.get("tool_name"):
+                            value = str(row["tool_name"]).strip()
+                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="tool", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("tool", value), url=str(row.get("tool_url") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                    role_key = str(role.get("role_key") or "")
+                    for row in role_cert_rows:
+                        if str(row.get("role_key")) == role_key and row.get("name"):
+                            value = str(row["name"]).strip()
+                            domain_resources.append(ProgrammeResourceEvidence(name=value, kind="certification", source="role", scope_name=subgroup_name, role_name=role_name, state=resource_state("certification", value), url=str(row.get("official_url") or "").strip() or None, description=str(row.get("body") or "").strip() or None, provider=str(row.get("source") or "").strip() or None, source_confidence=str(row.get("source_confidence") or "").strip() or None, data_state=str(row.get("data_state") or "").strip() or None))
+                    for row in learning_resource_rows:
+                        if str(row.get("domain_id")) == domain_id and str(row.get("role_id")) == str(role.get("id")):
+                            add_learning_resource(row, "role", scope_name=subgroup_name, role_name=role_name)
+
+                # Keep the evidence list readable without losing the domain
+                # grouping. The same skill can legitimately appear at more
+                # than one level, so dedupe by skill + evidence scope.
+                seen_evidence: set[tuple[str, str, str, str]] = set()
+                deduped: list[ProgrammeResourceEvidence] = []
+                for evidence in domain_resources:
+                    key = (evidence.name.casefold(), evidence.kind, evidence.source, evidence.scope_name or "", evidence.role_name or "")
+                    if key not in seen_evidence:
+                        seen_evidence.add(key)
+                        deduped.append(evidence)
+                covered_count = sum(1 for evidence in deduped if evidence.state == "covered")
+                bridge_count = sum(1 for evidence in deduped if evidence.state == "bridge")
+                match_type = str(link.get("match_type") or "review_only")
+                status = "complete" if curriculum and deduped else "source_missing"
+                if match_type not in {"direct", "functional", "adjacent"}:
+                    status = "review_only"
+                if not curriculum:
+                    explanation = "The programme learning-outcome profile is not recorded, so no bridge can be calculated yet."
+                elif not deduped:
+                    explanation = "This mapped domain does not yet have source-backed skill evidence to compare."
+                else:
+                    explanation = "Bridge resources are domain, subgroup and role skills, tools and certifications not evidenced by the programme outcome profile. Skill coverage uses exact-name overlap only; tools and certifications remain bridge resources unless separate programme evidence is added."
+                coverage_domains.append(ProgrammeDomainSkillCoverage(
+                    domain_id=str(domain.get("domain_key") or domain_id),
+                    domain_name=str(domain.get("name") or "Domain not named"),
+                    match_type=match_type,
+                    curriculum_skills=curriculum,
+                    resources=deduped,
+                    covered_count=covered_count,
+                    bridge_count=bridge_count,
+                    coverage_status=status,
+                    explanation=explanation,
+                ))
+            reports.append(ProgrammeSkillCoverage(
+                programme_id=programme_id,
+                programme_name=programme_names.get(programme_id) or "Programme not named",
+                curriculum_skills=curriculum,
+                curriculum_technical=technical,
+                curriculum_transferable=transferable,
+                curriculum_status="complete" if curriculum else "source_missing",
+                domains=coverage_domains,
+            ))
+        return ResponseModel(data=[report.model_dump(by_alias=True) for report in reports])
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions curriculum skill coverage failed", error=str(exc))
+        return ResponseModel(data=[])
+
+
+@router.get("/{institution_id}/skills-gap", response_model=ResponseModel)
+async def get_legacy_skills_gap(
+    institution_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Retained compatibility route for the former demand-shaped response.
+
+    It intentionally returns no rows: demand-shaped skill gaps are not the
+    programme curriculum view and there is no approved labour-market feed.
+    Clients should use ``programme-skill-coverage`` instead.
+    """
+    _assert_own_institution(institution_id, current_user)
     return ResponseModel(data=[])
 
 

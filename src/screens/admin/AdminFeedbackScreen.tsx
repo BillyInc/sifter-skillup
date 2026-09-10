@@ -47,7 +47,7 @@ type FeedbackCategory =
 
 const CATEGORIES: { key: FeedbackCategory; label: string }[] = [
   { key: "mapping_wrong", label: "A mapping looks wrong (domain, role, or programme)" },
-  { key: "data_outdated", label: "A number looks wrong (salary, demand, requirement, cut-off)" },
+  { key: "data_outdated", label: "A number or requirement looks wrong" },
   { key: "bug", label: "Something's broken (bug, crash, blank screen)" },
   { key: "confusing", label: "Confusing to use" },
   { key: "missing_info", label: "Missing information I was looking for" },

@@ -237,7 +237,7 @@ export default function SignUpPage() {
       <Text style={[styles.fine, { color: colors.textMuted }]}>
         Terms {TERMS_VERSION} · Privacy {PRIVACY_VERSION}. You can change your analytics choice any time in Settings.
       </Text>
-      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => {}}>
+      <Modal visible={legalPage !== null} animationType="slide" onRequestClose={() => setLegalPage(null)}>
         {legalPage === "terms" ? (
           <TermsScreen
             requireExplicitConfirmation

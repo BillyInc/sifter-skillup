@@ -36,8 +36,10 @@ import { useAuth } from "@/hooks/useAuth";
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
   title: string;
-  /** Visible contextual back label; the browser/router history remains the source of truth. */
+  /** Visible contextual back label. */
   backLabel?: string;
+  /** A deterministic back transition for a focused guidance flow. */
+  onBack?: () => void;
   /** When provided, a Save bookmark action appears in the header. */
   save?: { entityType: SavedEntityType; entityId: string; label?: string };
   /** Show online report printing/download action. */
@@ -73,6 +75,7 @@ export function DetailScaffold<T>({
   eyebrow,
   title,
   backLabel = "Back",
+  onBack,
   save,
   pdf,
   pdfTitle,
@@ -95,6 +98,10 @@ export function DetailScaffold<T>({
   const { user } = useAuth();
   const isGuest = !user || user.auth_provider === "guest";
   const goBack = () => {
+    if (onBack) {
+      onBack();
+      return;
+    }
     if (router.canGoBack()) {
       router.back();
     } else {

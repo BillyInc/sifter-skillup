@@ -6,6 +6,7 @@ import { DetailScaffold, RouteLine } from "@/components/careerIntelligence";
 import { careerData, type GuidanceDomainSelection, type GuidanceReportPath } from "@/lib/careerData";
 import { provisioningData } from "@/lib/provisioningData";
 import { useExploreNav } from "@/lib/exploreNav";
+import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { careerRoleTierLabel, compareCareerRoles } from "@/lib/careerRoleOrdering";
 import { comingSoon, pending, real, type DataState, type DomainMatchType, type DomainV2, type GuidanceEvidence, type GuidanceEvidenceState } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
@@ -56,13 +57,29 @@ export default function GuidedFieldSelectionScreen() {
     jamb_programme_id?: string;
     school_id?: string;
     user_type?: string;
+    journey_mode?: string;
     guidance_student_id?: string;
+    focus?: string;
+    guidance_target?: string;
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
   const targetStudentId = params.guidance_student_id ? String(params.guidance_student_id) : undefined;
   const programmeId = params.jamb_programme_id ? String(params.jamb_programme_id) : params.programme_id ? String(params.programme_id) : undefined;
+  const guidanceContext: GuidanceRouteContext = {
+    programmeId,
+    jambProgrammeId: params.jamb_programme_id ? String(params.jamb_programme_id) : undefined,
+    schoolId: params.school_id ? String(params.school_id) : undefined,
+    userType: params.user_type ? String(params.user_type) : undefined,
+    journeyMode: params.journey_mode ? String(params.journey_mode) : undefined,
+    guidanceTarget: params.guidance_target ? String(params.guidance_target) : undefined,
+    guidanceStudentId: targetStudentId,
+    focused: params.focus === "guidance",
+  };
+  const sessionOnlyGuidance = Boolean(
+    guidanceContext.guidanceTarget && guidanceContext.guidanceTarget !== "authorised_student",
+  );
   const [state, setState] = useState<DataState<DomainV2[]>>(() => pending("Loading the domains connected to this programme..."));
   const [path, setPath] = useState<GuidanceReportPath["path"]>({});
   const [step, setStep] = useState<Step>("domains");
@@ -81,7 +98,7 @@ export default function GuidedFieldSelectionScreen() {
        if (targetStudentId) {
          const saved = await provisioningData.getGuidancePath(targetStudentId);
          savedPath = (saved?.path ?? {}) as GuidanceReportPath["path"];
-       } else {
+       } else if (!sessionOnlyGuidance) {
          const saved = await careerData.getGuidancePath();
          savedPath = saved.status === "real" && saved.data ? saved.data.path : {};
        }
@@ -118,6 +135,13 @@ export default function GuidedFieldSelectionScreen() {
           const links = programme.status === "real" && programme.data ? programme.data.domains ?? [] : [];
           domains = await loadLinkedDomains(links);
         }
+        // A programme route must remain programme-scoped. Do not replace an
+        // empty or partially unavailable mapping with the entire domain
+        // catalogue: that would present unrelated domains as valid guidance.
+        if (active) {
+          setState(domains.length ? real(domains) : comingSoon("No mapped domains are available for this programme yet."));
+        }
+        return;
       }
       if (!domains.length) {
         const clusters = await careerData.getDomainClusters();
@@ -130,7 +154,7 @@ export default function GuidedFieldSelectionScreen() {
         domains = loaded.filter((entry): entry is DataState<DomainV2> & { data: DomainV2 } => Boolean(entry.data)).map((entry) => entry.data);
       }
       if (active) {
-        setState(domains.length ? real(domains) : comingSoon("No mapped domains are available for this programme yet."));
+        setState(domains.length ? real(domains) : comingSoon("No domains are available yet."));
       }
     })();
     return () => { active = false; };
@@ -165,6 +189,8 @@ export default function GuidedFieldSelectionScreen() {
       if (targetStudentId) {
         await provisioningData.saveGuidancePath(targetStudentId, nextPath as Record<string, unknown>);
         if (sequence === saveSequence.current) setNotice("Saved to this student’s guidance path.");
+      } else if (sessionOnlyGuidance) {
+        if (sequence === saveSequence.current) setNotice("Held for this guidance session.");
       } else {
         const saved = await careerData.saveGuidancePath({ source: "explore", path: nextPath });
         if (sequence !== saveSequence.current) return;
@@ -261,9 +287,9 @@ export default function GuidedFieldSelectionScreen() {
            <Text style={[styles.lead, { color: colors.textRole.secondary }]}>Start with the domains connected to your programme. Choose one primary route; add a secondary domain only when you want to compare or plan a pivot. Your choices save as a draft automatically and you can resume this route later.</Text>
            <RouteLine variant="spine" stations={showSubgroupStep ? [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "subgroups" ? "you" : displayedStep === "domains" ? "target" : "bridge", label: "Subgroups" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }] : [{ state: displayedStep === "domains" ? "you" : "bridge", label: "Domains" }, { state: displayedStep === "roles" ? "you" : displayedStep === "review" ? "bridge" : "target", label: "Roles" }, { state: displayedStep === "review" ? "you" : "target", label: "Review" }]} edges={showSubgroupStep ? ["solid", "dashed", "dashed"] : ["solid", "dashed"]} style={styles.route} />
            <View style={styles.steps}>{visibleSteps.map((name, index) => <TouchableOpacity key={name} accessibilityRole="button" accessibilityState={{ selected: displayedStep === name }} onPress={() => index === 0 || selectedDomainIds.size > 0 ? updateStep(name) : undefined} style={[styles.step, { borderColor: displayedStep === name ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: displayedStep === name ? colors.surface.subtle : colors.surface.raised }]}><Text style={[styles.stepNumber, { color: colors.accentRole.action }]}>{index + 1}</Text><Text style={[styles.stepText, { color: colors.textRole.primary }]}>{name === "domains" ? "Domains" : name === "subgroups" ? "Subgroups" : name === "roles" ? "Roles" : "Review"}</Text></TouchableOpacity>)}</View>
-            {displayedStep === "domains" ? <DomainStepRefined colors={colors} domains={domains} selected={selectedDomainIds} primaryId={primaryDomainId} onToggle={toggleDomain} onSetPrimary={setPrimaryDomain} onView={(domain) => exploreNav.domain(router, domain.id, targetStudentId, true, domain.programmeMatchType)} onNext={() => updateStep(showSubgroupStep ? "subgroups" : "roles")} nextLabel={showSubgroupStep ? "Review subgroups" : "Choose roles"} /> : null}
-           {displayedStep === "subgroups" ? <SubgroupStepRefined colors={colors} domains={selectedDomains} primaryId={primaryDomainId} selected={selectedSubgroupIds} onToggle={toggleSubgroup} onView={(domain, subgroup) => exploreNav.subgroup(router, domain.id, subgroup.id, targetStudentId, true)} onNext={() => updateStep("roles")} onBack={() => updateStep("domains")} /> : null}
-             {displayedStep === "roles" ? <RoleStepRefined colors={colors} entries={roleEntries} selected={selectedRoleIds} onToggle={toggleRole} onView={(role) => exploreNav.role(router, role.key, targetStudentId, true)} onNext={() => updateStep("review")} onBack={() => updateStep(showSubgroupStep ? "subgroups" : "domains")} /> : null}
+            {displayedStep === "domains" ? <DomainStepRefined colors={colors} domains={domains} selected={selectedDomainIds} primaryId={primaryDomainId} onToggle={toggleDomain} onSetPrimary={setPrimaryDomain} onView={(domain) => exploreNav.domain(router, domain.id, { ...guidanceContext, focused: true }, domain.programmeMatchType)} onNext={() => updateStep(showSubgroupStep ? "subgroups" : "roles")} nextLabel={showSubgroupStep ? "Review subgroups" : "Choose roles"} /> : null}
+           {displayedStep === "subgroups" ? <SubgroupStepRefined colors={colors} domains={selectedDomains} primaryId={primaryDomainId} selected={selectedSubgroupIds} onToggle={toggleSubgroup} onView={(domain, subgroup) => exploreNav.subgroup(router, domain.id, subgroup.id, { ...guidanceContext, focused: true })} onNext={() => updateStep("roles")} onBack={() => updateStep("domains")} /> : null}
+             {displayedStep === "roles" ? <RoleStepRefined colors={colors} entries={roleEntries} selected={selectedRoleIds} onToggle={toggleRole} onView={(role) => exploreNav.role(router, role.key, { ...guidanceContext, focused: true })} onNext={() => updateStep("review")} onBack={() => updateStep(showSubgroupStep ? "subgroups" : "domains")} /> : null}
            {displayedStep === "review" ? <ReviewStep colors={colors} domains={selectedDomains} primaryId={primaryDomainId} subgroups={selectedSubgroups} roles={path.roles ?? []} saving={saving} notice={notice} onBack={() => updateStep("roles")} /> : null}
            {displayedStep !== "review" && notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{notice}</Text> : null}
           {saving ? <ActivityIndicator size="small" color={colors.accentRole.action} /> : null}
@@ -297,9 +323,9 @@ function DomainStepRefined({ colors, domains, selected, primaryId, onToggle, onS
   return <View style={styles.section}>
     <Text style={[styles.heading, { color: colors.textRole.primary }]}>First, understand the domains</Text>
     <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Open a domain to understand what it covers. Choose one primary route for active guidance, then add secondary domains if you want to compare or plan a future pivot.</Text>
-    {primaryId && selected.has(primaryId) && domains.find((domain) => domain.id === primaryId)?.programmeMatchType === "direct" ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>You already have partial preparation from your programme and primary domain. These are the additional skills you need.</Text> : null}
+    {primaryId && selected.has(primaryId) && domains.find((domain) => domain.id === primaryId)?.programmeMatchType === "direct" ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Your programme has a close connection to this domain. Read the domain details to see what it covers and what you may want to build next.</Text> : null}
     {groups.map((group) => <View key={group.label} style={styles.group}><Text style={[styles.groupTitle, { color: colors.textRole.primary }]}>{group.label}</Text>{group.items.map((domain) => <View key={domain.id} style={[styles.card, { borderColor: selected.has(domain.id) ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: selected.has(domain.id) ? colors.surface.subtle : colors.surface.raised }]}>
-      <View style={styles.cardText}><View style={styles.cardHeading}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{domain.name}</Text><Text style={[styles.relation, { color: colors.textRole.muted }]}>{relationLabel(domain.programmeMatchType)}</Text></View><Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>{domain.programmeMatchType === "adjacent" || domain.programmeMatchType === "functional" ? "This is a possible pivot. Your current foundation helps, but you need this bridge before specializing." : domain.description || "See what people do in this domain, the skills it uses, and the subgroups inside it."}</Text><EvidenceSummary colors={colors} evidence={domain.guidanceEvidence} /><View style={styles.cardActions}><TouchableOpacity onPress={() => onView(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>View domain</Text></TouchableOpacity><TouchableOpacity onPress={() => onToggle(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>{selected.has(domain.id) ? "Remove" : "Add secondary"}</Text></TouchableOpacity>{selected.has(domain.id) && primaryId !== domain.id ? <TouchableOpacity onPress={() => onSetPrimary(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>Make primary</Text></TouchableOpacity> : null}{primaryId === domain.id ? <Text style={[styles.primaryLabel, { color: colors.accentRole.action }]}>Primary route</Text> : null}</View></View><Feather name={selected.has(domain.id) ? "check" : "circle"} size={18} color={colors.accentRole.action} />
+      <View style={styles.cardText}><View style={styles.cardHeading}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{domain.name}</Text><Text style={[styles.relation, { color: colors.textRole.muted }]}>{relationLabel(domain.programmeMatchType)}</Text></View><Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>{domain.programmeMatchType === "adjacent" ? "This is a possible direction outside your programme. Read the domain details to see what you would need to learn." : domain.programmeMatchType === "functional" ? "This domain uses some ideas from your programme in a different setting. Read the details to see the connection." : domain.description || "See what people do in this domain, the skills it uses, and the subgroups inside it."}</Text><EvidenceSummary colors={colors} evidence={domain.guidanceEvidence} /><View style={styles.cardActions}><TouchableOpacity onPress={() => onView(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>View domain</Text></TouchableOpacity><TouchableOpacity onPress={() => onToggle(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>{selected.has(domain.id) ? "Remove" : "Add secondary"}</Text></TouchableOpacity>{selected.has(domain.id) && primaryId !== domain.id ? <TouchableOpacity onPress={() => onSetPrimary(domain)}><Text style={[styles.link, { color: colors.accentRole.action }]}>Make primary</Text></TouchableOpacity> : null}{primaryId === domain.id ? <Text style={[styles.primaryLabel, { color: colors.accentRole.action }]}>Primary route</Text> : null}</View></View><Feather name={selected.has(domain.id) ? "check" : "circle"} size={18} color={colors.accentRole.action} />
     </View>)}</View>)}
     <ActionRow colors={colors} onBack={() => undefined} onNext={onNext} nextLabel={nextLabel} disabled={!selected.size} />
   </View>;
@@ -309,7 +335,7 @@ function SubgroupStepRefined({ colors, domains, primaryId, selected, onToggle, o
   return <View style={styles.section}>
     <Text style={[styles.heading, { color: colors.textRole.primary }]}>Now narrow into subgroups</Text>
     <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Your domain foundation stays portable. These are the additional capabilities to build as you narrow into a subgroup.</Text>
-    {domains.map((domain) => <View key={domain.id} style={styles.group}><Text style={[styles.groupTitle, { color: colors.textRole.primary }]}>{domain.name} <Text style={[styles.relation, { color: colors.textRole.muted }]}>{domain.id === primaryId ? "· Primary route" : "· Secondary route"}</Text></Text>{domain.id !== primaryId && (domain.programmeMatchType === "functional" || domain.programmeMatchType === "adjacent") ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>This is a possible pivot. Your current foundation helps, but you need this bridge before specializing.</Text> : null}{domain.subgroups.length ? domain.subgroups.map((subgroup) => <View key={subgroup.id} style={[styles.card, { borderColor: selected.has(subgroup.id) ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: selected.has(subgroup.id) ? colors.surface.subtle : colors.surface.raised }]}>
+    {domains.map((domain) => <View key={domain.id} style={styles.group}><Text style={[styles.groupTitle, { color: colors.textRole.primary }]}>{domain.name} <Text style={[styles.relation, { color: colors.textRole.muted }]}>{domain.id === primaryId ? "· Primary route" : "· Secondary route"}</Text></Text>{domain.id !== primaryId && (domain.programmeMatchType === "functional" || domain.programmeMatchType === "adjacent") ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{domain.programmeMatchType === "adjacent" ? "This is a possible direction outside your programme. Read the domain details to see what further learning may be needed." : "This domain uses some ideas from your programme in a different setting. Read the details to see the connection."}</Text> : null}{domain.subgroups.length ? domain.subgroups.map((subgroup) => <View key={subgroup.id} style={[styles.card, { borderColor: selected.has(subgroup.id) ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: selected.has(subgroup.id) ? colors.surface.subtle : colors.surface.raised }]}>
       <View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{subgroup.name}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>{subgroup.description || "View the skills, tools, resources and roles connected to this subgroup."}</Text><EvidenceSummary colors={colors} evidence={subgroup.guidanceEvidence} /><View style={styles.cardActions}><TouchableOpacity onPress={() => onView(domain, subgroup)}><Text style={[styles.link, { color: colors.accentRole.action }]}>View subgroup</Text></TouchableOpacity><TouchableOpacity onPress={() => onToggle(domain, subgroup)}><Text style={[styles.link, { color: colors.accentRole.action }]}>{selected.has(subgroup.id) ? "Remove" : "Select subgroup"}</Text></TouchableOpacity></View></View><Feather name={selected.has(subgroup.id) ? "check" : "circle"} size={18} color={colors.accentRole.action} />
      </View>) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>This domain does not use a separate subgroup structure here, so we’ll take you directly to its roles.</Text>}</View>)}
     <ActionRow colors={colors} onBack={onBack} onNext={onNext} nextLabel="Choose roles" />
