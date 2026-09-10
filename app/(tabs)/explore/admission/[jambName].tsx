@@ -1,4 +1,5 @@
 import { Redirect, useLocalSearchParams } from "expo-router";
+import { legacyAdmissionHref } from "@/lib/legacyAdmissionRedirect";
 
 /**
  * Legacy links return to the unified admission/discovery surface. Admission
@@ -6,7 +7,8 @@ import { Redirect, useLocalSearchParams } from "expo-router";
  * redirect prevents old bookmarks from reopening a duplicate screen.
  */
 export default function AdmissionRoute() {
-  const { jambName } = useLocalSearchParams<{ jambName: string }>();
+  const params = useLocalSearchParams();
+  const jambName = Array.isArray(params.jambName) ? params.jambName[0] : params.jambName;
   const value = String(jambName ?? "");
-  return <Redirect href={`/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(decodeURIComponent(value))}`} />;
+  return <Redirect href={legacyAdmissionHref("/(tabs)/explore", value, params) as never} />;
 }
