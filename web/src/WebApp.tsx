@@ -127,6 +127,7 @@ function WebRouterApp() {
   const location = useLocation();
   const { user, loading } = useAuth();
   const path = location.split("?")[0] || "/";
+  const isGuest = user?.auth_provider === "guest";
 
   if (loading) return <div className="loading">Loading Sifter LevelUp…</div>;
 
@@ -134,9 +135,10 @@ function WebRouterApp() {
   // `/` is the public landing entry only for signed-out visitors. A refresh
   // by an authenticated user should reopen the workspace, not the marketing
   // entry or a route-loading dead end.
-  if (path === "/" && user) return <AuthenticatedWebApp user={user} path="/home" />;
+  if (path === "/" && user && !isGuest) return <AuthenticatedWebApp user={user} path="/home" />;
   if (path === "/") return <AuthEntry initialMode="welcome" />;
-  if (user && isPublic) return <AuthenticatedWebApp user={user} path="/home" />;
+  if (user && isPublic && !isGuest) return <AuthenticatedWebApp user={user} path="/home" />;
+  if (user && isPublic && isGuest) return <AuthEntry initialMode={routeMode()} />;
   if (!user && !isPublic) {
     go(`/?mode=login&return_to=${encodeURIComponent(location)}`, true);
     return <div className="loading">Opening sign in…</div>;
@@ -162,7 +164,6 @@ function AuthEntry({ initialMode }: { initialMode: AuthMode }) {
 
   return (
     <main className="shell">
-      <header className="topbar"><Brand /><span className="topbar-note">Student and institution guidance</span></header>
       <section className="auth-layout">
         <div className="intro-panel">
           <div className="intro-brand-lockup"><span className="intro-brand-mark" aria-hidden="true"><i /><i /><i /></span><span>Sifter <b>LevelUp</b></span></div>
@@ -181,10 +182,6 @@ function AuthEntry({ initialMode }: { initialMode: AuthMode }) {
   );
 }
 
-function Brand() {
-  return <a className="brand" href="/" onClick={(event) => { event.preventDefault(); go("/"); }}><span className="brand-mark"><i /><i /><i /></span><span>Sifter <b>LevelUp</b></span></a>;
-}
-
 function Welcome({ onLogin, onSignup }: { onLogin: () => void; onSignup: () => void }) {
   const { signInGuest } = useAuth();
   const [busy, setBusy] = useState(false);
@@ -194,7 +191,7 @@ function Welcome({ onLogin, onSignup }: { onLogin: () => void; onSignup: () => v
     try { await signInGuest(); go("/explore", true); } catch (e) { setError(e instanceof Error ? e.message : "Could not continue as guest."); } finally { setBusy(false); }
   }
   return <>
-    <div className="auth-header"><h2>Welcome to Sifter</h2><p className="muted">Choose how you want to continue with your guidance and saved choices.</p></div>
+    <div className="auth-header"><h2>Welcome to Sifter LevelUp</h2><p className="muted">Choose how you want to continue with your guidance and saved choices.</p></div>
     <div className="stack"><button className="primary" onClick={onLogin}>Log in</button><button className="secondary" onClick={onSignup}>Create account</button><button className="link-button" onClick={guest} disabled={busy}>{busy ? "Opening guest mode…" : "Continue as guest"}</button></div>
     {error && <p className="error" role="alert">{error}</p>}
   </>;

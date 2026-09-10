@@ -106,9 +106,14 @@ export default function ProfileScreen() {
     <View style={[styles.context, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <Text style={[styles.contextLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>ACCOUNT</Text>
       <Text style={[styles.body, { color: colors.textRole.primary }]}>{user?.email || "Guest session"}</Text>
-      {isGuest ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Guest browsing does not save guidance until you create an account.</Text> : null}
+      {isGuest ? <>
+        <Text style={[styles.meta, { color: colors.textRole.muted }]}>Guest browsing does not save guidance until you create an account.</Text>
+        <TouchableOpacity onPress={() => go("/(auth)/signup")} style={styles.inlineAction}>
+          <Text style={[styles.inlineActionText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>Create account to start →</Text>
+        </TouchableOpacity>
+      </> : null}
       {isAdmin ? <AccountRow label="Admin workspace" sub="Organisation tools and student guidance" onPress={handleAdmin} /> : null}
-      <AccountRow label="Explore guidance" sub="Programmes, universities, domains and roles" onPress={() => go("/(tabs)/explore")} />
+      {!isGuest ? <AccountRow label="Explore guidance" sub="Programmes, universities, domains and roles" onPress={() => go("/(tabs)/explore")} /> : null}
       <AccountRow label="Settings" sub="Notifications, legal choices and account settings" onPress={() => go("/(tabs)/settings")} />
       {!isGuest ? <AccountRow label="Delete account" sub="Start the account deletion cooldown" onPress={() => setAccountAction("delete")} danger /> : null}
       <WebDivider />
@@ -116,7 +121,7 @@ export default function ProfileScreen() {
     </View>
   );
 
-  const content = (
+  const content = isGuest ? account : (
     <>
       {context}
       {account}
@@ -127,8 +132,8 @@ export default function ProfileScreen() {
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       {isWide ? (
         <WebShell>
-          <WebPageHeader title="Profile" subtitle="Your account and guidance context" accentColor={colors.accentRole.action} />
-          <WebRow><WebCol weight={1}>{content}</WebCol><WebCol weight={1}><WebCard title="Career guidance" accentBar accentColor={colors.accentRole.action}><Text style={[styles.body, { color: colors.textRole.secondary }]}>Your guidance is kept here as a connected path: subjects, programmes, universities, domains, subgroups and roles.</Text><TouchableOpacity onPress={() => go("/(tabs)/explore")} style={styles.primaryAction}><Text style={styles.primaryActionText}>Open Explore</Text></TouchableOpacity></WebCard></WebCol></WebRow>
+          <WebPageHeader title="Profile" subtitle={isGuest ? "Your guest account" : "Your account and guidance context"} accentColor={colors.accentRole.action} />
+          <WebRow><WebCol weight={1}>{content}</WebCol>{!isGuest ? <WebCol weight={1}><WebCard title="Career guidance" accentBar accentColor={colors.accentRole.action}><Text style={[styles.body, { color: colors.textRole.secondary }]}>Your guidance is kept here as a connected path: subjects, programmes, universities, domains, subgroups and roles.</Text><TouchableOpacity onPress={() => go("/(tabs)/explore")} style={styles.primaryAction}><Text style={styles.primaryActionText}>Open Explore</Text></TouchableOpacity></WebCard></WebCol> : null}</WebRow>
         </WebShell>
       ) : (
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}><Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Profile</Text>{content}</ScrollView>
