@@ -23,6 +23,15 @@ import type {
 export interface SearchGroup {
   label: string;
   items: SearchResult[];
+  /**
+   * Why this group is empty or incomplete, when the API said so. The backend
+   * distinguishes "the skill layer was skipped / failed / answered from a
+   * known-incomplete index" from a genuine no-match; without somewhere to put
+   * that sentence the distinction was made server-side, typed in
+   * `CareerSearchResult`, and then thrown away by this mapping -- the field was
+   * declared in `src/types/career.ts` and read NOWHERE.
+   */
+  notice?: string;
 }
 
 /**
@@ -103,18 +112,52 @@ function universityRows(result: CareerSearchResult): SearchResult[] {
   }));
 }
 
+/**
+ * One skill name can sit in dozens of domains. The API caps how many of them a
+ * single name contributes (two) and reports the rest as `otherDomainCount`, so
+ * the response for `financial markets` is TWO rows each carrying "+20".
+ *
+ * Rendering that verbatim double-counts: both rows say "and 20 other fields",
+ * and the reader adds them up to 42 domains for a skill that is in 22. The API
+ * value is right -- it is per row, and each row is separately routable -- so
+ * the fix belongs here. Each row instead reports the fields OTHER THAN ITS
+ * OWN: the withheld ones plus its visible siblings. Both rows of a 22-domain
+ * skill then say "and 21 other fields", which is true read either way round
+ * and adds up to the same 22 however many rows the reader looks at.
+ */
 function skillRows(result: CareerSearchResult): SearchResult[] {
-  return (result.skills ?? []).map((item) => ({
-    id: item.id,
-    type: "skill" as const,
-    title: item.name,
-    subtitle: item.domainName ? `Used in ${item.domainName}` : "Career skill",
-    meta: item.context,
-    actionLabel: "See this skill in context",
-    contextHint: "See what this skill is used for and where to learn it next.",
-    href: item.domainId ? `/(tabs)/explore/domain/${encodeURIComponent(item.domainId)}` : undefined,
-    icon: "zap",
-  }));
+  const skills = result.skills ?? [];
+  const shownPerName = new Map<string, number>();
+  for (const item of skills) {
+    shownPerName.set(item.name, (shownPerName.get(item.name) ?? 0) + 1);
+  }
+  return skills.map((item) => {
+    const siblings = (shownPerName.get(item.name) ?? 1) - 1;
+    const otherFields = (item.otherDomainCount ?? 0) + siblings;
+    const fieldWord = otherFields === 1 ? "field" : "fields";
+    return {
+      id: item.id,
+      type: "skill" as const,
+      title: item.name,
+      subtitle: item.domainName
+        ? otherFields > 0
+          ? `Used in ${item.domainName} and ${otherFields} other ${fieldWord}`
+          : `Used in ${item.domainName}`
+        : // The domain did not resolve, which is exactly when the count carries
+          // the MOST signal -- discarding it for a bare "Career skill" threw
+          // away the only thing the row could still say.
+          otherFields > 0
+          ? `Career skill used in ${otherFields + 1} fields`
+          : "Career skill",
+      meta: item.context,
+      actionLabel: "See this skill in context",
+      contextHint: "See what this skill is used for and where to learn it next.",
+      href: item.domainId
+        ? `/(tabs)/explore/domain/${encodeURIComponent(item.domainId)}`
+        : undefined,
+      icon: "zap",
+    };
+  });
 }
 
 function toolRows(result: CareerSearchResult): SearchResult[] {
@@ -216,7 +259,11 @@ export function toSearchGroups(
     groups.push({ label: "Roles", items: roleRows(result) });
   }
   if (wants("skills")) {
-    groups.push({ label: "Skills", items: skillRows(result) });
+    groups.push({
+      label: "Skills",
+      items: skillRows(result),
+      notice: result.skillsNotice ?? undefined,
+    });
   }
   if (wants("tools")) {
     groups.push({ label: "Tools", items: toolRows(result) });
@@ -228,7 +275,10 @@ export function toSearchGroups(
     groups.push({ label: "Opportunities", items: opportunityRows(result) });
   }
 
-  return groups.filter((g) => g.items.length > 0);
+  // A group with a notice and no rows is kept: "we could not search skills for
+  // this query" is the one thing an empty group needs to be able to say, and
+  // dropping it renders the same nothing as a real no-match.
+  return groups.filter((g) => g.items.length > 0 || Boolean(g.notice));
 }
 
 /**

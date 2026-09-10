@@ -21,10 +21,16 @@
 #   GET/POST/DELETE /api/career/subscriptions
 # ============================================================
 from typing import Any, Optional
+import asyncio
+import functools
+import heapq
 import re
 import time
+import weakref
 from datetime import datetime, timezone
 
+import anyio
+import anyio.to_thread
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
 
 from auth import Auth
@@ -290,11 +296,13 @@ def _split_skill_string(value: str) -> list[str]:
     """Split the delimiter-joined skill strings used by part of the v2 seed.
 
     ``domain_roles.essential_skills`` is a JSONB array for some rows and a
-    single ``"a | b | c"`` string for most of them (4330 of 5093 rows in dev
-    use ``|``, another 65 use ``;``; 16 domain foundation skills use ``;``).
-    Treating that string as one skill produced 200-character pseudo-skills, so
-    the delimiters are honoured here rather than at every call site. No seeded
-    skill name contains either character in its own right.
+    single delimiter-joined ``"a | b | c"`` string for most of them. Measured
+    against dev (5,093 role rows): 4,395 string-typed ``essential_skills``,
+    511 arrays and 187 nulls; ``optional_skills`` is 3,831 strings, 511 arrays
+    and 751 nulls. Treating a joined string as one skill produced
+    200-character pseudo-skills, so the delimiters are honoured here rather
+    than at every call site. No seeded skill name contains either character in
+    its own right.
     """
     return [part.strip() for part in _SKILL_DELIMITERS.split(value) if part.strip()]
 
@@ -327,10 +335,93 @@ def _is_missing_relation(exc: BaseException) -> bool:
     text = str(getattr(exc, "args", None) or exc)
     code = str(getattr(exc, "code", "") or "")
     haystack = f"{code} {text}".casefold()
-    return any(
-        marker in haystack
-        for marker in ("42p01", "pgrst205", "does not exist", "could not find the table")
-    )
+    if any(marker in haystack for marker in ("42p01", "pgrst205", "could not find the table")):
+        return True
+    # A bare "does not exist" is not enough: an undefined COLUMN (42703) and an
+    # undefined FUNCTION (42883) word their messages the same way, and calling
+    # either a schema regression would put a typo in the error log under a
+    # message that says the table is gone.
+    return "does not exist" in haystack and "relation" in haystack
+
+
+# PostgREST codes are PGRSTnnn; Postgres SQLSTATEs are five alphanumerics.
+# Shape alone is NOT enough for the SQLSTATE half: `?q=12345` has exactly that
+# shape, and the URL of a failed request carries the query string -- so a bare
+# five-character run would lift the user's own search term into `error_code`.
+# A SQLSTATE is therefore only lifted where the text presents it AS a code:
+# after a `code` key, or immediately before the `:` of a `42P01: ...` prefix.
+# PGRSTnnn is distinctive enough to take anywhere.
+_ERROR_CODE_SHAPE = re.compile(r"\A(?:PGRST\d{3}|[0-9][0-9A-Za-z]{4})\Z")
+_ERROR_CODE_RE = re.compile(
+    r"""['"]?\bcode['"]?\s*[:=]\s*['"]?(PGRST\d{3}|[0-9][0-9A-Za-z]{4})\b"""
+    r"""|\b(PGRST\d{3})\b"""
+    r"""|\b([0-9][0-9A-Za-z]{4})(?=\s*:)"""
+)
+
+
+def _extract_error_code(text: str) -> str:
+    match = _ERROR_CODE_RE.search(text)
+    if not match:
+        return ""
+    return next((group for group in match.groups() if group), "")
+
+
+def _error_summary(exc: BaseException) -> tuple[str, str]:
+    """A log-safe ``(code, exception class)`` for a database/transport failure.
+
+    ``str(exc)`` on a PostgREST error carries the message and hint -- schema and
+    table names -- and on an ``httpx.HTTPStatusError`` it carries the request
+    URL, which contains the Supabase project ref AND the raw user query string.
+    These logs go to stdout/journald and to error.log with 30-day retention, so
+    the classified summary is what gets logged at warning/error.
+
+    That is now an invariant of the whole module, not of one endpoint: every
+    `except` block routes through `_log_db_failure`, which is the only place
+    allowed to pair a warning/error record with the raw text (at DEBUG, on a
+    separate record). `/search` used to be the only fixed handler here while
+    30 siblings still wrote `error=str(exc)` into the record MESSAGE.
+
+    The raw string stays at DEBUG. That is not "off by default": `logger.py`
+    adds the app.log sink unconditionally, and it used to add it at DEBUG, so
+    the project ref and the user's raw search string were greppable on disk for
+    the retention window. The decision taken is that the DEBUG sink -- like the
+    stdout one -- is gated on ENVIRONMENT=development; outside development
+    app.log starts at INFO and these detail lines are never written.
+    """
+    # The attribute goes through the SAME shape check as the text: `exc.code`
+    # is whatever the raising library put there, and passing it through
+    # unvalidated is another way for free text to reach the log line.
+    code = str(getattr(exc, "code", "") or "")
+    if not _ERROR_CODE_SHAPE.match(code):
+        code = _extract_error_code(str(getattr(exc, "args", None) or exc))
+    return (code or "unclassified", type(exc).__name__)
+
+
+def _log_db_failure(message: str, exc: BaseException, *, level: str = "error", **fields) -> None:
+    """Report a database/transport failure without printing what it says.
+
+    The one spelling for every `except` block in this module. What it replaces
+    was `log.error("...", error=str(exc))`, and `Logger.error(self, message,
+    error=None)` emits `logger.error("{} | {}", message, error)` -- so a `str`
+    error lands in the record MESSAGE at ERROR level. That reaches error.log
+    (30-day retention, added UNCONDITIONALLY, so the ENVIRONMENT gate on
+    app.log does not help) and stderr/journald.
+
+    `str(httpx.HTTPStatusError)` is, empirically:
+
+        Server error '500 ...' for url 'https://<PROJECT_REF>.supabase.co
+        /rest/v1/programmes?select=id&name=ilike.%25<RAW USER TERM>%25'
+
+    Driving three UNAUTHENTICATED career routes into that exception put the
+    Supabase project ref and the user's raw search term verbatim into the
+    record message. `_error_summary` reduces it to a shape-checked SQLSTATE and
+    an exception class name; the raw text stays at DEBUG (see `_error_summary`
+    for why that is a real gate and not a nominal one).
+    """
+    error_code, error_type = _error_summary(exc)
+    emit = log.warning if level == "warning" else log.error
+    emit(message, error_code=error_code, error_type=error_type, **fields)
+    log.debug(message + " detail", error=str(exc))
 
 
 def _contains_skill(values: list[str], term: str) -> bool:
@@ -678,7 +769,7 @@ async def list_programmes(
         ]
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
-        log.error("career list_programmes failed", error=str(exc))
+        _log_db_failure("career list_programmes failed", exc)
         return ResponseModel(data=_coming_soon("Programme search is temporarily unavailable."))
 
 
@@ -746,7 +837,7 @@ def _programme_skills(svc: Any, programme_id: str) -> dict:
             "skillsCount": len(technical) + len(transferable),
         }
     except Exception as exc:  # noqa: BLE001
-        log.warning("programme skills lookup skipped", error=str(exc))
+        _log_db_failure("programme skills lookup skipped", exc, level="warning")
         return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
 
 
@@ -849,11 +940,11 @@ async def get_programme(programme_id: str):
                     programme["studentName"] = student_names[0]
                     programme["studentNames"] = list(dict.fromkeys(student_names))
         except Exception as exc:  # noqa: BLE001
-            log.warning("programme student naming lookup skipped", error=str(exc))
+            _log_db_failure("programme student naming lookup skipped", exc, level="warning")
         notice = None if domains else "Domain links are not available for this programme yet."
         return ResponseModel(data=_real(programme, notice=notice))
     except Exception as exc:  # noqa: BLE001
-        log.error("career get_programme failed", error=str(exc))
+        _log_db_failure("career get_programme failed", exc)
         return ResponseModel(data=_coming_soon("Programme detail is temporarily unavailable."))
 
 
@@ -935,7 +1026,7 @@ async def list_domain_clusters():
         ]
         return ResponseModel(data=_real(out))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_domain_clusters failed", error=str(exc))
+        _log_db_failure("career list_domain_clusters failed", exc)
         return ResponseModel(data=_coming_soon("The domain explorer is temporarily unavailable."))
 
 
@@ -1210,7 +1301,7 @@ async def get_domain(domain_id: str):
           }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
-        log.error("career get_domain failed", error=str(exc))
+        _log_db_failure("career get_domain failed", exc)
         return ResponseModel(data=_coming_soon("Domain detail is temporarily unavailable."))
 
 
@@ -1257,7 +1348,7 @@ async def get_role(role_id: str):
         except Exception as enrichment_exc:  # noqa: BLE001
             # The role enrichment migration is additive. Existing installations
             # can still render role skills while the patch is being applied.
-            log.warning("career role enrichment unavailable", error=str(enrichment_exc))
+            _log_db_failure("career role enrichment unavailable", enrichment_exc, level="warning")
 
         try:
             work_profile_rows = (
@@ -1492,7 +1583,7 @@ async def get_role(role_id: str):
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001
-        log.error("career get_role failed", error=str(exc))
+        _log_db_failure("career get_role failed", exc)
         return ResponseModel(data=_coming_soon("Role detail is temporarily unavailable."))
 
 
@@ -1574,7 +1665,7 @@ async def list_opportunities(
         orgs = _orgs_by_id(rows)
         return ResponseModel(data=_real([_opportunity_out(r, orgs.get(r.get("organisation_id"))) for r in rows]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_opportunities failed", error=str(exc))
+        _log_db_failure("career list_opportunities failed", exc)
         return ResponseModel(data=_coming_soon("Opportunities are temporarily unavailable."))
 
 
@@ -1588,7 +1679,7 @@ async def get_opportunity(opportunity_id: str):
         orgs = _orgs_by_id([row])
         return ResponseModel(data=_real(_opportunity_out(row, orgs.get(row.get("organisation_id")))))
     except Exception as exc:  # noqa: BLE001
-        log.error("career get_opportunity failed", error=str(exc))
+        _log_db_failure("career get_opportunity failed", exc)
         return ResponseModel(data=_coming_soon("Opportunity detail is temporarily unavailable."))
 
 
@@ -1615,7 +1706,7 @@ async def list_elite_pathways():
             for r in rows
         ]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_elite_pathways failed", error=str(exc))
+        _log_db_failure("career list_elite_pathways failed", exc)
         return ResponseModel(data=_coming_soon("Elite pathways are temporarily unavailable."))
 
 
@@ -1639,7 +1730,7 @@ async def get_elite_pathway(pathway_id: str):
             "bridgePlanId": r.get("bridge_plan_id"),
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("career get_elite_pathway failed", error=str(exc))
+        _log_db_failure("career get_elite_pathway failed", exc)
         return ResponseModel(data=_coming_soon("Elite pathway detail is temporarily unavailable."))
 
 
@@ -1656,7 +1747,7 @@ async def get_bridge_plan(plan_id: str):
             "coveredUserTypes": r.get("covered_user_types") or [],
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("career get_bridge_plan failed", error=str(exc))
+        _log_db_failure("career get_bridge_plan failed", exc)
         return ResponseModel(data=_coming_soon("Bridge plan is temporarily unavailable."))
 
 
@@ -1679,7 +1770,7 @@ async def list_scholarships(limit: int = 60):
             for r in rows
         ]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_scholarships failed", error=str(exc))
+        _log_db_failure("career list_scholarships failed", exc)
         return ResponseModel(data=_coming_soon("Scholarships are temporarily unavailable."))
 
 
@@ -1718,7 +1809,7 @@ async def list_application_windows(limit: int = 60):
             })
         return ResponseModel(data=_real(out))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_application_windows failed", error=str(exc))
+        _log_db_failure("career list_application_windows failed", exc)
         return ResponseModel(data=_coming_soon("Application windows are temporarily unavailable."))
 
 
@@ -1783,7 +1874,6 @@ async def discover_by_skills(
             "domain_id, subgroup_id, name, body, level"
         ).limit(10000).execute().data or []
 
-        domain_by_id = {row.get("id"): row for row in domains if row.get("id")}
         roles_by_domain: dict[str, list[dict]] = {}
         for row in roles:
             if row.get("domain_id"):
@@ -1856,7 +1946,6 @@ async def discover_by_skills(
             if terms and ((match_mode == "both" and len(matched) != len(terms)) or (match_mode == "either" and not matched)):
                 continue
             matched_domains.append((domain, matched))
-        matched_ids = {domain.get("id") for domain, _ in matched_domains}
 
         contextual_rows: list[dict] = []
         if matched_domains and terms:
@@ -2158,7 +2247,7 @@ async def discover_by_skills(
             "suggestedNext": suggestions,
         }, "No matching graph evidence is available for those skills yet." if terms and not matched_domains else None))
     except Exception as exc:  # noqa: BLE001
-        log.error("career skill discovery failed", error=str(exc))
+        _log_db_failure("career skill discovery failed", exc)
         return ResponseModel(data=_coming_soon("Skill discovery is temporarily unavailable."))
 
 
@@ -2178,13 +2267,211 @@ async def discover_by_skills_post(payload: dict = Body(...)):
 
 
 _SKILL_INDEX_TTL_SECONDS = 900.0
-_skill_index_cache: Optional[tuple[float, list[dict]]] = None
+# A build whose layers came back empty or short is almost never the truth about
+# a static taxonomy: it is an RLS change, a mid-reseed truncate, a page bound or
+# a transport failure that did not raise. Such a build is still cached (so a
+# genuinely empty table does not turn every keystroke into three full-table
+# scans) but only briefly, and loudly, so it cannot be served as authoritative
+# for the full TTL.
+#
+# This MUST stay above the measured cost of one build (10.0-16.4 s against
+# dev). At the old 30 s a degraded index spent roughly half its wall time
+# rebuilding, so a single RLS mistake turned into three full-table reads of
+# domain_roles every half minute, forever.
+_SKILL_INDEX_EMPTY_TTL_SECONDS = 120.0
+# How many rows to ASK for per page. This is deliberately NOT tied to the
+# server's `db-max-rows`: PostgREST clamps a larger request to its own cap and
+# says so only in `Content-Range`, which the supabase client discards. The
+# pager below therefore never infers anything from the size of a page -- it
+# advances by the number of rows it actually received and stops on an empty
+# one -- so this value is a throughput knob, not a correctness input.
+_SKILL_PAGE_SIZE = 1000
+# A bound on total pages so a pathological response (a server that keeps
+# returning rows) cannot loop forever. Hitting it is a bug, not a normal
+# outcome: it is logged at warning AND marks the build partial.
+_SKILL_MAX_PAGES = 64
+# Skill search scans the whole in-memory index, so its floor is higher than the
+# two characters the rest of /search accepts. `_search_terms` splits on
+# ` at|in|for|near `, so `?q=e in zz` reaches the skill layer as the one-letter
+# subject `e` -- which matched 20k+ rows on an unauthenticated, unthrottled
+# route.
+_MIN_SKILL_QUERY_LEN = 2
+# Below this length the scan keeps only PREFIX matches. `ai`, `go`, `bi`, `ux`
+# and `3d` are real skill-name prefixes with 6-16 names each, and `R` and `C#`
+# are real names, so a hard floor of three silently deleted them from /search.
+# A two-character SUBSTRING needle is the pathological case (`e` matched 20k+
+# rows and grew a per-name dict that large); a two-character PREFIX needle
+# matches tens of names, so the scan stays a cheap `startswith` over the index
+# and the result set is bounded by construction.
+_SKILL_PREFIX_ONLY_BELOW = 3
+_skill_index_cache: Optional[tuple[float, list[dict], bool]] = None
+
+# How many threadpool threads the skill layer may ever hold. `run_in_threadpool`
+# draws on AnyIO's DEFAULT limiter -- 40 tokens shared by the WHOLE app, every
+# sync route and dependency included -- so the skill layer gets its own bounded
+# limiters and can never starve anything else.
+_SKILL_BUILD_THREADS = 1
+_SKILL_RANK_THREADS = 8
+# The same reasoning for /search's own blocking round-trips. `search_career` is
+# `async def` and the supabase client is synchronous, so its ~15 sequential
+# PostgREST calls used to run INSIDE the loop: MEASURED against dev with a warm
+# index, n=1 -> 5.06 s and n=10 -> 55.64 s (5.56 s/req), a single event-loop
+# stall of 3.77-5.12 s, and loop-stall time equal to ~100% of wall clock. The
+# route has no auth and no rate limit and the unit runs `--workers 2`, so ~20
+# concurrent requests took EVERY endpoint on the box down with it. The work now
+# runs in a thread on its own bounded limiter -- never the app-wide 40.
+_SEARCH_QUERY_THREADS = 8
+
+# Per-EVENT-LOOP build state, keyed weakly so a closed loop is collected.
+#
+# Neither of the two obvious spellings works here:
+#
+#   * a module-global `asyncio.Lock` binds to whichever loop first CONTENDS on
+#     it and raises "... is bound to a different event loop" on every loop
+#     after that. In `search_career` that RuntimeError was swallowed by
+#     `except Exception` and became `skills: []` -- the silent-empty bug.
+#   * a module-global `threading.Lock` is loop-independent but is acquired
+#     INSIDE the threadpool: each waiter takes one of the shared 40 tokens and
+#     then blocks on the lock for the whole 8-16 s build. MEASURED: 45 cold
+#     calls made an unrelated `run_in_threadpool` wait 2.80 s.
+#
+# A per-loop `asyncio.Lock` has both properties: waiters park on the loop
+# (holding no thread), and exactly ONE thread ever enters the pool to build.
+_skill_loop_state: "weakref.WeakKeyDictionary[Any, dict]" = weakref.WeakKeyDictionary()
+
+
+def _loop_state() -> dict:
+    """The running loop's build lock, thread limiters and refresh handle.
+
+    Created lazily: `anyio.CapacityLimiter()` needs a running async backend, so
+    it cannot be built at import time.
+
+    EVERYTHING that is bound to a loop lives here, including the
+    stale-while-revalidate refresh TASK. A task handle is as loop-bound as a
+    lock is: parked in a module global, a refresh scheduled on loop A that
+    never finished (because loop A closed mid-build) stays `done() == False`
+    forever, and every later `_skill_index()` call on loop B therefore declines
+    to schedule its own rebuild and serves an arbitrarily old index with no log
+    line naming the cause.
+    """
+    loop = asyncio.get_running_loop()
+    state = _skill_loop_state.get(loop)
+    if state is None:
+        state = {
+            "lock": asyncio.Lock(),
+            "build": anyio.CapacityLimiter(_SKILL_BUILD_THREADS),
+            "rank": anyio.CapacityLimiter(_SKILL_RANK_THREADS),
+            "search": anyio.CapacityLimiter(_SEARCH_QUERY_THREADS),
+            "refresh": None,
+        }
+        _skill_loop_state[loop] = state
+    return state
+
+
+def _skill_loop_gate() -> tuple["asyncio.Lock", Any, Any]:
+    """The running loop's `(build lock, build limiter, rank limiter)`."""
+    state = _loop_state()
+    return state["lock"], state["build"], state["rank"]
+
+
+def _search_query_limiter() -> Any:
+    """The running loop's limiter for /search's blocking round-trips."""
+    return _loop_state()["search"]
+
+
+def _reset_skill_loop_state() -> None:
+    """Drop every per-loop gate, limiter and refresh handle (tests only)."""
+    _skill_loop_state.clear()
 
 
 def _reset_skill_index_cache() -> None:
     """Drop the cached skill index (used by tests and after a reseed)."""
     global _skill_index_cache
     _skill_index_cache = None
+
+
+def _skill_index_is_fresh(cached: Optional[tuple[float, list[dict], bool]]) -> bool:
+    """True while `cached` may still be served without a rebuild."""
+    if not cached:
+        return False
+    ttl = _SKILL_INDEX_EMPTY_TTL_SECONDS if cached[2] else _SKILL_INDEX_TTL_SECONDS
+    return (time.monotonic() - cached[0]) < ttl
+
+
+def _fetch_all_rows(svc, table: str, columns: str, order_column: str) -> tuple[list[dict], bool]:
+    """Read an entire table through PostgREST. Returns ``(rows, complete)``.
+
+    `.limit(n)` is NOT a way to read a whole table here: PostgREST caps the
+    response at its own `db-max-rows` (1000 on this project) and reports the
+    truncation only in the `Content-Range` header, which the supabase client
+    discards. The result is a silently partial index — measured at 15,298 of
+    44,895 index rows and 5,820 of 10,329 distinct skill names.
+
+    Two rules keep this independent of the server's cap rather than hardcoded
+    to today's value of it:
+
+      * the loop advances by ``len(chunk)``, never by ``_SKILL_PAGE_SIZE``, and
+        terminates on an EMPTY chunk. Inferring "that was the last page" from a
+        short page is what re-armed the silent truncation: raise
+        ``_SKILL_PAGE_SIZE`` above the server cap and every clamped page looks
+        short, so the very first one ends the read.
+      * the row total is cross-checked against ``count="exact"``. A read that
+        does not match the server's own count is reported as incomplete, which
+        is what stops a reseed landing mid-pagination from being cached as
+        authoritative for 900 s.
+
+    `complete` is False on a count mismatch or on hitting `_SKILL_MAX_PAGES`;
+    the caller turns that into the index-wide `partial` flag. A server that
+    does not return a count (or a mock that does not model one) leaves the
+    cross-check unarmed rather than failing closed.
+
+    The `.order()` is load-bearing, not cosmetic: without a total order the
+    pages are cut out of unspecified physical order, so they can overlap and
+    leave holes, and which rows land in which page changes after any UPDATE or
+    VACUUM. `order_column` must be unique (every one used here is a primary
+    key).
+    """
+    rows: list[dict] = []
+    expected: Optional[int] = None
+    for page in range(_SKILL_MAX_PAGES):
+        # `count="exact"` makes PostgREST run a full COUNT(*) for the request,
+        # so asking for it on every page charged a six-page build six counts of
+        # the same static table. The cross-check only ever reads the FIRST
+        # page's count, so that is the only page that asks for it.
+        select_kwargs = {"count": "exact"} if page == 0 else {}
+        res = (
+            svc.table(table)
+            .select(columns, **select_kwargs)
+            .order(order_column)
+            .range(len(rows), len(rows) + _SKILL_PAGE_SIZE - 1)
+            .execute()
+        )
+        chunk = getattr(res, "data", None) or []
+        if page == 0:
+            count = getattr(res, "count", None)
+            # A MagicMock (or a PostgREST build without the count header) must
+            # not be mistaken for a total of zero.
+            expected = count if isinstance(count, int) else None
+        if not chunk:
+            break
+        rows.extend(chunk)
+    else:
+        log.warning(
+            "skill layer fetch stopped at its page bound rather than at the end of the data",
+            table=table,
+            pages=_SKILL_MAX_PAGES,
+            rows=len(rows),
+        )
+        return rows, False
+    if expected is not None and len(rows) != expected:
+        log.warning(
+            "skill layer row count does not match the server's exact count",
+            table=table,
+            rows=len(rows),
+            expected=expected,
+        )
+        return rows, False
+    return rows, True
 
 
 def _build_skill_index(svc) -> list[dict]:
@@ -2204,30 +2491,50 @@ def _build_skill_index(svc) -> list[dict]:
     PostgREST cannot substring-match inside a JSONB array, so the three layers
     are flattened once and searched in memory. The taxonomy is static seed
     data, so the flattened index is cached for ``_SKILL_INDEX_TTL_SECONDS``
-    rather than refetched (~3 MB) on every keystroke.
+    rather than refetched on every keystroke. Measured cost of one full build
+    against dev: 160 domains (~0.34 MB), 542 sub-groups (~0.24 MB) and 5,093
+    roles (~3.7 MB) — roughly 4.2 MB and a MEASURED 10.0-16.4 s of blocking
+    client work, which is why the caller runs it in a threadpool under a lock
+    and serves the previous index while it runs.
+
+    Excluded domains are dropped here rather than at query time. `excluded` is
+    the publication switch `list_domain_clusters` uses to keep D086 (gambling)
+    out of the explorer; skipping it here put the same domain's skills into
+    /search, named and counted, by another door. Sub-group and role rows are
+    dropped with their domain, so no layer can reintroduce one.
+
+    Each row carries a pre-casefolded ``skill_name_cf``: `_rank_skill_matches`
+    scans all ~44,895 rows per request, and casefolding them per request put
+    22-612 ms of synchronous work on a public, unauthenticated route.
+
+    This is synchronous and blocking (the supabase client is). Call it through
+    ``_skill_index`` rather than directly from a request handler.
     """
     global _skill_index_cache
-    now = time.monotonic()
-    if _skill_index_cache and now - _skill_index_cache[0] < _SKILL_INDEX_TTL_SECONDS:
-        return _skill_index_cache[1]
 
-    domains = svc.table("domains").select(
-        "id, foundation_skills"
-    ).limit(1000).execute().data or []
-    subgroups = svc.table("domain_subgroups").select(
-        "id, domain_id, label, cluster_skills"
-    ).limit(5000).execute().data or []
-    roles = svc.table("domain_roles").select(
-        "role_key, role_name, domain_id, essential_skills, optional_skills"
-    ).limit(10000).execute().data or []
+    domains, domains_ok = _fetch_all_rows(svc, "domains", "id, excluded, foundation_skills", "id")
+    subgroups, subgroups_ok = _fetch_all_rows(
+        svc, "domain_subgroups", "id, domain_id, label, cluster_skills", "id"
+    )
+    roles, roles_ok = _fetch_all_rows(
+        svc,
+        "domain_roles",
+        "id, role_key, role_name, domain_id, essential_skills, optional_skills",
+        "id",
+    )
+
+    # The publication policy, applied once. Everything downstream keys off
+    # `allowed`, so a new layer cannot bypass it by forgetting a filter.
+    allowed = {str(d.get("id")) for d in domains if d.get("id") and not d.get("excluded")}
 
     rows: dict[tuple[str, str], dict] = {}
 
     def add(skill: str, domain_id: Optional[str], context: str, ident: str) -> None:
         name = (skill or "").strip()
-        if not name or not domain_id:
+        if not name or not domain_id or str(domain_id) not in allowed:
             return
-        key = (name.casefold(), str(domain_id))
+        folded = name.casefold()
+        key = (folded, str(domain_id))
         # A skill that appears at more than one layer keeps its first (widest)
         # context: a domain foundation skill is a better search answer than the
         # same string repeated on forty roles.
@@ -2235,6 +2542,7 @@ def _build_skill_index(svc) -> list[dict]:
             "id": ident,
             "domain_id": domain_id,
             "skill_name": name,
+            "skill_name_cf": folded,
             "category": context,
         })
 
@@ -2256,37 +2564,647 @@ def _build_skill_index(svc) -> list[dict]:
         for skill in _skill_text(role.get("optional_skills")):
             add(skill, did, f"Role skill (optional) — {role_name}", f"role:{role_key}:{skill.casefold()}")
 
-    index = sorted(rows.values(), key=lambda r: r["skill_name"].casefold())
-    _skill_index_cache = (now, index)
+    # Sorted by (name, domain) so the per-name domain cap below picks the same
+    # domains on every request instead of whichever the dict happened to hold.
+    index = sorted(rows.values(), key=lambda r: (r["skill_name_cf"], str(r["domain_id"])))
+
+    empty_layer = not domains or not subgroups or not roles
+    short_layer = not (domains_ok and subgroups_ok and roles_ok)
+    partial = empty_layer or short_layer
+    if partial:
+        # Not an exception: `.execute().data or []` turns an RLS change or a
+        # mid-reseed truncate into a perfectly successful empty answer, and the
+        # endpoint would then serve `status: "real"` with `skills: []` — which
+        # a client cannot tell apart from a genuine no-match — for the full
+        # TTL. A SHORT read is the same class and used not to be caught at all:
+        # every layer non-empty but truncated gave `partial=False` and 900 s of
+        # a confidently wrong index.
+        log.warning(
+            "career skill index built from an empty or short layer; caching it only briefly",
+            domains=len(domains),
+            subgroups=len(subgroups),
+            roles=len(roles),
+            domains_complete=domains_ok,
+            subgroups_complete=subgroups_ok,
+            roles_complete=roles_ok,
+            index_rows=len(index),
+        )
+    # Stamped AFTER the read, not before it: taking `time.monotonic()` at the
+    # top charged the 8-16 s build against the index's own TTL, so every index
+    # was born that stale -- up to 13% of the 120 s partial TTL gone before the
+    # first request could be served from it.
+    _skill_index_cache = (time.monotonic(), index, partial)
     return index
 
 
+async def _build_skill_index_guarded(svc) -> list[dict]:
+    """`_build_skill_index` behind the running loop's gate, with a re-check.
+
+    The gate is held on the EVENT LOOP, not inside the threadpool: waiters park
+    on the loop holding no thread, and only the winner crosses into a thread.
+    The re-check under the gate is what collapses a thundering herd of cold
+    requests into one build rather than N.
+    """
+    lock, build_limiter, _rank_limiter = _skill_loop_gate()
+    async with lock:
+        cached = _skill_index_cache
+        if _skill_index_is_fresh(cached):
+            return cached[1]  # type: ignore[index]
+        return await anyio.to_thread.run_sync(
+            _build_skill_index, svc, limiter=build_limiter
+        )
+
+
+async def _refresh_skill_index(svc) -> None:
+    """Background rebuild for the stale-while-revalidate path.
+
+    Never raises into the caller: if the rebuild fails the previous index stays
+    in the cache and keeps being served, which is the whole point.
+    """
+    try:
+        await _build_skill_index_guarded(svc)
+    except Exception as refresh_exc:  # noqa: BLE001
+        log.warning(
+            "career skill index background refresh failed",
+            error_code=_error_summary(refresh_exc)[0],
+            error_type=type(refresh_exc).__name__,
+        )
+        log.debug("career skill index background refresh detail", error=str(refresh_exc))
+    finally:
+        _loop_state()["refresh"] = None
+
+
+async def _skill_index(svc) -> list[dict]:
+    """Return the cached skill index, building it off the event loop.
+
+    ``search_career`` is ``async def`` and the supabase client is synchronous,
+    so a cold rebuild blocks the whole worker — MEASURED at 10.0-16.4 s for a
+    full paged build, and 41.6 s end-to-end for a cold ``/search``.
+
+    A COMPLETE index that has merely aged past its TTL is served immediately
+    and refreshed behind the request (stale-while-revalidate). The lock used to
+    collapse the herd correctly and then convert it into one shared 10-16 s
+    stall every 900 s, while a perfectly serviceable expired index sat in
+    memory unused.
+
+    A PARTIAL index is not eligible for that: it is known to be wrong, so it is
+    rebuilt synchronously once its short TTL is up. If that rebuild raises, the
+    expired index is served anyway — stale beats `skills: []`, which a client
+    cannot tell apart from a genuine no-match.
+    """
+    cached = _skill_index_cache
+    if _skill_index_is_fresh(cached):
+        return cached[1]  # type: ignore[index]
+    if cached and not cached[2]:
+        # Stale but complete: answer now, refresh behind. The handle is kept in
+        # the RUNNING LOOP's state, so a burst schedules exactly one refresh and
+        # a handle left over from a closed loop can never suppress the next one.
+        state = _loop_state()
+        task = state.get("refresh")
+        if task is None or task.done():
+            state["refresh"] = asyncio.create_task(_refresh_skill_index(svc))
+        return cached[1]
+    try:
+        return await _build_skill_index_guarded(svc)
+    except Exception:
+        stale = _skill_index_cache
+        if stale is not None:
+            log.warning("career skill index rebuild failed; serving the expired index")
+            return stale[1]
+        raise
+
+
+# One skill name may legitimately be attached to dozens of domains. Capping how
+# many domains a single name contributes keeps the group varied instead of
+# spending the whole 20-result budget on one string; `otherDomainCount` on the
+# emitted row tells the client how many were withheld so it can say "and N
+# other fields" rather than implying the two shown are all of them.
 _MAX_DOMAINS_PER_SKILL = 2
 
 
-def _search_skill_layers(svc, term: str, limit: int) -> list[dict]:
-    """Substring search over the flattened v2 skill layers.
+def _skill_match_rank(name: str, needle: str) -> int:
+    """0 = prefix, 1 = substring elsewhere. Lower sorts first.
 
-    A common skill such as ``financial statements`` is attached to dozens of
-    domains. Capping how many domains one skill name may contribute keeps the
-    group varied instead of spending the whole result budget on one string.
+    There is deliberately no separate "exact" rank. An exact match IS a prefix
+    match and is the SHORTEST possible one, so the `len(name)` tie-break in the
+    sort key already puts it first; a third rank was unreachable as an ordering
+    input and could be deleted without changing a single result.
+    """
+    return 0 if name.startswith(needle) else 1
+
+
+def _rank_skill_matches(index: list[dict], term: str, limit: int) -> list[dict]:
+    """Rank substring matches before truncating them.
+
+    The index is ordered by skill name, so taking the first `limit` hits in
+    index order answered ``financial`` with twelve alphabetically-early
+    ``advise on financial …`` entries and never reached ``financial
+    statements`` — an exact name that exists (``financial`` matches 57 distinct
+    names). Matches are ranked prefix → substring -- there is deliberately no
+    separate exact rank, see `_skill_match_rank` -- and only then cut.
+
+    The ORDER is identical to a full sort on
+    ``(rank, len(name), name, domain_id)`` followed by the per-name domain cap,
+    but nothing here is O(matches log matches):
+
+      * names are folded once at build time (`skill_name_cf`), not per request;
+      * the per-name domain cap is applied DURING the scan, so at most
+        `_MAX_DOMAINS_PER_SKILL` rows per distinct name are ever retained;
+      * the top `limit` names are chosen with a bounded heap over distinct
+        names, not by sorting every matching row.
+
+    That matters because this runs on a public route with no auth and no rate
+    limiter: `?q=e in zz` reaches here as the subject `e`, and the previous
+    full scan + full sort measured 161-505 ms of event-loop time per request.
     """
     needle = (term or "").strip().casefold()
-    if not needle:
+    if not needle or limit <= 0:
         return []
+    # A short needle keeps PREFIX matches only. `e` as a substring matched 20k+
+    # rows and grew a per-name dict that large on an unauthenticated route; `e`
+    # as a prefix matches tens. `startswith` is also cheaper per row than `in`.
+    prefix_only = len(needle) < _SKILL_PREFIX_ONLY_BELOW
+    # name -> [total rows seen, [(domain_id, row), ...] capped and sorted]
+    per_name: dict[str, list] = {}
+    for row in index:
+        name = row.get("skill_name_cf") or str(row.get("skill_name") or "").casefold()
+        if not (name.startswith(needle) if prefix_only else needle in name):
+            continue
+        entry = per_name.get(name)
+        if entry is None:
+            entry = per_name[name] = [0, []]
+        entry[0] += 1
+        kept = entry[1]
+        domain = str(row.get("domain_id"))
+        if len(kept) < _MAX_DOMAINS_PER_SKILL:
+            kept.append((domain, row))
+            kept.sort(key=lambda pair: pair[0])
+        elif domain < kept[-1][0]:
+            kept[-1] = (domain, row)
+            kept.sort(key=lambda pair: pair[0])
+    if not per_name:
+        return []
+
+    # Rows of one name are contiguous under the full-sort key, so choosing the
+    # best `limit` NAMES and expanding them in order is the same answer.
+    best_names = heapq.nsmallest(
+        limit, per_name, key=lambda name: (_skill_match_rank(name, needle), len(name), name)
+    )
+
     out: list[dict] = []
-    per_name: dict[str, int] = {}
-    for row in _build_skill_index(svc):
-        name = row["skill_name"].casefold()
-        if needle not in name:
-            continue
-        if per_name.get(name, 0) >= _MAX_DOMAINS_PER_SKILL:
-            continue
-        per_name[name] = per_name.get(name, 0) + 1
-        out.append(row)
+    emitted: dict[str, int] = {}
+    for name in best_names:
+        total, kept = per_name[name]
+        for _domain, row in kept:
+            out.append(dict(row, other_domain_count=0))
+            emitted[name] = emitted.get(name, 0) + 1
+            if len(out) >= limit:
+                break
         if len(out) >= limit:
             break
+    # `other_domain_count` is "how many further domains carry this name and are
+    # NOT in this response". Deriving it from `_MAX_DOMAINS_PER_SKILL` was off
+    # by one whenever `limit` cut a name after its first row, so the count is
+    # taken from what was actually emitted.
+    for row in out:
+        # EXACTLY the spelling the scan above used to key `per_name`. The two
+        # used to disagree: the scan read `row.get("skill_name_cf") or
+        # <fallback>` (falsy -> fallback) while this read
+        # `row["skill_name_cf"] if "skill_name_cf" in row else ...`
+        # (present-but-falsy -> ""), so a row carrying `skill_name_cf: ""` was
+        # counted under its fallback name and then looked up under "" --
+        # `KeyError: ''` on a public route.
+        name = row.get("skill_name_cf") or str(row.get("skill_name") or "").casefold()
+        row["other_domain_count"] = max(0, per_name[name][0] - emitted.get(name, 0))
     return out
+
+
+async def _search_skill_layers(svc, term: str, limit: int) -> tuple[list[dict], bool]:
+    """Ranked substring search over the flattened v2 skill layers.
+
+    Returns ``(rows, index_is_partial)``.
+
+    Both halves run off the event loop, on the skill layer's OWN capacity
+    limiters rather than the app-wide 40: the build (10-16 s cold) and the rank
+    (a scan of ~44,895 rows).
+
+    The floor is the same two characters the rest of /search accepts. A higher
+    floor was not a security control, it was a silent deletion: `R` and `C#`
+    are real skill names, `ai`/`go`/`bi`/`ux`/`3d` are real prefixes, and the
+    response carried no notice, so a gated query was indistinguishable from a
+    genuine no-match. What the scan is protected by instead is
+    `_SKILL_PREFIX_ONLY_BELOW`: below three characters only prefix matches are
+    kept, which bounds the work AND the result set without hiding anything a
+    user could reasonably be looking for. A ONE-character subject (reachable as
+    `?q=e in zz`, which `_search_terms` splits) is still refused, and
+    `search_career` says so in the response notice.
+    """
+    stem = (term or "").strip()
+    if len(stem) < _MIN_SKILL_QUERY_LEN:
+        return [], False
+    index = await _skill_index(svc)
+    # A KNOWN-PARTIAL index used to be logged and then handed to the client as
+    # an ordinary answer, so "we could only read part of the taxonomy" and
+    # "this really is everything" were the same response. The flag travels back
+    # with the rows so `search_career` can say which one it is.
+    cached = _skill_index_cache
+    partial = bool(cached and cached[2])
+    _lock, _build_limiter, rank_limiter = _skill_loop_gate()
+    rows = await anyio.to_thread.run_sync(
+        _rank_skill_matches, index, stem, limit, limiter=rank_limiter
+    )
+    return rows, partial
+
+
+def _safe_query(label: str, builder) -> tuple[list[dict], bool]:
+    """Run one optional /search group query. Returns ``(rows, ok)``.
+
+    `builder()` returns a PostgREST request builder, which has no `.data`:
+    reading it instead of calling `.execute()` raised AttributeError straight
+    into the route's own handler, so every optional group here (sub-groups,
+    tools, certifications, universities, opportunities and the domain context
+    lookup) returned [] whatever the query.
+
+    ``ok`` is the half that used to be thrown away, and throwing it away was a
+    SECURITY bug, not a tidiness one. The caller derives the excluded-domain set
+    from the "domain context" read; a swallowed failure made that set EMPTY, so
+    every `excluded` filter downstream passed and a hidden domain's sub-groups,
+    tools and certifications were emitted -- named, with a null domain, which is
+    exactly the label leak the switch exists to prevent. "This query returned
+    nothing" and "this query failed, so I know nothing" are different facts and
+    are now reported as different facts.
+    """
+    try:
+        return builder().execute().data or [], True
+    except Exception as query_exc:  # noqa: BLE001
+        # A missing relation is a schema regression, not an optional
+        # enrichment table that has not been migrated yet: it means the
+        # endpoint is silently serving an empty group forever. Log it
+        # loudly while still degrading rather than 500-ing.
+        # A classified summary, never `str(exc)`: the PostgREST message
+        # and hint name the schema and tables, and an HTTPStatusError
+        # carries the request URL -- project ref plus the user's raw
+        # search string. Escalating these to warning/error moved them
+        # out of a debug-only sink and into stdout/journald and
+        # error.log (30-day retention), so the raw text stays at debug
+        # -- which is written to disk in development only (logger.py).
+        error_code, error_type = _error_summary(query_exc)
+        if _is_missing_relation(query_exc):
+            log.error(
+                "career search group queries a relation that does not exist",
+                group=label,
+                error_code=error_code,
+                error_type=error_type,
+            )
+        else:
+            # Still the silent-empty class: a statement timeout, a
+            # 42501 RLS denial or a PostgREST 5xx all end here and the
+            # group just disappears from the response. Warning, not
+            # debug, so it is visible at the default log level.
+            log.warning(
+                "optional career search group unavailable",
+                group=label,
+                error_code=error_code,
+                error_type=error_type,
+            )
+        log.debug("career search group failure detail", group=label, error=str(query_exc))
+        return [], False
+
+
+def _search_catalogue_blocking(
+    svc,
+    *,
+    like: str,
+    institution_like: str,
+    institution_term: str,
+    user_type: Optional[str],
+    school_id: Optional[str],
+) -> dict:
+    """Every blocking PostgREST round-trip /search needs, in ONE synchronous call.
+
+    This is deliberately a plain `def`. The supabase client is synchronous, so
+    each of these ~14 sequential round-trips parked the whole worker's event
+    loop when they ran inside `async def search_career`. MEASURED against dev
+    with a WARM index: n=1 -> 5.06 s, n=5 -> 25.48 s, n=10 -> 55.64 s -- exactly
+    linear, i.e. zero concurrency -- with a single event-loop stall of
+    3.77-5.12 s and loop-stall time equal to ~100% of wall clock. A guaranteed
+    no-match (`q=zzzzzzzzzz`) still cost 3.25 s. The route has no auth and no
+    rate limit and the unit runs `--workers 2`, so ~20 concurrent requests
+    stalled both loops and took every other endpoint on the box with them.
+
+    `search_career` runs this through `anyio.to_thread.run_sync` on the
+    PER-LOOP `_search_query_limiter()`. Per-loop, and never a module global:
+    a module-global `asyncio.Lock` binds to one loop, and a module-global
+    `threading.Lock` is taken inside the pool and starves the app-wide 40-token
+    default limiter. Both were shipped and both had to be taken back out.
+
+    Call it through the route, not directly from a handler.
+    """
+    # THE EXCLUDED POLICY, in one place: `excluded` HIDES THE CONTENT of a
+    # domain, it does not merely un-name it. `list_domain_clusters` uses the
+    # same switch to keep D086 (gambling) out of the explorer; emitting its
+    # sub-groups, tools, certifications, roles or role families with the
+    # domain nulled leaves the LABEL -- "Sports betting odds modelling" --
+    # which is the leak the switch exists to prevent. Every group below
+    # therefore DROPS rows belonging to an excluded domain, and a row whose
+    # domain merely failed to resolve (never read, no error) is kept with a
+    # null domain, which is a different thing.
+    excluded_domain_ids: set = set()
+    excluded_domain_keys: set = set()
+
+    dres = (
+        svc.table("domains")
+        .select("domain_key, name, cluster, excluded")
+        .ilike("name", like)
+        .order("name")
+        .limit(_PUBLIC_SEARCH_LIMIT)
+        .execute()
+    )
+    # `excluded` is applied at EVERY point /search can name or describe a
+    # domain: this group, the role context map, the role-family group, the
+    # secondary-group context lookup and the skill index.
+    domain_rows = dres.data or []
+    excluded_domain_keys.update(
+        str(d.get("domain_key")) for d in domain_rows if d.get("excluded") and d.get("domain_key")
+    )
+    domains = [
+        {"id": d.get("domain_key"), "name": d.get("name"), "cluster": d.get("cluster")}
+        for d in domain_rows
+        if not d.get("excluded")
+    ]
+
+    # Roles: group by role_name, collect the domains each resolves to.
+    rres = (
+        svc.table("domain_roles")
+        .select("role_key, role_name, tier, domain_id")
+        .ilike("role_name", like)
+        .limit(_PUBLIC_SEARCH_LIMIT * 2)
+        .execute()
+    )
+    role_rows = rres.data or []
+    domain_ids = list({r["domain_id"] for r in role_rows if r.get("domain_id")})
+    dmap: dict[str, dict] = {}
+    if domain_ids:
+        dref = (
+            svc.table("domains")
+            .select("id, domain_key, name, excluded")
+            .in_("id", domain_ids)
+            .execute()
+        )
+        role_domain_rows = dref.data or []
+        excluded_domain_ids.update(
+            str(d["id"]) for d in role_domain_rows if d.get("excluded") and d.get("id")
+        )
+        excluded_domain_keys.update(
+            str(d.get("domain_key"))
+            for d in role_domain_rows
+            if d.get("excluded") and d.get("domain_key")
+        )
+        dmap = {d["id"]: d for d in role_domain_rows if not d.get("excluded")}
+    grouped: dict[str, dict] = {}
+    for r in role_rows:
+        name = r.get("role_name")
+        if name is None:
+            continue
+        # Hide the content: a role reached only through an excluded domain
+        # is not emitted at all. It used to survive as
+        # `{name, tier, domains: []}` -- named, unroutable, and sourced
+        # entirely from the domain that was meant to be hidden.
+        if str(r.get("domain_id")) in excluded_domain_ids:
+            continue
+        entry = grouped.setdefault(name, {"name": name, "tier": r.get("tier"), "domains": []})
+        d = dmap.get(r.get("domain_id"))
+        if d:
+            entry["domains"].append(
+                {
+                    "domainId": d.get("domain_key"),
+                    "domainName": d.get("name"),
+                    "roleKey": r.get("role_key"),
+                }
+            )
+    roles = list(grouped.values())
+
+    # Search canonical cross-domain families and their source-backed
+    # aliases (for example, third-party/vendor/supplier cyber risk).
+    role_families: list[dict] = []
+    try:
+        family_rows = svc.table("career_role_families").select(
+            "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
+        ).ilike("canonical_name", like).limit(_PUBLIC_SEARCH_LIMIT).execute().data or []
+        alias_rows = svc.table("career_role_family_aliases").select(
+            "family_id"
+        ).ilike("alias", like).limit(_PUBLIC_SEARCH_LIMIT * 2).execute().data or []
+        alias_family_ids = {row.get("family_id") for row in alias_rows if row.get("family_id")}
+        if alias_family_ids:
+            alias_families = svc.table("career_role_families").select(
+                "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
+            ).in_("id", list(alias_family_ids)).execute().data or []
+            family_rows.extend(alias_families)
+        deduped_families = {row.get("id"): row for row in family_rows if row.get("id")}
+        family_ids = list(deduped_families)
+        links_by_family: dict[str, list] = {}
+        if family_ids:
+            link_rows = svc.table("career_role_family_domains").select(
+                "family_id, domain_key, relationship"
+            ).in_("family_id", family_ids).execute().data or []
+            for link in link_rows:
+                links_by_family.setdefault(link.get("family_id"), []).append({
+                    "domainKey": link.get("domain_key"),
+                    "relationship": link.get("relationship"),
+                })
+        # The fifth door onto a domain name. `career_role_families` and
+        # `career_role_family_domains` carry `domain_key` strings of their
+        # own, so nothing checked upstream applies to them: an excluded
+        # domain was named here as `primaryDomainKey` and inside
+        # `domains[].domainKey` with no filter at all. Same policy as
+        # everywhere else -- hide the content: a family whose PRIMARY
+        # domain is excluded is dropped, and an excluded link is dropped
+        # from `domains`.
+        referenced_keys = {
+            key
+            for family in deduped_families.values()
+            for key in [family.get("primary_domain_key")]
+            if key
+        } | {
+            link.get("domainKey")
+            for links in links_by_family.values()
+            for link in links
+            if link.get("domainKey")
+        }
+        if referenced_keys:
+            family_domain_rows = svc.table("domains").select(
+                "domain_key, excluded"
+            ).in_("domain_key", list(referenced_keys)).execute().data or []
+            excluded_domain_keys.update(
+                str(row.get("domain_key"))
+                for row in family_domain_rows
+                if row.get("excluded") and row.get("domain_key")
+            )
+        role_families = [
+            {
+                "key": family.get("family_key"),
+                "name": family.get("canonical_name"),
+                "primaryDomainKey": family.get("primary_domain_key"),
+                "aliases": family.get("aliases") or [],
+                "domains": [
+                    link
+                    for link in links_by_family.get(family.get("id"), [])
+                    if str(link.get("domainKey")) not in excluded_domain_keys
+                ],
+                "sourceConfidence": family.get("source_confidence"),
+                "dataState": family.get("data_state"),
+                "sourceProvenance": family.get("source_provenance") or {},
+                "nigerianContext": family.get("nigerian_context") or {},
+            }
+            for family in deduped_families.values()
+            if str(family.get("primary_domain_key")) not in excluded_domain_keys
+        ]
+    except Exception as family_exc:  # noqa: BLE001
+        log.debug("career role-family search unavailable", error=str(family_exc))
+
+    programme_query = (
+        svc.table("programmes")
+        .select("id, name, institution_type, discipline")
+        .ilike("name", like)
+    )
+    if user_type == "student" and school_id:
+        # An undergraduate's programme search is anchored to the
+        # university already recorded in their starting point. The
+        # school_programmes -> programme_mapping hop turns the JAMB
+        # offering identity into the canonical programme id used by the
+        # career detail route. This prevents a national programme hit
+        # from silently opening a course that their university does not
+        # offer.
+        try:
+            offering_rows = (
+                svc.table("school_programmes")
+                .select("jamb_programme_id")
+                .eq("school_id", school_id)
+                .execute()
+            ).data or []
+            jamb_ids = [
+                row.get("jamb_programme_id")
+                for row in offering_rows
+                if row.get("jamb_programme_id")
+            ]
+            canonical_ids: list[str] = []
+            if jamb_ids:
+                mapping_rows = (
+                    svc.table("programme_mapping")
+                    .select("programme_id")
+                    .in_("jamb_programme_id", jamb_ids)
+                    .execute()
+                ).data or []
+                canonical_ids = list(dict.fromkeys(
+                    row.get("programme_id")
+                    for row in mapping_rows
+                    if row.get("programme_id")
+                ))
+            # Fail closed for an enrolled student when the selected
+            # university has no mapped offering for the query. A national
+            # result would misrepresent their actual university context.
+            programme_query = programme_query.in_(
+                "id",
+                canonical_ids or ["00000000-0000-0000-0000-000000000000"],
+            )
+        except Exception as programme_scope_exc:  # noqa: BLE001
+            log.debug("undergraduate programme scope unavailable", error=str(programme_scope_exc))
+            programme_query = programme_query.in_("id", ["00000000-0000-0000-0000-000000000000"])
+    pres = programme_query.order("name").limit(_PUBLIC_SEARCH_LIMIT).execute()
+    programmes = [
+        {
+            "id": p.get("id"),
+            "name": p.get("name"),
+            "institutionType": p.get("institution_type") or "university",
+            "discipline": p.get("discipline"),
+        }
+        for p in (pres.data or [])
+    ]
+
+    subgroup_rows, _subgroups_ok = _safe_query(
+        "subgroups",
+        lambda: svc.table("domain_subgroups")
+        .select("id, domain_id, label, description")
+        .ilike("label", like)
+        .order("label")
+        .limit(_PUBLIC_SEARCH_LIMIT),
+    )
+    tool_rows, _tools_ok = _safe_query(
+        "tools",
+        lambda: svc.table("domain_tools")
+        .select("id, domain_id, tool_name, tool_group")
+        .ilike("tool_name", like)
+        .order("tool_name")
+        .limit(_PUBLIC_SEARCH_LIMIT),
+    )
+    certification_rows, _certifications_ok = _safe_query(
+        "certifications",
+        lambda: svc.table("domain_certifications")
+        .select("id, domain_id, name, level, region")
+        .ilike("name", like)
+        .order("name")
+        .limit(_PUBLIC_SEARCH_LIMIT),
+    )
+    university_rows, _universities_ok = _safe_query(
+        "universities",
+        lambda: svc.table("schools")
+        .select("id, name, institution_type")
+        .eq("institution_type", "university")
+        .ilike("name", institution_like)
+        .order("name")
+        .limit(_PUBLIC_SEARCH_LIMIT),
+    )
+    if not university_rows:
+        alias_target = _UNIVERSITY_ALIASES.get(institution_term.lower().replace(" ", ""))
+        if alias_target:
+            university_rows, _alias_ok = _safe_query(
+                "university alias",
+                lambda: svc.table("schools")
+                .select("id, name, institution_type")
+                .eq("institution_type", "university")
+                .ilike("name", f"%{alias_target}%")
+                .order("name")
+                .limit(_PUBLIC_SEARCH_LIMIT),
+            )
+    opportunity_rows, _opportunities_ok = _safe_query(
+        "opportunities",
+        lambda: svc.table("opportunities")
+        .select("id, title, opp_type, scope, region")
+        .eq("active", True)
+        .ilike("title", like)
+        .order("title")
+        .limit(_PUBLIC_SEARCH_LIMIT),
+    )
+
+    return {
+        "domains": domains,
+        "roles": roles,
+        "role_families": role_families,
+        "programmes": programmes,
+        "subgroup_rows": subgroup_rows,
+        "tool_rows": tool_rows,
+        "certification_rows": certification_rows,
+        "university_rows": university_rows,
+        "opportunity_rows": opportunity_rows,
+        "dmap": dmap,
+        "excluded_domain_ids": excluded_domain_ids,
+        "excluded_domain_keys": excluded_domain_keys,
+    }
+
+
+def _search_domain_context_blocking(svc, context_ids: list) -> tuple[list[dict], bool]:
+    """Resolve the domain context for the secondary /search groups.
+
+    Synchronous and blocking for the same reason as
+    `_search_catalogue_blocking`; the route runs it in a thread. Returns
+    ``(rows, ok)`` -- see `_safe_query` for why `ok` is not optional here.
+    """
+    return _safe_query(
+        "domain context",
+        lambda: svc.table("domains")
+        .select("id, domain_key, name, excluded")
+        .in_("id", list(context_ids)),
+    )
 
 
 @router.get("/search", response_model=ResponseModel)
@@ -2304,6 +3222,12 @@ async def search_career(
     without mixing them into one ambiguous list. Optional enrichment tables
     are read defensively because this endpoint must remain usable during a
     rolling migration.
+
+    Nothing that touches the database runs on the event loop. The blocking
+    round-trips live in `_search_catalogue_blocking` and
+    `_search_domain_context_blocking`, the skill layer in
+    `_search_skill_layers`; each is dispatched to a thread on one of this
+    loop's own bounded capacity limiters.
     """
     term = _clean_public_query(q)
     intent_key = intent if intent in _SEARCH_INTENT_COPY else None
@@ -2326,247 +3250,75 @@ async def search_career(
         subject_term, institution_term = _search_terms(term)
         like = f"%{subject_term}%"
         institution_like = f"%{institution_term}%"
-
-        dres = (
-            svc.table("domains")
-            .select("domain_key, name, cluster")
-            .ilike("name", like)
-            .order("name")
-            .limit(_PUBLIC_SEARCH_LIMIT)
-            .execute()
+        # `_search_terms` splits on ` at|in|for|near `, so a query that clears
+        # the public two-character floor can still reach the skill layer with a
+        # one-character subject (`?q=e in zz`). That is refused -- and SAID, so
+        # an empty `skills` group is not silently indistinguishable from a
+        # genuine no-match.
+        skills_notice = (
+            None
+            if len(subject_term.strip()) >= _MIN_SKILL_QUERY_LEN
+            else "Skill matching needs at least two characters, so the skills group was skipped."
         )
-        domains = [
-            {"id": d.get("domain_key"), "name": d.get("name"), "cluster": d.get("cluster")}
-            for d in (dres.data or [])
-        ]
 
-        # Roles: group by role_name, collect the domains each resolves to.
-        rres = (
-            svc.table("domain_roles")
-            .select("role_key, role_name, tier, domain_id")
-            .ilike("role_name", like)
-            .limit(_PUBLIC_SEARCH_LIMIT * 2)
-            .execute()
+        query_limiter = _search_query_limiter()
+        catalogue = await anyio.to_thread.run_sync(
+            functools.partial(
+                _search_catalogue_blocking,
+                svc,
+                like=like,
+                institution_like=institution_like,
+                institution_term=institution_term,
+                user_type=user_type,
+                school_id=school_id,
+            ),
+            limiter=query_limiter,
         )
-        role_rows = rres.data or []
-        domain_ids = list({r["domain_id"] for r in role_rows if r.get("domain_id")})
-        dmap: dict[str, dict] = {}
-        if domain_ids:
-            dref = (
-                svc.table("domains")
-                .select("id, domain_key, name")
-                .in_("id", domain_ids)
-                .execute()
-            )
-            dmap = {d["id"]: d for d in (dref.data or [])}
-        grouped: dict[str, dict] = {}
-        for r in role_rows:
-            name = r.get("role_name")
-            if name is None:
-                continue
-            entry = grouped.setdefault(name, {"name": name, "tier": r.get("tier"), "domains": []})
-            d = dmap.get(r.get("domain_id"))
-            if d:
-                entry["domains"].append(
-                    {
-                        "domainId": d.get("domain_key"),
-                        "domainName": d.get("name"),
-                        "roleKey": r.get("role_key"),
-                    }
-                )
-        roles = list(grouped.values())
+        domains = catalogue["domains"]
+        roles = catalogue["roles"]
+        role_families = catalogue["role_families"]
+        programmes = catalogue["programmes"]
+        subgroup_rows = catalogue["subgroup_rows"]
+        tool_rows = catalogue["tool_rows"]
+        certification_rows = catalogue["certification_rows"]
+        university_rows = catalogue["university_rows"]
+        opportunity_rows = catalogue["opportunity_rows"]
+        dmap: dict = catalogue["dmap"]
+        excluded_domain_ids: set = catalogue["excluded_domain_ids"]
+        excluded_domain_keys: set = catalogue["excluded_domain_keys"]
 
-        # Search canonical cross-domain families and their source-backed
-        # aliases (for example, third-party/vendor/supplier cyber risk).
-        role_families: list[dict] = []
-        try:
-            family_rows = svc.table("career_role_families").select(
-                "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
-            ).ilike("canonical_name", like).limit(_PUBLIC_SEARCH_LIMIT).execute().data or []
-            alias_rows = svc.table("career_role_family_aliases").select(
-                "family_id"
-            ).ilike("alias", like).limit(_PUBLIC_SEARCH_LIMIT * 2).execute().data or []
-            alias_family_ids = {row.get("family_id") for row in alias_rows if row.get("family_id")}
-            if alias_family_ids:
-                alias_families = svc.table("career_role_families").select(
-                    "id, family_key, canonical_name, primary_domain_key, aliases, source_confidence, data_state, source_provenance, nigerian_context"
-                ).in_("id", list(alias_family_ids)).execute().data or []
-                family_rows.extend(alias_families)
-            deduped_families = {row.get("id"): row for row in family_rows if row.get("id")}
-            family_ids = list(deduped_families)
-            links_by_family: dict[str, list] = {}
-            if family_ids:
-                link_rows = svc.table("career_role_family_domains").select(
-                    "family_id, domain_key, relationship"
-                ).in_("family_id", family_ids).execute().data or []
-                for link in link_rows:
-                    links_by_family.setdefault(link.get("family_id"), []).append({
-                        "domainKey": link.get("domain_key"),
-                        "relationship": link.get("relationship"),
-                    })
-            role_families = [
-                {
-                    "key": family.get("family_key"),
-                    "name": family.get("canonical_name"),
-                    "primaryDomainKey": family.get("primary_domain_key"),
-                    "aliases": family.get("aliases") or [],
-                    "domains": links_by_family.get(family.get("id"), []),
-                    "sourceConfidence": family.get("source_confidence"),
-                    "dataState": family.get("data_state"),
-                    "sourceProvenance": family.get("source_provenance") or {},
-                    "nigerianContext": family.get("nigerian_context") or {},
-                }
-                for family in deduped_families.values()
-            ]
-        except Exception as family_exc:  # noqa: BLE001
-            log.debug("career role-family search unavailable", error=str(family_exc))
-
-        programme_query = (
-            svc.table("programmes")
-            .select("id, name, institution_type, discipline")
-            .ilike("name", like)
-        )
-        if user_type == "student" and school_id:
-            # An undergraduate's programme search is anchored to the
-            # university already recorded in their starting point. The
-            # school_programmes -> programme_mapping hop turns the JAMB
-            # offering identity into the canonical programme id used by the
-            # career detail route. This prevents a national programme hit
-            # from silently opening a course that their university does not
-            # offer.
-            try:
-                offering_rows = (
-                    svc.table("school_programmes")
-                    .select("jamb_programme_id")
-                    .eq("school_id", school_id)
-                    .execute()
-                ).data or []
-                jamb_ids = [
-                    row.get("jamb_programme_id")
-                    for row in offering_rows
-                    if row.get("jamb_programme_id")
-                ]
-                canonical_ids: list[str] = []
-                if jamb_ids:
-                    mapping_rows = (
-                        svc.table("programme_mapping")
-                        .select("programme_id")
-                        .in_("jamb_programme_id", jamb_ids)
-                        .execute()
-                    ).data or []
-                    canonical_ids = list(dict.fromkeys(
-                        row.get("programme_id")
-                        for row in mapping_rows
-                        if row.get("programme_id")
-                    ))
-                # Fail closed for an enrolled student when the selected
-                # university has no mapped offering for the query. A national
-                # result would misrepresent their actual university context.
-                programme_query = programme_query.in_(
-                    "id",
-                    canonical_ids or ["00000000-0000-0000-0000-000000000000"],
-                )
-            except Exception as programme_scope_exc:  # noqa: BLE001
-                log.debug("undergraduate programme scope unavailable", error=str(programme_scope_exc))
-                programme_query = programme_query.in_("id", ["00000000-0000-0000-0000-000000000000"])
-        pres = programme_query.order("name").limit(_PUBLIC_SEARCH_LIMIT).execute()
-        programmes = [
-            {
-                "id": p.get("id"),
-                "name": p.get("name"),
-                "institutionType": p.get("institution_type") or "university",
-                "discipline": p.get("discipline"),
-            }
-            for p in (pres.data or [])
-        ]
-
-        def safe_query(label: str, builder):
-            try:
-                # `builder()` returns a PostgREST request builder, which has no
-                # `.data`: reading it raised AttributeError straight into the
-                # handler below, so every optional group here (sub-groups,
-                # tools, certifications, universities, opportunities and the
-                # domain context lookup) returned [] whatever the query.
-                return builder().execute().data or []
-            except Exception as query_exc:  # noqa: BLE001
-                # A missing relation is a schema regression, not an optional
-                # enrichment table that has not been migrated yet: it means the
-                # endpoint is silently serving an empty group forever. Log it
-                # loudly while still degrading rather than 500-ing.
-                if _is_missing_relation(query_exc):
-                    log.error(
-                        "career search group queries a relation that does not exist",
-                        group=label,
-                        error=str(query_exc),
-                    )
-                else:
-                    log.debug("optional career search group unavailable", group=label, error=str(query_exc))
-                return []
-
-        subgroup_rows = safe_query(
-            "subgroups",
-            lambda: svc.table("domain_subgroups")
-            .select("id, domain_id, label, description")
-            .ilike("label", like)
-            .order("label")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
-        tool_rows = safe_query(
-            "tools",
-            lambda: svc.table("domain_tools")
-            .select("id, domain_id, tool_name, tool_group")
-            .ilike("tool_name", like)
-            .order("tool_name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
-        certification_rows = safe_query(
-            "certifications",
-            lambda: svc.table("domain_certifications")
-            .select("id, domain_id, name, level, region")
-            .ilike("name", like)
-            .order("name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
         # Skills: the pre-sweep domain_bridge_skills / role_bridge_skills /
         # adjacent_prerequisites tables were dropped by migration_career_v2.
         # The v2 taxonomy carries the same skills as JSONB on domains,
         # domain_subgroups and domain_roles, so all three groups are answered
         # from the flattened index over those layers.
         try:
-            skill_rows = _search_skill_layers(svc, subject_term, _PUBLIC_SEARCH_LIMIT)
+            skill_rows, skill_index_partial = await _search_skill_layers(
+                svc, subject_term, _PUBLIC_SEARCH_LIMIT
+            )
         except Exception as skill_exc:  # noqa: BLE001
-            log.warning("career skill layer search unavailable", error=str(skill_exc))
+            log.warning(
+                "career skill layer search unavailable",
+                error_code=_error_summary(skill_exc)[0],
+                error_type=type(skill_exc).__name__,
+            )
+            log.debug("career skill layer failure detail", error=str(skill_exc))
             skill_rows = []
-        university_rows = safe_query(
-            "universities",
-            lambda: svc.table("schools")
-            .select("id, name, institution_type")
-            .eq("institution_type", "university")
-            .ilike("name", institution_like)
-            .order("name")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
-        if not university_rows:
-            alias_target = _UNIVERSITY_ALIASES.get(institution_term.lower().replace(" ", ""))
-            if alias_target:
-                university_rows = safe_query(
-                    "university alias",
-                    lambda: svc.table("schools")
-                    .select("id, name, institution_type")
-                    .eq("institution_type", "university")
-                    .ilike("name", f"%{alias_target}%")
-                    .order("name")
-                    .limit(_PUBLIC_SEARCH_LIMIT),
+            # The notice exists precisely so an empty `skills` group is never
+            # indistinguishable from a genuine no-match -- and this is the path
+            # that produces an empty group in production. Leaving it None here
+            # made the error case byte-identical to a real no-match, i.e. the
+            # exact ambiguity the field was added to remove.
+            skills_notice = skills_notice or (
+                "Skill matching failed for this query, so the skills group is "
+                "missing rather than empty. Try again shortly."
+            )
+        else:
+            if skill_index_partial:
+                skills_notice = skills_notice or (
+                    "The skill index is incomplete right now, so the skills "
+                    "group may be missing matches."
                 )
-        opportunity_rows = safe_query(
-            "opportunities",
-            lambda: svc.table("opportunities")
-            .select("id, title, opp_type, scope, region")
-            .eq("active", True)
-            .ilike("title", like)
-            .order("title")
-            .limit(_PUBLIC_SEARCH_LIMIT),
-        )
 
         # Resolve the domain context for secondary search groups. The context
         # is what makes a result such as ``risk analysis`` actionable rather
@@ -2577,14 +3329,59 @@ async def search_career(
                         *skill_rows]
             if row.get("domain_id")
         }
+        # True when the context read FAILED, so the excluded set is unknown.
+        context_unknown = False
         if context_ids:
-            context_rows = safe_query(
-                "domain context",
-                lambda: svc.table("domains")
-                .select("id, domain_key, name")
-                .in_("id", list(context_ids)),
+            context_rows, context_ok = await anyio.to_thread.run_sync(
+                _search_domain_context_blocking, svc, list(context_ids),
+                limiter=query_limiter,
             )
-            dmap.update({row.get("id"): row for row in context_rows if row.get("id")})
+            context_unknown = not context_ok
+            # Same policy as the rest of the response (see the note above the
+            # `domains` group): an excluded domain's rows are DROPPED below,
+            # not emitted with the domain nulled.
+            excluded_domain_ids.update(
+                str(row.get("id")) for row in context_rows if row.get("excluded") and row.get("id")
+            )
+            excluded_domain_keys.update(
+                str(row.get("domain_key"))
+                for row in context_rows
+                if row.get("excluded") and row.get("domain_key")
+            )
+            dmap.update({
+                row.get("id"): row
+                for row in context_rows
+                if row.get("id") and not row.get("excluded")
+            })
+
+        resolved_domain_ids = {str(key) for key in dmap}
+
+        def domain_is_publishable(domain_id: Any) -> bool:
+            """May a row belonging to `domain_id` be named in the response?
+
+            Two DIFFERENT failure modes, deliberately answered differently:
+
+              * the domain was never read -- no error, the row just points
+                somewhere this response did not look. It is emitted with a null
+                domain, exactly as before; "unresolved" is not "excluded".
+              * the domain context read ERRORED. Then the excluded set is not
+                merely empty, it is UNKNOWN, and the old code treated the two as
+                the same thing: `_safe_query` swallowed the failure into `[]`,
+                so every filter passed and an excluded domain's sub-groups,
+                tools and certifications were published with the domain nulled
+                -- "Sportsbet odds desks", "Sportsbet Trading Terminal",
+                "Sportsbet Certified Bookmaker". That is the label leak the
+                switch exists to prevent, reachable by a statement timeout, a
+                42501 denial, a PostgREST 5xx or a flaky network. Fail CLOSED:
+                while the set is unknown, only a domain some OTHER read already
+                resolved may be published.
+            """
+            if domain_id is None:
+                return True
+            key = str(domain_id)
+            if key in excluded_domain_ids:
+                return False
+            return not (context_unknown and key not in resolved_domain_ids)
 
         subgroups = [
             {
@@ -2595,6 +3392,7 @@ async def search_career(
             }
             for row in subgroup_rows
             if row.get("id") and row.get("label")
+            and domain_is_publishable(row.get("domain_id"))
         ]
         tools = [
             {
@@ -2606,6 +3404,7 @@ async def search_career(
             }
             for row in tool_rows
             if row.get("id") and row.get("tool_name")
+            and domain_is_publishable(row.get("domain_id"))
         ]
         certifications = [
             {
@@ -2618,6 +3417,7 @@ async def search_career(
             }
             for row in certification_rows
             if row.get("id") and row.get("name")
+            and domain_is_publishable(row.get("domain_id"))
         ]
 
         skill_source_rows = skill_rows
@@ -2626,8 +3426,23 @@ async def search_career(
         for row in skill_source_rows:
             name = row.get("skill_name")
             domain = dmap.get(row.get("domain_id")) or {}
-            key = (str(name or "").strip().lower(), str(domain.get("domain_key") or ""))
+            # Falling back to the raw domain_id matters when `dmap` has no row
+            # for the domain (an excluded or unreadable one): keying on
+            # `domain_key or ""` collapsed two genuinely different rows into one
+            # and silently dropped the second.
+            key = (
+                str(name or "").strip().lower(),
+                str(domain.get("domain_key") or row.get("domain_id") or ""),
+            )
             if not name or key in seen_skills:
+                continue
+            # Defence in depth, and it is NOT redundant with the build-time
+            # `allowed` filter in `_build_skill_index`: that one protects rows
+            # that came from the index, this one protects the response from any
+            # row that reaches here by another door (a cached index built before
+            # a domain was excluded, or a future caller that assembles skill
+            # rows itself).
+            if not domain_is_publishable(row.get("domain_id")):
                 continue
             seen_skills.add(key)
             skills.append({
@@ -2636,6 +3451,10 @@ async def search_career(
                 "domainId": domain.get("domain_key"),
                 "domainName": domain.get("name"),
                 "context": row.get("category"),
+                # How many further domains carry this same skill name and were
+                # withheld by _MAX_DOMAINS_PER_SKILL, so the client can say
+                # "and N other fields" instead of implying these are all.
+                "otherDomainCount": row.get("other_domain_count") or 0,
             })
 
         universities = [
@@ -2674,9 +3493,18 @@ async def search_career(
             "tools": tools,
             "certifications": certifications,
             "opportunities": opportunities,
+            # Non-null when the skill layer was skipped, failed, or answered
+            # from a known-incomplete index, so an empty `skills` group is
+            # never silently indistinguishable from a real no-match.
+            "skillsNotice": skills_notice,
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("career search failed", error=str(exc))
+        log.error(
+            "career search failed",
+            error_code=_error_summary(exc)[0],
+            error_type=type(exc).__name__,
+        )
+        log.debug("career search failure detail", error=str(exc))
         return ResponseModel(data=_coming_soon("Search is temporarily unavailable."))
 
 
@@ -2738,7 +3566,7 @@ async def get_pivot(from_domain_key: str):
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001
-        log.error("career pivot failed", error=str(exc))
+        _log_db_failure("career pivot failed", exc)
         return ResponseModel(data=_coming_soon("Pivot suggestions are temporarily unavailable."))
 
 
@@ -2843,7 +3671,7 @@ async def get_pivot_gap(
         }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001
-        log.error("career pivot_gap failed", error=str(exc))
+        _log_db_failure("career pivot_gap failed", exc)
         return ResponseModel(data=_coming_soon("Gap analysis is temporarily unavailable."))
 
 
@@ -2866,7 +3694,7 @@ async def save_prior_field(
         ).eq("id", current_user["id"]).execute()
         return ResponseModel(data=_real({"priorFieldDomainKey": domain_key}))
     except Exception as exc:  # noqa: BLE001
-        log.error("career save_prior_field failed", error=str(exc))
+        _log_db_failure("career save_prior_field failed", exc)
         return ResponseModel(success=False, message="Could not save your prior field.", data=None)
 
 
@@ -2937,7 +3765,7 @@ async def get_jamb_domains(jamb_name: str):
         domains.sort(key=lambda x: _rank.get(x["matchType"], 0), reverse=True)
         return ResponseModel(data=_real({"jambName": jamb_name, "domains": domains}))
     except Exception as exc:  # noqa: BLE001
-        log.error("career jamb_domains failed", error=str(exc))
+        _log_db_failure("career jamb_domains failed", exc)
         return ResponseModel(data=_coming_soon("JAMB domain lookup is temporarily unavailable."))
 
 
@@ -2971,7 +3799,7 @@ async def list_saved(
         )
         return ResponseModel(data=_real([_saved_out(r) for r in (res.data or [])]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_saved failed", error=str(exc))
+        _log_db_failure("career list_saved failed", exc)
         return ResponseModel(data=_coming_soon("Saved items are temporarily unavailable."))
 
 
@@ -3013,7 +3841,7 @@ async def create_saved(
         )
         return ResponseModel(data=_real(_saved_out((res.data or [{}])[0])))
     except Exception as exc:  # noqa: BLE001
-        log.error("career create_saved failed", error=str(exc))
+        _log_db_failure("career create_saved failed", exc)
         return ResponseModel(success=False, message="Could not save that item.", data=None)
 
 
@@ -3034,7 +3862,7 @@ async def delete_saved(
         )
         return ResponseModel(data=_real(None))
     except Exception as exc:  # noqa: BLE001
-        log.error("career delete_saved failed", error=str(exc))
+        _log_db_failure("career delete_saved failed", exc)
         return ResponseModel(success=False, message="Could not remove that item.", data=None)
 
 
@@ -3072,7 +3900,7 @@ async def list_notes(
         res = query.order("updated_at", desc=True).execute()
         return ResponseModel(data=_real([_note_out(r) for r in (res.data or [])]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_notes failed", error=str(exc))
+        _log_db_failure("career list_notes failed", exc)
         return ResponseModel(data=_coming_soon("Notes are temporarily unavailable."))
 
 
@@ -3110,7 +3938,7 @@ async def upsert_note(
             res = svc.table("user_notes").insert(payload).execute()
         return ResponseModel(data=_real(_note_out((res.data or [{}])[0])))
     except Exception as exc:  # noqa: BLE001
-        log.error("career upsert_note failed", error=str(exc))
+        _log_db_failure("career upsert_note failed", exc)
         return ResponseModel(success=False, message="Could not save that note.", data=None)
 
 
@@ -3131,7 +3959,7 @@ async def delete_note(
         )
         return ResponseModel(data=_real(None))
     except Exception as exc:  # noqa: BLE001
-        log.error("career delete_note failed", error=str(exc))
+        _log_db_failure("career delete_note failed", exc)
         return ResponseModel(success=False, message="Could not delete that note.", data=None)
 
 
@@ -3161,7 +3989,7 @@ async def list_subscriptions(
         )
         return ResponseModel(data=_real([_sub_out(r) for r in (res.data or [])]))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_subscriptions failed", error=str(exc))
+        _log_db_failure("career list_subscriptions failed", exc)
         return ResponseModel(data=_coming_soon("Subscriptions are temporarily unavailable."))
 
 
@@ -3201,7 +4029,7 @@ async def create_subscription(
         )
         return ResponseModel(data=_real(_sub_out((res.data or [{}])[0])))
     except Exception as exc:  # noqa: BLE001
-        log.error("career create_subscription failed", error=str(exc))
+        _log_db_failure("career create_subscription failed", exc)
         return ResponseModel(success=False, message="Could not subscribe.", data=None)
 
 
@@ -3222,7 +4050,7 @@ async def delete_subscription(
         )
         return ResponseModel(data=_real(None))
     except Exception as exc:  # noqa: BLE001
-        log.error("career delete_subscription failed", error=str(exc))
+        _log_db_failure("career delete_subscription failed", exc)
         return ResponseModel(success=False, message="Could not unsubscribe.", data=None)
 
 
@@ -3259,7 +4087,7 @@ async def list_feedback(
         ]
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
-        log.error("career list_feedback failed", error=str(exc))
+        _log_db_failure("career list_feedback failed", exc)
         return ResponseModel(data=_coming_soon("Feedback is temporarily unavailable."))
 
 
@@ -3300,5 +4128,5 @@ async def create_mapping_feedback(
         )
         return ResponseModel(data=_real((res.data or [{}])[0]), notice="Thanks — your feedback was recorded.")
     except Exception as exc:  # noqa: BLE001
-        log.error("career create_mapping_feedback failed", error=str(exc))
+        _log_db_failure("career create_mapping_feedback failed", exc)
         return ResponseModel(success=False, message="Could not record feedback.", data=None)

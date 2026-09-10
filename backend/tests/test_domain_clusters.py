@@ -35,9 +35,97 @@ METRICS = [
 # The elite gate reads this table. `elite_domain` on the domain row is an audit
 # input, not publication evidence, so a domain is only shown as elite when it
 # also has a published review here. u2 (Alpha Systems) is the published one.
+#
+# These rows carry `entity_level` and `decision` because the mock below is
+# FILTER-AWARE: the noise rows are the point. A draft review for u2, and a
+# published review for u2 at the wrong entity level, are both present, so the
+# `.eq("decision", "published")` and `.eq("entity_level", ...)` filters in
+# `_published_elite_entity_ids` are actually exercised. With the previous
+# `t.eq.return_value = t` no-op mock, every row came back regardless of the
+# filters and deleting `.eq("decision", "published")` -- the entire point of
+# the gate -- turned no test red.
+#
+# The `decision` values are the ones the real CHECK constraint allows
+# (`not_established | provisional | published`). "draft"/"rejected" read fine
+# but could never reach the table, so a test built on them asserted the right
+# behaviour through a row the database would have rejected.
 REVIEWS = [
-    {"entity_id": "u2", "domain_id": None},
+    {"entity_id": "u2", "domain_id": None, "entity_level": "domain", "decision": "published"},
+    {"entity_id": "u1", "domain_id": None, "entity_level": "domain", "decision": "not_established"},
+    {"entity_id": "u4", "domain_id": None, "entity_level": "domain", "decision": "provisional"},
+    {"entity_id": "u1", "domain_id": None, "entity_level": "role", "decision": "published"},
 ]
+
+
+class _FilterAwareTable:
+    """A query builder that actually applies `.eq()`.
+
+    `t.eq.return_value = t` is a no-op: it makes every filter invisible, so a
+    test that "proves" the elite gate proves nothing -- the rows come back the
+    same whether the route filters on `decision = published` or not. This
+    records the `.eq()` pairs and applies them at `.execute()`, so removing a
+    filter from the route changes the rows the route sees.
+    """
+
+    def __init__(self, rows):
+        self._rows = rows
+        self._filters: list[tuple[str, str, object]] = []
+        self._range: tuple[int, int] | None = None
+
+    def select(self, *_a, **_k):
+        return self
+
+    def order(self, *_a, **_k):
+        return self
+
+    def limit(self, *_a, **_k):
+        return self
+
+    def eq(self, column, value):
+        self._filters.append(("eq", column, value))
+        return self
+
+    def ilike(self, column, pattern):
+        # Modelled, not stubbed: a stub that returns every row turns a wrong
+        # `.ilike()` into a green test. Only PostgREST's `%` wildcard is
+        # supported, which is all this route ever sends.
+        self._filters.append(("ilike", column, pattern))
+        return self
+
+    def in_(self, column, values):
+        self._filters.append(("in", column, list(values)))
+        return self
+
+    def range(self, start, end):
+        self._range = (start, end)
+        return self
+
+    @staticmethod
+    def _matches(kind, row, column, value):
+        cell = row.get(column)
+        if kind == "eq":
+            return cell == value
+        if kind == "in":
+            return cell in value
+        body = str(value)
+        text = "" if cell is None else str(cell)
+        if body.startswith("%") and body.endswith("%"):
+            return body[1:-1].casefold() in text.casefold()
+        return text.casefold() == body.casefold()
+
+    def execute(self):
+        if isinstance(self._rows, BaseException):
+            raise self._rows
+        rows = [
+            row
+            for row in self._rows
+            if all(self._matches(kind, row, column, value)
+                   for kind, column, value in self._filters)
+        ]
+        if self._range is not None:
+            start, end = self._range
+            rows = rows[start:end + 1]
+        return MagicMock(data=rows)
 
 
 def _svc_with(domains, metrics, reviews):
@@ -47,10 +135,6 @@ def _svc_with(domains, metrics, reviews):
     # against the wrong data and whether it passed was an accident of which
     # uuids happened to appear in METRICS.
     def table(name):
-        t = MagicMock()
-        t.select.return_value = t
-        t.order.return_value = t
-        t.eq.return_value = t
         if name == "domains":
             payload = domains
         elif name == "elite_evidence_reviews":
@@ -60,11 +144,7 @@ def _svc_with(domains, metrics, reviews):
         # Passing an exception makes that table's query raise, so a failure can
         # be injected at the database boundary and travel through the real
         # error handling instead of around it.
-        if isinstance(payload, BaseException):
-            t.execute.side_effect = payload
-        else:
-            t.execute.return_value = MagicMock(data=payload)
-        return t
+        return _FilterAwareTable(payload)
 
     return MagicMock(table=table)
 
@@ -144,10 +224,37 @@ class TestDomainClusters:
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
         assert by_name["Alpha Systems"]["eliteFlag"] is False
 
+    def test_an_unpublished_review_does_not_make_a_domain_elite(self):
+        # The filter under test, stated as data: u2 has a review, but it is a
+        # draft. Dropping `.eq("decision", "published")` from the route makes
+        # this test red.
+        out = _call(reviews=[
+            {"entity_id": "u2", "domain_id": None, "entity_level": "domain", "decision": "draft"},
+        ])
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Alpha Systems"]["eliteFlag"] is False
+
+    def test_a_published_review_at_another_entity_level_does_not_leak_across(self):
+        # Dropping `.eq("entity_level", ...)` makes this test red: a published
+        # ROLE review must not publish the domain of the same id.
+        out = _call(reviews=[
+            {"entity_id": "u2", "domain_id": None, "entity_level": "role", "decision": "published"},
+        ])
+        by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
+        assert by_name["Alpha Systems"]["eliteFlag"] is False
+
     def test_elite_gate_matches_on_domain_key_as_well_as_uuid(self):
         # Reviews may key a domain either way, so both lookups have to work or
         # half the published set silently stops being elite.
-        out = _call(reviews=[{"entity_id": None, "domain_id": "D002"}])
+        #
+        # The domain KEY goes in `entity_id`, which is text. `domain_id` is a
+        # uuid with an FK to domains(id), so "D002" could never be stored
+        # there -- the behaviour under test is real, the column used to assert
+        # it was not.
+        out = _call(reviews=[
+            {"entity_id": "D002", "domain_id": None, "entity_level": "domain",
+             "decision": "published"},
+        ])
         by_name = {d["name"]: d for g in out["data"] for d in g["domains"]}
         assert by_name["Alpha Systems"]["eliteFlag"] is True
 
@@ -172,24 +279,21 @@ class TestDomainClusters:
         out = _call(domains=[], metrics=[])
         assert out["status"] == "coming_soon"
 
-    def test_demand_failure_still_returns_domains(self):
-        # Demand is enrichment; losing it must not empty the screen.
-        def table(name):
-            t = MagicMock()
-            t.select.return_value = t
-            t.order.return_value = t
-            t.eq.return_value = t
-            if name == "domains":
-                t.execute.return_value = MagicMock(data=DOMAINS)
-            else:
-                t.execute.side_effect = RuntimeError("metrics unavailable")
-            return t
-
-        with patch.object(cr, "_svc", lambda: MagicMock(table=table)):
-            out = asyncio.run(cr.list_domain_clusters()).data
-        assert out is not None
+    def test_an_unrelated_table_failure_still_returns_domains(self):
+        # Named for what it covers. It used to be called
+        # `test_demand_failure_still_returns_domains`, but the demand query it
+        # named was removed with `domain_demand_metrics`; the only non-domains
+        # table this endpoint touches now is elite_evidence_reviews, so it was
+        # an exact duplicate of the elite-gate failure test above under a name
+        # that described a query that no longer exists.
+        #
+        # It is kept as the *shape* assertion its sibling does not make: the
+        # excluded domain is still dropped and all three survivors are still
+        # grouped and returned when a secondary lookup dies.
+        out = _call(reviews=RuntimeError("elite_evidence_reviews unavailable"))
         assert out["status"] == "real"
         assert sum(len(g["domains"]) for g in out["data"]) == 3
+        assert [g["cluster"] for g in out["data"]] == ["Health", "ICT"]
 
 
 class TestRouteOrder:

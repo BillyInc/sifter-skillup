@@ -643,3 +643,169 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
 
     assert len(rows[0]["schoolOfferings"]) == 15
     assert rows[0]["schoolCount"] == 15
+
+
+# ── NBC/NTC trailing conditions ───────────────────────────────
+#
+# A national rule sentence is frequently followed by a SEPARATE condition for
+# NBC/NTC/NABTEB/TC-II holders. Two `re.split(...)` calls in
+# `_match_structured_subject_options` cut the sentence at that boundary before
+# reading it: one feeds `source_norm` (the completeness check that requires
+# every subject NAMED in the source to appear in the option items), the other
+# feeds `source_scope_text` (the fail-closed guard on an unresolved subject
+# scope). Neither split had a single test -- `grep -rn "nbc\|ntc\|tc ii"
+# backend/tests/` returned nothing -- so replacing either one with the raw
+# un-split text changed no result.
+
+def _rule_row(option):
+    return {
+        "jamb_programme_id": option["jamb_programme_id"],
+        "requirement_id": option.get("requirement_id"),
+        "exam_type": option["exam_type"],
+        "rule_status": "matchable",
+        "source_text": option["source_text"],
+    }
+
+
+def test_a_subject_named_only_in_the_ntc_condition_does_not_void_the_option(monkeypatch):
+    """The completeness check reads the ORDINARY rule, not the NTC clause.
+
+    `Technical Drawing` is named only in the trailing NTC condition and is a
+    real catalogue subject, so without the split it counts as "named in the
+    source but missing from the items" and the whole option is discarded --
+    silently, by a `continue`.
+    """
+    option = {
+        "id": "opt1",
+        "jamb_programme_id": "jp1",
+        "exam_type": "olevel",
+        "option_label": "A",
+        "min_required": 2,
+        "source_text": (
+            "Five O level credits including English Language and Mathematics "
+            "for NTC holders in Technical Drawing and Building Construction"
+        ),
+    }
+    tables = {
+        "programme_subject_options": [option],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+        ],
+        "programme_subject_rule_records": [_rule_row(option)],
+        "subject_catalog": [
+            {"name": "English Language", "code": "ENG"},
+            {"name": "Mathematics", "code": "MTH"},
+            {"name": "Technical Drawing", "code": "TDR"},
+            {"name": "Building Construction", "code": "BCN"},
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"english language", "mathematics"}, limit=10, exam_type="olevel"
+    )
+    assert [row["jambProgrammeId"] for row in out] == ["jp1"], (
+        "the NTC condition must not be read as part of the ordinary rule's "
+        "named-subject list"
+    )
+
+
+def test_an_unresolved_scope_inside_the_ntc_condition_does_not_fail_the_option_closed(monkeypatch):
+    """The fail-closed scope guard reads the ORDINARY rule too.
+
+    The ordinary rule explicitly permits `any other subject`; only the trailing
+    NTC condition says `relevant`. Without the split the guard sees "relevant",
+    calls the scope unresolved, and drops a rule whose scope the source states
+    plainly.
+    """
+    broad = [f"Subject {n:02d}" for n in range(22)]
+    option = {
+        "id": "opt1",
+        "jamb_programme_id": "jp1",
+        "exam_type": "olevel",
+        "option_label": "A",
+        "min_required": 3,
+        "source_text": (
+            "Five O level credits including English Language and Mathematics "
+            "plus any other subject, for NTC holders in relevant subjects"
+        ),
+    }
+    tables = {
+        "programme_subject_options": [option],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+            *[
+                _item("opt1", "one_of", name, group_key="g1", min_from_group=1)
+                for name in broad
+            ],
+        ],
+        "programme_subject_rule_records": [_rule_row(option)],
+        "subject_catalog": [
+            {"name": "English Language", "code": "ENG"},
+            {"name": "Mathematics", "code": "MTH"},
+            *[{"name": name, "code": name[:3].upper()} for name in broad],
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"english language", "mathematics", "subject 00"},
+        limit=10,
+        exam_type="olevel",
+    )
+    assert [row["jambProgrammeId"] for row in out] == ["jp1"]
+
+
+def test_the_generic_scope_guard_is_scoped_to_olevel_options(monkeypatch):
+    """`exam_type == "olevel"` in the fail-closed gate is load-bearing.
+
+    A UTME option describes the named JAMB combination itself, so a broad
+    catalogue group there is not the "five credits including..." brochure
+    sentence the guard exists for. Dropping the exam-type term made the guard
+    swallow UTME options too, and nothing failed.
+    """
+    broad = [f"Subject {n:02d}" for n in range(22)]
+    option = {
+        "id": "opt1",
+        "jamb_programme_id": "jp1",
+        "exam_type": "utme",
+        "option_label": "A",
+        "min_required": 2,
+        "source_text": "Mathematics and any other relevant subject",
+    }
+    tables = {
+        "programme_subject_options": [option],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "Mathematics"),
+            *[
+                _item("opt1", "one_of", name, group_key="g1", min_from_group=1)
+                for name in broad
+            ],
+        ],
+        "programme_subject_rule_records": [_rule_row(option)],
+        "subject_catalog": [
+            {"name": "Mathematics", "code": "MTH"},
+            *[{"name": name, "code": name[:3].upper()} for name in broad],
+        ],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    out = spr._match_structured_subject_options(
+        {"mathematics", "subject 00"}, limit=10, exam_type="utme"
+    )
+    assert [row["jambProgrammeId"] for row in out] == ["jp1"]
+
+    # ... and the very same shape IS refused on an O-level option, which is
+    # what stops Agriculture + Animal Husbandry + Arabic reading as an exact
+    # Social Work match.
+    olevel_option = dict(option, exam_type="olevel")
+    tables["programme_subject_options"] = [olevel_option]
+    tables["programme_subject_rule_records"] = [_rule_row(olevel_option)]
+    assert spr._match_structured_subject_options(
+        {"mathematics", "subject 00"}, limit=10, exam_type="olevel"
+    ) == []

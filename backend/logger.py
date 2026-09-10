@@ -57,10 +57,24 @@ class Logger:
         logs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
         os.makedirs(logs_dir, exist_ok=True)
 
-        # Main application log with rotation
+        # Main application log with rotation.
+        #
+        # Gated the same way the stdout sink is. At DEBUG this file captured
+        # the detail lines that deliberately carry raw exception text -- which
+        # for a PostgREST/httpx failure is the Supabase project ref AND the
+        # user's raw search string -- and it is added UNCONDITIONALLY, so on
+        # production that text was greppable on disk for the whole retention
+        # window. Debug detail is a development affordance; outside development
+        # this sink starts at INFO and never sees those lines.
+        #
+        # `ENVIRONMENT` used to be set NOWHERE in the repo -- not .env.example,
+        # not DEPLOY-SETUP.md, not the systemd unit, not a workflow -- so the
+        # gate was false on a developer laptop too and those DEBUG lines were
+        # written nowhere, ever. `backend/.env.example` now ships
+        # ENVIRONMENT=development, which is what makes the sentence above true.
         logger.add(
             os.path.join(logs_dir, "app.log"),
-            level="DEBUG",
+            level="DEBUG" if os.getenv("ENVIRONMENT") == "development" else "INFO",
             rotation="500 MB",  # Rotate when file reaches 500MB
             retention="10 days",  # Keep logs for 10 days
             compression="zip",  # Compress rotated logs

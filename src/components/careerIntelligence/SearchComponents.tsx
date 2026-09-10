@@ -243,6 +243,7 @@ function defaultIcon(type: SearchResultType): string {
 export function SearchResultsGroup({
   label,
   results,
+  notice,
   query,
   onResultPress,
   onMorePress,
@@ -251,6 +252,13 @@ export function SearchResultsGroup({
 }: {
   label: string;
   results: SearchResult[];
+  /**
+   * Why the group is empty or incomplete, straight from the API. A group with
+   * a notice and no rows still renders: an empty `skills` group that says
+   * nothing is indistinguishable from a genuine no-match, which is the exact
+   * ambiguity the backend added `skillsNotice` to remove.
+   */
+  notice?: string;
   query?: string;
   onResultPress?: (result: SearchResult) => void;
   onMorePress?: () => void;
@@ -261,7 +269,7 @@ export function SearchResultsGroup({
   const visible = maxRows ? results.slice(0, maxRows) : results;
   const remaining = maxRows ? results.length - maxRows : 0;
 
-  if (results.length === 0) return null;
+  if (results.length === 0 && !notice) return null;
 
   return (
     <View style={[styles.resultsGroup, style]}>
@@ -273,6 +281,14 @@ export function SearchResultsGroup({
           {results.length}
         </Text>
       </View>
+      {notice ? (
+        <View style={styles.groupNotice}>
+          <Feather name="info" size={13} color={colors.textRole.muted} />
+          <Text style={[styles.groupNoticeText, { color: colors.textRole.muted }]}>
+            {notice}
+          </Text>
+        </View>
+      ) : null}
       {visible.map((result) => (
         <SearchResultRow
           key={result.id}
@@ -403,7 +419,7 @@ interface SearchOverlayProps {
   searchContext?: { label: string; guidance: string };
   loading?: boolean;
   error?: boolean;
-  results?: { label: string; items: SearchResult[] }[];
+  results?: { label: string; items: SearchResult[]; notice?: string }[];
   onResultPress?: (result: SearchResult) => void;
   recentSearches?: string[];
   onRecentPress?: (term: string) => void;
@@ -461,8 +477,11 @@ export function SearchOverlay({
 
   const hasQuery = value.length >= 2;
   const hasResults = results.some((g) => g.items.length > 0);
+  // A group carrying only a notice is still an answer, and a more informative
+  // one than "No results for X" -- it says the search did not actually happen.
+  const hasNotice = results.some((g) => Boolean(g.notice));
   const showSkeleton = loading && hasQuery;
-  const showEmpty = hasQuery && !loading && !hasResults;
+  const showEmpty = hasQuery && !loading && !hasResults && !hasNotice;
   const showIdle = !hasQuery && !loading;
   const isUndergraduate = userType === "student";
   const selectedIntent = INTENT_OPTIONS.find((item) => item.value === intent);
@@ -610,11 +629,12 @@ export function SearchOverlay({
         {!showIdle && !showSkeleton && !showEmpty && (
           <>
             {results.map((group) =>
-              group.items.length > 0 ? (
+              group.items.length > 0 || group.notice ? (
                 <SearchResultsGroup
                   key={group.label}
                   label={group.label}
                   results={group.items}
+                  notice={group.notice}
                   query={value}
                   onResultPress={onResultPress}
                   onMorePress={isGuest ? onSignIn : undefined}
@@ -767,6 +787,17 @@ const styles = StyleSheet.create({
   },
   groupCount: {
     fontSize: 10,
+  },
+  groupNotice: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: Spacing.xs,
+    paddingBottom: Spacing.sm,
+  },
+  groupNoticeText: {
+    flex: 1,
+    fontSize: FontSize.xs,
+    lineHeight: 16,
   },
   groupMore: {
     fontSize: FontSize.xs,

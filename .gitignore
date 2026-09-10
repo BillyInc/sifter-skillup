@@ -87,6 +87,12 @@ data/career-mapping/role_tools_malformed_2026-08-26.json
 # Large generated career preview SQL is reconstructed locally from the tracked
 # gzip parts; never add the monolithic output to GitHub.
 backend/seed_career_v2_preview_*.sql
+# Dated seed dumps. `seed_career_v2_2026-08-31.sql` is 659 MB -- well past
+# GitHub's 100 MB hard limit -- and the two literal names above do not match
+# it, so a `git add -A` staged it and the push was rejected outright. Match
+# every dated/suffixed variant, not just the two that existed on the day.
+backend/seed_career_v2_*.sql
+backend/seed_career_pilot_*.sql
 nul
 
 # Ephemeral Claude Code agent worktrees. These were committed as bare gitlinks

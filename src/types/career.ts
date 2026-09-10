@@ -847,6 +847,13 @@ export interface CareerSearchResult {
     domainId?: string;
     domainName?: string;
     context?: string;
+    /**
+     * Further domains that carry this same skill name and were withheld from
+     * the response by the per-name domain cap. Rendered, not decorative: the
+     * cap is what stops one string spending the whole result budget, and
+     * without this the two rows shown read as if they were all there is.
+     */
+    otherDomainCount?: number;
   }[];
   tools?: {
     id: string;
@@ -870,6 +877,12 @@ export interface CareerSearchResult {
     scope?: string;
     region?: string | null;
   }[];
+  /**
+   * Non-null when the skill layer was skipped for this query (the subject was
+   * too short after the natural-language split). Without it an empty `skills`
+   * group is indistinguishable from a genuine no-match.
+   */
+  skillsNotice?: string | null;
 }
 
 export interface RoleToolV2 extends SourceBackedFields {

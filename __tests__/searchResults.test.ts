@@ -119,6 +119,64 @@ describe("toSearchGroups", () => {
   });
 });
 
+describe("skill rows", () => {
+  // `otherDomainCount` had ZERO coverage: the PAYLOAD above has no `skills`
+  // key, so `skillRows()` was never executed by any test at all.
+  const skills = (
+    rows: NonNullable<CareerSearchResult["skills"]>,
+  ): SearchResult[] => toSearchGroups({ ...PAYLOAD, skills: rows }, "skills")[0].items;
+
+  it("says only the domain when no other field carries the skill", () => {
+    expect(
+      skills([{ id: "s1", name: "triage", domainName: "Nursing", domainId: "D024" }])[0].subtitle,
+    ).toBe("Used in Nursing");
+    expect(
+      skills([
+        { id: "s1", name: "triage", domainName: "Nursing", domainId: "D024", otherDomainCount: 0 },
+      ])[0].subtitle,
+    ).toBe("Used in Nursing");
+  });
+
+  it("uses the singular for exactly one other field", () => {
+    expect(
+      skills([
+        { id: "s1", name: "triage", domainName: "Nursing", domainId: "D024", otherDomainCount: 1 },
+      ])[0].subtitle,
+    ).toBe("Used in Nursing and 1 other field");
+  });
+
+  it("uses the plural for more than one other field", () => {
+    expect(
+      skills([
+        { id: "s1", name: "triage", domainName: "Nursing", domainId: "D024", otherDomainCount: 4 },
+      ])[0].subtitle,
+    ).toBe("Used in Nursing and 4 other fields");
+  });
+
+  it("does not double-count a skill the API emitted once per domain", () => {
+    // The API caps a name at two domains and reports the rest on EACH row, so
+    // `financial markets (+20)` arrives twice. Rendering both verbatim reads
+    // as 42 fields for a skill that is in 22.
+    const rows = skills([
+      { id: "a", name: "financial markets", domainName: "Finance", domainId: "D010", otherDomainCount: 20 },
+      { id: "b", name: "financial markets", domainName: "Insurance", domainId: "D011", otherDomainCount: 20 },
+    ]);
+    expect(rows.map((r) => r.subtitle)).toEqual([
+      "Used in Finance and 21 other fields",
+      "Used in Insurance and 21 other fields",
+    ]);
+  });
+
+  it("keeps the count when the domain did not resolve", () => {
+    // "Career skill" alone discarded the count in the one case where it
+    // carries the most signal: the row has nothing else to say.
+    const [withCount] = skills([{ id: "s1", name: "triage", otherDomainCount: 6 }]);
+    expect(withCount.subtitle).toBe("Career skill used in 7 fields");
+    const [without] = skills([{ id: "s2", name: "triage" }]);
+    expect(without.subtitle).toBe("Career skill");
+  });
+});
+
 describe("resolveSearchHref", () => {
   const row = (type: SearchResult["type"], id: string): SearchResult => ({
     id,
@@ -151,5 +209,59 @@ describe("resolveSearchHref", () => {
 
   it("returns null when the row has no id", () => {
     expect(resolveSearchHref({ id: "", type: "domain", title: "x" })).toBeNull();
+  });
+});
+
+/**
+ * `skillsNotice` was declared in `src/types/career.ts` and read NOWHERE:
+ * `grep -rn skillsNotice src/ app/ web/ __tests__/` returned exactly that one
+ * declaration. The backend distinguishes "the skill layer was skipped, failed,
+ * or answered from a known-incomplete index" from a genuine no-match, and the
+ * mapping threw the distinction away -- so end to end the fix did nothing.
+ */
+describe("skillsNotice reaches the overlay", () => {
+  const withNotice = (skillsNotice: string | null, skills: CareerSearchResult["skills"] = []) =>
+    toSearchGroups({ ...PAYLOAD, skills, skillsNotice } as CareerSearchResult, "all");
+
+  it("keeps an empty Skills group alive when the API explains why", () => {
+    const groups = withNotice("Skill matching failed for this query, so the skills group is missing rather than empty.");
+    const skills = groups.find((g) => g.label === "Skills");
+    expect(skills).toBeDefined();
+    expect(skills!.items).toEqual([]);
+    // Substring, not truthiness: replacing the copy with "Something went wrong."
+    // must not pass.
+    expect(skills!.notice).toContain("missing rather than empty");
+  });
+
+  it("still drops an empty Skills group when there is nothing to say", () => {
+    expect(withNotice(null).map((g) => g.label)).not.toContain("Skills");
+    expect(
+      toSearchGroups(PAYLOAD, "all").map((g) => g.label),
+    ).not.toContain("Skills");
+  });
+
+  it("carries the notice alongside rows when the group is merely incomplete", () => {
+    const groups = withNotice(
+      "The skill index is incomplete right now, so the skills group may be missing matches.",
+      [{ id: "sk1", name: "risk analysis", domainId: "D024", domainName: "Nursing" }],
+    );
+    const skills = groups.find((g) => g.label === "Skills")!;
+    expect(skills.items.map((i) => i.title)).toEqual(["risk analysis"]);
+    expect(skills.notice).toContain("incomplete");
+  });
+
+  it("honours the scope control — a notice cannot resurrect a filtered-out group", () => {
+    const groups = toSearchGroups(
+      { ...PAYLOAD, skills: [], skillsNotice: "anything at all" } as CareerSearchResult,
+      "programmes",
+    );
+    expect(groups.map((g) => g.label)).toEqual(["Programmes"]);
+  });
+
+  it("does not count a notice-only group as a result row", () => {
+    const groups = withNotice("Skill matching failed for this query.");
+    expect(countResults(groups)).toBe(
+      countResults(toSearchGroups(PAYLOAD, "all")),
+    );
   });
 });

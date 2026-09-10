@@ -50,6 +50,38 @@ def patch_all_db_modules(monkeypatch):
     return mock
 
 
+@pytest.fixture(autouse=True)
+def reset_career_skill_index():
+    """Never let a mocked skill index leak between tests.
+
+    `routes.career_routes` caches the flattened career skill index in a module
+    global for 900s. A test that builds it from mock rows would otherwise serve
+    those rows to every later test in the session (and to any test that does
+    not patch `_svc` at all), which is both a false pass and a false failure
+    waiting to happen. Reset on both sides so the leak cannot come from an
+    earlier test either.
+    """
+    try:
+        import routes.career_routes as career_routes
+    except Exception:  # pragma: no cover - the module may not be importable
+        yield
+        return
+    def clear():
+        career_routes._reset_skill_index_cache()
+        # The stale-while-revalidate path parks a background refresh task, and
+        # the build lock and thread limiters are event-loop-bound too. All of
+        # them now live in the PER-LOOP state dict, so one call clears the lot;
+        # left behind, a refresh handle from a closed loop is `done() == False`
+        # forever and the next stale read silently declines to rebuild.
+        career_routes._reset_skill_loop_state()
+
+    clear()
+    try:
+        yield
+    finally:
+        clear()
+
+
 @pytest.fixture
 def mock_db(patch_all_db_modules):
     return patch_all_db_modules
