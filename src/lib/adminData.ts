@@ -16,11 +16,13 @@ import { request } from "./api";
 import type {
   InstitutionSummary,
   ProgrammeDemandRow,
+  ProgrammeIntelligenceRow,
   ProgrammeFilter,
   DomainRankItem,
   RankScope,
   IntelligenceAlert,
   SkillGapRow,
+  ProgrammeSkillCoverage,
   RoleDemandRow,
   PeerInstitutionRow,
   Organization,
@@ -285,6 +287,29 @@ export const adminData = {
       return fromApi(await request<SkillGapRow[] | DataState<SkillGapRow[]>>(`/api/institutions/me/skills-gap`));
     } catch {
       return comingSoon<SkillGapRow[]>("The skills-gap report is being populated.");
+    }
+  },
+
+  /** Institution-scoped programme/domain structure; never demand data. */
+  async getProgrammeIntelligence(
+    filter: Pick<ProgrammeFilter, "discipline" | "query"> = {},
+  ): Promise<DataState<ProgrammeIntelligenceRow[]>> {
+    try {
+      const qs = new URLSearchParams(filter as any).toString();
+      return fromApi(await request<ProgrammeIntelligenceRow[] | DataState<ProgrammeIntelligenceRow[]>>(
+        `/api/institutions/me/programme-intelligence${qs ? `?${qs}` : ""}`,
+      ));
+    } catch {
+      return comingSoon<ProgrammeIntelligenceRow[]>("Programme intelligence is temporarily unavailable.");
+    }
+  },
+
+  /** Programme → mapped domain → source-backed curriculum bridge. */
+  async getProgrammeSkillCoverage(): Promise<DataState<ProgrammeSkillCoverage[]>> {
+    try {
+      return fromApi(await request<ProgrammeSkillCoverage[] | DataState<ProgrammeSkillCoverage[]>>(`/api/institutions/me/programme-skill-coverage`));
+    } catch {
+      return comingSoon<ProgrammeSkillCoverage[]>("Programme skill coverage is being populated.");
     }
   },
 

@@ -20,50 +20,129 @@ import { CurrentStudentSetupForm } from "@/components/onboarding/CurrentStudentS
 import { OnboardingBackGuard } from "@/components/onboarding/OnboardingBackGuard";
 import { studentAccountApi } from "@/lib/provisioningData";
 import { setPendingPostAuthRedirect } from "@/lib/postAuthRedirect";
+import {
+  guidanceContextQuery,
+  type GuidanceRouteContext,
+} from "@/lib/guidanceRouteContext";
+
+function guidanceHref(
+  path: string,
+  parameters: string[],
+  context: GuidanceRouteContext,
+): string {
+  const query = [...parameters.filter(Boolean), guidanceContextQuery(context)].filter(Boolean).join("&");
+  return query ? `${path}?${query}` : path;
+}
 
 function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
   const olevelSubjects = (profile.olevelSubjects ?? []).filter(Boolean).join(",");
-  const programme =
-    profile.intendedProgramme ||
-    profile.programmeName ||
-    "";
-  const subjectContext =
-    `subjects=${encodeURIComponent(subjects)}` +
-    `&olevel_subjects=${encodeURIComponent(olevelSubjects)}` +
-    `&stream=${encodeURIComponent(profile.stream ?? "")}` +
-    `&user_type=${encodeURIComponent(profile.userType ?? "")}` +
-    `&class_name=${encodeURIComponent(profile.ssClass ?? "")}` +
-    "&focus=guidance";
+  const programme = profile.intendedProgramme || profile.programmeName || "";
+  const programmeId = profile.intendedProgrammeId || profile.intendedJambProgrammeId;
+  const baseContext: GuidanceRouteContext = {
+    programmeId,
+    jambProgrammeId: profile.intendedJambProgrammeId,
+    schoolId: profile.preferredSchoolId,
+    userType: profile.userType,
+    className: profile.ssClass,
+    stream: profile.stream,
+    focused: true,
+  };
 
   if (profile.userType === "senior_secondary") {
     if (profile.exploreIntent?.includes("have_programme") && programme) {
-      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}`;
+      return guidanceHref("/(tabs)/explore/admission", [
+        "mode=programme",
+        `q=${encodeURIComponent(programme)}`,
+      ], {
+        ...baseContext,
+        journeyMode: "programme_preview",
+        resumeStage: "programme_preview",
+      });
     }
     if (olevelSubjects) {
-      return `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&exam_type=olevel&olevel_subjects=${encodeURIComponent(olevelSubjects)}&stream=${encodeURIComponent(profile.stream ?? "")}&user_type=senior_secondary&class_name=${encodeURIComponent(profile.ssClass ?? "")}`;
+      return guidanceHref("/(tabs)/explore/admission", [
+        "mode=subjects",
+        "exam_type=olevel",
+        `olevel_subjects=${encodeURIComponent(olevelSubjects)}`,
+      ], {
+        ...baseContext,
+        journeyMode: "guided_subject_discovery",
+        resumeStage: "setup",
+      });
     }
-      return "/(tabs)/explore/admission?mode=subjects&focus=guidance&exam_type=olevel&user_type=senior_secondary";
+    return guidanceHref("/(tabs)/explore/admission", ["mode=subjects", "exam_type=olevel"], {
+      ...baseContext,
+      journeyMode: "guided_subject_discovery",
+      resumeStage: "setup",
+    });
   }
 
   if (profile.userType === "jamb" || profile.userType === "ss3_secondary") {
     if (profile.ssDoor === "unsure") {
-      return subjects
-        ? `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&${subjectContext}`
-        : "/(tabs)/explore/admission?mode=subjects&focus=guidance";
+      return guidanceHref("/(tabs)/explore/admission", [
+        "mode=subjects",
+        ...(subjects ? [`subjects=${encodeURIComponent(subjects)}`] : []),
+        ...(olevelSubjects ? [`olevel_subjects=${encodeURIComponent(olevelSubjects)}`] : []),
+      ], {
+        ...baseContext,
+        journeyMode: "guided_subject_discovery",
+        resumeStage: "setup",
+      });
     }
     if (programme) {
-      const schoolContext =
-        profile.ssDoor === "know_where" && profile.preferredSchoolId
-          ? `&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? "")}`
-          : "";
-      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}&${subjectContext}${schoolContext}`;
+      if (profile.intendedJambProgrammeId && profile.preferredSchoolId) {
+        return guidanceHref(
+          `/(tabs)/explore/programme/${encodeURIComponent(profile.intendedJambProgrammeId)}`,
+          [],
+          {
+            ...baseContext,
+            journeyMode: "programme_to_role",
+            resumeStage: "university_context",
+          },
+        );
+      }
+      return guidanceHref("/(tabs)/explore/admission", [
+        "mode=programme",
+        `q=${encodeURIComponent(programme)}`,
+        ...(profile.ssDoor === "know_where" && profile.preferredSchool
+          ? [`school_name=${encodeURIComponent(profile.preferredSchool)}`]
+          : []),
+      ], {
+        ...baseContext,
+        journeyMode: "programme_preview",
+        resumeStage: "programme_preview",
+      });
     }
-    return `/(tabs)/explore/admission?mode=programme&focus=guidance&user_type=${encodeURIComponent(profile.userType)}`;
+    return guidanceHref("/(tabs)/explore/admission", ["mode=programme"], {
+      ...baseContext,
+      journeyMode: "programme_preview",
+      resumeStage: "setup",
+    });
   }
 
   if (profile.userType === "student" && profile.preferredSchoolId) {
-      return `/(tabs)/explore/admission?mode=school&focus=guidance&school_id=${encodeURIComponent(profile.preferredSchoolId)}&school_name=${encodeURIComponent(profile.preferredSchool ?? profile.schoolName ?? "")}&programme=${encodeURIComponent(programme)}&user_type=student`;
+    const jambProgrammeId = profile.intendedJambProgrammeId;
+    if (jambProgrammeId) {
+      return guidanceHref(
+        `/(tabs)/explore/programme/${encodeURIComponent(jambProgrammeId)}`,
+        [],
+        {
+          ...baseContext,
+          journeyMode: "undergraduate_career",
+          resumeStage: "university_context",
+        },
+      );
+    }
+    return guidanceHref("/(tabs)/explore/admission", [
+      "mode=school",
+      `school_name=${encodeURIComponent(profile.preferredSchool ?? profile.schoolName ?? "")}`,
+      `programme=${encodeURIComponent(programme)}`,
+    ], {
+      ...baseContext,
+      journeyMode: "undergraduate_career",
+      resumeStage: "setup",
+    });
   }
 
   return "/(tabs)/home";

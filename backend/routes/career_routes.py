@@ -248,15 +248,16 @@ def _search_terms(term: str) -> tuple[str, str]:
 
 
 def _student_programme_name(value: Any) -> Optional[str]:
-    """Keep source JAMB names intact while making composite labels readable."""
+    """Keep the exact source/JAMB programme name in student-facing output.
+
+    Composite labels and slash-separated qualifiers are source identity. They
+    must not be shortened or inferred into another programme name.
+    """
     if value is None:
         return None
     raw = str(value).strip()
     if not raw:
         return None
-    parts = [part.strip() for part in raw.split("/")]
-    if len(parts) == 2 and parts[0] and parts[1].lower().startswith(f"{parts[0].lower()} "):
-        return parts[0]
     return raw
 
 
@@ -2746,7 +2747,12 @@ async def get_jamb_domains(jamb_name: str):
         best: dict[str, str] = {}
         for r in rows:
             did = r["domain_id"]
-            mt = r.get("match_type") or "adjacent"
+            # A missing or unknown mapping type is not evidence of an
+            # adjacent relationship. Keep the public route fail-closed rather
+            # than turning an incomplete seed row into a user-facing match.
+            mt = str(r.get("match_type") or "").strip().lower()
+            if mt not in _rank:
+                continue
             if did not in best or _rank.get(mt, 0) > _rank.get(best[did], 0):
                 best[did] = mt
 

@@ -48,7 +48,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { comingSoon, type DataState } from "../../types/career";
 import type {
   InstitutionSummary,
-  ProgrammeDemandRow,
+  ProgrammeIntelligenceRow,
   DomainRankItem,
   IntelligenceAlert,
   EducatorProfile,
@@ -94,7 +94,7 @@ export function GeneralDashboardScreen() {
   const [summary, setSummary] =
     useState<DataState<InstitutionSummary>>(loadingState);
   const [programmes, setProgrammes] =
-    useState<DataState<ProgrammeDemandRow[]>>(loadingState);
+    useState<DataState<ProgrammeIntelligenceRow[]>>(loadingState);
   const [alerts, setAlerts] =
     useState<DataState<IntelligenceAlert[]>>(loadingState);
   const [domains, setDomains] =
@@ -148,8 +148,8 @@ export function GeneralDashboardScreen() {
     settle(setSummary, "Institution intelligence is being populated.")(
       adminData.getInstitutionSummary(),
     );
-    settle(setProgrammes, "Programme-domain-demand data is being populated.")(
-      adminData.getProgrammeDemand(),
+    settle(setProgrammes, "Programme intelligence is being populated.")(
+      adminData.getProgrammeIntelligence(),
     );
     settle(setAlerts, "Intelligence alerts are being populated.")(
       adminData.getIntelligenceAlerts(),
@@ -275,15 +275,15 @@ export function GeneralDashboardScreen() {
         <View style={[styles.grid, wide && styles.gridWide]}>
           <View style={wide ? styles.gridCell : undefined}>
             <Panel
-              title="Programme → domain mapping"
-              linkLabel="View all"
-              onPress={() => adminNav.marketIntelligence(router as Nav)}
+              title="Programme intelligence"
+              linkLabel="Review curriculum"
+              onPress={() => adminNav.skillsGap(router as Nav)}
             >
               <ComingSoonPanel
                 state={programmes}
                 empty={(rows) => rows.length === 0}
                 emptyTitle="No programmes yet"
-                emptyBody="Programme/domain mapping is unavailable on this preview until the structural mapping is loaded."
+                emptyBody="Programme/domain mapping appears when your institution's recorded programme list is linked to the CCMAS mapping."
               >
                 {(rows) => (
                   <View style={styles.list}>

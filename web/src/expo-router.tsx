@@ -21,7 +21,7 @@ function toHref(href: Href): string {
 function browserPath(href: Href): string {
   const value = toHref(href)
     .replace(/^\/\(tabs\)/, "")
-    .replace(/^\/\(admin\)\/workspace-explore/, "/admin/explore")
+    .replace(/^\/\(admin\)\/workspace-explore/, "/admin/workspace-explore")
     .replace(/^\/\(admin\)/, "/admin")
     .replace(/^\/\(auth\)/, "");
   return value || "/";

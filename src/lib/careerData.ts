@@ -170,6 +170,19 @@ export interface UniversityRequirementException {
   parseStatus?: "parsed" | "needs_review" | "not_subject_rule" | string;
 }
 
+export type RequirementEvidenceStatus = "complete" | "review_only" | "source_missing" | string;
+
+export interface RequirementSourceEvidence {
+  layer?: "utme" | "olevel" | "direct_entry" | string;
+  sourceFile?: string | null;
+  page?: number | null;
+  tableRow?: number | null;
+  sourceStatus?: "exact" | "inherited_shared" | "source_blank" | "source_row_not_found" | string;
+  resolution?: string | null;
+  text?: string | null;
+  sourceLabel?: string | null;
+}
+
 export interface UniversityStructuredSubjectRule {
   examType?: "utme" | "olevel" | string;
   scope?: "full" | "partial" | string;
@@ -182,7 +195,7 @@ export interface JambProgrammeSuggestion {
   id: string;
   jambProgrammeId: string;
   jambName: string;
-  /** Student-facing heading; raw jambName remains the source identity. */
+  /** Exact source/JAMB name used as the student-facing identity. */
   studentName?: string | null;
   jambFaculty?: string | null;
   degreeType?: string | null;
@@ -195,6 +208,7 @@ export interface JambProgrammeSuggestion {
     schoolId?: string | null;
     schoolName: string;
     programmeName: string;
+    /** Exact JAMB/source name for this offering; never inferred from CCMAS. */
     studentName?: string | null;
     address?: string | null;
     city?: string | null;
@@ -208,6 +222,8 @@ export interface JambProgrammeSuggestion {
     universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
     universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
     universityEligibilityStatus?: string;
+    universityRequirementStatus?: RequirementEvidenceStatus;
+    universityRequirementNotice?: string | null;
     hasUniversityException?: boolean;
   }[];
   /**
@@ -236,6 +252,9 @@ export interface JambProgrammeRequirements {
   directEntry: string | null;
   parseStatus: "parsed" | "unparsed" | "needs_review" | null;
   variesByInstitution: boolean;
+  requirementStatus?: RequirementEvidenceStatus;
+  parsedAt?: string | null;
+  sourceEvidence?: RequirementSourceEvidence[];
 }
 
 /** Full detail payload of GET /api/student/jamb-programmes/{id}. The
@@ -277,11 +296,6 @@ export interface JambProgrammeSchool {
   studentName?: string | null;
   programmeId?: string | null;
   programmeName?: string | null;
-  year?: number | null;
-  aggregateCutoff?: number | null;
-  jambCutoff?: number | null;
-  form?: "UTME" | "DE" | null;
-  sourceUrl?: string | null;
   universityUtmeSubjects?: string | null;
   universityOlevelRequirement?: string | null;
   universityDirectEntry?: string | null;
@@ -290,6 +304,8 @@ export interface JambProgrammeSchool {
   universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
   universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
   universityEligibilityStatus?: string;
+  universityRequirementStatus?: RequirementEvidenceStatus;
+  universityRequirementNotice?: string | null;
   hasUniversityException?: boolean;
 }
 
@@ -311,8 +327,8 @@ export interface SchoolFaculty {
 
 /**
  * A course as a specific university lists it — the enrolled student's entry
- * point. `jambName` is the national identity used to group the university
- * offering; a genuinely different JAMB name is a separate result.
+ * point. `jambName` is the exact source identity for the university offering;
+ * a genuinely different JAMB name is a separate result.
  */
 export interface SchoolProgrammeOffering {
   schoolId: string;
@@ -332,6 +348,8 @@ export interface SchoolProgrammeOffering {
   universityStructuredSubjectRules?: UniversityStructuredSubjectRule[];
   universityExceptionStatus?: "none" | "structured" | "needs_confirmation" | string;
   universityEligibilityStatus?: string;
+  universityRequirementStatus?: RequirementEvidenceStatus;
+  universityRequirementNotice?: string | null;
   hasUniversityException?: boolean;
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
@@ -480,7 +498,7 @@ export const careerData = {
       () => request<DataState<JambProgrammeSchool[]>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
       ),
-      "Schools and admission rows are unavailable.",
+      "University offerings are unavailable.",
       DETAIL_TTL_MS,
     );
   },
@@ -489,31 +507,37 @@ export const careerData = {
   async getSchoolProgrammes(
     schoolId: string,
     q?: string,
+    faculty?: string,
   ): Promise<DataState<SchoolProgrammeOffering[]>> {
-    const key = `school-programmes:${schoolId}:${(q ?? "").trim().toLowerCase()}`;
+    const key = `school-programmes:${schoolId}:${(faculty ?? "").trim().toLowerCase()}:${(q ?? "").trim().toLowerCase()}`;
     return readThrough(
       key,
       () => {
-        const qs = q && q.trim() ? `?q=${encodeURIComponent(q.trim())}` : "";
+        const params = new URLSearchParams();
+        if (q && q.trim()) params.set("q", q.trim());
+        if (faculty && faculty.trim()) params.set("faculty", faculty.trim());
+        const encoded = params.toString();
+        const qs = encoded ? `?${encoded}` : "";
         return request<DataState<SchoolProgrammeOffering[]>>(
           `/api/student/schools/${encodeURIComponent(schoolId)}/programmes${qs}`,
         );
       },
       "This university's programme list is temporarily unavailable. Please try again.",
-      q?.trim() ? SEARCH_TTL_MS : REFERENCE_TTL_MS,
+      q?.trim() || faculty?.trim() ? SEARCH_TTL_MS : REFERENCE_TTL_MS,
     );
   },
 
   async registerAdmissionSchool(
     name: string,
     institutionType: string,
+    address?: string,
   ): Promise<DataState<AdmissionSchool & { created?: boolean }>> {
     try {
       return await request<DataState<AdmissionSchool & { created?: boolean }>>(
         "/api/student/schools/register",
         {
           method: "POST",
-          body: JSON.stringify({ name, institutionType }),
+          body: JSON.stringify({ name, institutionType, address: address?.trim() || undefined }),
         },
       );
     } catch {
@@ -1117,30 +1141,6 @@ export const careerData = {
       SEARCH_TTL_MS,
     );
     return state;
-  },
-
-  /** Typeahead over programmes with published cut-offs (onboarding picker). */
-  async searchAdmissionProgrammes(
-    q: string,
-  ): Promise<
-    DataState<
-      { id: string; name: string; discipline?: string; institutionType: string }[]
-    >
-  > {
-    try {
-      return await request<
-        DataState<
-          {
-            id: string;
-            name: string;
-            discipline?: string;
-            institutionType: string;
-          }[]
-        >
-      >(`/api/admission/programmes?q=${encodeURIComponent(q)}`);
-    } catch {
-      return comingSoon("Programme search is temporarily unavailable.");
-    }
   },
 
   // ─── Note management (used by My World) ───────────────────────

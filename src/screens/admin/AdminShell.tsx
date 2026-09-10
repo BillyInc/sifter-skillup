@@ -142,7 +142,8 @@ export function AdminShell({
   const readParam = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
   const focusedGuidance = readParam(searchParams?.guided) === "1"
     || readParam(searchParams?.focus) === "guidance"
-    || readParam(searchParams?.journey) === "guided_subject_discovery";
+    || readParam(searchParams?.journey) === "guided_subject_discovery"
+    || readParam(searchParams?.journey_mode) === "guided_subject_discovery";
   const resumeQuery = useMemo(
     () => Object.entries(searchParams ?? {})
       .flatMap(([key, value]) => (Array.isArray(value) ? value.map((item) => [key, item] as const) : [[key, value] as const]))
@@ -188,7 +189,12 @@ export function AdminShell({
     return homeKey;
   })();
   // Home means the home route ITSELF, not anything pushed on top of it.
-  const isHome = activeKey === homeKey && lastSegment === homeSegment;
+  const isHome = activeKey === homeKey && (
+    lastSegment === homeSegment
+    // Keep old Vite/admin bookmarks usable while the canonical segment is
+    // /workspace-explore.
+    || (homeSegment === ADMIN_EXPLORE_SEGMENT && lastSegment === "explore")
+  );
   const goBack = () => {
     if (router.canGoBack()) {
       router.back();
@@ -242,6 +248,39 @@ export function AdminShell({
       onDeleteAccount={() => confirmAccountAction("delete")}
     />
   );
+
+  // The browser has its own admin information architecture. The native
+  // React-Native chrome remains the mobile reference, but rendering that
+  // chrome as a stack of RN Views on Vite made admin pages look like the
+  // student shell and hid the workspace identity. Keep the route/context
+  // logic shared, and switch only the presentation layer here.
+  if (Platform.OS === "web") {
+    return (
+      <WebAdminShell
+        title={title}
+        eyebrow={eyebrow}
+        actions={actions}
+        children={children}
+        audience={audience}
+        profile={profile}
+        groups={navGroups}
+        activeKey={activeKey}
+        focusedGuidance={focusedGuidance}
+        isHome={isHome}
+        drawerOpen={drawerOpen}
+        onDrawerOpen={() => setDrawerOpen(true)}
+        onDrawerClose={() => setDrawerOpen(false)}
+        onNavigate={navigate}
+        onBack={goBack}
+        onSignOut={() => confirmAccountAction("sign-out")}
+        onDeleteAccount={() => confirmAccountAction("delete")}
+        accountAction={accountAction}
+        actionBusy={actionBusy}
+        onCancelAction={() => setAccountAction(null)}
+        onRunAction={() => void runAccountAction()}
+      />
+    );
+  }
 
   return (
     <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
@@ -314,7 +353,7 @@ export function AdminShell({
           <GuidanceContextBanner
             studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
             stream={readParam(searchParams?.stream)}
-            journey={readParam(searchParams?.journey)}
+            journey={readParam(searchParams?.journey_mode) || readParam(searchParams?.journey)}
             studentTarget={readParam(searchParams?.guidance_student_id) ? "student" : "anonymous"}
           />
         ) : null}
@@ -348,6 +387,101 @@ export function AdminShell({
         </View>
       </Modal>
     </View>
+  );
+}
+
+function WebAdminShell({
+  title,
+  eyebrow,
+  actions,
+  children,
+  audience,
+  profile,
+  groups,
+  activeKey,
+  focusedGuidance,
+  isHome,
+  drawerOpen,
+  onDrawerOpen,
+  onDrawerClose,
+  onNavigate,
+  onBack,
+  onSignOut,
+  onDeleteAccount,
+  accountAction,
+  actionBusy,
+  onCancelAction,
+  onRunAction,
+}: {
+  title: string;
+  eyebrow?: string;
+  actions?: ReactNode;
+  children: ReactNode;
+  audience: AdminAudience;
+  profile: EducatorProfile | null;
+  groups: { title: string; items: AdminNavItem[] }[];
+  activeKey: string;
+  focusedGuidance: boolean;
+  isHome: boolean;
+  drawerOpen: boolean;
+  onDrawerOpen: () => void;
+  onDrawerClose: () => void;
+  onNavigate: (item: AdminNavItem) => void;
+  onBack: () => void;
+  onSignOut: () => void;
+  onDeleteAccount: () => void;
+  accountAction: "sign-out" | "delete" | null;
+  actionBusy: boolean;
+  onCancelAction: () => void;
+  onRunAction: () => void;
+}) {
+  const workspaceName = profile?.organizationName || adminAudienceLabel(audience);
+  const nav = (
+    <div className="web-admin-nav-inner">
+      <div className="web-admin-brand">
+        <span className="web-admin-brand-mark" aria-hidden="true"><i /><i /><i /></span>
+        <span><strong>Sifter LevelUp</strong><small>{workspaceName}</small></span>
+        {drawerOpen ? <button className="web-admin-close" onClick={onDrawerClose} aria-label="Close navigation">×</button> : null}
+      </div>
+      <nav className="web-admin-nav" aria-label="Administrator navigation">
+        {groups.map((group) => (
+          <section key={group.title} className="web-admin-nav-group">
+            <p>{group.title}</p>
+            {group.items.map((item) => (
+              <button key={item.key} className={item.key === activeKey ? "active" : ""} onClick={() => onNavigate(item)}>
+                <span aria-hidden="true">{item.icon}</span><span>{item.label}</span>{item.locked ? <small>Locked</small> : null}
+              </button>
+            ))}
+          </section>
+        ))}
+      </nav>
+      {audience === "school" ? <p className="web-admin-privacy-note">Student data stays private. Individual access requires verified consent.</p> : null}
+      <div className="web-admin-account">
+        <button onClick={onSignOut}>Sign out</button>
+        <button className="danger" onClick={onDeleteAccount}>Delete account</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className={`web-admin-shell${focusedGuidance ? " is-focused" : ""}`}>
+      {!focusedGuidance ? <aside className="web-admin-sidebar">{nav}</aside> : null}
+      {drawerOpen && !focusedGuidance ? <div className="web-admin-drawer-layer"><button className="web-admin-drawer-backdrop" onClick={onDrawerClose} aria-label="Close navigation" /><aside className="web-admin-drawer">{nav}</aside></div> : null}
+      <section className="web-admin-main">
+        <header className="web-admin-header">
+          <button className="web-admin-menu" onClick={onDrawerOpen} aria-label="Open navigation">☰</button>
+          {!isHome ? <button className="web-admin-back" onClick={onBack}>{focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
+          <div className="web-admin-heading">
+            {eyebrow ? <span>{eyebrow}</span> : null}
+            <h1>{focusedGuidance ? "Guidance workspace" : title}</h1>
+          </div>
+          {actions ? <div className="web-admin-actions">{actions}</div> : null}
+        </header>
+        {focusedGuidance ? <div className="web-admin-context" role="status"><strong>Focused guidance workspace</strong><span>Navigation is collapsed while you work. Your target and resume context remain attached to this route.</span></div> : null}
+        <main className="web-admin-content">{children}</main>
+      </section>
+      {accountAction ? <div className="web-admin-modal-backdrop" role="presentation"><section className="web-admin-modal" role="dialog" aria-modal="true" aria-labelledby="web-admin-action-title"><h2 id="web-admin-action-title">{accountAction === "delete" ? "Delete this account?" : "Sign out?"}</h2><p>{accountAction === "delete" ? "Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately." : "You will need to sign in again to continue."}</p><div><button className="secondary" onClick={onCancelAction} disabled={actionBusy}>Cancel</button><button className="danger-button" onClick={onRunAction} disabled={actionBusy}>{accountAction === "delete" ? "Delete account" : "Sign out"}</button></div></section></div> : null}
+    </div>
   );
 }
 

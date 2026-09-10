@@ -6,65 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
 import { useResponsive } from '@/hooks/useResponsive';
 import { LEGAL_OPERATOR_ADDRESS, LEGAL_OPERATOR_NAME, PRIVACY_VERSION } from '@/lib/legal';
+import { privacySections } from '@/lib/legalContent';
 
-const SECTIONS = [
-  {
-    title: 'Who controls the data',
-    body: `${LEGAL_OPERATOR_NAME} is the service operator. ${LEGAL_OPERATOR_ADDRESS ? `Service address: ${LEGAL_OPERATOR_ADDRESS}. ` : 'The registered operating entity and Nigerian service address must be supplied in the production environment before launch. '}For privacy questions, access, correction, deletion, portability or complaints, contact privacy@sifter.app. Do not send identity documents by ordinary email unless requested through a verified support process.`,
-  },
-  {
-    title: 'What data we collect',
-    body: 'Account details, user type, starting point, subjects you choose to enter, saved programmes, schools, domains, subgroups, roles, notes, preferences, device/session data and security logs.',
-  },
-  {
-    title: 'Sensitive student data',
-    body: 'We do not need grades, transcripts, exam documents or guardian documents for the core exploration flow. Institution roster visibility is consent-gated and should be limited to what is necessary.',
-  },
-  {
-    title: 'Why we process it',
-    body: 'We process account and service data to provide the features you request, use consent for optional analytics and consent-gated student sharing, comply with legal or security duties where applicable, and use limited service-improvement interests where permitted. These purposes are separate: optional analytics is not required to create an account.',
-  },
-  {
-    title: 'Who receives it and where',
-    body: 'Data may be handled by hosting, authentication, email, storage, support and optional analytics providers acting for the service. Schools receive only the roster or guidance information their role and the applicable consent state allow. Some providers may process data outside Nigeria; we use applicable contractual, security and transfer safeguards and will provide further information on request.',
-  },
-  {
-    title: 'How we use data',
-    body: 'We use data to run the platform, restore sessions, personalize guidance, improve search, prevent abuse, support institution verification, generate aggregate intelligence and honour user requests.',
-  },
-  {
-    title: 'Analytics and product improvement',
-    body: 'We may use consented or legally-permitted analytics to understand searches, drop-offs, saved paths and confusing screens. Analytics should be aggregated where possible and should not expose individual student records to institutions.',
-  },
-  {
-    title: 'Nigeria-first privacy basis',
-    body: 'We design around the Nigeria Data Protection Act 2023 and applicable NDPC guidance: fair and transparent processing, purpose limitation, minimisation, accuracy, security, retention limits, affirmative consent and data-subject rights. Where Nigerian requirements differ by role, age, state or processing context, the applicable safeguard controls the feature.',
-  },
-  {
-    title: 'Minors and guardians',
-    body: 'Senior-secondary users may be minors. We minimise grades and identity data, explain roster visibility, and require the appropriate guardian, student or school consent before consent-gated sharing. Child-rights protections can vary by Nigerian state, so schools must follow the law and safeguarding rules applicable to their students and location.',
-  },
-  {
-    title: 'International users',
-    body: 'Users outside Nigeria may have additional local rights, including GDPR-style access, correction, portability, objection and erasure rights where applicable.',
-  },
-  {
-    title: 'Retention',
-    body: 'We keep account and guidance data only as long as needed for the service, safety, legal compliance and auditability. Users may request deletion, subject to lawful retention requirements.',
-  },
-  {
-    title: 'Security',
-    body: 'We use access controls, authentication, role boundaries and server-side checks to reduce unauthorised access. No web service can guarantee perfect security, so sensitive details should be collected sparingly.',
-  },
-  {
-    title: 'Automated matching and your challenge rights',
-    body: 'Programme, subject and career matching is guidance and is not used as the sole basis for an admission, employment or other high-impact decision. You may ask for access, correction, human review or an explanation of a material personal-data issue through privacy@sifter.app.',
-  },
-  {
-    title: 'Your rights and choices',
-    body: 'You can request access, correction, deletion, export, restriction or opt-out of non-essential communications and analytics by contacting privacy@sifter.app.',
-  },
-];
+const SECTIONS = privacySections(LEGAL_OPERATOR_NAME, LEGAL_OPERATOR_ADDRESS).map(([title, body]) => ({ title, body }));
 
 interface Props {
   onClose?: () => void;
@@ -127,7 +71,7 @@ export default function PrivacyScreen({
         <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Privacy policy</Text>
         <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Nigeria-first privacy with global user-rights support.</Text>
       </View>
-      {onClose && (!requireExplicitConfirmation || confirmed) ? (
+      {onClose ? (
         <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
         </TouchableOpacity>

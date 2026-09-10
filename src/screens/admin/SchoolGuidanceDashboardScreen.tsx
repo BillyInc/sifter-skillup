@@ -278,7 +278,7 @@ export function SchoolGuidanceDashboardScreen() {
               onPress={() => adminNav.explore(router as Nav)}
             >
               <Text style={[styles.panelNote, { color: colors.textMuted }]}>
-                Programmes, universities, requirements and cut-offs are in
+                Programmes, universities and requirements are in
                 Explore — your home page. This screen answers a different
                 question: who your students are, taken together.
               </Text>

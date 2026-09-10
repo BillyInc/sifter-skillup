@@ -362,12 +362,10 @@ function ProgrammeRow({
   row,
   domains,
   roles,
-  skillsGap,
 }: {
   row: ProgrammeDemandRow;
   domains: DomainRankItem[];
   roles: DataState<RoleDemandRow[]>;
-  skillsGap: DataState<SkillGapRow[]>;
 }) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
@@ -560,7 +558,6 @@ function ProgrammeRow({
           )}
 
           {/* §5.3 — the full report, nested here as well as on the dashboard */}
-          <SkillsGapReport state={skillsGap} programmeName={row.programmeName} />
         </View>
       ) : null}
     </View>
@@ -743,10 +740,6 @@ export function MarketIntelligenceScreen() {
     status: "pending",
     data: null,
   });
-  const [skillsGap, setSkillsGap] = useState<DataState<SkillGapRow[]>>({
-    status: "pending",
-    data: null,
-  });
   // Scope-independent reads.
   useEffect(() => {
     let active = true;
@@ -774,20 +767,6 @@ export function MarketIntelligenceScreen() {
           setRoles(
             comingSoon<RoleDemandRow[]>(
               "Role-level demand could not be loaded. Try again shortly.",
-            ),
-          );
-        }
-      });
-    adminData
-      .getSkillsGapReport()
-      .then((d) => {
-        if (active) setSkillsGap(d);
-      })
-      .catch(() => {
-        if (active) {
-          setSkillsGap(
-            comingSoon<SkillGapRow[]>(
-              "The skills-gap report could not be loaded. Try again shortly.",
             ),
           );
         }
@@ -944,7 +923,6 @@ export function MarketIntelligenceScreen() {
                         row={row}
                         domains={domainList}
                         roles={roles}
-                        skillsGap={skillsGap}
                       />
                     ))}
                   </View>

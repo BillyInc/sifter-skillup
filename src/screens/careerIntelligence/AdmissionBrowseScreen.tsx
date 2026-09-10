@@ -26,6 +26,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { invalidateGuidancePathCache } from "@/components/careerIntelligence";
 import { LiveSubjectMultiSelect, MAX_OLEVEL_SUBJECTS } from "@/components/onboarding/LiveSubjectMultiSelect";
 import { useExploreNav } from "@/lib/exploreNav";
+import { isGuidanceContextCompatible } from "@/lib/guidanceRouteContext";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { provisioningData } from "@/lib/provisioningData";
@@ -167,9 +168,11 @@ export default function AdmissionBrowseScreen() {
     admin?: string | string[];
     admin_type?: string | string[];
     guidance_student_id?: string | string[];
+    guidance_target?: string | string[];
     user_type?: string | string[];
     programme?: string | string[];
     journey?: string | string[];
+    journey_mode?: string | string[];
     focus?: string | string[];
     resume?: string | string[];
   }>();
@@ -198,7 +201,20 @@ export default function AdmissionBrowseScreen() {
   const isAdminExplore = readParam(params.admin) === "1";
   const adminType = readParam(params.admin_type);
   const guidanceStudentId = readParam(params.guidance_student_id);
-  const journeyMode = readParam(params.journey);
+  const requestedGuidanceTarget = readParam(params.guidance_target);
+  // Older admin links did not carry a target marker. Infer only from the
+  // presence of a student ID; an explicit contradictory marker is stale and
+  // must not hydrate another account's checkpoint.
+  const guidanceTarget = requestedGuidanceTarget || (guidanceStudentId ? "authorised_student" : "");
+  const sessionOnlyGuidance = isAdminExplore && !guidanceStudentId;
+  const guidanceContextShape = { guidanceTarget, guidanceStudentId };
+  const staleGuidanceRoute = isAdminExplore && (
+    guidanceTarget === "authorised_student"
+      ? !guidanceStudentId || !isGuidanceContextCompatible(guidanceContextShape, { guidanceTarget: "authorised_student" })
+      : Boolean(guidanceStudentId)
+  );
+  const journeyMode = readParam(params.journey_mode) || readParam(params.journey);
+  const isFocusedGuidance = readParam(params.focus) === "guidance" || journeyMode === "guided_subject_discovery";
   const undergraduateContext = userType === "student" || journeyMode === "undergraduate_programmes";
   const learnerAudience: AdminLearnerAudience | null = adminLearnerAudienceForOrg(adminType);
   const [contextClass, setContextClass] = useState(readParam(params.class_name));
@@ -255,7 +271,7 @@ export default function AdmissionBrowseScreen() {
         : subjects.length === 4 && olevelSubjects.length >= 5 && olevelSubjects.length <= MAX_OLEVEL_SUBJECTS;
   const canMatchSubjects = hasSubjectContext && !subjectLimitExceeded;
   const guidedSubjectDiscovery =
-    readParam(params.journey) === "guided_subject_discovery" &&
+    journeyMode === "guided_subject_discovery" &&
     initialMode === "subjects" &&
     hasSubjectContext;
   const [showSubjectEditor, setShowSubjectEditor] = useState(!guidedSubjectDiscovery);
@@ -319,7 +335,7 @@ export default function AdmissionBrowseScreen() {
   // for this specific student before running any initial search so returning to
   // a roster row restores the same stage, subjects and selected records.
   useEffect(() => {
-    if (!guidanceStudentId) {
+    if (!guidanceStudentId || staleGuidanceRoute) {
       setResumeHydrated(true);
       return;
     }
@@ -358,7 +374,12 @@ export default function AdmissionBrowseScreen() {
       if (active) setResumeHydrated(true);
     });
     return () => { active = false; };
-  }, [guidanceStudentId]);
+  }, [guidanceStudentId, staleGuidanceRoute]);
+
+  useEffect(() => {
+    if (!staleGuidanceRoute) return;
+    router.replace(isAdminExplore ? "/(admin)/guidance-start" as never : "/(tabs)/explore" as never);
+  }, [isAdminExplore, router, staleGuidanceRoute]);
 
   useEffect(() => {
     if (!resumeHydrated) return;
@@ -669,6 +690,20 @@ export default function AdmissionBrowseScreen() {
       skillsTransferable: offering.skillsTransferable,
       skillsCount: offering.skillsCount,
     });
+    // Undergraduate students have already selected the university. Open the
+    // university-aware programme page directly; the generic admission browser
+    // is for choosing a school or comparing offerings, not for this route.
+    if (undergraduateContext && chosenSchool) {
+      exploreNav.programme(router, offering.jambProgrammeId, {
+        jambProgrammeId: offering.jambProgrammeId,
+        schoolId: chosenSchool.id,
+        userType: userType || "student",
+        focused: true,
+        guidanceStudentId: guidanceStudentId || undefined,
+        guidanceTarget: guidanceTarget || undefined,
+        journeyMode: "undergraduate_career",
+      });
+    }
   };
 
   const selectCandidate = async (candidate: Candidate) => {
@@ -720,7 +755,7 @@ export default function AdmissionBrowseScreen() {
     // The supported student flows are ordinary university/UTME guidance. A
     // Direct Entry row belongs to a future explicit polytechnic/DE route and
     // must not silently appear beside the ordinary university choices.
-    setSchools(availableSchools.filter((school) => !school.form || school.form.toUpperCase() === "UTME"));
+    setSchools(availableSchools);
     const onboardingSchool = initialSchoolId
       ? availableSchools.find((school) => school.schoolId === initialSchoolId)
       : null;
@@ -734,11 +769,6 @@ export default function AdmissionBrowseScreen() {
         studentName: candidateDisplayName(candidate),
         programmeId: null,
         programmeName: candidateDisplayName(candidate),
-        year: undefined,
-        aggregateCutoff: null,
-        jambCutoff: null,
-        form: null,
-        sourceUrl: null,
       }, { status: nextSubjectMatchStatus, match: nextSubjectMatch });
     }
   };
@@ -849,7 +879,7 @@ export default function AdmissionBrowseScreen() {
           nextPath,
         );
         invalidateGuidancePathCache();
-      } else {
+      } else if (!sessionOnlyGuidance) {
         const existing = await getStartingPoint(user?.id);
         const updated = {
           userType: existing?.userType ?? "jamb",
@@ -899,11 +929,21 @@ export default function AdmissionBrowseScreen() {
       jambProgrammeId: selected.jambProgrammeId || selected.id,
       schoolId: school.schoolId,
       userType: userType || undefined,
-      focused: readParam(params.focus) === "guidance" || readParam(params.journey) === "guided_subject_discovery",
+      guidanceTarget: guidanceTarget || undefined,
+      focused: isFocusedGuidance,
       viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
       journeyMode: journeyMode || undefined,
     });
   };
+
+  if (staleGuidanceRoute) {
+    return (
+      <View style={[styles.panel, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <Text style={[styles.section, { color: colors.text }]}>This guidance link has expired</Text>
+        <Text style={[styles.hint, { color: colors.textMuted }]}>We did not reopen a checkpoint belonging to a different guidance target.</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -913,7 +953,7 @@ export default function AdmissionBrowseScreen() {
       showsVerticalScrollIndicator={false}
     >
       <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
-        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : "ADMISSION INTELLIGENCE"}
+        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : undergraduateContext ? "MY UNIVERSITY" : "PROGRAMME DISCOVERY"}
       </Text>
       <Text style={[styles.title, { color: colors.text }]}>
         {guidedSubjectDiscovery
@@ -1058,7 +1098,6 @@ export default function AdmissionBrowseScreen() {
                             .includes(courseFilter.trim().toLowerCase())
                         : true,
                     )
-                    .slice(0, 40)
                     .map((o) => {
                       const active = selected?.jambProgrammeId === o.jambProgrammeId;
                       return (
@@ -1322,9 +1361,9 @@ export default function AdmissionBrowseScreen() {
             </View>
           ) : null}
           {schools.length ? (
-            schools.slice(0, 12).map((school) => (
+            schools.map((school) => (
               <TouchableOpacity
-                key={`${school.schoolId}-${school.form ?? "offer"}`}
+                key={school.schoolId}
                 activeOpacity={0.8}
                 onPress={() => { void openUniversityDetails(school); }}
                 style={[styles.infoRow, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -1335,7 +1374,7 @@ export default function AdmissionBrowseScreen() {
                     <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{school.address}</Text>
                   ) : null}
                   <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    {school.year ? `${school.year} cycle` : "Offering listed"}
+                    Offering recorded
                   </Text>
                   {school.universityNote ? (
                     <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]} numberOfLines={2}>{school.universityNote}</Text>
@@ -1347,7 +1386,7 @@ export default function AdmissionBrowseScreen() {
               </TouchableOpacity>
             ))
            ) : (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>No university admission rows are available yet.</Text>
+             <Text style={[styles.hint, { color: colors.textMuted }]}>No university offerings are recorded for this programme yet.</Text>
           )}
 
            {selectedAdmissionSchool ? (
@@ -1356,7 +1395,8 @@ export default function AdmissionBrowseScreen() {
                 jambProgrammeId: selected.jambProgrammeId || selected.id,
                 schoolId: selectedAdmissionSchool.schoolId,
                 userType: userType || undefined,
-                focused: readParam(params.focus) === "guidance" || readParam(params.journey) === "guided_subject_discovery",
+                guidanceTarget: guidanceTarget || undefined,
+                focused: isFocusedGuidance,
                 viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
                 journeyMode: journeyMode || undefined,
               })}

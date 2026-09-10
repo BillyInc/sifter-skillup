@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { adminLearnerAudienceForOrg, type AdminLearnerAudience } from "@/lib/adminLearnerAudience";
 import { getEducatorProfile } from "@/lib/educatorProfile";
 import { provisioningData } from "@/lib/provisioningData";
+import { guidanceContextQuery } from "@/lib/guidanceRouteContext";
 import {
   CompassFonts,
   FontSize,
@@ -130,17 +131,24 @@ export function GuidanceStartScreen() {
     const learner = selectedLearnerType;
     const mode = journey === "full" || journey === "utme_only" || journey === "olevel_only" ? "subjects" : "programme";
     const examType = journey === "utme_only" ? "utme" : journey === "olevel_only" ? "olevel" : journey === "full" ? "combined" : "";
+    const guidanceContext = guidanceContextQuery({
+      className: learner,
+      userType: userTypeForLearner(learner),
+      stream: selectedStream || undefined,
+      journeyMode: journey,
+      guidanceTarget: target === "student" ? "authorised_student" : "self",
+      guidanceStudentId: target === "student" ? selectedStudent?.userId : undefined,
+      resumeStage: "setup",
+      focused: true,
+    });
     const params = [
       `mode=${mode}`,
-      "focus=guidance",
       "admin=1",
       `admin_type=${encodeURIComponent(organizationType)}`,
       `journey=${encodeURIComponent(journey)}`,
-      `class_name=${encodeURIComponent(learner)}`,
-      `user_type=${encodeURIComponent(userTypeForLearner(learner))}`,
-      selectedStream ? `stream=${encodeURIComponent(selectedStream)}` : "",
       examType ? `exam_type=${examType}` : "",
-      target === "student" && selectedStudent ? `guidance_student_id=${encodeURIComponent(selectedStudent.userId)}&resume=1&student_type=${encodeURIComponent(selectedStudent.studentType ?? "")}` : "",
+      target === "student" && selectedStudent ? `resume=1&student_type=${encodeURIComponent(selectedStudent.studentType ?? "")}` : "",
+      guidanceContext,
     ].filter(Boolean).join("&");
     router.push(`/(admin)/workspace-explore/admission?${params}` as never);
   };
@@ -197,7 +205,7 @@ export function GuidanceStartScreen() {
         {target === "anonymous" ? <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Student context</Text>
           <Text style={[styles.body, { color: colors.textMuted }]}>{audience.description} This context controls which admission questions and stream filters appear.</Text>
-          <View style={styles.optionRow}>{audience.learnerTypes.map((value) => <Choice key={value} title={value === "undergraduate" ? "Undergraduate" : value.toUpperCase()} body="Use this learner context for the guidance check." active={learnerType === value} onPress={() => setLearnerType(value)} colors={colors} />)}</View>
+          <View style={styles.optionRow}>{audience.learnerTypes.map((value) => <Choice key={value} title={value === "undergraduate" ? "Undergraduate" : value.toUpperCase()} body="Use this student context for the guidance check." active={learnerType === value} onPress={() => setLearnerType(value)} colors={colors} />)}</View>
           {needsStream ? <><Text style={[styles.label, { color: colors.textMuted }]}>Stream</Text><View style={styles.optionRow}>{audience.streams.map((value) => <Choice key={value} title={value[0].toUpperCase() + value.slice(1)} body="A guidance filter, not a permanent eligibility judgement." active={stream === value} onPress={() => setStream(value)} colors={colors} />)}</View></> : null}
         </View> : null}
 

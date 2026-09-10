@@ -1,10 +1,16 @@
 import { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { ThemeProvider } from "../../src/theme";
-import { request } from "../../src/lib/api";
+import { API, request } from "../../src/lib/api";
 import { careerData } from "../../src/lib/careerData";
 import { friendlyLoginError, isValidEmail } from "../../src/lib/authMessages";
+import { TERMS_SECTIONS, privacySections } from "../../src/lib/legalContent";
 import type { CareerSearchResult, SearchIntent } from "../../src/types/career";
 import { WebAuthProvider, useAuth, type WebUser } from "./webAuth";
+import { ExploreBaseProvider, ADMIN_EXPLORE_BASE } from "../../src/lib/exploreNav";
+import { getEducatorProfile } from "../../src/lib/educatorProfile";
+import { adminAudienceForProfile } from "../../src/lib/adminAudience";
+import type { EducatorProfile } from "../../src/types/institution";
+import { AdminShell } from "../../src/screens/admin/AdminShell";
 import "./styles.css";
 
 const TOKEN_KEY = "sifter_auth_token_v2";
@@ -73,14 +79,10 @@ const AdminAffiliationScreen = lazy(() => import("../../src/screens/admin/Affili
 const AdminSessionScreen = lazy(() => import("../../src/screens/admin/SessionModeScreen"));
 const AdminProfileScreen = lazy(() => import("../../src/screens/admin/InstitutionProfileScreen"));
 const AdminStudentGuidanceRoute = lazy(() => import("../../app/(admin)/students/[userId]/guidance"));
-const ForgotPasswordScreen = lazy(() => import("../../src/screens/ForgotPasswordScreen"));
 const DisabledLearningScreen = lazy(() => import("../../src/screens/DisabledLearningScreen"));
-const LandingPage = lazy(() => import("../../app/index"));
-const AuthScreen = lazy(() => import("../../src/screens/AuthScreen"));
-const SignupPage = lazy(() => import("../../app/(auth)/signup"));
 const AccountTypeGate = lazy(() => import("../../src/screens/onboarding/AccountTypeGate"));
 
-type AuthMode = "welcome" | "login" | "signup";
+type AuthMode = "welcome" | "login" | "signup" | "forgot";
 
 function currentPath() {
   return `${window.location.pathname}${window.location.search}`;
@@ -103,8 +105,12 @@ function useLocation() {
 }
 
 function routeMode(): AuthMode {
+  const path = window.location.pathname;
+  if (path === "/login" || path === "/sign-in") return "login";
+  if (path === "/signup" || path === "/create-account") return "signup";
+  if (path === "/forgot-password") return "forgot";
   const mode = new URLSearchParams(window.location.search).get("mode");
-  return mode === "login" || mode === "signup" ? mode : "welcome";
+  return mode === "login" || mode === "signup" || mode === "forgot" ? mode : "welcome";
 }
 
 export function WebApp() {
@@ -129,16 +135,14 @@ function WebRouterApp() {
   // by an authenticated user should reopen the workspace, not the marketing
   // entry or a route-loading dead end.
   if (path === "/" && user) return <AuthenticatedWebApp user={user} path="/home" />;
-  if (path === "/") return <Suspense fallback={<RouteLoading />}><LandingPage /></Suspense>;
+  if (path === "/") return <AuthEntry initialMode="welcome" />;
+  if (user && isPublic) return <AuthenticatedWebApp user={user} path="/home" />;
   if (!user && !isPublic) {
     go(`/?mode=login&return_to=${encodeURIComponent(location)}`, true);
     return <div className="loading">Opening sign in…</div>;
   }
 
-  if (!user && path === "/forgot-password") return <Suspense fallback={<RouteLoading />}><ForgotPasswordScreen /></Suspense>;
-  if (!user && (path === "/login" || path === "/sign-in")) return <Suspense fallback={<RouteLoading />}><AuthScreen initialMode="login" /></Suspense>;
-  if (!user && (path === "/signup" || path === "/create-account")) return <Suspense fallback={<RouteLoading />}><SignupPage /></Suspense>;
-  if (!user) return <Suspense fallback={<RouteLoading />}><AuthScreen initialMode="welcome" /></Suspense>;
+  if (!user) return <AuthEntry initialMode={routeMode()} />;
 
   return <AuthenticatedWebApp user={user} path={path} />;
 }
@@ -152,7 +156,8 @@ function AuthEntry({ initialMode }: { initialMode: AuthMode }) {
   }, []);
   const change = (next: AuthMode) => {
     setMode(next);
-    go(next === "welcome" ? "/" : `/?mode=${next}`);
+    const path = next === "welcome" ? "/" : next === "login" ? "/login" : next === "signup" ? "/signup" : "/forgot-password";
+    go(path);
   };
 
   return (
@@ -160,15 +165,16 @@ function AuthEntry({ initialMode }: { initialMode: AuthMode }) {
       <header className="topbar"><Brand /><span className="topbar-note">Student and institution guidance</span></header>
       <section className="auth-layout">
         <div className="intro-panel">
-          <p className="eyebrow">A clearer next step</p>
+          <div className="intro-brand-lockup"><span className="intro-brand-mark" aria-hidden="true"><i /><i /><i /></span><span>Sifter <b>LevelUp</b></span></div>
           <h1>Find the direction that fits you.</h1>
           <p>Explore programmes, subjects, skills and opportunities with guidance that keeps your choices connected.</p>
           <div className="promise-list"><span>Programme and university guidance</span><span>Subject-aware next steps</span><span>Your choices saved in one place</span></div>
         </div>
         <div className="auth-card">
           {mode === "welcome" && <Welcome onLogin={() => change("login")} onSignup={() => change("signup")} />}
-          {mode === "login" && <Login onBack={() => change("welcome")} onSignup={() => change("signup")} />}
+          {mode === "login" && <Login onBack={() => change("welcome")} onSignup={() => change("signup")} onForgot={() => change("forgot")} />}
           {mode === "signup" && <Signup onBack={() => change("welcome")} onLogin={() => change("login")} />}
+          {mode === "forgot" && <ForgotPassword onBack={() => change("login")} />}
         </div>
       </section>
     </main>
@@ -187,10 +193,14 @@ function Welcome({ onLogin, onSignup }: { onLogin: () => void; onSignup: () => v
     setBusy(true); setError("");
     try { await signInGuest(); go("/explore", true); } catch (e) { setError(e instanceof Error ? e.message : "Could not continue as guest."); } finally { setBusy(false); }
   }
-  return <><p className="eyebrow">Before you begin</p><h2>Choose how you want to continue</h2><p className="muted">Use one account across your guidance, saved choices and reports.</p><div className="stack"><button className="primary" onClick={onLogin}>Log in</button><button className="secondary" onClick={onSignup}>Create account</button><button className="link-button" onClick={guest} disabled={busy}>{busy ? "Opening guest mode…" : "Continue as guest"}</button></div>{error && <p className="error">{error}</p>}</>;
+  return <>
+    <div className="auth-header"><h2>Welcome to Sifter</h2><p className="muted">Choose how you want to continue with your guidance and saved choices.</p></div>
+    <div className="stack"><button className="primary" onClick={onLogin}>Log in</button><button className="secondary" onClick={onSignup}>Create account</button><button className="link-button" onClick={guest} disabled={busy}>{busy ? "Opening guest mode…" : "Continue as guest"}</button></div>
+    {error && <p className="error" role="alert">{error}</p>}
+  </>;
 }
 
-function Login({ onBack, onSignup }: { onBack: () => void; onSignup: () => void }) {
+function Login({ onBack, onSignup, onForgot }: { onBack: () => void; onSignup: () => void; onForgot: () => void }) {
   const { signInEmail } = useAuth();
   const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [error, setError] = useState(""); const [busy, setBusy] = useState(false);
   async function submit(event: FormEvent) {
@@ -205,23 +215,74 @@ function Login({ onBack, onSignup }: { onBack: () => void; onSignup: () => void 
     catch (e) { setError(friendlyLoginError(e)); }
     finally { setBusy(false); }
   }
-  return <><button className="back" onClick={onBack}>← Back</button><p className="eyebrow">Welcome back</p><h2>Log in</h2><form onSubmit={submit} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label><label>Password<input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label><button className="primary" disabled={busy}>{busy ? "Logging in…" : "Log in"}</button></form>{error && <p className="error">{error}</p>}<p className="switch">Need an account? <button className="inline-button" onClick={onSignup}>Create one</button></p></>;
+  return <>
+    <button className="back" onClick={onBack}>← Back</button>
+    <div className="auth-header"><h2>Log in</h2><p className="muted">Use the email and password for your Sifter account.</p></div>
+    <form onSubmit={submit} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label><label>Password<input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label><button type="button" className="text-button forgot-link" onClick={onForgot}>Forgot password?</button><button className="primary" disabled={busy}>{busy ? "Logging in…" : "Log in"}</button></form>
+    {error && <p className="error" role="alert">{error}</p>}
+    <p className="switch">Need an account? <button className="inline-button" onClick={onSignup}>Create one</button></p>
+  </>;
 }
 
 function Signup({ onBack, onLogin }: { onBack: () => void; onLogin: () => void }) {
   const { signUpEmail } = useAuth();
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "", code: "" });
+  const [form, setForm] = useState({ firstName: "", middleName: "", lastName: "", dateOfBirth: "", email: "", password: "", confirmPassword: "", schoolCode: "", claimCode: "", code: "" });
   const [sent, setSent] = useState(false); const [error, setError] = useState(""); const [busy, setBusy] = useState(false);
-  const [termsRead, setTermsRead] = useState(false); const [privacyRead, setPrivacyRead] = useState(false); const [analytics, setAnalytics] = useState(false); const [document, setDocument] = useState<"terms" | "privacy" | null>(null);
+  const [termsAccepted, setTermsAccepted] = useState(false); const [privacyAccepted, setPrivacyAccepted] = useState(false); const [analytics, setAnalytics] = useState(false); const [document, setDocument] = useState<"terms" | "privacy" | null>(null);
   const update = (key: keyof typeof form) => (event: React.ChangeEvent<HTMLInputElement>) => setForm((current) => ({ ...current, [key]: event.target.value }));
-  async function sendCode() { setError(""); setBusy(true); try { await request("/api/auth/email-code/request", { method: "POST", body: JSON.stringify({ email: form.email }) }); setSent(true); } catch (e) { setError(e instanceof Error ? e.message : "Could not send the verification code."); } finally { setBusy(false); } }
-  async function submit(event: FormEvent) { event.preventDefault(); setError(""); if (!termsRead || !privacyRead) { setError("Read and accept both documents before creating your account."); return; } setBusy(true); try { await signUpEmail(form.email, form.password, { email_code: form.code, first_name: form.firstName, last_name: form.lastName, terms_version: TERMS_VERSION, privacy_version: PRIVACY_VERSION, analytics_consent: analytics }); go("/onboarding", true); } catch (e) { setError(e instanceof Error ? e.message : "Could not create your account."); } finally { setBusy(false); } }
-  return <><button className="back" onClick={onBack}>← Back</button><p className="eyebrow">Create your account</p><h2>Start with a few details</h2><p className="muted">Required terms and privacy acceptance are explicit. Anonymous analytics is optional and helps us understand which parts of Sifter are useful; it never contains your passwords or report contents.</p><form onSubmit={submit} className="form"><div className="two-col"><label>First name<input value={form.firstName} onChange={update("firstName")} required /></label><label>Last name<input value={form.lastName} onChange={update("lastName")} required /></label></div><label>Email<input type="email" autoComplete="email" value={form.email} onChange={update("email")} required /></label><label>Password<input type="password" autoComplete="new-password" minLength={6} value={form.password} onChange={update("password")} required /></label>{sent && <label>Verification code<input inputMode="numeric" value={form.code} onChange={update("code")} required /></label>}<div className="legal-box"><p className="legal-heading">Before you create your account</p><label className="check-row"><input type="checkbox" checked={termsRead} disabled={!termsRead && !privacyRead} onChange={(e) => setTermsRead(e.target.checked)} /> I have read and accept the <button type="button" className="inline-button" onClick={() => setDocument("terms")}>Terms & Conditions</button></label><label className="check-row"><input type="checkbox" checked={privacyRead} disabled={!privacyRead && !termsRead} onChange={(e) => setPrivacyRead(e.target.checked)} /> I have read and accept the <button type="button" className="inline-button" onClick={() => setDocument("privacy")}>Privacy Policy</button></label><label className="check-row"><input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} /> Share anonymous usage analytics (optional)</label></div><div className="action-row"><button type="button" className="secondary" onClick={sendCode} disabled={busy}>{sent ? "Send again" : "Send email code"}</button>{sent && <button className="primary" disabled={busy || !termsRead || !privacyRead}>{busy ? "Creating…" : "Create account"}</button>}</div></form>{error && <p className="error">{error}</p>}<p className="switch">Already have an account? <button className="inline-button" onClick={onLogin}>Log in</button></p>{document && <LegalDialog kind={document} onClose={() => setDocument(null)} onRead={() => { if (document === "terms") setTermsRead(true); else setPrivacyRead(true); setDocument(null); }} />}</>;
+  function validateFields() { if (!form.firstName.trim() || !form.lastName.trim() || !form.dateOfBirth) { setError("Complete your first name, last name and date of birth."); return false; } if (form.password.length < 8) { setError("Password must be at least 8 characters."); return false; } if (form.password !== form.confirmPassword) { setError("Passwords do not match."); return false; } return true; }
+  async function sendCode() { setError(""); if (!isValidEmail(form.email.trim())) { setError("Enter a valid email address, such as name@example.com."); return; } if (!validateFields()) return; setBusy(true); try { await request("/api/auth/email-code/request", { method: "POST", body: JSON.stringify({ email: form.email.trim() }) }); setSent(true); } catch (e) { setError(e instanceof Error ? e.message : "Could not send the verification code."); } finally { setBusy(false); } }
+  async function submit(event: FormEvent) { event.preventDefault(); setError(""); if (!validateFields()) return; if (!termsAccepted || !privacyAccepted) { setError("Read and explicitly accept both documents before creating your account."); return; } setBusy(true); try { await signUpEmail(form.email.trim(), form.password, { email_code: form.code, first_name: form.firstName.trim(), middle_name: form.middleName.trim() || undefined, last_name: form.lastName.trim(), date_of_birth: form.dateOfBirth, terms_version: TERMS_VERSION, privacy_version: PRIVACY_VERSION, analytics_consent: analytics }); if (form.schoolCode.trim()) { await request("/api/provisioning/students/affiliate", { method: "POST", body: JSON.stringify({ school_code: form.schoolCode.trim().toUpperCase() }) }).catch(() => undefined); } if (form.claimCode.trim()) { await request("/api/provisioning/students/claim", { method: "POST", body: JSON.stringify({ code: form.claimCode.trim().toUpperCase(), email: form.email.trim() }) }).catch(() => undefined); } go("/onboarding", true); } catch (e) { setError(e instanceof Error ? e.message : "Could not create your account."); } finally { setBusy(false); } }
+  const requiredAccepted = termsAccepted && privacyAccepted;
+  return <>
+    <button className="back" onClick={onBack}>← Back</button>
+    <div className="auth-header"><h2>Create your account</h2><p className="muted">Use one account to keep your guidance, saved choices and reports together.</p></div>
+    <form onSubmit={submit} className="form"><div className="two-col"><label>First name<input autoComplete="given-name" value={form.firstName} onChange={update("firstName")} required /></label><label>Last name<input autoComplete="family-name" value={form.lastName} onChange={update("lastName")} required /></label></div><label>Middle name <span className="field-optional">Optional</span><input autoComplete="additional-name" value={form.middleName} onChange={update("middleName")} /></label><label>Date of birth<input type="date" autoComplete="bday" min="1900-01-01" max={new Date().toISOString().slice(0, 10)} value={form.dateOfBirth} onChange={update("dateOfBirth")} required /><small className="field-hint">Used for account safety and age-appropriate guidance.</small></label><label>Email<input type="email" autoComplete="email" value={form.email} onChange={update("email")} required /></label><label>Password<input type="password" autoComplete="new-password" minLength={8} value={form.password} onChange={update("password")} required /><small className="field-hint">At least 8 characters.</small></label><label>Confirm password<input type="password" autoComplete="new-password" minLength={8} value={form.confirmPassword} onChange={update("confirmPassword")} required /></label><label>School code <span className="field-optional">Optional</span><input autoComplete="off" value={form.schoolCode} onChange={update("schoolCode")} placeholder="SCHOOL-XXXXXXXX" /><small className="field-hint">Use a code shared by your school to link your account.</small></label><label>Student claim code <span className="field-optional">Optional</span><input autoComplete="off" value={form.claimCode} onChange={update("claimCode")} placeholder="SCHOOL-SS1-XXXXXXXX" /><small className="field-hint">Use this if your school created an account for you.</small></label>{sent && <label>Email verification code<input inputMode="numeric" autoComplete="one-time-code" value={form.code} onChange={update("code")} required /><small className="field-hint">Enter the code sent to your email.</small></label>}<div className="legal-box"><p className="legal-heading">Review before creating your account</p><div className="consent-status" aria-live="polite"><span className={`consent-check ${requiredAccepted ? "is-accepted" : ""}`} aria-hidden="true">{requiredAccepted ? "✓" : ""}</span><span>{requiredAccepted ? "Terms & Conditions and Privacy Policy accepted" : "Both documents must be read and explicitly accepted"}</span></div><div className="legal-actions"><button type="button" className="secondary" onClick={() => setDocument("terms")}>{termsAccepted ? "Terms accepted" : "Read and accept Terms"}</button><button type="button" className="secondary" onClick={() => setDocument("privacy")}>{privacyAccepted ? "Privacy accepted" : "Read and accept Privacy"}</button></div>{requiredAccepted && <><p className="analytics-explanation">Optional analytics helps us see which screens are useful and where people get stuck. It records anonymous product-usage events, not your password, email content, private report content, or school records. You can leave it off and change this choice later in Settings.</p><label className="check-row"><input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} /> Share anonymous usage analytics (optional)</label></>}</div><div className="action-row"><button type="button" className="secondary" onClick={sendCode} disabled={busy}>{sent ? "Send again" : "Send email code"}</button>{sent && <button className="primary" disabled={busy || !requiredAccepted}>{busy ? "Creating…" : "Create account"}</button>}</div></form>{error && <p className="error" role="alert">{error}</p>}<p className="switch">Already have an account? <button className="inline-button" onClick={onLogin}>Log in</button></p>{document && <LegalDialog kind={document} onClose={() => setDocument(null)} onAccept={() => { if (document === "terms") { setTermsAccepted(true); setDocument("privacy"); } else { setPrivacyAccepted(true); setDocument(null); } }} />}</>;
 }
 
-function LegalDialog({ kind, onClose, onRead }: { kind: "terms" | "privacy"; onClose: () => void; onRead: () => void }) {
+function LegalDialog({ kind, onClose, onAccept }: { kind: "terms" | "privacy"; onClose: () => void; onAccept: () => void }) {
   const [atEnd, setAtEnd] = useState(false);
-  return <div className="modal-backdrop"><section className="legal-modal"><div className="modal-head"><h3>{kind === "terms" ? "Terms & Conditions" : "Privacy Policy"}</h3><button className="text-button" onClick={onClose}>Close</button></div><div className="legal-scroll" onScroll={(event) => { const element = event.currentTarget; setAtEnd(element.scrollTop + element.clientHeight >= element.scrollHeight - 8); }}><p>These documents explain how Sifter LevelUp handles your account, guidance choices, reports, and optional analytics.</p><p>Use Sifter for guidance and planning. Programme and university information should be checked against the relevant institution before making an admission decision.</p><p>Your account data is used to provide saved guidance and account features. Optional analytics is separate from required account operation and can remain off.</p><p>Read the current document carefully before accepting it.</p><p>Document version: {kind === "terms" ? TERMS_VERSION : PRIVACY_VERSION}</p></div><button className="primary" disabled={!atEnd} onClick={onRead}>{atEnd ? "I have read this document" : "Scroll to read the document"}</button></section></div>;
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const sections = kind === "terms" ? TERMS_SECTIONS : privacySections("Sifter LevelUp", "");
+  useEffect(() => {
+    const element = scrollRef.current;
+    if (element) setAtEnd(element.scrollHeight <= element.clientHeight + 8);
+  }, [kind, sections.length]);
+  return <div className="modal-backdrop" role="presentation"><section className="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title"><div className="modal-head"><h3 id="legal-title">{kind === "terms" ? "Terms & Conditions" : "Privacy Policy"}</h3><button className="text-button" onClick={onClose}>Close</button></div><div ref={scrollRef} className="legal-scroll" onScroll={(event) => { const element = event.currentTarget; setAtEnd(element.scrollTop + element.clientHeight >= element.scrollHeight - 8); }}>{sections.map(([title, body]) => <section key={title}><h4>{title}</h4><p>{body}</p></section>)}<p>Document version: {kind === "terms" ? TERMS_VERSION : PRIVACY_VERSION}</p><p>Reaching the end only enables the acceptance button; it does not accept the document for you.</p></div><button className="primary" disabled={!atEnd} onClick={onAccept}>{atEnd ? `I have read and accept the ${kind === "terms" ? "Terms & Conditions" : "Privacy Policy"}` : "Scroll to read the document"}</button></section></div>;
+}
+
+function ForgotPassword({ onBack }: { onBack: () => void }) {
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function sendCode(event?: FormEvent) {
+    event?.preventDefault(); setError(""); setMessage("");
+    const normalized = email.trim();
+    if (!isValidEmail(normalized)) { setError("Enter a valid email address, such as name@example.com."); return; }
+    setBusy(true);
+    try { await API.requestPasswordResetCode(normalized); setSent(true); setMessage("If an account matches that email, a reset code has been sent. Check your inbox and spam folder."); }
+    catch (e) { setError(e instanceof Error ? e.message : "Could not request a reset code."); }
+    finally { setBusy(false); }
+  }
+
+  async function reset(event: FormEvent) {
+    event.preventDefault(); setError("");
+    if (!code.trim()) { setError("Enter the reset code."); return; }
+    if (password.length < 6) { setError("Password must be at least 6 characters."); return; }
+    if (password !== confirmPassword) { setError("Passwords do not match."); return; }
+    setBusy(true);
+    try { await API.confirmPasswordReset(email.trim(), code.trim(), password); setMessage("Your password has been changed. You can now log in."); setSent(false); setCode(""); setPassword(""); setConfirmPassword(""); }
+    catch (e) { const text = e instanceof Error ? e.message : ""; setError(/invalid reset code/i.test(text) ? "That reset code is not correct. Check it and try again." : text || "Could not reset your password."); }
+    finally { setBusy(false); }
+  }
+
+  return <><button className="back" onClick={onBack}>← Back to log in</button><div className="auth-header"><h2>Reset your password</h2><p className="muted">Request a reset code, then choose a new password. We will not reveal whether an email is registered.</p></div>{message && <p className="success" role="status">{message}</p>}{error && <p className="error" role="alert">{error}</p>}<form onSubmit={sent ? reset : sendCode} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>{sent && <><label>Reset code<input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required /></label><label>New password<input type="password" autoComplete="new-password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required /></label><label>Confirm new password<input type="password" autoComplete="new-password" minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></label></>}<button className="primary" disabled={busy}>{busy ? (sent ? "Saving…" : "Sending…") : sent ? "Set new password" : "Send reset code"}</button></form>{sent && <button className="link-button recovery-resend" onClick={() => void sendCode()} disabled={busy}>Send another code</button>}<p className="switch">Remembered it? <button className="inline-button" onClick={onBack}>Log in</button></p></>;
 }
 
 type GlobalSearchKind = "programme" | "university" | "domain" | "subgroup" | "role" | "skill" | "tool" | "certification" | "opportunity";
@@ -292,19 +353,32 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   const { signOut } = useAuth();
   const query = new URLSearchParams(window.location.search);
   const back = () => go("/home");
+  const [adminProfile, setAdminProfile] = useState<EducatorProfile | null>(null);
+  useEffect(() => {
+    if (!path.startsWith("/admin")) return;
+    let active = true;
+    getEducatorProfile(user.id).then((profile) => {
+      if (active) setAdminProfile(profile);
+    }).catch(() => {
+      if (active) setAdminProfile(null);
+    });
+    return () => { active = false; };
+  }, [path, user.id]);
   const route = path.startsWith("/admin/explore")
     ? path.replace(/^\/admin\/explore/, "/explore")
     : path.startsWith("/admin/workspace-explore")
       ? path.replace(/^\/admin\/workspace-explore/, "/explore")
       : path;
+  const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
+  const isAdminRoute = path.startsWith("/admin");
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
     if (route === "/onboarding") return <Suspense fallback={<RouteLoading />}><AccountTypeGate /></Suspense>;
-    if (route === "/explore") return <ExploreScreen initialQuery={query.get("q") ?? ""} adminAudience={path.startsWith("/admin") ? "school" : undefined} />;
+    if (route === "/explore") return <ExploreScreen initialQuery={query.get("q") ?? ""} adminAudience={path.startsWith("/admin") ? adminAudienceForProfile(adminProfile) : undefined} adminType={path.startsWith("/admin") ? adminProfile?.organizationType : undefined} />;
     if (route === "/explore/admission") return <AdmissionBrowseScreen />;
     const legacyAdmission = route.match(/^\/explore\/admission\/([^/]+)$/)?.[1];
-    if (legacyAdmission) return <LegacyAdmissionRedirect jambName={decodeURIComponent(legacyAdmission)} />;
+    if (legacyAdmission) return <LegacyAdmissionRedirect jambName={decodeURIComponent(legacyAdmission)} admin={path.startsWith("/admin/")} />;
     if (route === "/explore/domains") return <DomainExplorerScreen />;
     if (route === "/explore/compare") return <ProgrammeCompareScreen />;
     if (route === "/explore/pathways") return <PathwaysHubScreen />;
@@ -316,7 +390,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (route === "/explore/elite") return <ElitePathwaysHubScreen />;
     if (route.startsWith("/explore/elite/")) return <ElitePathwayDetailScreen />;
     const programme = route.match(/^\/explore\/programme\/([^/]+)/)?.[1];
-    if (programme) return <ProgrammeDetailRefinedScreen programmeId={decodeURIComponent(programme)} jambProgrammeId={query.get("jamb_programme_id") ?? undefined} initialSchoolId={query.get("school_id") ?? undefined} userType={query.get("user_type") ?? undefined} journeyMode={query.get("journey_mode") ?? undefined} />;
+    if (programme) return <ProgrammeDetailRefinedScreen programmeId={decodeURIComponent(programme)} jambProgrammeId={query.get("jamb_programme_id") ?? undefined} initialSchoolId={query.get("school_id") ?? undefined} userType={query.get("user_type") ?? undefined} guidanceStudentId={query.get("guidance_student_id") ?? undefined} guidanceTarget={query.get("guidance_target") ?? undefined} viewOnly={query.get("view_only") === "1"} journeyMode={query.get("journey_mode") ?? undefined} />;
     const domain = route.match(/^\/explore\/domain\/([^/]+)$/)?.[1];
     if (domain) return <DomainDetailScreen domainId={decodeURIComponent(domain)} />;
     const subgroup = route.match(/^\/explore\/domain\/([^/]+)\/subgroup\/([^/]+)$/);
@@ -457,12 +531,32 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     }
   };
 
+  if (isAdminExplore) {
+    return (
+      <AdminShell title="Explore programmes and domains">
+        <ExploreBaseProvider base={ADMIN_EXPLORE_BASE}>
+          <div className="admin-web-content">
+            <Suspense fallback={<RouteLoading />}>{content()}</Suspense>
+          </div>
+        </ExploreBaseProvider>
+      </AdminShell>
+    );
+  }
+
+  // Every native admin screen owns an AdminShell. Do not wrap it in the
+  // student platform shell on Vite: that produced two competing navigation
+  // systems and made browser admin pages look like student pages.
+  if (isAdminRoute) {
+    return <Suspense fallback={<RouteLoading />}>{content()}</Suspense>;
+  }
+
   return <main className="platform-shell">
     <aside className="platform-sidebar">
       <Brand />
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
         <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
+        <a href="/opportunities" onClick={(e) => { e.preventDefault(); go("/opportunities"); }}>Opportunities</a>
         <a href="/myworld" onClick={(e) => { e.preventDefault(); go("/myworld"); }}>My World</a>
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
       </nav>
@@ -490,8 +584,14 @@ function PersonaChooser({ onChoose }: { onChoose: (value: string) => void }) {
 }
 
 function RouteLoading() { return <div className="web-panel"><p className="muted">Loading Sifter LevelUp…</p></div>; }
-function LegacyAdmissionRedirect({ jambName }: { jambName: string }) {
-  useEffect(() => { go(`/explore/admission?mode=programme&q=${encodeURIComponent(jambName)}`, true); }, [jambName]);
+function LegacyAdmissionRedirect({ jambName, admin }: { jambName: string; admin?: boolean }) {
+  useEffect(() => {
+    const next = new URLSearchParams(window.location.search);
+    next.set("mode", "programme");
+    next.set("q", jambName);
+    if (admin) next.set("admin", "1");
+    go(`/explore/admission?${next.toString()}`, true);
+  }, [admin, jambName]);
   return <RouteLoading />;
 }
 function NotFound({ path }: { path: string }) { return <section className="web-panel"><p className="eyebrow">Web route</p><h1>This route is not available yet.</h1><p className="muted">{path}</p><button className="primary" onClick={() => go("/home")}>Return home</button></section>; }

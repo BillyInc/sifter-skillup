@@ -8,7 +8,7 @@ import type { EducatorProfile, OrganizationType } from "../types/institution";
  *    answer changes on the scale of a curriculum review.
  *  - "school" — ADVISORY work. Secondary schools, tutorial centres and JAMB
  *    cafés sit with a student and answer "which programme, which university,
- *    what cut-off". National-scoped, and the answer changes per conversation.
+ *    and which requirements". National-scoped, and the answer changes per conversation.
  *
  * That split is why they do not share a landing page — see adminHomeForProfile.
  */

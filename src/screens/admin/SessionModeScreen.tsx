@@ -18,6 +18,7 @@ import {
   webContainer,
 } from "@/theme";
 import { getEducatorProfile } from "@/lib/educatorProfile";
+import { guidanceContextQuery } from "@/lib/guidanceRouteContext";
 import { useAuth } from "@/hooks/useAuth";
 import type { EducatorProfile } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
@@ -100,14 +101,21 @@ export function SessionModeScreen() {
     setJourney(value);
     const mode = value === "full" || value === "utme_only" || value === "olevel_only" ? "subjects" : "programme";
     const examType = value === "utme_only" ? "utme" : value === "olevel_only" ? "olevel" : value === "full" ? "combined" : "";
+    const guidanceContext = guidanceContextQuery({
+      className: "JAMB",
+      userType: "jamb",
+      journeyMode: value,
+      guidanceTarget: "provider_session",
+      resumeStage: "setup",
+      focused: true,
+    });
     const params = [
       `mode=${mode}`,
-      "focus=guidance",
       "admin=1",
       `admin_type=${encodeURIComponent(profile.organizationType ?? "")}`,
-      "class_name=JAMB",
       `journey=${encodeURIComponent(value)}`,
       examType ? `exam_type=${examType}` : "",
+      guidanceContext,
     ].filter(Boolean).join("&");
     router.push(`/(admin)/workspace-explore/admission?${params}` as never);
   };

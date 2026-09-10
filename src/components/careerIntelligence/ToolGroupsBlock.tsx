@@ -80,10 +80,10 @@ export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
     <View style={[styles.container, style]}>
       {title ? <SectionLabel>{title}</SectionLabel> : null}
       <Text style={styles.explanation}>
-        Practise broadly used tools alongside the foundation. Domain-specific tools become more relevant after you choose a subgroup or role; all available tools remain visible.
+        Practise broadly used tools alongside the foundation. Some tools become more useful after you choose a specialisation or role; all available tools remain visible.
       </Text>
-      <ToolGroup label="Tools used across this domain" tools={visibleCommon} prominent />
-      <ToolGroup label="Tools for a chosen specialization" tools={visibleDistinctive} prominent={false} />
+      <ToolGroup label="Tools used across this field" tools={visibleCommon} prominent />
+      <ToolGroup label="Tools for a chosen specialisation" tools={visibleDistinctive} prominent={false} />
       {(hasHidden || expanded) ? (
         <TouchableOpacity
           onPress={() => setExpanded((value) => !value)}

@@ -42,7 +42,8 @@ import {
   CompassFonts,
 } from "@/theme";
 import { DataStateView, LockedPill } from "@/components/careerIntelligence";
-import { careerData } from "@/lib/careerData";
+import { careerData, type GuidanceReportPath } from "@/lib/careerData";
+import { openStudentDocument } from "@/lib/provisioningData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
   type DataState,
@@ -59,6 +60,7 @@ import { featureFlags } from "@/lib/featureFlags";
 import { WORLD_NAV } from "@/lib/worldNav";
 import { xpEngine, type XPSnapshot } from "@/lib/XPEngine";
 import { streakEngine, type StreakStatus } from "@/lib/StreakEngine";
+import { PdfExportButton, ShareExportButton } from "@/components/careerIntelligence";
 
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
@@ -288,6 +290,7 @@ function PersonalPage() {
       ) : null}
 
       <PersonalCareerBlocks {...personal} />
+      <GuidanceReportCard />
 
       {/* ── LOCKED: Learning Tracks & Portfolio (single card) ─────── */}
     </ScrollView>
@@ -519,6 +522,7 @@ function LiveWorldHub() {
 
       {/* ── Personal career-mapping blocks (shared with OFF branch) ─ */}
       <PersonalCareerBlocks {...personal} />
+      <GuidanceReportCard />
 
       {/* ── More: the rest of the learning world ─────────────────── */}
       <Text style={[styles.section, { color: colors.textRole.secondary }]}>More</Text>
@@ -546,6 +550,78 @@ function LiveWorldHub() {
 
       <View style={{ height: Spacing.xxxl }} />
     </ScrollView>
+  );
+}
+
+/**
+ * The completed guidance report belongs in the student's personal workspace,
+ * not only on Explore detail screens. It is intentionally hidden until the
+ * saved path contains both a programme and university: an unfinished path is
+ * resumable, but it is not presented as a finished report.
+ */
+function GuidanceReportCard() {
+  const { colors } = useTheme();
+  const router = useRouter();
+  const [state, setState] = useState<DataState<GuidanceReportPath | null> | null>(null);
+  const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      setState(null);
+      void careerData.getGuidancePath().then((next) => {
+        if (active) setState(next);
+      });
+      return () => {
+        active = false;
+      };
+    }, []),
+  );
+
+  const path = state?.status === "real" ? state.data?.path : null;
+  if (!path) return null;
+
+  const programme = path.programme;
+  const university = path.university;
+  const programmeName = typeof programme?.name === "string" ? programme.name : "your selected programme";
+  const universityName = typeof university?.name === "string" ? university.name : "your selected university";
+  const ready = Boolean(programme?.name && university?.name);
+  const resumeInProgress = path.resume?.status === "in_progress";
+
+  const downloadEditableCopy = async () => {
+    setDownloadNotice(null);
+    const opened = await openStudentDocument("/api/student/report.docx", {
+      download: "sifter-guidance-report.docx",
+    });
+    if (!opened) setDownloadNotice("The editable copy is unavailable right now. Try again when you are online.");
+  };
+
+  return (
+    <View style={[styles.reportCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.reportEyebrow, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>YOUR GUIDANCE REPORT</Text>
+      <Text style={[styles.reportTitle, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>Keep your guidance together</Text>
+      <Text style={[styles.reportBody, CompassFonts.body, { color: colors.textRole.secondary }]}>
+        {ready
+          ? `Your saved route connects ${programmeName} with ${universityName}. Open the report when you are ready to print, save or share it.`
+          : resumeInProgress
+            ? "Your choices are saved, but the report is not ready until you select both a programme and a university."
+            : "Your saved guidance is not complete enough to create a report yet."}
+      </Text>
+      {ready ? (
+        <View style={styles.reportActions}>
+          <PdfExportButton title="Print / save report" documentPath="/api/student/report.html" />
+          <ShareExportButton documentPath="/api/student/report.html" fileName="sifter-guidance-report.html" />
+          <TouchableOpacity onPress={() => { void downloadEditableCopy(); }} style={[styles.reportLink, { borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Download editable copy</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={() => router.push("/(tabs)/explore/admission" as never)} style={[styles.reportLink, { borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.reportLinkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>Continue</Text>
+        </TouchableOpacity>
+      )}
+      {downloadNotice ? <Text style={[styles.reportNotice, CompassFonts.body, { color: colors.textRole.muted }]}>{downloadNotice}</Text> : null}
+    </View>
   );
 }
 
@@ -1061,6 +1137,43 @@ const styles = StyleSheet.create({
   bannerText: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.4,
+  },
+  reportCard: {
+    borderRadius: Radius.lg,
+    borderWidth: 1,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  reportEyebrow: {
+    fontSize: FontSize.xs,
+    letterSpacing: 1.1,
+  },
+  reportTitle: {
+    fontSize: FontSize.lg,
+  },
+  reportBody: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.45,
+  },
+  reportActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    gap: Spacing.sm,
+    marginTop: Spacing.xs,
+  },
+  reportLink: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
+  reportLinkText: {
+    fontSize: FontSize.xs,
+  },
+  reportNotice: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.4,
   },
   section: {
     fontSize: FontSize.sm,

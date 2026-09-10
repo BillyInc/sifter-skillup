@@ -18,6 +18,7 @@
  */
 import React from "react";
 import type { Router } from "expo-router";
+import { guidanceContextQuery, logGuidanceRoute, withGuidanceContext, type GuidanceRouteContext } from "./guidanceRouteContext";
 
 type Nav = Pick<Router, "push" | "replace" | "back">;
 
@@ -40,57 +41,60 @@ export type ExploreNav = ReturnType<typeof makeExploreNav>;
 export function makeExploreNav(base: string) {
   return {
     base,
-    programme(router: Nav, programmeId: string, context?: { jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string; focused?: boolean; viewOnly?: boolean; journeyMode?: string }) {
-      const query = [
-        context?.jambProgrammeId ? `jamb_programme_id=${encodeURIComponent(context.jambProgrammeId)}` : "",
-        context?.schoolId ? `school_id=${encodeURIComponent(context.schoolId)}` : "",
-        context?.userType ? `user_type=${encodeURIComponent(context.userType)}` : "",
-        context?.guidanceStudentId ? `guidance_student_id=${encodeURIComponent(context.guidanceStudentId)}` : "",
-        context?.focused ? "focus=guidance" : "",
-        context?.viewOnly ? "view_only=1" : "",
-        context?.journeyMode ? `journey_mode=${encodeURIComponent(context.journeyMode)}` : "",
-      ].filter(Boolean).join("&");
+    programme(router: Nav, programmeId: string, context?: GuidanceRouteContext) {
+      const query = guidanceContextQuery(context);
+      logGuidanceRoute(`${base}/programme`, context, "programme_preview");
       router.push(`${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never);
     },
-    guided(router: Nav, context?: { programmeId?: string; jambProgrammeId?: string; schoolId?: string; userType?: string; guidanceStudentId?: string }) {
-      const query = [
-        "guided=1",
-        "focus=guidance",
-        context?.programmeId ? `programme_id=${encodeURIComponent(context.programmeId)}` : "",
-        context?.jambProgrammeId ? `jamb_programme_id=${encodeURIComponent(context.jambProgrammeId)}` : "",
-        context?.schoolId ? `school_id=${encodeURIComponent(context.schoolId)}` : "",
-        context?.userType ? `user_type=${encodeURIComponent(context.userType)}` : "",
-        context?.guidanceStudentId ? `guidance_student_id=${encodeURIComponent(context.guidanceStudentId)}` : "",
-      ].filter(Boolean).join("&");
-      router.push(`${base}/pathways?${query}` as never);
+    guided(router: Nav, context?: GuidanceRouteContext) {
+      if (context?.programmeId || context?.jambProgrammeId) {
+        return this.domainGuidance(router, context);
+      }
+      router.push(withGuidanceContext(`${base}/pathways?guided=1`, { ...context, focused: true }) as never);
+    },
+    /** Programme-to-domain guidance. Keep this route separate from the
+     * pathways hub so the URL and shell match the user's current task. */
+    domainGuidance(router: Nav, context?: GuidanceRouteContext) {
+      const query = guidanceContextQuery(context, { includeProgrammeId: true });
+      logGuidanceRoute(`${base}/domain-guidance`, context, "domains");
+      router.push(`${base}/domain-guidance${query ? `?${query}` : ""}` as never);
     },
     compare(router: Nav, programmeIds: string[] = []) {
       const ids = programmeIds.slice(0, 4).map(encodeURIComponent).join(",");
       router.push(`${base}/compare${ids ? `?ids=${ids}` : ""}` as never);
     },
-    role(router: Nav, roleId: string, guidanceStudentId?: string, focused?: boolean) {
-      const query = [
-        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
-        focused ? "focus=guidance" : "",
-      ].filter(Boolean).join("&");
+    role(router: Nav, roleId: string, contextOrStudentId?: GuidanceRouteContext | string, focused?: boolean) {
+      const context: GuidanceRouteContext = typeof contextOrStudentId === "string"
+        ? { guidanceStudentId: contextOrStudentId, focused }
+        : { ...(contextOrStudentId ?? {}), focused: contextOrStudentId?.focused ?? focused };
+      const query = guidanceContextQuery(context, { includeProgrammeId: true });
       router.push(`${base}/role/${roleId}${query ? `?${query}` : ""}` as never);
     },
     domains(router: Nav) {
       router.push(`${base}/domains` as never);
     },
-    domain(router: Nav, domainId: string, guidanceStudentId?: string, focused?: boolean, matchType?: string) {
+    domain(
+      router: Nav,
+      domainId: string,
+      contextOrStudentId?: GuidanceRouteContext | string,
+      focusedOrMatchType?: boolean | string,
+      legacyMatchType?: string,
+    ) {
+      const context: GuidanceRouteContext = typeof contextOrStudentId === "string"
+        ? { guidanceStudentId: contextOrStudentId, focused: typeof focusedOrMatchType === "boolean" ? focusedOrMatchType : undefined }
+        : { ...(contextOrStudentId ?? {}), focused: contextOrStudentId?.focused ?? (typeof focusedOrMatchType === "boolean" ? focusedOrMatchType : undefined) };
+      const matchType = typeof focusedOrMatchType === "string" ? focusedOrMatchType : legacyMatchType;
       const query = [
-        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
-        focused ? "focus=guidance" : "",
+        guidanceContextQuery(context, { includeProgrammeId: true }),
         matchType ? `match_type=${encodeURIComponent(matchType)}` : "",
       ].filter(Boolean).join("&");
       router.push(`${base}/domain/${domainId}${query ? `?${query}` : ""}` as never);
     },
-    subgroup(router: Nav, domainId: string, subgroupId: string, guidanceStudentId?: string, focused?: boolean) {
-      const query = [
-        guidanceStudentId ? `guidance_student_id=${encodeURIComponent(guidanceStudentId)}` : "",
-        focused ? "focus=guidance" : "",
-      ].filter(Boolean).join("&");
+    subgroup(router: Nav, domainId: string, subgroupId: string, contextOrStudentId?: GuidanceRouteContext | string, focused?: boolean) {
+      const context: GuidanceRouteContext = typeof contextOrStudentId === "string"
+        ? { guidanceStudentId: contextOrStudentId, focused }
+        : { ...(contextOrStudentId ?? {}), focused: contextOrStudentId?.focused ?? focused };
+      const query = guidanceContextQuery(context, { includeProgrammeId: true });
       router.push(`${base}/domain/${encodeURIComponent(domainId)}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
     },
 
@@ -117,11 +121,11 @@ export function makeExploreNav(base: string) {
     charterships(router: Nav) {
       router.push(`${base}/pathways/credentials` as never);
     },
-    entrepreneurship(router: Nav, context?: { programmeName?: string; domainId?: string; focused?: boolean }) {
+    entrepreneurship(router: Nav, context?: GuidanceRouteContext & { programmeName?: string; domainId?: string }) {
       const query = [
+        guidanceContextQuery(context, { includeProgrammeId: true }),
         context?.programmeName ? `programme_name=${encodeURIComponent(context.programmeName)}` : "",
         context?.domainId ? `domain_id=${encodeURIComponent(context.domainId)}` : "",
-        context?.focused ? "focus=guidance" : "",
       ].filter(Boolean).join("&");
       router.push(`${base}/pathways/entrepreneurship${query ? `?${query}` : ""}` as never);
     },

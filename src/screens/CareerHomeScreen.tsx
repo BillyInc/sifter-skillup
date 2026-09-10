@@ -33,9 +33,11 @@ import { StaggerReveal } from "../components/animations/StaggerReveal";
 import { careerData } from "../lib/careerData";
 import { getStartingPoint } from "../lib/startingPoint";
 import { getOnboardingDraft } from "../lib/onboardingDraft";
+import { guidanceContextQuery } from "../lib/guidanceRouteContext";
 import type { GuidanceReportPath } from "../lib/careerData";
 import {
-  comingSoon,
+  error,
+  pending,
   type DataState,
   type SavedItem,
 } from "../types/career";
@@ -144,6 +146,8 @@ function nextStartingPointAction(
   const isAdmissionUser = p.userType === "jamb" || p.userType === "ss3_secondary" || p.userType === "senior_secondary";
   const savedProgramme = guidance?.path.programme;
   const savedUniversity = guidance?.path.university;
+  const savedResume = guidance?.path.resume;
+  const resumeStage = recordText(savedResume, "stage", "resumeStage") || undefined;
   const programmeId = p.intendedJambProgrammeId
     ?? p.intendedProgrammeId
     ?? recordText(savedProgramme, "id", "programmeId", "jambProgrammeId");
@@ -151,28 +155,58 @@ function nextStartingPointAction(
     ?? p.programmeName
     ?? recordText(savedProgramme, "name", "programmeName", "jambName");
   const hasProgramme = Boolean(programmeId || programmeName);
+  const jambProgrammeId = p.intendedJambProgrammeId
+    ?? recordText(savedProgramme, "jambProgrammeId", "jamb_programme_id");
   const schoolId = p.preferredSchoolId ?? recordText(savedUniversity, "id", "schoolId", "universityId");
-  const schoolName = p.preferredSchool ?? p.schoolName ?? recordText(savedUniversity, "name", "universityName", "schoolName");
-  const hasSchool = Boolean(schoolId || schoolName);
 
   if ((p.userType === "student" || p.userType === "graduate") && programmeId) {
+    const contextQuery = guidanceContextQuery({
+      programmeId,
+      jambProgrammeId,
+      schoolId,
+      userType: p.userType,
+      journeyMode: "undergraduate_career",
+      resumeStage: resumeStage || "university_context",
+      focused: true,
+    });
     return {
       label: "Continue",
-      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?focus=guidance`,
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?${contextQuery}`,
     };
   }
 
-  if (isAdmissionUser && hasProgramme && hasSchool && programmeId) {
+  if (isAdmissionUser && hasProgramme && schoolId && programmeId) {
+    const contextQuery = guidanceContextQuery({
+      programmeId,
+      jambProgrammeId,
+      schoolId,
+      userType: p.userType,
+      className: p.ssClass,
+      stream: p.stream,
+      journeyMode: "programme_to_role",
+      resumeStage: resumeStage || "university_context",
+      focused: true,
+    });
     return {
       label: "Continue",
-      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?focus=guidance&school_id=${encodeURIComponent(schoolId)}&user_type=${encodeURIComponent(p.userType)}&class_name=${encodeURIComponent(p.ssClass ?? "")}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      href: `/(tabs)/explore/programme/${encodeURIComponent(programmeId)}?${contextQuery}`,
     };
   }
 
   if (isAdmissionUser && hasProgramme) {
+    const contextQuery = guidanceContextQuery({
+      programmeId,
+      jambProgrammeId,
+      userType: p.userType,
+      className: p.ssClass,
+      stream: p.stream,
+      journeyMode: "programme_preview",
+      resumeStage: resumeStage || "programme_preview",
+      focused: true,
+    });
     return {
       label: "Choose university",
-      href: `/(tabs)/explore/admission?mode=programme&focus=guidance&q=${encodeURIComponent(programmeName || programmeId || "")}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      href: `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programmeName || programmeId || "")}&${contextQuery}`,
     };
   }
 
@@ -182,9 +216,17 @@ function nextStartingPointAction(
   const subjectExamType = p.userType === "senior_secondary" || !p.jambSubjects?.length ? "olevel" : "utme";
   if (isAdmissionUser && subjects?.length) {
     const subjectParam = subjectExamType === "olevel" ? "olevel_subjects" : "subjects";
+    const contextQuery = guidanceContextQuery({
+      userType: p.userType,
+      className: p.ssClass,
+      stream: p.stream,
+      journeyMode: "guided_subject_discovery",
+      resumeStage: resumeStage || "subjects",
+      focused: true,
+    });
     return {
       label: "Continue",
-      href: `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&${subjectParam}=${encodeURIComponent(subjects.join(","))}&exam_type=${subjectExamType}&user_type=${encodeURIComponent(p.userType)}${p.ssClass ? `&class_name=${encodeURIComponent(p.ssClass)}` : ""}${p.stream ? `&stream=${encodeURIComponent(p.stream)}` : ""}`,
+      href: `/(tabs)/explore/admission?mode=subjects&journey=guided_subject_discovery&${subjectParam}=${encodeURIComponent(subjects.join(","))}&exam_type=${subjectExamType}&${contextQuery}`,
     };
   }
 
@@ -228,10 +270,10 @@ export default function CareerHomeScreen() {
   const [starting, setStarting] = useState<StartingPointProfile | null>(null);
   const [startingLoaded, setStartingLoaded] = useState(false);
   const [guidance, setGuidance] = useState<DataState<GuidanceReportPath | null>>(() =>
-    comingSoon<GuidanceReportPath | null>(),
+    pending<GuidanceReportPath | null>("Loading your saved guidance…"),
   );
   const [saved, setSaved] = useState<DataState<SavedItem[]>>(() =>
-    comingSoon<SavedItem[]>(),
+    pending<SavedItem[]>("Loading your saved paths…"),
   );
   const realGuidance = guidance.status === "real" ? guidance.data : null;
   const guidanceUserType = recordText(realGuidance?.path.academicContext, "userType") as UserType | "";
@@ -246,23 +288,30 @@ export default function CareerHomeScreen() {
     setStartingLoaded(false);
     let active = true;
     void (async () => {
-      const [sp, items, draft] = await Promise.all([
-        getStartingPoint(user?.id),
-        careerData.getSavedItems(),
-        getOnboardingDraft(user?.id),
-      ]);
-      const path = await careerData.getGuidancePath();
-      if (!active) return;
-      const draftProfile = draft?.studentProfile && draft.choice !== "educator"
-        ? {
-            ...(draft.studentProfile as StartingPointProfile),
-            userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
-          }
-        : null;
-      setStarting(sp ?? draftProfile);
-      setStartingLoaded(true);
-      setSaved(items);
-      setGuidance(path);
+      try {
+        const [sp, items, draft] = await Promise.all([
+          getStartingPoint(user?.id),
+          careerData.getSavedItems(),
+          getOnboardingDraft(user?.id),
+        ]);
+        const path = await careerData.getGuidancePath();
+        if (!active) return;
+        const draftProfile = draft?.studentProfile && draft.choice !== "educator"
+          ? {
+              ...(draft.studentProfile as StartingPointProfile),
+              userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
+            }
+          : null;
+        setStarting(sp ?? draftProfile);
+        setStartingLoaded(true);
+        setSaved(items);
+        setGuidance(path);
+      } catch {
+        if (!active) return;
+        setStartingLoaded(true);
+        setSaved(error<SavedItem[]>("Saved paths could not be loaded. Try again."));
+        setGuidance(error<GuidanceReportPath | null>("Saved guidance could not be loaded. Try again."));
+      }
     })();
     return () => {
       active = false;
@@ -485,61 +534,7 @@ export default function CareerHomeScreen() {
         </TouchableOpacity>
       )}
 
-      {/* Your saved paths */}
-      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        Saved paths
-      </Text>
-      <DataStateView
-        state={saved.data ? filterDomainsRoles(saved.data) : saved}
-        empty={(rows) => rows.length === 0}
-        emptyTitle="Nothing saved yet"
-        emptyBody="Save programmes, domains or roles to return to them here."
-        onRetry={loadCareerHome}
-      >
-        {(rows) => (
-          <View style={styles.list}>
-            {rows.map((it, i) => (
-              <StaggerReveal key={it.id} index={i}>
-                <View
-                  style={[
-                    styles.row,
-                    { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-                  ]}
-                >
-                  <Text style={styles.rowIcon}>
-                    {it.entityType === "role" ? "Role" : "Map"}
-                  </Text>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={[styles.rowTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}
-                      numberOfLines={1}
-                    >
-                      {it.label ?? it.entityId}
-                    </Text>
-                    <Text
-                      style={[styles.rowMeta, { color: colors.textRole.muted }, CompassFonts.body]}
-                      numberOfLines={1}
-                    >
-                      {it.entityType === "role" ? "Role" : "Domain"}
-                    </Text>
-                  </View>
-                </View>
-              </StaggerReveal>
-            ))}
-          </View>
-        )}
-      </DataStateView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={styles.linkRow}
-        onPress={() => router.push("/(tabs)/explore")}
-      >
-        <Text style={[styles.linkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          Explore and save domains
-        </Text>
-      </TouchableOpacity>
-
-      {/* Quick actions */}
+      {/* Quick actions stay available while saved guidance hydrates. */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Quick actions
       </Text>
@@ -565,6 +560,69 @@ export default function CareerHomeScreen() {
           </StaggerReveal>
         ))}
       </View>
+
+      {/* Your saved paths */}
+      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
+        Saved paths
+      </Text>
+      <DataStateView
+        state={saved.data ? filterDomainsRoles(saved.data) : saved}
+        empty={(rows) => rows.length === 0}
+        emptyTitle="Nothing saved yet"
+        emptyBody="Save programmes, domains or roles to return to them here."
+        onRetry={loadCareerHome}
+      >
+        {(rows) => (
+          <View style={styles.list}>
+            {rows.map((it, i) => (
+              <StaggerReveal key={it.id} index={i}>
+                <TouchableOpacity
+                  activeOpacity={0.82}
+                  onPress={() => {
+                    const id = encodeURIComponent(it.entityId);
+                    const href = it.entityType === "role"
+                      ? `/(tabs)/explore/role/${id}?focus=guidance`
+                      : `/(tabs)/explore/domain/${id}?focus=guidance`;
+                    router.push(href as never);
+                  }}
+                  style={[
+                    styles.row,
+                    { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+                  ]}
+                >
+                  <Text style={styles.rowIcon}>
+                    {it.entityType === "role" ? "Role" : "Map"}
+                  </Text>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={[styles.rowTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}
+                      numberOfLines={1}
+                    >
+                      {it.label ?? it.entityId}
+                    </Text>
+                    <Text
+                      style={[styles.rowMeta, { color: colors.textRole.muted }, CompassFonts.body]}
+                      numberOfLines={1}
+                    >
+                      {it.entityType === "role" ? "Role" : "Domain"}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </StaggerReveal>
+            ))}
+          </View>
+        )}
+      </DataStateView>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.linkRow}
+        onPress={() => router.push("/(tabs)/explore")}
+      >
+        <Text style={[styles.linkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
+          Explore and save domains
+        </Text>
+      </TouchableOpacity>
+
     </ScrollView>
   );
 }

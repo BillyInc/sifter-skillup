@@ -242,6 +242,11 @@ function RosterTab() {
     setError(null);
     try {
       await provisioningData.deleteStudents(selectedDeleteIds);
+      setData((current) => current ? {
+        ...current,
+        students: current.students.filter((student) => !selectedDeleteIds.includes(student.userId)),
+        totalAffiliated: Math.max(0, current.totalAffiliated - selectedDeleteIds.length),
+      } : current);
       setSelectedForDeletion({});
       setDeleteConfirmOpen(false);
       load();

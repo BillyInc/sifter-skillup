@@ -82,21 +82,71 @@ def _clean_text(value: Any) -> Optional[str]:
 
 
 def _student_programme_name(value: Any) -> Optional[str]:
-    """Return a readable student heading without discarding the source name.
+    """Return the exact JAMB/source name for student-facing output.
 
-    Some imported JAMB labels combine a base name and a descriptive variant,
-    for example ``Nursing/Nursing Science``. The raw value remains the source
-    identity used for matching; the shortened value is only for headings and
-    result labels. This rule only unwraps a slash label whose second part starts
-    with the first part, so unrelated source names are not silently renamed.
+    Programme identity is source data, not presentation copy. A slash, acronym,
+    qualifier, or university-specific wording must remain intact because two
+    source rows can represent different JAMB names. In particular, do not turn
+    ``Library Science`` into ``Library and Information Science`` (or vice versa)
+    and do not shorten labels such as ``Nursing/Nursing Science``.
     """
     raw = _clean_text(value)
     if not raw:
         return None
-    parts = [part.strip() for part in raw.split("/")]
-    if len(parts) == 2 and parts[0] and parts[1].lower().startswith(f"{parts[0].lower()} "):
-        return parts[0]
     return raw
+
+
+def _requirement_status(parse_status: Any, *texts: Any) -> str:
+    """Classify requirement evidence without turning missing text into a rule.
+
+    ``complete`` means the national row is explicitly marked parsed and has
+    usable text. ``review_only`` keeps source text browseable while preventing
+    it from being treated as an executable eligibility rule. ``source_missing``
+    is reserved for rows with no usable requirement text at all.
+    """
+    has_text = any(_clean_text(value) for value in texts)
+    status = str(parse_status or "").strip().lower()
+    if status == "parsed" and has_text:
+        return "complete"
+    if status in {"unparsed", "needs_review", "inherited_shared"} or has_text:
+        return "review_only"
+    return "source_missing"
+
+
+def _source_evidence_out(rows: list[dict]) -> list[dict]:
+    """Return source locations as evidence, never as eligibility rules."""
+    out = []
+    for row in rows:
+        out.append({
+            "layer": row.get("layer"),
+            "sourceFile": row.get("source_file"),
+            "page": row.get("pdf_page"),
+            "tableRow": row.get("table_row"),
+            "sourceStatus": row.get("source_status"),
+            "resolution": row.get("resolution"),
+            "text": row.get("requirement_text") or row.get("course_cell") or row.get("waiver_cell"),
+            "sourceLabel": row.get("source_label"),
+        })
+    return out
+
+
+def _offering_requirement_status(
+    *,
+    utme: Any,
+    olevel: Any,
+    exceptions: list[dict],
+    local_options: list[dict],
+) -> tuple[str, str]:
+    """Classify one university offering's local requirement evidence."""
+    if any(row.get("parseStatus") == "needs_review" for row in exceptions):
+        return "review_only", "This university's requirement wording still needs confirmation."
+    if local_options:
+        if any(option.get("rule_scope") == "full" for option in local_options):
+            return "complete", "A structured university-specific rule is recorded."
+        return "review_only", "A university-specific condition is recorded, but it is not a complete rule."
+    if _clean_text(utme) or _clean_text(olevel):
+        return "review_only", "The university requirement text is recorded but has not been fully structured."
+    return "review_only", "University-specific requirements have not been recorded yet."
 
 
 def _clean_list(value: Any) -> list[str]:
@@ -278,6 +328,7 @@ class GuidanceReportPathIn(BaseModel):
 class InstitutionRegisterIn(BaseModel):
     name: str
     institutionType: str
+    address: Optional[str] = None
 
 
 def _admission_resolution_complete(payload: StartingPointIn) -> bool:
@@ -750,7 +801,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 offering_rows.extend(
                     (
                         svc.table("v_school_jamb_programmes")
-                        .select("jamb_programme_id, school_name, jamb_name")
+                        .select("school_id, jamb_programme_id, school_name, jamb_name")
                         .in_("jamb_programme_id", jamb_ids[start : start + 5])
                         .limit(2000)
                         .execute()
@@ -774,6 +825,37 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                     existing = offerings_by_jamb.setdefault(jid, [])
                     if offering not in existing:
                         existing.append(offering)
+            preview_school_ids = list({row.get("school_id") for row in offering_rows if row.get("school_id")})
+            preview_locations: dict[str, dict] = {}
+            if preview_school_ids:
+                try:
+                    preview_location_rows = (
+                        svc.table("schools")
+                        .select("id, address, city, state, country")
+                        .in_("id", preview_school_ids)
+                        .execute()
+                    ).data or []
+                    preview_locations = {str(row.get("id")): row for row in preview_location_rows}
+                except Exception as location_exc:  # noqa: BLE001
+                    log.debug("programme search school address enrichment unavailable", error=str(location_exc))
+            for jid, offerings in offerings_by_jamb.items():
+                source_rows = [row for row in offering_rows if row.get("jamb_programme_id") == jid]
+                for offering in offerings:
+                    source = next(
+                        (
+                            row for row in source_rows
+                            if row.get("school_name") == offering.get("schoolName")
+                        ),
+                        None,
+                    ) or {}
+                    location = preview_locations.get(str(source.get("school_id"))) or {}
+                    offering.update({
+                        "schoolId": source.get("school_id"),
+                        "address": location.get("address"),
+                        "city": location.get("city"),
+                        "state": location.get("state"),
+                        "country": location.get("country"),
+                    })
             for item in items:
                 jid = item.get("jambProgrammeId")
                 names = schools_by_jamb.get(jid, [])
@@ -810,19 +892,59 @@ async def get_jamb_programme(jamb_programme_id: str):
         try:
             req = (
                 svc.table("programme_subject_requirements")
-                .select("utme_subjects, olevel_requirement, direct_entry, parse_status")
+                .select("utme_subjects, olevel_requirement, direct_entry, parse_status, parsed_at")
                 .eq("jamb_programme_id", jamb_programme_id)
                 .limit(1)
                 .execute()
             )
             if req.data:
                 r = req.data[0]
+                source_rows = []
+                try:
+                    source_rows = (
+                        svc.table("jamb_programme_requirement_sources")
+                        .select(
+                            "layer, source_file, pdf_page, table_row, source_status, "
+                            "resolution, requirement_text, course_cell, waiver_cell, source_label"
+                        )
+                        .eq("jamb_programme_id", jamb_programme_id)
+                        .order("layer")
+                        .order("pdf_page")
+                        .order("table_row")
+                        .execute()
+                    ).data or []
+                except Exception as source_exc:  # noqa: BLE001
+                    log.debug("jamb requirement source evidence unavailable", error=str(source_exc))
+                source_statuses = {str(row.get("source_status") or "").lower() for row in source_rows}
+                requirement_status = _requirement_status(
+                    r.get("parse_status"),
+                    r.get("utme_subjects"),
+                    r.get("olevel_requirement"),
+                )
+                if {"source_blank", "source_row_not_found"} & source_statuses:
+                    requirement_status = "source_missing"
+                elif "inherited_shared" in source_statuses and requirement_status == "complete":
+                    requirement_status = "review_only"
                 out["requirements"] = {
                     "utmeSubjects": r.get("utme_subjects"),
                     "olevelRequirement": r.get("olevel_requirement"),
                     "directEntry": r.get("direct_entry"),
                     "parseStatus": r.get("parse_status"),
                     "variesByInstitution": r.get("parse_status") == "needs_review",
+                    "requirementStatus": requirement_status,
+                    "parsedAt": r.get("parsed_at"),
+                    "sourceEvidence": _source_evidence_out(source_rows),
+                }
+            else:
+                out["requirements"] = {
+                    "utmeSubjects": None,
+                    "olevelRequirement": None,
+                    "directEntry": None,
+                    "parseStatus": None,
+                    "variesByInstitution": False,
+                    "requirementStatus": "source_missing",
+                    "parsedAt": None,
+                    "sourceEvidence": [],
                 }
         except Exception as exc:  # noqa: BLE001
             log.warning("jamb requirements lookup skipped", error=str(exc))
@@ -910,16 +1032,23 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
             .eq("jamb_programme_id", jamb_programme_id)
             .execute()
         )
-        domains = [
-            {
-                "domainId": r.get("domain_key"),
-                "domainName": r.get("domain_name"),
-                "cluster": r.get("cluster"),
-                "matchType": r.get("match_type") or "adjacent",
-                "eliteFlag": bool(r.get("elite_domain")),
-            }
-            for r in (res.data or [])
-        ]
+        domains = []
+        for r in (res.data or []):
+            # An unclassified link is not evidence of an adjacent relationship.
+            # Keep the matcher fail-closed instead of silently turning missing
+            # data into a user-facing false positive.
+            match_type = str(r.get("match_type") or "").strip().lower()
+            if match_type not in {"direct", "functional", "adjacent"}:
+                continue
+            domains.append(
+                {
+                    "domainId": r.get("domain_key"),
+                    "domainName": r.get("domain_name"),
+                    "cluster": r.get("cluster"),
+                    "matchType": match_type,
+                    "eliteFlag": bool(r.get("elite_domain")),
+                }
+            )
         return ResponseModel(data=_real({"jambProgrammeId": jamb_programme_id, "domains": domains}))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb domains failed", error=str(exc))
@@ -953,7 +1082,7 @@ async def register_school(
         svc = _svc()
         existing = (
             svc.table("schools")
-            .select("id, name, institution_type")
+            .select("id, name, institution_type, address, city, state, country")
             .ilike("name", name)
             .eq("institution_type", institution_type)
             .limit(1)
@@ -961,13 +1090,22 @@ async def register_school(
         ).data or []
         row = existing[0] if existing else None
         created = False
+        address = _clean_text(payload.address)
         if not row:
             row = (
                 svc.table("schools")
-                .insert({"name": name, "institution_type": institution_type, "ibass_verified": False})
+                .insert({
+                    "name": name,
+                    "institution_type": institution_type,
+                    "address": address or None,
+                    "ibass_verified": False,
+                })
                 .execute()
             ).data[0]
             created = True
+        elif address and not _clean_text(row.get("address")):
+            svc.table("schools").update({"address": address}).eq("id", row.get("id")).execute()
+            row["address"] = address
             clear_prefix("admission:")
             clear_prefix("student:")
         return ResponseModel(
@@ -975,6 +1113,7 @@ async def register_school(
                 "id": row.get("id"),
                 "name": row.get("name") or name,
                 "institutionType": row.get("institution_type") or institution_type,
+                "address": row.get("address"),
                 "created": created,
             }),
             message="Institution added to the registry." if created else "Existing institution found.",
@@ -1024,7 +1163,11 @@ async def get_school_faculties(school_id: str):
 
 
 @router.get("/schools/{school_id}/programmes", response_model=ResponseModel)
-async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
+async def get_school_programmes(
+    school_id: str,
+    q: Optional[str] = Query(None),
+    faculty: Optional[str] = Query(None),
+):
     """The courses a given university actually offers, by JAMB name.
 
     The entry point for a student who is ALREADY ENROLLED. They do not need the
@@ -1038,11 +1181,32 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
     """
     try:
         query_text = (q or "").strip().lower()
-        cache_key = f"student:school-programmes:{school_id}:{query_text}"
+        faculty_text = (faculty or "").strip()
+        cache_key = f"student:school-programmes:{school_id}:{faculty_text.lower()}:{query_text}"
         cached = get_json(cache_key)
         if isinstance(cached, list):
             return ResponseModel(data=_real(cached))
         svc = _svc()
+        faculty_jamb_ids: list[str] = []
+        if faculty_text:
+            # The older live offerings view does not expose jamb_faculty. Resolve
+            # the faculty against the source programme table, then filter the
+            # offerings by programme id. This works before and after the view is
+            # rebuilt with the faculty column.
+            faculty_rows = (
+                svc.table("jamb_programmes")
+                .select("id")
+                .eq("jamb_faculty", faculty_text)
+                .limit(2000)
+                .execute()
+            ).data or []
+            faculty_jamb_ids = [
+                str(row.get("id"))
+                for row in faculty_rows
+                if row.get("id")
+            ]
+            if not faculty_jamb_ids:
+                return ResponseModel(data=_real([]))
         query = (
             svc.table("v_school_jamb_programmes")
             .select("*")
@@ -1050,7 +1214,13 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
         )
         if q and q.strip():
             query = query.ilike("jamb_name", f"%{q.strip()}%")
-        res = query.order("jamb_name").limit(400).execute()
+        if faculty_jamb_ids:
+            query = query.in_("jamb_programme_id", faculty_jamb_ids)
+        # This is the complete course list for the selected institution, not a
+        # typeahead preview. Do not silently hide valid offerings behind a
+        # small arbitrary cap; the q/faculty filters remain available for large
+        # catalogues.
+        res = query.order("jamb_name").limit(2000).execute()
         rows = res.data or []
         if not rows:
             return ResponseModel(
@@ -1104,86 +1274,45 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
 
 @router.get("/jamb-programmes/{jamb_programme_id}/schools", response_model=ResponseModel)
 async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int] = Query(None)):
+    """Return recorded university offerings for one JAMB programme.
+
+    Legacy admission-cycle data is deliberately not part of this student-facing
+    route. Incomplete cycle data must not decide which universities appear or
+    be presented as programme guidance.
+    ``year`` remains accepted for URL compatibility but is intentionally ignored.
+    """
     try:
         svc = _svc()
-        target_year = year
-        if not target_year:
-            snap = (
-                svc.table("admission_snapshot_version")
-                .select("year")
-                .eq("is_active", True)
-                .limit(1)
-                .execute()
-            )
-            if snap.data:
-                target_year = int(snap.data[0]["year"])
-        query = (
-            svc.table("v_cutoffs_by_jamb_programme")
+        offerings = (
+            svc.table("v_school_jamb_programmes")
             .select("*")
             .eq("jamb_programme_id", jamb_programme_id)
+            .order("school_name")
+            .limit(2000)
+            .execute()
         )
-        if target_year:
-            query = query.eq("year", target_year)
-        res = query.order("school_name").limit(2000).execute()
-        # NOTE: per-school requirement columns on v_school_jamb_programmes
-        # (utme_subjects / olevel_requirement / direct_entry) are 100% NULL —
-        # programme-level requirements live in programme_subject_requirements
-        # and are served by GET /jamb-programmes/{id}. No schoolRequirements
-        # block is attached here.
-        items = [_cutoff_out(r) for r in (res.data or [])]
-        if not items:
-            offerings = (
-                svc.table("v_school_jamb_programmes")
-                .select("*")
-                .eq("jamb_programme_id", jamb_programme_id)
-                .order("school_name")
-                .limit(2000)
-                .execute()
-            )
-            items = [
-                {
-                    "schoolId": r.get("school_id"),
-                    "schoolName": r.get("school_name"),
-                    "institutionType": r.get("institution_type"),
-                    "jambProgrammeId": r.get("jamb_programme_id"),
-                    "jambName": r.get("jamb_name"),
-                    "studentName": _student_programme_name(r.get("jamb_name")),
-                    "programmeId": r.get("programme_id"),
-                    "programmeName": r.get("canonical_programme_name"),
-                    "year": target_year,
-                    "aggregateCutoff": None,
-                    "jambCutoff": None,
-                    "form": None,
-                    "sourceUrl": None,
-                }
-                for r in (offerings.data or [])
-            ]
-            return ResponseModel(data=_fallback(_attach_school_details(items), "No admission rows found yet; showing schools offering the programme."))
-        return ResponseModel(data=_real(_attach_school_details(items)))
+        offering_items = [
+            {
+                "schoolId": r.get("school_id"),
+                "schoolName": r.get("school_name"),
+                "institutionType": r.get("institution_type"),
+                "jambProgrammeId": r.get("jamb_programme_id"),
+                "jambName": r.get("jamb_name"),
+                "studentName": _student_programme_name(r.get("jamb_name")),
+                "programmeId": r.get("programme_id"),
+                # The user-facing programme identity is the exact JAMB name
+                # from this offering row. CCMAS/canonical fields remain
+                # internal mapping substrate and must not replace it.
+                "programmeName": r.get("jamb_name"),
+            }
+            for r in (offerings.data or [])
+        ]
+        offering_items.sort(key=lambda item: str(item.get("schoolName") or "").casefold())
+        enriched = _attach_school_details(offering_items)
+        return ResponseModel(data=_real(enriched, "Showing recorded university offerings and their requirements." if enriched else "No university offering is recorded for this programme yet."))
     except Exception as exc:  # noqa: BLE001
-        log.error("student jamb schools failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("Schools and admission rows are temporarily unavailable."))
-
-
-def _cutoff_out(r: dict) -> dict:
-    return {
-        "id": r.get("id"),
-        "schoolId": r.get("school_id"),
-        "schoolName": r.get("school_name"),
-        "institutionType": r.get("institution_type"),
-        "jambProgrammeId": r.get("jamb_programme_id"),
-        "jambName": r.get("jamb_name"),
-        "studentName": _student_programme_name(r.get("jamb_name")),
-        "programmeId": r.get("programme_id"),
-        "programmeName": r.get("canonical_programme_name"),
-        "year": r.get("year"),
-        "aggregateCutoff": None,
-        "jambCutoff": None,
-        "form": r.get("form"),
-        "sourceUrl": r.get("source_url"),
-        "verifiedAt": r.get("verified_at"),
-        "dataDate": r.get("created_at"),
-    }
+        log.error("student jamb university offerings failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("University offerings are temporarily unavailable."))
 
 
 def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selected_norm: set[str]) -> dict:
@@ -1415,6 +1544,14 @@ def _attach_school_details(
             }
             for option in local_options
         ]
+        requirement_status, requirement_notice = _offering_requirement_status(
+            utme=item.get("universityUtmeSubjects"),
+            olevel=item.get("universityOlevelRequirement"),
+            exceptions=exception_rows,
+            local_options=local_options,
+        )
+        item["universityRequirementStatus"] = requirement_status
+        item["universityRequirementNotice"] = requirement_notice
         item["hasUniversityException"] = bool(
             override.get("remarks")
             or override.get("utme_subjects")
@@ -1475,6 +1612,13 @@ async def programmes_by_subjects(
             data=_real(
                 [],
                 "Choose Use of English and three other UTME subjects before matching programmes.",
+            )
+        )
+    if exam in {"utme", "combined"} and "english language" not in utme_norm:
+        return ResponseModel(
+            data=_real(
+                [],
+                "UTME must include Use of English plus three other subjects before matching programmes.",
             )
         )
     if exam == "combined" and len(utme_norm) > MAX_UTME_SUBJECTS:
@@ -2088,6 +2232,8 @@ def _attach_school_context(
                 "hasUniversityException": school_detail.get("hasUniversityException", False),
                 "universityExceptionStatus": school_detail.get("universityExceptionStatus", "none"),
                 "universityEligibilityStatus": school_detail.get("universityEligibilityStatus", "none"),
+                "universityRequirementStatus": school_detail.get("universityRequirementStatus", "source_missing"),
+                "universityRequirementNotice": school_detail.get("universityRequirementNotice"),
                 "universityRequirementExceptions": school_detail.get("universityRequirementExceptions", []),
                 "universityStructuredSubjectRules": school_detail.get("universityStructuredSubjectRules", []),
             })

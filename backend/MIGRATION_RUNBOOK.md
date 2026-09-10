@@ -81,6 +81,14 @@ If the SQL Editor must be used, decompress and run the numbered parts
 separately in numeric order. Each part is a complete transaction. Do not paste
 or upload `.sql.gz` bytes to Supabase.
 
+### Manual-only deployment mode
+
+If the product owner says they will run the SQL manually, do not write to
+Supabase from the application service client, REST API, RPC, `psql`, or an
+automated SQL tool. Prepare the files, validate them locally, and stop with the
+exact order and verification queries. A local seed generation or read-only API
+check is not proof that Supabase was updated.
+
 After the career seed has completed, run
 `backend/seed_certification_lifecycle.sql`. It applies the evergreen status
 overlay to the loaded domain and role credential rows. This includes the
@@ -129,6 +137,7 @@ not a substitute for production deployment verification.
 | 12a | `backend/migration_contextual_career_items.sql` | Adds the learner-facing contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
 | 13 | `backend/migration_provisioning.sql` | Institution provisioning, school codes, claim codes, student affiliations/consents, merge candidates. | #5 |
 | 14 | `backend/migration_student_pipeline_live.sql` | Student starting points, selected subjects, structured subject options, pathway choices, JAMB/cutoff views. | #4, #6, #13 |
+| 14aa | `backend/migration_school_faculty_filter_2026-09-09.sql` | Appends `jamb_faculty` to the school programme view so the university → faculty → programme picker filters real offerings. | #14 |
 | 14a | `backend/migration_ss3_secondary_starting_point_patch.sql` | Existing-project patch that allows the split `ss3_secondary` starting-point type. | #14 |
 | 14b | `backend/migration_guidance_report_paths.sql` | Durable, account-scoped selected guidance paths used by student and admin-guided reports. | #13 and #14 |
 | 15 | `backend/migration_institution_team_access.sql` | Extends `institution_members` with scoped seats, creates `institution_member_invites`, and supports multiple officials per school/university/tutorial centre. | #5 and #13 |
@@ -199,6 +208,85 @@ the seed can create the subgroup foreign keys used by grouped roles, tools and
 resources. Roles without a supported subgroup taxonomy retain a direct
 domain-to-role path with a null subgroup foreign key. Do not hand-edit generated
 SQL to repair this relationship.
+
+### Pre-2026-09-01 JAMB-domain repair
+
+If the database was loaded with the 2026-08-31 preview, the historical
+`refresh_jamb_programme_domain_2026-08-17.sql`, or another older JAMB-domain
+transport, apply `backend/migration_jamb_domain_mapping_corrections_2026-09-08.sql`
+after that load. It repairs the 147 links that were incorrectly labelled
+`functional` instead of `adjacent` and removes one extra Project Management
+link. The 2026-09-01 authoritative seed already contains these corrections;
+the repair is safe to run after it as well.
+
+## Current live partial-seed diagnosis
+
+The latest read-only preflight observed this state:
+
+| Object | Observed state |
+|---|---:|
+| `domains` | 0 rows |
+| `domain_roles` | 0 rows |
+| `domain_subgroups` | 460 rows |
+| `jamb_programme_domain` | 3,164 rows |
+| `v_jamb_programme_domain_paths` | missing |
+| `v_school_jamb_programmes` | present, old shape without `jamb_faculty` |
+
+This is why a JAMB mapping can exist while domain detail, subgroup, and role
+screens remain unavailable. It is not a complete career seed. The current
+`migration_career_v2.sql` is explicitly a staging/rebuild migration and drops
+taxonomy tables before recreating them; do not run it against a populated
+project without backup and explicit approval. If a controlled staging rebuild
+is approved, use this order:
+
+1. Apply the career schema prerequisites through `migration_career_v2.sql`.
+2. Apply the role/tools/source-backed/enrichment/resource schema migrations
+   required by the 2026-09-01 seed.
+3. Apply `seed_career_v2_2026-09-01_parts_gz/part-001.sql.gz` through
+   `part-023.sql.gz`, in numeric order, preserving each transaction.
+4. Apply `migration_student_pipeline_live.sql`.
+5. Apply `migration_school_faculty_filter_2026-09-09.sql`.
+6. If the older 2026-08-31 or historical JAMB transport was used, apply
+   `migration_jamb_domain_mapping_corrections_2026-09-08.sql`.
+
+The correction file is not a replacement for the career seed. The authoritative
+2026-09-01 seed already has the corrected Sociology mapping, including the
+adjacent Criminology, Criminal Justice connection.
+
+After the user applies the files, verify the deployment with read-only queries
+in the SQL Editor:
+
+```sql
+SELECT 'domains' AS object, count(*) FROM skillup_dev.domains
+UNION ALL SELECT 'domain_subgroups', count(*) FROM skillup_dev.domain_subgroups
+UNION ALL SELECT 'domain_roles', count(*) FROM skillup_dev.domain_roles
+UNION ALL SELECT 'jamb_programme_domain', count(*) FROM skillup_dev.jamb_programme_domain;
+
+SELECT column_name
+FROM information_schema.columns
+WHERE table_schema = 'skillup_dev'
+  AND table_name = 'v_school_jamb_programmes'
+ORDER BY ordinal_position;
+
+SELECT jpd.jamb_name, d.name AS domain, jpd.match_type
+FROM skillup_dev.jamb_programme_domain AS jpd
+JOIN skillup_dev.domains AS d ON d.id = jpd.domain_id
+WHERE upper(jpd.jamb_name) = 'SOCIOLOGY'
+ORDER BY jpd.match_type, d.name;
+
+SELECT count(*) AS sociology_social_science_subgroups
+FROM skillup_dev.domain_subgroups AS sg
+JOIN skillup_dev.domains AS d ON d.id = sg.domain_id
+WHERE d.domain_key = 'D078';
+
+SELECT to_regclass('skillup_dev.v_jamb_programme_domain_paths') AS domain_paths_view;
+```
+
+The expected checks are: non-zero domains and roles, Sociology's Criminology,
+Criminal Justice row marked `adjacent`, at least the seeded D078 subgroups,
+`jamb_faculty` present in the school-offering view, and a non-null domain-path
+view. If any check fails, stop the user-facing smoke test and fix the SQL
+deployment state first.
 
 ## Subject-pipeline deployment order
 

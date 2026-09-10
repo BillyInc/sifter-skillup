@@ -177,7 +177,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         ))}
       </View>
 
-      {door ? (
+      {door && (door === "unsure" || showSubjectCheck) ? (
         <SelectField
           label="Your school stream"
           options={STREAM_OPTIONS}

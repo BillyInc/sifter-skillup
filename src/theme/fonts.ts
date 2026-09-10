@@ -6,7 +6,7 @@
  * — so the app never blocks on fonts that aren't present yet.
  *
  *   Sans : Inter             (all UI text, titles, section labels)
- *   Data : Spline Sans Mono  (scores, cut-offs, salary, %, freshness)
+ *   Data : Spline Sans Mono  (scores, salary, %, freshness)
  *
  * Legacy display roles intentionally map to Inter so existing call sites keep
  * working without carrying the old Bricolage display voice into the redesign.

@@ -151,23 +151,21 @@ def _guidance_requirement_rows(path: dict) -> list[tuple[str, str]]:
     """Return only student-facing requirement fields for the selected route.
 
     Direct Entry is intentionally excluded from the ordinary supported student
-    routes. University-specific text takes precedence over the national
-    programme text when it exists, while the two sources remain labelled.
+    routes. National and university-specific text are both retained and
+    labelled; a university row must never silently replace the national row.
     """
     national = path.get("requirements") if isinstance(path.get("requirements"), dict) else {}
     university = path.get("universityRequirements") if isinstance(path.get("universityRequirements"), dict) else {}
     rows: list[tuple[str, str]] = []
-    utme = university.get("utmeSubjects") or national.get("utmeSubjects")
-    olevel = university.get("olevelRequirement") or national.get("olevelRequirement")
-    note = university.get("note")
-    if utme:
-        rows.append(("UTME subjects", str(utme)))
-    if olevel:
-        rows.append(("O-level requirements", str(olevel)))
-    if note:
-        rows.append(("University note", str(note)))
-    if not rows and national.get("variesByInstitution"):
-        rows.append(("Requirement note", "Universities may phrase or add requirements differently. Check the selected university's current notice."))
+    rows.append(("National UTME subjects", str(national.get("utmeSubjects") or "Not recorded in the current source data.")))
+    rows.append(("National O-level requirements", str(national.get("olevelRequirement") or "Not recorded in the current source data.")))
+    rows.append(("University UTME subjects", str(university.get("utmeSubjects") or "Not recorded for the selected university.")))
+    rows.append(("University O-level requirements", str(university.get("olevelRequirement") or "Not recorded for the selected university.")))
+    if university.get("note"):
+        rows.append(("Additional university note", str(university["note"])))
+    status = str(national.get("requirementStatus") or "").lower()
+    if status in {"review_only", "source_missing"}:
+        rows.append(("Requirement evidence", "The published text is shown for reference and should be checked against the current university notice."))
     return rows
 
 
@@ -305,10 +303,10 @@ def build_full_guidance_report_html(ctx: ReportContext) -> str:
 <html><head><meta charset='utf-8'><title>Guidance report - {e(ctx.student_name)}</title>
 <style>
 @media print {{ @page {{ margin: 16mm; }} .toolbar {{ display:none; }} .page-break {{ break-before: page; }} }}
-body {{ font-family: Arial, sans-serif; color:#202124; max-width:820px; margin:0 auto; padding:28px; line-height:1.45; }}
+body {{ font-family: Arial, sans-serif; color:#202124; max-width:820px; margin:0 auto; padding:28px; line-height:1.45; user-select:none; -webkit-user-select:none; -webkit-user-drag:none; }}
 .watermark {{ position:fixed; top:44%; left:50%; transform:translate(-50%,-50%) rotate(-28deg); color:rgba(242,137,0,.10); font-size:42px; font-weight:800; white-space:nowrap; pointer-events:none; }}
 .content {{ position:relative; z-index:1; }} .toolbar {{ text-align:right; margin-bottom:18px; }}
-button {{ padding:9px 14px; border:1px solid #bbb; border-radius:6px; background:#fff; }}
+button {{ padding:9px 14px; border:1px solid #bbb; border-radius:6px; background:#fff; user-select:auto; -webkit-user-select:auto; cursor:pointer; }}
 .head {{ border-bottom:2px solid #202124; padding-bottom:14px; }} h1 {{ margin:4px 0; font-size:28px; }}
 h2 {{ margin-top:28px; border-bottom:1px solid #ddd; padding-bottom:6px; }} h3 {{ margin-bottom:4px; font-size:21px; }}
 h4 {{ margin:18px 0 6px; font-size:14px; text-transform:uppercase; letter-spacing:.5px; }} h5 {{ margin:12px 0 3px; font-size:13px; }}
@@ -360,10 +358,11 @@ def build_report_html(ctx: ReportContext) -> str:
 <style>
   @media print {{ @page {{ margin: 18mm; }} }}
   .toolbar {{ position: sticky; top: 12px; display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; }}
-  .toolbar button {{ border: 1px solid #bbb; border-radius: 6px; background: #fff; padding: 8px 12px; cursor: pointer; }}
+  .toolbar button {{ border: 1px solid #bbb; border-radius: 6px; background: #fff; padding: 8px 12px; cursor: pointer; user-select: auto; -webkit-user-select: auto; }}
   @media print {{ .toolbar {{ display: none; }} }}
   body {{ font-family: Georgia, 'Times New Roman', serif; color: #1a1a1a; max-width: 720px;
-         margin: 0 auto; padding: 32px; line-height: 1.55; }}
+         margin: 0 auto; padding: 32px; line-height: 1.55; user-select: none;
+         -webkit-user-select: none; -webkit-user-drag: none; }}
   .watermark {{ position: fixed; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-28deg);
          font-family: Arial, sans-serif; font-size: 42px; font-weight: 800; letter-spacing: 2px;
          color: rgba(31, 94, 255, 0.08); white-space: nowrap; z-index: 0; pointer-events: none; }}

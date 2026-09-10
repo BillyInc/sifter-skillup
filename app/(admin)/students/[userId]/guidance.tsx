@@ -9,6 +9,7 @@ import LocalLegalNotice from "../../../../src/components/LocalLegalNotice";
 import { getEducatorProfile } from "../../../../src/lib/educatorProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { provisioningData } from "../../../../src/lib/provisioningData";
+import { guidanceContextQuery } from "../../../../src/lib/guidanceRouteContext";
 
 export default function AdminStudentGuidancePage() {
   const { colors } = useTheme();
@@ -68,8 +69,18 @@ export default function AdminStudentGuidancePage() {
 
   const startGuidance = () => {
     if (!userId) return;
+    const guidanceContext = guidanceContextQuery({
+      className: contextClass,
+      userType: contextUserType,
+      stream,
+      journeyMode: "admin_created_student_guidance",
+      guidanceTarget: "authorised_student",
+      guidanceStudentId: userId,
+      resumeStage: "setup",
+      focused: true,
+    });
     router.push(
-      `/(admin)/workspace-explore/admission?mode=programme&focus=guidance&admin=1&admin_type=${encodeURIComponent(adminType)}&guidance_student_id=${encodeURIComponent(userId)}&resume=1&class_name=${encodeURIComponent(contextClass)}&user_type=${encodeURIComponent(contextUserType)}&student_type=${encodeURIComponent(studentType ?? "")}${stream ? `&stream=${encodeURIComponent(stream)}` : ""}` as never,
+      `/(admin)/workspace-explore/admission?mode=programme&admin=1&admin_type=${encodeURIComponent(adminType)}&student_type=${encodeURIComponent(studentType ?? "")}&${guidanceContext}` as never,
     );
   };
 

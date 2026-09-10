@@ -27,6 +27,7 @@ import {
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
+import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
   pending,
   type DataState,
@@ -54,12 +55,22 @@ export interface RoleDetailScreenProps {
 }
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; guidance_student_id?: string | string[]; focus?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; focus?: string | string[] }>();
   const roleKey = props.roleId ?? String(params.id ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
+  const guidanceContext: GuidanceRouteContext = {
+    programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
+    jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
+    schoolId: Array.isArray(params.school_id) ? params.school_id[0] : params.school_id,
+    userType: Array.isArray(params.user_type) ? params.user_type[0] : params.user_type,
+    journeyMode: Array.isArray(params.journey_mode) ? params.journey_mode[0] : params.journey_mode,
+    guidanceTarget: Array.isArray(params.guidance_target) ? params.guidance_target[0] : params.guidance_target,
+    guidanceStudentId: targetStudentId,
+    focused: focusedGuidance,
+  };
 
   const [state, setState] = useState<DataState<DomainRoleV2>>(() =>
     pending<DomainRoleV2>("Loading role details..."),
@@ -100,7 +111,7 @@ export function RoleDetailScreen(props: RoleDetailScreenProps) {
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />}
+      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} />}
     </DetailScaffold>
   );
 }
@@ -110,11 +121,13 @@ function RoleBody({
   roleKey,
   targetStudentId,
   focusedGuidance,
+  guidanceContext,
 }: {
   role: DomainRoleV2;
   roleKey: string;
   targetStudentId?: string;
   focusedGuidance: boolean;
+  guidanceContext: GuidanceRouteContext;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -290,7 +303,7 @@ function RoleBody({
 
       {/* 4 — Routes into this role */}
       <View onLayout={(e) => onSectionLayout("routes", e.nativeEvent.layout.y)} />
-      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} />
+      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} />
 
       {/* 5 — Related roles from career ladder */}
       <View onLayout={(e) => onSectionLayout("related", e.nativeEvent.layout.y)} />
@@ -305,7 +318,7 @@ function RoleBody({
                 colors={colors}
                 onPress={() => {
                   const slug = `${roleKey.split("|")[0]}|${name.toLowerCase()}`;
-                  exploreNav.role(router, slug, targetStudentId, focusedGuidance);
+                  exploreNav.role(router, slug, guidanceContext);
                 }}
               />
             ))}
@@ -400,6 +413,7 @@ function RouteIntoSection({
   colors,
   targetStudentId,
   focusedGuidance,
+  guidanceContext,
 }: {
   appearsIn: DomainRoleV2["appearsIn"];
   careerLadder?: string[];
@@ -407,6 +421,7 @@ function RouteIntoSection({
   colors: ColorPalette;
   targetStudentId?: string;
   focusedGuidance: boolean;
+  guidanceContext: GuidanceRouteContext;
 }) {
   const exploreNav = useExploreNav();
   const hasLadder = careerLadder?.length;
@@ -430,7 +445,7 @@ function RouteIntoSection({
           {appearsIn.map((a) => (
             <TouchableOpacity
               key={a.domainId}
-              onPress={() => exploreNav.domain(router, a.domainId, targetStudentId, focusedGuidance)}
+              onPress={() => exploreNav.domain(router, a.domainId, guidanceContext)}
               style={[
                 styles.domainChip,
                 {
