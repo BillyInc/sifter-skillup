@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
+import { useAuth } from "@/hooks/useAuth";
 import {
   useTheme,
   Spacing,
@@ -70,6 +71,8 @@ export function OpportunitiesScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const resp = useResponsive();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<OpportunityFilter>({});
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
@@ -78,18 +81,37 @@ export function OpportunitiesScreen() {
 
   const loadOpportunities = useCallback(() => {
     setState(pending<Opportunity[]>("Loading verified Opportunities..."));
+    if (isGuest) return () => undefined;
     let active = true;
     void (async () => {
       const result = await careerData.getOpportunities({ ...filter, query: query.trim() || undefined });
       if (active) setState(result);
     })();
     return () => { active = false; };
-  }, [filter, query]);
+  }, [filter, isGuest, query]);
 
   useEffect(() => loadOpportunities(), [loadOpportunities]);
 
   const isDesktop = resp.isDesktop && resp.isWeb;
   const isTablet = resp.isTablet;
+
+  if (isGuest) {
+    return (
+      <ScrollView style={{ flex: 1, backgroundColor: colors.surface.base }} contentContainerStyle={styles.guestScroll}>
+        <View style={[styles.guestCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <View style={[styles.guestIcon, { backgroundColor: colors.accentRole.action + "14" }]}>
+            <Feather name="briefcase" size={22} color={colors.accentRole.action} />
+          </View>
+          <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>OPPORTUNITIES</Text>
+          <Text style={[styles.guestTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Opportunities are for your saved direction</Text>
+          <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>Create an account to see opportunities connected to your programmes, domains and roles, and to save the ones you want to revisit.</Text>
+          <TouchableOpacity onPress={() => router.push("/(auth)/signup" as never)} style={styles.guestAction}>
+            <Text style={[styles.guestActionText, { color: colors.accentRole.action }]}>Create account to start →</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 
   return (
     <ScrollView
@@ -219,10 +241,17 @@ export function OpportunitiesScreen() {
 export default OpportunitiesScreen;
 
 const styles = StyleSheet.create({
+  guestScroll: { flexGrow: 1, padding: Spacing.xl, justifyContent: "center" },
+  guestCard: { width: "100%", maxWidth: 680, alignSelf: "center", borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.sm },
+  guestIcon: { width: 52, height: 52, borderRadius: Radius.md, alignItems: "center", justifyContent: "center", marginBottom: Spacing.xs },
+  guestTitle: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.18 },
+  guestBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5, marginBottom: Spacing.sm },
+  guestAction: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  guestActionText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   scroll: {
     paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
-    gap: Spacing.md,
+    gap: Spacing.sm,
     flexGrow: 1,
   },
   hero: { gap: 4, marginBottom: Spacing.xs },
@@ -277,7 +306,7 @@ const styles = StyleSheet.create({
 
   // ── Results ──────────────────────────────────────────────
   results: { marginTop: Spacing.xs },
-  cards: { gap: Spacing.md },
+  cards: { gap: Spacing.sm },
   cardsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",

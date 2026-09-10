@@ -1,5 +1,5 @@
 import React, { useEffect, type ReactNode } from 'react';
-import { type ViewStyle } from 'react-native';
+import { Platform, type ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -29,11 +29,16 @@ export function StaggerReveal({
   rise = 8,
   style,
 }: StaggerRevealProps) {
+  // The Vite web adapter uses a synchronous reanimated shim. It cannot notify
+  // React when a shared value changes, so an animated wrapper would otherwise
+  // remain at opacity 0 and make its children look like missing data.
+  const isWeb = Platform.OS === 'web';
   const reduced = useReducedMotion();
-  const opacity = useSharedValue(0);
-  const translateY = useSharedValue(rise);
+  const opacity = useSharedValue(isWeb ? 1 : 0);
+  const translateY = useSharedValue(isWeb ? 0 : rise);
 
   useEffect(() => {
+    if (isWeb) return;
     if (reduced) {
       opacity.value = 1;
       translateY.value = 0;
@@ -42,7 +47,7 @@ export function StaggerReveal({
     const config = duration ? { duration, easing: Timing.base.easing } : Timing.base;
     opacity.value = withDelay(index * stagger, withTiming(1, config));
     translateY.value = withDelay(index * stagger, withTiming(0, config));
-  }, [index, stagger, duration, rise, reduced]);
+  }, [index, stagger, duration, rise, reduced, isWeb]);
 
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,

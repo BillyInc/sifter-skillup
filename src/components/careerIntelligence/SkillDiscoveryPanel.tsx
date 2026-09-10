@@ -89,6 +89,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   const exploreNav = useExploreNav();
   const adminAudience = adminLearnerAudienceForOrg(adminType);
   const isAdmin = Boolean(adminAudience);
+  const isGuest = !user || user.auth_provider === "guest";
   const [userType, setUserType] = useState<string | undefined>();
   const [adminLearnerType, setAdminLearnerType] = useState<string | undefined>();
   const [intent, setIntent] = useState<Intent>("learned");
@@ -112,7 +113,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
   }, [adminAudience]);
 
   useEffect(() => {
-    if (adminType || !user?.id) return;
+    if (adminType || !user?.id || isGuest) return;
     let active = true;
     getStartingPoint(user.id).then((profile) => {
       if (active) setUserType(profile?.userType ?? undefined);
@@ -120,11 +121,12 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
     return () => {
       active = false;
     };
-  }, [adminType, user?.id]);
+  }, [adminType, isGuest, user?.id]);
 
   useEffect(() => {
     let active = true;
     setState(null);
+    if (isGuest) return () => { active = false; };
     const timer = setTimeout(() => {
       careerData.discoverBySkills({
         skills: selected,
@@ -141,7 +143,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
       active = false;
       clearTimeout(timer);
     };
-  }, [adminType, category, effectiveUserType, intent, match, selected]);
+  }, [adminType, category, effectiveUserType, intent, isGuest, match, selected]);
 
   const audienceCopy = useMemo(() => {
     if (adminType === "university") return "Guide an undergraduate from the skills they have to curriculum domains, subgroups and roles.";
@@ -164,6 +166,23 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
     setDraft("");
   };
   const data = state?.status === "real" ? state.data : null;
+
+  if (isGuest) {
+    return (
+      <TouchableOpacity activeOpacity={0.88} onPress={() => router.push("/(auth)/signup" as never)} style={[styles.guestCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <View style={[styles.iconBox, { backgroundColor: colors.surface.subtle }]}>
+          <Feather name="compass" size={20} color={colors.accentRole.action} />
+        </View>
+        <View style={styles.guestCopy}>
+          <Text style={[styles.eyebrow, { color: colors.accentRole.action }]}>SKILLS MATCH</Text>
+          <Text style={[CompassFonts.bodyBold, styles.guestTitle, { color: colors.textRole.primary }]}>See where your skills can take you</Text>
+          <Text style={[styles.help, { color: colors.textRole.secondary }]}>Create an account to match your skills to fields, subgroups and roles, then save what you find.</Text>
+          <Text style={[styles.guestAction, { color: colors.accentRole.action }]}>Create account to start →</Text>
+        </View>
+        <Feather name="arrow-up-right" size={20} color={colors.textRole.muted} />
+      </TouchableOpacity>
+    );
+  }
 
   const openDomain = (id: string) => exploreNav.domain(router, id);
   const openSubgroup = (domainId: string, subgroupId: string) => exploreNav.subgroup(router, domainId, subgroupId);
@@ -403,7 +422,11 @@ function SkillResults({
 }
 
 const styles = StyleSheet.create({
-  container: { gap: Spacing.md },
+  container: { gap: Spacing.sm },
+  guestCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, flexDirection: "row", alignItems: "flex-start", gap: Spacing.md },
+  guestCopy: { flex: 1, gap: Spacing.sm },
+  guestTitle: { fontSize: FontSize.lg, lineHeight: FontSize.lg * 1.2 },
+  guestAction: { fontSize: FontSize.sm, fontWeight: "800", marginTop: Spacing.xs },
   hero: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
   heroHeading: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   iconBox: { width: 42, height: 42, borderRadius: Radius.md, alignItems: "center", justifyContent: "center" },

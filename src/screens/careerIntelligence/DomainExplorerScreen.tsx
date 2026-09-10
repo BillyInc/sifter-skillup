@@ -21,6 +21,7 @@ import {
   type DimensionValue,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   DataStateView,
   DomainIcon,
@@ -43,6 +44,7 @@ import {
 import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import CareerDisclaimer from "@/components/careerIntelligence/CareerDisclaimer";
+import { useAuth } from "@/hooks/useAuth";
 
 type FilterKey = "all" | "elite" | string;
 
@@ -53,6 +55,8 @@ export function DomainExplorerScreen() {
   const router = useRouter();
   const exploreNav = useExploreNav();
   const resp = useResponsive();
+  const { user } = useAuth();
+  const isGuest = !user || user.auth_provider === "guest";
   const [filter, setFilter] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const [state, setState] = useState<DataState<DomainClusterGroup[]>>(() =>
@@ -61,6 +65,7 @@ export function DomainExplorerScreen() {
 
   const loadDomains = useCallback(() => {
     setState(pending<DomainClusterGroup[]>("Loading domains..."));
+    if (isGuest) return () => undefined;
     let active = true;
     void (async () => {
       const result = await careerData.getDomainClusters();
@@ -69,7 +74,7 @@ export function DomainExplorerScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [isGuest]);
 
   useEffect(() => loadDomains(), [loadDomains]);
 
@@ -140,6 +145,24 @@ export function DomainExplorerScreen() {
 
   const clusterColWidth: DimensionValue = (resp.isDesktop ? "48%" : "100%") as DimensionValue;
 
+  if (isGuest) {
+    return (
+      <ScrollView style={{ flex: 1, backgroundColor: colors.surface.base }} contentContainerStyle={styles.guestScroll}>
+        <View style={[styles.guestCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <View style={[styles.guestIcon, { backgroundColor: colors.accentRole.action + "14" }]}>
+            <DomainIcon cluster="Technology" size={22} rounded />
+          </View>
+          <Text style={[styles.eyebrow, { color: colors.accentRole.action }]}>CAREER MAP</Text>
+          <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>Explore fields, domains and roles</Text>
+          <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>Create an account to browse the full field map and save the domains, subgroups and roles that interest you.</Text>
+          <TouchableOpacity onPress={() => router.push("/(auth)/signup" as never)} style={styles.guestAction}>
+            <Text style={[styles.guestActionText, { color: colors.accentRole.action }]}>Create account to start →</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
@@ -163,7 +186,7 @@ export function DomainExplorerScreen() {
           { color: colors.textRole.primary },
         ]}
       >
-        Domain Explorer
+        Choose a field to explore
       </Text>
       <Text
         style={[
@@ -172,7 +195,7 @@ export function DomainExplorerScreen() {
           { color: colors.textRole.secondary },
         ]}
       >
-        {counts}
+        Explore the domains, skills and roles inside each field. {counts}
       </Text>
 
       <SearchBar
@@ -216,11 +239,11 @@ export function DomainExplorerScreen() {
           <View style={styles.masonry}>
             {groups.map((g, idx) => {
               return (
-                <StaggerReveal key={g.cluster} index={idx}>
+                <StaggerReveal key={g.cluster} index={idx} style={{ width: clusterColWidth, flexShrink: 0 }}>
                   <View
                     style={[
                       styles.clusterCol,
-                      { width: clusterColWidth },
+                      { width: "100%", borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised },
                     ]}
                   >
                     {/* Cluster header */}
@@ -251,13 +274,14 @@ export function DomainExplorerScreen() {
                           {g.domains.length} domain
                           {g.domains.length === 1 ? "" : "s"}
                         </Text>
+                        <Text style={[styles.clusterDescription, { color: colors.textRole.secondary }]}>Explore the domains, skills and roles inside this field.</Text>
                       </View>
                     </View>
 
                     {/* Domain cards */}
                     <View style={styles.domainGrid}>
-                      {g.domains.map((d) => (
-                        <View key={d.id} style={{ gap: Spacing.xs }}>
+                       {g.domains.map((d) => (
+                        <View key={d.id} style={[styles.domainItem, { width: resp.isMobile ? "100%" : "48%" }]}>
                           <TouchableOpacity
                           activeOpacity={0.85}
                           onPress={() => exploreNav.domain(router, d.id)}
@@ -277,6 +301,12 @@ export function DomainExplorerScreen() {
                             ]}
                           />
                           <View style={styles.domainCardBody}>
+                            <View style={styles.domainCardTop}>
+                              <View style={[styles.domainIcon, { backgroundColor: getClusterColor(g.cluster) + "14" }]}>
+                                <Feather name="compass" size={16} color={getClusterColor(g.cluster)} />
+                              </View>
+                              <Text style={[styles.domainCardAction, { color: colors.textRole.muted }]}>Explore field <Feather name="arrow-up-right" size={13} color={colors.textRole.muted} /></Text>
+                            </View>
                             <Text
                               style={[
                                 styles.domainCardName,
@@ -332,10 +362,44 @@ export function DomainExplorerScreen() {
 export default DomainExplorerScreen;
 
 const styles = StyleSheet.create({
+  guestScroll: {
+    padding: Spacing.xl,
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  guestCard: {
+    maxWidth: 680,
+    alignSelf: "center",
+    width: "100%",
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.xl,
+    gap: Spacing.sm,
+  },
+  guestIcon: {
+    width: 52,
+    height: 52,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: Spacing.xs,
+  },
+  guestTitle: {
+    fontSize: FontSize.xl,
+    lineHeight: FontSize.xl * 1.18,
+    ...CompassFonts.displaySemi,
+  },
+  guestBody: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+    marginBottom: Spacing.sm,
+  },
+  guestAction: { alignSelf: "flex-start", paddingVertical: Spacing.xs },
+  guestActionText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   scroll: {
-    paddingVertical: Spacing.xl,
-    paddingHorizontal: Spacing.lg,
-    gap: Spacing.md,
+    paddingVertical: Spacing.lg,
+    paddingHorizontal: Spacing.md,
+    gap: Spacing.sm,
     flexGrow: 1,
   },
   eyebrow: {
@@ -362,19 +426,22 @@ const styles = StyleSheet.create({
   masonry: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: Spacing.md,
+    gap: Spacing.sm,
     marginTop: Spacing.xs,
   },
   clusterCol: {
     gap: Spacing.sm,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
   },
   clusterHeader: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
+    paddingBottom: Spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "rgba(100, 116, 139, 0.18)",
   },
   clusterIconWrap: {
     width: 32,
@@ -390,31 +457,60 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     marginTop: 1,
   },
+  clusterDescription: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.4,
+    marginTop: Spacing.xs,
+  },
 
   // Domain cards — 2-column within each cluster
   domainGrid: {
-    flexDirection: "column",
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: Spacing.sm,
   },
+  domainItem: { gap: Spacing.xs },
   domainCard: {
     width: "100%",
+    minHeight: 132,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.md,
+    borderRadius: Radius.lg,
     overflow: "hidden",
   },
   accentBar: {
-    height: 3,
+    height: 5,
   },
   domainCardBody: {
-    padding: Spacing.sm,
-    gap: 4,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+    minHeight: 112,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  domainCardTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.sm,
+  },
+  domainIcon: {
+    width: 34,
+    height: 34,
+    borderRadius: Radius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  domainCardAction: {
+    fontSize: FontSize.xs,
+    ...CompassFonts.bodySemibold,
   },
   domainCardName: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.3,
+    textAlign: "center",
   },
   eliteBadge: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
     borderRadius: Radius.full,
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 6,

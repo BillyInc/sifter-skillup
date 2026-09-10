@@ -55,18 +55,19 @@ import { useSearchLauncher } from "@/components/shell/searchLauncher";
 const CLUSTER_HEROES: {
   id: string;
   name: string;
+  description: string;
   color: string;
   icon: keyof typeof Feather.glyphMap;
   route: string;
 }[] = [
-  { id: "ict",     name: "Technology",       color: "#3B3AC4", icon: "code",          route: "ICT" },
-  { id: "health",  name: "Health",           color: "#0E9F6E", icon: "heart",         route: "Health" },
-  { id: "eng",     name: "Engineering",      color: "#D97706", icon: "tool",          route: "Engineering" },
-  { id: "finance", name: "Finance",          color: "#0D9488", icon: "trending-up",   route: "Financial Services" },
-  { id: "legal",   name: "Legal",            color: "#111111", icon: "shield",        route: "Legal" },
-  { id: "agri",    name: "Agriculture",      color: "#F5A65B", icon: "sun",           route: "Agriculture" },
-  { id: "edu",     name: "Education",        color: "#2563EB", icon: "book-open",     route: "Education" },
-  { id: "creative",name: "Creative",         color: "#F5A65B", icon: "star",          route: "Creative" },
+  { id: "ict",     name: "Technology",       description: "Digital fields, systems and data", color: "#3B3AC4", icon: "code",          route: "ICT" },
+  { id: "health",  name: "Health",           description: "People, health and wellbeing", color: "#0E9F6E", icon: "heart",         route: "Health" },
+  { id: "eng",     name: "Engineering",      description: "Design, infrastructure and making", color: "#D97706", icon: "tool",          route: "Engineering" },
+  { id: "finance", name: "Finance",          description: "Money, markets and organisations", color: "#0D9488", icon: "trending-up",   route: "Financial Services" },
+  { id: "legal",   name: "Legal",            description: "Rules, justice and public systems", color: "#111111", icon: "shield",        route: "Legal" },
+  { id: "agri",    name: "Agriculture",      description: "Food, land and natural resources", color: "#F5A65B", icon: "sun",           route: "Agriculture" },
+  { id: "edu",     name: "Education",        description: "Learning, teaching and development", color: "#2563EB", icon: "book-open",     route: "Education" },
+  { id: "creative",name: "Creative",         description: "Media, design and expression", color: "#F5A65B", icon: "star",          route: "Creative" },
 ];
 
 const MIN_QUERY = 2;
@@ -258,9 +259,9 @@ export default function ExploreScreen({
       {intro}
 
       {/* ── Search ────────────────────────────────────────────── */}
-      <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text>
+      {!isGuest ? <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>Use Search in the workspace header to find programmes, universities, domains, roles or skills. The filters below narrow the results shown here.</Text> : null}
 
-      <View style={styles.filterRow}>
+      {!isGuest ? <View style={styles.filterRow}>
         {filters.map((item) => (
           <FilterChip
             key={item.value}
@@ -269,7 +270,16 @@ export default function ExploreScreen({
             onPress={() => setFilter(item.value)}
           />
         ))}
-      </View>
+      </View> : null}
+
+      {/* The main student task belongs immediately below search. It should not
+          be buried beneath the skill workspace or field discovery cards. */}
+      {!adminAudience ? (
+        <AdmissionEntryCard
+          isGuest={isGuest}
+          onPress={() => isGuest ? router.push("/(auth)/signup" as never) : exploreNav.admissionHub(router, "programme")}
+        />
+      ) : null}
 
       {/* Skills Match is an independent optional tool. Keep the main search
           primary and expose this flipped-discovery route after its scope. */}
@@ -496,6 +506,14 @@ function ExploreIdle({
 }) {
   const { colors } = useTheme();
   const { isMobile, columns } = useResponsive();
+  const visibleClusters = isGuest ? CLUSTER_HEROES.slice(0, 4) : CLUSTER_HEROES;
+  const openDomains = () => {
+    if (isGuest) {
+      router.push("/(auth)/signup" as never);
+      return;
+    }
+    nav.domains(router);
+  };
   return (
     <View style={styles.idle}>
       {/* ── Hero cluster carousel ──────────────────────────────── */}
@@ -511,43 +529,49 @@ function ExploreIdle({
             snapToInterval={CLUSTER_CARD_W + Spacing.sm}
             snapToAlignment="start"
           >
-            {CLUSTER_HEROES.map((c, i) => (
-              <StaggerReveal key={c.id} index={i}>
+            {visibleClusters.map((c, i) => (
+              <StaggerReveal key={c.id} index={i} style={{ width: CLUSTER_CARD_W, flexShrink: 0 }}>
                 <TouchableOpacity
                   activeOpacity={0.85}
-                  onPress={() => nav.domains(router)}
+                  onPress={openDomains}
                   style={[styles.clusterCard, { borderColor: c.color + "30" }]}
                 >
+                  <View style={[styles.clusterAccent, { backgroundColor: c.color }]} />
                   <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
                     <Feather name={c.icon} size={22} color={c.color} />
                   </View>
-                  <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
-                    {c.name}
-                  </Text>
+                  <View style={styles.clusterCardCopy}>
+                    <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>{c.name}</Text>
+                    <Text style={[styles.clusterCardDescription, { color: colors.textRole.secondary }]}>{c.description}</Text>
+                  </View>
+                  <Feather name="arrow-up-right" size={16} color={colors.textRole.muted} />
                 </TouchableOpacity>
               </StaggerReveal>
             ))}
           </ScrollView>
         ) : (
           <View style={styles.clusterGrid}>
-            {CLUSTER_HEROES.map((c, i) => {
-              const cardW = columns === 2 ? "48%" : columns === 3 ? "30%" : "22%";
+            {visibleClusters.map((c, i) => {
+              const cardW = isGuest ? "23%" : columns === 2 ? "48%" : columns === 3 ? "31%" : "23%";
               return (
-                <StaggerReveal key={c.id} index={i}>
+                <StaggerReveal key={c.id} index={i} style={{ width: cardW, flexShrink: 0 }}>
                   <TouchableOpacity
                     activeOpacity={0.85}
-                    onPress={() => nav.domains(router)}
+                    onPress={openDomains}
                     style={[
                       styles.clusterGridCard,
-                      { borderColor: c.color + "30", width: cardW },
+                      { borderColor: c.color + "30", width: "100%" },
                     ]}
                   >
+                    <View style={[styles.clusterAccent, { backgroundColor: c.color }]} />
                     <View style={[styles.clusterIconWrap, { backgroundColor: c.color + "12" }]}>
                       <Feather name={c.icon} size={22} color={c.color} />
                     </View>
-                    <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>
-                      {c.name}
-                    </Text>
+                    <View style={styles.clusterCardCopy}>
+                      <Text style={[styles.clusterCardName, { color: colors.textRole.primary }]}>{c.name}</Text>
+                      <Text style={[styles.clusterCardDescription, { color: colors.textRole.secondary }]}>{c.description}</Text>
+                    </View>
+                    <Feather name="arrow-up-right" size={16} color={colors.textRole.muted} />
                   </TouchableOpacity>
                 </StaggerReveal>
               );
@@ -556,14 +580,11 @@ function ExploreIdle({
         )}
         <TouchableOpacity
           activeOpacity={0.75}
-          onPress={() => nav.domains(router)}
+          onPress={openDomains}
           style={styles.seeAllLink}
         >
           <Text style={[styles.seeAllText, { color: colors.accentRole.action }]}>
-            {/* No count. "37 clusters" was a literal, and the real figure is
-                35 — the Domain Explorer states its own totals from the data it
-                actually loaded. */}
-            Browse all clusters →
+            {isGuest ? "Create an account to browse all fields →" : "Browse all fields →"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -572,72 +593,10 @@ function ExploreIdle({
         <AdminExploreActions audience={adminAudience} adminType={adminType} router={router} nav={nav} />
       ) : null}
 
-      {/* ── Pathways strip ────────────────────────────────────── */}
-      {!adminAudience ? <View style={styles.section}>
-        <SectionLabel>Pathways</SectionLabel>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={hScroll}
-          contentContainerStyle={styles.pathwayCarousel}
-        >
-          <StaggerReveal index={0}>
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={() => nav.pathways(router)}
-              style={[
-                styles.pathwayCard,
-                styles.unifiedPathwayCard,
-                {
-                  backgroundColor: colors.surface.raised,
-                  borderColor: colors.borderRole.subtle,
-                },
-              ]}
-            >
-              <Feather name="map" size={16} color={colors.accentRole.action} />
-              <View style={styles.unifiedPathwayCopy}>
-                <Text style={[styles.pathwayLabel, { color: colors.textRole.primary }]}>Career pathways</Text>
-                <Text style={[styles.unifiedPathwayBody, { color: colors.textRole.secondary }]}>Explore one guided product for research, career change, credentials, qualification upgrades and entrepreneurship.</Text>
-              </View>
-              <Feather name="chevron-right" size={16} color={colors.textRole.muted} />
-            </TouchableOpacity>
-          </StaggerReveal>
-        </ScrollView>
-      </View> : null}
-
-      {/* ── Admission intelligence card ────────────────────────── */}
-      {!adminAudience ? <TouchableOpacity
-        activeOpacity={0.85}
-        onPress={() => nav.admissionHub(router, "programme")}
-        style={[
-          styles.admissionCard,
-          {
-            backgroundColor: colors.surface.raised,
-            borderColor: colors.borderRole.subtle,
-          },
-        ]}
-      >
-        <View style={styles.admissionLeft}>
-          <Text style={[styles.admissionEyebrow, { color: colors.textRole.muted }]}>
-            PROGRAMME & UNIVERSITY MATCHING
-          </Text>
-          <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>
-            Programmes, universities{"\n"}& requirements
-          </Text>
-        </View>
-        <View style={[styles.admissionNumeral, { backgroundColor: colors.accentRole.action + "10" }]}>
-          <Text style={[styles.admissionNumeralText, { color: colors.accentRole.action }]}>
-            JAMB
-          </Text>
-          <Text style={[styles.admissionNumeralUnit, { color: colors.textRole.muted }]}>
-            requirements
-          </Text>
-        </View>
-      </TouchableOpacity> : null}
-
-      {/* ── Elite pathways gold strip ─────────────────────────── */}
+      {/* Pathways remain available by direct route while their product surface
+          is intentionally not promoted from the student Explore landing. */}
       {/* ── Suggested searches ─────────────────────────────────── */}
-      {!adminAudience ? <View style={styles.section}>
+      {!adminAudience && !isGuest ? <View style={styles.section}>
         <SectionLabel>Suggested searches</SectionLabel>
         <View style={styles.filterRow}>
           {["Nursing", "Software engineer", "Accounting", "Civil engineering"].map(
@@ -666,8 +625,12 @@ function ExploreIdle({
         </View>
       ) : null}
 
-      {/* ── Starting points (3 doors) ─────────────────────────── */}
-      {!adminAudience ? (
+      {/* Signed-in users get the three guided doors. Guests see the same
+          choices as explicit account-entry actions rather than entering a
+          partially initialised guidance route. */}
+      {!adminAudience && isGuest ? (
+        <GuestExploreActions onCreateAccount={() => router.push("/(auth)/signup" as never)} />
+      ) : !adminAudience ? (
         <View style={styles.section}>
           <SectionLabel>Starting points</SectionLabel>
           {DOORS.map((d, i) => (
@@ -709,6 +672,57 @@ function ExploreIdle({
       {!adminAudience ? <Text style={[styles.note, { color: colors.textRole.muted }]}>
         University and College of Education programmes come online first.
       </Text> : null}
+    </View>
+  );
+}
+
+function AdmissionEntryCard({ isGuest, onPress }: { isGuest: boolean; onPress: () => void }) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      activeOpacity={0.88}
+      onPress={onPress}
+      style={[styles.admissionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+    >
+      <View style={[styles.admissionIcon, { backgroundColor: colors.accentRole.action + "14" }]}>
+        <Feather name="book-open" size={22} color={colors.accentRole.action} />
+      </View>
+      <View style={styles.admissionLeft}>
+        <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>PROGRAMME + UNIVERSITY</Text>
+        <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>Find a programme and university</Text>
+        <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>
+          {isGuest ? "Create an account to start a connected programme and university search." : "Start with what you know, your subjects, or a university and compare the right options."}
+        </Text>
+        <Text style={[styles.admissionAction, { color: colors.accentRole.action }]}>
+          {isGuest ? "Create account to start" : "Start matching"} <Text style={{ fontSize: 16 }}>→</Text>
+        </Text>
+      </View>
+      <Feather name="arrow-up-right" size={20} color={colors.textRole.muted} />
+    </TouchableOpacity>
+  );
+}
+
+function GuestExploreActions({ onCreateAccount }: { onCreateAccount: () => void }) {
+  const { colors } = useTheme();
+  const actions = [
+    { icon: "book-open" as const, title: "Find a programme and university", body: "Start with a programme idea or compare university options." },
+    { icon: "check-circle" as const, title: "Match from subjects", body: "Use your O’level or UTME subjects to find possible programmes." },
+    { icon: "compass" as const, title: "Explore fields and roles", body: "Browse the career map and see where each field can lead." },
+  ];
+  return (
+    <View style={styles.section}>
+      <SectionLabel>What do you want to do?</SectionLabel>
+      <Text style={[styles.guestExploreIntro, { color: colors.textRole.secondary }]}>Choose a starting point. We’ll ask you to create an account when you’re ready to continue and save your choices.</Text>
+      <View style={styles.guestActionGrid}>
+        {actions.map((action) => (
+          <TouchableOpacity key={action.title} activeOpacity={0.86} onPress={onCreateAccount} style={[styles.guestActionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <View style={[styles.guestActionIcon, { backgroundColor: colors.surface.subtle }]}><Feather name={action.icon} size={18} color={colors.accentRole.action} /></View>
+            <Text style={[styles.guestActionTitle, { color: colors.textRole.primary }]}>{action.title}</Text>
+            <Text style={[styles.guestActionBody, { color: colors.textRole.secondary }]}>{action.body}</Text>
+            <Text style={[styles.guestActionLink, { color: colors.accentRole.action }]}>Create account to start →</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 }
@@ -952,12 +966,12 @@ function buildExtendedSearchGroups(
   ];
 }
 
-const CLUSTER_CARD_W = 120;
+const CLUSTER_CARD_W = 220;
 
 const styles = StyleSheet.create({
   scroll: {
-    paddingVertical: Spacing.xl,
-    gap: Spacing.md,
+    paddingVertical: Spacing.lg,
+    gap: Spacing.sm,
     flexGrow: 1,
   },
   eyebrow: {
@@ -1000,11 +1014,11 @@ const styles = StyleSheet.create({
 
   // ── Idle ─────────────────────────────────────────────────────
   idle: {
-    gap: Spacing.lg,
+    gap: Spacing.md,
     marginTop: Spacing.xs,
   },
   section: {
-    gap: Spacing.sm,
+    gap: Spacing.xs,
   },
   adminActionGrid: {
     flexDirection: "row",
@@ -1037,11 +1051,14 @@ const styles = StyleSheet.create({
   },
   clusterCard: {
     width: CLUSTER_CARD_W,
+    minHeight: 164,
     padding: Spacing.md,
     borderRadius: Radius.md,
     borderWidth: StyleSheet.hairlineWidth,
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: Spacing.sm,
+    overflow: "hidden",
   },
   clusterGrid: {
     flexDirection: "row",
@@ -1049,11 +1066,21 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   clusterGridCard: {
+    minHeight: 148,
     padding: Spacing.md,
     borderRadius: Radius.md,
     borderWidth: StyleSheet.hairlineWidth,
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: Spacing.sm,
+    overflow: "hidden",
+  },
+  clusterAccent: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
   },
   clusterIconWrap: {
     width: 40,
@@ -1066,6 +1093,17 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     ...CompassFonts.bodySemibold,
     lineHeight: FontSize.sm * 1.2,
+  },
+  clusterCardCopy: {
+    gap: 5,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  clusterCardDescription: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.45,
+    textAlign: "center",
   },
   seeAllLink: {
     paddingVertical: Spacing.xs,
@@ -1122,6 +1160,13 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: Spacing.xs,
   },
+  admissionIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   admissionEyebrow: {
     fontSize: FontSize.xs,
     ...CompassFonts.bodySemibold,
@@ -1131,6 +1176,15 @@ const styles = StyleSheet.create({
     fontSize: FontSize.md,
     ...CompassFonts.bodySemibold,
     lineHeight: FontSize.md * 1.3,
+  },
+  admissionBody: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.45,
+  },
+  admissionAction: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
+    marginTop: Spacing.xs,
   },
   admissionNumeral: {
     width: 72,
@@ -1149,6 +1203,47 @@ const styles = StyleSheet.create({
     ...CompassFonts.bodySemibold,
     letterSpacing: 0.5,
     marginTop: 1,
+  },
+
+  guestExploreIntro: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.45,
+    maxWidth: 720,
+  },
+  guestActionGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  guestActionCard: {
+    flex: 1,
+    minWidth: 220,
+    minHeight: 166,
+    padding: Spacing.md,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: Spacing.sm,
+  },
+  guestActionIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: Radius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  guestActionTitle: {
+    fontSize: FontSize.sm,
+    ...CompassFonts.bodySemibold,
+    lineHeight: FontSize.sm * 1.3,
+  },
+  guestActionBody: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.45,
+    flex: 1,
+  },
+  guestActionLink: {
+    fontSize: FontSize.xs,
+    ...CompassFonts.bodySemibold,
   },
 
   // Elite strip

@@ -15,8 +15,10 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
   Spacing,
@@ -34,9 +36,11 @@ import { careerData } from "../lib/careerData";
 import { getStartingPoint } from "../lib/startingPoint";
 import { getOnboardingDraft } from "../lib/onboardingDraft";
 import { guidanceContextQuery } from "../lib/guidanceRouteContext";
+import { useResponsive } from "@/hooks/useResponsive";
 import type { GuidanceReportPath } from "../lib/careerData";
 import {
   error,
+  locked,
   pending,
   type DataState,
   type SavedItem,
@@ -49,13 +53,6 @@ const QUICK = [
     title: "Explore programmes",
     body: "Find programmes, universities and connected domains",
     href: "/(tabs)/explore" as const,
-    locked: false,
-  },
-  {
-    icon: "Build",
-    title: "Entrepreneurship",
-    body: "Business paths connected to your domain",
-    href: "/(tabs)/explore/pathways/entrepreneurship" as const,
     locked: false,
   },
   {
@@ -80,6 +77,13 @@ const QUICK = [
     locked: false,
   },
 ];
+
+const QUICK_ICONS: Record<string, keyof typeof Feather.glyphMap> = {
+  Search: "search",
+  Brief: "briefcase",
+  Lock: "lock",
+  User: "user",
+};
 
 const USER_TYPE_LABEL: Record<UserType, string> = {
   senior_secondary: "Senior secondary explorer",
@@ -261,6 +265,7 @@ export default function CareerHomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { user } = useAuth();
+  const { isMobile } = useResponsive();
   const isGuest = user?.auth_provider === "guest";
   const name =
     user?.username && user.username !== "Student"
@@ -287,6 +292,18 @@ export default function CareerHomeScreen() {
   const loadCareerHome = useCallback(() => {
     setStartingLoaded(false);
     let active = true;
+    if (isGuest) {
+      // Guest mode is a preview, not a personal workspace. Do not make the
+      // home screen wait for account-owned endpoints or present their failure
+      // envelopes as if the guest had saved data.
+      setStarting(null);
+      setStartingLoaded(true);
+      setSaved(locked<SavedItem[]>("Create an account to save programmes, domains and roles."));
+      setGuidance(locked<GuidanceReportPath | null>("Create an account to save and resume guidance."));
+      return () => {
+        active = false;
+      };
+    }
     void (async () => {
       try {
         const [sp, items, draft] = await Promise.all([
@@ -316,7 +333,7 @@ export default function CareerHomeScreen() {
     return () => {
       active = false;
     };
-  }, [user?.id]);
+  }, [isGuest, user?.id]);
 
   useEffect(() => loadCareerHome(), [loadCareerHome]);
 
@@ -460,9 +477,16 @@ export default function CareerHomeScreen() {
 
       {/* Your starting point */}
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        Your starting point
+        {isGuest ? "Build your starting point" : "Your starting point"}
       </Text>
-      {!startingLoaded ? null : starting ? (
+      {!startingLoaded ? (
+        <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <ActivityIndicator color={colors.accentRole.action} />
+          <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
+            Loading your starting point…
+          </Text>
+        </View>
+      ) : starting ? (
         <View
           style={[
             styles.card,
@@ -505,7 +529,7 @@ export default function CareerHomeScreen() {
               onPress={() => router.push(isGuest ? "/(auth)/signup" : "/(auth)/onboarding?restart=1")}
             >
               <Text style={[styles.cardLinkText, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-                {isGuest ? "Create account" : "Update"}
+                {isGuest ? "Create account to start →" : "Update"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -529,7 +553,7 @@ export default function CareerHomeScreen() {
               : "Complete a quick onboarding so we can tailor programmes, subjects and guidance to you."}
           </Text>
           <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-            {isGuest ? "Create account" : "Start onboarding"}
+            {isGuest ? "Create account to start →" : "Start onboarding"}
           </Text>
         </TouchableOpacity>
       )}
@@ -538,21 +562,24 @@ export default function CareerHomeScreen() {
       <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Quick actions
       </Text>
-      <View style={styles.grid}>
+      <View style={[styles.grid, isMobile ? styles.gridMobile : styles.gridWide]}>
         {homeQuickActions.map((q, i) => (
-          <StaggerReveal key={q.title} index={i}>
+          <StaggerReveal key={q.title} index={i} style={styles.tileReveal}>
             <TouchableOpacity
               activeOpacity={0.85}
-              onPress={() => router.push(q.href)}
+              onPress={() => router.push((isGuest && (q.title === "Opportunities" || q.locked)) ? "/(auth)/signup" : q.href)}
               style={[
                 styles.tile,
                 { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
               ]}
             >
-              <Text style={styles.tileIcon}>{q.icon}</Text>
-              <Text style={[styles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-                {q.title}
-              </Text>
+              <View style={styles.tileHeader}>
+                <View style={[styles.tileIconBox, { backgroundColor: colors.accentRole.action + "12" }]}>
+                  <Feather name={isGuest && q.title === "Opportunities" ? "lock" : QUICK_ICONS[q.icon] ?? "circle"} size={20} color={colors.accentRole.action} />
+                </View>
+                <Feather name="arrow-up-right" size={17} color={colors.textRole.muted} />
+              </View>
+              <Text style={[styles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{q.title}</Text>
               <Text style={[styles.tileBody, { color: colors.textRole.muted }, CompassFonts.body]}>
                 {q.body}
               </Text>
@@ -629,9 +656,9 @@ export default function CareerHomeScreen() {
 
 const styles = StyleSheet.create({
   scroll: {
-    paddingVertical: Spacing.xl,
+    paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
-    gap: Spacing.md,
+    gap: Spacing.sm,
     flexGrow: 1,
   },
   header: {
@@ -655,7 +682,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     gap: 4,
   },
   cardEyebrow: {
@@ -672,7 +699,7 @@ const styles = StyleSheet.create({
   contextCard: {
     borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     gap: Spacing.xs,
   },
   contextTitle: { fontSize: FontSize.md },
@@ -712,22 +739,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   linkText: { fontSize: FontSize.sm },
-  grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  gridWide: { flexWrap: "nowrap" },
+  gridMobile: { flexDirection: "column", flexWrap: "nowrap" },
+  tileReveal: { flex: 1, minWidth: 0 },
   tile: {
-    flexBasis: "47%",
-    flexGrow: 1,
-    minWidth: 150,
-    minHeight: 44,
+    width: "100%",
+    minHeight: 142,
     borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg,
-    gap: 4,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+    justifyContent: "space-between",
   },
-  tileIcon: { fontSize: 26 },
+  tileHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  tileIconBox: {
+    width: 42,
+    height: 42,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   tileTitle: {
-    fontSize: FontSize.lg,
-    marginTop: Spacing.xs,
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.3,
   },
-  tileBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
+  tileBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
 });
 
