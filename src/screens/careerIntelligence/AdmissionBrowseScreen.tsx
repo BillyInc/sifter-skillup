@@ -717,6 +717,24 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchStatus(hasSubjectContext ? "loading" : "idle");
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
+    if (isFocusedGuidance) {
+      // A guided subject/programme result is already the user's selection.
+      // Open the single programme preview immediately; its next screen owns
+      // the university-offering choice. Do not leave the user in the generic
+      // admission picker with variants, search, and mode switches visible.
+      exploreNav.programme(router, id, {
+        jambProgrammeId: id,
+        userType: userType || undefined,
+        className: contextClass || readParam(params.class_name) || undefined,
+        stream: stream || undefined,
+        guidanceStudentId: guidanceStudentId || undefined,
+        guidanceTarget: guidanceTarget || undefined,
+        focused: true,
+        journeyMode: journeyMode || "programme_preview",
+        resumeStage: "programme_preview",
+      });
+      return;
+    }
     const [schoolState, detailState, subjectState] = await Promise.all([
       careerData.getJambProgrammeSchools(id),
       careerData.getJambProgramme(id),
@@ -1489,7 +1507,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
-  actionText: { color: "#fff", fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  actionText: { color: "#0F172A", fontSize: FontSize.sm, fontWeight: FontWeight.black },
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },

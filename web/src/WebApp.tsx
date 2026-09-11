@@ -94,6 +94,24 @@ function go(path: string, replace = false) {
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
+function platformBackFallback(path: string): string {
+  if (path === "/onboarding") return "/home";
+  if (path.startsWith("/explore/")) return "/explore";
+  if (path.startsWith("/opportunities/")) return "/opportunities";
+  if (path.startsWith("/profile/")) return "/profile";
+  if (path.startsWith("/myworld/") || path.startsWith("/portfolio")) return "/myworld";
+  if (path.startsWith("/skills") || path === "/streaks" || path === "/world" || path === "/map" || path.startsWith("/map/")) return "/home";
+  return "/home";
+}
+
+function platformBack(path: string) {
+  if (window.history.length > 1 && document.referrer.startsWith(window.location.origin)) {
+    window.history.back();
+    return;
+  }
+  go(platformBackFallback(path));
+}
+
 function useLocation() {
   const [location, setLocation] = useState(currentPath);
   useEffect(() => {
@@ -349,7 +367,10 @@ function GlobalSearchDropdown({
 function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   const { signOut } = useAuth();
   const query = new URLSearchParams(window.location.search);
-  const back = () => go("/home");
+  const focusedGuidance = query.get("focus") === "guidance"
+    || query.get("guided") === "1"
+    || query.get("journey") === "guided_subject_discovery"
+    || query.get("journey_mode") === "guided_subject_discovery";
   const [adminProfile, setAdminProfile] = useState<EducatorProfile | null>(null);
   useEffect(() => {
     if (!path.startsWith("/admin")) return;
@@ -368,6 +389,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       : path;
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
+  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/opportunities" || path === "/myworld" || path === "/profile";
+  const showPlatformBack = !isAdminRoute && (focusedGuidance || !isRootPlatformRoute);
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
@@ -547,8 +570,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     return <Suspense fallback={<RouteLoading />}>{content()}</Suspense>;
   }
 
-  return <main className="platform-shell">
-    <aside className="platform-sidebar">
+  return <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
+    {!focusedGuidance ? <aside className="platform-sidebar">
       <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="Sifter LevelUp home">
         <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>
         <span>Sifter <b>LevelUp</b></span>
@@ -561,17 +584,18 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
       </nav>
       <div className="platform-sidebar-account"><span>{user.username || user.email || "Account"}</span><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
-    </aside>
+    </aside> : null}
     <section className="platform-main">
       <header className="platform-toolbar">
-        <div className="global-search-shell" ref={searchShellRef}>
+        {showPlatformBack ? <button className="platform-back" onClick={() => platformBack(path)} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
+        {focusedGuidance ? <div className="platform-guidance-title"><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
           <span aria-hidden="true">⌕</span>
           <input value={globalQuery} onFocus={() => setSearchOpen(true)} onChange={(event) => { setGlobalQuery(event.target.value); setSearchOpen(true); }} placeholder="Search programmes, universities, domains, roles or skills" aria-label="Search Sifter" />
           <button type="submit">Search</button>
         </form>
         {searchOpen ? <GlobalSearchDropdown query={globalQuery} intent={searchIntent} onIntentChange={setSearchIntent} loading={searchLoading} result={searchPayload} onSelect={openSearchResult} onClose={() => setSearchOpen(false)} /> : null}
-        </div>
+        </div>}
       </header>
       <div className="platform-content"><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
     </section>

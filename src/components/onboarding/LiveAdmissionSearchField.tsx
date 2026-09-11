@@ -207,13 +207,10 @@ export function LiveAdmissionSearchField({
               style={styles.suggestion}
             >
               <Text style={[styles.suggestionText, { color: colors.text }]}>{r.name}</Text>
-              {kind === "programme" && (r.schoolCount || r.schoolNames?.length) ? (
-                <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
-                  {r.schoolNames?.length
-                    ? `Offered by ${r.schoolNames.slice(0, 2).join(", ")}${(r.schoolCount ?? 0) > 2 ? ` + ${(r.schoolCount ?? 0) - 2} more` : ""}`
-                    : `Offered by ${r.schoolCount} universities`}
-                </Text>
-              ) : null}
+              {/* Onboarding search is selecting a programme identity. Keep
+                  university offerings for the programme preview, where the
+                  student can compare them in context; do not turn each
+                  suggestion into "offered by ..." noise or imply a variant. */}
               {kind === "school" ? (
                 <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
                   {[r.address, r.city, r.state, r.country].filter(Boolean).join(", ") || "Address not listed"}
@@ -273,7 +270,7 @@ const styles = StyleSheet.create({
   helper: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
   empty: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   registerButton: { alignSelf: "flex-start", borderRadius: Radius.sm, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
-  registerButtonText: { color: "#fff", fontSize: FontSize.sm, fontWeight: "800" },
+  registerButtonText: { color: "#0F172A", fontSize: FontSize.sm, fontWeight: "800" },
   selectedField: {
     minHeight: 58,
     borderWidth: 1,
