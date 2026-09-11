@@ -30,7 +30,7 @@ function titleish(s: string): string {
 }
 
 const TEASER_MAX = 3;
-const FULL_INITIAL = 8;
+const FULL_INITIAL = 5;
 
 export interface DegreeSkillsProps {
   technical?: string[] | null;
@@ -89,21 +89,24 @@ export function DegreeSkills({
     );
   }
 
-  const shown = expanded ? tech : tech.slice(0, FULL_INITIAL);
-  const hidden = tech.length - shown.length;
+  const shownTech = expanded ? tech : tech.slice(0, FULL_INITIAL);
+  const shownSoft = expanded ? soft : soft.slice(0, FULL_INITIAL);
+  const hidden = Math.max(0, tech.length - shownTech.length) + Math.max(0, soft.length - shownSoft.length);
 
   return (
     <View style={styles.block}>
-      <SectionLabel>What you&apos;ll study</SectionLabel>
+      <SectionLabel>What you&apos;ll learn</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
         This is a source-backed summary of the programme curriculum. It shows
-        topics and learning outcomes connected to the programme; it does not
-        mean you already have these skills.
+        the main topics and ways of working you may meet; it does not mean you
+        already have these skills.
       </Text>
 
       {tech.length ? (
-        <View style={styles.list}>
-          {shown.map((skill, i) => (
+        <View style={styles.topicBlock}>
+          <Text style={[styles.groupLabel, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>Main study areas</Text>
+          <View style={styles.list}>
+          {shownTech.map((skill, i) => (
             <View
               key={`${skill}-${i}`}
               style={[styles.row, { borderTopColor: colors.borderRole.subtle }]}
@@ -114,40 +117,23 @@ export function DegreeSkills({
               </Text>
             </View>
           ))}
-          {hidden > 0 || expanded ? (
-            <TouchableOpacity
-              onPress={() => setExpanded((v) => !v)}
-              activeOpacity={0.75}
-              accessibilityRole="button"
-              style={styles.moreBtn}
-            >
-              <Text
-                style={[
-                  styles.moreText,
-                  CompassFonts.bodySemibold,
-                  { color: colors.accentRole.action },
-                ]}
-              >
-                {expanded ? "Show fewer" : `Show all ${tech.length}`}
-              </Text>
-            </TouchableOpacity>
-          ) : null}
+          </View>
         </View>
       ) : null}
 
       {soft.length ? (
-        <View style={styles.softBlock}>
+        <View style={styles.topicBlock}>
           <Text
             style={[
-              styles.softLabel,
+              styles.groupLabel,
               CompassFonts.bodySemibold,
               { color: colors.textRole.muted },
             ]}
           >
-            Related study outcomes
+            Ways you&apos;ll work
           </Text>
           <View style={styles.chips}>
-            {soft.map((skill, i) => (
+            {shownSoft.map((skill, i) => (
               <View
                 key={`${skill}-${i}`}
                 style={[
@@ -168,6 +154,19 @@ export function DegreeSkills({
             ))}
           </View>
         </View>
+      ) : null}
+      {hidden > 0 || expanded ? (
+        <TouchableOpacity
+          onPress={() => setExpanded((v) => !v)}
+          activeOpacity={0.75}
+          accessibilityRole="button"
+          accessibilityState={{ expanded }}
+          style={styles.moreBtn}
+        >
+          <Text style={[styles.moreText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
+            {expanded ? "Show fewer study details" : `See the full study profile (${total})`}
+          </Text>
+        </TouchableOpacity>
       ) : null}
     </View>
   );
@@ -210,8 +209,8 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   moreText: { fontSize: FontSize.sm },
-  softBlock: { gap: Spacing.xs, marginTop: Spacing.sm },
-  softLabel: {
+  topicBlock: { gap: Spacing.xs, marginTop: Spacing.sm },
+  groupLabel: {
     fontSize: FontSize.xs,
     letterSpacing: 0.6,
     textTransform: "uppercase",

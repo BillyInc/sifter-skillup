@@ -7,6 +7,9 @@ import { SectionLabel } from "./RedesignPrimitives";
 export interface ToolGroupsBlockProps {
   tools: ToolGroupsEnriched;
   title?: string;
+  explanation?: string;
+  commonLabel?: string;
+  distinctiveLabel?: string;
   style?: ViewStyle;
 }
 
@@ -65,7 +68,14 @@ function ToolGroup({
   );
 }
 
-export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
+export function ToolGroupsBlock({
+  tools,
+  title,
+  explanation = "Start with the tools shown first. The rest become more useful as you choose an area or role.",
+  commonLabel = "Useful across this field",
+  distinctiveLabel = "Used in particular areas",
+  style,
+}: ToolGroupsBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const common = tools?.common ?? [];
@@ -79,11 +89,9 @@ export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
   return (
     <View style={[styles.container, style]}>
       {title ? <SectionLabel>{title}</SectionLabel> : null}
-      <Text style={styles.explanation}>
-        Practise broadly used tools alongside the foundation. Some tools become more useful after you choose a specialisation or role; all available tools remain visible.
-      </Text>
-      <ToolGroup label="Tools used across this field" tools={visibleCommon} prominent />
-      <ToolGroup label="Tools for a chosen specialisation" tools={visibleDistinctive} prominent={false} />
+      <Text style={styles.explanation}>{explanation}</Text>
+      <ToolGroup label={commonLabel} tools={visibleCommon} prominent />
+      <ToolGroup label={distinctiveLabel} tools={visibleDistinctive} prominent={false} />
       {(hasHidden || expanded) ? (
         <TouchableOpacity
           onPress={() => setExpanded((value) => !value)}
