@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "source_directory": "C:\\Users\\USER\\Downloads\\jamb brochure",
+  "purpose": "Explicit manual confirmations for the five offering contexts that the automatic brochure-row matcher could not safely locate.",
+  "confirmations": [
+    {
+      "jamb_name": "Dentistry and Dental Technology",
+      "layer": "utme",
+      "status": "exact",
+      "source_file": "Medica_Pharmaceutical Health Science.pdf",
+      "pdf_page": 8,
+      "table_row": 4,
+      "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+      "source_heading": "Dentistry and Dental Surgery",
+      "note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national UTME cell on page 8 is Chemistry, Physics and Biology."
+    },
+    {
+      "jamb_name": "Dentistry and Dental Technology",
+      "layer": "olevel",
+      "status": "exact",
+      "source_file": "Medica_Pharmaceutical Health Science.pdf",
+      "pdf_page": 8,
+      "table_row": 4,
+      "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+      "source_heading": "Dentistry and Dental Surgery",
+      "note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national O-level cell is five credits in English Language, Physics, Chemistry, Biology and Mathematics."
+    },
+    {
+      "jamb_name": "Dentistry and Dental Technology",
+      "layer": "direct_entry",
+      "status": "exact",
+      "source_file": "Medica_Pharmaceutical Health Science.pdf",
+      "pdf_page": 8,
+      "table_row": 4,
+      "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+      "source_heading": "Dentistry and Dental Surgery",
+      "note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national Direct Entry cell requires three A-level passes including Chemistry, Biology/Zoology and Physics."
+    },
+    {
+      "jamb_name": "Economics with/and Operation Research",
+      "layer": "utme",
+      "status": "source_blank",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 40,
+      "table_row": 1,
+      "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+      "source_heading": "Economics with Operation Research",
+      "note": "The CUAB offering is printed in the requirement table, but its UTME cell is blank. Do not inherit the Economics rule."
+    },
+    {
+      "jamb_name": "Economics with/and Operation Research",
+      "layer": "olevel",
+      "status": "source_blank",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 40,
+      "table_row": 1,
+      "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+      "source_heading": "Economics with Operation Research",
+      "note": "The CUAB offering is printed in the requirement table, but its O-level cell is blank. Do not inherit the Economics rule."
+    },
+    {
+      "jamb_name": "Economics with/and Operation Research",
+      "layer": "direct_entry",
+      "status": "source_blank",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 40,
+      "table_row": 1,
+      "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+      "source_heading": "Economics with Operation Research",
+      "note": "The CUAB offering is printed in the requirement table, but its Direct Entry cell is blank. Do not inherit the Economics rule."
+    },
+    {
+      "jamb_name": "Forestry and Fisheries",
+      "layer": "utme",
+      "status": "source_missing",
+      "source_file": "Agriculture.pdf",
+      "pdf_page": 1,
+      "table_row": null,
+      "course_cell": "42 Forestry and Fisheries",
+      "source_heading": "Forestry and Fisheries",
+      "note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a UTME cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable."
+    },
+    {
+      "jamb_name": "Forestry and Fisheries",
+      "layer": "olevel",
+      "status": "source_missing",
+      "source_file": "Agriculture.pdf",
+      "pdf_page": 1,
+      "table_row": null,
+      "course_cell": "42 Forestry and Fisheries",
+      "source_heading": "Forestry and Fisheries",
+      "note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with an O-level cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable."
+    },
+    {
+      "jamb_name": "Forestry and Fisheries",
+      "layer": "direct_entry",
+      "status": "source_missing",
+      "source_file": "Agriculture.pdf",
+      "pdf_page": 1,
+      "table_row": null,
+      "course_cell": "42 Forestry and Fisheries",
+      "source_heading": "Forestry and Fisheries",
+      "note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a Direct Entry cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable."
+    },
+    {
+      "jamb_name": "Political Science and Conflict",
+      "layer": "utme",
+      "status": "inherited_shared",
+      "source_file": "Arts _ Humanities.pdf",
+      "pdf_page": 123,
+      "table_row": 4,
+      "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+      "source_heading": "Political Science and Conflict Resolution",
+      "note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+    },
+    {
+      "jamb_name": "Political Science and Conflict",
+      "layer": "olevel",
+      "status": "inherited_shared",
+      "source_file": "Arts _ Humanities.pdf",
+      "pdf_page": 123,
+      "table_row": 4,
+      "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+      "source_heading": "Political Science and Conflict Resolution",
+      "note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+    },
+    {
+      "jamb_name": "Political Science and Conflict",
+      "layer": "direct_entry",
+      "status": "inherited_shared",
+      "source_file": "Arts _ Humanities.pdf",
+      "pdf_page": 123,
+      "table_row": 4,
+      "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+      "source_heading": "Political Science and Conflict Resolution",
+      "note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+    },
+    {
+      "jamb_name": "Political Science / International Law and Diplomacy",
+      "layer": "utme",
+      "status": "inherited_shared",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 81,
+      "table_row": 1,
+      "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+      "source_heading": "Political Science / International Law and Diplomacy",
+      "note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+    },
+    {
+      "jamb_name": "Political Science / International Law and Diplomacy",
+      "layer": "olevel",
+      "status": "inherited_shared",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 81,
+      "table_row": 1,
+      "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+      "source_heading": "Political Science / International Law and Diplomacy",
+      "note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+    },
+    {
+      "jamb_name": "Political Science / International Law and Diplomacy",
+      "layer": "direct_entry",
+      "status": "inherited_shared",
+      "source_file": "Social Management Science.pdf",
+      "pdf_page": 81,
+      "table_row": 1,
+      "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+      "source_heading": "Political Science / International Law and Diplomacy",
+      "note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+    }
+  ]
+}
