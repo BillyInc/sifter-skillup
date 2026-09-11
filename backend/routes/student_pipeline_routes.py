@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 
 from auth import Auth
 from database import db
+from log_safety import clean_public_query, ilike_any, log_db_failure
 from logger import log
 from models import ResponseModel
 from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, clear_prefix, get_json, set_json
@@ -30,6 +31,10 @@ router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 _SCHEMA = "skillup_dev"
 MAX_EARLY_OLEVEL_SUBJECTS = 6
 MAX_UTME_SUBJECTS = 4
+# Ceiling for the unauthenticated subject picker; the active catalogue is ~46.
+_SUBJECT_CATALOGUE_LIMIT = 500
+# Ceiling for the unauthenticated JAMB programme typeahead.
+_JAMB_PROGRAMME_PAGE_LIMIT = 80
 _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
 CAREER_REPORT_EXPORTS_ENABLED = True
 
@@ -188,7 +193,7 @@ def _resolve_subject_catalog(subjects: list[str]) -> dict[str, dict]:
                     matched[key] = row
         return matched
     except Exception as exc:  # noqa: BLE001
-        log.warning("student subjects: catalog match skipped", error=str(exc))
+        log_db_failure("student subjects: catalog match skipped", exc, level="warning")
         return {}
 
 
@@ -309,7 +314,7 @@ def _upsert_secondary_school_affiliation(svc, user_id: str, payload: StartingPoi
             "self_reported": True,
         }, on_conflict="student_id,school_id").execute()
     except Exception as exc:  # noqa: BLE001
-        log.warning("student secondary school affiliation skipped", error=str(exc))
+        log_db_failure("student secondary school affiliation skipped", exc, level="warning")
 
 
 def _record_admission_pathway_choice(svc, user_id: str, starting_id: str, payload: StartingPointIn) -> None:
@@ -338,7 +343,7 @@ def _record_admission_pathway_choice(svc, user_id: str, starting_id: str, payloa
             },
         }).execute()
     except Exception as exc:  # noqa: BLE001
-        log.warning("student admission pathway choice skipped", error=str(exc))
+        log_db_failure("student admission pathway choice skipped", exc, level="warning")
 
 
 @router.get("/starting-point", response_model=ResponseModel)
@@ -365,7 +370,7 @@ async def get_starting_point(current_user: dict = Depends(Auth.get_current_user)
         )
         return ResponseModel(data=_real(_profile_out(row, subjects.data or [])))
     except Exception as exc:  # noqa: BLE001
-        log.error("student starting-point get failed", error=str(exc))
+        log_db_failure("student starting-point get failed", exc)
         return ResponseModel(data=_coming_soon("Starting point is temporarily unavailable."))
 
 
@@ -478,7 +483,7 @@ async def save_starting_point(
         row = (res.data or [{}])[0]
         return ResponseModel(data=_real(_profile_out(row, subject_rows)))
     except Exception as exc:  # noqa: BLE001
-        log.error("student starting-point save failed", error=str(exc))
+        log_db_failure("student starting-point save failed", exc)
         return ResponseModel(success=False, message="Could not save starting point.", data=None)
 
 
@@ -534,7 +539,7 @@ async def get_guidance_path(current_user: dict = Depends(Auth.get_current_user))
             "updatedAt": row.get("updated_at"),
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("student guidance path get failed", error=str(exc))
+        log_db_failure("student guidance path get failed", exc)
         return ResponseModel(data=_coming_soon("Your saved guidance path is temporarily unavailable."))
 
 
@@ -566,7 +571,7 @@ async def save_guidance_path(
             "updatedAt": now,
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("student guidance path save failed", error=str(exc))
+        log_db_failure("student guidance path save failed", exc)
         return ResponseModel(success=False, message="Could not save this guidance path yet.", data=None)
 
 
@@ -609,7 +614,7 @@ async def get_my_guidance_report_html(
     except HTTPException:
         raise
     except Exception as exc:  # noqa: BLE001
-        log.error("student guidance report html failed", error=str(exc))
+        log_db_failure("student guidance report html failed", exc)
         raise HTTPException(status_code=503, detail="Your report is temporarily unavailable.")
 
 
@@ -630,7 +635,7 @@ async def get_my_guidance_report_docx(
     except HTTPException:
         raise
     except Exception as exc:  # noqa: BLE001
-        log.error("student guidance report docx failed", error=str(exc))
+        log_db_failure("student guidance report docx failed", exc)
         raise HTTPException(status_code=503, detail="Your report is temporarily unavailable.")
 
 
@@ -655,8 +660,22 @@ async def list_subjects(
             .select("id, code, name, aliases, category, stream_tags")
             .eq("active", True)
         )
-        if q:
-            query = query.ilike("name", f"%{q.strip()}%")
+        # Same LIKE-metacharacter strip as every other public search term (see
+        # `log_safety._LIKE_METACHARACTERS`). This module was missed entirely by
+        # the round-8 sweep: MEASURED before this line, `?q=**` reached
+        # `.ilike("name", "%**%")` and returned all 46 rows of the active
+        # catalogue against 0 for a real miss, and `?q=%` and `?q=_` did the
+        # same.
+        #
+        # What the strip changes here is the FILTER, not the row count. This is
+        # the full-catalogue picker: `**` now cleans to `""`, no filter is
+        # applied, and the endpoint still answers all 46 rows -- by design. The
+        # fix is that a wildcard can no longer masquerade as a search, and that
+        # the read below is bounded; it is not a reduction in what `**`
+        # returns, and an earlier revision of this comment implied it was.
+        term = clean_public_query(q)
+        if term:
+            query = query.ilike("name", f"%{term}%")
         normalized_stream = _normalise_stream(stream)
         # Stream is a relevance/order hint, not an eligibility filter. The
         # picker must still expose every valid JAMB/O-level subject for the
@@ -666,7 +685,12 @@ async def list_subjects(
         # Return the complete active catalogue for the requested exam type.
         # Stream tags only affect ordering; they must never hide valid subjects
         # that a Student may need to choose.
-        res = query.order("name").execute()
+        # The catalogue is small (46 active rows in dev) and this endpoint
+        # deliberately returns all of it, but "deliberately unbounded" and
+        # "forgot a limit" look identical from the outside, and the subject
+        # picker is unauthenticated. The ceiling is well above the real
+        # catalogue and tracks the question, not the table.
+        res = query.order("name").limit(_SUBJECT_CATALOGUE_LIMIT).execute()
         items = [
             {
                 "id": r["id"],
@@ -686,7 +710,7 @@ async def list_subjects(
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
-        log.warning("student subjects: list failed", error=str(exc))
+        log_db_failure("student subjects: list failed", exc, level="warning")
         # Never manufacture a subject list when the catalogue is unavailable.
         # A fabricated list makes stream-aware JAMB/O-level guidance look
         # authoritative and can silently change eligibility decisions.
@@ -699,42 +723,55 @@ async def list_subjects(
 async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Query(30)):
     try:
         svc = _svc()
+        # `min(limit, 80)` clamped the CEILING but not the FLOOR, so `?limit=-1`
+        # reached PostgREST as `limit=-1` -> 400 on the view read AND on the
+        # registry fallback -> `coming_soon`, plus one ERROR record (30-day
+        # retention) for every unauthenticated request. The sibling
+        # `career_routes.list_programmes` already spells it `max(1, min(...))`.
+        row_limit = max(1, min(limit, _JAMB_PROGRAMME_PAGE_LIMIT))
         cache_key = (q or "").strip().lower()
-        cache_key = f"student:jamb-programmes:{cache_key}:{min(limit, 80)}"
+        cache_key = f"student:jamb-programmes:{cache_key}:{row_limit}"
         cached = get_json(cache_key)
         if isinstance(cached, list):
-            return ResponseModel(data=_real(cached[: min(limit, 80)]))
+            return ResponseModel(data=_real(cached[:row_limit]))
+        term = clean_public_query(q)
         try:
-            if q and q.strip():
-                like = f"%{q.strip()}%"
-                res = (
-                    svc.table("v_jamb_programme_details")
-                    .select("*")
-                    .or_(f"jamb_name.ilike.{like},canonical_programme_name.ilike.{like}")
-                    .order("jamb_name")
-                    .limit(min(limit, 80))
-                    .execute()
+            if term:
+                # `.or_("jamb_name.ilike.%term%,canonical_programme_name.ilike.
+                # %term%")` put the user's text inside a PostgREST FILTER
+                # EXPRESSION, where `,` and `.` are separators and no LIKE
+                # cleaner applies. MEASURED before this change:
+                # `?q=zz,jamb_name.gt.A` -> 30 rows against 0 for the control,
+                # and `gt.<cursor>` is keyset pagination over the whole view.
+                # One `.ilike()` per column keeps the term a parameter value.
+                rows = ilike_any(
+                    lambda: svc.table("v_jamb_programme_details").select("*"),
+                    ("jamb_name", "canonical_programme_name"),
+                    term,
+                    limit=row_limit,
+                    order_by="jamb_name",
+                    key="jamb_programme_id",
                 )
             else:
-                res = (
+                rows = (
                     svc.table("v_jamb_programme_details")
                     .select("*")
                     .order("jamb_name")
-                    .limit(min(limit, 80))
+                    .limit(row_limit)
                     .execute()
-                )
+                ).data or []
         except Exception as exc:
             # Keep JAMB onboarding searchable when the optional detail view is
             # absent or stale. The direct registry still contains the official
             # JAMB programme names; school-specific requirements load later.
-            log.warning("student jamb programme detail view skipped", error=str(exc))
+            log_db_failure("student jamb programme detail view skipped", exc, level="warning")
             direct = svc.table("jamb_programmes").select(
                 "id, jamb_name, jamb_faculty, degree_type, is_blend"
             )
-            if q and q.strip():
-                direct = direct.ilike("jamb_name", f"%{q.strip()}%")
-            res = direct.order("jamb_name").limit(min(limit, 80)).execute()
-        items = [_jamb_detail_out(r) for r in (res.data or [])]
+            if term:
+                direct = direct.ilike("jamb_name", f"%{term}%")
+            rows = (direct.order("jamb_name").limit(row_limit).execute()).data or []
+        items = [_jamb_detail_out(r) for r in rows]
         # Keep each JAMB programme identity as its own result. The attached
         # rows are university offerings for that exact identity; a genuinely
         # different JAMB name must have a different jamb_programme_id and will
@@ -781,11 +818,11 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 item["schoolCount"] = len(names)
                 item["schoolOfferings"] = offerings_by_jamb.get(jid, [])
         except Exception as exc:  # noqa: BLE001
-            log.warning("student programme school context skipped", error=str(exc))
+            log_db_failure("student programme school context skipped", exc, level="warning")
         set_json(cache_key, items, SEARCH_TTL_SECONDS)
         return ResponseModel(data=_real(items[: min(limit, 80)]))
     except Exception as exc:  # noqa: BLE001
-        log.error("student jamb-programme search failed", error=str(exc))
+        log_db_failure("student jamb-programme search failed", exc)
         return ResponseModel(data=_coming_soon("JAMB programme search is temporarily unavailable."))
 
 
@@ -825,10 +862,10 @@ async def get_jamb_programme(jamb_programme_id: str):
                     "variesByInstitution": r.get("parse_status") == "needs_review",
                 }
         except Exception as exc:  # noqa: BLE001
-            log.warning("jamb requirements lookup skipped", error=str(exc))
+            log_db_failure("jamb requirements lookup skipped", exc, level="warning")
         return ResponseModel(data=_real(out))
     except Exception as exc:  # noqa: BLE001
-        log.error("student jamb-programme detail failed", error=str(exc))
+        log_db_failure("student jamb-programme detail failed", exc)
         return ResponseModel(data=_coming_soon("JAMB programme detail is temporarily unavailable."))
 
 
@@ -922,7 +959,7 @@ async def get_jamb_programme_domains(jamb_programme_id: str):
         ]
         return ResponseModel(data=_real({"jambProgrammeId": jamb_programme_id, "domains": domains}))
     except Exception as exc:  # noqa: BLE001
-        log.error("student jamb domains failed", error=str(exc))
+        log_db_failure("student jamb domains failed", exc)
         return ResponseModel(data=_coming_soon("Domain paths are temporarily unavailable."))
 
 
@@ -980,7 +1017,7 @@ async def register_school(
             message="Institution added to the registry." if created else "Existing institution found.",
         )
     except Exception as exc:  # noqa: BLE001
-        log.error("student institution registration failed", user_id=current_user["id"], error=str(exc))
+        log_db_failure("student institution registration failed", exc, user_id=current_user["id"])
         return ResponseModel(
             success=False,
             message="We could not add that institution right now. Please try again.",
@@ -1019,7 +1056,7 @@ async def get_school_faculties(school_id: str):
         set_json(cache_key, items, REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
-        log.warning("student school faculties lookup failed", school_id=school_id, error=str(exc))
+        log_db_failure("student school faculties lookup failed", exc, level="warning", school_id=school_id)
         return ResponseModel(data=_coming_soon("Faculty data is not available for this university."))
 
 
@@ -1048,8 +1085,9 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
             .select("*")
             .eq("school_id", school_id)
         )
-        if q and q.strip():
-            query = query.ilike("jamb_name", f"%{q.strip()}%")
+        school_term = clean_public_query(q)
+        if school_term:
+            query = query.ilike("jamb_name", f"%{school_term}%")
         res = query.order("jamb_name").limit(400).execute()
         rows = res.data or []
         if not rows:
@@ -1070,7 +1108,7 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
                 skills_by_id = {r["id"]: r for r in (sk.data or [])}
             except Exception as exc:  # noqa: BLE001
                 # Degrade to names only rather than failing the whole list.
-                log.warning("school programme skills lookup skipped", error=str(exc))
+                log_db_failure("school programme skills lookup skipped", exc, level="warning")
 
         items = []
         for r in rows:
@@ -1096,7 +1134,7 @@ async def get_school_programmes(school_id: str, q: Optional[str] = Query(None)):
         set_json(cache_key, items, SEARCH_TTL_SECONDS if query_text else REFERENCE_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001
-        log.error("student school programmes failed", error=str(exc))
+        log_db_failure("student school programmes failed", exc)
         return ResponseModel(
             data=_coming_soon("This institution's course list is temporarily unavailable.")
         )
@@ -1161,7 +1199,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
             return ResponseModel(data=_fallback(_attach_school_details(items), "No admission rows found yet; showing schools offering the programme."))
         return ResponseModel(data=_real(_attach_school_details(items)))
     except Exception as exc:  # noqa: BLE001
-        log.error("student jamb schools failed", error=str(exc))
+        log_db_failure("student jamb schools failed", exc)
         return ResponseModel(data=_coming_soon("Schools and admission rows are temporarily unavailable."))
 
 
@@ -1581,7 +1619,7 @@ async def programmes_by_subjects(
         )
         return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
-        log.error("student subject programme match failed", error=str(exc))
+        log_db_failure("student subject programme match failed", exc)
         return ResponseModel(
             data=_coming_soon(
                 "Subject matching is temporarily unavailable. You can still browse programmes by name, compare university offerings and read university requirements."
@@ -1623,7 +1661,7 @@ def _match_structured_subject_options(
             .execute()
         ).data or []
     except Exception as exc:  # noqa: BLE001
-        log.warning("typed subject rule authority unavailable; refusing national matches", error=str(exc))
+        log_db_failure("typed subject rule authority unavailable; refusing national matches", exc, level="warning")
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
     typed_by_programme = {
@@ -1671,7 +1709,7 @@ def _match_structured_subject_options(
     except Exception as exc:  # noqa: BLE001
         # An unavailable catalogue must make the option review stricter,
         # never broader. The generated SQL remains the primary source.
-        log.warning("subject option completeness check unavailable", error=str(exc))
+        log_db_failure("subject option completeness check unavailable", exc, level="warning")
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
     if not catalog_rows:
@@ -2162,7 +2200,7 @@ async def affiliate_with_school_code(
             "verificationLevel": "code_verified",
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("student school-code affiliate failed", error=str(exc))
+        log_db_failure("student school-code affiliate failed", exc)
         return ResponseModel(success=False, message="Could not affiliate with that school.", data=None)
 
 
@@ -2191,5 +2229,5 @@ async def my_affiliations(current_user: dict = Depends(Auth.get_current_user)):
             })
         return ResponseModel(data=_real(out))
     except Exception as exc:  # noqa: BLE001
-        log.error("student affiliations list failed", error=str(exc))
+        log_db_failure("student affiliations list failed", exc)
         return ResponseModel(data=_coming_soon("Affiliations are temporarily unavailable."))

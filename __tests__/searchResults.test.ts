@@ -167,6 +167,25 @@ describe("skill rows", () => {
     ]);
   });
 
+  it("treats two casings of one name as the same skill, as the backend does", () => {
+    // The backend keys `per_name` on the CASEFOLDED name
+    // (`career_routes.py:2800`, and `_build_skill_index` keys on
+    // `(folded, domain_id)`), so "Python" in one domain and "python" in
+    // another are ONE name server-side: the cap of two applies across both
+    // and `otherDomainCount` is `total - 2`. Keyed on the raw name here they
+    // were TWO names, `siblings` was 0 for each, and both rows read
+    // "and 20 other fields" for a skill in 22 — the exact double-count the
+    // sibling adjustment exists to remove, reintroduced by a case difference.
+    const rows = skills([
+      { id: "a", name: "Python", domainName: "Software", domainId: "D001", otherDomainCount: 20 },
+      { id: "b", name: "python", domainName: "Data Science", domainId: "D002", otherDomainCount: 20 },
+    ]);
+    expect(rows.map((r) => r.subtitle)).toEqual([
+      "Used in Software and 21 other fields",
+      "Used in Data Science and 21 other fields",
+    ]);
+  });
+
   it("keeps the count when the domain did not resolve", () => {
     // "Career skill" alone discarded the count in the one case where it
     // carries the most signal: the row has nothing else to say.

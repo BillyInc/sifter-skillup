@@ -36,6 +36,19 @@ from fastapi import APIRouter, Body, Depends, HTTPException, Query
 from auth import Auth
 from database import db
 from logger import log
+# `error_summary` / `log_db_failure` / `clean_public_query` used to be private
+# helpers of THIS file, and the docstring here claimed they were an invariant
+# of "the whole module". They now live in `log_safety` because the same
+# invariant has to hold for `admission_routes` and `entrepreneurship_routes`,
+# whose unauthenticated handlers were still writing `error=str(exc)` into the
+# record message at ERROR. The underscore aliases keep the in-file spelling
+# (and the existing tests that read `career_routes._error_summary`) unchanged.
+from log_safety import (
+    clean_public_query as _clean_public_query,
+    error_summary as _error_summary,
+    ilike_any as _ilike_any,
+    log_db_failure as _log_db_failure,
+)
 from models import ResponseModel
 
 router = APIRouter(prefix="/api/career", tags=["career"])
@@ -223,15 +236,6 @@ def _published_elite_entity_ids(entity_level: str) -> set[str]:
         return set()
 
 
-def _clean_public_query(q: Optional[str]) -> str:
-    """Normalize public search text and remove wildcard characters.
-
-    Public career endpoints are intentionally sliced search endpoints, not bulk
-    export endpoints. Removing `%` and `_` prevents wildcard-only scraping.
-    """
-    return (q or "").replace("%", "").replace("_", "").strip()
-
-
 def _search_terms(term: str) -> tuple[str, str]:
     """Return the subject and institution parts of a natural-language query.
 
@@ -342,86 +346,6 @@ def _is_missing_relation(exc: BaseException) -> bool:
     # either a schema regression would put a typo in the error log under a
     # message that says the table is gone.
     return "does not exist" in haystack and "relation" in haystack
-
-
-# PostgREST codes are PGRSTnnn; Postgres SQLSTATEs are five alphanumerics.
-# Shape alone is NOT enough for the SQLSTATE half: `?q=12345` has exactly that
-# shape, and the URL of a failed request carries the query string -- so a bare
-# five-character run would lift the user's own search term into `error_code`.
-# A SQLSTATE is therefore only lifted where the text presents it AS a code:
-# after a `code` key, or immediately before the `:` of a `42P01: ...` prefix.
-# PGRSTnnn is distinctive enough to take anywhere.
-_ERROR_CODE_SHAPE = re.compile(r"\A(?:PGRST\d{3}|[0-9][0-9A-Za-z]{4})\Z")
-_ERROR_CODE_RE = re.compile(
-    r"""['"]?\bcode['"]?\s*[:=]\s*['"]?(PGRST\d{3}|[0-9][0-9A-Za-z]{4})\b"""
-    r"""|\b(PGRST\d{3})\b"""
-    r"""|\b([0-9][0-9A-Za-z]{4})(?=\s*:)"""
-)
-
-
-def _extract_error_code(text: str) -> str:
-    match = _ERROR_CODE_RE.search(text)
-    if not match:
-        return ""
-    return next((group for group in match.groups() if group), "")
-
-
-def _error_summary(exc: BaseException) -> tuple[str, str]:
-    """A log-safe ``(code, exception class)`` for a database/transport failure.
-
-    ``str(exc)`` on a PostgREST error carries the message and hint -- schema and
-    table names -- and on an ``httpx.HTTPStatusError`` it carries the request
-    URL, which contains the Supabase project ref AND the raw user query string.
-    These logs go to stdout/journald and to error.log with 30-day retention, so
-    the classified summary is what gets logged at warning/error.
-
-    That is now an invariant of the whole module, not of one endpoint: every
-    `except` block routes through `_log_db_failure`, which is the only place
-    allowed to pair a warning/error record with the raw text (at DEBUG, on a
-    separate record). `/search` used to be the only fixed handler here while
-    30 siblings still wrote `error=str(exc)` into the record MESSAGE.
-
-    The raw string stays at DEBUG. That is not "off by default": `logger.py`
-    adds the app.log sink unconditionally, and it used to add it at DEBUG, so
-    the project ref and the user's raw search string were greppable on disk for
-    the retention window. The decision taken is that the DEBUG sink -- like the
-    stdout one -- is gated on ENVIRONMENT=development; outside development
-    app.log starts at INFO and these detail lines are never written.
-    """
-    # The attribute goes through the SAME shape check as the text: `exc.code`
-    # is whatever the raising library put there, and passing it through
-    # unvalidated is another way for free text to reach the log line.
-    code = str(getattr(exc, "code", "") or "")
-    if not _ERROR_CODE_SHAPE.match(code):
-        code = _extract_error_code(str(getattr(exc, "args", None) or exc))
-    return (code or "unclassified", type(exc).__name__)
-
-
-def _log_db_failure(message: str, exc: BaseException, *, level: str = "error", **fields) -> None:
-    """Report a database/transport failure without printing what it says.
-
-    The one spelling for every `except` block in this module. What it replaces
-    was `log.error("...", error=str(exc))`, and `Logger.error(self, message,
-    error=None)` emits `logger.error("{} | {}", message, error)` -- so a `str`
-    error lands in the record MESSAGE at ERROR level. That reaches error.log
-    (30-day retention, added UNCONDITIONALLY, so the ENVIRONMENT gate on
-    app.log does not help) and stderr/journald.
-
-    `str(httpx.HTTPStatusError)` is, empirically:
-
-        Server error '500 ...' for url 'https://<PROJECT_REF>.supabase.co
-        /rest/v1/programmes?select=id&name=ilike.%25<RAW USER TERM>%25'
-
-    Driving three UNAUTHENTICATED career routes into that exception put the
-    Supabase project ref and the user's raw search term verbatim into the
-    record message. `_error_summary` reduces it to a shape-checked SQLSTATE and
-    an exception class name; the raw text stays at DEBUG (see `_error_summary`
-    for why that is a real gate and not a nominal one).
-    """
-    error_code, error_type = _error_summary(exc)
-    emit = log.warning if level == "warning" else log.error
-    emit(message, error_code=error_code, error_type=error_type, **fields)
-    log.debug(message + " detail", error=str(exc))
 
 
 def _contains_skill(values: list[str], term: str) -> bool:
@@ -720,6 +644,69 @@ def _uri_at(uris: Any, idx: int) -> Optional[str]:
 
 # ── Public READ endpoints ─────────────────────────────────────
 
+def _list_programmes_blocking(
+    term: str, institution_type: Optional[str], safe_limit: int
+) -> list[dict]:
+    """The programme typeahead's PostgREST round trips, off the event loop.
+
+    BLOCKING, and it used to run directly on the loop inside an `async def`.
+    That was pre-existing on `main`, but round 10 turned 1-2 synchronous round
+    trips into 2-4 (one read per column, per fallback) on the same
+    unauthenticated GET, and this branch's own `_jamb_domains_blocking`
+    docstring measures what that costs: stall time was 100% of wall clock,
+    n=10 concurrent, i.e. a whole-box outage from an unauthenticated search.
+    Leaving the one public search path the branch did not off-load while
+    arguing at length that this is the risk is not a position worth defending.
+
+    Runs on `/search`'s own PER-LOOP bounded limiter, never the app-wide
+    AnyIO default of 40 -- see `_search_query_limiter`.
+
+    `.or_("name.ilike.%term%,display_name.ilike.%term%")` is what used to be
+    here, and it put the user's text inside a PostgREST FILTER EXPRESSION
+    rather than passing it as a parameter value. `,` and `.` are the DSL's
+    separators and are not LIKE metacharacters, so `_clean_public_query`
+    neither removed them nor should: `?q=zz,name.gt.A` supplied its own filter
+    on its own column, and 25 rows per request of `name.gt.<cursor>` keyset
+    pagination walked the whole table out of an endpoint whose own notice says
+    "Bulk listing is not exposed." `_ilike_any` reads one column at a time so
+    the term is always a single encoded parameter. See `log_safety.ilike_any`
+    for the measurements.
+    """
+
+    def _programmes(untyped_only: bool = False):
+        query = (
+            db.get_service_client()
+            .schema(_SCHEMA)
+            .table("programmes")
+            .select("id, name, display_name, institution_type, discipline")
+        )
+        if untyped_only:
+            return query.is_("institution_type", "null")
+        if institution_type:
+            return query.eq("institution_type", institution_type)
+        return query
+
+    rows = _ilike_any(
+        _programmes,
+        ("name", "display_name"),
+        term,
+        limit=safe_limit,
+        order_by="name",
+    )
+    if not rows and institution_type == "university":
+        # Some earlier programme imports did not set institution_type.
+        # Keep the student surface useful for those rows while still
+        # excluding records explicitly marked as non-university.
+        rows = _ilike_any(
+            functools.partial(_programmes, True),
+            ("name", "display_name"),
+            term,
+            limit=safe_limit,
+            order_by="name",
+        )
+    return rows
+
+
 @router.get("/programmes", response_model=ResponseModel)
 async def list_programmes(
     q: Optional[str] = None,
@@ -737,27 +724,12 @@ async def list_programmes(
             )
         )
     try:
-        query = (
-            db.get_service_client()
-            .schema(_SCHEMA)
-            .table("programmes")
-            .select("id, name, display_name, institution_type, discipline")
+        rows = await anyio.to_thread.run_sync(
+            functools.partial(
+                _list_programmes_blocking, term, institution_type, safe_limit
+            ),
+            limiter=_search_query_limiter(),
         )
-        like = f"%{term}%"
-        query = query.or_(f"name.ilike.{like},display_name.ilike.{like}")
-        if institution_type:
-            query = query.eq("institution_type", institution_type)
-        res = query.order("name").limit(safe_limit).execute()
-        if not res.data and institution_type == "university":
-            # Some earlier programme imports did not set institution_type.
-            # Keep the student surface useful for those rows while still
-            # excluding records explicitly marked as non-university.
-            fallback = db.get_service_client().schema(_SCHEMA).table(
-                "programmes"
-            ).select("id, name, display_name, institution_type, discipline").or_(
-                f"name.ilike.{like},display_name.ilike.{like}"
-            ).is_("institution_type", "null").order("name").limit(safe_limit).execute()
-            res = fallback
         items = [
             {
                 "id": r["id"],
@@ -765,7 +737,7 @@ async def list_programmes(
                 "institutionType": r.get("institution_type") or "university",
                 "discipline": r.get("discipline"),
             }
-            for r in (res.data or [])
+            for r in rows
         ]
         return ResponseModel(data=_real(items))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
@@ -2320,6 +2292,29 @@ _SKILL_RANK_THREADS = 8
 # route has no auth and no rate limit and the unit runs `--workers 2`, so ~20
 # concurrent requests took EVERY endpoint on the box down with it. The work now
 # runs in a thread on its own bounded limiter -- never the app-wide 40.
+#
+# WHAT IS FIXED, measured after the change: n=10 wall 55.64 s -> 9.29 s; max
+# event-loop stall 3.77-5.12 s -> 0.331 s; stall time 100% -> 3.6% of wall. The
+# cross-endpoint blast radius is gone too -- `/api/career/scholarships` answers
+# in 0.626 s idle and 0.579 s under 10 concurrent searches. Cancellation frees
+# threads cleanly (`borrowed_tokens == 0` after abandoning a request).
+#
+# WHAT IS NOT FIXED, and is a deliberate non-goal here: there is no admission
+# control in front of this limiter. `anyio.CapacityLimiter.acquire()` queues
+# waiters WITHOUT bound and nothing sheds load, so concurrency past 8 turns
+# into latency rather than into an error. Modelled: n=50 -> all served, last at
+# 21.2 s; n=200 -> all served, last at 76.5 s, peak traced memory 10.6 MB
+# (~53 KB per pending request). So this is a LATENCY/holding exposure, not
+# memory exhaustion. `/search` is unauthenticated and unrated at ~4.6 s of real
+# DB time over 10-15 round trips, and because `run_sync` uses the default
+# `abandon_on_cancel=False` a client that disconnects immediately still costs a
+# full thread-slot for the whole 4.6 s (cost asymmetry).
+#
+# Two things were done about it rather than building a rate limiter, which is a
+# product decision that has not been made: the cheapest amplifier was removed
+# (`log_safety.clean_public_query` now strips `*`, so `?q=**` no longer turns
+# one request into a full-table scan), and the residual is written down here.
+# A real fix is admission control or authentication on this route.
 _SEARCH_QUERY_THREADS = 8
 
 # Per-EVENT-LOOP build state, keyed weakly so a closed loop is collected.
@@ -2816,7 +2811,59 @@ async def _search_skill_layers(svc, term: str, limit: int) -> tuple[list[dict], 
     return rows, partial
 
 
-def _safe_query(label: str, builder) -> tuple[list[dict], bool]:
+def _read_may_be_truncated(response, rows: list) -> bool:
+    """True unless the server's own exact count says this read was complete.
+
+    The discriminator between the two "succeeded but told me less than
+    everything" cases, which a row count alone CANNOT tell apart:
+
+      * TRUNCATED -- a project-level PostgREST `db-max-rows` below the number
+        of rows the filter actually matches. PostgREST answers 200 with a
+        partial `Content-Range`, so `count` exceeds `len(rows)`.
+      * genuinely absent -- a dangling foreign key. The filter matched fewer
+        rows than the caller asked about, and `count == len(rows)` says so.
+
+    Only the first is a failure. Comparing `len(rows)` against the number of
+    IDS REQUESTED conflates them, and conflating them is not a safe default in
+    either direction: it turns every unresolved row into an "unknown" and
+    empties the secondary groups whenever a row points at a domain this
+    response never read (which `_search_domain_context_blocking`'s caller
+    deliberately still publishes, with a null domain).
+
+    WHAT A MISSING COUNT MEANS. An earlier version of this returned
+    `isinstance(count, int) and len(rows) < count`, i.e. a non-`int` count was
+    "no opinion" and therefore `ok=True` -- a genuinely truncated read was
+    indistinguishable from a complete one AND NOTHING WAS LOGGED. That failed
+    OPEN on the one fact the caller derives a SECURITY decision from. PROVEN
+    against the real route with the excluded-domain fixture:
+
+        data=[], count=1     -> 0 hidden labels published, warned     (correct)
+        data=[], count=None  -> 3 hidden labels published, NO warning
+        data=[], count="1"   -> 3 published, no warning
+        data=[], count=0     -> 3 published, no warning
+        data=[row], count=1  -> 0 published (genuine success control)
+
+    So "no opinion" is now an ASSUMED truncation: no usable count means the
+    caller does not know what it did not see, which is the same position a
+    failed read leaves it in. A MagicMock reaching here is a FIXTURE that
+    forgot to state a count, and the place to fix that is the fixture -- not by
+    loosening production logic until the mock looks complete.
+
+    ACCEPTED LIMITATION: `count=0` with non-empty `rows` is impossible, and
+    `count=0` with empty `rows` is indistinguishable from a real empty read, so
+    a server that reports 0 for a truncated read cannot be caught here.
+    `count=False` is the SAME case, not a second one: `bool` is a subclass of
+    `int`, so `isinstance(False, int)` is True and `len(rows) < False` is
+    `len(rows) < 0`. Both therefore answer "complete" on an empty read, and the
+    gap above is the whole of it.
+    """
+    count = getattr(response, "count", None)
+    if not isinstance(count, int):
+        return True
+    return len(rows) < count
+
+
+def _safe_query(label: str, builder, *, count_checked: bool = False) -> tuple[list[dict], bool]:
     """Run one optional /search group query. Returns ``(rows, ok)``.
 
     `builder()` returns a PostgREST request builder, which has no `.data`:
@@ -2833,9 +2880,26 @@ def _safe_query(label: str, builder) -> tuple[list[dict], bool]:
     exactly the label leak the switch exists to prevent. "This query returned
     nothing" and "this query failed, so I know nothing" are different facts and
     are now reported as different facts.
+
+    ``count_checked`` adds the third fact. A read whose caller derives a
+    SECURITY decision from the rows it did not see cannot treat "the server cut
+    me off" as "that is everything": pass `count="exact"` in the select and
+    `count_checked=True`, and a truncated read reports ``ok=False`` exactly as
+    a failed one does. See `_read_may_be_truncated`.
     """
     try:
-        return builder().execute().data or [], True
+        response = builder().execute()
+        rows = getattr(response, "data", None) or []
+        if count_checked and _read_may_be_truncated(response, rows):
+            log.warning(
+                "career search group is not verifiably complete (no usable "
+                "exact count, or fewer rows than it)",
+                group=label,
+                rows=len(rows),
+                expected=getattr(response, "count", None),
+            )
+            return rows, False
+        return rows, True
     except Exception as query_exc:  # noqa: BLE001
         # A missing relation is a schema regression, not an optional
         # enrichment table that has not been migrated yet: it means the
@@ -2947,7 +3011,7 @@ def _search_catalogue_blocking(
     if domain_ids:
         dref = (
             svc.table("domains")
-            .select("id, domain_key, name, excluded")
+            .select("id, domain_key, name, excluded", count="exact")
             .in_("id", domain_ids)
             .execute()
         )
@@ -2955,6 +3019,25 @@ def _search_catalogue_blocking(
         excluded_domain_ids.update(
             str(d["id"]) for d in role_domain_rows if d.get("excluded") and d.get("id")
         )
+        # Same missing-`.limit()` shape as the domain-context read, so the same
+        # guard. Only a read the SERVER says it truncated fails closed here: an
+        # id that is simply absent from `domains` stays "unresolved" and its
+        # role is still emitted, which is the round-6 policy. Left open, a
+        # truncated read put an excluded domain's role back in the response as
+        # `{name, tier, domains: []}` -- named, unroutable, and sourced
+        # entirely from the domain that was meant to be hidden, which is
+        # exactly what the `continue` below was added to stop.
+        if _read_may_be_truncated(dref, role_domain_rows):
+            log.warning(
+                "career search role domain lookup is not verifiably complete "
+                "(no usable exact count, or fewer rows than it)",
+                rows=len(role_domain_rows),
+                expected=getattr(dref, "count", None),
+            )
+            returned_ids = {str(d["id"]) for d in role_domain_rows if d.get("id")}
+            excluded_domain_ids.update(
+                str(domain_id) for domain_id in domain_ids if str(domain_id) not in returned_ids
+            )
         excluded_domain_keys.update(
             str(d.get("domain_key"))
             for d in role_domain_rows
@@ -3032,14 +3115,31 @@ def _search_catalogue_blocking(
             if link.get("domainKey")
         }
         if referenced_keys:
-            family_domain_rows = svc.table("domains").select(
-                "domain_key, excluded"
-            ).in_("domain_key", list(referenced_keys)).execute().data or []
+            family_domain_response = svc.table("domains").select(
+                "domain_key, excluded", count="exact"
+            ).in_("domain_key", list(referenced_keys)).execute()
+            family_domain_rows = family_domain_response.data or []
             excluded_domain_keys.update(
                 str(row.get("domain_key"))
                 for row in family_domain_rows
                 if row.get("excluded") and row.get("domain_key")
             )
+            # Same guard as the role domain lookup above, for the same reason.
+            if _read_may_be_truncated(family_domain_response, family_domain_rows):
+                log.warning(
+                    "career search family domain lookup is not verifiably "
+                    "complete (no usable exact count, or fewer rows than it)",
+                    rows=len(family_domain_rows),
+                    expected=getattr(family_domain_response, "count", None),
+                )
+                returned_keys = {
+                    str(row.get("domain_key"))
+                    for row in family_domain_rows
+                    if row.get("domain_key")
+                }
+                excluded_domain_keys.update(
+                    str(key) for key in referenced_keys if str(key) not in returned_keys
+                )
         role_families = [
             {
                 "key": family.get("family_key"),
@@ -3121,6 +3221,24 @@ def _search_catalogue_blocking(
         for p in (pres.data or [])
     ]
 
+    # Why five of the six `ok` flags below are discarded, on purpose.
+    #
+    # `_safe_query`'s docstring frames `ok` as load-bearing, and for its one
+    # SECURITY consumer -- the domain-context read, whose result decides
+    # whether a hidden domain's labels may be published -- it is. For these
+    # groups `ok` would only feed a per-group client notice, and the response
+    # contract has no field for one: `skillsNotice` is singular and
+    # skills-specific, and the mapper (`src/lib/searchResults.ts`) carries
+    # exactly one `notice` per group with no backend source for the other
+    # nine. Adding `groupNotices` means a change to the envelope, the TS types,
+    # the mapper, the overlay and their tests, which is a larger change than
+    # the defect justifies in this pass.
+    #
+    # So the silent-empty ambiguity DOES still exist for these five groups, and
+    # that is a known gap rather than a solved problem. What it is not is
+    # invisible: `_safe_query` already logs every failure at warning (or error
+    # for a missing relation) with the group name, so the operator-facing half
+    # is covered; only the user-facing half is missing. Recommended follow-up.
     subgroup_rows, _subgroups_ok = _safe_query(
         "subgroups",
         lambda: svc.table("domain_subgroups")
@@ -3198,12 +3316,24 @@ def _search_domain_context_blocking(svc, context_ids: list) -> tuple[list[dict],
     Synchronous and blocking for the same reason as
     `_search_catalogue_blocking`; the route runs it in a thread. Returns
     ``(rows, ok)`` -- see `_safe_query` for why `ok` is not optional here.
+
+    `count="exact"` and `count_checked=True` are load-bearing, not telemetry.
+    This read has no `.limit()` and its ceiling is 4 groups x
+    `_PUBLIC_SEARCH_LIMIT` = 80 ids, so a project-level PostgREST `db-max-rows`
+    below that truncates it with a 200 and a partial `Content-Range`. On the
+    old two-mode switch that read as "succeeded, and said nothing about this
+    domain": the hidden domain's key was in neither `excluded_domain_ids` nor
+    `resolved_domain_ids`, `domain_is_publishable` returned True, and all three
+    hidden labels published with `domainId: null` -- byte-identical to the leak
+    the switch exists to prevent, with no error anywhere. `ok=False` on a
+    truncated read is what makes the fail-closed branch cover it.
     """
     return _safe_query(
         "domain context",
         lambda: svc.table("domains")
-        .select("id, domain_key, name, excluded")
+        .select("id, domain_key, name, excluded", count="exact")
         .in_("id", list(context_ids)),
+        count_checked=True,
     )
 
 
@@ -3329,7 +3459,8 @@ async def search_career(
                         *skill_rows]
             if row.get("domain_id")
         }
-        # True when the context read FAILED, so the excluded set is unknown.
+        # True when the excluded set is unknown, for EITHER reason: the context
+        # read failed, or it succeeded and came back TRUNCATED.
         context_unknown = False
         if context_ids:
             context_rows, context_ok = await anyio.to_thread.run_sync(
@@ -3698,6 +3829,209 @@ async def save_prior_field(
         return ResponseModel(success=False, message="Could not save your prior field.", data=None)
 
 
+# A JAMB name maps to a handful of domains. `jamb_programme_domain` holds 3,163
+# rows in dev and BOTH reads below were unbounded, so a match-everything pattern
+# returned 1,000 of them -- the project's `db-max-rows`, confirmed live -- per
+# request. Every read on this path is bounded now, so the response size tracks
+# the question rather than the table.
+#
+# The mapping ceiling is the SERVER's own `db-max-rows`, not a smaller number.
+# It was 200 for one round, and 200 rows of an UNORDERED read is an arbitrary
+# slice of the match set -- neither read below had an `.order()`, so which 200
+# arrived was whatever the planner produced. MEASURED on dev, distinct domains
+# reachable from all matching rows vs from the first 200:
+#
+#     science 94 -> 57 | a 111 -> 49 | management 62 -> 35 | studies 67 -> 37
+#
+# i.e. it silently dropped up to 60% of the mappings on the path whose own
+# docstring says "partial student input still resolves". Two changes: the reads
+# are `.order()`ed so the window is deterministic, and the ceiling is raised to
+# the 1,000-row server cap. The bound that keeps the RESPONSE small is
+# `_JAMB_DOMAIN_LIMIT`, applied after ranking.
+#
+# THIS CEILING IS THE SERVER CAP ITSELF, SO IT CANNOT BOUND ANYTHING. An earlier
+# revision of this comment claimed the cap is one "which every real term
+# measured is far under"; the data contradicts that. MEASURED on dev, an
+# unbounded read of `jamb_programme_domain` answers `206 Partial Content` with
+# `Content-Range: 0-999/3163`, i.e. `db-max-rows` is exactly 1000 -- so
+# `.limit(1000)` is indistinguishable from an unbounded read and 19 terms
+# reachable through `/api/career/jamb/{name}/domains` (a route with no
+# minimum-length floor, see `get_jamb_domains`) exceed it TODAY:
+#
+#     'a'  2638 rows -> 48 of >=107 domains | 'e'  2826 -> 44 of >=95
+#     'en' 1476 rows -> 82 of >=123 domains | 'st' 1038 -> 104 of >=108
+#
+# Because the reads are `.order("domain_id")`ed, the window is the 1,000 lowest
+# domain-id UUIDs, so a `direct` mapping whose domain sorts high is dropped
+# DETERMINISTICALLY. This is NOT a regression -- `main` received exactly 1,000
+# rows too, unordered -- and it is a COMPLETENESS problem, not a disclosure one:
+# the `excluded` filter still runs on whatever arrives, so nothing hidden can
+# be published by a short read. So the treatment here is the one the shape
+# warrants and no more: `count="exact"` + `_read_may_be_truncated`, which turns
+# a silent short read into a WARNING naming the term-independent numbers.
+# Deliberately NOT a client notice: `_JAMB_DOMAIN_LIMIT` already truncates the
+# published list without one, and adding a second, differently-worded partial
+# marker on an unauthenticated route is an envelope change with no security
+# content. Raising the ceiling is not an option either -- 1000 IS the ceiling;
+# the real fix is a server-side aggregate, which is a product change.
+_JAMB_MAPPING_ROW_LIMIT = 1000
+_JAMB_DOMAIN_LIMIT = 50
+
+# Strongest match first, for display.
+_JAMB_MATCH_RANK = {"direct": 3, "functional": 2, "adjacent": 1}
+
+
+def _warn_if_mapping_read_is_short(probe: str, response, rows: list) -> None:
+    """Say so when a mapping read did not see everything it matched.
+
+    `_read_may_be_truncated` is the same discriminator the role-domain,
+    family-domain and domain-context reads use; it was simply never applied
+    here, which left `_JAMB_MAPPING_ROW_LIMIT`'s no-op ceiling (see the comment
+    on the constant) SILENT. No exact count is treated as a truncation, for the
+    reason spelled out in that helper: "I cannot tell" is not "I saw it all".
+
+    Warning only -- the response is unchanged. See `_JAMB_MAPPING_ROW_LIMIT`.
+    """
+    if not _read_may_be_truncated(response, rows):
+        return
+    log.warning(
+        "jamb domain mapping read is not verifiably complete "
+        "(no usable exact count, or fewer rows than it); the domain list "
+        "for this term may be missing mappings",
+        probe=probe,
+        rows=len(rows),
+        expected=getattr(response, "count", None),
+        ceiling=_JAMB_MAPPING_ROW_LIMIT,
+    )
+
+
+def _jamb_domains_blocking(svc, term: str) -> list[dict]:
+    """Resolve a cleaned JAMB name to its mapped, non-excluded domains.
+
+    BLOCKING: every line here is a PostgREST round trip, and this used to run
+    DIRECTLY ON THE EVENT LOOP -- `get_jamb_domains` was an `async def` that was
+    never off-loaded the way `_search_catalogue_blocking` was. MEASURED, n=10
+    concurrent, before this split:
+
+        /api/career/jamb/zzzzqqqq/domains -> wall  9.89 s, max loop stall 9.867 s
+        /api/career/jamb/**/domains       -> wall 14.02 s, max loop stall 14.000 s
+        /api/career/search (already off-loaded, same n) -> 9.21 s / 0.308 s
+
+    i.e. stall time was 100% of wall clock on an unauthenticated GET, which is
+    the whole-box outage the `/search` off-loading was done to stop. Removing
+    `*` from the cleaner did not remove the cheapest amplifier, it moved it here.
+    This now runs in a thread on `/search`'s own bounded limiter.
+    """
+    # Exact (case-insensitive) first; fall back to an ilike contains so partial
+    # student input still resolves.
+    exact = (
+        svc.table("jamb_programme_domain")
+        .select("domain_id, match_type", count="exact")
+        .ilike("jamb_name", term)
+        .order("domain_id")
+        .limit(_JAMB_MAPPING_ROW_LIMIT)
+        .execute()
+    )
+    rows = exact.data or []
+    _warn_if_mapping_read_is_short("exact", exact, rows)
+    if not rows:
+        contains = (
+            svc.table("jamb_programme_domain")
+            .select("domain_id, match_type", count="exact")
+            .ilike("jamb_name", f"%{term}%")
+            .order("domain_id")
+            .limit(_JAMB_MAPPING_ROW_LIMIT)
+            .execute()
+        )
+        rows = contains.data or []
+        _warn_if_mapping_read_is_short("contains", contains, rows)
+    if not rows:
+        return []
+
+    # Dedup by domain, keeping the strongest match_type.
+    #
+    # FAIL-CLOSED on `match_type`. A missing or unknown mapping type is not
+    # evidence of an adjacent relationship. Keep the public route fail-closed.
+    #
+    # This guard was deleted by the first commit on this branch, which wrote
+    # `mt = r.get("match_type") or "adjacent"` -- no validation, no
+    # normalisation. PROVED through the real route: a NULL `match_type` was
+    # published as a genuine `matchType: "adjacent"` relationship; a
+    # non-canonical `"Direct"` went to the client verbatim, breaking its enum;
+    # and because `"Direct"` then ranked 0, a domain holding BOTH `"Direct"`
+    # and `"adjacent"` was DOWNGRADED to `adjacent`. Dev has 0 NULL and only
+    # canonical lowercase values today -- the same "latent, not live" argument
+    # the `excluded` filter below is justified by.
+    best: dict[str, str] = {}
+    for r in rows:
+        did = r["domain_id"]
+        mt = str(r.get("match_type") or "").strip().lower()
+        if mt not in _JAMB_MATCH_RANK:
+            continue
+        if did not in best or _JAMB_MATCH_RANK[mt] > _JAMB_MATCH_RANK[best[did]]:
+            best[did] = mt
+    if not best:
+        # AN ENVELOPE CHANGE VERSUS `main`, stated rather than glossed. `main`
+        # fell through to `.in_("id", [])`, i.e. a real round trip to
+        # `domains?id=in.()`, and answered `domains: []` with NO notice. The
+        # early return routes this case into `get_jamb_domains`'s `if not
+        # domains:` branch, which attaches "No domains mapped to this JAMB name
+        # yet." -- the same notice a genuine miss and the all-excluded case get.
+        # A client that branched on "empty list, no notice" sees a notice now.
+        # That is the improvement (the three empty states are labelled the same
+        # way), and it is a real contract change worth naming in the PR body.
+        #
+        # The round trip it saves is the other half: removing this return is
+        # behaviour-preserving apart from the notice and SURVIVES the suite,
+        # while costing one extra PostgREST request per call on an
+        # unauthenticated route whose stated justification is cutting round
+        # trips. `test_the_all_invalid_path_makes_no_join_round_trip` pins it.
+        return []
+
+    # RANK FIRST, THEN TRUNCATE. `list(best.keys())[:50]` took the first fifty
+    # FIRST-SEEN ids and left the rank sort to run afterwards, so 60 `adjacent`
+    # mappings followed by one `direct` mapping returned fifty domains with the
+    # `direct` match ABSENT -- the exact opposite of what `_JAMB_MATCH_RANK`
+    # ("strongest match first, for display") exists to produce. Python's sort
+    # is stable, so equal ranks keep their first-seen order.
+    ids = sorted(best, key=lambda did: -_JAMB_MATCH_RANK[best[did]])[:_JAMB_DOMAIN_LIMIT]
+
+    # `excluded` HIDES THE CONTENT of a domain (see `_search_domain_context_
+    # blocking` for the policy in one place). This read selected `name` and
+    # `cluster` with NO `excluded` filter, so an excluded domain still reachable
+    # through `jamb_programme_domain` would have been published BY NAME here --
+    # the one door left into the data the rest of this branch closed. Dev has 0
+    # excluded rows today, which is exactly why it survived every earlier round.
+    dref = (
+        svc.table("domains")
+        .select("id, domain_key, name, cluster, elite_domain, excluded")
+        .in_("id", ids)
+        .limit(_JAMB_DOMAIN_LIMIT)
+        .execute()
+    )
+    dmap = {d["id"]: d for d in (dref.data or []) if not d.get("excluded")}
+    domains = []
+    for did in ids:
+        d = dmap.get(did)
+        if not d:
+            continue
+        domains.append(
+            {
+                "domainId": d.get("domain_key") or did,
+                "domainName": d.get("name"),
+                "cluster": d.get("cluster"),
+                "matchType": best[did],
+                "eliteFlag": bool(d.get("elite_domain")),
+            }
+        )
+    # No trailing `domains.sort(...)`: `ids` is already in rank order and this
+    # loop preserves it. A second sort here would be a no-op that no mutation
+    # could ever kill, which is worse than no sort at all -- the ordering is
+    # pinned at the one place that also decides which domains survive
+    # `_JAMB_DOMAIN_LIMIT`.
+    return domains
+
+
 @router.get("/jamb/{jamb_name:path}/domains", response_model=ResponseModel)
 async def get_jamb_domains(jamb_name: str):
     """JAMB name → domains (the student's entry point).
@@ -3707,66 +4041,41 @@ async def get_jamb_domains(jamb_name: str):
     shape. Case-insensitive exact match on jamb_name, then a broad ilike
     fallback so partial student input still resolves.
     """
+    # Deliberately NOT rebound onto `jamb_name`. The cleaned value is a PATTERN
+    # INPUT; `jambName` in the response is the display string for what the
+    # student typed, and rebinding made every cleaned-to-empty segment answer
+    # `jambName: ""`.
+    term = _clean_public_query(jamb_name)
+    if not term:
+        # `*`, `%`, `_`, `\` and whitespace all clean to "". The empty term then
+        # missed the exact-match probe and fell into the `%{term}%` fallback --
+        # `ilike.%%`, match-everything -- on a route with no minimum-length
+        # floor. MEASURED through the handler before this guard: segments `**`,
+        # `%`, `_`, `\` and `%20%20` each returned 61 domains / 8,285 bytes,
+        # against 0 domains / 157 bytes for a genuine miss. Answering the
+        # no-mapping notice is what an unmatchable term actually means.
+        return ResponseModel(
+            data=_real(
+                {"jambName": jamb_name, "domains": []},
+                notice="No domains mapped to this JAMB name yet.",
+            )
+        )
     try:
-        svc = _svc()
-        # Exact (case-insensitive) first; fall back to ilike contains.
-        jres = (
-            svc.table("jamb_programme_domain")
-            .select("domain_id, match_type")
-            .ilike("jamb_name", jamb_name)
-            .execute()
+        domains = await anyio.to_thread.run_sync(
+            functools.partial(_jamb_domains_blocking, _svc(), term),
+            limiter=_search_query_limiter(),
         )
-        rows = jres.data or []
-        if not rows:
-            jres = (
-                svc.table("jamb_programme_domain")
-                .select("domain_id, match_type")
-                .ilike("jamb_name", f"%{jamb_name}%")
-                .execute()
-            )
-            rows = jres.data or []
-        if not rows:
-            return ResponseModel(
-                data=_real({"jambName": jamb_name, "domains": []},
-                           notice="No domains mapped to this JAMB name yet.")
-            )
-
-        # Dedup by domain, keeping the strongest match_type.
-        _rank = {"direct": 3, "functional": 2, "adjacent": 1}
-        best: dict[str, str] = {}
-        for r in rows:
-            did = r["domain_id"]
-            mt = r.get("match_type") or "adjacent"
-            if did not in best or _rank.get(mt, 0) > _rank.get(best[did], 0):
-                best[did] = mt
-
-        dref = (
-            svc.table("domains")
-            .select("id, domain_key, name, cluster, elite_domain")
-            .in_("id", list(best.keys()))
-            .execute()
-        )
-        dmap = {d["id"]: d for d in (dref.data or [])}
-        domains = []
-        for did, mt in best.items():
-            d = dmap.get(did)
-            if not d:
-                continue
-            domains.append(
-                {
-                    "domainId": d.get("domain_key") or did,
-                    "domainName": d.get("name"),
-                    "cluster": d.get("cluster"),
-                    "matchType": mt,
-                    "eliteFlag": bool(d.get("elite_domain")),
-                }
-            )
-        # Strongest tiers first for display.
-        domains.sort(key=lambda x: _rank.get(x["matchType"], 0), reverse=True)
-        return ResponseModel(data=_real({"jambName": jamb_name, "domains": domains}))
     except Exception as exc:  # noqa: BLE001
         _log_db_failure("career jamb_domains failed", exc)
         return ResponseModel(data=_coming_soon("JAMB domain lookup is temporarily unavailable."))
+    if not domains:
+        return ResponseModel(
+            data=_real(
+                {"jambName": jamb_name, "domains": []},
+                notice="No domains mapped to this JAMB name yet.",
+            )
+        )
+    return ResponseModel(data=_real({"jambName": jamb_name, "domains": domains}))
 
 
 # ── User-owned endpoints (auth required) ──────────────────────

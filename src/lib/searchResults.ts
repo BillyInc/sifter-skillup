@@ -127,12 +127,34 @@ function universityRows(result: CareerSearchResult): SearchResult[] {
  */
 function skillRows(result: CareerSearchResult): SearchResult[] {
   const skills = result.skills ?? [];
+  // Keyed to MATCH the backend's keying, as closely as JavaScript can.
+  // `career_routes.py` caps `per_name` on the CASEFOLDED name (`:2724`,
+  // `:2769`, and `_build_skill_index` at `:2530` keys on `(folded,
+  // domain_id)`), so "Python" in domain A and "python" in domain B are ONE
+  // name server-side: the cap of two applies across both and
+  // `otherDomainCount` is `total - 2`. Keyed on the raw `item.name` they were
+  // TWO names here, `siblings` came out 0 for each, and both rows read "and
+  // N-2 other fields" instead of "N-1" -- the same double-counting this
+  // function exists to undo, reintroduced by a case difference in the data.
+  //
+  // NOT THE SAME FUNCTION, and the earlier wording ("keyed the way the backend
+  // keys it") overstated it. JavaScript has no `str.casefold()`;
+  // `toLowerCase()` is its nearest equivalent and agrees with casefold for all
+  // ASCII, which is every skill name in the dataset today. They diverge for a
+  // handful of characters -- casefold maps `ß` to `ss` and `ﬁ` to `fi`, and
+  // `İ`.toLowerCase() is `i̇` where casefold gives `i̇` only under the same
+  // normalisation -- so a future non-ASCII skill name could be one name
+  // server-side and two here. Left as `toLowerCase()`: the alternative is a
+  // hand-rolled casefold table for a case no data reaches, and the failure
+  // mode is an off-by-one in a count, not a wrong or hidden row.
   const shownPerName = new Map<string, number>();
+  const foldKey = (name: string) => name.toLowerCase();
   for (const item of skills) {
-    shownPerName.set(item.name, (shownPerName.get(item.name) ?? 0) + 1);
+    const key = foldKey(item.name);
+    shownPerName.set(key, (shownPerName.get(key) ?? 0) + 1);
   }
   return skills.map((item) => {
-    const siblings = (shownPerName.get(item.name) ?? 1) - 1;
+    const siblings = (shownPerName.get(foldKey(item.name)) ?? 1) - 1;
     const otherFields = (item.otherDomainCount ?? 0) + siblings;
     const fieldWord = otherFields === 1 ? "field" : "fields";
     return {

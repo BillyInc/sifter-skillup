@@ -14,7 +14,10 @@ skills, and a missing relation is logged loudly rather than at debug.
 """
 
 import asyncio
+import inspect
+import re
 import threading
+import traceback
 import time
 import tracemalloc
 from contextlib import contextmanager
@@ -40,6 +43,20 @@ def captured_logs(level="DEBUG"):
         yield records
     finally:
         loguru_logger.remove(sink_id)
+
+
+
+def _cached_index() -> tuple:
+    """`cr._skill_index_cache`, asserted present.
+
+    The module declares it `Optional[tuple[float, list[dict], bool]]`, so a
+    bare `_cached_index()[2]` is a type error -- and, worse, an
+    `AttributeError`-free way for a test to pass on a cache that was never
+    built. Failing loudly here says which of the two happened.
+    """
+    cache = cr._skill_index_cache
+    assert cache is not None, "the skill index cache was never populated"
+    return cache
 
 
 DOMAINS = [
@@ -168,9 +185,21 @@ class _Table:
             return cell in value
         body = str(value)
         text = "" if cell is None else str(cell)
-        if body.startswith("%") and body.endswith("%"):
-            return body[1:-1].casefold() in text.casefold()
-        return text.casefold() == body.casefold()
+        # EVERY wildcard PostgREST/Postgres honours, not just `%`.
+        #
+        # This used to be "if it starts and ends with `%`, do a substring
+        # match", and that assumption is precisely what hid the bulk-export
+        # bug: PostgREST maps `*` to `%` in `like`/`ilike`, so `?q=**` reached
+        # the database as a match-all pattern -- verified against dev,
+        # `name=ilike.%*%` returns all 160 rows of `domains` while
+        # `name=ilike.%zzzqqq%` returns 0 -- but a `%`-only model treated the
+        # `*` as an ordinary character and reported 0 rows. The mock made the
+        # sanitizer look load-bearing when it was not.
+        pattern = "".join(
+            ".*" if char in "%*" else "." if char == "_" else re.escape(char)
+            for char in body
+        )
+        return re.fullmatch(pattern, text, re.IGNORECASE | re.DOTALL) is not None
 
     def _filtered(self):
         rows = self._rows
@@ -528,9 +557,25 @@ class TestSkillIndexPagination:
         # stopping early is a bug and has to leave a trace -- silent truncation
         # is the exact bug class this code exists to remove.
         class Endless(_Table):
-            def _window(self, _rows):
+            # Same parameter NAME as `_Table._window`. Renaming the METHOD
+            # is caught (the base implementation runs and the fixture stops
+            # being endless); renaming only the PARAMETER is not, because
+            # Python calls it positionally and there is no pyright/mypy in the
+            # gate -- so the signature is asserted below rather than asserted
+            # in a comment.
+            def _window(self, rows):
                 return [{"id": str(i)} for i in range(self.MAX_ROWS)]
 
+        # The override is only "endless" while it actually overrides. Renaming
+        # the method is caught by the assertions below, but renaming only the
+        # PARAMETER (`rows` -> `page_rows`) is not -- Python passes it
+        # positionally and no type checker runs in this gate. Assert it.
+        assert inspect.signature(Endless._window) == inspect.signature(
+            _Table._window
+        ), (
+            "the `_window` override must keep the base signature; a renamed "
+            "parameter silently makes this fixture a different shape"
+        )
         table = Endless([])
         with captured_logs("WARNING") as records:
             rows, complete = cr._fetch_all_rows(
@@ -741,7 +786,7 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
         with captured_logs("WARNING") as records:
             cr._build_skill_index(_svc_with(roles=[]))
         assert cr._skill_index_cache is not None
-        assert cr._skill_index_cache[2] is True, "the build is flagged partial"
+        assert _cached_index()[2] is True, "the build is flagged partial"
         assert any("empty or short layer" in r["message"] for r in records)
         assert cr._SKILL_INDEX_EMPTY_TTL_SECONDS < cr._SKILL_INDEX_TTL_SECONDS
 
@@ -750,11 +795,11 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
         # mutation `partial = not roles` survived: an RLS change that hides
         # `domains` is the same silent-empty failure.
         cr._build_skill_index(_svc_with(domains=[]))
-        assert cr._skill_index_cache[2] is True
+        assert _cached_index()[2] is True
 
     def test_an_empty_subgroup_layer_alone_flags_the_build_partial(self):
         cr._build_skill_index(_svc_with(subgroups=[]))
-        assert cr._skill_index_cache[2] is True
+        assert _cached_index()[2] is True
 
     def test_a_short_layer_flags_the_build_partial_even_though_nothing_is_empty(self):
         # A reseed landing mid-pagination: every layer answers, none is empty,
@@ -763,19 +808,48 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
         tables = {"domain_roles": _Table(ROLES, count_override=5093)}
         with captured_logs("WARNING") as records:
             cr._build_skill_index(_svc_with(tables=tables))
-        assert cr._skill_index_cache[2] is True, "a short read is not authoritative"
+        assert _cached_index()[2] is True, "a short read is not authoritative"
         assert any("empty or short layer" in r["message"] for r in records)
 
     def test_a_bound_truncated_layer_flags_the_build_partial(self):
         class Endless(_Table):
-            def _window(self, _rows):
+            # Same parameter NAME as `_Table._window`. Renaming the METHOD
+            # is caught (the base implementation runs and the fixture stops
+            # being endless); renaming only the PARAMETER is not, because
+            # Python calls it positionally and there is no pyright/mypy in the
+            # gate -- so the signature is asserted below rather than asserted
+            # in a comment.
+            def _window(self, rows):
                 return [{"id": str(i), "domain_id": "d1", "essential_skills": ""}
                         for i in range(self.MAX_ROWS)]
 
-        cr._build_skill_index(_svc_with(tables={"domain_roles": Endless([])}))
-        assert cr._skill_index_cache[2] is True, (
+        # The override is only "endless" while it actually overrides. Renaming
+        # the method is caught by the assertions below, but renaming only the
+        # PARAMETER (`rows` -> `page_rows`) is not -- Python passes it
+        # positionally and no type checker runs in this gate. Assert it.
+        assert inspect.signature(Endless._window) == inspect.signature(
+            _Table._window
+        ), (
+            "the `_window` override must keep the base signature; a renamed "
+            "parameter silently makes this fixture a different shape"
+        )
+        with captured_logs("WARNING") as records:
+            cr._build_skill_index(_svc_with(tables={"domain_roles": Endless([])}))
+        assert _cached_index()[2] is True, (
             "stopping at the page bound returns truncated rows; caching them as "
             "authoritative for 900 s is the bug"
+        )
+        # `partial is True` ALONE cannot tell the two paths apart: rename the
+        # `_window` override and the table answers `[]`, so `partial` is True via
+        # `empty_layer` and the test passes for the wrong reason. The fields on
+        # the warning say WHICH fact produced it -- same assertion style as the
+        # short-layer sibling above.
+        reports = [r for r in records if "empty or short layer" in r["message"]]
+        assert reports, "the degraded build must still be reported"
+        assert reports[-1]["extra"]["roles_complete"] is False, reports[-1]["extra"]
+        assert reports[-1]["extra"]["roles"] > 0, (
+            "this is the TRUNCATED path: a zero row count means the fixture "
+            "stopped returning rows and the empty-layer branch flagged it instead"
         )
 
     def test_the_short_ttl_leaves_room_for_more_than_the_rebuild_itself(self):
@@ -789,7 +863,7 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
 
     def test_a_stale_partial_index_is_rebuilt_rather_than_served(self):
         cr._build_skill_index(_svc_with(roles=[]))
-        stamp, index, partial = cr._skill_index_cache
+        stamp, index, partial = _cached_index()
         # Age it past the short TTL but well inside the full one.
         cr._skill_index_cache = (
             stamp - (cr._SKILL_INDEX_EMPTY_TTL_SECONDS + 1), index, partial
@@ -798,7 +872,7 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
 
         def counting_build(svc):
             builds.append(1)
-            return cr._skill_index_cache[1] if cr._skill_index_cache else []
+            return _cached_index()[1] if cr._skill_index_cache else []
 
         with patch.object(cr, "_build_skill_index", counting_build):
             asyncio.run(cr._skill_index(_svc_with()))
@@ -806,7 +880,7 @@ class TestPartialBuildsAreNotCachedAsAuthoritative:
 
     def test_a_complete_build_is_not_flagged_partial(self):
         cr._build_skill_index(_svc_with())
-        assert cr._skill_index_cache[2] is False
+        assert _cached_index()[2] is False
 
 
 class TestSkillIndexShape:
@@ -819,7 +893,7 @@ class TestSkillIndexShape:
         domains = [dict(DOMAINS[0], foundation_skills=["testing"])]
         roles = [dict(ROLES[0], essential_skills="testing", optional_skills=[])]
         cr._build_skill_index(_svc_with(domains=domains, subgroups=[], roles=roles))
-        index = cr._skill_index_cache[1]
+        index = _cached_index()[1]
         assert [row["category"] for row in index] == ["Foundation skill"], (
             "the widest layer must win, not the last one written"
         )
@@ -838,7 +912,7 @@ class TestSkillIndexShape:
         started = cr.time.monotonic()
         with patch.object(cr, "_fetch_all_rows", slow_fetch):
             cr._build_skill_index(_svc_with())
-        stamped = cr._skill_index_cache[0]
+        stamped = _cached_index()[0]
         assert stamped - started >= 0.12, (
             "the cache timestamp must be taken AFTER the read, not before it"
         )
@@ -854,7 +928,7 @@ class TestSkillIndexShape:
             for i in (3, 1, 2)
         ]
         cr._build_skill_index(_svc_with(domains=domains, subgroups=[], roles=[]))
-        index = cr._skill_index_cache[1]
+        index = _cached_index()[1]
         assert [(row["skill_name_cf"], row["domain_id"]) for row in index] == sorted(
             (row["skill_name_cf"], row["domain_id"]) for row in index
         )
@@ -924,7 +998,7 @@ class TestSkillIndexFreshnessAndStaleServing:
                 assert task is not None, "the refresh must actually be scheduled"
                 await task
             assert builds == [1]
-            assert cr._skill_index_cache[1] is rebuilt
+            assert _cached_index()[1] is rebuilt
 
         asyncio.run(go())
 
@@ -1092,15 +1166,41 @@ class TestSkillIndexDoesNotBlockTheEventLoop:
 
     def test_the_skill_layer_has_its_own_bounded_thread_limiter(self):
         # It must never be able to consume the app-wide 40.
+        #
+        # The /search limiter was absent from all three assertions below, so
+        # `_SEARCH_QUERY_THREADS` had no value or bound pinned anywhere: 1, 40
+        # and 999 all passed 443/443, while the module comment claims the work
+        # runs "never the app-wide 40". A limiter sized 40 or above is that
+        # comment being false -- it can starve every other sync route on the
+        # box, which is the failure this whole limiter exists to prevent.
         async def go():
             _lock, build_limiter, rank_limiter = cr._skill_loop_gate()
+            search_limiter = cr._search_query_limiter()
             default = anyio.to_thread.current_default_thread_limiter()
             assert build_limiter is not default and rank_limiter is not default
+            assert search_limiter is not default
             assert build_limiter.total_tokens == cr._SKILL_BUILD_THREADS
             assert rank_limiter.total_tokens == cr._SKILL_RANK_THREADS
+            assert search_limiter.total_tokens == cr._SEARCH_QUERY_THREADS
             assert cr._SKILL_BUILD_THREADS + cr._SKILL_RANK_THREADS < default.total_tokens
+            # Every off-loop pool this module owns, held at once, must still
+            # leave the shared default with room to serve anything else.
+            assert (
+                cr._SKILL_BUILD_THREADS
+                + cr._SKILL_RANK_THREADS
+                + cr._SEARCH_QUERY_THREADS
+            ) < default.total_tokens
 
         asyncio.run(go())
+
+    def test_the_search_limiter_is_a_bound_not_a_formality(self):
+        # A limiter of 1 serialises the endpoint; a limiter at or above the
+        # app-wide default is not a limiter at all. Both extremes passed.
+        default_tokens = 40
+        assert 1 < cr._SEARCH_QUERY_THREADS < default_tokens, (
+            f"_SEARCH_QUERY_THREADS={cr._SEARCH_QUERY_THREADS} is outside the "
+            "range that makes the module comment true"
+        )
 
     def test_the_gate_is_per_loop_and_is_not_a_process_wide_thread_lock(self):
         seen = []
@@ -1200,7 +1300,7 @@ class TestSkillNamesAreFoldedAtBuildTime:
         # Folding ~44,895 names per request is the difference between 22 ms and
         # 612 ms of event-loop time on an unauthenticated route.
         cr._build_skill_index(_svc_with())
-        index = cr._skill_index_cache[1]
+        index = _cached_index()[1]
         assert index
         assert all(row["skill_name_cf"] == row["skill_name"].casefold() for row in index)
 
@@ -1247,13 +1347,13 @@ class TestExcludedDomainsStayExcluded:
 
     def test_an_excluded_domains_foundation_skills_are_not_indexed(self):
         cr._build_skill_index(_svc_with(domains=self.EXCLUDED, subgroups=[], roles=[]))
-        assert cr._skill_index_cache[1] == []
+        assert _cached_index()[1] == []
 
     def test_an_excluded_domains_subgroup_and_role_skills_are_not_indexed_either(self):
         # Dropping the domain is not enough if the other two layers still carry
         # its rows: they key on `domain_id`, not on the domain row.
         cr._build_skill_index(_svc_with(domains=self.EXCLUDED))
-        assert cr._skill_index_cache[1] == []
+        assert _cached_index()[1] == []
 
     def test_an_excluded_domain_produces_no_skill_results(self):
         data = _search("programming", svc=_svc_with(domains=self.EXCLUDED))["data"]
@@ -1357,9 +1457,37 @@ class TestErrorLogsDoNotCarryTheRawMessage:
     """
 
     @staticmethod
-    def _leak_blob(records):
-        """Everything a record can carry the raw string in."""
-        return "".join(f"{r['message']}|{r['extra']}" for r in records)
+    def _formatted_exception(record):
+        """The traceback text loguru would render for this record, if any.
+
+        `record["exception"]` is loguru's `(type, value, traceback)`, and it is
+        populated whenever `Logger.error` is handed an Exception OBJECT rather
+        than a string -- `logger.opt(exception=exc)`. Formatting it is what
+        makes the exception CHANNEL visible to these assertions.
+        """
+        info = record.get("exception")
+        if not info:
+            return ""
+        try:
+            return "".join(traceback.format_exception(info.type, info.value, info.traceback))
+        except Exception:  # noqa: BLE001 - a stub record must not fail the test
+            return str(info)
+
+    @classmethod
+    def _leak_blob(cls, records):
+        """Everything a record can carry the raw string in.
+
+        `message` and `extra` are two of THREE channels, and the third was
+        unwatched. `Logger.error(message, error=<Exception>)` routes the text
+        through `logger.opt(exception=exc)` instead, which puts it in the
+        traceback -- and, while any sink had `diagnose=True`, in the frame
+        locals of every frame. That lands in NEITHER `message` NOR `extra`, so
+        a regression that passed the exception OBJECT rather than `str(exc)`
+        kept this whole class green while leaking all three needles.
+        """
+        return "".join(
+            f"{r['message']}|{r['extra']}|{cls._formatted_exception(r)}" for r in records
+        )
 
     def _boom(self):
         return Exception(
@@ -1459,12 +1587,14 @@ class TestErrorLogsDoNotCarryTheRawMessage:
     def test_an_exception_code_attribute_is_shape_checked_too(self):
         # `exc.code` is whatever the raising library put there.
         exc = TimeoutError("boom")
-        exc.code = "my secret search"
+        # Deliberately an arbitrary attribute: the point of the test is that
+        # `error_summary` shape-checks whatever the raising library put there.
+        exc.code = "my secret search"  # type: ignore[attr-defined]
         assert cr._error_summary(exc) == ("unclassified", "TimeoutError")
 
     def test_a_code_is_classified_from_an_exception_attribute_when_present(self):
         exc = TimeoutError("boom")
-        exc.code = "57014"
+        exc.code = "57014"  # type: ignore[attr-defined]
         assert cr._error_summary(exc) == ("57014", "TimeoutError")
 
     def test_an_unclassifiable_failure_does_not_smuggle_the_message_through(self):
@@ -1577,6 +1707,115 @@ class TestEveryOffLoopCallSitePassesItsOwnLimiter:
             "app-wide default"
         )
         assert spy.limiter_for(cr._build_skill_index) == [build_limiter]
+
+    def test_the_jamb_domain_round_trips_pass_the_search_limiter(self):
+        """`get_jamb_domains` was an `async def` doing its PostgREST round trips
+        DIRECTLY on the event loop -- never off-loaded the way
+        `_search_catalogue_blocking` was. MEASURED, n=10 concurrent:
+        `jamb/zzzzqqqq/domains` wall 9.89 s with a 9.867 s max loop stall (100%
+        of wall), `jamb/**/domains` 14.02 s / 14.000 s, against `/search`'s
+        already-off-loaded 9.21 s / 0.308 s. Removing `*` from the cleaner moved
+        the cheapest unauthenticated amplifier here rather than removing it."""
+        spy = _CountingLimiterSpy()
+
+        async def go():
+            limiter = cr._search_query_limiter()
+            with patch.object(cr, "_svc", lambda: _svc_with()), \
+                    patch.object(anyio.to_thread, "run_sync", spy):
+                await cr.get_jamb_domains("computer science")
+            return limiter
+
+        limiter = asyncio.run(go())
+        assert spy.limiter_for(cr._jamb_domains_blocking) == [limiter], (
+            "the JAMB domain round trips must run in a thread on the search "
+            "limiter, not on the event loop"
+        )
+
+    def test_the_jamb_domain_reads_really_leave_the_event_loop(self):
+        """The limiter assertion above would also pass if `run_sync` were
+        patched out entirely. This one checks the THREAD."""
+        seen: list = []
+        real = cr._jamb_domains_blocking
+
+        def spy(svc, term):
+            seen.append(threading.current_thread() is threading.main_thread())
+            return real(svc, term)
+
+        async def go():
+            with patch.object(cr, "_svc", lambda: _svc_with()), \
+                    patch.object(cr, "_jamb_domains_blocking", spy):
+                await cr.get_jamb_domains("computer science")
+
+        asyncio.run(go())
+        assert seen == [False], (
+            "the blocking reads ran on the main thread, i.e. on the event loop"
+        )
+
+    PROGRAMME_ROWS = [
+        {"id": "p1", "name": "Computer Science", "display_name": None,
+         "institution_type": "university", "discipline": "Science"},
+        {"id": "p2", "name": "Computer Engineering", "display_name": None,
+         "institution_type": "university", "discipline": "Engineering"},
+    ]
+
+    def _programme_db(self):
+        """A `cr.db` whose `programmes` table answers the typeahead's reads."""
+        svc = _svc_with(tables={"programmes": _Table(list(self.PROGRAMME_ROWS))})
+        fake = MagicMock()
+        fake.get_service_client.return_value.schema.return_value = svc
+        return fake
+
+    def test_the_programme_typeahead_round_trips_pass_the_search_limiter(self):
+        """`list_programmes` was the one public search path left ON the loop.
+
+        Pre-existing on `main`, but round 10 turned its 1-2 synchronous
+        PostgREST round trips into 2-4 (one read per column, per fallback)
+        inside an `async def` -- on the same unauthenticated GET whose
+        event-loop stall `TestSearchNeverRunsItsQueriesOnTheEventLoop` measures
+        at ~100% of wall clock.
+        """
+        spy = _CountingLimiterSpy()
+
+        async def go():
+            limiter = cr._search_query_limiter()
+            with patch.object(cr, "db", self._programme_db()), \
+                    patch.object(anyio.to_thread, "run_sync", spy):
+                await cr.list_programmes(q="computer", institution_type=None, limit=20)
+            return limiter
+
+        limiter = asyncio.run(go())
+        assert spy.limiter_for(cr._list_programmes_blocking) == [limiter], (
+            "the programme reads must run in a thread on the search limiter, "
+            f"not on the event loop: {spy.calls}"
+        )
+
+    def test_the_programme_reads_really_leave_the_event_loop(self):
+        """The limiter assertion would also pass if `run_sync` were patched out
+        entirely. This one checks the THREAD, and that the route still answers.
+        """
+        seen: list = []
+        real = cr._list_programmes_blocking
+
+        def spy(term, institution_type, safe_limit):
+            seen.append(threading.current_thread() is threading.main_thread())
+            return real(term, institution_type, safe_limit)
+
+        async def go():
+            with patch.object(cr, "db", self._programme_db()), \
+                    patch.object(cr, "_list_programmes_blocking", spy):
+                return await cr.list_programmes(
+                    q="computer", institution_type=None, limit=20
+                )
+
+        response = asyncio.run(go())
+        assert seen == [False], (
+            "the blocking programme reads ran on the main thread, i.e. on the "
+            "event loop"
+        )
+        assert [item["name"] for item in response.data["data"]] == [
+            "Computer Engineering",
+            "Computer Science",
+        ], response.data["data"]
 
     def test_the_search_round_trips_pass_the_search_limiter(self):
         spy = _CountingLimiterSpy()
@@ -1967,6 +2206,11 @@ class TestSiblingRoutesDoNotLeakTheProjectRefEither:
                 assert "secret" not in record["message"], f"{name} leaked the user's query"
                 assert "supabase.co" not in str(record["extra"]), name
                 assert "secret" not in str(record["extra"]), name
+                # ...and the third channel: `error=<Exception>` goes through
+                # `logger.opt(exception=...)`, so it is in neither of the above.
+                rendered = TestErrorLogsDoNotCarryTheRawMessage._formatted_exception(record)
+                assert "supabase.co" not in rendered, f"{name} leaked via the traceback"
+                assert "secret" not in rendered, f"{name} leaked via the traceback"
 
     def test_the_raw_text_is_still_reachable_at_debug(self):
         svc, exploded_db = self._explode()
@@ -2012,7 +2256,7 @@ class TestPagerDoesNotPayForACountItNeverReads:
         # Asking on the first page only must not disarm the mid-reseed guard.
         svc = _svc_with(tables={"domains": _Table(DOMAINS, count_override=999)})
         cr._build_skill_index(svc)
-        assert cr._skill_index_cache[2] is True
+        assert _cached_index()[2] is True
 
 
 class TestTheFoldedNameHasExactlyOneSpelling:
@@ -2029,3 +2273,422 @@ class TestTheFoldedNameHasExactlyOneSpelling:
         out = cr._rank_skill_matches(index, "risk", 20)
         assert [row["skill_name"] for row in out] == ["Risk analysis"]
         assert out[0]["other_domain_count"] == 0
+
+
+class TestWildcardQueriesCannotWalkTheGraph:
+    """`*` is a PostgREST wildcard and it was not stripped.
+
+    `_clean_public_query` removed `%` and `_` and said so in its docstring --
+    "prevents wildcard-only scraping" -- but PostgREST ALSO maps `*` to `%` in
+    `like`/`ilike`. `_MIN_PUBLIC_QUERY_LEN = 2` refused `?q=*` and accepted
+    `?q=**`. PROVEN against dev through the live app:
+
+        ?q=zzzzzzqqqq (control) -> 0 rows in every group
+        ?q=**  -> domains 20, subgroups 20, roles 36, roleFamilies 38,
+                  programmes 20, universities 20, tools 20, certifications 20
+        ?q=*a* -> the same shape;  ?q=a* -> the same shape
+
+    and the content was the alphabetical head of every table. Each group is
+    `.order("name").limit(20)`, so prefix walking (`aa*`, `ab*`, ...) paginates
+    the WHOLE career graph out of an endpoint whose own notice says "Bulk graph
+    listing is not exposed". It was also the cheapest way to induce the 5xx
+    that the leaky sibling log lines needed (measured 4.67 s for `**`).
+
+    These assert on BEHAVIOUR, not on the helper's return string, and `_Table`
+    models `*` as a wildcard the way PostgREST does -- see `_Table._matches`.
+    """
+
+    GROUPS = ("domains", "roles", "roleFamilies", "programmes", "universities",
+              "subgroups", "tools", "certifications", "skills", "opportunities")
+
+    @staticmethod
+    def _rich_svc():
+        """Enough rows that a match-all pattern is visibly different from a miss."""
+        return _svc_with(
+            domains=[
+                dict(DOMAINS[0]),
+                {"id": "d2", "domain_key": "D002", "name": "Accounting",
+                 "cluster": "Business", "excluded": False,
+                 "foundation_skills": [{"skill": "bookkeeping", "prevalence": 0.3, "n": 4}]},
+            ],
+            subgroups=[
+                dict(SUBGROUPS[0]),
+                {"id": "s2", "domain_id": "d2", "label": "Audit teams",
+                 "description": None, "cluster_skills": ["assurance"]},
+            ],
+            roles=[
+                dict(ROLES[0]),
+                {"id": "r2", "role_key": "D002|Auditor", "role_name": "Auditor",
+                 "domain_id": "d2", "tier": "entry",
+                 "essential_skills": "audit planning", "optional_skills": []},
+            ],
+        )
+
+    def _counts(self, query):
+        data = _search(query, svc=self._rich_svc())["data"]
+        return {group: len(data.get(group) or []) for group in self.GROUPS}
+
+    def test_a_star_only_query_returns_nothing_at_all(self):
+        # `**` must behave like the two-character floor rejection it is, not
+        # like a match-all. This is the assertion that fails if `*` stops
+        # being stripped: the mock then treats `%**%` as match-all.
+        counts = self._counts("**")
+        assert counts == dict.fromkeys(self.GROUPS, 0), (
+            f"a wildcard-only query published rows: {counts}"
+        )
+
+    def test_a_longer_star_run_is_refused_too(self):
+        assert self._counts("*****") == dict.fromkeys(self.GROUPS, 0)
+
+    def test_a_star_padded_query_returns_no_more_than_its_literal_equivalent(self):
+        # The behavioural form of the fix: decorating a term with `*` must not
+        # widen it. `*a*` must be exactly `a`.
+        assert self._counts("*a*") == self._counts("a")
+        assert self._counts("a*") == self._counts("a")
+
+    def test_a_star_cannot_widen_a_term_that_matches_nothing(self):
+        control = self._counts("zzzzzzqqqq")
+        assert control == dict.fromkeys(self.GROUPS, 0), "the control must really miss"
+        assert self._counts("zzzzzzqqqq*") == control
+        assert self._counts("*zzzzzzqqqq*") == control
+
+    def test_the_short_query_notice_says_what_the_endpoint_is(self):
+        # J2: replacing this copy with "Something went wrong." SURVIVED, while
+        # its skills-group sibling was pinned. Substring, not equality, so
+        # rewording stays possible.
+        notice = _search("**", svc=self._rich_svc())["meta"]["notice"]
+        assert "at least two characters" in notice
+        assert "Bulk graph listing is not exposed" in notice
+
+
+class TestATruncatedDomainContextFailsClosedToo:
+    """The THIRD mode of the context read: it SUCCEEDED and came back short.
+
+    The round-6 split distinguished "the read errored" from "the read
+    succeeded". It did not distinguish "the read succeeded and returned FEWER
+    rows than the server says match". With `context_ok=True` and the hidden
+    domain's row simply absent, `context_unknown` stayed False, the key was in
+    NEITHER `excluded_domain_ids` nor `resolved_domain_ids`,
+    `domain_is_publishable` returned True, and all three hidden labels
+    published with `domainId: null` -- byte-identical to the leak the switch
+    exists to prevent, with no error logged anywhere.
+
+    The realistic vector is a project-level PostgREST `db-max-rows` below the
+    read's ceiling (4 groups x `_PUBLIC_SEARCH_LIMIT` = 80 ids); the read has
+    no `.limit()`, so PostgREST answers 200 with a partial `Content-Range`.
+    The RLS variant is weak -- `_svc()` is the service client and bypasses RLS.
+
+    The discriminator is the server's own exact count, which is the mechanism
+    the skill-layer pager already uses. It is deliberately NOT
+    `len(rows) < len(requested_ids)`: that conflates truncation with a dangling
+    foreign key, and dropping every unresolved row is the OPPOSITE regression
+    -- pinned by `TestExcludedDomainsStayExcluded.
+    test_a_row_whose_domain_merely_failed_to_resolve_is_still_emitted`.
+    """
+
+    HIDDEN = [{
+        "id": "d1", "domain_key": "D086", "name": "Gambling and betting",
+        "cluster": "Other", "excluded": True, "foundation_skills": [],
+    }]
+
+    class _TruncatingDomains(_Table):
+        """Answers the context read the way a `db-max-rows` cap does: 200, an
+        empty page, and a `count` that says a row was withheld.
+
+        Only the context lookup is touched -- a bare `.in_("id", ...)`. The
+        `domains` group read of the same request must still work, or the route
+        degrades for an unrelated reason and the test proves nothing.
+        """
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            # One entry per CONTEXT read: whether it asked for the exact count.
+            self.context_count_requests: list = []
+
+        def execute(self):
+            is_context = any(
+                kind == "in" and column == "id" for kind, column, _v in self._filters
+            )
+            if is_context:
+                self.context_count_requests.append(self._count)
+                self._reset()
+                return MagicMock(data=[], count=1)
+            return super().execute()
+
+    def _svc(self):
+        return _svc_with(
+            domains=self.HIDDEN,
+            subgroups=[{"id": "s1", "domain_id": "d1", "label": "Sportsbet odds desks",
+                        "description": None, "cluster_skills": []}],
+            roles=[],
+            tables={
+                "domains": self._TruncatingDomains(self.HIDDEN),
+                "domain_tools": _Table([
+                    {"id": "t1", "domain_id": "d1", "tool_name": "Sportsbet Trading Terminal",
+                     "tool_group": "core"},
+                ]),
+                "domain_certifications": _Table([
+                    {"id": "c1", "domain_id": "d1", "name": "Sportsbet Certified Bookmaker",
+                     "level": "pro", "region": "NG"},
+                ]),
+            },
+        )
+
+    def test_a_silently_truncated_context_read_does_not_publish_hidden_labels(self):
+        data = _search("sportsbet", svc=self._svc())["data"]
+        assert data["subgroups"] == [], "a row the context read never vetted must not publish"
+        assert data["tools"] == []
+        assert data["certifications"] == []
+
+    def test_the_truncation_is_reported_rather_than_passing_for_completeness(self):
+        with captured_logs("WARNING") as records:
+            _search("sportsbet", svc=self._svc())
+        assert any(
+            "career search group is not verifiably complete" in r["message"]
+            and r["extra"].get("group") == "domain context"
+            for r in records
+        ), "a truncated read must be visible, not silent"
+
+    def test_the_read_actually_asks_for_the_exact_count(self):
+        # Without `count="exact"` there is no count to compare against and the
+        # guard is inert whatever it says.
+        # Asserting on `count_requests` alone is NOT enough: the skill-index
+        # pager reads `domains` with `count="exact"` through the same builder,
+        # so that assertion passes with the guard fully reverted. It has to be
+        # the CONTEXT read specifically.
+        pinned = self._TruncatingDomains(self.HIDDEN)
+        svc = _svc_with(
+            domains=self.HIDDEN,
+            subgroups=[{"id": "s1", "domain_id": "d1", "label": "Sportsbet odds desks",
+                        "description": None, "cluster_skills": []}],
+            roles=[],
+            tables={"domains": pinned},
+        )
+        _search("sportsbet", svc=svc)
+        assert pinned.context_count_requests, "the context read never ran"
+        assert all(pinned.context_count_requests), (
+            "the domain context read must ask for the exact count; without it "
+            "there is nothing to compare the row count against and the "
+            "fail-closed guard is inert"
+        )
+
+
+class TestAnUnusableExactCountFailsClosedAsWell:
+    """A count that is not an `int` must not be read as "that was everything".
+
+    `_read_may_be_truncated` used to be `isinstance(count, int) and len(rows) <
+    count`, so ANY non-`int` count -- absent header, a string, a MagicMock from
+    a fixture that never set one -- meant "no opinion", `ok=True`, and SILENCE.
+    The caller derives the excluded-domain set from this read, so failing open
+    on it republishes exactly the labels the switch exists to hide. Measured
+    through the real route with the same D086 fixture as the class above:
+    `count=None` and `count="1"` each published all three hidden labels with no
+    warning anywhere, while `count=1` published none and warned.
+
+    `count=0` is genuinely undetectable (an empty page with a count of 0 is what
+    a real empty read looks like) and is recorded as an accepted limitation in
+    `_read_may_be_truncated`.
+    """
+
+    HIDDEN = TestATruncatedDomainContextFailsClosedToo.HIDDEN
+
+    # `UNSET` is the shape that motivated the lenient branch: a MagicMock whose
+    # `.count` is an auto-created Mock attribute, because the fixture never said
+    # anything about a count.
+    UNSET = "<no count attribute at all>"
+
+    def _svc(self, count):
+        hidden = self.HIDDEN
+        unset = self.UNSET
+
+        class _UncountedDomains(_Table):
+            def execute(self):
+                is_context = any(
+                    kind == "in" and column == "id" for kind, column, _v in self._filters
+                )
+                if is_context:
+                    self._reset()
+                    if count is unset:
+                        return MagicMock(data=[])
+                    return MagicMock(data=[], count=count)
+                return super().execute()
+
+        return _svc_with(
+            domains=hidden,
+            subgroups=[{"id": "s1", "domain_id": "d1", "label": "Sportsbet odds desks",
+                        "description": None, "cluster_skills": []}],
+            roles=[],
+            tables={
+                "domains": _UncountedDomains(hidden),
+                "domain_tools": _Table([
+                    {"id": "t1", "domain_id": "d1", "tool_name": "Sportsbet Trading Terminal",
+                     "tool_group": "core"},
+                ]),
+                "domain_certifications": _Table([
+                    {"id": "c1", "domain_id": "d1", "name": "Sportsbet Certified Bookmaker",
+                     "level": "pro", "region": "NG"},
+                ]),
+            },
+        )
+
+    @pytest.mark.parametrize(
+        "count", [None, "1", 0.0, UNSET], ids=["absent", "string", "float", "mock-attribute"]
+    )
+    def test_a_count_that_is_not_an_int_publishes_nothing_and_says_so(self, count):
+        with captured_logs("WARNING") as records:
+            data = _search("sportsbet", svc=self._svc(count))["data"]
+        assert data["subgroups"] == [], "a read with no usable count vetted nothing"
+        assert data["tools"] == []
+        assert data["certifications"] == []
+        assert any(
+            "career search group is not verifiably complete" in r["message"]
+            and r["extra"].get("group") == "domain context"
+            for r in records
+        ), "failing closed silently is still failing silently"
+
+    def test_a_real_complete_read_still_publishes(self):
+        """The positive control: without it, "nothing published" proves nothing."""
+        visible = [{
+            "id": "d1", "domain_key": "D086", "name": "Sportsbet research",
+            "cluster": "Other", "excluded": False, "foundation_skills": [],
+        }]
+        svc = _svc_with(
+            domains=visible,
+            subgroups=[{"id": "s1", "domain_id": "d1", "label": "Sportsbet odds desks",
+                        "description": None, "cluster_skills": []}],
+            roles=[],
+        )
+        data = _search("sportsbet", svc=svc)["data"]
+        assert data["subgroups"], "the fixture must be able to publish at all"
+        assert "Sportsbet odds desks" in str(data["subgroups"])
+
+
+class TestTheAdjacentDomainLookupsFailClosedOnTruncationToo:
+    """Two reads beside the domain context have the same missing-`.limit()`
+    shape, and both fed the excluded set.
+
+    Neither is anywhere near a plausible `db-max-rows` on its own (`dref` asks
+    about at most 40 ids, the family lookup about the keys of at most 20
+    families), so this is defence in depth rather than a reproduced outage. The
+    guard is the same three lines and the leak it prevents is the same leak, so
+    leaving them on the two-mode switch would just be an inconsistency waiting
+    to be the next round's finding.
+
+    As with the context read, the discriminator is the SERVER's exact count, not
+    "fewer rows than ids asked about" -- a domain that is simply absent stays
+    "unresolved" and its row is still emitted.
+    """
+
+    HIDDEN = [{
+        "id": "d1", "domain_key": "D086", "name": "Gambling and betting",
+        "cluster": "Other", "excluded": True, "foundation_skills": [],
+    }]
+
+    class _TruncatingById(_Table):
+        """Truncates only the role-domain lookup: `.in_("id", ...)`."""
+
+        def execute(self):
+            if any(kind == "in" and column == "id" for kind, column, _v in self._filters):
+                self._reset()
+                return MagicMock(data=[], count=1)
+            return super().execute()
+
+    class _TruncatingByKey(_Table):
+        """Truncates only the family-domain lookup: `.in_("domain_key", ...)`."""
+
+        def execute(self):
+            if any(
+                kind == "in" and column == "domain_key" for kind, column, _v in self._filters
+            ):
+                self._reset()
+                return MagicMock(data=[], count=1)
+            return super().execute()
+
+    def test_a_truncated_role_domain_lookup_drops_the_role_instead_of_nulling_it(self):
+        # The role is reachable ONLY through the hidden domain. Left open, a
+        # truncated read republished it as `{name, tier, domains: []}` -- named,
+        # unroutable, and sourced entirely from the domain meant to be hidden.
+        roles = [{
+            "id": "r9", "role_key": "D086|Odds Compiler", "role_name": "Sportsbet Odds Compiler",
+            "domain_id": "d1", "tier": "entry",
+            # No skills: a skill row would add `d1` to `context_ids` and route
+            # the assertion through the CONTEXT read instead of this one.
+            "essential_skills": "", "optional_skills": [],
+        }]
+        svc = _svc_with(
+            domains=self.HIDDEN, subgroups=[], roles=roles,
+            tables={"domains": self._TruncatingById(self.HIDDEN)},
+        )
+        data = _search("sportsbet", svc=svc)["data"]
+        assert data["roles"] == [], (
+            "a role whose only domain was never vetted must not be published"
+        )
+
+    def test_the_truncated_role_domain_lookup_is_reported(self):
+        roles = [{
+            "id": "r9", "role_key": "D086|Odds Compiler", "role_name": "Sportsbet Odds Compiler",
+            "domain_id": "d1", "tier": "entry", "essential_skills": "", "optional_skills": [],
+        }]
+        svc = _svc_with(
+            domains=self.HIDDEN, subgroups=[], roles=roles,
+            tables={"domains": self._TruncatingById(self.HIDDEN)},
+        )
+        with captured_logs("WARNING") as records:
+            _search("sportsbet", svc=svc)
+        assert any(
+            "role domain lookup is not verifiably complete" in r["message"] for r in records
+        )
+
+    def test_a_truncated_family_domain_lookup_drops_the_family(self):
+        families = [{
+            "id": "f1", "family_key": "sportsbet-trading",
+            "canonical_name": "Sportsbet trading", "primary_domain_key": "D086",
+            "aliases": [], "source_confidence": "high", "data_state": "real",
+            "source_provenance": {}, "nigerian_context": {},
+        }]
+        svc = _svc_with(
+            domains=self.HIDDEN, subgroups=[], roles=[],
+            tables={
+                "domains": self._TruncatingByKey(self.HIDDEN),
+                "career_role_families": _Table(families),
+            },
+        )
+        data = _search("sportsbet", svc=svc)["data"]
+        assert data["roleFamilies"] == [], (
+            "a family whose primary domain was never vetted must not be published"
+        )
+
+    def test_the_truncated_family_domain_lookup_is_reported(self):
+        families = [{
+            "id": "f1", "family_key": "sportsbet-trading",
+            "canonical_name": "Sportsbet trading", "primary_domain_key": "D086",
+            "aliases": [], "source_confidence": "high", "data_state": "real",
+            "source_provenance": {}, "nigerian_context": {},
+        }]
+        svc = _svc_with(
+            domains=self.HIDDEN, subgroups=[], roles=[],
+            tables={
+                "domains": self._TruncatingByKey(self.HIDDEN),
+                "career_role_families": _Table(families),
+            },
+        )
+        with captured_logs("WARNING") as records:
+            _search("sportsbet", svc=svc)
+        assert any(
+            "family domain lookup is not verifiably complete" in r["message"] for r in records
+        )
+
+    def test_an_absent_domain_row_does_not_trigger_either_guard(self):
+        # The companion assertion: `count == len(rows)` is a COMPLETE read that
+        # happens to resolve nothing, and the round-6 policy publishes those.
+        # A guard keyed on "fewer rows than ids" would drop them instead.
+        roles = [{
+            "id": "r9", "role_key": "DX|Analyst", "role_name": "Sportsbet Analyst",
+            "domain_id": "dX", "tier": "entry", "essential_skills": "", "optional_skills": [],
+        }]
+        data = _search(
+            "sportsbet",
+            svc=_svc_with(domains=self.HIDDEN, subgroups=[], roles=roles),
+        )["data"]
+        assert [r["name"] for r in data["roles"]] == ["Sportsbet Analyst"]
+        assert data["roles"][0]["domains"] == []

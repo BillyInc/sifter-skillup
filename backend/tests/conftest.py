@@ -141,3 +141,73 @@ def client(mock_db):
          patch("database.db", mock_db):
         from main import app
         yield TestClient(app)
+
+
+# ── Shared leak-probe fixture ─────────────────────────────────────────────────
+#
+# Lives here, not in one of the test modules, because pytest 9 defaults to
+# `importmode=importlib` and test modules are therefore NOT importable from each
+# other. `tests/test_career_route_log_leaks.py` and
+# `tests/test_public_route_log_leaks.py` both need it.
+
+# The live dev project ref is never written down in a test file. This stands in
+# for it; the branch these tests belong to exists to stop that ref reaching a
+# log sink, and a checked-in fixture is a worse sink than a log file.
+LEAK_PROBE_PROJECT_REF = "abcdefghijklmnop"
+LEAK_PROBE_NEEDLE = "my secret search"
+
+_LEAK_PROBE_FILTER_METHODS = {
+    "ilike", "like", "eq", "neq", "gt", "gte", "lt", "lte", "in_", "is_",
+    "contains", "match", "imatch", "cs", "ov", "filter",
+}
+
+
+class ExplodesAtExecute:
+    """A PostgREST client stand-in that fails where PostgREST actually fails.
+
+    The older `_exploded_db` raises from `get_service_client()`, i.e. before a
+    single filter exists, so the needle in its message is hard-coded by the test
+    rather than put there by the handler: nothing it proves says the user's term
+    would have been in the request URL. This one records the filters the handler
+    really passes and raises from `.execute()` with a URL built from them.
+
+    It doubles as the `database.db` module object -- `get_service_client()`,
+    `schema()` and `table()` all return `self`, which is also how the real
+    builder chains.
+    """
+
+    def __init__(self, ref: str = LEAK_PROBE_PROJECT_REF):
+        self.ref = ref
+        self.table_name = "unknown"
+        self.filters: list = []
+        self.urls: list = []
+
+    def __getattr__(self, name):
+        def chain(*args, **kwargs):
+            if name == "table":
+                self.table_name = str(args[0]) if args else "unknown"
+                self.filters = []
+            elif name in _LEAK_PROBE_FILTER_METHODS and len(args) >= 2:
+                from urllib.parse import quote_plus
+
+                self.filters.append(f"{args[0]}={name.rstrip('_')}.{quote_plus(str(args[1]))}")
+            elif name == "or_" and args:
+                from urllib.parse import quote_plus
+
+                self.filters.append(f"or=({quote_plus(str(args[0]))})")
+            return self
+
+        return chain
+
+    def execute(self):
+        url = f"https://{self.ref}.supabase.co/rest/v1/{self.table_name}?select=*"
+        if self.filters:
+            url += "&" + "&".join(self.filters)
+        self.urls.append(url)
+        raise RuntimeError(f"Server error '500 Internal Server Error' for url '{url}'")
+
+
+@pytest.fixture
+def exploding_client():
+    """The class, not an instance: a test may need one per handler."""
+    return ExplodesAtExecute

@@ -8,6 +8,7 @@ from celery import Celery
 from celery.schedules import crontab
 from config import settings
 from database import db
+from log_safety import log_db_failure
 
 # Demand tables currently contain taxonomy-derived baselines, not a verified
 # labour-market feed. Keep scheduled jobs from turning those rows into new
@@ -59,7 +60,7 @@ def reset_daily_quests():
         log.info("Daily quests reset", deleted=len(result.data or []))
         return {"status": "success", "deleted": len(result.data or [])}
     except Exception as e:
-        log.error("Daily quests reset failed", error=e)
+        log_db_failure("Daily quests reset failed", e)
         raise
 
 
@@ -72,7 +73,7 @@ def update_guild_ranks():
         log.info("Guild ranks updated", count=len(guilds.data or []))
         return {"status": "success", "updated": len(guilds.data or [])}
     except Exception as e:
-        log.error("Guild ranks update failed", error=e)
+        log_db_failure("Guild ranks update failed", e)
         raise
 
 
@@ -84,7 +85,7 @@ def cleanup_notifications():
         log.info("Old notifications cleaned", deleted=len(result.data or []))
         return {"status": "success", "deleted": len(result.data or [])}
     except Exception as e:
-        log.error("Notification cleanup failed", error=e)
+        log_db_failure("Notification cleanup failed", e)
         raise
 
 
@@ -101,7 +102,7 @@ def process_withdrawals():
         log.info("Withdrawals processed", count=processed)
         return {"status": "success", "processed": processed}
     except Exception as e:
-        log.error("Withdrawal processing failed", error=e)
+        log_db_failure("Withdrawal processing failed", e)
         raise
 
 
@@ -121,7 +122,7 @@ def sync_airtable():
         log.info("Airtable sync complete", total_records=total, errors=errors)
         return {"status": "success", "records_synced": total, "errors": errors}
     except Exception as e:
-        log.error("Airtable sync task failed", error=str(e))
+        log_db_failure("Airtable sync task failed", e)
         raise
 
 
@@ -149,7 +150,7 @@ def fetch_labour_market_demand():
         log.info("fetch_labour_market_demand: ingestion ran", result=result)
         return {"status": "success", "detail": "ingested", "result": result}
     except Exception as e:
-        log.error("fetch_labour_market_demand failed", error=str(e))
+        log_db_failure("fetch_labour_market_demand failed", e)
         raise
 
 
@@ -293,7 +294,7 @@ def compute_elite_composite():
                 did = r.get("domain_id")
                 domain_postings[did] = max(domain_postings.get(did, 0), int(r.get("postings_count") or 0))
         except Exception as e:
-            log.warning("compute_elite_composite: demand read skipped", error=str(e))
+            log_db_failure("compute_elite_composite: demand read skipped", e, level="warning")
 
         scored = flagged = 0
         for r in roles.data:
@@ -326,12 +327,12 @@ def compute_elite_composite():
                     "elite_domain": bool(any_elite and ratio >= 0.25)
                 }).eq("id", did).execute()
         except Exception as e:
-            log.warning("compute_elite_composite: domain flag pass skipped", error=str(e))
+            log_db_failure("compute_elite_composite: domain flag pass skipped", e, level="warning")
 
         log.info("compute_elite_composite complete", scored=scored, elite_roles=flagged)
         return {"status": "success", "scored": scored, "elite_roles": flagged}
     except Exception as e:
-        log.error("compute_elite_composite failed", error=str(e))
+        log_db_failure("compute_elite_composite failed", e)
         raise
 
 @celery.task
@@ -353,7 +354,7 @@ def cleanup_expired_sessions():
         log.info("Expired device sessions cleaned", deleted=deleted)
         return {"status": "success", "deleted": deleted}
     except Exception as e:
-        log.error("Session cleanup failed", error=str(e))
+        log_db_failure("Session cleanup failed", e)
         raise
 
 
@@ -387,7 +388,7 @@ def ingest_track_feeds():
                         "published_at": entry.get("published", datetime.now(timezone.utc).isoformat()),
                     })
             except Exception as e:
-                log.warning("RSS fetch failed", url=url, error=str(e))
+                log_db_failure("RSS fetch failed", e, level="warning", url=url)
 
         if items:
             from feed_routes import ingest_feed_for_track
@@ -416,7 +417,7 @@ def expire_old_sync_log():
         log.info("Old sync log entries purged", deleted=deleted)
         return {"status": "success", "deleted": deleted}
     except Exception as e:
-        log.error("Sync log cleanup failed", error=str(e))
+        log_db_failure("Sync log cleanup failed", e)
         raise
 
 
@@ -430,7 +431,7 @@ def reconcile_student_merge_candidates():
         log.info("Student merge candidate reconciliation complete", **result)
         return {"status": "success", **result}
     except Exception as e:
-        log.error("Student merge candidate reconciliation failed", error=str(e))
+        log_db_failure("Student merge candidate reconciliation failed", e)
         raise
 
 

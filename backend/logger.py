@@ -23,6 +23,38 @@ class Logger:
         # Remove default handler
         logger.remove()
 
+        # `diagnose=False` on EVERY sink, including the two console ones.
+        #
+        # `diagnose=True` makes loguru append the VALUE OF EVERY LOCAL in
+        # every traceback frame to the rendered record. `Logger.error(msg,
+        # error=<Exception>)` routes through `logger.opt(exception=exc)`, so
+        # any such call dumped the frame locals of the whole raising stack.
+        # PROVEN to leak a secret held in a raising frame with a positive
+        # control. NOT proven that a real failing supabase call's frames hold
+        # `SUPABASE_SERVICE_KEY`; the point is that the channel exists and
+        # nothing bounds what a frame may hold.
+        #
+        # The four `error=e` sites this note used to cite lived in
+        # `backend/workers/celery_worker.py`, a DEAD duplicate of
+        # `backend/celery_worker.py` (the unit runs `-A celery_worker` from the
+        # backend root, and the copy was last touched 2026-07-31 and lacked the
+        # newer beat entries). It was invisible to the source guard twice over
+        # -- it did not import `log_safety`, so it was not in `GUARDED_SOURCES`,
+        # and the staleness check only tested the converse direction. It has
+        # been deleted rather than converted. `log_safety.frames_only` is what
+        # makes an exception OBJECT safe to hand loguru today.
+        #
+        # The file sinks are the minimum -- `error.log` is ERROR-level, added
+        # unconditionally, and kept 30 days. The two console sinks get the same
+        # treatment because on the deployed unit they are not ephemeral: the
+        # service runs under systemd, so stdout and stderr are journald, which
+        # persists to disk and is greppable exactly like a log file. A sink
+        # whose exposure depends on how the process happens to be supervised is
+        # not a boundary.
+        #
+        # `backtrace=True` stays: the frame LIST is what makes a failure
+        # diagnosable, and it carries no values.
+
         # Windows development consoles often use cp1252. Structured log
         # records include level icons, so replace unsupported characters
         # instead of raising a secondary logging error during a request.
@@ -41,7 +73,7 @@ class Logger:
             level="DEBUG" if os.getenv("ENVIRONMENT") == "development" else "INFO",
             serialize=True,
             backtrace=True,
-            diagnose=True,
+            diagnose=False,
         )
 
         # Console output for errors
@@ -50,7 +82,7 @@ class Logger:
             level="ERROR",
             serialize=True,
             backtrace=True,
-            diagnose=True,
+            diagnose=False,
         )
 
         # Create logs directory if it doesn't exist
@@ -80,7 +112,7 @@ class Logger:
             compression="zip",  # Compress rotated logs
             serialize=True,
             backtrace=True,
-            diagnose=True,
+            diagnose=False,
             encoding="utf8",
         )
 
@@ -93,7 +125,7 @@ class Logger:
             compression="zip",
             serialize=True,
             backtrace=True,
-            diagnose=True,
+            diagnose=False,
             encoding="utf8",
         )
 

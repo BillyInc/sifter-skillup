@@ -5,7 +5,7 @@ from typing import Any, Optional
 from fastapi import APIRouter, Query
 
 from database import db
-from logger import log
+from log_safety import log_db_failure
 from models import ResponseModel
 
 router = APIRouter(prefix="/api/entrepreneurship", tags=["entrepreneurship"])
@@ -100,7 +100,7 @@ async def opportunity_map(
             },
         }))
     except Exception as exc:  # noqa: BLE001
-        log.error("entrepreneurship opportunity_map failed", error=str(exc))
+        log_db_failure("entrepreneurship opportunity_map failed", exc)
         return ResponseModel(data=_coming_soon("Opportunity Map is temporarily unavailable."))
 
 
@@ -117,5 +117,5 @@ async def institution_aggregate(institution_id: str):
         ).data or []
         return ResponseModel(data=_real({"rows": rows}))
     except Exception as exc:  # noqa: BLE001
-        log.error("entrepreneurship institution aggregate failed", error=str(exc))
+        log_db_failure("entrepreneurship institution aggregate failed", exc)
         return ResponseModel(data=_coming_soon("Institution aggregate entrepreneurship data is unavailable."))

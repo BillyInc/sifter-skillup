@@ -19,6 +19,7 @@ from config import settings
 from database import db
 from models import *
 from auth import Auth
+from log_safety import log_db_failure
 from logger import log
 from middleware.session_middleware import DeviceSessionMiddleware
 
@@ -49,9 +50,16 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
     the application stack. Without this handler, a Supabase 402 appears in a
     browser as a misleading CORS/Failed-to-fetch error.
     """
-    log.error(
+    # `with_traceback=True`: this is THE handler for crashes nobody predicted,
+    # and without a stack the record is "a RuntimeError happened at /x" -- no
+    # file, no line, no raiser, at any level. `log_safety.frames_only` keeps the
+    # frame list and replaces the exception's own text with the classified
+    # summary, so `backtrace=True` stops being inert without re-opening the
+    # value line that carries the project ref and the user's query string.
+    log_db_failure(
         "Unhandled API exception",
-        error=exc,
+        exc,
+        with_traceback=True,
         endpoint=request.url.path,
         method=request.method,
     )
@@ -108,8 +116,14 @@ async def logging_middleware(request: Request, call_next):
         return response
     except Exception as e:
         duration = (datetime.now() - start_time).total_seconds() * 1000
-        log.error("Request failed", error=e, endpoint=request.url.path,
-                  method=request.method, duration=f"{duration:.2f}ms")
+        log_db_failure(
+            "Request failed",
+            e,
+            with_traceback=True,
+            endpoint=request.url.path,
+            method=request.method,
+            duration=f"{duration:.2f}ms",
+        )
         raise
 
 
@@ -197,7 +211,12 @@ def _attach_legal_acceptance(service, user: dict, acceptance: dict) -> dict:
         # Keep compatibility with older local schemas; the authenticated legal
         # gate will require the record to be written before account features
         # continue, while signup itself remains recoverable.
-        log.warning("Could not persist signup legal acceptance", error=str(exc), user_id=user.get("id"))
+        log_db_failure(
+            "Could not persist signup legal acceptance",
+            exc,
+            level="warning",
+            user_id=user.get("id"),
+        )
         user["settings"] = settings_value
         return user
 
@@ -228,7 +247,7 @@ async def _issue_email_code(email: str, purpose: str) -> str:
     except email_delivery.EmailDeliveryError as exc:
         # Never answer sent:true for mail that was not accepted -- that was the
         # original defect and is indistinguishable from success in the UI.
-        log.error("Email code delivery failed", email=email, purpose=purpose, error=str(exc))
+        log_db_failure("Email code delivery failed", exc, email=email, purpose=purpose)
         raise HTTPException(
             status_code=502,
             detail="Could not send the email. Please try again shortly.",
@@ -346,7 +365,12 @@ async def request_admin_mfa(current_user: dict = Depends(Auth.get_current_user))
             "method": "email_otp", "updated_at": datetime.now().isoformat(),
         }, on_conflict="user_id").execute()
     except Exception as exc:
-        log.warning("Admin MFA state update skipped", error=str(exc), user_id=current_user["id"])
+        log_db_failure(
+            "Admin MFA state update skipped",
+            exc,
+            level="warning",
+            user_id=current_user["id"],
+        )
     data = {"sent": True, "expiresInMinutes": settings.EMAIL_CODE_TTL_MINUTES}
     if settings.EMAIL_VERIFICATION_DEV_CODES:
         data["devCode"] = code
@@ -440,7 +464,12 @@ async def get_onboarding_draft(current_user: dict = Depends(Auth.get_current_use
         row = (result.data or [None])[0]
         return ResponseModel(data=_onboarding_draft_out(row) if row else None)
     except Exception as exc:
-        log.warning("Onboarding draft read unavailable", error=str(exc), user_id=current_user.get("id"))
+        log_db_failure(
+            "Onboarding draft read unavailable",
+            exc,
+            level="warning",
+            user_id=current_user.get("id"),
+        )
         raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
 
 
@@ -488,7 +517,12 @@ async def save_onboarding_draft(
     except HTTPException:
         raise
     except Exception as exc:
-        log.warning("Onboarding draft write unavailable", error=str(exc), user_id=current_user.get("id"))
+        log_db_failure(
+            "Onboarding draft write unavailable",
+            exc,
+            level="warning",
+            user_id=current_user.get("id"),
+        )
         raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
 
 
@@ -498,7 +532,12 @@ async def delete_onboarding_draft(current_user: dict = Depends(Auth.get_current_
         db.get_service_client().table("onboarding_drafts").delete().eq("user_id", current_user["id"]).execute()
         return ResponseModel(data={"deleted": True})
     except Exception as exc:
-        log.warning("Onboarding draft delete unavailable", error=str(exc), user_id=current_user.get("id"))
+        log_db_failure(
+            "Onboarding draft delete unavailable",
+            exc,
+            level="warning",
+            user_id=current_user.get("id"),
+        )
         raise HTTPException(status_code=503, detail="Onboarding resume is temporarily unavailable.")
 
 
@@ -591,7 +630,7 @@ async def auth_signup(body: dict, request: Request):
             # The cooldown table is introduced by the lifecycle migration. A
             # pre-migration dev database must still enforce the cooldown saved
             # on the deleted user row itself.
-            log.warning("Signup cooldown lookup skipped", error=str(exc))
+            log_db_failure("Signup cooldown lookup skipped", exc, level="warning")
             cooldown = []
             try:
                 cooldown = (
@@ -605,7 +644,11 @@ async def auth_signup(body: dict, request: Request):
                 # Very old schemas may not have either lifecycle surface. The
                 # migration remains the durable fix; keep this compatibility
                 # path non-fatal for those databases.
-                log.warning("Signup user-row cooldown lookup skipped", error=str(fallback_exc))
+                log_db_failure(
+                    "Signup user-row cooldown lookup skipped",
+                    fallback_exc,
+                    level="warning",
+                )
         if cooldown:
             raise HTTPException(status_code=429, detail="This device must wait before creating another account.")
     try:
@@ -661,9 +704,10 @@ async def auth_signup(body: dict, request: Request):
     except HTTPException:
         raise
     except Exception as exc:
-        log.error(
+        log_db_failure(
             "Signup account creation failed",
-            error=exc,
+            exc,
+            with_traceback=True,
             email=email,
             has_first_name=bool(first_name),
             has_last_name=bool(last_name),
@@ -927,7 +971,7 @@ async def delete_me(
         # Lifecycle migrations are additive. Account deletion must still work
         # against an older local schema; the cooldown is an extra safeguard,
         # not a reason to leave the account active.
-        log.warning("Account deletion cooldown table unavailable", error=str(exc))
+        log_db_failure("Account deletion cooldown table unavailable", exc, level="warning")
     deletion_updates = {
         "is_deleted": True,
         "deleted_at": deleted_at,
@@ -945,7 +989,7 @@ async def delete_me(
             if settings.DEBUG
             else "Account deletion is temporarily unavailable."
         )
-        log.error("Account deletion update failed", error=str(exc))
+        log_db_failure("Account deletion update failed", exc)
         raise HTTPException(status_code=500, detail=detail) from exc
     try:
         service.table("active_sessions").update({
@@ -953,7 +997,7 @@ async def delete_me(
             "revoked_at": deleted_at,
         }).eq("user_id", current_user["id"]).execute()
     except Exception as exc:
-        log.warning("Active session revocation skipped during deletion", error=str(exc))
+        log_db_failure("Active session revocation skipped during deletion", exc, level="warning")
     return ResponseModel(data={"deleted": True, "available_at": available_at})
 
 

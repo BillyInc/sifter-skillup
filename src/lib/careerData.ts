@@ -71,6 +71,27 @@ async function readThrough<T>(
   unavailableMessage: string,
   ttlMs: number = REFERENCE_TTL_MS,
 ): Promise<DataState<T>> {
+  // NETWORK-FIRST, and that is load-bearing for the rest of this function: the
+  // fetcher is awaited UNCONDITIONALLY, and `cached`/`stale` are returned only
+  // when the answer is not `status: "real"` or the fetcher threw. A cache entry
+  // therefore never suppresses a request.
+  //
+  // An earlier revision of this file added an `isCacheable` predicate so that
+  // `/api/career/search` would not persist a response carrying
+  // `skillsNotice: "…Try again shortly."`, on the stated premise that "one
+  // timeout and for seven days every repeat is served from disk; no request
+  // ever reaches the backend". THAT PREMISE WAS FALSE — see the comment above.
+  // Proven against the pre-guard code with a stateful in-memory cache: the
+  // notice envelope was written AND the second identical query still hit the
+  // network.
+  //
+  // What the predicate actually did was stop caching ANY search result while a
+  // notice was present — and the skill index sets `skillsNotice` on EVERY
+  // response during a partial-index window — so a user who went offline after
+  // seeing results got `error("Search is temporarily unavailable.")` instead of
+  // the rows they had just been shown. The guard is gone; a stale notice
+  // envelope served offline is strictly better than no answer, and
+  // `__tests__/searchCacheNotice.test.ts` pins both halves.
   const cached = await getCached<DataState<T>>(key);
   const stale = await getCachedStale<DataState<T>>(key);
   try {
@@ -623,6 +644,11 @@ export const careerData = {
       ),
       "Search is temporarily unavailable.",
       SEARCH_TTL_MS,
+      // No cacheability predicate here on purpose: `readThrough` is
+      // network-first, so a persisted `skillsNotice: "…Try again shortly."`
+      // cannot stop the retry from reaching the backend. It can only be served
+      // when the backend is unreachable, which is when the user wants their
+      // last results rather than an error. See `readThrough`.
     );
   },
 

@@ -8,11 +8,30 @@ from typing import Any, List, Optional, Literal
 from fastapi import APIRouter, Query
 
 from database import db
-from logger import log
+from log_safety import clean_public_query, log_db_failure
 from models import ResponseModel, JambFloorOut, ProgrammeSchoolCutoffOut, SchoolAggregateFormulaOut, CourseCompetitivenessOut, AdmissionSnapshotVersionOut, AdmissionInsightOut
 from reference_cache import REFERENCE_TTL_SECONDS, SEARCH_TTL_SECONDS, get_json, set_json
 
 _SCHEMA = "skillup_dev"
+# A JAMB name resolves to a handful of programmes; this bounds both the read and
+# the `.in_()` URL built from it.
+_INSIGHT_PROGRAMME_LIMIT = 50
+# The onboarding typeaheads' page ceiling. It used to be the bare literal `50`
+# inside `min(limit, 50)` at four places in two handlers, which clamped the
+# CEILING and left the FLOOR open: `limit: int = Query(20)` carries no `ge=`,
+# so `?limit=-1` reached PostgREST as `limit=-1` -> 400 -> the handler degraded
+# to `coming_soon` and wrote one ERROR record (30-day retention) per request.
+# EVERY route in this module is unauthenticated (there is no `current_user`
+# anywhere in it), so that is unauthenticated log amplification. MEASURED
+# through the real handlers before this change, the values reaching PostgREST:
+#
+#     /api/admission/schools?limit=-1     -> [-1, 1200]
+#     /api/admission/programmes?limit=-1  -> [-1]
+#     career_routes.list_programmes?limit=-1 -> 1   (the already-correct sibling)
+#
+# `max(1, min(...))` is the spelling `career_routes.list_programmes` and
+# `student_pipeline_routes.search_jamb_programmes` already use.
+_TYPEAHEAD_PAGE_LIMIT = 50
 router = APIRouter(prefix="/api/admission", tags=["admission"])
 
 UNIVERSITY_DISPLAY_NAMES = {
@@ -133,7 +152,7 @@ async def get_active_snapshot():
             return ResponseModel(data=_coming_soon("Admission data not yet compiled for any year."))
         return ResponseModel(data=_real(AdmissionSnapshotVersionOut(**res.data[0]).model_dump()))
     except Exception as exc:
-        log.error("admission get_snapshot failed", error=str(exc))
+        log_db_failure("admission get_snapshot failed", exc)
         return ResponseModel(data=_coming_soon("Snapshot temporarily unavailable."))
 
 
@@ -145,7 +164,7 @@ async def get_snapshot_history():
         res = svc.table("admission_snapshot_version").select("*").order("year", desc=True).execute()
         return ResponseModel(data=_real([AdmissionSnapshotVersionOut(**r).model_dump() for r in (res.data or [])]))
     except Exception as exc:
-        log.error("admission snapshot_history failed", error=str(exc))
+        log_db_failure("admission snapshot_history failed", exc)
         return ResponseModel(data=_coming_soon("Snapshot history unavailable."))
 
 
@@ -165,7 +184,7 @@ async def get_jamb_floor(year: Optional[int] = Query(None)):
             return ResponseModel(data=_coming_soon(f"Universal JAMB floor for {target_year} is not published in this dataset yet."))
         return ResponseModel(data=_real(JambFloorOut(**res.data[0]).model_dump()))
     except Exception as exc:
-        log.error("admission get_floor failed", error=str(exc))
+        log_db_failure("admission get_floor failed", exc)
         return ResponseModel(data=_coming_soon("JAMB floor temporarily unavailable."))
 
 
@@ -223,7 +242,7 @@ async def get_cutoffs(
             notice = f"No admission cycle rows found for {target_year} with the selected filters."
         return ResponseModel(data=_real(items, notice=notice, sources=["school_portal", "jamb_brochure", "news"]))
     except Exception as exc:
-        log.error("admission get_cutoffs failed", error=str(exc))
+        log_db_failure("admission get_cutoffs failed", exc)
         return ResponseModel(data=_coming_soon("Cut-offs temporarily unavailable."))
 
 
@@ -259,7 +278,7 @@ async def get_school_formula(school_id: str, year: Optional[int] = None):
             sourceUrl=r.get("source_url"),
         ).model_dump()))
     except Exception as exc:
-        log.error("admission get_formula failed", error=str(exc))
+        log_db_failure("admission get_formula failed", exc)
         return ResponseModel(data=_coming_soon("Formula temporarily unavailable."))
 
 
@@ -303,7 +322,7 @@ async def get_competitiveness(year: Optional[int] = None, broad_course: Optional
             notice = f"No competitiveness data for {target_year}."
         return ResponseModel(data=_real(items, notice=notice, sources=["JAMB_annual_report", "NBS"]))
     except Exception as exc:
-        log.error("admission get_competitiveness failed", error=str(exc))
+        log_db_failure("admission get_competitiveness failed", exc)
         return ResponseModel(data=_coming_soon("Competitiveness temporarily unavailable."))
 
 
@@ -321,9 +340,26 @@ async def jamb_admission_insight(jamb_name: str):
         if not target_year:
             return ResponseModel(data=_real(AdmissionInsightOut(hasCutoffData=False, year=0, label="No admission data compiled", programmeCount=0).model_dump()))
 
-        # Find programmes matching this JAMB name pattern
-        prog_res = svc.table("programmes").select("id").ilike("name", f"%{jamb_name}%").execute()
-        prog_ids = [p["id"] for p in (prog_res.data or [])]
+        # Find programmes matching this JAMB name pattern.
+        #
+        # This was the one sibling of the three fixed `/jamb/...` routes that
+        # kept its RAW path segment, and it is unauthenticated. MEASURED before
+        # this line: segment `zzzzqqqq` -> programmeCount 0, segment `**` or `%`
+        # -> programmeCount 21, i.e. the whole cut-off-bearing set. The count is
+        # a small disclosure on its own; the `.in_()` below is the real cost,
+        # because it was built from EVERY matching programme id and so both the
+        # URL and the query grew with the table.
+        term = clean_public_query(jamb_name)
+        prog_ids: list = []
+        if term:
+            prog_res = (
+                svc.table("programmes")
+                .select("id")
+                .ilike("name", f"%{term}%")
+                .limit(_INSIGHT_PROGRAMME_LIMIT)
+                .execute()
+            )
+            prog_ids = [p["id"] for p in (prog_res.data or [])][:_INSIGHT_PROGRAMME_LIMIT]
 
         if not prog_ids:
             return ResponseModel(data=_real(AdmissionInsightOut(hasCutoffData=False, year=target_year, label="No matching programmes", programmeCount=0).model_dump()))
@@ -338,7 +374,7 @@ async def jamb_admission_insight(jamb_name: str):
             programmeCount=count,
         ).model_dump()))
     except Exception as exc:
-        log.error("admission jamb_insight failed", error=str(exc))
+        log_db_failure("admission jamb_insight failed", exc)
         return ResponseModel(data=_coming_soon("Admission insight unavailable."))
 
 
@@ -358,8 +394,16 @@ async def search_schools(
     try:
         svc = db.get_service_client().schema(_SCHEMA)
         selected_type = institution_type or "university"
+        # Same LIKE-metacharacter strip as every other public search term; see
+        # `log_safety._LIKE_METACHARACTERS`. This one is less exposed than the
+        # programme typeahead because `_is_university_search_match` re-filters
+        # the rows in Python, but the `.ilike()` below is still user-shaped.
+        q = clean_public_query(q) or None
         query_text = (q or "").strip().lower()
-        result_key = f"admission:schools:v5:{selected_type}:{query_text}:{min(limit, 50)}"
+        # Floored as well as capped; see `_TYPEAHEAD_PAGE_LIMIT`. Computed once
+        # so the cache key, both reads and the final slice cannot drift apart.
+        row_limit = max(1, min(limit, _TYPEAHEAD_PAGE_LIMIT))
+        result_key = f"admission:schools:v5:{selected_type}:{query_text}:{row_limit}"
         cached_items = get_json(result_key)
         if isinstance(cached_items, list) and cached_items:
             return ResponseModel(data=_real(cached_items))
@@ -372,7 +416,7 @@ async def search_schools(
             # Use the indexed name search first. Loading the entire university
             # registry for every keystroke made typeahead time out on populated
             # projects. The bounded registry is only needed for abbreviations.
-            rows = query.ilike("name", f"%{q}%").order("name").limit(min(limit, 50)).execute().data or []
+            rows = query.ilike("name", f"%{q}%").order("name").limit(row_limit).execute().data or []
             registry_key = "admission:university-registry:v5"
             registry = get_json(registry_key)
             if not isinstance(registry, list):
@@ -401,7 +445,7 @@ async def search_schools(
         else:
             if q:
                 query = query.ilike("name", f"%{q}%")
-            rows = query.order("name").limit(min(limit, 50)).execute().data or []
+            rows = query.order("name").limit(row_limit).execute().data or []
         # Address is useful disambiguation, but it is additive to the older
         # registry schema. Never make a search fail merely because the
         # address migration has not reached this instance yet.
@@ -414,7 +458,7 @@ async def search_schools(
                 ).in_("id", school_ids).execute().data or []
                 metadata = {str(r.get("id")): r for r in metadata_rows}
             except Exception as exc:  # noqa: BLE001
-                log.info("admission school address enrichment unavailable", error=str(exc))
+                log_db_failure("admission school address enrichment unavailable", exc, level="info")
         items = [
             {
                 "id": r["id"],
@@ -425,12 +469,12 @@ async def search_schools(
                 "state": (metadata.get(str(r.get("id"))) or {}).get("state") or r.get("state"),
                 "country": (metadata.get(str(r.get("id"))) or {}).get("country") or r.get("country"),
             }
-            for r in rows[: min(limit, 50)]
+            for r in rows[:row_limit]
         ]
         set_json(result_key, items, SEARCH_TTL_SECONDS)
         return ResponseModel(data=_real(items))
     except Exception as exc:
-        log.error("admission search_schools failed", error=str(exc))
+        log_db_failure("admission search_schools failed", exc)
         return ResponseModel(data=_coming_soon("School search temporarily unavailable."))
 
 
@@ -445,10 +489,18 @@ async def search_admission_programmes(q: Optional[str] = Query(None), limit: int
         svc = db.get_service_client().schema(_SCHEMA)
         # Typeahead is a registry lookup. Admission snapshot/cut-off data is a
         # detail concern and must never make programme names unsearchable.
+        #
+        # `q` reaches `.ilike()` and nothing filters the result in Python
+        # afterwards, so an unstripped `*` (which PostgREST maps to `%`) made
+        # this the same bulk-export walk `/api/career/search` had: `?q=**`
+        # returned the alphabetical head of `programmes`, and `?q=aa*`,
+        # `?q=ab*`, ... paginate the rest of it out.
+        term = clean_public_query(q)
         query = svc.table("programmes").select("id, name, discipline, institution_type")
-        if q:
-            query = query.ilike("name", f"%{q}%")
-        res = query.order("name").limit(min(limit, 50)).execute()
+        if term:
+            query = query.ilike("name", f"%{term}%")
+        # Floored as well as capped; see `_TYPEAHEAD_PAGE_LIMIT`.
+        res = query.order("name").limit(max(1, min(limit, _TYPEAHEAD_PAGE_LIMIT))).execute()
         items = [
             {
                 "id": r["id"],
@@ -461,5 +513,5 @@ async def search_admission_programmes(q: Optional[str] = Query(None), limit: int
         ]
         return ResponseModel(data=_real(items))
     except Exception as exc:
-        log.error("admission search_programmes failed", error=str(exc))
+        log_db_failure("admission search_programmes failed", exc)
         return ResponseModel(data=_coming_soon("Programme search temporarily unavailable."))
