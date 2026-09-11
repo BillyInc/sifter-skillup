@@ -90,7 +90,6 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
   const seen = new Set(rows.map((row) => row.name.toLowerCase()));
   const ids = [
     ...(Array.isArray(context.source_ids) ? context.source_ids : []),
-    ...((record(context.global_enrichment).source_ids as unknown[]) ?? []),
   ];
   for (const value of ids) {
     if (typeof value !== "string") continue;
@@ -144,10 +143,8 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
   const starterItems = uniqueItems(starterKeys.flatMap((key) => items(priority[key]))).slice(0, 5);
   const actual = record(data.actual_enrichment);
   const fieldContext = record(data.domain_context_enrichment);
-  const global = record(data.global_enrichment);
   const hasLayers = CATEGORIES.some((category) => items(actual[category.key]).length)
-    || CATEGORIES.some((category) => items(fieldContext[category.key]).length)
-    || CATEGORIES.some((category) => items(global[category.key]).length);
+    || CATEGORIES.some((category) => items(fieldContext[category.key]).length);
   const sources = sourceRows(data);
 
   if (!starterItems.length && !hasLayers && !sources.length) return null;
@@ -167,7 +164,6 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
       {expanded ? <>
         <Layer label="Local evidence" source={actual} expanded />
         <Layer label="Field context" source={fieldContext} expanded />
-        <Layer label="Shared occupational evidence" source={global} expanded />
       </> : null}
       <TouchableOpacity
         accessibilityRole="button"

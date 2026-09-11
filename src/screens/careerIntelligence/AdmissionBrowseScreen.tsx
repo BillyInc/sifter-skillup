@@ -814,7 +814,7 @@ export default function AdmissionBrowseScreen() {
                 : "partial",
           examType: subjectExamType,
           notice: subjectMatchStatus === "unavailable"
-            ? "The structured subject requirement check was unavailable or under review when this path was selected."
+            ? "The structured subject requirement check is not available for this path yet."
             : undefined,
         },
         programme: {
@@ -1389,7 +1389,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
-  actionText: { color: "#0F172A", fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  actionText: { color: "#FFFFFF", fontSize: FontSize.sm, fontWeight: FontWeight.black },
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },

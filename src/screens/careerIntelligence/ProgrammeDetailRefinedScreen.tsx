@@ -579,7 +579,7 @@ function ProgrammeDetailBody({
            {selectedSchool ? (
               <View style={styles.block}>
                  {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
-                {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a review-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
+                {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a read-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
               {showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceContext)} onContinue={onContinueCareer} /> : <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><SectionLabel>University options review</SectionLabel><Text style={[styles.body, { color: colors.textRole.secondary }]}>You have reviewed this university offering and its requirements. Career guidance is not part of this session mode.</Text><TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Change university</Text></TouchableOpacity></View>}
              </View>
            ) : (
@@ -666,7 +666,7 @@ function ProgrammeDetailBody({
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{selectedSchool.address}</Text>
                 </View>
               ) : null}
-              {(requirements?.sourceEvidence?.some((source) => source.layer !== "direct_entry") || selectedSchool.universityRequirementExceptions?.some((row) => row.text)) ? (
+              {(requirements?.sourceEvidence?.some((source) => source.layer !== "direct_entry") || selectedSchool.universityRequirementExceptions?.some((row) => row.text && row.parseStatus !== "needs_review")) ? (
                 <View style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
                   <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: evidenceOpen }} onPress={() => setEvidenceOpen((open) => !open)}>
                     <Text style={[styles.label, { color: colors.accentRole.action }]}>{evidenceOpen ? "Hide source evidence" : "View source evidence"}</Text>
@@ -681,7 +681,7 @@ function ProgrammeDetailBody({
                           <Text style={[styles.body, { color: colors.textRole.secondary }]}>{source.text || source.resolution || "The source location is recorded, but its text is not available."}</Text>
                         </View>
                       ))}
-                      {(selectedSchool.universityRequirementExceptions ?? []).filter((row) => row.text).map((row, index) => (
+                      {(selectedSchool.universityRequirementExceptions ?? []).filter((row) => row.text && row.parseStatus !== "needs_review").map((row, index) => (
                         <View key={`university-source-${index}`}>
                           <Text style={[styles.meta, { color: colors.textRole.muted }]}>{(row.examType ?? "university").toUpperCase()} source note{row.parseStatus === "needs_review" ? " · needs confirmation" : ""}</Text>
                           <Text style={[styles.body, { color: colors.textRole.secondary }]}>{row.text}</Text>
@@ -692,7 +692,7 @@ function ProgrammeDetailBody({
                 </View>
               ) : null}
               {selectedSchool.hasUniversityException && !selectedSchool.universityNote && !selectedSchool.universityRequirementExceptions?.some((row) => row.text) ? (
-                <Text style={[styles.body, { color: colors.textRole.muted }]}>Some university-specific wording may still need confirmation. Check the university&apos;s current admission notice before applying.</Text>
+                <Text style={[styles.body, { color: colors.textRole.muted }]}>Check the university&apos;s current admission notice before applying.</Text>
               ) : null}
             </View>
           )}

@@ -139,7 +139,7 @@ def _offering_requirement_status(
 ) -> tuple[str, str]:
     """Classify one university offering's local requirement evidence."""
     if any(row.get("parseStatus") == "needs_review" for row in exceptions):
-        return "review_only", "This university's requirement wording still needs confirmation."
+        return "review_only", "Check this university's current admission notice for the latest wording."
     if local_options:
         if any(option.get("rule_scope") == "full" for option in local_options):
             return "complete", "A structured university-specific rule is recorded."
@@ -1715,7 +1715,7 @@ async def programmes_by_subjects(
         if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
             return ResponseModel(
                 data=_coming_soon(
-                    "Subject matching is unavailable because the structured subject rules are not fully deployed or are under review. You can still browse programmes by name, compare university offerings and read each university's requirements; try subject matching again after the subject data is updated."
+                    "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare university offerings and read each university's requirements; try subject matching again after the subject data is updated."
                 )
             )
         if structured:
@@ -1728,7 +1728,7 @@ async def programmes_by_subjects(
         # where it is labelled as source text and review status.
         notice = (
             "No exact structured subject match was found. Some brochure requirements "
-            "still need review and are not shown as matches here. You can browse programmes by name or compare university offerings instead."
+            "are not structured well enough to produce a match here. You can browse programmes by name or compare university offerings instead."
         )
         return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
