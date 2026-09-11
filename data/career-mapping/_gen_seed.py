@@ -181,12 +181,25 @@ def ingest_offerings(path, faculty, degree):
             remarks = " | ".join(x for x in waiver_by_code.get(nc, []) if x) or None
             spid = uid("sp", nc, jname)
             if spid not in school_programme_by_id:
-                school_programme_by_id[spid] = [spid, sid, jid, remarks]
+                # Keep the university-scoped brochure fields on the offering
+                # row.  The old generator emitted only remarks, leaving these
+                # schema columns NULL and making the programme screen fall
+                # back to national requirements even when the offering row
+                # had source-backed university text.
+                school_programme_by_id[spid] = [
+                    spid,
+                    sid,
+                    jid,
+                    as_text(pr.get("utme_subjects")),
+                    pr.get("olevel_requirement"),
+                    pr.get("direct_entry"),
+                    remarks,
+                ]
             elif remarks:
-                prior = school_programme_by_id[spid][3]
+                prior = school_programme_by_id[spid][6]
                 existing = [part for part in (prior or "").split(" | ") if part]
                 if remarks not in existing:
-                    school_programme_by_id[spid][3] = " | ".join([*existing, remarks])
+                    school_programme_by_id[spid][6] = " | ".join([*existing, remarks])
             for waiver_index, note in enumerate(waiver_by_code.get(nc, [])):
                 note = (note or "").strip()
                 if not note:
@@ -608,8 +621,8 @@ emit("jamb_programme_requirement_sources",
       for (a,b,c,d,e,f,g,h,i,j,k,l,m,n) in rows["jamb_programme_requirement_sources"]])
 
 emit("school_programmes",
-     ["id","school_id","jamb_programme_id","remarks"],
-     [[q(a),q(b),q(c),q(d)] for (a,b,c,d) in rows["school_programmes"]])
+     ["id","school_id","jamb_programme_id","utme_subjects","olevel_requirement","direct_entry","remarks"],
+     [[q(a),q(b),q(c),q(d),q(e),q(f),q(g)] for (a,b,c,d,e,f,g) in rows["school_programmes"]])
 
 emit("school_programme_requirement_exceptions",
      ["id","school_programme_id","school_id","jamb_programme_id","exam_type",

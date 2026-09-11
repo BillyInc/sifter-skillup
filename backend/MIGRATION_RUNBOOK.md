@@ -14,6 +14,88 @@ SQL Editor** (paste + run each file) or **psql** with the DB connection string
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <file>
 ```
 
+## Canonical subject/JAMB deployment order (2026-09-11)
+
+Use this section for the current subject matcher and university-offering
+refresh. It supersedes older subject-pipeline snippets in this document; the
+2026-09-01 compressed career taxonomy seed is a separate, staging-only refresh.
+
+### Existing Supabase project
+
+Run a read-only preflight first. Apply only migrations that the preflight shows
+are missing, one file at a time, with `ON_ERROR_STOP` enabled:
+
+1. `backend/migration_career_base_registry.sql`
+2. `backend/migration_subject_catalog.sql`
+3. `backend/migration_career_pilot.sql`
+4. `backend/migration_subject_rule_records.sql`
+5. `backend/migration_student_pipeline_live.sql`
+6. `backend/migration_school_faculty_filter_2026-09-09.sql`
+7. Any separately requested additive onboarding, identity, consent, team,
+   verification, or report-path migration, after its prerequisite tables exist.
+
+Then apply the data files in exactly this order:
+
+1. `backend/seed_subject_catalog.sql`
+2. `backend/seed_career_pilot.sql`
+3. `backend/seed_subject_rule_records.sql`
+4. `backend/seed_subject_options.sql`
+
+`seed_career_pilot.sql` is the current generated programme/offering load. Its
+latest local artifact contains 243 CCMAS programmes, 861 institutions, 420
+JAMB identities, 9,130 university offerings, 420 national requirement rows,
+2,706 requirement-source rows, 3,884 university exception rows, 1,998
+structured university option rows, and 12,813 structured option items. The
+exact live counts must be confirmed after deployment; local generation is not
+proof that Supabase was seeded.
+
+`seed_subject_options.sql` is a replacement transaction for the national
+matcher tables. Back up the affected tables before running it. Do not apply it
+before both `migration_subject_rule_records.sql` and
+`seed_subject_rule_records.sql`; the runtime deliberately fails closed when
+typed rules are absent or disagree with picker rows.
+
+The current API policy keeps Direct Entry requirements in the database for a
+future polytechnic route, but excludes them from current student, SS, JAMB,
+and university guidance payloads. Do not delete the `direct_entry` columns or
+source rows, and do not add Direct Entry back to current responses as a
+workaround. No extra SQL migration is required for that API filtering change.
+
+### Fresh or explicitly approved staging database
+
+Apply the base, career, subject, admission/resource, provisioning, and auth
+migrations from the full order below. Only after all prerequisite schema files
+are successful should the four current subject seeds above be applied. Apply
+`migration_career_v2.sql` and the large compressed career seed only for an
+approved empty/staging taxonomy rebuild; never use that destructive rebuild to
+repair a populated production project.
+
+### Required post-apply checks
+
+Run these checks in the same database after the seed transaction completes:
+
+```sql
+SELECT count(*) FROM skillup_dev.jamb_programmes;
+SELECT count(*) FROM skillup_dev.programme_mapping;
+SELECT count(*) FROM skillup_dev.programme_subject_requirements;
+SELECT count(*) FROM skillup_dev.jamb_programme_requirement_sources;
+SELECT count(*) FROM skillup_dev.school_programmes;
+SELECT count(*) FILTER (WHERE utme_subjects IS NOT NULL)
+FROM skillup_dev.school_programmes;
+SELECT count(*) FILTER (WHERE olevel_requirement IS NOT NULL)
+FROM skillup_dev.school_programmes;
+SELECT count(*) FILTER (WHERE direct_entry IS NOT NULL)
+FROM skillup_dev.school_programmes;
+```
+
+The expected current seed totals are 420, 420, 420, 2,706, and 9,130 for the
+first five queries. The three offering-field checks should be non-zero and
+match the generated seed's post-load counts. Then run
+`_audit_subject_option_seed.py` and
+`_audit_subject_match_exhaustive.py`; the exhaustive audit must report zero
+oracle mismatches. Finally smoke-test the student pipeline and confirm the
+current API payloads contain programme requirements but no Direct Entry fields.
+
 ## Current career refresh since the last push (2026-09-01)
 
 The current career seed is transported in compressed, ordered parts:
@@ -290,20 +372,23 @@ deployment state first.
 
 ## Subject-pipeline deployment order
 
-On a fresh database, apply `backend/migration_subject_catalog.sql` before
-`backend/migration_career_pilot.sql`. Apply
-`backend/migration_subject_rule_records.sql` after the career pilot migration
-and before the subject seeds. Then run the data files in this order:
+The canonical order is the 2026-09-11 order at the top of this runbook. In
+short, apply `backend/migration_subject_catalog.sql` before
+`backend/migration_career_pilot.sql`, apply
+`backend/migration_subject_rule_records.sql` after the career pilot migration,
+then apply `backend/migration_student_pipeline_live.sql` followed by
+`backend/migration_school_faculty_filter_2026-09-09.sql`. Only then run the
+data files in this order:
 
 1. `backend/seed_subject_catalog.sql`
 2. `backend/seed_career_pilot.sql`
 3. `backend/seed_subject_rule_records.sql`
 4. `backend/seed_subject_options.sql`
 
-The current generated subject counts are 46 catalog subjects, 596 national
-matcher options, 7,793 option items, and 1,260 typed rule records. The
-subject-option seed intentionally deletes and rebuilds only the two national
-matcher tables; back up an existing production database before running it.
+The subject-option seed intentionally deletes and rebuilds only the two
+national matcher tables; back up an existing production database before
+running it. Do not reuse older hard-coded option/item totals: regenerate and
+run the seed audit to obtain the current matcher counts.
 The API will not trust an option row until the corresponding typed rule record
 is present and has the same programme, requirement, exam layer, and source
 text. Apply `seed_subject_rule_records.sql` before
