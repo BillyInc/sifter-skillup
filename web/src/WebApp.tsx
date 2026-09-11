@@ -549,7 +549,10 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
 
   return <main className="platform-shell">
     <aside className="platform-sidebar">
-      <Brand />
+      <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="Sifter LevelUp home">
+        <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>
+        <span>Sifter <b>LevelUp</b></span>
+      </a>
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
         <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
