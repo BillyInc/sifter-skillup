@@ -93,6 +93,41 @@ tables; back up the affected tables first. The API intentionally fails closed
 when `programme_subject_rule_records` is empty or does not agree with the
 option seed. Do not call that state a passing matcher test.
 
+For the current 2026-09-11 refresh, the complete prerequisite order is:
+
+```text
+backend/migration_career_base_registry.sql
+backend/migration_subject_catalog.sql
+backend/migration_career_pilot.sql
+backend/migration_subject_rule_records.sql
+backend/migration_student_pipeline_live.sql
+backend/migration_school_faculty_filter_2026-09-09.sql
+backend/seed_subject_catalog.sql
+backend/seed_career_pilot.sql
+backend/seed_subject_rule_records.sql
+backend/seed_subject_options.sql
+```
+
+On an existing project, use the preflight to skip only files already proven
+to be applied. Keep each migration and seed transaction intact and stop at the
+first error. The faculty-filter migration must follow
+`migration_student_pipeline_live.sql` because it appends `jamb_faculty` to an
+existing view without reordering its columns.
+
+The latest local `seed_career_pilot.sql` contains 243 CCMAS programmes, 861
+institutions, 420 JAMB identities, 9,130 university offerings, 2,706
+requirement-source rows, 3,884 university exception rows, 1,998 structured
+university option rows, and 12,813 structured option items. Confirm those
+totals in Supabase after applying the seed; local generation is not deployment
+proof. Do not rely on the older 596/604 option or 7,793/8,007 item counts in
+historical notes.
+
+Direct Entry remains stored in the generated seed and database for a future
+polytechnic route. The current backend deliberately omits Direct Entry from
+student, SS, JAMB, and university guidance responses. Do not remove its
+columns/source rows and do not expose it in current UI payloads; this is an API
+filtering policy, not a reason to create another migration.
+
 ### Fresh or explicitly approved staging database: full order
 
 Apply the following groups in order, keeping each SQL file's transaction
