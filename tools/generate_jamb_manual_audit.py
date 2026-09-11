@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CLASSIFICATION = ROOT / "docs/manual-review/complete-subject-requirement-classification-2026-08-18.json"
 SOURCE_AUDIT = ROOT / "docs/manual-review/brochure-subject-requirements-audit-2026-08-18.json"
 SOURCE_RULES = ROOT / "data/career-mapping/_audit/jamb_brochure_source_rules_2026-08-19.json"
+MANUAL_CONFIRMATIONS = ROOT / "data/career-mapping/_audit/jamb_brochure_manual_source_confirmations_2026-09-11.json"
 OUT = ROOT / "docs/manual-review/jamb-brochure-complete-manual-audit-2026-09-08.md"
 LIVE_REVIEW = Path(r"C:\tmp\sifter_live_jamb_needs_review.json")
 
@@ -45,23 +46,51 @@ def main() -> None:
     classification = load(CLASSIFICATION)
     audit = load(SOURCE_AUDIT)
     source_rules = load(SOURCE_RULES)
+    confirmations = load(MANUAL_CONFIRMATIONS) if MANUAL_CONFIRMATIONS.exists() else {"confirmations": []}
 
     national = classification["nationalRequirements"]
     exceptions = classification["universityExceptions"]
     audit_by_key = {(row.get("jamb_name"), row.get("layer")): row for row in audit.get("rows", [])}
-    unresolved = [row for row in source_rules.get("rows", []) if row.get("resolution") == "no_source_candidate"]
+    confirmed_by_key = {
+        (row.get("jamb_name"), row.get("layer")): row
+        for row in confirmations.get("confirmations", [])
+    }
+    confirmed_names = {key[0] for key in confirmed_by_key}
+    source_rule_by_key = {
+        (row.get("jamb_name"), row.get("layer")): row
+        for row in source_rules.get("rows", [])
+    }
+    unresolved = [
+        row
+        for row in source_rules.get("rows", [])
+        if row.get("resolution") == "no_source_candidate"
+        and (row.get("jamb_name"), row.get("layer")) not in confirmed_by_key
+    ]
     live_review = json.loads(LIVE_REVIEW.read_text(encoding="utf-8")) if LIVE_REVIEW.exists() else []
 
-    national_manual = [row for row in national if row.get("status") in {"needs_review", "empty"}]
+    national_manual = [
+        row
+        for row in national
+        if row.get("status") in {"needs_review", "empty"}
+        and (row.get("jambName"), row.get("layer")) not in confirmed_by_key
+    ]
     university_manual = [row for row in exceptions if row.get("status") == "needs_review"]
+    live_review = [row for row in live_review if row.get("jamb_name") not in confirmed_names]
     national_manual.sort(key=lambda row: (str(row.get("jambName")), str(row.get("layer"))))
     university_manual.sort(key=lambda row: (str(row.get("jambName")), str(row.get("institution")), str(row.get("exceptionId"))))
     unresolved.sort(key=lambda row: (str(row.get("jamb_name")), str(row.get("layer"))))
 
+    def confirmed_status(key: tuple[str | None, str | None]) -> str:
+        source_row = source_rule_by_key.get(key, {})
+        variants = source_row.get("source_variants") or []
+        if variants:
+            return str((variants[0].get("source_variant") or {}).get("status") or confirmed_by_key[key].get("status"))
+        return str(confirmed_by_key[key].get("status"))
+
     lines: list[str] = [
         "# Complete JAMB brochure manual audit",
         "",
-        "Status date: 2026-09-08",
+        "Status date: 2026-09-11",
         "Scope: JAMB brochure requirements, subject rules, university offerings, and university-specific exceptions.",
         "",
         "This is the single manual-audit handoff. Every row still marked for source review or without a resolved source candidate is listed below. It does not ask for CCMAS, domain, subgroup, role, or labour-market work.",
@@ -100,13 +129,33 @@ def main() -> None:
         "",
         "These rows should still be available in programme/university detail where relevant, but they must not be silently converted into a subject match.",
         "",
+        "## Confirmed manual source outcomes",
+        "",
+        f"The five previously unresolved offering contexts have **{len(confirmed_by_key)} of 15 layer confirmations** recorded. They are removed from the pending sections below. Source-backed layers may match; confirmed blank or missing layers remain visible as non-matchable states.",
+        "",
+    ]
+
+    for index, name in enumerate(sorted({key[0] for key in confirmed_by_key}), 1):
+        name_keys = sorted(key for key in confirmed_by_key if key[0] == name)
+        first = confirmed_by_key[name_keys[0]]
+        lines.extend([
+            f"### C{index:02d}. {clean(name)}",
+            "",
+            f"- Source: {clean(first.get('source_file'))}, PDF p.{clean(first.get('pdf_page'))}, table row {clean(first.get('table_row'))}; heading: {clean(first.get('source_heading'))}",
+            f"- Layers: {', '.join(f'{key[1]}={confirmed_status(key)}' for key in name_keys)}",
+            f"- Note: {clean(first.get('note'))}",
+            "- Manual result: CONFIRMED; no longer pending source confirmation.",
+            "",
+        ])
+
+    lines.extend([
         "## Part 1 — National requirement layers requiring manual source review",
         "",
         f"Total rows listed: **{len(national_manual)}** ({Counter(row.get('status') for row in national_manual).get('needs_review', 0)} needs_review, {Counter(row.get('status') for row in national_manual).get('empty', 0)} empty). Review each layer separately: UTME, O-level, and Direct Entry.",
         "",
         "For every row, capture the exact requirement cell, continuation/shared heading, PDF page, table row, institution association, and one decision: exact_rule, shared_rule, partial_condition, cross_reference, source_blank, or needs_manual_interpretation.",
         "",
-    ]
+    ])
 
     for index, row in enumerate(national_manual, 1):
         key = (row.get("jambName"), row.get("layer"))
