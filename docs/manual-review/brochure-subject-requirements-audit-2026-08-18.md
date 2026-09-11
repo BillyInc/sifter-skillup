@@ -11,10 +11,14 @@ This report compares unstructured repository subject layers with the original br
 
 ## Status counts
 
+- `manual_exact_confirmed`: **3**
+- `manual_inherited_shared_confirmed`: **6**
+- `manual_source_blank_confirmed`: **3**
+- `manual_source_missing_confirmed`: **3**
 - `multiple_primary_source_candidates`: **200**
 - `one_primary_source_candidate`: **390**
 - `source_row_found_but_primary_cell_empty`: **535**
-- `source_row_not_found`: **135**
+- `source_row_not_found`: **120**
 
 ## Review layers
 
@@ -354,9 +358,9 @@ This report compares unstructured repository subject layers with the original br
 - `utme` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
 - `olevel` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
 - `direct_entry` `Demography and Statistics` — `one_primary_source_candidate`; 1 brochure candidate(s).
-- `utme` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
-- `olevel` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
-- `direct_entry` `Dentistry and Dental Technology` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Dentistry and Dental Technology` — `manual_exact_confirmed`; 1 brochure candidate(s).
+- `olevel` `Dentistry and Dental Technology` — `manual_exact_confirmed`; 1 brochure candidate(s).
+- `direct_entry` `Dentistry and Dental Technology` — `manual_exact_confirmed`; 1 brochure candidate(s).
 - `utme` `Development and Communication Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
 - `olevel` `Development and Communication Studies` — `one_primary_source_candidate`; 1 brochure candidate(s).
 - `direct_entry` `Development and Communication Studies` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
@@ -399,9 +403,9 @@ This report compares unstructured repository subject layers with the original br
 - `utme` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
 - `olevel` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
 - `direct_entry` `Economics and Statistics` — `source_row_found_but_primary_cell_empty`; 2 brochure candidate(s).
-- `utme` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
-- `olevel` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
-- `direct_entry` `Economics with/and Operation Research` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Economics with/and Operation Research` — `manual_source_blank_confirmed`; 1 brochure candidate(s).
+- `olevel` `Economics with/and Operation Research` — `manual_source_blank_confirmed`; 1 brochure candidate(s).
+- `direct_entry` `Economics with/and Operation Research` — `manual_source_blank_confirmed`; 1 brochure candidate(s).
 - `utme` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
 - `olevel` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
 - `direct_entry` `Education and Business Administration` — `one_primary_source_candidate`; 1 brochure candidate(s).
@@ -525,9 +529,9 @@ This report compares unstructured repository subject layers with the original br
 - `utme` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
 - `olevel` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
 - `direct_entry` `Food Technology` — `source_row_found_but_primary_cell_empty`; 3 brochure candidate(s).
-- `utme` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
-- `olevel` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
-- `direct_entry` `Forestry and Fisheries` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Forestry and Fisheries` — `manual_source_missing_confirmed`; 1 brochure candidate(s).
+- `olevel` `Forestry and Fisheries` — `manual_source_missing_confirmed`; 1 brochure candidate(s).
+- `direct_entry` `Forestry and Fisheries` — `manual_source_missing_confirmed`; 1 brochure candidate(s).
 - `utme` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
 - `olevel` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
 - `direct_entry` `Forestry, Wildlife & Fisheries` — `source_row_found_but_primary_cell_empty`; 1 brochure candidate(s).
@@ -1047,12 +1051,12 @@ This report compares unstructured repository subject layers with the original br
 - `utme` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
 - `olevel` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
 - `direct_entry` `Political Science` — `multiple_primary_source_candidates`; 11 brochure candidate(s).
-- `utme` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
-- `olevel` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
-- `direct_entry` `Political Science / International Law and Diplomacy` — `source_row_not_found`; 0 brochure candidate(s).
-- `utme` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
-- `olevel` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
-- `direct_entry` `Political Science and Conflict` — `source_row_not_found`; 0 brochure candidate(s).
+- `utme` `Political Science / International Law and Diplomacy` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
+- `olevel` `Political Science / International Law and Diplomacy` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
+- `direct_entry` `Political Science / International Law and Diplomacy` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
+- `utme` `Political Science and Conflict` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
+- `olevel` `Political Science and Conflict` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
+- `direct_entry` `Political Science and Conflict` — `manual_inherited_shared_confirmed`; 1 brochure candidate(s).
 - `utme` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).
 - `olevel` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).
 - `direct_entry` `Political Science and Conflict Resolution` — `one_primary_source_candidate`; 2 brochure candidate(s).

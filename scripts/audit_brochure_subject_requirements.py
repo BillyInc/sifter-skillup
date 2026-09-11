@@ -27,6 +27,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 BROCHURE_ROOT = Path(r"C:\Users\USER\Downloads\jamb brochure")
 DATA_ROOT = ROOT / "data" / "career-mapping"
+MANUAL_CONFIRMATIONS = DATA_ROOT / "_audit" / "jamb_brochure_manual_source_confirmations_2026-09-11.json"
 
 PDF_BY_JSON = {
     "administration_offerings.json": "Administration.pdf",
@@ -277,6 +278,11 @@ def audit() -> dict[str, Any]:
     programmes = effective_programmes()
     review = review_layers(programmes)
     source_rows = extract_source_rows()
+    manual_document = json.loads(MANUAL_CONFIRMATIONS.read_text(encoding="utf-8")) if MANUAL_CONFIRMATIONS.exists() else {"confirmations": []}
+    manual_by_key = {
+        (row.get("jamb_name"), row.get("layer")): row
+        for row in manual_document.get("confirmations") or []
+    }
     report_rows: list[dict[str, Any]] = []
     for item in review:
         candidates = []
@@ -286,9 +292,34 @@ def audit() -> dict[str, Any]:
             # related prose, not proof that the row owns that requirement.
             if is_source_candidate(item["jamb_name"], source):
                 candidates.append(source)
+        manual = manual_by_key.get((item["jamb_name"], item["layer"]))
+        if not candidates and manual:
+            candidates.append({
+                "source_file": manual.get("source_file"),
+                "page": manual.get("pdf_page"),
+                "row": manual.get("table_row"),
+                "cells": [
+                    manual.get("course_cell", ""),
+                    "" if manual.get("layer") == "direct_entry" else "",
+                    "" if manual.get("layer") == "olevel" else "",
+                    "" if manual.get("layer") == "utme" else "",
+                    "",
+                ],
+                "course_cell": manual.get("course_cell", ""),
+                "direct_entry_cell": "",
+                "olevel_cell": "",
+                "utme_cell": "",
+                "waiver_cell": "",
+                "manual_status": manual.get("status"),
+                "manual_note": manual.get("note"),
+                "source_heading": manual.get("source_heading"),
+            })
+        source_status = classify(item["layer"], candidates)
+        if manual and candidates and candidates[-1].get("manual_status"):
+            source_status = f"manual_{candidates[-1]['manual_status']}_confirmed"
         report_rows.append({
             **item,
-            "source_status": classify(item["layer"], candidates),
+            "source_status": source_status,
             "candidate_count": len(candidates),
             "source_candidates": candidates[:12],
         })
@@ -333,12 +364,54 @@ def write_report(report: dict[str, Any], json_path: Path, md_path: Path) -> None
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def apply_manual_confirmations(existing_path: Path) -> dict[str, Any]:
+    """Replay explicit confirmations without re-scanning every brochure PDF."""
+    report = json.loads(existing_path.read_text(encoding="utf-8"))
+    manual_document = json.loads(MANUAL_CONFIRMATIONS.read_text(encoding="utf-8"))
+    confirmations = {
+        (row.get("jamb_name"), row.get("layer")): row
+        for row in manual_document.get("confirmations") or []
+    }
+    changed = 0
+    for row in report.get("rows") or []:
+        confirmation = confirmations.get((row.get("jamb_name"), row.get("layer")))
+        if not confirmation:
+            continue
+        candidate = {
+            "source_file": confirmation.get("source_file"),
+            "page": confirmation.get("pdf_page"),
+            "row": confirmation.get("table_row"),
+            "cells": [confirmation.get("course_cell", ""), "", "", "", ""],
+            "course_cell": confirmation.get("course_cell", ""),
+            "direct_entry_cell": "",
+            "olevel_cell": "",
+            "utme_cell": "",
+            "waiver_cell": "",
+            "manual_status": confirmation.get("status"),
+            "manual_note": confirmation.get("note"),
+            "source_heading": confirmation.get("source_heading"),
+        }
+        row["source_status"] = f"manual_{confirmation.get('status')}_confirmed"
+        row["candidate_count"] = 1
+        row["source_candidates"] = [candidate]
+        changed += 1
+    report.setdefault("manual_confirmations", {})["file"] = str(MANUAL_CONFIRMATIONS)
+    report["manual_confirmations"]["applied_rows"] = changed
+    report["manual_confirmations"]["statuses"] = dict(Counter(
+        confirmation.get("status")
+        for confirmation in confirmations.values()
+    ))
+    report["status_counts"] = dict(Counter(row.get("source_status") for row in report.get("rows") or []))
+    return report
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json", type=Path, default=ROOT / "docs" / "manual-review" / "brochure-subject-requirements-audit-2026-08-18.json")
     parser.add_argument("--md", type=Path, default=ROOT / "docs" / "manual-review" / "brochure-subject-requirements-audit-2026-08-18.md")
+    parser.add_argument("--apply-manual-confirmations", action="store_true")
     args = parser.parse_args()
-    report = audit()
+    report = apply_manual_confirmations(args.json) if args.apply_manual_confirmations else audit()
     write_report(report, args.json, args.md)
     print(json.dumps({"counts": report["counts"], "status_counts": report["status_counts"]}, indent=2))
 

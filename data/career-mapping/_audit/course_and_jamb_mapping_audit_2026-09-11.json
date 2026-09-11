@@ -7480,66 +7480,9 @@
     "resolved_context_counts": {
       "resolved_as_separate_exact_jamb_identities": 3,
       "resolved_same_ccmas_identity_context": 17,
-      "resolved_combined_ccmas_components": 23,
-      "needs_manual_source_review": 5
+      "resolved_combined_ccmas_components": 28
     },
-    "unresolved_contexts": [
-      {
-        "normalized_name": "dentistryanddentaltechnology",
-        "exact_names": [
-          "Dentistry and Dental Technology"
-        ],
-        "missing_source_layers": [
-          "direct_entry",
-          "olevel",
-          "utme"
-        ]
-      },
-      {
-        "normalized_name": "economicswithandoperationresearch",
-        "exact_names": [
-          "Economics with/and Operation Research"
-        ],
-        "missing_source_layers": [
-          "direct_entry",
-          "olevel",
-          "utme"
-        ]
-      },
-      {
-        "normalized_name": "forestryandfisheries",
-        "exact_names": [
-          "Forestry and Fisheries"
-        ],
-        "missing_source_layers": [
-          "direct_entry",
-          "olevel",
-          "utme"
-        ]
-      },
-      {
-        "normalized_name": "politicalscienceandconflict",
-        "exact_names": [
-          "Political Science and Conflict"
-        ],
-        "missing_source_layers": [
-          "direct_entry",
-          "olevel",
-          "utme"
-        ]
-      },
-      {
-        "normalized_name": "politicalscienceinternationallawanddiplomacy",
-        "exact_names": [
-          "Political Science / International Law and Diplomacy"
-        ],
-        "missing_source_layers": [
-          "direct_entry",
-          "olevel",
-          "utme"
-        ]
-      }
-    ],
+    "unresolved_contexts": [],
     "collisions": [
       {
         "normalized_name": "anthropology",
@@ -8365,25 +8308,21 @@
         ],
         "distinct_requirement_variants": 1,
         "institution_count_total": 33,
-        "status": "needs_manual_source_review",
-        "resolution_reason": "The offering identity is mapped, but the brochure source-rule audit has no source candidate for: direct_entry, olevel, utme.",
-        "source_variant_count": 0,
+        "status": "resolved_combined_ccmas_components",
+        "resolution_reason": "The exact JAMB name intentionally inherits multiple CCMAS components; the combined curriculum scope is retained.",
+        "source_variant_count": 3,
         "source_coverage": {
           "Dentistry and Dental Technology": {
             "review_layers": 3,
-            "source_variant_count": 0,
+            "source_variant_count": 3,
             "resolution_counts": {
-              "no_source_candidate": 3
+              "resolved_from_source_variants": 3
             },
             "catalogue_state_counts": {
               "parsed": 2,
               "present": 1
             },
-            "no_source_candidate_layers": [
-              "utme",
-              "olevel",
-              "direct_entry"
-            ],
+            "no_source_candidate_layers": [],
             "source_blank_variant_count": 0
           }
         },
@@ -8918,26 +8857,22 @@
         ],
         "distinct_requirement_variants": 1,
         "institution_count_total": 1,
-        "status": "needs_manual_source_review",
-        "resolution_reason": "The offering identity is mapped, but the brochure source-rule audit has no source candidate for: direct_entry, olevel, utme.",
-        "source_variant_count": 0,
+        "status": "resolved_combined_ccmas_components",
+        "resolution_reason": "The exact JAMB name intentionally inherits multiple CCMAS components; the combined curriculum scope is retained.",
+        "source_variant_count": 3,
         "source_coverage": {
           "Economics with/and Operation Research": {
             "review_layers": 3,
-            "source_variant_count": 0,
+            "source_variant_count": 3,
             "resolution_counts": {
-              "no_source_candidate": 3
+              "source_still_blank_or_missing": 3
             },
             "catalogue_state_counts": {
               "parsed": 2,
               "present": 1
             },
-            "no_source_candidate_layers": [
-              "utme",
-              "olevel",
-              "direct_entry"
-            ],
-            "source_blank_variant_count": 0
+            "no_source_candidate_layers": [],
+            "source_blank_variant_count": 3
           }
         },
         "rows": [
@@ -9092,25 +9027,21 @@
         ],
         "distinct_requirement_variants": 1,
         "institution_count_total": 21,
-        "status": "needs_manual_source_review",
-        "resolution_reason": "The offering identity is mapped, but the brochure source-rule audit has no source candidate for: direct_entry, olevel, utme.",
-        "source_variant_count": 0,
+        "status": "resolved_combined_ccmas_components",
+        "resolution_reason": "The exact JAMB name intentionally inherits multiple CCMAS components; the combined curriculum scope is retained.",
+        "source_variant_count": 3,
         "source_coverage": {
           "Forestry and Fisheries": {
             "review_layers": 3,
-            "source_variant_count": 0,
+            "source_variant_count": 3,
             "resolution_counts": {
-              "no_source_candidate": 3
+              "source_still_blank_or_missing": 3
             },
             "catalogue_state_counts": {
               "parsed": 1,
               "empty": 2
             },
-            "no_source_candidate_layers": [
-              "utme",
-              "olevel",
-              "direct_entry"
-            ],
+            "no_source_candidate_layers": [],
             "source_blank_variant_count": 0
           }
         },
@@ -11236,25 +11167,21 @@
         ],
         "distinct_requirement_variants": 1,
         "institution_count_total": 12,
-        "status": "needs_manual_source_review",
-        "resolution_reason": "The offering identity is mapped, but the brochure source-rule audit has no source candidate for: direct_entry, olevel, utme.",
-        "source_variant_count": 0,
+        "status": "resolved_combined_ccmas_components",
+        "resolution_reason": "The exact JAMB name intentionally inherits multiple CCMAS components; the combined curriculum scope is retained.",
+        "source_variant_count": 3,
         "source_coverage": {
           "Political Science and Conflict": {
             "review_layers": 3,
-            "source_variant_count": 0,
+            "source_variant_count": 3,
             "resolution_counts": {
-              "no_source_candidate": 3
+              "resolved_from_source_variants": 3
             },
             "catalogue_state_counts": {
               "parsed": 2,
               "present": 1
             },
-            "no_source_candidate_layers": [
-              "utme",
-              "olevel",
-              "direct_entry"
-            ],
+            "no_source_candidate_layers": [],
             "source_blank_variant_count": 0
           }
         },
@@ -11700,25 +11627,21 @@
         ],
         "distinct_requirement_variants": 1,
         "institution_count_total": 1,
-        "status": "needs_manual_source_review",
-        "resolution_reason": "The offering identity is mapped, but the brochure source-rule audit has no source candidate for: direct_entry, olevel, utme.",
-        "source_variant_count": 0,
+        "status": "resolved_combined_ccmas_components",
+        "resolution_reason": "The exact JAMB name intentionally inherits multiple CCMAS components; the combined curriculum scope is retained.",
+        "source_variant_count": 3,
         "source_coverage": {
           "Political Science / International Law and Diplomacy": {
             "review_layers": 3,
-            "source_variant_count": 0,
+            "source_variant_count": 3,
             "resolution_counts": {
-              "no_source_candidate": 3
+              "resolved_from_source_variants": 3
             },
             "catalogue_state_counts": {
               "needs_review": 2,
               "present": 1
             },
-            "no_source_candidate_layers": [
-              "utme",
-              "olevel",
-              "direct_entry"
-            ],
+            "no_source_candidate_layers": [],
             "source_blank_variant_count": 0
           }
         },
@@ -13417,7 +13340,7 @@
   },
   "data_review_inventory": {
     "source_rule_layers": 1260,
-    "source_rule_variants": 2706,
+    "source_rule_variants": 2721,
     "by_layer": {
       "utme": {
         "review_layers": 420,
@@ -13427,8 +13350,9 @@
         },
         "resolution_counts": {
           "multiple_source_variants_preserved": 148,
-          "resolved_from_source_variants": 227,
-          "no_source_candidate": 45
+          "resolved_from_source_variants": 230,
+          "no_source_candidate": 40,
+          "source_still_blank_or_missing": 2
         },
         "needs_review_rows": [
           {
@@ -13705,7 +13629,7 @@
             "jamb_name": "Political Science / International Law and Diplomacy",
             "catalogue_text": "as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)",
             "source_status_before_inheritance": "source_row_not_found",
-            "resolution": "no_source_candidate"
+            "resolution": "resolved_from_source_variants"
           },
           {
             "jamb_name": "Political Science and International Relations",
@@ -13795,11 +13719,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Dentistry and Dental Technology",
-            "catalogue_text": "Chemistry; Physics; Biology",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Drama/Dramatic Arts/Performing Arts",
             "catalogue_text": "Literature in English; and two (2) other relevant subjects",
             "source_status_before_inheritance": "source_row_not_found"
@@ -13812,11 +13731,6 @@
           {
             "jamb_name": "Eco-Tourism and Wildlife Management",
             "catalogue_text": "English Language; Biology/Agricultural Science; any two (2) of Chemistry, Geography, Economics, Mathematics and Physics",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Economics with/and Operation Research",
-            "catalogue_text": "Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -13847,11 +13761,6 @@
           {
             "jamb_name": "Fine Art/Fine and Applied Arts",
             "catalogue_text": "Fine Arts and any other subjects; or Social Science subjects",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Forestry and Fisheries",
-            "catalogue_text": "as in Agricultural Economics and Extension",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -13965,16 +13874,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Political Science / International Law and Diplomacy",
-            "catalogue_text": "as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Political Science and Conflict",
-            "catalogue_text": "Government/History; and two (2) other Social Sciences or Arts subjects",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Public and International Law",
             "catalogue_text": "As in Civil Law",
             "source_status_before_inheritance": "source_row_not_found"
@@ -14005,8 +13904,9 @@
         },
         "resolution_counts": {
           "multiple_source_variants_preserved": 148,
-          "resolved_from_source_variants": 227,
-          "no_source_candidate": 45
+          "resolved_from_source_variants": 230,
+          "no_source_candidate": 40,
+          "source_still_blank_or_missing": 2
         },
         "needs_review_rows": [
           {
@@ -14379,7 +14279,7 @@
             "jamb_name": "Political Science / International Law and Diplomacy",
             "catalogue_text": "as in Political Science",
             "source_status_before_inheritance": "source_row_not_found",
-            "resolution": "no_source_candidate"
+            "resolution": "resolved_from_source_variants"
           },
           {
             "jamb_name": "Political Science and Conflict Resolution",
@@ -14541,11 +14441,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Dentistry and Dental Technology",
-            "catalogue_text": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Drama/Dramatic Arts/Performing Arts",
             "catalogue_text": "Five (5) SSC credit passes to include English Language and Arts subjects.",
             "source_status_before_inheritance": "source_row_not_found"
@@ -14558,11 +14453,6 @@
           {
             "jamb_name": "Eco-Tourism and Wildlife Management",
             "catalogue_text": "Five (5) SSC credit passes to include English Language, Mathematics, Biology or Agricultural Science, Chemistry and any other relevant subject (shares block with Agribusiness umbrella).",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Economics with/and Operation Research",
-            "catalogue_text": "Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -14593,11 +14483,6 @@
           {
             "jamb_name": "Fine Art/Fine and Applied Arts",
             "catalogue_text": "Five (5) SSC credit passes to include English Language and Fine Arts.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Forestry and Fisheries",
-            "catalogue_text": "",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -14711,16 +14596,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Political Science / International Law and Diplomacy",
-            "catalogue_text": "as in Political Science",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Political Science and Conflict",
-            "catalogue_text": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Public and International Law",
             "catalogue_text": "As in Civil Law",
             "source_status_before_inheritance": "source_row_not_found"
@@ -14750,8 +14625,9 @@
         },
         "resolution_counts": {
           "multiple_source_variants_preserved": 149,
-          "resolved_from_source_variants": 226,
-          "no_source_candidate": 45
+          "resolved_from_source_variants": 229,
+          "no_source_candidate": 40,
+          "source_still_blank_or_missing": 2
         },
         "needs_review_rows": [],
         "no_source_candidate_rows": [
@@ -14781,11 +14657,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Dentistry and Dental Technology",
-            "catalogue_text": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Drama/Dramatic Arts/Performing Arts",
             "catalogue_text": "Two (2) `A' Level passes in Arts, Social Sciences or Science subjects.",
             "source_status_before_inheritance": "source_row_not_found"
@@ -14798,11 +14669,6 @@
           {
             "jamb_name": "Eco-Tourism and Wildlife Management",
             "catalogue_text": "ND with a minimum of upper credit or equivalent from recognized Polytechnics and Colleges of Wildlife Management in relevant programs (Agricultural Sciences); or candidates with 'A' Level passes in at least two (2) of Chemistry, Biology, Physics and Geography or Economics, plus UTME requirements.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Economics with/and Operation Research",
-            "catalogue_text": "Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -14833,11 +14699,6 @@
           {
             "jamb_name": "Fine Art/Fine and Applied Arts",
             "catalogue_text": "(i) Two (2) `A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Forestry and Fisheries",
-            "catalogue_text": "",
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
@@ -14951,16 +14812,6 @@
             "source_status_before_inheritance": "source_row_not_found"
           },
           {
-            "jamb_name": "Political Science / International Law and Diplomacy",
-            "catalogue_text": "as in Political Science",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
-            "jamb_name": "Political Science and Conflict",
-            "catalogue_text": "Two (2) 'A' Level passes to include Government or History.",
-            "source_status_before_inheritance": "source_row_not_found"
-          },
-          {
             "jamb_name": "Public and International Law",
             "catalogue_text": "As in Civil Law",
             "source_status_before_inheritance": "source_row_not_found"
@@ -15022,6 +14873,36 @@
           "pdf_page": 5,
           "table_row": 6,
           "course_cell": "Botany"
+        }
+      },
+      {
+        "jamb_name": "Economics with/and Operation Research",
+        "layer": "utme",
+        "source": {
+          "source_file": "Social Management Science.pdf",
+          "pdf_page": 40,
+          "table_row": 1,
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
+        }
+      },
+      {
+        "jamb_name": "Economics with/and Operation Research",
+        "layer": "olevel",
+        "source": {
+          "source_file": "Social Management Science.pdf",
+          "pdf_page": 40,
+          "table_row": 1,
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
+        }
+      },
+      {
+        "jamb_name": "Economics with/and Operation Research",
+        "layer": "direct_entry",
+        "source": {
+          "source_file": "Social Management Science.pdf",
+          "pdf_page": 40,
+          "table_row": 1,
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
         }
       },
       {
@@ -15141,66 +15022,9 @@
       "resolved": {
         "resolved_as_separate_exact_jamb_identities": 3,
         "resolved_same_ccmas_identity_context": 17,
-        "resolved_combined_ccmas_components": 23,
-        "needs_manual_source_review": 5
+        "resolved_combined_ccmas_components": 28
       },
-      "still_needing_manual_source_review": [
-        {
-          "normalized_name": "dentistryanddentaltechnology",
-          "exact_names": [
-            "Dentistry and Dental Technology"
-          ],
-          "missing_source_layers": [
-            "direct_entry",
-            "olevel",
-            "utme"
-          ]
-        },
-        {
-          "normalized_name": "economicswithandoperationresearch",
-          "exact_names": [
-            "Economics with/and Operation Research"
-          ],
-          "missing_source_layers": [
-            "direct_entry",
-            "olevel",
-            "utme"
-          ]
-        },
-        {
-          "normalized_name": "forestryandfisheries",
-          "exact_names": [
-            "Forestry and Fisheries"
-          ],
-          "missing_source_layers": [
-            "direct_entry",
-            "olevel",
-            "utme"
-          ]
-        },
-        {
-          "normalized_name": "politicalscienceandconflict",
-          "exact_names": [
-            "Political Science and Conflict"
-          ],
-          "missing_source_layers": [
-            "direct_entry",
-            "olevel",
-            "utme"
-          ]
-        },
-        {
-          "normalized_name": "politicalscienceinternationallawanddiplomacy",
-          "exact_names": [
-            "Political Science / International Law and Diplomacy"
-          ],
-          "missing_source_layers": [
-            "direct_entry",
-            "olevel",
-            "utme"
-          ]
-        }
-      ]
+      "still_needing_manual_source_review": []
     },
     "domain_mapping_review": {
       "active_links_failing_numeric_gate": 267,

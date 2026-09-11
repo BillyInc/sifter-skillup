@@ -5,16 +5,18 @@
   "contract": "Blank primary cells inherit the latest populated cell in the same brochure table stream; source variants are never merged silently.",
   "counts": {
     "review_layers": 1260,
-    "source_variants": 2706,
+    "source_variants": 2721,
     "variant_statuses": {
-      "exact": 988,
-      "inherited_shared": 1704,
-      "source_blank": 14
+      "exact": 991,
+      "inherited_shared": 1710,
+      "source_blank": 17,
+      "source_missing": 3
     },
     "resolutions": {
       "multiple_source_variants_preserved": 445,
-      "resolved_from_source_variants": 680,
-      "no_source_candidate": 135
+      "resolved_from_source_variants": 689,
+      "no_source_candidate": 120,
+      "source_still_blank_or_missing": 6
     }
   },
   "rows": [
@@ -25898,9 +25900,34 @@
       "catalogue_text": "Chemistry; Physics; Biology",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Dentistry and Dental Technology",
+          "layer": "utme",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Chemistry; Physics; Biology",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "exact",
+            "text": "Chemistry, Physicsand Biology.",
+            "source": {
+              "source_file": "Medica_Pharmaceutical Health Science.pdf",
+              "pdf_page": 8,
+              "table_row": 4,
+              "course_cell": "DENTISTRYANDDENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS"
+            },
+            "inherited_from": null,
+            "source_heading": "Dentistry and Dental Surgery",
+            "manual_confirmation": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national UTME cell on page 8 is Chemistry, Physics and Biology."
+          },
+          "direct_entry_cell": "Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics.",
+          "olevel_cell": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+          "utme_cell": "Chemistry, Physicsand Biology.",
+          "waiver_cell": "DIRECTENTRY (i) BENIN accepts B.Sc. Second Class Lower in Biochemistry, Microbiology, Zoology, Botany, Anatomy, Physiology, Nursing, B.Sc. or ND Optometry,B.PharmacyorDoctorofPharmacy. (ii) IBADANasinMedicineandSurgery. (iii) JOS accepts passes in IJMB/‘A’ Level in Physics, Chemistry and Zoology or Biology. Such candidatesmust alsohave obtained five (5)‘0’level credits passes in Physics, Chemistry, Biology or Zoology,EnglishLanguageandMathematics. (iv) LAGOSacceptsJUPEB/‘A’-levelpassesinPhysics Chemistry and Biology. B.Sc. Degree (first"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Dentistry and Dental Technology",
@@ -25908,9 +25935,34 @@
       "catalogue_text": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Dentistry and Dental Technology",
+          "layer": "olevel",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "exact",
+            "text": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+            "source": {
+              "source_file": "Medica_Pharmaceutical Health Science.pdf",
+              "pdf_page": 8,
+              "table_row": 4,
+              "course_cell": "DENTISTRYANDDENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS"
+            },
+            "inherited_from": null,
+            "source_heading": "Dentistry and Dental Surgery",
+            "manual_confirmation": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national O-level cell is five credits in English Language, Physics, Chemistry, Biology and Mathematics."
+          },
+          "direct_entry_cell": "Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics.",
+          "olevel_cell": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+          "utme_cell": "Chemistry, Physicsand Biology.",
+          "waiver_cell": "DIRECTENTRY (i) BENIN accepts B.Sc. Second Class Lower in Biochemistry, Microbiology, Zoology, Botany, Anatomy, Physiology, Nursing, B.Sc. or ND Optometry,B.PharmacyorDoctorofPharmacy. (ii) IBADANasinMedicineandSurgery. (iii) JOS accepts passes in IJMB/‘A’ Level in Physics, Chemistry and Zoology or Biology. Such candidatesmust alsohave obtained five (5)‘0’level credits passes in Physics, Chemistry, Biology or Zoology,EnglishLanguageandMathematics. (iv) LAGOSacceptsJUPEB/‘A’-levelpassesinPhysics Chemistry and Biology. B.Sc. Degree (first"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Dentistry and Dental Technology",
@@ -25918,9 +25970,34 @@
       "catalogue_text": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
       "catalogue_state": "present",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Dentistry and Dental Technology",
+          "layer": "direct_entry",
+          "catalogue_state": "present",
+          "catalogue_text": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "exact",
+            "text": "Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics.",
+            "source": {
+              "source_file": "Medica_Pharmaceutical Health Science.pdf",
+              "pdf_page": 8,
+              "table_row": 4,
+              "course_cell": "DENTISTRYANDDENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS"
+            },
+            "inherited_from": null,
+            "source_heading": "Dentistry and Dental Surgery",
+            "manual_confirmation": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national Direct Entry cell requires three A-level passes including Chemistry, Biology/Zoology and Physics."
+          },
+          "direct_entry_cell": "Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics.",
+          "olevel_cell": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+          "utme_cell": "Chemistry, Physicsand Biology.",
+          "waiver_cell": "DIRECTENTRY (i) BENIN accepts B.Sc. Second Class Lower in Biochemistry, Microbiology, Zoology, Botany, Anatomy, Physiology, Nursing, B.Sc. or ND Optometry,B.PharmacyorDoctorofPharmacy. (ii) IBADANasinMedicineandSurgery. (iii) JOS accepts passes in IJMB/‘A’ Level in Physics, Chemistry and Zoology or Biology. Such candidatesmust alsohave obtained five (5)‘0’level credits passes in Physics, Chemistry, Biology or Zoology,EnglishLanguageandMathematics. (iv) LAGOSacceptsJUPEB/‘A’-levelpassesinPhysics Chemistry and Biology. B.Sc. Degree (first"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Development and Communication Studies",
@@ -28455,9 +28532,34 @@
       "catalogue_text": "Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Economics with/and Operation Research",
+          "layer": "utme",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_blank",
+            "text": null,
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 40,
+              "table_row": 1,
+              "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The CUAB offering is printed in the requirement table, but its UTME cell is blank. Do not inherit the Economics rule.",
+            "source_heading": "Economics with Operation Research"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Economics with/and Operation Research",
@@ -28465,9 +28567,34 @@
       "catalogue_text": "Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Economics with/and Operation Research",
+          "layer": "olevel",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_blank",
+            "text": null,
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 40,
+              "table_row": 1,
+              "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The CUAB offering is printed in the requirement table, but its O-level cell is blank. Do not inherit the Economics rule.",
+            "source_heading": "Economics with Operation Research"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Economics with/and Operation Research",
@@ -28475,9 +28602,34 @@
       "catalogue_text": "Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.",
       "catalogue_state": "present",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Economics with/and Operation Research",
+          "layer": "direct_entry",
+          "catalogue_state": "present",
+          "catalogue_text": "Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_blank",
+            "text": null,
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 40,
+              "table_row": 1,
+              "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The CUAB offering is printed in the requirement table, but its Direct Entry cell is blank. Do not inherit the Economics rule.",
+            "source_heading": "Economics with Operation Research"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Education and Business Administration",
@@ -38152,9 +38304,34 @@
       "catalogue_text": "as in Agricultural Economics and Extension",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Forestry and Fisheries",
+          "layer": "utme",
+          "catalogue_state": "parsed",
+          "catalogue_text": "as in Agricultural Economics and Extension",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_missing",
+            "text": null,
+            "source": {
+              "source_file": "Agriculture.pdf",
+              "pdf_page": 1,
+              "table_row": null,
+              "course_cell": "42 Forestry and Fisheries"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a UTME cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+            "source_heading": "Forestry and Fisheries"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Forestry and Fisheries",
@@ -38162,9 +38339,34 @@
       "catalogue_text": "",
       "catalogue_state": "empty",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Forestry and Fisheries",
+          "layer": "olevel",
+          "catalogue_state": "empty",
+          "catalogue_text": "",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_missing",
+            "text": null,
+            "source": {
+              "source_file": "Agriculture.pdf",
+              "pdf_page": 1,
+              "table_row": null,
+              "course_cell": "42 Forestry and Fisheries"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with an O-level cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+            "source_heading": "Forestry and Fisheries"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Forestry and Fisheries",
@@ -38172,9 +38374,34 @@
       "catalogue_text": "",
       "catalogue_state": "empty",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Forestry and Fisheries",
+          "layer": "direct_entry",
+          "catalogue_state": "empty",
+          "catalogue_text": "",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "source_missing",
+            "text": null,
+            "source": {
+              "source_file": "Agriculture.pdf",
+              "pdf_page": 1,
+              "table_row": null,
+              "course_cell": "42 Forestry and Fisheries"
+            },
+            "inherited_from": null,
+            "manual_confirmation": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a Direct Entry cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+            "source_heading": "Forestry and Fisheries"
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": ""
+        }
+      ],
+      "resolution": "source_still_blank_or_missing"
     },
     {
       "jamb_name": "Forestry, Wildlife & Fisheries",
@@ -76652,9 +76879,39 @@
       "catalogue_text": "as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)",
       "catalogue_state": "needs_review",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science / International Law and Diplomacy",
+          "layer": "utme",
+          "catalogue_state": "needs_review",
+          "catalogue_text": "as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Government or History plus two (2) other Social Science/Arts subjects.",
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 81,
+              "table_row": 1,
+              "course_cell": "TANSIAN TASUED TRINITY UDA UDU UMYUK UNI-AFRICA UNIHEZ UNI-ILESA UNIKINGS UNIOSUN UNIZIK UNN UOO UYO VENITE WELLSPRING WESLEYUNI WESTERN-DEL WESTLAND YSU POLITICALSCIENCE/ INTERNTIONALLAWAND DIPLOMACY BABCOCK"
+            },
+            "inherited_from": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 77,
+              "table_row": 2,
+              "course_cell": "POLITICALSCIENCE AAU AAUA ABUJA ABSU ABU ABU-ODL ABUAD ACHIEVERS ADSU AJAYI AKSU AL-QALAM ANCHOR-UNI ARTHUR-JARVIS ATIBA AUE AUGUSTINE AVE-MARIA BABCOCK BASU BAUK BAYERO BAZE BINGHAM BOSU BOUEDST BOWEN BSU"
+            },
+            "source_heading": "Political Science / International Law and Diplomacy",
+            "manual_confirmation": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "Science subjects. HND/ND Lower Credit in Political Science, International studies, Public Administration/ Local Government studies and NCE Merit in related fields. IJMB with 7 points andaboveinSocialSciencesubject. (xxxiv) ABU accepts Two ‘A’ level /IJMB passes which must include Government/History and any one from Economics, Sociology and Geography. ABU Diploma in Political Science and InternationalStudieswithminimumofMerit. (xxxv)LANDMARK accepts Two (2) A level passes includingGovernmentorHistory. (xxxvi) RSU accepts; Admissions into Year III; Degree relevant to the Programme. HND (Upper Credit) relevant to the Programme. Admissions into Year II; HND (Lower Credit) relevant to the Programme. OND/ND (Upper Credit) relevant to the discipline. Degree (Third Class) relevant to the programme. In addition, all such candidates above must also satisfy the UME entry requirements. (xxxvii) SOSU accepts Diploma in Public Administration withatleastLowerCredit. (xxxviii) FED-DUTSErequires; a)In addition to ‘O’ Level, candidate must have passed at least two (2) GCE ‘A’ Level or HSC/IJMB subjects including Government and any other SocialSciencesubject. b)NCE certificate with Political Science as main subject (merit score and above), or Polytechnic Diploma in Public Administration, International Relations or Local Government Administration with minimum of LowerCredit. UTME"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science / International Law and Diplomacy",
@@ -76662,9 +76919,39 @@
       "catalogue_text": "as in Political Science",
       "catalogue_state": "needs_review",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science / International Law and Diplomacy",
+          "layer": "olevel",
+          "catalogue_state": "needs_review",
+          "catalogue_text": "as in Political Science",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required.",
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 81,
+              "table_row": 1,
+              "course_cell": "TANSIAN TASUED TRINITY UDA UDU UMYUK UNI-AFRICA UNIHEZ UNI-ILESA UNIKINGS UNIOSUN UNIZIK UNN UOO UYO VENITE WELLSPRING WESLEYUNI WESTERN-DEL WESTLAND YSU POLITICALSCIENCE/ INTERNTIONALLAWAND DIPLOMACY BABCOCK"
+            },
+            "inherited_from": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 77,
+              "table_row": 2,
+              "course_cell": "POLITICALSCIENCE AAU AAUA ABUJA ABSU ABU ABU-ODL ABUAD ACHIEVERS ADSU AJAYI AKSU AL-QALAM ANCHOR-UNI ARTHUR-JARVIS ATIBA AUE AUGUSTINE AVE-MARIA BABCOCK BASU BAUK BAYERO BAZE BINGHAM BOSU BOUEDST BOWEN BSU"
+            },
+            "source_heading": "Political Science / International Law and Diplomacy",
+            "manual_confirmation": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "Science subjects. HND/ND Lower Credit in Political Science, International studies, Public Administration/ Local Government studies and NCE Merit in related fields. IJMB with 7 points andaboveinSocialSciencesubject. (xxxiv) ABU accepts Two ‘A’ level /IJMB passes which must include Government/History and any one from Economics, Sociology and Geography. ABU Diploma in Political Science and InternationalStudieswithminimumofMerit. (xxxv)LANDMARK accepts Two (2) A level passes includingGovernmentorHistory. (xxxvi) RSU accepts; Admissions into Year III; Degree relevant to the Programme. HND (Upper Credit) relevant to the Programme. Admissions into Year II; HND (Lower Credit) relevant to the Programme. OND/ND (Upper Credit) relevant to the discipline. Degree (Third Class) relevant to the programme. In addition, all such candidates above must also satisfy the UME entry requirements. (xxxvii) SOSU accepts Diploma in Public Administration withatleastLowerCredit. (xxxviii) FED-DUTSErequires; a)In addition to ‘O’ Level, candidate must have passed at least two (2) GCE ‘A’ Level or HSC/IJMB subjects including Government and any other SocialSciencesubject. b)NCE certificate with Political Science as main subject (merit score and above), or Polytechnic Diploma in Public Administration, International Relations or Local Government Administration with minimum of LowerCredit. UTME"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science / International Law and Diplomacy",
@@ -76672,9 +76959,39 @@
       "catalogue_text": "as in Political Science",
       "catalogue_state": "present",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science / International Law and Diplomacy",
+          "layer": "direct_entry",
+          "catalogue_state": "present",
+          "catalogue_text": "as in Political Science",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Two (2) 'A' Level passes including Government or History.",
+            "source": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 81,
+              "table_row": 1,
+              "course_cell": "TANSIAN TASUED TRINITY UDA UDU UMYUK UNI-AFRICA UNIHEZ UNI-ILESA UNIKINGS UNIOSUN UNIZIK UNN UOO UYO VENITE WELLSPRING WESLEYUNI WESTERN-DEL WESTLAND YSU POLITICALSCIENCE/ INTERNTIONALLAWAND DIPLOMACY BABCOCK"
+            },
+            "inherited_from": {
+              "source_file": "Social Management Science.pdf",
+              "pdf_page": 77,
+              "table_row": 2,
+              "course_cell": "POLITICALSCIENCE AAU AAUA ABUJA ABSU ABU ABU-ODL ABUAD ACHIEVERS ADSU AJAYI AKSU AL-QALAM ANCHOR-UNI ARTHUR-JARVIS ATIBA AUE AUGUSTINE AVE-MARIA BABCOCK BASU BAUK BAYERO BAZE BINGHAM BOSU BOUEDST BOWEN BSU"
+            },
+            "source_heading": "Political Science / International Law and Diplomacy",
+            "manual_confirmation": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block."
+          },
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "Science subjects. HND/ND Lower Credit in Political Science, International studies, Public Administration/ Local Government studies and NCE Merit in related fields. IJMB with 7 points andaboveinSocialSciencesubject. (xxxiv) ABU accepts Two ‘A’ level /IJMB passes which must include Government/History and any one from Economics, Sociology and Geography. ABU Diploma in Political Science and InternationalStudieswithminimumofMerit. (xxxv)LANDMARK accepts Two (2) A level passes includingGovernmentorHistory. (xxxvi) RSU accepts; Admissions into Year III; Degree relevant to the Programme. HND (Upper Credit) relevant to the Programme. Admissions into Year II; HND (Lower Credit) relevant to the Programme. OND/ND (Upper Credit) relevant to the discipline. Degree (Third Class) relevant to the programme. In addition, all such candidates above must also satisfy the UME entry requirements. (xxxvii) SOSU accepts Diploma in Public Administration withatleastLowerCredit. (xxxviii) FED-DUTSErequires; a)In addition to ‘O’ Level, candidate must have passed at least two (2) GCE ‘A’ Level or HSC/IJMB subjects including Government and any other SocialSciencesubject. b)NCE certificate with Political Science as main subject (merit score and above), or Polytechnic Diploma in Public Administration, International Relations or Local Government Administration with minimum of LowerCredit. UTME"
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -76682,9 +76999,34 @@
       "catalogue_text": "Government/History; and two (2) other Social Sciences or Arts subjects",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science and Conflict",
+          "layer": "utme",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Government/History; and two (2) other Social Sciences or Arts subjects",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Government/Hist ory and two (2) other Social Sciences or Arts subjects.",
+            "source": {
+              "source_file": "Arts _ Humanities.pdf",
+              "pdf_page": 123,
+              "table_row": 4,
+              "course_cell": "POLITICALSCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICTRESOLUTION AL-HIKMAH"
+            },
+            "inherited_from": null,
+            "source_heading": "Political Science and Conflict Resolution",
+            "manual_confirmation": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+          },
+          "direct_entry_cell": "Two (2) A' Level passes to include Government or History.",
+          "olevel_cell": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level passinMathematics.",
+          "utme_cell": "Government/Hist ory and two (2) other Social Sciences or Arts subjects.",
+          "waiver_cell": "DIRECT ENTRY (i) FED-WUKARI - Direct Entry Candidates must obtain Two ‘A’ level passes in Government/History/Economics/CRK/IRK/ COMMERCE/ at GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE in relevant subjects or at Least a credit at OND/HND or a First Degree in relevant field from an approved University. Candidates must also satisfy the minimum O/L requirementforadmission. (ii) FED-LOKOJA accepts In addition to meeting the UTME Entry Requirements; 2 A’ Level Passes to include History/ Government & one other Arts or Social Science; NCE Credit pass in Minimum of Credit pass in 3 major subjects ; ND upper credit in Upper Credit in Pub. Adm. & LG Studies or other cognate courses; HND lower credit in Pub. Adm. & LG Studies or othercognatecourses;Degree(ThirdClass) in Law or Education Courses & Arts, Soc. Sci.Courses. (iii) FED-KASHERE accepts ND/Accredited Diploma in any of the following disciplines: Pol. Science, Public Admin., Local Government, Law, Public Policy, Mass Communication at Credit passes or NCE withatleast9points."
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -76692,9 +77034,34 @@
       "catalogue_text": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
       "catalogue_state": "parsed",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science and Conflict",
+          "layer": "olevel",
+          "catalogue_state": "parsed",
+          "catalogue_text": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level passinMathematics.",
+            "source": {
+              "source_file": "Arts _ Humanities.pdf",
+              "pdf_page": 123,
+              "table_row": 4,
+              "course_cell": "POLITICALSCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICTRESOLUTION AL-HIKMAH"
+            },
+            "inherited_from": null,
+            "source_heading": "Political Science and Conflict Resolution",
+            "manual_confirmation": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+          },
+          "direct_entry_cell": "Two (2) A' Level passes to include Government or History.",
+          "olevel_cell": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level passinMathematics.",
+          "utme_cell": "Government/Hist ory and two (2) other Social Sciences or Arts subjects.",
+          "waiver_cell": "DIRECT ENTRY (i) FED-WUKARI - Direct Entry Candidates must obtain Two ‘A’ level passes in Government/History/Economics/CRK/IRK/ COMMERCE/ at GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE in relevant subjects or at Least a credit at OND/HND or a First Degree in relevant field from an approved University. Candidates must also satisfy the minimum O/L requirementforadmission. (ii) FED-LOKOJA accepts In addition to meeting the UTME Entry Requirements; 2 A’ Level Passes to include History/ Government & one other Arts or Social Science; NCE Credit pass in Minimum of Credit pass in 3 major subjects ; ND upper credit in Upper Credit in Pub. Adm. & LG Studies or other cognate courses; HND lower credit in Pub. Adm. & LG Studies or othercognatecourses;Degree(ThirdClass) in Law or Education Courses & Arts, Soc. Sci.Courses. (iii) FED-KASHERE accepts ND/Accredited Diploma in any of the following disciplines: Pol. Science, Public Admin., Local Government, Law, Public Policy, Mass Communication at Credit passes or NCE withatleast9points."
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -76702,9 +77069,34 @@
       "catalogue_text": "Two (2) 'A' Level passes to include Government or History.",
       "catalogue_state": "present",
       "source_status_before_inheritance": "source_row_not_found",
-      "source_variant_count": 0,
-      "source_variants": [],
-      "resolution": "no_source_candidate"
+      "source_variant_count": 1,
+      "source_variants": [
+        {
+          "jamb_name": "Political Science and Conflict",
+          "layer": "direct_entry",
+          "catalogue_state": "present",
+          "catalogue_text": "Two (2) 'A' Level passes to include Government or History.",
+          "source_status_before_inheritance": "source_row_not_found",
+          "source_variant": {
+            "status": "inherited_shared",
+            "text": "Two (2) A' Level passes to include Government or History.",
+            "source": {
+              "source_file": "Arts _ Humanities.pdf",
+              "pdf_page": 123,
+              "table_row": 4,
+              "course_cell": "POLITICALSCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICTRESOLUTION AL-HIKMAH"
+            },
+            "inherited_from": null,
+            "source_heading": "Political Science and Conflict Resolution",
+            "manual_confirmation": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block."
+          },
+          "direct_entry_cell": "Two (2) A' Level passes to include Government or History.",
+          "olevel_cell": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level passinMathematics.",
+          "utme_cell": "Government/Hist ory and two (2) other Social Sciences or Arts subjects.",
+          "waiver_cell": "DIRECT ENTRY (i) FED-WUKARI - Direct Entry Candidates must obtain Two ‘A’ level passes in Government/History/Economics/CRK/IRK/ COMMERCE/ at GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE in relevant subjects or at Least a credit at OND/HND or a First Degree in relevant field from an approved University. Candidates must also satisfy the minimum O/L requirementforadmission. (ii) FED-LOKOJA accepts In addition to meeting the UTME Entry Requirements; 2 A’ Level Passes to include History/ Government & one other Arts or Social Science; NCE Credit pass in Minimum of Credit pass in 3 major subjects ; ND upper credit in Upper Credit in Pub. Adm. & LG Studies or other cognate courses; HND lower credit in Pub. Adm. & LG Studies or othercognatecourses;Degree(ThirdClass) in Law or Education Courses & Arts, Soc. Sci.Courses. (iii) FED-KASHERE accepts ND/Accredited Diploma in any of the following disciplines: Pol. Science, Public Admin., Local Government, Law, Public Policy, Mass Communication at Credit passes or NCE withatleast9points."
+        }
+      ],
+      "resolution": "resolved_from_source_variants"
     },
     {
       "jamb_name": "Political Science and Conflict Resolution",
@@ -91539,5 +91931,9 @@
       ],
       "resolution": "resolved_from_source_variants"
     }
-  ]
+  ],
+  "manual_confirmations": {
+    "file": "C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\data\\career-mapping\\_audit\\jamb_brochure_manual_source_confirmations_2026-09-11.json",
+    "applied_rows": 15
+  }
 }

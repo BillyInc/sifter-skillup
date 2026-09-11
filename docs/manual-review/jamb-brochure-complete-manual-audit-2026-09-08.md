@@ -951,7 +951,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Review reason: no_source_text
 - Source index: agriculture_offerings.json
 - Current catalogue/source text: —
-- Candidate brochure locations: No source candidate recorded by the local table audit.
+- Candidate brochure locations: Agriculture.pdf, PDF p.1, table row None; course cell: 42 Forestry and Fisheries
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
@@ -961,7 +961,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Review reason: no_source_text
 - Source index: agriculture_offerings.json
 - Current catalogue/source text: —
-- Candidate brochure locations: No source candidate recorded by the local table audit.
+- Candidate brochure locations: Agriculture.pdf, PDF p.1, table row None; course cell: 42 Forestry and Fisheries
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
@@ -971,7 +971,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Review reason: cross_reference
 - Source index: agriculture_offerings.json
 - Current catalogue/source text: as in Agricultural Economics and Extension
-- Candidate brochure locations: No source candidate recorded by the local table audit.
+- Candidate brochure locations: Agriculture.pdf, PDF p.1, table row None; course cell: 42 Forestry and Fisheries
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
@@ -2131,7 +2131,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Review reason: cross_reference_or_shared_rule
 - Source index: social_management_offerings.json
 - Current catalogue/source text: as in Political Science
-- Candidate brochure locations: No source candidate recorded by the local table audit.
+- Candidate brochure locations: Social Management Science.pdf, PDF p.81, table row 1; course cell: POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
@@ -2141,7 +2141,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Review reason: direct_entry_prose_in_subject_cell
 - Source index: social_management_offerings.json
 - Current catalogue/source text: as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)
-- Candidate brochure locations: No source candidate recorded by the local table audit.
+- Candidate brochure locations: Social Management Science.pdf, PDF p.81, table row 1; course cell: POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
@@ -2828,7 +2828,7 @@ The one current live database row with parse_status=unparsed is: International S
 
 ## Part 2 — Layers with no resolved brochure source candidate
 
-Total rows listed: **135**. These are not proven to be absent from the original PDFs; the local extraction did not produce a safe source candidate. Search the printed programme name, spelling variants, faculty block, and continuation headings in the original brochure before marking them source_missing.
+Total rows listed: **120**. These are not proven to be absent from the original PDFs; the local extraction did not produce a safe source candidate. Search the printed programme name, spelling variants, faculty block, and continuation headings in the original brochure before marking them source_missing.
 
 ### U001. Applied Microbiology and Brewing / Applied Microbiology — DIRECT_ENTRY
 
@@ -2935,840 +2935,735 @@ Total rows listed: **135**. These are not proven to be absent from the original 
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U016. Dentistry and Dental Technology — DIRECT_ENTRY
-
-- Current catalogue text: Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U017. Dentistry and Dental Technology — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U018. Dentistry and Dental Technology — UTME
-
-- Current catalogue text: Chemistry; Physics; Biology
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U019. Drama/Dramatic Arts/Performing Arts — DIRECT_ENTRY
+### U016. Drama/Dramatic Arts/Performing Arts — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) `A' Level passes in Arts, Social Sciences or Science subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U020. Drama/Dramatic Arts/Performing Arts — OLEVEL
+### U017. Drama/Dramatic Arts/Performing Arts — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Arts subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U021. Drama/Dramatic Arts/Performing Arts — UTME
+### U018. Drama/Dramatic Arts/Performing Arts — UTME
 
 - Current catalogue text: Literature in English; and two (2) other relevant subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U022. ENGINEERING PHYSICS — DIRECT_ENTRY
+### U019. ENGINEERING PHYSICS — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level Passes in Physics and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U023. ENGINEERING PHYSICS — OLEVEL
+### U020. ENGINEERING PHYSICS — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Physics and one (1) other subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U024. ENGINEERING PHYSICS — UTME
+### U021. ENGINEERING PHYSICS — UTME
 
 - Current catalogue text: Physics, Chemistry and Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U025. Eco-Tourism and Wildlife Management — DIRECT_ENTRY
+### U022. Eco-Tourism and Wildlife Management — DIRECT_ENTRY
 
 - Current catalogue text: ND with a minimum of upper credit or equivalent from recognized Polytechnics and Colleges of Wildlife Management in relevant programs (Agricultural Sciences); or candidates with 'A' Level passes in at least two (2) of Chemistry, Biology, Physics and Geography or Economics, plus UTME requirements.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U026. Eco-Tourism and Wildlife Management — OLEVEL
+### U023. Eco-Tourism and Wildlife Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Mathematics, Biology or Agricultural Science, Chemistry and any other relevant subject (shares block with Agribusiness umbrella).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U027. Eco-Tourism and Wildlife Management — UTME
+### U024. Eco-Tourism and Wildlife Management — UTME
 
 - Current catalogue text: English Language; Biology/Agricultural Science; any two (2) of Chemistry, Geography, Economics, Mathematics and Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U028. Economics with/and Operation Research — DIRECT_ENTRY
-
-- Current catalogue text: Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U029. Economics with/and Operation Research — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U030. Economics with/and Operation Research — UTME
-
-- Current catalogue text: Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U031. Electrical/Electronic Engineering — DIRECT_ENTRY
+### U025. Electrical/Electronic Engineering — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Mathematics, Physics or Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U032. Electrical/Electronic Engineering — OLEVEL
+### U026. Electrical/Electronic Engineering — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include Mathematics, Physics, Chemistry, English Language and any other Science subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U033. Electrical/Electronic Engineering — UTME
+### U027. Electrical/Electronic Engineering — UTME
 
 - Current catalogue text: Mathematics; Physics; Chemistry
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U034. Employment and Human Resource Management — DIRECT_ENTRY
+### U028. Employment and Human Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U035. Employment and Human Resource Management — OLEVEL
+### U029. Employment and Human Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U036. Employment and Human Resource Management — UTME
+### U030. Employment and Human Resource Management — UTME
 
 - Current catalogue text: Mathematics, Economics plus one (1) other subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U037. Environmental Management and Technology — DIRECT_ENTRY
+### U031. Environmental Management and Technology — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Chemistry and any one of Biology, Agricultural Science, Botany and Zoology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U038. Environmental Management and Technology — OLEVEL
+### U032. Environmental Management and Technology — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Chemistry, Biology Science, Physics and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U039. Environmental Management and Technology — UTME
+### U033. Environmental Management and Technology — UTME
 
 - Current catalogue text: Chemistry; Biology; Mathematics/Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U040. Environmental Science and Technology — DIRECT_ENTRY
+### U034. Environmental Science and Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U041. Environmental Science and Technology — OLEVEL
+### U035. Environmental Science and Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U042. Environmental Science and Technology — UTME
+### U036. Environmental Science and Technology — UTME
 
 - Current catalogue text: Biology and any two (2) of Physics, Chemistry and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U043. Farm Management & Agric. Extension — DIRECT_ENTRY
+### U037. Farm Management & Agric. Extension — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Geography, Mathematics, Physics, Geology, Economics and Health Science (as in Agricultural Economics).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U044. Farm Management & Agric. Extension — OLEVEL
+### U038. Farm Management & Agric. Extension — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and one of Geography, Physics and Economics (shares requirements with Agricultural Economics umbrella block).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U045. Farm Management & Agric. Extension — UTME
+### U039. Farm Management & Agric. Extension — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Mathematics or Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U046. Fine Art/Fine and Applied Arts — DIRECT_ENTRY
+### U040. Fine Art/Fine and Applied Arts — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) `A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U047. Fine Art/Fine and Applied Arts — OLEVEL
+### U041. Fine Art/Fine and Applied Arts — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Fine Arts.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U048. Fine Art/Fine and Applied Arts — UTME
+### U042. Fine Art/Fine and Applied Arts — UTME
 
 - Current catalogue text: Fine Arts and any other subjects; or Social Science subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U049. Forestry and Fisheries — DIRECT_ENTRY
+### U043. French and German/Russian — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U050. Forestry and Fisheries — OLEVEL
+### U044. French and German/Russian — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U051. Forestry and Fisheries — UTME
-
-- Current catalogue text: as in Agricultural Economics and Extension
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U052. French and German/Russian — DIRECT_ENTRY
-
-- Current catalogue text: —
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U053. French and German/Russian — OLEVEL
-
-- Current catalogue text: —
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U054. French and German/Russian — UTME
+### U045. French and German/Russian — UTME
 
 - Current catalogue text: French and any other two (2) subjects from Arts and Social Sciences.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U055. Geography and Environmental Studies — DIRECT_ENTRY
+### U046. Geography and Environmental Studies — DIRECT_ENTRY
 
 - Current catalogue text: No Direct Entry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U056. Geography and Environmental Studies — OLEVEL
+### U047. Geography and Environmental Studies — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Geography and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U057. Geography and Environmental Studies — UTME
+### U048. Geography and Environmental Studies — UTME
 
 - Current catalogue text: Geography; and any two (2) other Arts or Social Science subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U058. Home Economics and Hotel Management — DIRECT_ENTRY
+### U049. Home Economics and Hotel Management — DIRECT_ENTRY
 
 - Current catalogue text: (i) NCE merit in Home Economics; (ii) 'A' Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science; (iii) ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U059. Home Economics and Hotel Management — OLEVEL
+### U050. Home Economics and Hotel Management — OLEVEL
 
 - Current catalogue text: Five (5) 'O' Level NTC/NBC credit passes or TC II merit including English Language, Mathematics, Home Economics, Biology and Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U060. Home Economics and Hotel Management — UTME
+### U051. Home Economics and Hotel Management — UTME
 
 - Current catalogue text: Chemistry; Biology or Agricultural Science; and one (1) other subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U061. Home Science & Management — DIRECT_ENTRY
+### U052. Home Science & Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U062. Home Science & Management — OLEVEL
+### U053. Home Science & Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U063. Home Science & Management — UTME
+### U054. Home Science & Management — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Physics/Mathematics or one (1) social science subject (Economics or Geography)
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U064. Hotel Management & Tourism — DIRECT_ENTRY
+### U055. Hotel Management & Tourism — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agric Science/Economics/Physics/Mathematics/Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U065. Hotel Management & Tourism — OLEVEL
+### U056. Hotel Management & Tourism — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U066. Hotel Management & Tourism — UTME
+### U057. Hotel Management & Tourism — UTME
 
 - Current catalogue text: Chemistry and any two (2) of Biology/Botany/Agricultural Science, Economics, Physics, Mathematics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U067. ICT Engineering — DIRECT_ENTRY
+### U058. ICT Engineering — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level/IJMB/ND/HND upper credit in relevant programmes (Information Technology, Computer Science/Engineering, Electrical and Electronic Engineering) into 200/300 level.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U068. ICT Engineering — OLEVEL
+### U059. ICT Engineering — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U069. ICT Engineering — UTME
+### U060. ICT Engineering — UTME
 
 - Current catalogue text: Mathematics; Physics; Chemistry
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U070. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
+### U061. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U071. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
+### U062. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U072. INFORMATION AND MEDIA TECHNOLOGY — UTME
+### U063. INFORMATION AND MEDIA TECHNOLOGY — UTME
 
 - Current catalogue text: Mathematics, Physics and one of Biology, Chemistry, Agric Science, Economics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U073. Industral Mathematics/Computer — DIRECT_ENTRY
+### U064. Industral Mathematics/Computer — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U074. Industral Mathematics/Computer — OLEVEL
+### U065. Industral Mathematics/Computer — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U075. Industral Mathematics/Computer — UTME
+### U066. Industral Mathematics/Computer — UTME
 
 - Current catalogue text: Mathematics and two (2) of Physics, Chemistry, Economics, Biology and Agricultural Science.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U076. Industrial Relations / Industrial and Labour Relations — DIRECT_ENTRY
+### U067. Industrial Relations / Industrial and Labour Relations — DIRECT_ENTRY
 
 - Current catalogue text: i) Two (2) 'A' Level passes chosen from Economics, Accounting, Government, Geography and Statistics. ii) NCE in related programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U077. Industrial Relations / Industrial and Labour Relations — OLEVEL
+### U068. Industrial Relations / Industrial and Labour Relations — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U078. Industrial Relations / Industrial and Labour Relations — UTME
+### U069. Industrial Relations / Industrial and Labour Relations — UTME
 
 - Current catalogue text: Mathematics, Economics plus one other relevant subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U079. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — DIRECT_ENTRY
+### U070. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U080. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
+### U071. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U081. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — UTME
+### U072. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — UTME
 
 - Current catalogue text: Mathematics, Economics and one other subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U082. Islamic Law/Sharia Law — DIRECT_ENTRY
+### U073. Islamic Law/Sharia Law — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) A' level passes to include Islamic Studies or Arabic
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U083. Islamic Law/Sharia Law — OLEVEL
+### U074. Islamic Law/Sharia Law — OLEVEL
 
 - Current catalogue text: Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U084. Islamic Law/Sharia Law — UTME
+### U075. Islamic Law/Sharia Law — UTME
 
 - Current catalogue text: Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U085. Marine Science and Technology — DIRECT_ENTRY
+### U076. Marine Science and Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U086. Marine Science and Technology — OLEVEL
+### U077. Marine Science and Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U087. Marine Science and Technology — UTME
+### U078. Marine Science and Technology — UTME
 
 - Current catalogue text: Biology and any two (2) of Physics, Chemistry and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U088. Mathematics and Economics / Mathematics with Economics — DIRECT_ENTRY
+### U079. Mathematics and Economics / Mathematics with Economics — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) 'A' Level passes at not more than two (2) sittings. The subjects should include Mathematics and Economics. (ii) ND upper credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iii) HND lower credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iv) NCE credit in Mathematics and Economics from a recognised College of Education with merit.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U089. Mathematics and Economics / Mathematics with Economics — OLEVEL
+### U080. Mathematics and Economics / Mathematics with Economics — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Economics and any other two (2) subjects selected from Science or Social Sciences at not more than two (2) sittings.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U090. Mathematics and Economics / Mathematics with Economics — UTME
+### U081. Mathematics and Economics / Mathematics with Economics — UTME
 
 - Current catalogue text: Mathematics, Economics and any other Science or Social Science subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U091. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — DIRECT_ENTRY
+### U082. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) 'A' Level passes in Mathematics and either Physics or Chemistry. (ii) NCE merit in Mathematics and either Physics or Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U092. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
+### U083. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Mathematics and at least three (3) of Physics, Chemistry, Biology and Additional/Further Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U093. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
+### U084. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
 
 - Current catalogue text: Maths, Physics and Chemistry or Biology and Additional/Further Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U094. Medical Laboratory Technology/Science — DIRECT_ENTRY
+### U085. Medical Laboratory Technology/Science — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes to include Physics, Chemistry and Biology or Zoology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U095. Medical Laboratory Technology/Science — OLEVEL
+### U086. Medical Laboratory Technology/Science — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U096. Medical Laboratory Technology/Science — UTME
+### U087. Medical Laboratory Technology/Science — UTME
 
 - Current catalogue text: Chemistry; Physics; Biology/Zoology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U097. Medicine and Surgery (Human Medicine) — DIRECT_ENTRY
+### U088. Medicine and Surgery (Human Medicine) — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to the UTME requirements; or B.Sc, B.OS, etc in relevant programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U098. Medicine and Surgery (Human Medicine) — OLEVEL
+### U089. Medicine and Surgery (Human Medicine) — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U099. Medicine and Surgery (Human Medicine) — UTME
+### U090. Medicine and Surgery (Human Medicine) — UTME
 
 - Current catalogue text: English Language; Physics; Chemistry; Biology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U100. Modern Language and Translation — DIRECT_ENTRY
+### U091. Modern Language and Translation — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) `A' Level passes or NCE in French for French programme. (ii) Two (2) `A' Level passes or NCE in any subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U101. Modern Language and Translation — OLEVEL
+### U092. Modern Language and Translation — OLEVEL
 
 - Current catalogue text: For Programme A: five (5) SSC credit passes including English Language and French. For Programme B: credit passes in English Language and four (4) other subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U102. Modern Language and Translation — UTME
+### U093. Modern Language and Translation — UTME
 
 - Current catalogue text: Programme A: French and any other two (2) subjects; Programme B: any three (3) subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U103. Office and Information Technology / Information Resource Management — DIRECT_ENTRY
+### U094. Office and Information Technology / Information Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U104. Office and Information Technology / Information Resource Management — OLEVEL
+### U095. Office and Information Technology / Information Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U105. Office and Information Technology / Information Resource Management — UTME
+### U096. Office and Information Technology / Information Resource Management — UTME
 
 - Current catalogue text: Economics and two (2) other subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U106. Pasture & Range Management — DIRECT_ENTRY
+### U097. Pasture & Range Management — DIRECT_ENTRY
 
 - Current catalogue text: Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U107. Pasture & Range Management — OLEVEL
+### U098. Pasture & Range Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U108. Pasture & Range Management — UTME
+### U099. Pasture & Range Management — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Physics/Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U109. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
+### U100. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U110. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
+### U101. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U111. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — UTME
+### U102. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — UTME
 
 - Current catalogue text: Physics, Mathematics and Chemistry or Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U112. Physics with Computational Modeling — DIRECT_ENTRY
+### U103. Physics with Computational Modeling — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U113. Physics with Computational Modeling — OLEVEL
+### U104. Physics with Computational Modeling — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U114. Physics with Computational Modeling — UTME
+### U105. Physics with Computational Modeling — UTME
 
 - Current catalogue text: Physics, Mathematics and Chemistry or Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U115. Plant Breeding and Seed Technology — DIRECT_ENTRY
+### U106. Plant Breeding and Seed Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U116. Plant Breeding and Seed Technology — OLEVEL
+### U107. Plant Breeding and Seed Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U117. Plant Breeding and Seed Technology — UTME
+### U108. Plant Breeding and Seed Technology — UTME
 
 - Current catalogue text: Chemistry, Biology/Agricultural Science and Mathematics or Physics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U118. Political Science / International Law and Diplomacy — DIRECT_ENTRY
-
-- Current catalogue text: as in Political Science
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U119. Political Science / International Law and Diplomacy — OLEVEL
-
-- Current catalogue text: as in Political Science
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U120. Political Science / International Law and Diplomacy — UTME
-
-- Current catalogue text: as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U121. Political Science and Conflict — DIRECT_ENTRY
-
-- Current catalogue text: Two (2) 'A' Level passes to include Government or History.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U122. Political Science and Conflict — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U123. Political Science and Conflict — UTME
-
-- Current catalogue text: Government/History; and two (2) other Social Sciences or Arts subjects
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U124. Public and International Law — DIRECT_ENTRY
+### U109. Public and International Law — DIRECT_ENTRY
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U125. Public and International Law — OLEVEL
+### U110. Public and International Law — OLEVEL
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U126. Public and International Law — UTME
+### U111. Public and International Law — UTME
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U127. Robotics (Artificial Intelligence) — DIRECT_ENTRY
+### U112. Robotics (Artificial Intelligence) — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U128. Robotics (Artificial Intelligence) — OLEVEL
+### U113. Robotics (Artificial Intelligence) — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U129. Robotics (Artificial Intelligence) — UTME
+### U114. Robotics (Artificial Intelligence) — UTME
 
 - Current catalogue text: Mathematics, Physics and one of Biology, Chemistry, Agric Science, Economics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U130. Sport Management (Education) — DIRECT_ENTRY
+### U115. Sport Management (Education) — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U131. Sport Management (Education) — OLEVEL
+### U116. Sport Management (Education) — OLEVEL
 
 - Current catalogue text: Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U132. Sport Management (Education) — UTME
+### U117. Sport Management (Education) — UTME
 
 - Current catalogue text: Biology; Mathematics; Economics; Geography
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U133. Water Resources and Environmental Engr — DIRECT_ENTRY
+### U118. Water Resources and Environmental Engr — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes must include Physics or Chemistry, and Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U134. Water Resources and Environmental Engr — OLEVEL
+### U119. Water Resources and Environmental Engr — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in Physics, Chemistry, Mathematics, English Language and Biology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U135. Water Resources and Environmental Engr — UTME
+### U120. Water Resources and Environmental Engr — UTME
 
 - Current catalogue text: Chemistry; Mathematics; Physics
 - Local source status: source_row_not_found / no_source_candidate
