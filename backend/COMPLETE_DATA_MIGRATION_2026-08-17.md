@@ -7,6 +7,68 @@ admission, and source-backed resource data. SQL files are generated outputs;
 the partition manifest, JSON parts, and generators under
 `data/career-mapping/` are the sources of truth.
 
+## Canonical current deployment order (2026-09-11)
+
+This section controls the current JAMB/offering/subject refresh. Older order
+tables later in this document describe historical or staging-only paths and do
+not override this sequence.
+
+### A. Rebuild and verify the generated artifacts locally
+
+Run from the repository root:
+
+```powershell
+python scripts/audit_brochure_subject_requirements.py --apply-manual-confirmations
+python scripts/build_jamb_brochure_source_rules.py --apply-manual-confirmations
+python data/career-mapping/_gen_seed.py
+python data/career-mapping/_parse_subject_options.py
+python data/career-mapping/_gen_subject_rule_records.py
+python data/career-mapping/_audit_course_and_jamb_mapping.py
+python data/career-mapping/_audit_subject_option_seed.py
+python data/career-mapping/_audit_subject_match_exhaustive.py
+```
+
+The explicit source ledger is
+`data/career-mapping/_audit/jamb_brochure_manual_source_confirmations_2026-09-11.json`.
+It records source-backed, confirmed-blank, and confirmed-missing brochure
+contexts. Confirmed blank/missing contexts remain review-visible but are not
+eligible for subject matching.
+
+### B. Apply missing schema files to an existing Supabase project
+
+Run a read-only preflight first. Apply only missing files, one complete
+transaction at a time, in this order:
+
+```text
+backend/migration_career_base_registry.sql
+backend/migration_subject_catalog.sql
+backend/migration_career_pilot.sql
+backend/migration_subject_rule_records.sql
+backend/migration_student_pipeline_live.sql
+backend/migration_school_faculty_filter_2026-09-09.sql
+```
+
+Then apply in-scope additive provisioning, identity, institution, consent,
+verification, guidance-report, and account-lifecycle migrations only after
+their prerequisite tables exist. Never use `migration_career_v2.sql` as an
+ordinary production patch; it is a destructive empty/staging taxonomy rebuild.
+
+### C. Apply the generated data seeds
+
+After the schema succeeds, apply these files in exactly this order:
+
+```text
+backend/seed_subject_catalog.sql
+backend/seed_career_pilot.sql
+backend/seed_subject_rule_records.sql
+backend/seed_subject_options.sql
+```
+
+The last file is a controlled replacement transaction for the national matcher
+tables. Back up affected tables first on an existing project. Run the
+post-apply queries in this document, then rerun the exhaustive matcher audit
+and only afterward test provisioning, guidance, matching, or reports.
+
 The generated SQL has been locally regenerated and audited. It has not been
 executed against Supabase by this audit; the post-seed queries below are the
 required proof of a successful Supabase run.

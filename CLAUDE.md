@@ -16,6 +16,71 @@ string. The complete explanation and verification queries are in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md` and
 `backend/MIGRATION_RUNBOOK.md`.
 
+### Canonical 2026-09-11 order
+
+When the task concerns the current JAMB/offering/subject refresh, use the
+following order. Do not apply SQL files by filename order and do not use the
+historical full-rebuild sections below as a substitute for this sequence.
+
+#### 1. Regenerate and audit locally before applying SQL
+
+From the repository root, run the source-confirmation replay and generators in
+this order:
+
+```powershell
+python scripts/audit_brochure_subject_requirements.py --apply-manual-confirmations
+python scripts/build_jamb_brochure_source_rules.py --apply-manual-confirmations
+python data/career-mapping/_gen_seed.py
+python data/career-mapping/_parse_subject_options.py
+python data/career-mapping/_gen_subject_rule_records.py
+python data/career-mapping/_audit_course_and_jamb_mapping.py
+python data/career-mapping/_audit_subject_option_seed.py
+python data/career-mapping/_audit_subject_match_exhaustive.py
+```
+
+If the course/JAMB audit filename differs in the local checkout, use the
+checked-in audit script whose name begins `_audit_course_and_jamb_mapping`.
+The manual confirmation source is
+`data/career-mapping/_audit/jamb_brochure_manual_source_confirmations_2026-09-11.json`.
+Do not infer blank or missing brochure cells from a neighbouring programme.
+Only matchable typed rules may become picker options.
+
+#### 2. Apply the current schema dependencies
+
+On an existing Supabase project, run a read-only preflight and apply only
+missing files, one transaction at a time, in this order:
+
+```text
+backend/migration_career_base_registry.sql
+backend/migration_subject_catalog.sql
+backend/migration_career_pilot.sql
+backend/migration_subject_rule_records.sql
+backend/migration_student_pipeline_live.sql
+backend/migration_school_faculty_filter_2026-09-09.sql
+```
+
+Then apply any requested additive onboarding, identity, institution, consent,
+verification, guidance-report, or account-lifecycle migrations only after the
+base tables they extend exist. Never run `migration_career_v2.sql` against a
+populated project; it is a staging/empty taxonomy rebuild.
+
+#### 3. Apply the generated data in dependency order
+
+Keep each transaction intact and stop at the first error:
+
+```text
+backend/seed_subject_catalog.sql
+backend/seed_career_pilot.sql
+backend/seed_subject_rule_records.sql
+backend/seed_subject_options.sql
+```
+
+`seed_subject_options.sql` is a controlled replacement of national matcher
+rows. It must be applied after both the career/offering seed and the typed
+rule-record seed. A successful local generation is not proof of a live
+deployment; rerun the post-apply counts and exhaustive matcher audit in
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
+
 ### MANDATORY APPLY BEHAVIOUR
 
 #### User-requested manual-only mode

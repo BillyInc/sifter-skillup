@@ -1,6 +1,6 @@
 # Complete JAMB brochure manual audit
 
-Status date: 2026-09-08
+Status date: 2026-09-11
 Scope: JAMB brochure requirements, subject rules, university offerings, and university-specific exceptions.
 
 This is the single manual-audit handoff. Every row still marked for source review or without a resolved source candidate is listed below. It does not ask for CCMAS, domain, subgroup, role, or labour-market work.
@@ -39,9 +39,48 @@ The current frontend fix makes university-specific requirements visible from the
 
 These rows should still be available in programme/university detail where relevant, but they must not be silently converted into a subject match.
 
+## Confirmed manual source outcomes
+
+The five previously unresolved offering contexts have **15 of 15 layer confirmations** recorded. They are removed from the pending sections below. Source-backed layers may match; confirmed blank or missing layers remain visible as non-matchable states.
+
+### C01. Dentistry and Dental Technology
+
+- Source: Medica_Pharmaceutical Health Science.pdf, PDF p.8, table row 4; heading: Dentistry and Dental Surgery
+- Layers: direct_entry=exact, olevel=exact, utme=exact
+- Note: The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national Direct Entry cell requires three A-level passes including Chemistry, Biology/Zoology and Physics.
+- Manual result: CONFIRMED; no longer pending source confirmation.
+
+### C02. Economics with/and Operation Research
+
+- Source: Social Management Science.pdf, PDF p.40, table row 1; heading: Economics with Operation Research
+- Layers: direct_entry=source_blank, olevel=source_blank, utme=source_blank
+- Note: The CUAB offering is printed in the requirement table, but its Direct Entry cell is blank. Do not inherit the Economics rule.
+- Manual result: CONFIRMED; no longer pending source confirmation.
+
+### C03. Forestry and Fisheries
+
+- Source: Agriculture.pdf, PDF p.1, table row —; heading: Forestry and Fisheries
+- Layers: direct_entry=source_missing, olevel=source_missing, utme=source_missing
+- Note: The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a Direct Entry cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.
+- Manual result: CONFIRMED; no longer pending source confirmation.
+
+### C04. Political Science / International Law and Diplomacy
+
+- Source: Social Management Science.pdf, PDF p.81, table row 1; heading: Political Science / International Law and Diplomacy
+- Layers: direct_entry=inherited_shared, olevel=inherited_shared, utme=inherited_shared
+- Note: The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block.
+- Manual result: CONFIRMED; no longer pending source confirmation.
+
+### C05. Political Science and Conflict
+
+- Source: Arts _ Humanities.pdf, PDF p.123, table row 4; heading: Political Science and Conflict Resolution
+- Layers: direct_entry=inherited_shared, olevel=inherited_shared, utme=inherited_shared
+- Note: The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block.
+- Manual result: CONFIRMED; no longer pending source confirmation.
+
 ## Part 1 — National requirement layers requiring manual source review
 
-Total rows listed: **260** (149 needs_review, 111 empty). Review each layer separately: UTME, O-level, and Direct Entry.
+Total rows listed: **255** (146 needs_review, 109 empty). Review each layer separately: UTME, O-level, and Direct Entry.
 
 For every row, capture the exact requirement cell, continuation/shared heading, PDF page, table row, institution association, and one decision: exact_rule, shared_rule, partial_condition, cross_reference, source_blank, or needs_manual_interpretation.
 
@@ -945,37 +984,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N091. Forestry and Fisheries — DIRECT_ENTRY
-
-- Current status: empty
-- Review reason: no_source_text
-- Source index: agriculture_offerings.json
-- Current catalogue/source text: —
-- Candidate brochure locations: No source candidate recorded by the local table audit.
-- Manual result: PENDING SOURCE REVIEW
-- Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
-
-### N092. Forestry and Fisheries — OLEVEL
-
-- Current status: empty
-- Review reason: no_source_text
-- Source index: agriculture_offerings.json
-- Current catalogue/source text: —
-- Candidate brochure locations: No source candidate recorded by the local table audit.
-- Manual result: PENDING SOURCE REVIEW
-- Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
-
-### N093. Forestry and Fisheries — UTME
-
-- Current status: needs_review
-- Review reason: cross_reference
-- Source index: agriculture_offerings.json
-- Current catalogue/source text: as in Agricultural Economics and Extension
-- Candidate brochure locations: No source candidate recorded by the local table audit.
-- Manual result: PENDING SOURCE REVIEW
-- Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
-
-### N094. French and German/Russian — DIRECT_ENTRY
+### N091. French and German/Russian — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -985,7 +994,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N095. French and German/Russian — OLEVEL
+### N092. French and German/Russian — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -995,7 +1004,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N096. Genetics and Biotechnology — DIRECT_ENTRY
+### N093. Genetics and Biotechnology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1005,7 +1014,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N097. Genetics and Biotechnology — OLEVEL
+### N094. Genetics and Biotechnology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1015,7 +1024,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N098. Geography — UTME
+### N095. Geography — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1025,7 +1034,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N099. Geography and Environmental Management — DIRECT_ENTRY
+### N096. Geography and Environmental Management — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1035,7 +1044,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N100. Geography and Environmental Management — OLEVEL
+### N097. Geography and Environmental Management — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1045,7 +1054,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N101. Geography and Geosciences — OLEVEL
+### N098. Geography and Geosciences — OLEVEL
 
 - Current status: needs_review
 - Review reason: sitting_condition
@@ -1055,7 +1064,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N102. Geography and Geosciences — UTME
+### N099. Geography and Geosciences — UTME
 
 - Current status: needs_review
 - Review reason: institutional_or_unrecognized_prose
@@ -1065,7 +1074,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N103. Geology and Mining — DIRECT_ENTRY
+### N100. Geology and Mining — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1075,7 +1084,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N104. Geology and Mining — OLEVEL
+### N101. Geology and Mining — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1085,7 +1094,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N105. Geophysics — DIRECT_ENTRY
+### N102. Geophysics — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1095,7 +1104,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N106. Geophysics — OLEVEL
+### N103. Geophysics — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1105,7 +1114,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N107. German — DIRECT_ENTRY
+### N104. German — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1115,7 +1124,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N108. German — OLEVEL
+### N105. German — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1125,7 +1134,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N109. Government and Public Administration — OLEVEL
+### N106. Government and Public Administration — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -1135,7 +1144,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N110. Government and Public Administration — UTME
+### N107. Government and Public Administration — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1145,7 +1154,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N111. HOME SCIENCE — DIRECT_ENTRY
+### N108. HOME SCIENCE — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1155,7 +1164,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N112. HOME SCIENCE — OLEVEL
+### N109. HOME SCIENCE — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1165,7 +1174,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N113. HOME SCIENCE — UTME
+### N110. HOME SCIENCE — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1175,7 +1184,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N114. HUMAN BIOLOGY — UTME
+### N111. HUMAN BIOLOGY — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1185,7 +1194,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N115. Home Economics — OLEVEL
+### N112. Home Economics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1195,7 +1204,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N116. Home Economics and Food Management — OLEVEL
+### N113. Home Economics and Food Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1205,7 +1214,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N117. Home Economics and Hotel Management — OLEVEL
+### N114. Home Economics and Hotel Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1215,7 +1224,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N118. Home Science & Management — OLEVEL
+### N115. Home Science & Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1225,7 +1234,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N119. Home Science & Management — UTME
+### N116. Home Science & Management — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1235,7 +1244,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N120. Home Science, Nutrition and Dietetics — OLEVEL
+### N117. Home Science, Nutrition and Dietetics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1245,7 +1254,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N121. Horticulture — DIRECT_ENTRY
+### N118. Horticulture — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1255,7 +1264,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N122. Horticulture — OLEVEL
+### N119. Horticulture — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1265,7 +1274,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N123. Hotel Management & Tourism — OLEVEL
+### N120. Hotel Management & Tourism — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1275,7 +1284,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N124. Hotel Management and Tourism — OLEVEL
+### N121. Hotel Management and Tourism — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1285,7 +1294,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N125. Human Resources Management — OLEVEL
+### N122. Human Resources Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -1295,7 +1304,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N126. ICT Engineering — OLEVEL
+### N123. ICT Engineering — OLEVEL
 
 - Current status: needs_review
 - Review reason: sitting_condition
@@ -1305,7 +1314,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N127. INFORMATION AND COMMUNICATION TECHNOLOGY — DIRECT_ENTRY
+### N124. INFORMATION AND COMMUNICATION TECHNOLOGY — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1315,7 +1324,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N128. INFORMATION AND COMMUNICATION TECHNOLOGY — OLEVEL
+### N125. INFORMATION AND COMMUNICATION TECHNOLOGY — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1325,7 +1334,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N129. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
+### N126. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1335,7 +1344,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N130. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
+### N127. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1345,7 +1354,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N131. INFORMATION SCIENCE — DIRECT_ENTRY
+### N128. INFORMATION SCIENCE — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1355,7 +1364,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N132. INFORMATION SCIENCE — OLEVEL
+### N129. INFORMATION SCIENCE — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1365,7 +1374,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N133. INFORMATION SCIENCE AND MEDIA STUDIES — DIRECT_ENTRY
+### N130. INFORMATION SCIENCE AND MEDIA STUDIES — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1375,7 +1384,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N134. INFORMATION SCIENCE AND MEDIA STUDIES — OLEVEL
+### N131. INFORMATION SCIENCE AND MEDIA STUDIES — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1385,7 +1394,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N135. INFORMATION TECHNOLOGY — DIRECT_ENTRY
+### N132. INFORMATION TECHNOLOGY — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1395,7 +1404,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N136. INFORMATION TECHNOLOGY — OLEVEL
+### N133. INFORMATION TECHNOLOGY — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1405,7 +1414,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N137. Industral Mathematics/Computer — DIRECT_ENTRY
+### N134. Industral Mathematics/Computer — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1415,7 +1424,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N138. Industral Mathematics/Computer — OLEVEL
+### N135. Industral Mathematics/Computer — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1425,7 +1434,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N139. Industrial Microbiology — DIRECT_ENTRY
+### N136. Industrial Microbiology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1435,7 +1444,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N140. Industrial Microbiology — OLEVEL
+### N137. Industrial Microbiology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1445,7 +1454,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N141. Industrial Physics — OLEVEL
+### N138. Industrial Physics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1455,7 +1464,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N142. Industrial Relations and Human Resources Management — OLEVEL
+### N139. Industrial Relations and Human Resources Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -1465,7 +1474,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N143. Industrial Relations and Personnel Management — OLEVEL
+### N140. Industrial Relations and Personnel Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -1475,7 +1484,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N144. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
+### N141. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -1485,7 +1494,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N145. Intelligence and Security Studies — OLEVEL
+### N142. Intelligence and Security Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1495,7 +1504,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N146. International Studies and — DIRECT_ENTRY
+### N143. International Studies and — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1505,7 +1514,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N147. International Studies and — OLEVEL
+### N144. International Studies and — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1515,7 +1524,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N148. International Studies and — UTME
+### N145. International Studies and — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1525,7 +1534,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N149. International Studies and Diplomacy — DIRECT_ENTRY
+### N146. International Studies and Diplomacy — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1535,7 +1544,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N150. International Studies and Diplomacy — OLEVEL
+### N147. International Studies and Diplomacy — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1545,7 +1554,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N151. International Studies and Diplomacy — UTME
+### N148. International Studies and Diplomacy — UTME
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1555,7 +1564,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N152. Islamic Law/Sharia Law — OLEVEL
+### N149. Islamic Law/Sharia Law — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1565,7 +1574,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N153. Library and Information Science — DIRECT_ENTRY
+### N150. Library and Information Science — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1575,7 +1584,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N154. Library and Information Science — OLEVEL
+### N151. Library and Information Science — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1585,7 +1594,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N155. Library and Information Science — UTME
+### N152. Library and Information Science — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1595,7 +1604,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N156. Linguistics — DIRECT_ENTRY
+### N153. Linguistics — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1605,7 +1614,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N157. Linguistics — OLEVEL
+### N154. Linguistics — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1615,7 +1624,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N158. Linguistics — UTME
+### N155. Linguistics — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1625,7 +1634,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N159. Linguistics/Edo — OLEVEL
+### N156. Linguistics/Edo — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1635,7 +1644,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N160. Literature in English — DIRECT_ENTRY
+### N157. Literature in English — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1645,7 +1654,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N161. Literature in English — OLEVEL
+### N158. Literature in English — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1655,7 +1664,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N162. Livestock Production Technology — OLEVEL
+### N159. Livestock Production Technology — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1665,7 +1674,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N163. METEOROLOGY AND CLIMATE CHANGE — DIRECT_ENTRY
+### N160. METEOROLOGY AND CLIMATE CHANGE — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1675,7 +1684,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N164. METEOROLOGY AND CLIMATE CHANGE — OLEVEL
+### N161. METEOROLOGY AND CLIMATE CHANGE — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1685,7 +1694,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N165. Marine Science and Technology — DIRECT_ENTRY
+### N162. Marine Science and Technology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1695,7 +1704,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N166. Marine Science and Technology — OLEVEL
+### N163. Marine Science and Technology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1705,7 +1714,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N167. Mass Communication — OLEVEL
+### N164. Mass Communication — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1715,7 +1724,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N168. Mathematics and Economics / Mathematics with Economics — OLEVEL
+### N165. Mathematics and Economics / Mathematics with Economics — OLEVEL
 
 - Current status: needs_review
 - Review reason: sitting_condition
@@ -1725,7 +1734,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N169. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
+### N166. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1735,7 +1744,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N170. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
+### N167. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1745,7 +1754,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N171. Medical Biochemistry — OLEVEL
+### N168. Medical Biochemistry — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1755,7 +1764,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N172. Modern Language and Translation — OLEVEL
+### N169. Modern Language and Translation — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1765,7 +1774,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N173. Modern Language and Translation — UTME
+### N170. Modern Language and Translation — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1775,7 +1784,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N174. Molecular Biology — DIRECT_ENTRY
+### N171. Molecular Biology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1785,7 +1794,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N175. Molecular Biology — OLEVEL
+### N172. Molecular Biology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1795,7 +1804,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N176. NATURAL AND ENVIRONMENTAL SCIENCE — OLEVEL
+### N173. NATURAL AND ENVIRONMENTAL SCIENCE — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1805,7 +1814,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N177. NATURAL AND ENVIRONMENTAL SCIENCE — UTME
+### N174. NATURAL AND ENVIRONMENTAL SCIENCE — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -1815,7 +1824,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N178. Office and Information Technology / Information Resource Management — OLEVEL
+### N175. Office and Information Technology / Information Resource Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1825,7 +1834,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N179. PHYSICS — OLEVEL
+### N176. PHYSICS — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1835,7 +1844,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N180. PHYSICS WITH ELECTRONICS — OLEVEL
+### N177. PHYSICS WITH ELECTRONICS — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1845,7 +1854,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N181. Pasture & Range Management — OLEVEL
+### N178. Pasture & Range Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1855,7 +1864,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N182. Peace Strategic and Conflict Resolution — OLEVEL
+### N179. Peace Strategic and Conflict Resolution — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1865,7 +1874,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N183. Peace Studies and Conflict Resolution — OLEVEL
+### N180. Peace Studies and Conflict Resolution — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1875,7 +1884,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N184. Peace and Conflict Studies — OLEVEL
+### N181. Peace and Conflict Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1885,7 +1894,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N185. Personnel Management — OLEVEL
+### N182. Personnel Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -1895,7 +1904,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N186. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
+### N183. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1905,7 +1914,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N187. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
+### N184. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1915,7 +1924,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N188. Physics Electronics — DIRECT_ENTRY
+### N185. Physics Electronics — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1925,7 +1934,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N189. Physics Electronics — OLEVEL
+### N186. Physics Electronics — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1935,7 +1944,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N190. Physics and Applied Physics — OLEVEL
+### N187. Physics and Applied Physics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1945,7 +1954,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N191. Physics and Computer Electronic — OLEVEL
+### N188. Physics and Computer Electronic — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1955,7 +1964,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N192. Physics and Energy Studies — OLEVEL
+### N189. Physics and Energy Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1965,7 +1974,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N193. Physics with Computational Modeling — DIRECT_ENTRY
+### N190. Physics with Computational Modeling — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1975,7 +1984,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N194. Physics with Computational Modeling — OLEVEL
+### N191. Physics with Computational Modeling — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -1985,7 +1994,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N195. Physics with Solar Energy — OLEVEL
+### N192. Physics with Solar Energy — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -1995,7 +2004,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N196. Physics/Astrology — OLEVEL
+### N193. Physics/Astrology — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2005,7 +2014,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N197. Physics/Industrial Physics — OLEVEL
+### N194. Physics/Industrial Physics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2015,7 +2024,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N198. Physiotherapy — DIRECT_ENTRY
+### N195. Physiotherapy — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2025,7 +2034,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N199. Plant Breeding and Seed Technology — DIRECT_ENTRY
+### N196. Plant Breeding and Seed Technology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2035,7 +2044,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N200. Plant Breeding and Seed Technology — OLEVEL
+### N197. Plant Breeding and Seed Technology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2045,7 +2054,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N201. Plant Science — DIRECT_ENTRY
+### N198. Plant Science — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2055,7 +2064,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N202. Plant Science — OLEVEL
+### N199. Plant Science — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2065,7 +2074,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N203. Plant Science and Biotechnology — DIRECT_ENTRY
+### N200. Plant Science and Biotechnology — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2075,7 +2084,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N204. Plant Science and Biotechnology — OLEVEL
+### N201. Plant Science and Biotechnology — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2085,7 +2094,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N205. Policy and Administrative Studies — OLEVEL
+### N202. Policy and Administrative Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2095,7 +2104,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N206. Policy and Administrative Studies — UTME
+### N203. Policy and Administrative Studies — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2105,7 +2114,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N207. Policy and Strategic Studies — OLEVEL
+### N204. Policy and Strategic Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2115,7 +2124,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N208. Political Science — OLEVEL
+### N205. Political Science — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2125,27 +2134,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N209. Political Science / International Law and Diplomacy — OLEVEL
-
-- Current status: needs_review
-- Review reason: cross_reference_or_shared_rule
-- Source index: social_management_offerings.json
-- Current catalogue/source text: as in Political Science
-- Candidate brochure locations: No source candidate recorded by the local table audit.
-- Manual result: PENDING SOURCE REVIEW
-- Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
-
-### N210. Political Science / International Law and Diplomacy — UTME
-
-- Current status: needs_review
-- Review reason: direct_entry_prose_in_subject_cell
-- Source index: social_management_offerings.json
-- Current catalogue/source text: as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)
-- Candidate brochure locations: No source candidate recorded by the local table audit.
-- Manual result: PENDING SOURCE REVIEW
-- Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
-
-### N211. Political Science and Conflict Resolution — OLEVEL
+### N206. Political Science and Conflict Resolution — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2155,7 +2144,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N212. Political Science and Conflict Resolution — UTME
+### N207. Political Science and Conflict Resolution — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2165,7 +2154,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N213. Political Science and Defence Studies — OLEVEL
+### N208. Political Science and Defence Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2175,7 +2164,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N214. Political Science and Defence Studies — UTME
+### N209. Political Science and Defence Studies — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2185,7 +2174,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N215. Political Science and Diplomacy — OLEVEL
+### N210. Political Science and Diplomacy — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2195,7 +2184,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N216. Political Science and Diplomacy — UTME
+### N211. Political Science and Diplomacy — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2205,7 +2194,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N217. Political Science and International Relations — OLEVEL
+### N212. Political Science and International Relations — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2215,7 +2204,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N218. Political Science and International Relations — UTME
+### N213. Political Science and International Relations — UTME
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -2225,7 +2214,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N219. Political Science and International Studies — OLEVEL
+### N214. Political Science and International Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2235,7 +2224,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N220. Political Science and International Studies — UTME
+### N215. Political Science and International Studies — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2245,7 +2234,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N221. Political Science and Public Administration — OLEVEL
+### N216. Political Science and Public Administration — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2255,7 +2244,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N222. Political and Administrative Studies — OLEVEL
+### N217. Political and Administrative Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2265,7 +2254,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N223. Political and Administrative Studies — UTME
+### N218. Political and Administrative Studies — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2275,7 +2264,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N224. Psychology — OLEVEL
+### N219. Psychology — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2285,7 +2274,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N225. Public Relations and Advertising — OLEVEL
+### N220. Public Relations and Advertising — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2295,7 +2284,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N226. Public Relations and Advertising — UTME
+### N221. Public Relations and Advertising — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2305,7 +2294,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N227. Public and International Law — OLEVEL
+### N222. Public and International Law — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2315,7 +2304,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N228. Public and International Law — UTME
+### N223. Public and International Law — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2325,7 +2314,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N229. Pure Physics — DIRECT_ENTRY
+### N224. Pure Physics — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2335,7 +2324,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N230. Pure Physics — OLEVEL
+### N225. Pure Physics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2345,7 +2334,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N231. Pure and Applied Physics — OLEVEL
+### N226. Pure and Applied Physics — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2355,7 +2344,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N232. Pure and Industrial Chemistry — UTME
+### N227. Pure and Industrial Chemistry — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -2365,7 +2354,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N233. Robotics (Artificial Intelligence) — DIRECT_ENTRY
+### N228. Robotics (Artificial Intelligence) — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2375,7 +2364,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N234. Robotics (Artificial Intelligence) — OLEVEL
+### N229. Robotics (Artificial Intelligence) — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2385,7 +2374,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N235. Russian with French/German — UTME
+### N230. Russian with French/German — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -2395,7 +2384,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N236. Science Laboratory Technology — OLEVEL
+### N231. Science Laboratory Technology — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2405,7 +2394,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N237. Science Laboratory Technology — UTME
+### N232. Science Laboratory Technology — UTME
 
 - Current status: needs_review
 - Review reason: institutional_or_unrecognized_prose
@@ -2415,7 +2404,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N238. Secretarial Administration — OLEVEL
+### N233. Secretarial Administration — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2425,7 +2414,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N239. Securities and Investment — OLEVEL
+### N234. Securities and Investment — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2435,7 +2424,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N240. Securities and Investment — UTME
+### N235. Securities and Investment — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2445,7 +2434,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N241. Social Justice — OLEVEL
+### N236. Social Justice — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2455,7 +2444,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N242. Sociology — OLEVEL
+### N237. Sociology — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2465,7 +2454,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N243. Sociology and Anthroplogy — OLEVEL
+### N238. Sociology and Anthroplogy — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2475,7 +2464,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N244. Sociology and Anthroplogy — UTME
+### N239. Sociology and Anthroplogy — UTME
 
 - Current status: needs_review
 - Review reason: direct_entry_prose_in_subject_cell
@@ -2485,7 +2474,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N245. Sociology and Social Studies — OLEVEL
+### N240. Sociology and Social Studies — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2495,7 +2484,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N246. Sport Management (Education) — OLEVEL
+### N241. Sport Management (Education) — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2505,7 +2494,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N247. Sport Science — OLEVEL
+### N242. Sport Science — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2515,7 +2504,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N248. Strategic Communication — OLEVEL
+### N243. Strategic Communication — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2525,7 +2514,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N249. Systems Engineering — OLEVEL
+### N244. Systems Engineering — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2535,7 +2524,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N250. TELECOMMUNICATION AND WIRELESS TECHNOLOGY — DIRECT_ENTRY
+### N245. TELECOMMUNICATION AND WIRELESS TECHNOLOGY — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2545,7 +2534,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N251. TELECOMMUNICATION AND WIRELESS TECHNOLOGY — OLEVEL
+### N246. TELECOMMUNICATION AND WIRELESS TECHNOLOGY — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2555,7 +2544,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N252. Taxation — OLEVEL
+### N247. Taxation — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2565,7 +2554,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N253. Teacher Education — OLEVEL
+### N248. Teacher Education — OLEVEL
 
 - Current status: needs_review
 - Review reason: cross_reference_or_shared_rule
@@ -2575,7 +2564,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N254. Teacher Education — UTME
+### N249. Teacher Education — UTME
 
 - Current status: needs_review
 - Review reason: cross_reference
@@ -2585,7 +2574,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N255. Technology Education — DIRECT_ENTRY
+### N250. Technology Education — DIRECT_ENTRY
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2595,7 +2584,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N256. Technology Education — OLEVEL
+### N251. Technology Education — OLEVEL
 
 - Current status: empty
 - Review reason: no_source_text
@@ -2605,7 +2594,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N257. Technology Education — UTME
+### N252. Technology Education — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -2615,7 +2604,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N258. Theology — UTME
+### N253. Theology — UTME
 
 - Current status: needs_review
 - Review reason: unrecognized_utme_grammar
@@ -2625,7 +2614,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N259. Transport Planning and Management — OLEVEL
+### N254. Transport Planning and Management — OLEVEL
 
 - Current status: needs_review
 - Review reason: sitting_condition
@@ -2635,7 +2624,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 - Manual result: PENDING SOURCE REVIEW
 - Capture: exact brochure text; page; table row; shared/inherited heading; decision; institution/variant scope.
 
-### N260. Vocational Education — OLEVEL
+### N255. Vocational Education — OLEVEL
 
 - Current status: needs_review
 - Review reason: unrecognized_olevel_grammar
@@ -2647,7 +2636,7 @@ For every row, capture the exact requirement cell, continuation/shared heading, 
 
 ### Current live database review rows
 
-The live database currently reports 172 national rows with parse_status=needs_review. The table below preserves their current programme name and raw three-layer values, including rows added or changed after the repository classification snapshot.
+The live database currently reports 169 national rows with parse_status=needs_review. The table below preserves their current programme name and raw three-layer values, including rows added or changed after the repository classification snapshot.
 
 | # | Programme | UTME source text | O-level source text | Direct Entry source text |
 |---:|---|---|---|---|
@@ -2710,125 +2699,122 @@ The live database currently reports 172 national rows with parse_status=needs_re
 | LIVE057 | Fine Art/Fine and Applied Arts | Fine Arts and any other subjects, or Social Science subjects | Five (5) SSC credit passes to include English Language and Fine Arts. | (i) Two (2) `A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions. |
 | LIVE058 | Food Science and Engineering | i. Mathematics, Chemistryand Physicsor Biology. | Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and Physics | Two (2) 'A' Level passes in Chemistry and Biology/Physics/Agricultural Science/Botany/Zoology. |
 | LIVE059 | Food Technology | i. Mathematics, Chemistryand Physicsor Biology. | — | — |
-| LIVE060 | Forestry and Fisheries | as in Agricultural Economics and Extension | — | — |
-| LIVE061 | French | French, and any other two (2) subjects from Arts and Social Sciences | Five (5) SSC credit passes including French and English Language plus one other Arts subject. | Two (2) `A' Level passes including French and one other Arts subject. |
-| LIVE062 | Fulfulde | Any three (3) Arts subjects | Five (5) SSC credit passes in Arts/Social Science subjects. | Two (2) `A' Level passes in Arts and Social Science subjects. |
-| LIVE063 | Gas Engineering | Chemistry, Mathematicsand Physics. | Five(5) SSCcreditsto includePhysics, Chemistry, Mathematics, EnglishLanguageand anyoneScience subject. | 'A'Levelpassesto includePhysics, Chemistryand Mathematics. |
-| LIVE064 | Geography | Geography and one (1) other science subject. Mathematics, Geography and any other two (2) Science subjects. | Five (5) SSC credit passes to include English Language, Mathematics, Geography and any two (2) of Biology, Chemistry, Physics and Agricultural Science. | Two (2) 'A' Level passes in Geography and one (1) other science subject. |
-| LIVE065 | Geography and Environmental Studies | Geography, and any two (2) other Arts or Social Science subjects | Five (5) SSC credit passes to include English Language, Geography and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics. | No Direct Entry. |
-| LIVE066 | Geography and Geosciences | OAU require Mathematics, Physics and Chemistry; CALABAR does not accept Biology; FUPRE requires Physics, Mathematics and Chemistry; FED-OYE EKITI requires Physics and Mathematics, Chemistry or Biology; OAUSTECH requires Physics, Mathematics and any one of Chemistry, Biology and Geography; FUTA requires Physics, Mathematics and Chemistry; MOUNTAIN TOP requires Physics, Mathematics and any one of Chemistry/Biology/Agricultural Science/Geography; FUPRE requires Mathematics, Chemistry and Physics; ILORIN requires Physics, Mathematics and Chemistry; LAGOS requires English Language, Mathematics, Physics and Chemistry; FED-KASHERE requires Physics, Chemistry and Mathematics. | Five 'O' Level credit passes. OAU: English Language, Chemistry, Biology/Further Mathematics, Mathematics and Physics. FUTA: English Language, Physics, Mathematics, Chemistry and one of Biology/Geography/Technical Drawing (max two sittings). FUPRE: English Language, Biology, Mathematics, Physics and Chemistry. FED-OYE EKITI: English, Mathematics, Physics and Chemistry. OAUSTECH: English Language, Physics, Chemistry, Mathematics and Biology/Geography. LAGOS: English Language, Mathematics, Physics, Chemistry and Biology. ILORIN: English Language, Physics, Mathematics, Chemistry and one of Further Mathematics/Biology/Geography. FED-KASHERE: English, Mathematics, Physics, Chemistry and any of Further Mathematics/Geography/Biology. (heading begins before line range; this programme is partial) | National Diploma (Upper Credit) in Electrical Engineering, Petroleum Engineering, Geology and Mining, Physics or Computer Science (one option visible at top of range). |
-| LIVE067 | Geoscience | Any three (3) of Physics, Chemistry, Biology and Mathematics. | Five (5) SSC credit passes including English Language, Mathematics, Physics and Chemistry/Biology. | 'A' Level passes in Chemistry and Physics or Mathematics. |
-| LIVE068 | Government and Public Administration | UTME SUBJECTS | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE069 | HOME SCIENCE | Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, UTME Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | — | — |
-| LIVE070 | HUMAN BIOLOGY | three (3) relevant Science subject. Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English Language, Biology, Chemistry and Mathematics/Physics. | (i) Two (2) 'A' Level passes from Chemistry, Biology, Botany/Zoology. (ii) NCE merit accepted. |
-| LIVE071 | History and International Relations | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE072 | History and International Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE073 | Home Economics | Chemistry, Biology/Agriculture, Mathematics/Physics or one (1) Social Science subject | Five (5) SSC credit passes in Chemistry, Biology/Agricultural Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing. | Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting. |
-| LIVE074 | Home Economics and Food Management | Biology, Chemistry, any other Science subject | Five (5) credits at SSC or equivalent in English, Mathematics, Chemistry, Agricultural Science or Biology or Home Economics, and any other science subject, preferably Physics. | (i) At least 2 'A' Level passes in Chemistry, Agricultural Science or Biology, Physics or Home Economics. (ii) NCE credit/merit and ND credit in addition to five (5) credit in SSC or equivalents. |
-| LIVE075 | Home Economics and Hotel Management | Chemistry, Biology or Agricultural Science, and one (1) other subject | Five (5) 'O' Level NTC/NBC credit passes or TC II merit including English Language, Mathematics, Home Economics, Biology and Chemistry. | (i) NCE merit in Home Economics; (ii) 'A' Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science; (iii) ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme. |
-| LIVE076 | Home Science & Management | Chemistry, Biology/Agricultural Science, Physics/Mathematics or one (1) social science subject (Economics or Geography) | Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity. | Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting. |
-| LIVE077 | Home Science, Nutrition and Dietetics | Mathematics, Economics and one (1) other subject. | and at least 'O' Level pass in English LanguageandPhysics. General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity. | Economics/Physics/ Mathematics/Geograph y/Accounting. |
-| LIVE078 | Hotel Management and Tourism | Biology, Chemistry, any other Science subject | Five (5) credits at SSC or equivalent in English, Mathematics, Chemistry, Agricultural Science or Biology or Home Economics, and any other science subject, preferably Physics. | (i) At least 2 'A' Level passes in Chemistry, Agricultural Science or Biology, Physics or Home Economics. (ii) NCE credit/merit and ND credit in addition to five (5) credit in SSC or equivalents. |
-| LIVE079 | Human Resources Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE080 | ICT Engineering | Mathematics, Physics, Chemistry | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings. | 'A' Level/IJMB/ND/HND upper credit in relevant programmes (Information Technology, Computer Science/Engineering, Electrical and Electronic Engineering) into 200/300 level. |
-| LIVE081 | Industrial Design | Chemistry, Mathematics, and Fine Arts/Physics | Five (5) SSC credit passes to include English Language, Fine Art, Mathematics, Chemistry. Spinning; Weaving; Surface Design and Printing; Bleaching, Dyeing and Finishing; Ceramics; Graphic Design; Graphic Printing; Decorative Painting, Spray Painting, Lining, Sign and Design, Wall Hanging, Colour Mixing/Matching and Glazing, Building/Engineering Drawing, General Wood Work. | (i) 'A' Level passes in Two (2) of Fine Arts, Chemistry, Mathematics, and Physics. (ii) ND in Industrial Design or Glass Technology or Fine Art at credit level. |
-| LIVE082 | Industrial Physics | Physics, Mathematics and Physics, Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
-| LIVE083 | Industrial Relations and Human Resources Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE084 | Industrial Relations and Personnel Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE085 | Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management | Mathematics, Economics and one other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE086 | Information and Media Studies | Government, Economics and any other subject. | Five (5) SSC credit passes to include English Language, Economics and Government. For NBC holders, the other relevant subjects could be from any of the following: Accounting, Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) `A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE087 | Intelligence and Security Studies | Three (3) Social Science or Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
-| LIVE088 | International Relations and Diplomacy | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE089 | International Relations and Diplomatic Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE090 | International Relationship & Strategic Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE091 | International Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE092 | International Studies and | History/Governm entandanyother two (2) subjects fromtheArtsand SocialSciences. | — | — |
-| LIVE093 | International and Comparative Politics | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
-| LIVE094 | Islamic Law/Sharia Law | Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies | Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic. | Two (2) A' level passes to include Islamic Studies or Arabic |
-| LIVE095 | Islamic Studies | English Language, Islamic Studies and any two (2) subjects. | Five (5) SSC credit passes to include English Language, Islamic Studies or Arabic and any three (3) relevant subjects. | Two (2) `A'Level passes to include Islamic Studies. |
-| LIVE096 | Land Surveying | Physics, Mathematics, Chemistry/Geography/Art/Biology/Economics | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography, Wood Work, Biology, Economics, Technical Drawing, Further Mathematics or Introduction to Building Construction. | For Land Surveying: a. Two 'A' Level/IJMB passes in Mathematics and any of Physics, Chemistry or Geography. b. ND at Upper Credit in Land Surveying/Geomatics, Geoinformatics, Civil Engineering, Physics/Mathematics, Building. c. HND at Lower Credit in Land Surveying/Geomatics, Civil Engineering. |
-| LIVE097 | Library and Information Science | EDUCATION 21 22 23 24 Science Education 25 26 (Visual Handicaps) EDUCATION 1 2 COURSES 3 Education 4 5 6 7 Social Sciences 8 Religious Studies 9 10 Language 11 Applied Arts 12 13 14 15 16 17 18 Arts 19 and French 20 21 22 Studies 23. | — | — |
-| LIVE098 | Linguistics | Arabic and two (2)subjectsfrom Arts and/or SocialSciences. Sameasin ArabicStudies. | — | — |
-| LIVE099 | Linguistics/Edo | Two (2) relevant Arts subjects, and any other subject | Five (5) SSC credit passes or TC II merits including English Language, Literature in English and a Nigerian Language preferably Edo. 'O' Level pass in Mathematics is optional. | (i) Two (2) 'A' Level passes in GCE or HSC or a recognised equivalent in any two (2) Arts subjects. (ii) NCE in any two (2) Arts subjects with an overall Merit level pass. |
-| LIVE100 | Local Government Studies | Government/History, Economics and any other subject. | Five (5) SSC credit passes including English Language, Government or History, Economics and any other two (2) subjects and at least a pass in Mathematics. | Two (2) 'A' Level/IJMB passes one (1) of which must be in Government or History. |
-| LIVE101 | MARINE BIOLOGY | Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Sciencesubject. | Two (2) 'A' Level passes in Biology andChemistry. |
-| LIVE102 | MARINE BIOLOGY & FISHERIES | Biology, & Chemistry Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Science subject. | Two (2) 'A' Level passes in Biology and Chemistry. |
-| LIVE103 | METEOROLOGY | Mathematics, Physics, Chemistry or Geography | Five (5) SSC credit passes including Physics, Mathematics and English Language and either Chemistry or Geography | (i) ND upper credit in Meteorology in addition to the 'O' Level requirements. OR (ii) WMO Class II Certificate in Weather Forecasting in addition to the 'O' Level requirements. (iii) 'A' Level passes in Mathematics and Physics in addition to the SSC requirements. |
-| LIVE104 | METEOROLOGY AND CLIMATE SCIENCE | Mathematics, Physics, Chemistry or Geography. | Five (5) SSC credit passes including Physics, Mathematics and English Language and either Chemistry or Geography | (i) ND upper credit in Meteorology in addition to the 'O' Level requirements. OR (ii)WMO Class II Certificate in Weather Forecasting in addition to the 'O' Level requirements. (iii) 'A' Level passes in Mathematics and Physics in addition to the SSC requirements. |
-| LIVE105 | Mass Communication | Literature in English, Economics and Government. | Five (5) SSC credit passes to include English Language, Literature in English and Government plus a pass in Mathematics. | Two (2) `A' Level passes in Literature in English, Economics or Government. |
-| LIVE106 | Mathematics and Economics / Mathematics with Economics | Mathematics, Economics and any other Science or Social Science subject. | Five (5) SSC credit passes in English Language, Mathematics, Economics and any other two (2) subjects selected from Science or Social Sciences at not more than two (2) sittings. | (i) Two (2) 'A' Level passes at not more than two (2) sittings. The subjects should include Mathematics and Economics. (ii) ND upper credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iii) HND lower credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iv) NCE credit in Mathematics and Economics from a recognised College of Education with merit. |
-| LIVE107 | Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics | Maths, Physics and Chemistry or Biology and Additional/Further Mathematics. | Five (5) SSC credit passes to include English Language, Mathematics and at least three (3) of Physics, Chemistry, Biology and Additional/Further Mathematics. | (i) Two (2) 'A' Level passes in Mathematics and either Physics or Chemistry. (ii) NCE merit in Mathematics and either Physics or Chemistry. |
-| LIVE108 | Medical Biochemistry | Physics, Chemistry and Biology. 433. | Five(5) SSC credit passesinEnglish Language, Mathematics, Physics, Chemistryand Biology. Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics. | Two(2)'A'Level passesinChemistry andanyoneof Physics, Biology/ Zoology/Botanyand Mathematics. Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics. |
-| LIVE109 | Meteorology | Mathematics, Physics, Chemistry or Geography | Five (5) SSC credit passes including Physics, Mathematics, English Language and either Chemistry or Geography. | (i) 'A' Level passes in Mathematics and Physics. (ii) ND upper credit level in Meteorology. (iii) NMO Class II Certificate in Weather Forecasting, plus 'O' Level SSC requirements. |
-| LIVE110 | Modern Language and Translation | Programme A: French and any other two (2) subjects, Programme B: any three (3) subjects | For Programme A: five (5) SSC credit passes including English Language and French. For Programme B: credit passes in English Language and four (4) other subjects. | (i) Two (2) `A' Level passes or NCE in French for French programme. (ii) Two (2) `A' Level passes or NCE in any subjects. |
-| LIVE111 | NATURAL AND ENVIRONMENTAL SCIENCE | Any subject combination which includes Mathematics and any two (2) of Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | Five (5) SSC credit passes including English Language, Mathematics, and any other three (3) subjects from Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | 'A' Level passes chosen from English Language, Mathematics, Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. (ii) ND/HND. (iii) A level Cambridge. |
-| LIVE112 | OCEANOGRAPHY | Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Sciencesubject. | Two (2) 'A' Level passes in Biology andChemistry. |
-| LIVE113 | OPERATIONS RESEARCH | Mathematics and any other two (2) either Science or Social Science subjects. | Five (5) SSC credit passes in English Language, Mathematics, Chemistry and one (1) other subject. | Two (2) 'A' Level passes in Mathematics and any one (1) of Physics, Chemistry, Statistics, Economics or Geography. (ii) ND credit in Statistics or Mathematics. |
-| LIVE114 | Office and Information Technology / Information Resource Management | Economics and two (2) other subjects. | Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM. | Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management. |
-| LIVE115 | PHYSICS | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE116 | PHYSICS WITH ELECTRONICS | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE117 | Peace Strategic and Conflict Resolution | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
-| LIVE118 | Peace Studies and Conflict Resolution | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
-| LIVE119 | Peace and Conflict Studies | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
-| LIVE120 | Personnel Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
-| LIVE121 | Philosophy | Any three (3) subjects | Five (5) SSC credit passes to include English Language and four (4) other relevant subjects. | Any two (2) 'A' Level passes. |
-| LIVE122 | Physics and Applied Physics | Physics, Mathematics and Physics, Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
-| LIVE123 | Physics and Computer Electronic | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE124 | Physics and Energy Studies | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE125 | Physics with Solar Energy | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE126 | Physics/Astrology | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE127 | Physics/Industrial Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
-| LIVE128 | Plant Science | Biology, Chemistry and Physics or Mathematics. | — | — |
-| LIVE129 | Policy and Administrative Studies | as in Policy and Strategic Studies (shared requirements column; no separate UTME SUBJECTS column shown for this heading) | as in Policy and Strategic Studies (shared requirements column) | as in Policy and Strategic Studies (shared requirements column) |
-| LIVE130 | Policy and Strategic Studies | Government and any other two (2) from the following Economics, Geography, History Accounting, Commerce | Five (5) SSC credit passes including English Language Government and a pass in Mathematics 'O' Level | Two 2 'A' Level passes in Social Sciences including Geography and Economics. |
-| LIVE131 | Political Science | Government or History plus two (2) other Social Science/Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
-| LIVE132 | Political Science / International Law and Diplomacy | as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list) | as in Political Science | as in Political Science |
-| LIVE133 | Political Science and Conflict | Government/History, and two (2) other Social Sciences or Arts subjects | Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics. | Two (2) 'A' Level passes to include Government or History. |
-| LIVE134 | Political Science and Conflict Resolution | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE135 | Political Science and Defence Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE136 | Political Science and Diplomacy | as in Political Science (no separate requirements column shown for this heading) | as in Political Science | as in Political Science |
-| LIVE137 | Political Science and International Relations | as in Political Science and Public Administration (no separate requirements column shown for this heading; rightward area continues the shared DIRECT ENTRY/UTME waiver list) | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE138 | Political Science and International Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE139 | Political Science and Public Administration | Three (3) Arts or Social Science subjects | Five (5) SSC credit passes including English Language Government or History and at least a pass in Mathematics | Two (2) 'A' Level passes in Government and one other Social Science subject |
-| LIVE140 | Political and Administrative Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
-| LIVE141 | Portuguese/English | French and any other two (2) subjects from Arts and Social Sciences. | Five (5) SSC credit passes including French and English Language plus one other Arts subject. | Two (2) `A' Level passes including French and one other Arts subject. |
-| LIVE142 | Procurement | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
-| LIVE143 | Procurement Management | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
-| LIVE144 | Public Administration | Mathematics, Economics and any other Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and two (2) other relevant subjects. | Two (2) 'A' Level passes including Economics. |
-| LIVE145 | Public Relations and Advertising | Same as in Mass Communication | Same as in Mass Communication | Same as in Mass Communication |
-| LIVE146 | Public and International Law | As in Civil Law | As in Civil Law | As in Civil Law |
-| LIVE147 | Pure Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | — |
-| LIVE148 | Pure and Applied Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
-| LIVE149 | Pure and Industrial Chemistry | Physics, Mathematicsand Chemistryor Biology. Chemistry, Biology and Physics or Mathematics. | Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Physics and Biology/Agricultural Science. | (i) Two (2) 'A' Level passes in Chemistry and Mathematics (ii) ND in Science Technology or ND in relevant programmes with the UTME requirements. |
-| LIVE150 | Quantity Surveying | Physics, Mathematics, and any of Chemistry, Geography, Art, Biology, Economics | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography or Wood Work, Biology, Economics, Technical Drawing, Further Mathematics, Introduction to Building Construction, Bricklaying/Block laying, Concreting, Wall Floors and Ceiling Finishing, Joinery, Carpentry, Decorative Painting, Lining, Sign and Design, Wall Hanging, Colour Mixing/Matching and Glazing, Ceramics, Graphics Design, Graphic Printing, Basic Electricity | (i) Two (2) 'A' Level passes chosen from Mathematics or Physics and Chemistry, Geography or Fine Arts. (ii) ND/HND upper credits in relevant field. |
-| LIVE151 | Religious Studies | CRS/IRS, any other two (2) subjects | Five (5) SSC credit passes to include English Language and CRS/IRS. | Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS). |
-| LIVE152 | Russian with French/German | Literature in UTME English, one other Arts subject and another Arts or Social Science subject. French and any two (2) other Arts/Social Science subjects. | Five (5) SSC credit passes to include French, English Language and any three (3) othersubjects. | Two (2) ‘A’ Level passes including the Foreign Language(s) whereapplicable. |
-| LIVE153 | Science Laboratory Technology | UDU and FUTA accept Agricultural Science in lieu of Biology; UNIOSUN, SALEM, MAKURDI and BENIN require Biology, Chemistry and Physics; CALABAR and UYO require Physics as the third subject; EVANGEL and AJAYI require Biology and Chemistry and any other Science subject; UNIOSUN requires Mathematics, Biology and Chemistry; FED-DUTSE (a) For Microbiology requires Biology, Physics and Chemistry, (b) For Environmental Management and Toxicology requires Chemistry, and two of Physics, Biology and Mathematics. | Five (5) 'O' Level credit passes (varies by institution; see waivers). Note: column shared across grouped Microbiology/SLT/Environmental programmes. Typical: English Language, Mathematics, Chemistry, Biology and Physics. | Varies by institution (see waivers). Note: heading lists option set with options in: 1. Biological Science Technique, 2. Biotechnology Technique, 3. Biochemistry Technique, 4. Chemistry Technique, 5. Geology Technique, 6. Microbiology Technique, 7. Physics/Electronics Technique, 8. Physiology/Pharmacology Technique, 9. Petrochemical Technique. |
-| LIVE154 | Secretarial Administration | Economics and Two (2) other subjects. | Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other Subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM. | Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management. |
-| LIVE155 | Securities and Investment | UTME SUBJECTS (i) AUN requires Mathematics, plus any other subjects from the following: Economics, Geography, Government, History, Literature in English, Biology, Physics, Chemistry and French. (ii) EBSU and IGBINEDION - as in Accounting. (iii) ESUTECH, UNN, OOU - Mathematics, Economics, plus any Social Science subject. | Five (5) SSC credit passes to include: English Language, Mathematics and any other subjects. For NBC, the other two (2) relevant subjects could be from any of the following; Accounting, Principles of Accounts, Commerce, Office Practice and Economics. | Two (2) 'A' Level passes chosen from Accounting, Economics, Management, Mathematics, Geography and Statistics. |
-| LIVE156 | Social Innovation and Entrepreneurship | Economics, Mathematics and one (1) other Social Science or Commercial subject. | Five (5) SSC credit passes to include English Language, Mathematics, Economics, one (1) Science subject and one (1) other Social Science or Commercial subject. | Two (2) 'A' Level passes to include Economics and one (1) of Accounts, Business Management, Government, Geography or Mathematics. |
-| LIVE157 | Social Justice | Geography and any two (2) subjects from the Sciences or Social Sciences. | Five (5) SSC credit passes to include English Language, Mathematics, Geography and any two | 'A' Level passes, ND or NCE merit in Science or Social Science subjects or Programmes. |
-| LIVE158 | Social Standards | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
-| LIVE159 | Sociology and Anthroplogy | Two (2) 'A' Level passes including Government or History. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Three (3) Social Science or Arts Subjects. |
-| LIVE160 | Sociology and Social Studies | Three (3) Social Science or Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
-| LIVE161 | Sport Management (Education) | Biology, Mathematics, Economics, Geography | Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics. | Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport. |
-| LIVE162 | Sport Science | Biology and any two (2) relevant subjects. | (i) Five (5) SSC credit passes/TC II merit passes including English Language, Biology or its equivalent. (ii) Five (5) SSC credit passes/TC II merit passes to include English Language and Mathematics. | (i) Two (2) 'A' Level passes in any of Biology, Chemistry, Physics and Mathematics. (ii) NCE merit in Physical Education and credit in Arithmetical process or Mathematics. (iii) Diploma in Health Education, Environmental Sanitation, Physical Education, Social work, Health Administration with overall grades of merit plus three (3) 'O' Level credit passes/TC II merit which should include English Language. (iv) NCE in Biology, Health Education, and Integrated Science with a pass grade plus two (2) 'O' Level credit passes/TC II merit passes. (v) Registered Nurse plus five (5) 'O' Level credit passes to include English Language. |
-| LIVE163 | Statistics Education | Mathematics, Physics, Chemistry, Biology | Five (5) SSC credit passes to include English Language, Mathematics plus one (1) other Science subject. | Two (2) 'A' Level passes/NCE in Mathematics and one (1) Science subject. |
-| LIVE164 | Strategic Communication | Literature in English, Economics and Government. | Five (5) SSC credit passes to include English Language, Literature in English and Government plus a pass in Mathematics. | Two (2) 'A' Level passes in Literature in English, Economics or Government. |
-| LIVE165 | Surveying and Geoinformatics | Physics, Mathematics, and any of Chemistry, Geography, Art, Biology and Economics. | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography or Wood Work, Biology, Economics, Technical Drawing, Further Mathematics, Introduction to Building Construction, Bricklaying/Block Laying, Concreting, Wall, Floors and Ceiling Finishing, Joinery, Carpentry, Decorative Painting, Lining, Sign & Design, Wall Hanging, Colour Mixing/Matching & Glazing, Ceramics, Graphics Design, Graphic Printing, Basic Electricity. | (i) Two (2) 'A' Level passes chosen from Mathematics or Physics and Chemistry, Geography or Fine Arts. (ii) ND/HND upper credit in relevant programmes. |
-| LIVE166 | Taxation | Mathematics, Economics, plus any one (1) of Government and Geography. | Five (5) SSC credit passes to include: English Language, Mathematics and any other subjects. For NBC, the other two (2) relevant subjects could be from any of the following; Accounting, Principles of Accounts, Commerce, Office Practice and Economics. | Two (2) 'A' Level passes chosen from Accounting, Economics, Management, Mathematics, Geography and Statistics. |
-| LIVE167 | Teacher Education | As in Educational Management | As in Educational Management. | As in Educational Management. |
-| LIVE168 | Technology Education | EDUCATION 21 22 23 24 Science Education 25 26 (Visual Handicaps) EDUCATION 1 2 COURSES 3 Education 4 5 6 7 Social Sciences 8 Religious Studies 9 10 Language 11 Applied Arts 12 13 14 15 16 17 18 Arts 19 and French 20 21 22 Studies 23. | — | — |
-| LIVE169 | Theology | Government and any other two (2) Arts or Social Science subjects. Any three (3) subjects. | Five (5) SSC credit passes to include English Language and CRS/IRS. | Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS). |
-| LIVE170 | Transport Planning and Management | Geography, Economics, Government, Mathematics, Chemistry, Biology, Physics, Agricultural Science, Accounting, Commerce | Five (5) 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings in English Language, Mathematics and any three (3) of Economics, Government, Commerce, Accounting, Biology, Agricultural Science, Geography, Chemistry and Physics. | i. Two (2) 'A' Level passes in Geography or Economics and one other subject. ii. NCE merit in Geography and other Social Science or Science subjects. iii. ND/HND in Town Planning, Estate Management, Surveying. |
-| LIVE171 | Urban and Regional Planning | Mathematics, Geography, and one of Economics, Physics, Chemistry | Five (5) SSC credit passes in English Language, Mathematics, Geography, and any two (2) of Physics, Chemistry, Economics, Government, Biology, Art, History, IRK/CRK, Social Studies and Tech Drawing. | (i) Two (2) A'Level passes in Geography and Mathematics. (ii) ND/HND upper credit in Town Planning or related programmes plus UTME requirements are accepted. |
-| LIVE172 | Vocational Education | Mathematics, Economics, plus one (1) of Literature in English, History, Government, Geography/Physics, Chemistry and Physics | Five (5) 'O' Level credit passes to include English, Mathematics, Chemistry, Agricultural Science and Geography/Physics or TC Grade II. | (i) NCE credit in Agricultural Science Education; (ii) ND upper credit in Agricultural Science; (iii) HND lower credit in relevant programme of Agricultural Science. For the Home Economics option: (i) NCE merit in Home Economics; (ii) ND lower credit in Home Economics. For Industrial Technical Education: (i) Two (2) 'A' Level passes in Physics and Mathematics; (ii) ND lower credit in Civil Engineering, Production/Electrical Engineering; (iii) Final City and Guilds or its equivalent plus National Technical Certificate; (iv) NCE credit in Technical Education plus 'O' Level credit passes in Physics or Mathematics. |
+| LIVE060 | French | French, and any other two (2) subjects from Arts and Social Sciences | Five (5) SSC credit passes including French and English Language plus one other Arts subject. | Two (2) `A' Level passes including French and one other Arts subject. |
+| LIVE061 | Fulfulde | Any three (3) Arts subjects | Five (5) SSC credit passes in Arts/Social Science subjects. | Two (2) `A' Level passes in Arts and Social Science subjects. |
+| LIVE062 | Gas Engineering | Chemistry, Mathematicsand Physics. | Five(5) SSCcreditsto includePhysics, Chemistry, Mathematics, EnglishLanguageand anyoneScience subject. | 'A'Levelpassesto includePhysics, Chemistryand Mathematics. |
+| LIVE063 | Geography | Geography and one (1) other science subject. Mathematics, Geography and any other two (2) Science subjects. | Five (5) SSC credit passes to include English Language, Mathematics, Geography and any two (2) of Biology, Chemistry, Physics and Agricultural Science. | Two (2) 'A' Level passes in Geography and one (1) other science subject. |
+| LIVE064 | Geography and Environmental Studies | Geography, and any two (2) other Arts or Social Science subjects | Five (5) SSC credit passes to include English Language, Geography and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics. | No Direct Entry. |
+| LIVE065 | Geography and Geosciences | OAU require Mathematics, Physics and Chemistry; CALABAR does not accept Biology; FUPRE requires Physics, Mathematics and Chemistry; FED-OYE EKITI requires Physics and Mathematics, Chemistry or Biology; OAUSTECH requires Physics, Mathematics and any one of Chemistry, Biology and Geography; FUTA requires Physics, Mathematics and Chemistry; MOUNTAIN TOP requires Physics, Mathematics and any one of Chemistry/Biology/Agricultural Science/Geography; FUPRE requires Mathematics, Chemistry and Physics; ILORIN requires Physics, Mathematics and Chemistry; LAGOS requires English Language, Mathematics, Physics and Chemistry; FED-KASHERE requires Physics, Chemistry and Mathematics. | Five 'O' Level credit passes. OAU: English Language, Chemistry, Biology/Further Mathematics, Mathematics and Physics. FUTA: English Language, Physics, Mathematics, Chemistry and one of Biology/Geography/Technical Drawing (max two sittings). FUPRE: English Language, Biology, Mathematics, Physics and Chemistry. FED-OYE EKITI: English, Mathematics, Physics and Chemistry. OAUSTECH: English Language, Physics, Chemistry, Mathematics and Biology/Geography. LAGOS: English Language, Mathematics, Physics, Chemistry and Biology. ILORIN: English Language, Physics, Mathematics, Chemistry and one of Further Mathematics/Biology/Geography. FED-KASHERE: English, Mathematics, Physics, Chemistry and any of Further Mathematics/Geography/Biology. (heading begins before line range; this programme is partial) | National Diploma (Upper Credit) in Electrical Engineering, Petroleum Engineering, Geology and Mining, Physics or Computer Science (one option visible at top of range). |
+| LIVE066 | Geoscience | Any three (3) of Physics, Chemistry, Biology and Mathematics. | Five (5) SSC credit passes including English Language, Mathematics, Physics and Chemistry/Biology. | 'A' Level passes in Chemistry and Physics or Mathematics. |
+| LIVE067 | Government and Public Administration | UTME SUBJECTS | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE068 | HOME SCIENCE | Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, UTME Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | — | — |
+| LIVE069 | HUMAN BIOLOGY | three (3) relevant Science subject. Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English Language, Biology, Chemistry and Mathematics/Physics. | (i) Two (2) 'A' Level passes from Chemistry, Biology, Botany/Zoology. (ii) NCE merit accepted. |
+| LIVE070 | History and International Relations | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE071 | History and International Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE072 | Home Economics | Chemistry, Biology/Agriculture, Mathematics/Physics or one (1) Social Science subject | Five (5) SSC credit passes in Chemistry, Biology/Agricultural Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing. | Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting. |
+| LIVE073 | Home Economics and Food Management | Biology, Chemistry, any other Science subject | Five (5) credits at SSC or equivalent in English, Mathematics, Chemistry, Agricultural Science or Biology or Home Economics, and any other science subject, preferably Physics. | (i) At least 2 'A' Level passes in Chemistry, Agricultural Science or Biology, Physics or Home Economics. (ii) NCE credit/merit and ND credit in addition to five (5) credit in SSC or equivalents. |
+| LIVE074 | Home Economics and Hotel Management | Chemistry, Biology or Agricultural Science, and one (1) other subject | Five (5) 'O' Level NTC/NBC credit passes or TC II merit including English Language, Mathematics, Home Economics, Biology and Chemistry. | (i) NCE merit in Home Economics; (ii) 'A' Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science; (iii) ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme. |
+| LIVE075 | Home Science & Management | Chemistry, Biology/Agricultural Science, Physics/Mathematics or one (1) social science subject (Economics or Geography) | Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity. | Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting. |
+| LIVE076 | Home Science, Nutrition and Dietetics | Mathematics, Economics and one (1) other subject. | and at least 'O' Level pass in English LanguageandPhysics. General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity. | Economics/Physics/ Mathematics/Geograph y/Accounting. |
+| LIVE077 | Hotel Management and Tourism | Biology, Chemistry, any other Science subject | Five (5) credits at SSC or equivalent in English, Mathematics, Chemistry, Agricultural Science or Biology or Home Economics, and any other science subject, preferably Physics. | (i) At least 2 'A' Level passes in Chemistry, Agricultural Science or Biology, Physics or Home Economics. (ii) NCE credit/merit and ND credit in addition to five (5) credit in SSC or equivalents. |
+| LIVE078 | Human Resources Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE079 | ICT Engineering | Mathematics, Physics, Chemistry | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings. | 'A' Level/IJMB/ND/HND upper credit in relevant programmes (Information Technology, Computer Science/Engineering, Electrical and Electronic Engineering) into 200/300 level. |
+| LIVE080 | Industrial Design | Chemistry, Mathematics, and Fine Arts/Physics | Five (5) SSC credit passes to include English Language, Fine Art, Mathematics, Chemistry. Spinning; Weaving; Surface Design and Printing; Bleaching, Dyeing and Finishing; Ceramics; Graphic Design; Graphic Printing; Decorative Painting, Spray Painting, Lining, Sign and Design, Wall Hanging, Colour Mixing/Matching and Glazing, Building/Engineering Drawing, General Wood Work. | (i) 'A' Level passes in Two (2) of Fine Arts, Chemistry, Mathematics, and Physics. (ii) ND in Industrial Design or Glass Technology or Fine Art at credit level. |
+| LIVE081 | Industrial Physics | Physics, Mathematics and Physics, Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
+| LIVE082 | Industrial Relations and Human Resources Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE083 | Industrial Relations and Personnel Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE084 | Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management | Mathematics, Economics and one other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE085 | Information and Media Studies | Government, Economics and any other subject. | Five (5) SSC credit passes to include English Language, Economics and Government. For NBC holders, the other relevant subjects could be from any of the following: Accounting, Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) `A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE086 | Intelligence and Security Studies | Three (3) Social Science or Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
+| LIVE087 | International Relations and Diplomacy | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE088 | International Relations and Diplomatic Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE089 | International Relationship & Strategic Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE090 | International Studies | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE091 | International Studies and | History/Governm entandanyother two (2) subjects fromtheArtsand SocialSciences. | — | — |
+| LIVE092 | International and Comparative Politics | Economics, Literature in English and Geography/Government/History. | Five (5) SSC credit passes to include English Language, Government or History and three (3) relevant subjects. | Two (2) 'A' Level passes in Social Science subject from Government/History, Economics, Sociology and Business Management. |
+| LIVE093 | Islamic Law/Sharia Law | Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies | Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic. | Two (2) A' level passes to include Islamic Studies or Arabic |
+| LIVE094 | Islamic Studies | English Language, Islamic Studies and any two (2) subjects. | Five (5) SSC credit passes to include English Language, Islamic Studies or Arabic and any three (3) relevant subjects. | Two (2) `A'Level passes to include Islamic Studies. |
+| LIVE095 | Land Surveying | Physics, Mathematics, Chemistry/Geography/Art/Biology/Economics | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography, Wood Work, Biology, Economics, Technical Drawing, Further Mathematics or Introduction to Building Construction. | For Land Surveying: a. Two 'A' Level/IJMB passes in Mathematics and any of Physics, Chemistry or Geography. b. ND at Upper Credit in Land Surveying/Geomatics, Geoinformatics, Civil Engineering, Physics/Mathematics, Building. c. HND at Lower Credit in Land Surveying/Geomatics, Civil Engineering. |
+| LIVE096 | Library and Information Science | EDUCATION 21 22 23 24 Science Education 25 26 (Visual Handicaps) EDUCATION 1 2 COURSES 3 Education 4 5 6 7 Social Sciences 8 Religious Studies 9 10 Language 11 Applied Arts 12 13 14 15 16 17 18 Arts 19 and French 20 21 22 Studies 23. | — | — |
+| LIVE097 | Linguistics | Arabic and two (2)subjectsfrom Arts and/or SocialSciences. Sameasin ArabicStudies. | — | — |
+| LIVE098 | Linguistics/Edo | Two (2) relevant Arts subjects, and any other subject | Five (5) SSC credit passes or TC II merits including English Language, Literature in English and a Nigerian Language preferably Edo. 'O' Level pass in Mathematics is optional. | (i) Two (2) 'A' Level passes in GCE or HSC or a recognised equivalent in any two (2) Arts subjects. (ii) NCE in any two (2) Arts subjects with an overall Merit level pass. |
+| LIVE099 | Local Government Studies | Government/History, Economics and any other subject. | Five (5) SSC credit passes including English Language, Government or History, Economics and any other two (2) subjects and at least a pass in Mathematics. | Two (2) 'A' Level/IJMB passes one (1) of which must be in Government or History. |
+| LIVE100 | MARINE BIOLOGY | Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Sciencesubject. | Two (2) 'A' Level passes in Biology andChemistry. |
+| LIVE101 | MARINE BIOLOGY & FISHERIES | Biology, & Chemistry Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Science subject. | Two (2) 'A' Level passes in Biology and Chemistry. |
+| LIVE102 | METEOROLOGY | Mathematics, Physics, Chemistry or Geography | Five (5) SSC credit passes including Physics, Mathematics and English Language and either Chemistry or Geography | (i) ND upper credit in Meteorology in addition to the 'O' Level requirements. OR (ii) WMO Class II Certificate in Weather Forecasting in addition to the 'O' Level requirements. (iii) 'A' Level passes in Mathematics and Physics in addition to the SSC requirements. |
+| LIVE103 | METEOROLOGY AND CLIMATE SCIENCE | Mathematics, Physics, Chemistry or Geography. | Five (5) SSC credit passes including Physics, Mathematics and English Language and either Chemistry or Geography | (i) ND upper credit in Meteorology in addition to the 'O' Level requirements. OR (ii)WMO Class II Certificate in Weather Forecasting in addition to the 'O' Level requirements. (iii) 'A' Level passes in Mathematics and Physics in addition to the SSC requirements. |
+| LIVE104 | Mass Communication | Literature in English, Economics and Government. | Five (5) SSC credit passes to include English Language, Literature in English and Government plus a pass in Mathematics. | Two (2) `A' Level passes in Literature in English, Economics or Government. |
+| LIVE105 | Mathematics and Economics / Mathematics with Economics | Mathematics, Economics and any other Science or Social Science subject. | Five (5) SSC credit passes in English Language, Mathematics, Economics and any other two (2) subjects selected from Science or Social Sciences at not more than two (2) sittings. | (i) Two (2) 'A' Level passes at not more than two (2) sittings. The subjects should include Mathematics and Economics. (ii) ND upper credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iii) HND lower credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iv) NCE credit in Mathematics and Economics from a recognised College of Education with merit. |
+| LIVE106 | Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics | Maths, Physics and Chemistry or Biology and Additional/Further Mathematics. | Five (5) SSC credit passes to include English Language, Mathematics and at least three (3) of Physics, Chemistry, Biology and Additional/Further Mathematics. | (i) Two (2) 'A' Level passes in Mathematics and either Physics or Chemistry. (ii) NCE merit in Mathematics and either Physics or Chemistry. |
+| LIVE107 | Medical Biochemistry | Physics, Chemistry and Biology. 433. | Five(5) SSC credit passesinEnglish Language, Mathematics, Physics, Chemistryand Biology. Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics. | Two(2)'A'Level passesinChemistry andanyoneof Physics, Biology/ Zoology/Botanyand Mathematics. Three(3)'A'Level passestoinclude Chemistry, Biology/Zoologyand Physics. |
+| LIVE108 | Meteorology | Mathematics, Physics, Chemistry or Geography | Five (5) SSC credit passes including Physics, Mathematics, English Language and either Chemistry or Geography. | (i) 'A' Level passes in Mathematics and Physics. (ii) ND upper credit level in Meteorology. (iii) NMO Class II Certificate in Weather Forecasting, plus 'O' Level SSC requirements. |
+| LIVE109 | Modern Language and Translation | Programme A: French and any other two (2) subjects, Programme B: any three (3) subjects | For Programme A: five (5) SSC credit passes including English Language and French. For Programme B: credit passes in English Language and four (4) other subjects. | (i) Two (2) `A' Level passes or NCE in French for French programme. (ii) Two (2) `A' Level passes or NCE in any subjects. |
+| LIVE110 | NATURAL AND ENVIRONMENTAL SCIENCE | Any subject combination which includes Mathematics and any two (2) of Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | Five (5) SSC credit passes including English Language, Mathematics, and any other three (3) subjects from Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. | 'A' Level passes chosen from English Language, Mathematics, Environmental Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French. (ii) ND/HND. (iii) A level Cambridge. |
+| LIVE111 | OCEANOGRAPHY | Biology, Chemistry and Physics or Mathematics. | Five (5) SSC credit passes to include English, Language, Mathematics, Biology, Chemistry and any other Sciencesubject. | Two (2) 'A' Level passes in Biology andChemistry. |
+| LIVE112 | OPERATIONS RESEARCH | Mathematics and any other two (2) either Science or Social Science subjects. | Five (5) SSC credit passes in English Language, Mathematics, Chemistry and one (1) other subject. | Two (2) 'A' Level passes in Mathematics and any one (1) of Physics, Chemistry, Statistics, Economics or Geography. (ii) ND credit in Statistics or Mathematics. |
+| LIVE113 | Office and Information Technology / Information Resource Management | Economics and two (2) other subjects. | Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM. | Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management. |
+| LIVE114 | PHYSICS | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE115 | PHYSICS WITH ELECTRONICS | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE116 | Peace Strategic and Conflict Resolution | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
+| LIVE117 | Peace Studies and Conflict Resolution | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
+| LIVE118 | Peace and Conflict Studies | Three (3) Arts or Social Science subjects. | Five (5) SSC credit passes including English Language, Government or History and at least a pass in Mathematics. | Two (2) 'A' Level passes in Government and one other Social Science subject. |
+| LIVE119 | Personnel Management | Mathematics, Economics plus one (1) other subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics. |
+| LIVE120 | Philosophy | Any three (3) subjects | Five (5) SSC credit passes to include English Language and four (4) other relevant subjects. | Any two (2) 'A' Level passes. |
+| LIVE121 | Physics and Applied Physics | Physics, Mathematics and Physics, Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
+| LIVE122 | Physics and Computer Electronic | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE123 | Physics and Energy Studies | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE124 | Physics with Solar Energy | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE125 | Physics/Astrology | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE126 | Physics/Industrial Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | NCE/Two (2) 'A' Level passes in Physics and Mathematics or Chemistry. |
+| LIVE127 | Plant Science | Biology, Chemistry and Physics or Mathematics. | — | — |
+| LIVE128 | Policy and Administrative Studies | as in Policy and Strategic Studies (shared requirements column; no separate UTME SUBJECTS column shown for this heading) | as in Policy and Strategic Studies (shared requirements column) | as in Policy and Strategic Studies (shared requirements column) |
+| LIVE129 | Policy and Strategic Studies | Government and any other two (2) from the following Economics, Geography, History Accounting, Commerce | Five (5) SSC credit passes including English Language Government and a pass in Mathematics 'O' Level | Two 2 'A' Level passes in Social Sciences including Geography and Economics. |
+| LIVE130 | Political Science | Government or History plus two (2) other Social Science/Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
+| LIVE131 | Political Science and Conflict Resolution | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE132 | Political Science and Defence Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE133 | Political Science and Diplomacy | as in Political Science (no separate requirements column shown for this heading) | as in Political Science | as in Political Science |
+| LIVE134 | Political Science and International Relations | as in Political Science and Public Administration (no separate requirements column shown for this heading; rightward area continues the shared DIRECT ENTRY/UTME waiver list) | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE135 | Political Science and International Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE136 | Political Science and Public Administration | Three (3) Arts or Social Science subjects | Five (5) SSC credit passes including English Language Government or History and at least a pass in Mathematics | Two (2) 'A' Level passes in Government and one other Social Science subject |
+| LIVE137 | Political and Administrative Studies | as in Political Science and Public Administration (no separate requirements column shown for this heading) | as in Political Science and Public Administration | as in Political Science and Public Administration |
+| LIVE138 | Portuguese/English | French and any other two (2) subjects from Arts and Social Sciences. | Five (5) SSC credit passes including French and English Language plus one other Arts subject. | Two (2) `A' Level passes including French and one other Arts subject. |
+| LIVE139 | Procurement | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
+| LIVE140 | Procurement Management | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
+| LIVE141 | Public Administration | Mathematics, Economics and any other Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and two (2) other relevant subjects. | Two (2) 'A' Level passes including Economics. |
+| LIVE142 | Public Relations and Advertising | Same as in Mass Communication | Same as in Mass Communication | Same as in Mass Communication |
+| LIVE143 | Public and International Law | As in Civil Law | As in Civil Law | As in Civil Law |
+| LIVE144 | Pure Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | — |
+| LIVE145 | Pure and Applied Physics | Physics, Mathematics and Chemistry or Biology. | Five (5) SSC credit passes in English Language, Physics, Chemistry, Mathematics and any other Science subject from Further Mathematics and Biology or Agricultural Science. | Two (2) 'A' Level passes in Physics and Mathematics. |
+| LIVE146 | Pure and Industrial Chemistry | Physics, Mathematicsand Chemistryor Biology. Chemistry, Biology and Physics or Mathematics. | Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Physics and Biology/Agricultural Science. | (i) Two (2) 'A' Level passes in Chemistry and Mathematics (ii) ND in Science Technology or ND in relevant programmes with the UTME requirements. |
+| LIVE147 | Quantity Surveying | Physics, Mathematics, and any of Chemistry, Geography, Art, Biology, Economics | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography or Wood Work, Biology, Economics, Technical Drawing, Further Mathematics, Introduction to Building Construction, Bricklaying/Block laying, Concreting, Wall Floors and Ceiling Finishing, Joinery, Carpentry, Decorative Painting, Lining, Sign and Design, Wall Hanging, Colour Mixing/Matching and Glazing, Ceramics, Graphics Design, Graphic Printing, Basic Electricity | (i) Two (2) 'A' Level passes chosen from Mathematics or Physics and Chemistry, Geography or Fine Arts. (ii) ND/HND upper credits in relevant field. |
+| LIVE148 | Religious Studies | CRS/IRS, any other two (2) subjects | Five (5) SSC credit passes to include English Language and CRS/IRS. | Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS). |
+| LIVE149 | Russian with French/German | Literature in UTME English, one other Arts subject and another Arts or Social Science subject. French and any two (2) other Arts/Social Science subjects. | Five (5) SSC credit passes to include French, English Language and any three (3) othersubjects. | Two (2) ‘A’ Level passes including the Foreign Language(s) whereapplicable. |
+| LIVE150 | Science Laboratory Technology | UDU and FUTA accept Agricultural Science in lieu of Biology; UNIOSUN, SALEM, MAKURDI and BENIN require Biology, Chemistry and Physics; CALABAR and UYO require Physics as the third subject; EVANGEL and AJAYI require Biology and Chemistry and any other Science subject; UNIOSUN requires Mathematics, Biology and Chemistry; FED-DUTSE (a) For Microbiology requires Biology, Physics and Chemistry, (b) For Environmental Management and Toxicology requires Chemistry, and two of Physics, Biology and Mathematics. | Five (5) 'O' Level credit passes (varies by institution; see waivers). Note: column shared across grouped Microbiology/SLT/Environmental programmes. Typical: English Language, Mathematics, Chemistry, Biology and Physics. | Varies by institution (see waivers). Note: heading lists option set with options in: 1. Biological Science Technique, 2. Biotechnology Technique, 3. Biochemistry Technique, 4. Chemistry Technique, 5. Geology Technique, 6. Microbiology Technique, 7. Physics/Electronics Technique, 8. Physiology/Pharmacology Technique, 9. Petrochemical Technique. |
+| LIVE151 | Secretarial Administration | Economics and Two (2) other subjects. | Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other Subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM. | Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management. |
+| LIVE152 | Securities and Investment | UTME SUBJECTS (i) AUN requires Mathematics, plus any other subjects from the following: Economics, Geography, Government, History, Literature in English, Biology, Physics, Chemistry and French. (ii) EBSU and IGBINEDION - as in Accounting. (iii) ESUTECH, UNN, OOU - Mathematics, Economics, plus any Social Science subject. | Five (5) SSC credit passes to include: English Language, Mathematics and any other subjects. For NBC, the other two (2) relevant subjects could be from any of the following; Accounting, Principles of Accounts, Commerce, Office Practice and Economics. | Two (2) 'A' Level passes chosen from Accounting, Economics, Management, Mathematics, Geography and Statistics. |
+| LIVE153 | Social Innovation and Entrepreneurship | Economics, Mathematics and one (1) other Social Science or Commercial subject. | Five (5) SSC credit passes to include English Language, Mathematics, Economics, one (1) Science subject and one (1) other Social Science or Commercial subject. | Two (2) 'A' Level passes to include Economics and one (1) of Accounts, Business Management, Government, Geography or Mathematics. |
+| LIVE154 | Social Justice | Geography and any two (2) subjects from the Sciences or Social Sciences. | Five (5) SSC credit passes to include English Language, Mathematics, Geography and any two | 'A' Level passes, ND or NCE merit in Science or Social Science subjects or Programmes. |
+| LIVE155 | Social Standards | Mathematics, Economics plus any Social Science subject. | Five (5) SSC credit passes including English Language, Mathematics, Economics and any other two (2) subjects. For NBC holders, the other two (2) relevant subjects could be from any of Principles of Accounts, Commerce, Office Practice and Secretarial Duties. | Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government and Geography. |
+| LIVE156 | Sociology and Anthroplogy | Two (2) 'A' Level passes including Government or History. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Three (3) Social Science or Arts Subjects. |
+| LIVE157 | Sociology and Social Studies | Three (3) Social Science or Arts subjects. | Five (5) SSC credit passes in Government or History, English Language and three (3) other subjects. A pass in Mathematics is required. | Two (2) 'A' Level passes including Government or History. |
+| LIVE158 | Sport Management (Education) | Biology, Mathematics, Economics, Geography | Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics. | Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport. |
+| LIVE159 | Sport Science | Biology and any two (2) relevant subjects. | (i) Five (5) SSC credit passes/TC II merit passes including English Language, Biology or its equivalent. (ii) Five (5) SSC credit passes/TC II merit passes to include English Language and Mathematics. | (i) Two (2) 'A' Level passes in any of Biology, Chemistry, Physics and Mathematics. (ii) NCE merit in Physical Education and credit in Arithmetical process or Mathematics. (iii) Diploma in Health Education, Environmental Sanitation, Physical Education, Social work, Health Administration with overall grades of merit plus three (3) 'O' Level credit passes/TC II merit which should include English Language. (iv) NCE in Biology, Health Education, and Integrated Science with a pass grade plus two (2) 'O' Level credit passes/TC II merit passes. (v) Registered Nurse plus five (5) 'O' Level credit passes to include English Language. |
+| LIVE160 | Statistics Education | Mathematics, Physics, Chemistry, Biology | Five (5) SSC credit passes to include English Language, Mathematics plus one (1) other Science subject. | Two (2) 'A' Level passes/NCE in Mathematics and one (1) Science subject. |
+| LIVE161 | Strategic Communication | Literature in English, Economics and Government. | Five (5) SSC credit passes to include English Language, Literature in English and Government plus a pass in Mathematics. | Two (2) 'A' Level passes in Literature in English, Economics or Government. |
+| LIVE162 | Surveying and Geoinformatics | Physics, Mathematics, and any of Chemistry, Geography, Art, Biology and Economics. | Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography or Wood Work, Biology, Economics, Technical Drawing, Further Mathematics, Introduction to Building Construction, Bricklaying/Block Laying, Concreting, Wall, Floors and Ceiling Finishing, Joinery, Carpentry, Decorative Painting, Lining, Sign & Design, Wall Hanging, Colour Mixing/Matching & Glazing, Ceramics, Graphics Design, Graphic Printing, Basic Electricity. | (i) Two (2) 'A' Level passes chosen from Mathematics or Physics and Chemistry, Geography or Fine Arts. (ii) ND/HND upper credit in relevant programmes. |
+| LIVE163 | Taxation | Mathematics, Economics, plus any one (1) of Government and Geography. | Five (5) SSC credit passes to include: English Language, Mathematics and any other subjects. For NBC, the other two (2) relevant subjects could be from any of the following; Accounting, Principles of Accounts, Commerce, Office Practice and Economics. | Two (2) 'A' Level passes chosen from Accounting, Economics, Management, Mathematics, Geography and Statistics. |
+| LIVE164 | Teacher Education | As in Educational Management | As in Educational Management. | As in Educational Management. |
+| LIVE165 | Technology Education | EDUCATION 21 22 23 24 Science Education 25 26 (Visual Handicaps) EDUCATION 1 2 COURSES 3 Education 4 5 6 7 Social Sciences 8 Religious Studies 9 10 Language 11 Applied Arts 12 13 14 15 16 17 18 Arts 19 and French 20 21 22 Studies 23. | — | — |
+| LIVE166 | Theology | Government and any other two (2) Arts or Social Science subjects. Any three (3) subjects. | Five (5) SSC credit passes to include English Language and CRS/IRS. | Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS). |
+| LIVE167 | Transport Planning and Management | Geography, Economics, Government, Mathematics, Chemistry, Biology, Physics, Agricultural Science, Accounting, Commerce | Five (5) 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings in English Language, Mathematics and any three (3) of Economics, Government, Commerce, Accounting, Biology, Agricultural Science, Geography, Chemistry and Physics. | i. Two (2) 'A' Level passes in Geography or Economics and one other subject. ii. NCE merit in Geography and other Social Science or Science subjects. iii. ND/HND in Town Planning, Estate Management, Surveying. |
+| LIVE168 | Urban and Regional Planning | Mathematics, Geography, and one of Economics, Physics, Chemistry | Five (5) SSC credit passes in English Language, Mathematics, Geography, and any two (2) of Physics, Chemistry, Economics, Government, Biology, Art, History, IRK/CRK, Social Studies and Tech Drawing. | (i) Two (2) A'Level passes in Geography and Mathematics. (ii) ND/HND upper credit in Town Planning or related programmes plus UTME requirements are accepted. |
+| LIVE169 | Vocational Education | Mathematics, Economics, plus one (1) of Literature in English, History, Government, Geography/Physics, Chemistry and Physics | Five (5) 'O' Level credit passes to include English, Mathematics, Chemistry, Agricultural Science and Geography/Physics or TC Grade II. | (i) NCE credit in Agricultural Science Education; (ii) ND upper credit in Agricultural Science; (iii) HND lower credit in relevant programme of Agricultural Science. For the Home Economics option: (i) NCE merit in Home Economics; (ii) ND lower credit in Home Economics. For Industrial Technical Education: (i) Two (2) 'A' Level passes in Physics and Mathematics; (ii) ND lower credit in Civil Engineering, Production/Electrical Engineering; (iii) Final City and Guilds or its equivalent plus National Technical Certificate; (iv) NCE credit in Technical Education plus 'O' Level credit passes in Physics or Mathematics. |
 
 The one current live database row with parse_status=unparsed is: International Studies and Diplomacy. Its UTME, O-level, and Direct Entry fields are all null. Confirm the original brochure row before adding any rule.
 
 ## Part 2 — Layers with no resolved brochure source candidate
 
-Total rows listed: **135**. These are not proven to be absent from the original PDFs; the local extraction did not produce a safe source candidate. Search the printed programme name, spelling variants, faculty block, and continuation headings in the original brochure before marking them source_missing.
+Total rows listed: **120**. These are not proven to be absent from the original PDFs; the local extraction did not produce a safe source candidate. Search the printed programme name, spelling variants, faculty block, and continuation headings in the original brochure before marking them source_missing.
 
 ### U001. Applied Microbiology and Brewing / Applied Microbiology — DIRECT_ENTRY
 
@@ -2935,840 +2921,735 @@ Total rows listed: **135**. These are not proven to be absent from the original 
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U016. Dentistry and Dental Technology — DIRECT_ENTRY
-
-- Current catalogue text: Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U017. Dentistry and Dental Technology — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U018. Dentistry and Dental Technology — UTME
-
-- Current catalogue text: Chemistry; Physics; Biology
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U019. Drama/Dramatic Arts/Performing Arts — DIRECT_ENTRY
+### U016. Drama/Dramatic Arts/Performing Arts — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) `A' Level passes in Arts, Social Sciences or Science subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U020. Drama/Dramatic Arts/Performing Arts — OLEVEL
+### U017. Drama/Dramatic Arts/Performing Arts — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Arts subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U021. Drama/Dramatic Arts/Performing Arts — UTME
+### U018. Drama/Dramatic Arts/Performing Arts — UTME
 
 - Current catalogue text: Literature in English; and two (2) other relevant subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U022. ENGINEERING PHYSICS — DIRECT_ENTRY
+### U019. ENGINEERING PHYSICS — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level Passes in Physics and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U023. ENGINEERING PHYSICS — OLEVEL
+### U020. ENGINEERING PHYSICS — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Physics and one (1) other subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U024. ENGINEERING PHYSICS — UTME
+### U021. ENGINEERING PHYSICS — UTME
 
 - Current catalogue text: Physics, Chemistry and Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U025. Eco-Tourism and Wildlife Management — DIRECT_ENTRY
+### U022. Eco-Tourism and Wildlife Management — DIRECT_ENTRY
 
 - Current catalogue text: ND with a minimum of upper credit or equivalent from recognized Polytechnics and Colleges of Wildlife Management in relevant programs (Agricultural Sciences); or candidates with 'A' Level passes in at least two (2) of Chemistry, Biology, Physics and Geography or Economics, plus UTME requirements.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U026. Eco-Tourism and Wildlife Management — OLEVEL
+### U023. Eco-Tourism and Wildlife Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Mathematics, Biology or Agricultural Science, Chemistry and any other relevant subject (shares block with Agribusiness umbrella).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U027. Eco-Tourism and Wildlife Management — UTME
+### U024. Eco-Tourism and Wildlife Management — UTME
 
 - Current catalogue text: English Language; Biology/Agricultural Science; any two (2) of Chemistry, Geography, Economics, Mathematics and Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U028. Economics with/and Operation Research — DIRECT_ENTRY
-
-- Current catalogue text: Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U029. Economics with/and Operation Research — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U030. Economics with/and Operation Research — UTME
-
-- Current catalogue text: Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U031. Electrical/Electronic Engineering — DIRECT_ENTRY
+### U025. Electrical/Electronic Engineering — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Mathematics, Physics or Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U032. Electrical/Electronic Engineering — OLEVEL
+### U026. Electrical/Electronic Engineering — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include Mathematics, Physics, Chemistry, English Language and any other Science subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U033. Electrical/Electronic Engineering — UTME
+### U027. Electrical/Electronic Engineering — UTME
 
 - Current catalogue text: Mathematics; Physics; Chemistry
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U034. Employment and Human Resource Management — DIRECT_ENTRY
+### U028. Employment and Human Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U035. Employment and Human Resource Management — OLEVEL
+### U029. Employment and Human Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U036. Employment and Human Resource Management — UTME
+### U030. Employment and Human Resource Management — UTME
 
 - Current catalogue text: Mathematics, Economics plus one (1) other subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U037. Environmental Management and Technology — DIRECT_ENTRY
+### U031. Environmental Management and Technology — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Chemistry and any one of Biology, Agricultural Science, Botany and Zoology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U038. Environmental Management and Technology — OLEVEL
+### U032. Environmental Management and Technology — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Chemistry, Biology Science, Physics and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U039. Environmental Management and Technology — UTME
+### U033. Environmental Management and Technology — UTME
 
 - Current catalogue text: Chemistry; Biology; Mathematics/Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U040. Environmental Science and Technology — DIRECT_ENTRY
+### U034. Environmental Science and Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U041. Environmental Science and Technology — OLEVEL
+### U035. Environmental Science and Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U042. Environmental Science and Technology — UTME
+### U036. Environmental Science and Technology — UTME
 
 - Current catalogue text: Biology and any two (2) of Physics, Chemistry and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U043. Farm Management & Agric. Extension — DIRECT_ENTRY
+### U037. Farm Management & Agric. Extension — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Geography, Mathematics, Physics, Geology, Economics and Health Science (as in Agricultural Economics).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U044. Farm Management & Agric. Extension — OLEVEL
+### U038. Farm Management & Agric. Extension — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and one of Geography, Physics and Economics (shares requirements with Agricultural Economics umbrella block).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U045. Farm Management & Agric. Extension — UTME
+### U039. Farm Management & Agric. Extension — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Mathematics or Physics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U046. Fine Art/Fine and Applied Arts — DIRECT_ENTRY
+### U040. Fine Art/Fine and Applied Arts — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) `A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U047. Fine Art/Fine and Applied Arts — OLEVEL
+### U041. Fine Art/Fine and Applied Arts — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Fine Arts.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U048. Fine Art/Fine and Applied Arts — UTME
+### U042. Fine Art/Fine and Applied Arts — UTME
 
 - Current catalogue text: Fine Arts and any other subjects; or Social Science subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U049. Forestry and Fisheries — DIRECT_ENTRY
+### U043. French and German/Russian — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U050. Forestry and Fisheries — OLEVEL
+### U044. French and German/Russian — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U051. Forestry and Fisheries — UTME
-
-- Current catalogue text: as in Agricultural Economics and Extension
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U052. French and German/Russian — DIRECT_ENTRY
-
-- Current catalogue text: —
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U053. French and German/Russian — OLEVEL
-
-- Current catalogue text: —
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U054. French and German/Russian — UTME
+### U045. French and German/Russian — UTME
 
 - Current catalogue text: French and any other two (2) subjects from Arts and Social Sciences.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U055. Geography and Environmental Studies — DIRECT_ENTRY
+### U046. Geography and Environmental Studies — DIRECT_ENTRY
 
 - Current catalogue text: No Direct Entry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U056. Geography and Environmental Studies — OLEVEL
+### U047. Geography and Environmental Studies — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Geography and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U057. Geography and Environmental Studies — UTME
+### U048. Geography and Environmental Studies — UTME
 
 - Current catalogue text: Geography; and any two (2) other Arts or Social Science subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U058. Home Economics and Hotel Management — DIRECT_ENTRY
+### U049. Home Economics and Hotel Management — DIRECT_ENTRY
 
 - Current catalogue text: (i) NCE merit in Home Economics; (ii) 'A' Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science; (iii) ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U059. Home Economics and Hotel Management — OLEVEL
+### U050. Home Economics and Hotel Management — OLEVEL
 
 - Current catalogue text: Five (5) 'O' Level NTC/NBC credit passes or TC II merit including English Language, Mathematics, Home Economics, Biology and Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U060. Home Economics and Hotel Management — UTME
+### U051. Home Economics and Hotel Management — UTME
 
 - Current catalogue text: Chemistry; Biology or Agricultural Science; and one (1) other subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U061. Home Science & Management — DIRECT_ENTRY
+### U052. Home Science & Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U062. Home Science & Management — OLEVEL
+### U053. Home Science & Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U063. Home Science & Management — UTME
+### U054. Home Science & Management — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Physics/Mathematics or one (1) social science subject (Economics or Geography)
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U064. Hotel Management & Tourism — DIRECT_ENTRY
+### U055. Hotel Management & Tourism — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agric Science/Economics/Physics/Mathematics/Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U065. Hotel Management & Tourism — OLEVEL
+### U056. Hotel Management & Tourism — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U066. Hotel Management & Tourism — UTME
+### U057. Hotel Management & Tourism — UTME
 
 - Current catalogue text: Chemistry and any two (2) of Biology/Botany/Agricultural Science, Economics, Physics, Mathematics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U067. ICT Engineering — DIRECT_ENTRY
+### U058. ICT Engineering — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level/IJMB/ND/HND upper credit in relevant programmes (Information Technology, Computer Science/Engineering, Electrical and Electronic Engineering) into 200/300 level.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U068. ICT Engineering — OLEVEL
+### U059. ICT Engineering — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U069. ICT Engineering — UTME
+### U060. ICT Engineering — UTME
 
 - Current catalogue text: Mathematics; Physics; Chemistry
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U070. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
+### U061. INFORMATION AND MEDIA TECHNOLOGY — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U071. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
+### U062. INFORMATION AND MEDIA TECHNOLOGY — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U072. INFORMATION AND MEDIA TECHNOLOGY — UTME
+### U063. INFORMATION AND MEDIA TECHNOLOGY — UTME
 
 - Current catalogue text: Mathematics, Physics and one of Biology, Chemistry, Agric Science, Economics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U073. Industral Mathematics/Computer — DIRECT_ENTRY
+### U064. Industral Mathematics/Computer — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U074. Industral Mathematics/Computer — OLEVEL
+### U065. Industral Mathematics/Computer — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U075. Industral Mathematics/Computer — UTME
+### U066. Industral Mathematics/Computer — UTME
 
 - Current catalogue text: Mathematics and two (2) of Physics, Chemistry, Economics, Biology and Agricultural Science.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U076. Industrial Relations / Industrial and Labour Relations — DIRECT_ENTRY
+### U067. Industrial Relations / Industrial and Labour Relations — DIRECT_ENTRY
 
 - Current catalogue text: i) Two (2) 'A' Level passes chosen from Economics, Accounting, Government, Geography and Statistics. ii) NCE in related programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U077. Industrial Relations / Industrial and Labour Relations — OLEVEL
+### U068. Industrial Relations / Industrial and Labour Relations — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U078. Industrial Relations / Industrial and Labour Relations — UTME
+### U069. Industrial Relations / Industrial and Labour Relations — UTME
 
 - Current catalogue text: Mathematics, Economics plus one other relevant subject
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U079. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — DIRECT_ENTRY
+### U070. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting, Business Management, Government, Geography and Statistics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U080. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
+### U071. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes including English Language, Mathematics, Economics plus any two (2) subjects listed under the Direct Entry column.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U081. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — UTME
+### U072. Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management — UTME
 
 - Current catalogue text: Mathematics, Economics and one other subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U082. Islamic Law/Sharia Law — DIRECT_ENTRY
+### U073. Islamic Law/Sharia Law — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) A' level passes to include Islamic Studies or Arabic
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U083. Islamic Law/Sharia Law — OLEVEL
+### U074. Islamic Law/Sharia Law — OLEVEL
 
 - Current catalogue text: Five (5)'O' Level credit passes in Arts or Social Sciences to include English Language and Islamic Studies or Arabic.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U084. Islamic Law/Sharia Law — UTME
+### U075. Islamic Law/Sharia Law — UTME
 
 - Current catalogue text: Any three (3) Arts or Social Science subjects including Arabic or Islamic Studies
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U085. Marine Science and Technology — DIRECT_ENTRY
+### U076. Marine Science and Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U086. Marine Science and Technology — OLEVEL
+### U077. Marine Science and Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U087. Marine Science and Technology — UTME
+### U078. Marine Science and Technology — UTME
 
 - Current catalogue text: Biology and any two (2) of Physics, Chemistry and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U088. Mathematics and Economics / Mathematics with Economics — DIRECT_ENTRY
+### U079. Mathematics and Economics / Mathematics with Economics — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) 'A' Level passes at not more than two (2) sittings. The subjects should include Mathematics and Economics. (ii) ND upper credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iii) HND lower credit in Mathematics/Statistics, Computer Science, Accounting or Business Studies from a recognised Polytechnic or College of Technology. (iv) NCE credit in Mathematics and Economics from a recognised College of Education with merit.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U089. Mathematics and Economics / Mathematics with Economics — OLEVEL
+### U080. Mathematics and Economics / Mathematics with Economics — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Economics and any other two (2) subjects selected from Science or Social Sciences at not more than two (2) sittings.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U090. Mathematics and Economics / Mathematics with Economics — UTME
+### U081. Mathematics and Economics / Mathematics with Economics — UTME
 
 - Current catalogue text: Mathematics, Economics and any other Science or Social Science subject.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U091. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — DIRECT_ENTRY
+### U082. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) 'A' Level passes in Mathematics and either Physics or Chemistry. (ii) NCE merit in Mathematics and either Physics or Chemistry.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U092. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
+### U083. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes to include English Language, Mathematics and at least three (3) of Physics, Chemistry, Biology and Additional/Further Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U093. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
+### U084. Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics — UTME
 
 - Current catalogue text: Maths, Physics and Chemistry or Biology and Additional/Further Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U094. Medical Laboratory Technology/Science — DIRECT_ENTRY
+### U085. Medical Laboratory Technology/Science — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes to include Physics, Chemistry and Biology or Zoology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U095. Medical Laboratory Technology/Science — OLEVEL
+### U086. Medical Laboratory Technology/Science — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U096. Medical Laboratory Technology/Science — UTME
+### U087. Medical Laboratory Technology/Science — UTME
 
 - Current catalogue text: Chemistry; Physics; Biology/Zoology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U097. Medicine and Surgery (Human Medicine) — DIRECT_ENTRY
+### U088. Medicine and Surgery (Human Medicine) — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to the UTME requirements; or B.Sc, B.OS, etc in relevant programme.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U098. Medicine and Surgery (Human Medicine) — OLEVEL
+### U089. Medicine and Surgery (Human Medicine) — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U099. Medicine and Surgery (Human Medicine) — UTME
+### U090. Medicine and Surgery (Human Medicine) — UTME
 
 - Current catalogue text: English Language; Physics; Chemistry; Biology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U100. Modern Language and Translation — DIRECT_ENTRY
+### U091. Modern Language and Translation — DIRECT_ENTRY
 
 - Current catalogue text: (i) Two (2) `A' Level passes or NCE in French for French programme. (ii) Two (2) `A' Level passes or NCE in any subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U101. Modern Language and Translation — OLEVEL
+### U092. Modern Language and Translation — OLEVEL
 
 - Current catalogue text: For Programme A: five (5) SSC credit passes including English Language and French. For Programme B: credit passes in English Language and four (4) other subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U102. Modern Language and Translation — UTME
+### U093. Modern Language and Translation — UTME
 
 - Current catalogue text: Programme A: French and any other two (2) subjects; Programme B: any three (3) subjects
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U103. Office and Information Technology / Information Resource Management — DIRECT_ENTRY
+### U094. Office and Information Technology / Information Resource Management — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes chosen from Economics, Accounting and Business Management.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U104. Office and Information Technology / Information Resource Management — OLEVEL
+### U095. Office and Information Technology / Information Resource Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in English Language, Economics and three (3) other subjects plus at least a pass in Mathematics. For NBC holders, three (3) other subjects could be from any of the following: Office Practice, Secretarial Duties, Principles of Accounts, Shorthand 80 WPM and Typewriting 35 WPM.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U105. Office and Information Technology / Information Resource Management — UTME
+### U096. Office and Information Technology / Information Resource Management — UTME
 
 - Current catalogue text: Economics and two (2) other subjects.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U106. Pasture & Range Management — DIRECT_ENTRY
+### U097. Pasture & Range Management — DIRECT_ENTRY
 
 - Current catalogue text: Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U107. Pasture & Range Management — OLEVEL
+### U098. Pasture & Range Management — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U108. Pasture & Range Management — UTME
+### U099. Pasture & Range Management — UTME
 
 - Current catalogue text: Chemistry; Biology/Agricultural Science; Physics/Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U109. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
+### U100. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U110. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
+### U101. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U111. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — UTME
+### U102. Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics) — UTME
 
 - Current catalogue text: Physics, Mathematics and Chemistry or Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U112. Physics with Computational Modeling — DIRECT_ENTRY
+### U103. Physics with Computational Modeling — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U113. Physics with Computational Modeling — OLEVEL
+### U104. Physics with Computational Modeling — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U114. Physics with Computational Modeling — UTME
+### U105. Physics with Computational Modeling — UTME
 
 - Current catalogue text: Physics, Mathematics and Chemistry or Biology.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U115. Plant Breeding and Seed Technology — DIRECT_ENTRY
+### U106. Plant Breeding and Seed Technology — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U116. Plant Breeding and Seed Technology — OLEVEL
+### U107. Plant Breeding and Seed Technology — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U117. Plant Breeding and Seed Technology — UTME
+### U108. Plant Breeding and Seed Technology — UTME
 
 - Current catalogue text: Chemistry, Biology/Agricultural Science and Mathematics or Physics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U118. Political Science / International Law and Diplomacy — DIRECT_ENTRY
-
-- Current catalogue text: as in Political Science
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U119. Political Science / International Law and Diplomacy — OLEVEL
-
-- Current catalogue text: as in Political Science
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U120. Political Science / International Law and Diplomacy — UTME
-
-- Current catalogue text: as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U121. Political Science and Conflict — DIRECT_ENTRY
-
-- Current catalogue text: Two (2) 'A' Level passes to include Government or History.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U122. Political Science and Conflict — OLEVEL
-
-- Current catalogue text: Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U123. Political Science and Conflict — UTME
-
-- Current catalogue text: Government/History; and two (2) other Social Sciences or Arts subjects
-- Local source status: source_row_not_found / no_source_candidate
-- Manual result: PENDING SOURCE SEARCH
-- Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
-
-### U124. Public and International Law — DIRECT_ENTRY
+### U109. Public and International Law — DIRECT_ENTRY
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U125. Public and International Law — OLEVEL
+### U110. Public and International Law — OLEVEL
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U126. Public and International Law — UTME
+### U111. Public and International Law — UTME
 
 - Current catalogue text: As in Civil Law
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U127. Robotics (Artificial Intelligence) — DIRECT_ENTRY
+### U112. Robotics (Artificial Intelligence) — DIRECT_ENTRY
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U128. Robotics (Artificial Intelligence) — OLEVEL
+### U113. Robotics (Artificial Intelligence) — OLEVEL
 
 - Current catalogue text: —
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U129. Robotics (Artificial Intelligence) — UTME
+### U114. Robotics (Artificial Intelligence) — UTME
 
 - Current catalogue text: Mathematics, Physics and one of Biology, Chemistry, Agric Science, Economics and Geography.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U130. Sport Management (Education) — DIRECT_ENTRY
+### U115. Sport Management (Education) — DIRECT_ENTRY
 
 - Current catalogue text: Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U131. Sport Management (Education) — OLEVEL
+### U116. Sport Management (Education) — OLEVEL
 
 - Current catalogue text: Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U132. Sport Management (Education) — UTME
+### U117. Sport Management (Education) — UTME
 
 - Current catalogue text: Biology; Mathematics; Economics; Geography
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U133. Water Resources and Environmental Engr — DIRECT_ENTRY
+### U118. Water Resources and Environmental Engr — DIRECT_ENTRY
 
 - Current catalogue text: 'A' Level passes must include Physics or Chemistry, and Mathematics
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U134. Water Resources and Environmental Engr — OLEVEL
+### U119. Water Resources and Environmental Engr — OLEVEL
 
 - Current catalogue text: Five (5) SSC credit passes in Physics, Chemistry, Mathematics, English Language and Biology
 - Local source status: source_row_not_found / no_source_candidate
 - Manual result: PENDING SOURCE SEARCH
 - Capture: exact PDF, page, table row, course cell, requirement cell, and whether the row is exact, shared, variant-specific, or genuinely absent.
 
-### U135. Water Resources and Environmental Engr — UTME
+### U120. Water Resources and Environmental Engr — UTME
 
 - Current catalogue text: Chemistry; Mathematics; Physics
 - Local source status: source_row_not_found / no_source_candidate

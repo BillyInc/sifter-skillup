@@ -20,6 +20,29 @@ Use this section for the current subject matcher and university-offering
 refresh. It supersedes older subject-pipeline snippets in this document; the
 2026-09-01 compressed career taxonomy seed is a separate, staging-only refresh.
 
+### Local build order before Supabase
+
+The SQL files are generated artifacts. Rebuild them only after replaying the
+explicit brochure confirmations, then run the local audits before applying any
+SQL:
+
+```powershell
+python scripts/audit_brochure_subject_requirements.py --apply-manual-confirmations
+python scripts/build_jamb_brochure_source_rules.py --apply-manual-confirmations
+python data/career-mapping/_gen_seed.py
+python data/career-mapping/_parse_subject_options.py
+python data/career-mapping/_gen_subject_rule_records.py
+python data/career-mapping/_audit_course_and_jamb_mapping.py
+python data/career-mapping/_audit_subject_option_seed.py
+python data/career-mapping/_audit_subject_match_exhaustive.py
+```
+
+The confirmation ledger is
+`data/career-mapping/_audit/jamb_brochure_manual_source_confirmations_2026-09-11.json`.
+`source_blank` and `source_missing` are confirmed non-matchable states; they
+must remain in the typed rule layer but must not be emitted as subject-picker
+options.
+
 ### Existing Supabase project
 
 Run a read-only preflight first. Apply only migrations that the preflight shows
@@ -31,8 +54,14 @@ are missing, one file at a time, with `ON_ERROR_STOP` enabled:
 4. `backend/migration_subject_rule_records.sql`
 5. `backend/migration_student_pipeline_live.sql`
 6. `backend/migration_school_faculty_filter_2026-09-09.sql`
-7. Any separately requested additive onboarding, identity, consent, team,
-   verification, or report-path migration, after its prerequisite tables exist.
+7. Requested additive migrations, after their prerequisites exist, in this
+   dependency order when those flows are in scope:
+   `migration_provisioning.sql`, `migration_school_identity.sql`,
+   `migration_institution_team_access.sql`,
+   `migration_guidance_report_paths.sql`,
+   `migration_student_consent_requests.sql`,
+   `migration_institution_verification_proof.sql`, then the current auth,
+   lifecycle, feedback, and admin patches listed in the full runbook.
 
 Then apply the data files in exactly this order:
 
@@ -60,6 +89,11 @@ future polytechnic route, but excludes them from current student, SS, JAMB,
 and university guidance payloads. Do not delete the `direct_entry` columns or
 source rows, and do not add Direct Entry back to current responses as a
 workaround. No extra SQL migration is required for that API filtering change.
+
+Do not treat a local seed count or a REST read as proof that SQL was applied.
+After the four seeds succeed, run the post-apply queries below, then the
+exhaustive matcher audit and the student-pipeline smoke test. If a migration or
+seed fails, stop at that file and report the database error.
 
 ### Fresh or explicitly approved staging database
 

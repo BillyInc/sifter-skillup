@@ -25,6 +25,7 @@ BROCHURE_ROOT = Path(r"C:\Users\USER\Downloads\jamb brochure")
 AUDIT_PATH = ROOT / "docs" / "manual-review" / "brochure-subject-requirements-audit-2026-08-18.json"
 DEFAULT_JSON = ROOT / "data" / "career-mapping" / "_audit" / "jamb_brochure_source_rules_2026-08-19.json"
 DEFAULT_MD = ROOT / "docs" / "manual-review" / "jamb-brochure-source-rules-2026-08-19.md"
+MANUAL_CONFIRMATIONS = ROOT / "data" / "career-mapping" / "_audit" / "jamb_brochure_manual_source_confirmations_2026-09-11.json"
 
 PDF_BY_JSON = {
     "administration_offerings.json": "Administration.pdf",
@@ -199,6 +200,28 @@ def rule_from_start(
     return rule
 
 
+def manual_rule(confirmation: dict[str, Any]) -> dict[str, Any]:
+    """Create an explicit source decision for a manually confirmed row.
+
+    `source_blank` and `source_missing` are deliberately not inferred from a
+    neighbouring row. They are evidence-backed review states and must remain
+    non-matchable.
+    """
+    return {
+        "status": confirmation["status"],
+        "text": None,
+        "source": {
+            "source_file": confirmation.get("source_file"),
+            "pdf_page": confirmation.get("pdf_page"),
+            "table_row": confirmation.get("table_row"),
+            "course_cell": confirmation.get("course_cell", ""),
+        },
+        "inherited_from": None,
+        "manual_confirmation": confirmation.get("note"),
+        "source_heading": confirmation.get("source_heading"),
+    }
+
+
 def inherited_rule(pdf_name: str, page: int, row_number: int, layer: str, document, cache: dict, heading_names: set[str]) -> dict[str, Any]:
     field = FIELD_BY_LAYER[layer]
     current_rows = page_rows(pdf_name, page, document, cache)
@@ -274,6 +297,11 @@ def row_resolution(variants: list[dict[str, Any]]) -> str:
 
 def build() -> dict[str, Any]:
     audit = json.loads(AUDIT_PATH.read_text(encoding="utf-8"))
+    manual_document = json.loads(MANUAL_CONFIRMATIONS.read_text(encoding="utf-8")) if MANUAL_CONFIRMATIONS.exists() else {"confirmations": []}
+    manual_by_key = {
+        (row.get("jamb_name"), row.get("layer")): row
+        for row in manual_document.get("confirmations") or []
+    }
     result_rows: list[dict[str, Any]] = []
     # Programme names are used only to identify the beginning of a source
     # block. They do not alter the source text or perform fuzzy matching.
@@ -293,9 +321,16 @@ def build() -> dict[str, Any]:
         with pdfplumber.open(str(BROCHURE_ROOT / source_file)) as document:
             for item, candidate in candidates:
                 layer = item["layer"]
-                rule = inherited_rule(source_file, candidate["page"], candidate["row"], layer, document, cache, heading_names)
+                manual = manual_by_key.get((item["jamb_name"], layer))
+                if manual and manual.get("status") in {"source_blank", "source_missing"}:
+                    rule = manual_rule(manual)
+                else:
+                    rule = inherited_rule(source_file, candidate["page"], candidate["row"], layer, document, cache, heading_names)
                 rows = page_rows(source_file, candidate["page"], document, cache)
                 current = next((row for row in rows if row["row"] == candidate["row"]), {})
+                if manual:
+                    rule.setdefault("manual_confirmation", manual.get("note"))
+                    rule.setdefault("source_heading", manual.get("source_heading"))
                 item.setdefault("_source_variants", []).append(
                     {
                         "jamb_name": item["jamb_name"],
@@ -379,12 +414,98 @@ def write(report: dict[str, Any], json_path: Path, md_path: Path) -> None:
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def apply_manual_confirmations(existing_path: Path) -> dict[str, Any]:
+    """Materialize the five explicit confirmations without rebuilding all PDFs."""
+    report = json.loads(existing_path.read_text(encoding="utf-8"))
+    manual_document = json.loads(MANUAL_CONFIRMATIONS.read_text(encoding="utf-8"))
+    confirmations = manual_document.get("confirmations") or []
+    heading_names: set[str] = set()
+    for path in sorted((ROOT / "data" / "career-mapping" / "jamb").glob("*_offerings.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for programme in data.get("programmes") or []:
+            name = re.sub(r"[^a-z0-9]+", "", str(programme.get("jamb_name") or "").lower())
+            if name:
+                heading_names.add(name)
+
+    pdf_cache: dict[str, Any] = {}
+    page_cache: dict[tuple[str, int], list[dict[str, Any]]] = {}
+    by_key = {(row.get("jamb_name"), row.get("layer")): row for row in report.get("rows") or []}
+    for confirmation in confirmations:
+        row = by_key.get((confirmation.get("jamb_name"), confirmation.get("layer")))
+        if row is None:
+            continue
+        status = confirmation.get("status")
+        if status in {"source_blank", "source_missing"}:
+            rule = manual_rule(confirmation)
+            current = {}
+        else:
+            source_file = confirmation["source_file"]
+            if source_file not in pdf_cache:
+                pdf_cache[source_file] = pdfplumber.open(str(BROCHURE_ROOT / source_file))
+            document = pdf_cache[source_file]
+            page = int(confirmation["pdf_page"])
+            rows = page_cache.setdefault(
+                (source_file, page),
+                page_rows(source_file, page, document, page_cache),
+            )
+            current = next((item for item in rows if item["row"] == confirmation.get("table_row")), {})
+            rule = inherited_rule(
+                source_file,
+                page,
+                confirmation.get("table_row"),
+                confirmation["layer"],
+                document,
+                page_cache,
+                heading_names,
+            )
+            rule["status"] = status
+            rule["source_heading"] = confirmation.get("source_heading")
+            rule["manual_confirmation"] = confirmation.get("note")
+
+        wrapper = {
+            "jamb_name": confirmation.get("jamb_name"),
+            "layer": confirmation.get("layer"),
+            "catalogue_state": row.get("catalogue_state"),
+            "catalogue_text": row.get("catalogue_text"),
+            "source_status_before_inheritance": row.get("source_status_before_inheritance"),
+            "source_variant": rule,
+            "direct_entry_cell": current.get("direct_entry_cell", ""),
+            "olevel_cell": current.get("olevel_cell", ""),
+            "utme_cell": current.get("utme_cell", ""),
+            "waiver_cell": current.get("waiver_cell", ""),
+        }
+        row["source_variants"] = [wrapper]
+        row["source_variant_count"] = 1
+        row["resolution"] = row_resolution([wrapper])
+
+    for document in pdf_cache.values():
+        document.close()
+    counts = Counter(
+        variant["source_variant"]["status"]
+        for row in report.get("rows") or []
+        for variant in row.get("source_variants") or []
+    )
+    resolutions = Counter(row.get("resolution") for row in report.get("rows") or [])
+    report["counts"] = {
+        "review_layers": len(report.get("rows") or []),
+        "source_variants": sum(row.get("source_variant_count", 0) for row in report.get("rows") or []),
+        "variant_statuses": dict(counts),
+        "resolutions": dict(resolutions),
+    }
+    report["manual_confirmations"] = {
+        "file": str(MANUAL_CONFIRMATIONS),
+        "applied_rows": len(confirmations),
+    }
+    return report
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--md", type=Path, default=DEFAULT_MD)
+    parser.add_argument("--apply-manual-confirmations", action="store_true")
     args = parser.parse_args()
-    report = build()
+    report = apply_manual_confirmations(args.json) if args.apply_manual_confirmations else build()
     write(report, args.json, args.md)
     print(json.dumps(report["counts"], indent=2))
 

@@ -23,7 +23,11 @@
     "multiple_primary_source_candidates": 200,
     "source_row_found_but_primary_cell_empty": 535,
     "one_primary_source_candidate": 390,
-    "source_row_not_found": 135
+    "source_row_not_found": 120,
+    "manual_exact_confirmed": 3,
+    "manual_source_blank_confirmed": 3,
+    "manual_source_missing_confirmed": 3,
+    "manual_inherited_shared_confirmed": 6
   },
   "rows": [
     {
@@ -17000,9 +17004,30 @@
       "source_json": "medical_offerings.json",
       "catalogue_text": "Chemistry; Physics; Biology",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_exact_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Medica_Pharmaceutical Health Science.pdf",
+          "page": 8,
+          "row": 4,
+          "cells": [
+            "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "exact",
+          "manual_note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national UTME cell on page 8 is Chemistry, Physics and Biology.",
+          "source_heading": "Dentistry and Dental Surgery"
+        }
+      ]
     },
     {
       "jamb_name": "Dentistry and Dental Technology",
@@ -17010,9 +17035,30 @@
       "source_json": "medical_offerings.json",
       "catalogue_text": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_exact_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Medica_Pharmaceutical Health Science.pdf",
+          "page": 8,
+          "row": 4,
+          "cells": [
+            "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "exact",
+          "manual_note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national O-level cell is five credits in English Language, Physics, Chemistry, Biology and Mathematics.",
+          "source_heading": "Dentistry and Dental Surgery"
+        }
+      ]
     },
     {
       "jamb_name": "Dentistry and Dental Technology",
@@ -17020,9 +17066,30 @@
       "source_json": "medical_offerings.json",
       "catalogue_text": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
       "catalogue_state": "present",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_exact_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Medica_Pharmaceutical Health Science.pdf",
+          "page": 8,
+          "row": 4,
+          "cells": [
+            "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "DENTISTRY AND DENTAL SURGERY ABU ABUAD BAYERO BENIN CALABAR DANUMS FUHSA IBADAN JOS",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "exact",
+          "manual_note": "The row continues on PDF page 9 with the Dentistry and Dental Technology institution block. The national Direct Entry cell requires three A-level passes including Chemistry, Biology/Zoology and Physics.",
+          "source_heading": "Dentistry and Dental Surgery"
+        }
+      ]
     },
     {
       "jamb_name": "Development and Communication Studies",
@@ -18707,9 +18774,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "Economics, Mathematics and any of Government, History, Geography, Literature in English, French and Christian Religious Studies/Islamic Studies.",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_blank_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 40,
+          "row": 1,
+          "cells": [
+            "ECONOMICS WITH OPERATION RESEARCH CUAB",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_blank",
+          "manual_note": "The CUAB offering is printed in the requirement table, but its UTME cell is blank. Do not inherit the Economics rule.",
+          "source_heading": "Economics with Operation Research"
+        }
+      ]
     },
     {
       "jamb_name": "Economics with/and Operation Research",
@@ -18717,9 +18805,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "Five (5) SSC credit passes in English Language, Mathematics, Economics and any two (2) of Arts or Social Science subjects.",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_blank_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 40,
+          "row": 1,
+          "cells": [
+            "ECONOMICS WITH OPERATION RESEARCH CUAB",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_blank",
+          "manual_note": "The CUAB offering is printed in the requirement table, but its O-level cell is blank. Do not inherit the Economics rule.",
+          "source_heading": "Economics with Operation Research"
+        }
+      ]
     },
     {
       "jamb_name": "Economics with/and Operation Research",
@@ -18727,9 +18836,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "Two (2) 'A' Level passes in Economics and any one of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government.",
       "catalogue_state": "present",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_blank_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 40,
+          "row": 1,
+          "cells": [
+            "ECONOMICS WITH OPERATION RESEARCH CUAB",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "ECONOMICS WITH OPERATION RESEARCH CUAB",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_blank",
+          "manual_note": "The CUAB offering is printed in the requirement table, but its Direct Entry cell is blank. Do not inherit the Economics rule.",
+          "source_heading": "Economics with Operation Research"
+        }
+      ]
     },
     {
       "jamb_name": "Education and Business Administration",
@@ -24764,9 +24894,30 @@
       "source_json": "agriculture_offerings.json",
       "catalogue_text": "as in Agricultural Economics and Extension",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_missing_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Agriculture.pdf",
+          "page": 1,
+          "row": null,
+          "cells": [
+            "42 Forestry and Fisheries",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "42 Forestry and Fisheries",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_missing",
+          "manual_note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a UTME cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+          "source_heading": "Forestry and Fisheries"
+        }
+      ]
     },
     {
       "jamb_name": "Forestry and Fisheries",
@@ -24774,9 +24925,30 @@
       "source_json": "agriculture_offerings.json",
       "catalogue_text": "",
       "catalogue_state": "empty",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_missing_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Agriculture.pdf",
+          "page": 1,
+          "row": null,
+          "cells": [
+            "42 Forestry and Fisheries",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "42 Forestry and Fisheries",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_missing",
+          "manual_note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with an O-level cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+          "source_heading": "Forestry and Fisheries"
+        }
+      ]
     },
     {
       "jamb_name": "Forestry and Fisheries",
@@ -24784,9 +24956,30 @@
       "source_json": "agriculture_offerings.json",
       "catalogue_text": "",
       "catalogue_state": "empty",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_source_missing_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Agriculture.pdf",
+          "page": 1,
+          "row": null,
+          "cells": [
+            "42 Forestry and Fisheries",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "42 Forestry and Fisheries",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "source_missing",
+          "manual_note": "The programme appears in the Agriculture catalogue index, but no exact Forestry and Fisheries requirement-table row with a Direct Entry cell was found. The related Forestry/Wildlife and Fisheries rows are not interchangeable.",
+          "source_heading": "Forestry and Fisheries"
+        }
+      ]
     },
     {
       "jamb_name": "Forestry, Wildlife & Fisheries",
@@ -49820,9 +50013,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "as in Political Science (no separate requirements column shown for this heading; the rightward area continues the Political Science DIRECT ENTRY/UTME waiver list)",
       "catalogue_state": "needs_review",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 81,
+          "row": 1,
+          "cells": [
+            "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block.",
+          "source_heading": "Political Science / International Law and Diplomacy"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science / International Law and Diplomacy",
@@ -49830,9 +50044,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "as in Political Science",
       "catalogue_state": "needs_review",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 81,
+          "row": 1,
+          "cells": [
+            "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block.",
+          "source_heading": "Political Science / International Law and Diplomacy"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science / International Law and Diplomacy",
@@ -49840,9 +50075,30 @@
       "source_json": "social_management_offerings.json",
       "catalogue_text": "as in Political Science",
       "catalogue_state": "present",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Social Management Science.pdf",
+          "page": 81,
+          "row": 1,
+          "cells": [
+            "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE / INTERNTIONAL LAW AND DIPLOMACY BABCOCK",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The brochure heading contains a source typo, INTERNTIONAL. Its blank cells explicitly continue the preceding Political Science requirement block.",
+          "source_heading": "Political Science / International Law and Diplomacy"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -49850,9 +50106,30 @@
       "source_json": "arts_hum_offerings.json",
       "catalogue_text": "Government/History; and two (2) other Social Sciences or Arts subjects",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Arts _ Humanities.pdf",
+          "page": 123,
+          "row": 4,
+          "cells": [
+            "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block.",
+          "source_heading": "Political Science and Conflict Resolution"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -49860,9 +50137,30 @@
       "source_json": "arts_hum_offerings.json",
       "catalogue_text": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
       "catalogue_state": "parsed",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Arts _ Humanities.pdf",
+          "page": 123,
+          "row": 4,
+          "cells": [
+            "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block.",
+          "source_heading": "Political Science and Conflict Resolution"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science and Conflict",
@@ -49870,9 +50168,30 @@
       "source_json": "arts_hum_offerings.json",
       "catalogue_text": "Two (2) 'A' Level passes to include Government or History.",
       "catalogue_state": "present",
-      "source_status": "source_row_not_found",
-      "candidate_count": 0,
-      "source_candidates": []
+      "source_status": "manual_inherited_shared_confirmed",
+      "candidate_count": 1,
+      "source_candidates": [
+        {
+          "source_file": "Arts _ Humanities.pdf",
+          "page": 123,
+          "row": 4,
+          "cells": [
+            "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "course_cell": "POLITICAL SCIENCE EVANGEL FED-KASHERE FED-LOKOJA FED-OTUOKE FED-WUKARI PLASU POLITICAL SCIENCE AND CONFLICT RESOLUTION AL-HIKMAH",
+          "direct_entry_cell": "",
+          "olevel_cell": "",
+          "utme_cell": "",
+          "waiver_cell": "",
+          "manual_status": "inherited_shared",
+          "manual_note": "The source heading is printed as Political Science and Conflict Resolution; the current Arts bridge label is a shortened variant of this same institution block.",
+          "source_heading": "Political Science and Conflict Resolution"
+        }
+      ]
     },
     {
       "jamb_name": "Political Science and Conflict Resolution",
@@ -59678,5 +59997,15 @@
         }
       ]
     }
-  ]
+  ],
+  "manual_confirmations": {
+    "file": "C:\\Users\\USER\\Documents\\sifter-skillup-integrated\\data\\career-mapping\\_audit\\jamb_brochure_manual_source_confirmations_2026-09-11.json",
+    "applied_rows": 15,
+    "statuses": {
+      "exact": 3,
+      "source_blank": 3,
+      "source_missing": 3,
+      "inherited_shared": 6
+    }
+  }
 }
