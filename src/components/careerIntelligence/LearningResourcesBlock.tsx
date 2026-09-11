@@ -34,12 +34,6 @@ function accessLabel(resource: CareerLearningResource): string {
   return "Check current details";
 }
 
-function regionLabel(resource: CareerLearningResource): string {
-  if (resource.region === "nigeria") return "Nigeria";
-  if (resource.region === "global_proxy") return "Global reference";
-  return "Global";
-}
-
 function resourceTitle(resource: CareerLearningResource): string {
   return resource.targetName || resource.provider;
 }
@@ -146,7 +140,7 @@ export function LearningResourcesBlock({
                   {resourceTitle(resource)}
                 </Text>
                 <Text style={[styles.meta, { color: colors.textRole.muted }]}>
-                  {resource.provider} | {regionLabel(resource)} | {accessLabel(resource)}
+                  {resource.provider} | {accessLabel(resource)}
                 </Text>
                 {resource.description ? (
                   <Text style={[styles.description, { color: colors.textRole.secondary }]} numberOfLines={2}>

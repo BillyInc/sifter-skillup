@@ -131,7 +131,7 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
   );
 }
 
-/** Shows the source-backed Nigerian/global context attached to an entity. */
+/** Shows the source-backed context attached to an entity. */
 export function NigerianContextBlock({ context, level, style }: NigerianContextBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
@@ -154,9 +154,9 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
 
   return (
     <View style={[styles.container, style]}>
-      <SectionLabel>Nigerian and global context</SectionLabel>
+      <SectionLabel>Context that supports this guidance</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        These are source-backed context items attached to this {level}. Start with the suggested items, then review everything available. A listed item is not automatically required for every employer or route.
+        These are source-backed context items attached to this {level}. Start with the suggested items, then review the fuller context if you need it. A listed item is not automatically required for every employer or route.
       </Text>
       {starterItems.length ? (
         <View style={[styles.startCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
@@ -165,9 +165,9 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
         </View>
       ) : null}
       {expanded ? <>
-        <Layer label="Nigerian item evidence" source={actual} expanded />
-        <Layer label="Nigerian field context" source={fieldContext} expanded />
-        <Layer label="Global or shared evidence" source={global} expanded />
+        <Layer label="Local evidence" source={actual} expanded />
+        <Layer label="Field context" source={fieldContext} expanded />
+        <Layer label="Shared occupational evidence" source={global} expanded />
       </> : null}
       <TouchableOpacity
         accessibilityRole="button"

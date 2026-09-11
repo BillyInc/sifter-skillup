@@ -169,6 +169,7 @@ export default function AdmissionBrowseScreen() {
     admin_type?: string | string[];
     guidance_student_id?: string | string[];
     guidance_target?: string | string[];
+    guidance_entry?: string | string[];
     user_type?: string | string[];
     programme?: string | string[];
     journey?: string | string[];
@@ -206,6 +207,7 @@ export default function AdmissionBrowseScreen() {
   // presence of a student ID; an explicit contradictory marker is stale and
   // must not hydrate another account's checkpoint.
   const guidanceTarget = requestedGuidanceTarget || (guidanceStudentId ? "authorised_student" : "");
+  const guidanceEntry = readParam(params.guidance_entry);
   const sessionOnlyGuidance = isAdminExplore && !guidanceStudentId;
   const guidanceContextShape = { guidanceTarget, guidanceStudentId };
   const staleGuidanceRoute = isAdminExplore && (
@@ -701,6 +703,7 @@ export default function AdmissionBrowseScreen() {
         focused: true,
         guidanceStudentId: guidanceStudentId || undefined,
         guidanceTarget: guidanceTarget || undefined,
+        entryPath: guidanceEntry || undefined,
         journeyMode: "undergraduate_career",
       });
     }
@@ -731,6 +734,7 @@ export default function AdmissionBrowseScreen() {
       stream: stream || undefined,
       guidanceStudentId: guidanceStudentId || undefined,
       guidanceTarget: guidanceTarget || undefined,
+      entryPath: guidanceEntry || undefined,
       focused: isFocusedGuidance,
       journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
       resumeStage: "programme_preview",
@@ -895,6 +899,7 @@ export default function AdmissionBrowseScreen() {
       schoolId: school.schoolId,
       userType: userType || undefined,
       guidanceTarget: guidanceTarget || undefined,
+      entryPath: guidanceEntry || undefined,
       focused: isFocusedGuidance,
       viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
       journeyMode: journeyMode || undefined,
@@ -1227,7 +1232,7 @@ export default function AdmissionBrowseScreen() {
       {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus === "unavailable" ? (
         <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}66` }]}>
           <Text style={[styles.section, { color: Brand.primaryDeep, marginTop: 0 }]}>Subject matching is unavailable</Text>
-          <Text style={[styles.noticeText, { color: colors.text }]}>We did not turn your subjects into a programme match because the structured requirement data is missing or still under review.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>We could not turn your subjects into a programme match because the structured requirement data is not complete yet.</Text>
           <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities that offer it, and open each university's published requirements. Your subject choices remain available when the matcher is ready.</Text>
         </View>
       ) : null}
@@ -1293,6 +1298,7 @@ export default function AdmissionBrowseScreen() {
                jambProgrammeId: selected.jambProgrammeId || selected.id,
                userType: userType || undefined,
                guidanceTarget: guidanceTarget || undefined,
+               entryPath: guidanceEntry || undefined,
                focused: isFocusedGuidance,
                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
                journeyMode: journeyMode || undefined,

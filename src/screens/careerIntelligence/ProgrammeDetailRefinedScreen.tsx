@@ -437,6 +437,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
               userType,
               guidanceStudentId,
               journeyMode: activeJourneyMode || undefined,
+              entryPath: activeGuidanceEntry,
+              resumeStage: "domains",
               focused: focusedGuidance,
             });
           }}
@@ -708,8 +710,6 @@ function ProgrammeDetailBody({
                   <Text style={[styles.schoolName, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
                   {school.studentName || school.jambName ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{school.studentName ?? school.jambName}</Text> : null}
                   {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
-                  {school.universityRequirementStatus !== "complete" ? <Text style={[styles.meta, { color: colors.accentRole.action }]}>{requirementStatusLabel(school.universityRequirementStatus)}</Text> : null}
-                  {school.universityNote ? <Text style={[styles.meta, { color: colors.accentRole.action }]} numberOfLines={2}>{school.universityNote}</Text> : null}
                 </View>
                 <TouchableOpacity onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
                   <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Opening..." : selectedSchoolId === school.schoolId ? (earlySecondary ? "Viewing" : "Selected") : (earlySecondary ? "View details" : "Choose")}</Text>

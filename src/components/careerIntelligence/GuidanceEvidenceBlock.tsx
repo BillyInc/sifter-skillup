@@ -10,10 +10,9 @@ export interface GuidanceEvidenceBlockProps {
   style?: ViewStyle;
 }
 
-const LENSES: Array<{ key: "nigeria" | "remote" | "global"; label: string }> = [
-  { key: "nigeria", label: "Nigeria" },
-  { key: "remote", label: "Remote" },
-  { key: "global", label: "Global" },
+const SUPPORTING_LENSES: Array<{ key: "remote" | "global"; label: string }> = [
+  { key: "remote", label: "Remote-work context" },
+  { key: "global", label: "International reference" },
 ];
 
 function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens }) {
@@ -21,14 +20,14 @@ function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens })
   const [notice, setNotice] = useState<string | null>(null);
   const stateLabel =
     lens.state === "source_backed"
-      ? "Source-backed"
+      ? "Supported by sources"
       : lens.state === "context_only"
-        ? "Context available"
+        ? "Context only"
         : lens.state === "limited"
-          ? "Limited evidence"
+          ? "Limited source coverage"
           : lens.state === "pending"
-            ? "Pending"
-            : "Not attached";
+            ? "Being checked"
+            : "Not available";
 
   return (
     <View style={[styles.row, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
@@ -72,17 +71,29 @@ function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens })
 /** Makes evidence scope visible without exposing internal scores or ranks. */
 export function GuidanceEvidenceBlock({ evidence, style }: GuidanceEvidenceBlockProps) {
   const { colors } = useTheme();
+  const [showSupportingContext, setShowSupportingContext] = useState(false);
   if (!evidence) return null;
 
   return (
     <View style={[styles.container, style]}>
       <SectionLabel>How this guidance is supported</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }, CompassFonts.body]}>
-        Nigerian, remote and global signals are kept separate. A missing local signal does not make a portable skill less useful, and global evidence does not establish a Nigerian licence.
+        Start with the local context. The supporting references below help explain the wider field; they are not a promise of demand, employment or a Nigerian licence.
       </Text>
       <View style={styles.rows}>
-        {LENSES.map(({ key, label }) => <LensRow key={key} label={label} lens={evidence[key]} />)}
+        <LensRow label="Local context" lens={evidence.nigeria} />
+        {showSupportingContext ? SUPPORTING_LENSES.map(({ key, label }) => <LensRow key={key} label={label} lens={evidence[key]} />) : null}
       </View>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ expanded: showSupportingContext }}
+        onPress={() => setShowSupportingContext((value) => !value)}
+        style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}
+      >
+        <Text style={[styles.moreText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
+          {showSupportingContext ? "Hide supporting context" : "See supporting context"}
+        </Text>
+      </Pressable>
       {evidence.limitations?.map((limitation, index) => (
         <Text key={`${limitation}-${index}`} style={[styles.limit, { color: colors.textRole.muted }, CompassFonts.body]}>
           {limitation}
@@ -107,6 +118,8 @@ const styles = StyleSheet.create({
   sourcesLabel: { fontSize: FontSize.xs },
   sourceLink: { alignSelf: "flex-start", paddingVertical: 2 },
   sourceText: { fontSize: FontSize.xs, textDecorationLine: "underline" },
+  moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreText: { fontSize: FontSize.sm },
   limit: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
   notice: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
 });

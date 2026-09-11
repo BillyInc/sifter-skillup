@@ -276,7 +276,7 @@ function RoleBody({
       {(roleTools.length || roleCertifications.length) ? (
         <View style={{ gap: Spacing.sm }}>
           <SectionLabel>What this role needs</SectionLabel>
-          <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Start with the role essentials, then add tools and credentials as your route becomes clearer. Nigerian, remote and global signals remain separate when the source data supports them.</Text>
+          <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>Start with the role essentials, then add tools and credentials as your route becomes clearer. Supporting source context is available below when it helps explain the route.</Text>
           {roleTools.length ? (
             <View style={{ gap: Spacing.xs }}>
               {(roleTools.filter((tool) => tool.group === "common").length) ? <>

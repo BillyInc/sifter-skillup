@@ -326,7 +326,7 @@ function DomainBody({
               <Text style={[styles.linkText, { color: colors.accentRole.action }]}>Explore this area and its roles →</Text>
             </TouchableOpacity>
             ))}
-            {subgroups.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: subgroupsExpanded }} onPress={() => setSubgroupsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{subgroupsExpanded ? "Show fewer subgroups" : `See all ${subgroups.length} subgroups`}</Text></TouchableOpacity> : null}
+            {subgroups.length > 6 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: subgroupsExpanded }} onPress={() => setSubgroupsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{subgroupsExpanded ? "Show fewer areas" : `See all ${subgroups.length} areas`}</Text></TouchableOpacity> : null}
           </> : <View style={[styles.emptySubgroups, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
             <SectionLabel>No areas published yet</SectionLabel>
             <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain does not currently have a supported area mapping yet.</Text>
