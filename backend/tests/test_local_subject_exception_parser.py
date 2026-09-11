@@ -133,3 +133,47 @@ def test_university_rule_is_evaluated_only_for_its_offering(monkeypatch):
     )
     assert rows[0]["universityEligibilityStatus"] == "eligible_local_rule"
     assert rows[0]["address"] == "1 Main Road"
+
+
+def test_direct_entry_is_hidden_from_current_student_offering_payload(monkeypatch):
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _Service(
+            {
+                "schools": [],
+                "school_programmes": [{
+                    "id": "sp1",
+                    "school_id": "s1",
+                    "jamb_programme_id": "jp1",
+                    "utme_subjects": "Mathematics, Physics and Chemistry",
+                    "olevel_requirement": "Five credits",
+                    "direct_entry": "Two A-Level passes",
+                    "remarks": None,
+                }],
+                "school_programme_requirement_exceptions": [{
+                    "school_id": "s1",
+                    "jamb_programme_id": "jp1",
+                    "exam_type": "direct_entry",
+                    "requirement_text": "Two A-Level passes",
+                    "source_file": "brochure",
+                    "source_label": "brochure:jp1:s1:0",
+                    "parse_status": "needs_review",
+                }],
+                "school_programme_subject_options": [{
+                    "id": "direct1",
+                    "school_id": "s1",
+                    "jamb_programme_id": "jp1",
+                    "exam_type": "direct_entry",
+                    "rule_scope": "full",
+                    "source_text": "Two A-Level passes",
+                    "min_required": 2,
+                }],
+                "school_programme_subject_option_items": [],
+            }
+        ),
+    )
+    rows = spr._attach_school_details([{"schoolId": "s1", "jambProgrammeId": "jp1"}])
+    assert "universityDirectEntry" not in rows[0]
+    assert rows[0]["universityRequirementExceptions"] == []
+    assert rows[0]["universityStructuredSubjectRules"] == []

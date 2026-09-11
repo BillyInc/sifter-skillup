@@ -892,7 +892,7 @@ async def get_jamb_programme(jamb_programme_id: str):
         try:
             req = (
                 svc.table("programme_subject_requirements")
-                .select("utme_subjects, olevel_requirement, direct_entry, parse_status, parsed_at")
+                .select("utme_subjects, olevel_requirement, parse_status, parsed_at")
                 .eq("jamb_programme_id", jamb_programme_id)
                 .limit(1)
                 .execute()
@@ -913,6 +913,10 @@ async def get_jamb_programme(jamb_programme_id: str):
                         .order("table_row")
                         .execute()
                     ).data or []
+                    source_rows = [
+                        row for row in source_rows
+                        if row.get("layer") != "direct_entry"
+                    ]
                 except Exception as source_exc:  # noqa: BLE001
                     log.debug("jamb requirement source evidence unavailable", error=str(source_exc))
                 source_statuses = {str(row.get("source_status") or "").lower() for row in source_rows}
@@ -928,7 +932,6 @@ async def get_jamb_programme(jamb_programme_id: str):
                 out["requirements"] = {
                     "utmeSubjects": r.get("utme_subjects"),
                     "olevelRequirement": r.get("olevel_requirement"),
-                    "directEntry": r.get("direct_entry"),
                     "parseStatus": r.get("parse_status"),
                     "variesByInstitution": r.get("parse_status") == "needs_review",
                     "requirementStatus": requirement_status,
@@ -939,7 +942,6 @@ async def get_jamb_programme(jamb_programme_id: str):
                 out["requirements"] = {
                     "utmeSubjects": None,
                     "olevelRequirement": None,
-                    "directEntry": None,
                     "parseStatus": None,
                     "variesByInstitution": False,
                     "requirementStatus": "source_missing",
@@ -1257,7 +1259,6 @@ async def get_school_programmes(
                     "studentName": _student_programme_name(r.get("jamb_name")),
                     "utmeSubjects": r.get("utme_subjects"),
                     "olevelRequirement": r.get("olevel_requirement"),
-                    "directEntry": r.get("direct_entry"),
                     # Preview only — this list runs to 400 rows.
                     **_skills_out(sk, full=False),
                 }
@@ -1419,7 +1420,7 @@ def _attach_school_details(
     try:
         rows = (
             svc.table("school_programmes")
-            .select("id, school_id, jamb_programme_id, utme_subjects, olevel_requirement, direct_entry, remarks")
+            .select("id, school_id, jamb_programme_id, utme_subjects, olevel_requirement, remarks")
             .in_("school_id", school_ids)
             .execute()
         ).data or []
@@ -1501,10 +1502,17 @@ def _attach_school_details(
         override = overrides.get((sid, jid)) or {}
         item["universityUtmeSubjects"] = override.get("utme_subjects")
         item["universityOlevelRequirement"] = override.get("olevel_requirement")
-        item["universityDirectEntry"] = override.get("direct_entry")
         item["universityNote"] = override.get("remarks")
-        exception_rows = exceptions_by_pair.get((sid, jid), [])
-        local_options = local_options_by_pair.get((sid, jid), [])
+        # Direct Entry evidence remains stored for a future polytechnic route,
+        # but is not exposed through current university/student responses.
+        exception_rows = [
+            row for row in exceptions_by_pair.get((sid, jid), [])
+            if row.get("examType") != "direct_entry"
+        ]
+        local_options = [
+            option for option in local_options_by_pair.get((sid, jid), [])
+            if option.get("exam_type") != "direct_entry"
+        ]
         item["universityRequirementExceptions"] = exception_rows
         local_status = "none"
         if any(row.get("parseStatus") == "needs_review" for row in exception_rows):
@@ -1556,7 +1564,6 @@ def _attach_school_details(
             override.get("remarks")
             or override.get("utme_subjects")
             or override.get("olevel_requirement")
-            or override.get("direct_entry")
             or exception_rows
         )
     return items
@@ -2227,7 +2234,6 @@ def _attach_school_context(
             offering.update({
                 "universityUtmeSubjects": school_detail.get("universityUtmeSubjects"),
                 "universityOlevelRequirement": school_detail.get("universityOlevelRequirement"),
-                "universityDirectEntry": school_detail.get("universityDirectEntry"),
                 "universityNote": school_detail.get("universityNote"),
                 "hasUniversityException": school_detail.get("hasUniversityException", False),
                 "universityExceptionStatus": school_detail.get("universityExceptionStatus", "none"),
