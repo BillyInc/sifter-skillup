@@ -10,20 +10,21 @@ import { pending, type DataState, type DomainV2 } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 
 export default function SubgroupDetailScreen() {
-  const params = useLocalSearchParams<{ id: string; subgroupId: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; focus?: string | string[] }>();
+const params = useLocalSearchParams<{ id: string; subgroupId: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
   const domainId = String(params.id ?? "");
   const subgroupId = String(params.subgroupId ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id) ? params.guidance_student_id[0] : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
-  const guidanceContext: GuidanceRouteContext = {
+const guidanceContext: GuidanceRouteContext = {
     programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
     jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
     schoolId: Array.isArray(params.school_id) ? params.school_id[0] : params.school_id,
     userType: Array.isArray(params.user_type) ? params.user_type[0] : params.user_type,
     journeyMode: Array.isArray(params.journey_mode) ? params.journey_mode[0] : params.journey_mode,
     guidanceTarget: Array.isArray(params.guidance_target) ? params.guidance_target[0] : params.guidance_target,
-    guidanceStudentId: targetStudentId,
-    focused: focusedGuidance,
+  guidanceStudentId: targetStudentId,
+  entryPath: Array.isArray(params.guidance_entry) ? params.guidance_entry[0] : params.guidance_entry,
+  focused: focusedGuidance,
   };
   const router = useRouter();
   const exploreNav = useExploreNav();

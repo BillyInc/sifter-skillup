@@ -65,7 +65,7 @@ export interface DomainDetailScreenProps {
 }
 
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
-  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
+  const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
   const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
@@ -81,6 +81,7 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
     journeyMode: Array.isArray(params.journey_mode) ? params.journey_mode[0] : params.journey_mode,
     guidanceTarget: Array.isArray(params.guidance_target) ? params.guidance_target[0] : params.guidance_target,
     guidanceStudentId: targetStudentId,
+    entryPath: Array.isArray(params.guidance_entry) ? params.guidance_entry[0] : params.guidance_entry,
     focused: focusedGuidance,
   };
 
@@ -226,6 +227,14 @@ function DomainBody({
         ]}
         edges={["solid", "dashed"]}
       /> : null}
+
+      {activeSection === "overview" ? <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <SectionLabel>How this domain is organised</SectionLabel>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
+          Start with the domain overview and foundation skills. The {subgroups.length || "available"} subgroup{subgroups.length === 1 ? "" : "s"} below divide this broad field into more focused kinds of work, so you can understand a specialisation before choosing roles.
+        </Text>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Open a subgroup when you are ready to compare its skills, tools, certifications and roles. Roles are intentionally shown inside their subgroup, not mixed into the domain overview.</Text>
+      </View> : null}
 
       {/* Domain-owned build surface. This is separate from programme skills:
           it answers what someone can create or develop within this domain. */}

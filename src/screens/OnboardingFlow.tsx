@@ -46,6 +46,7 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
     userType: profile.userType,
     className: profile.ssClass,
     stream: profile.stream,
+    entryPath: "/onboarding",
     focused: true,
   };
 

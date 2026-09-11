@@ -7,7 +7,7 @@ import type { DataState, DataStatus } from "../../types/career";
 const PRESET: Record<Exclude<DataStatus, "real">, { icon: keyof typeof Feather.glyphMap; title: string; body: string }> = {
   coming_soon: { icon: "lock", title: "Locked", body: "This surface is waiting for verified data." },
   locked: { icon: "lock", title: "Locked", body: "Create an account or wait for release to unlock this surface." },
-  pending: { icon: "clock", title: "Data pending", body: "Verified detail is still being added. This will update automatically." },
+  pending: { icon: "clock", title: "Loading your saved items", body: "We’re loading the information available for this view." },
   fallback: { icon: "info", title: "Standard data", body: "Showing the national standard while detailed data is added." },
   error: { icon: "alert-triangle", title: "Something went wrong", body: "Please try again in a moment." },
 };

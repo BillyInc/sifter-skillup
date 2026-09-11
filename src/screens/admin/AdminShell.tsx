@@ -144,6 +144,7 @@ export function AdminShell({
     || readParam(searchParams?.focus) === "guidance"
     || readParam(searchParams?.journey) === "guided_subject_discovery"
     || readParam(searchParams?.journey_mode) === "guided_subject_discovery";
+  const guidanceEntry = readParam(searchParams?.guidance_entry);
   const resumeQuery = useMemo(
     () => Object.entries(searchParams ?? {})
       .flatMap(([key, value]) => (Array.isArray(value) ? value.map((item) => [key, item] as const) : [[key, value] as const]))
@@ -196,6 +197,10 @@ export function AdminShell({
     || (homeSegment === ADMIN_EXPLORE_SEGMENT && lastSegment === "explore")
   );
   const goBack = () => {
+    if (focusedGuidance && guidanceEntry?.startsWith("/")) {
+      router.replace(guidanceEntry as never);
+      return;
+    }
     if (router.canGoBack()) {
       router.back();
       return;

@@ -139,6 +139,7 @@ export function GuidanceStartScreen() {
       guidanceTarget: target === "student" ? "authorised_student" : "self",
       guidanceStudentId: target === "student" ? selectedStudent?.userId : undefined,
       resumeStage: "setup",
+      entryPath: "/admin/guidance-start",
       focused: true,
     });
     const params = [

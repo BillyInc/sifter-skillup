@@ -107,6 +107,7 @@ export function SessionModeScreen() {
       journeyMode: value,
       guidanceTarget: "provider_session",
       resumeStage: "setup",
+      entryPath: "/admin/session",
       focused: true,
     });
     const params = [

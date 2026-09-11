@@ -178,7 +178,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   // focus marker added by a programme/domain/subgroup/role route reaches the
   // shell and hides the complete app navigation chrome, not only the current
   // Explore screen's controls.
-  const params = useGlobalSearchParams<{ trackId?: string | string[]; trackName?: string | string[]; journey?: string | string[]; focus?: string | string[]; guided?: string | string[] }>();
+  const params = useGlobalSearchParams<{ trackId?: string | string[]; trackName?: string | string[]; journey?: string | string[]; focus?: string | string[]; guided?: string | string[]; guidance_entry?: string | string[] }>();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { colors, isDark, toggle } = useTheme();
@@ -217,6 +217,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const focusedGuidance = (Array.isArray(params.journey) ? params.journey[0] : params.journey) === 'guided_subject_discovery'
     || (Array.isArray(params.focus) ? params.focus[0] : params.focus) === 'guidance'
     || (Array.isArray(params.guided) ? params.guided[0] : params.guided) === '1';
+  const guidanceEntry = readParam(params.guidance_entry);
 
   useEffect(() => {
     let active = true;
@@ -379,7 +380,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             {focusedGuidance ? (
               <TouchableOpacity
                 activeOpacity={0.85}
-                onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)/home' as any))}
+                onPress={() => {
+                  if (guidanceEntry?.startsWith('/')) router.replace(guidanceEntry as any);
+                  else if (router.canGoBack()) router.back();
+                  else router.replace('/(tabs)/home' as any);
+                }}
                 style={[styles.focusExitButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}
               >
                 <Text style={[styles.focusExitText, { color: colors.textRole.primary }]}>Exit guidance</Text>
