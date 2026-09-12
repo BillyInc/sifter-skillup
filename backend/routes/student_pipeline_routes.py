@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 import uuid
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 from typing import Any, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
@@ -94,6 +95,138 @@ def _student_programme_name(value: Any) -> Optional[str]:
     if not raw:
         return None
     return raw
+
+
+_JAMB_LABEL_CACHE_KEY = "student:known-jamb-programme-labels:v1"
+
+
+def _normalise_registry_label(value: Any) -> str:
+    text = _clean_text(value) or ""
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", text.lower())).strip()
+
+
+def _known_jamb_programme_labels(svc) -> list[str]:
+    """Load official programme labels used to reject malformed school names.
+
+    Some legacy offering/view rows contain a programme fragment in
+    ``school_name``. That is data quality debt, but it must not become a
+    student-facing university until the source row is corrected.
+    """
+    cached = get_json(_JAMB_LABEL_CACHE_KEY)
+    if isinstance(cached, list):
+        return [label for label in cached if isinstance(label, str) and label]
+    try:
+        rows = (
+            svc.table("jamb_programmes")
+            .select("jamb_name")
+            .limit(2000)
+            .execute()
+        ).data or []
+        labels = sorted({
+            normalised
+            for row in rows
+            if (normalised := _normalise_registry_label(row.get("jamb_name")))
+        })
+        set_json(_JAMB_LABEL_CACHE_KEY, labels, REFERENCE_TTL_SECONDS)
+        return labels
+    except Exception as exc:  # noqa: BLE001
+        log.warning("student programme label lookup failed", error=str(exc))
+        return []
+
+
+def _looks_like_programme_label(school_name: Any, programme_name: Any, labels: list[str]) -> bool:
+    school = _normalise_registry_label(school_name)
+    if not school or len(school) < 4:
+        return False
+    candidates = list(labels)
+    programme = _normalise_registry_label(programme_name)
+    if programme:
+        candidates.append(programme)
+    school_tokens = school.split()
+    for label in candidates:
+        if school == label:
+            return True
+        # Rows such as "SOCIOLOGY AND" are truncated programme labels.
+        if label.startswith(f"{school} ") and len(school_tokens) >= 2:
+            return True
+        # Some legacy rows contain a complete programme fragment rather than
+        # the beginning of it (for example "Security Studies" inside
+        # "Criminology and Security Studies", or "Arts" inside "Creative
+        # Arts"). Treat a full token sequence inside an official programme
+        # label as source evidence that this is not an institution name.
+        if f" {school} " in f" {label} ":
+            return True
+        # Catch one-character OCR/transcription errors such as ANTHROPOLGY.
+        if len(school) >= 8 and SequenceMatcher(None, school, label).ratio() >= 0.94:
+            return True
+    return False
+
+
+def _filter_user_facing_school_rows(rows: list[dict], svc) -> list[dict]:
+    """Fail closed when an offering row is not actually a university.
+
+    ``institution_type`` is necessary but not sufficient because malformed
+    legacy rows can still be typed as ``university``. Keep this filter at the
+    response boundary so search, programme details, and subject-match previews
+    agree while the underlying source data remains available for audit.
+    """
+    labels = _known_jamb_programme_labels(svc)
+    filtered: list[dict] = []
+    for row in rows:
+        institution_type = str(
+            row.get("institution_type") or row.get("institutionType") or ""
+        ).strip().lower()
+        if institution_type and institution_type != "university":
+            continue
+        school_name = row.get("school_name") or row.get("schoolName")
+        programme_name = (
+            row.get("jamb_name")
+            or row.get("jambName")
+            or row.get("programmeName")
+        )
+        if _looks_like_programme_label(school_name, programme_name, labels):
+            log.warning(
+                "suppressing malformed institution label from student response",
+                school_name=school_name,
+                programme_name=programme_name,
+            )
+            continue
+        filtered.append(row)
+    return filtered
+
+
+def _filter_user_facing_programme_search_items(items: list[dict], svc) -> list[dict]:
+    """Sanitise nested university previews in cached programme-search items."""
+    labels = _known_jamb_programme_labels(svc)
+    out: list[dict] = []
+    for item in items:
+        programme_name = item.get("jambName") or item.get("studentName")
+        offerings = item.get("schoolOfferings")
+        if isinstance(offerings, list):
+            valid_offerings = _filter_user_facing_school_rows(offerings, svc)
+            item = dict(item)
+            item["schoolOfferings"] = valid_offerings
+            names = list(dict.fromkeys(
+                str(offering.get("schoolName")).strip()
+                for offering in valid_offerings
+                if offering.get("schoolName")
+            ))
+            item["schoolNames"] = names[:3]
+            item["schoolCount"] = len(names)
+        elif isinstance(item.get("schoolNames"), list):
+            item = dict(item)
+            original_names = list(item["schoolNames"])
+            names = [
+                str(name).strip()
+                for name in original_names
+                if name and not _looks_like_programme_label(name, programme_name, labels)
+            ]
+            item["schoolNames"] = names[:3]
+            item["schoolCount"] = max(0, int(item.get("schoolCount") or 0) - (
+                len(original_names) - len(names)
+            ))
+        out.append(item)
+    return out
 
 
 def _requirement_status(parse_status: Any, *texts: Any) -> str:
@@ -751,10 +884,16 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
     try:
         svc = _svc()
         cache_key = (q or "").strip().lower()
-        cache_key = f"student:jamb-programmes:{cache_key}:{min(limit, 80)}"
+        cache_key = f"student:jamb-programmes:v2:{cache_key}:{min(limit, 80)}"
         cached = get_json(cache_key)
         if isinstance(cached, list):
-            return ResponseModel(data=_real(cached[: min(limit, 80)]))
+            # Cached rows are already frontend-shaped, so apply the same
+            # response-boundary protection before returning them.
+            return ResponseModel(
+                data=_real(
+                    _filter_user_facing_programme_search_items(cached, _svc())[: min(limit, 80)]
+                )
+            )
         try:
             if q and q.strip():
                 like = f"%{q.strip()}%"
@@ -808,6 +947,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                     ).data
                     or []
                 )
+            offering_rows = _filter_user_facing_school_rows(offering_rows, svc)
             schools_by_jamb: dict[str, list[str]] = {}
             offerings_by_jamb: dict[str, list[dict[str, str]]] = {}
             for row in offering_rows:
@@ -864,6 +1004,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 item["schoolOfferings"] = offerings_by_jamb.get(jid, [])
         except Exception as exc:  # noqa: BLE001
             log.warning("student programme school context skipped", error=str(exc))
+        items = _filter_user_facing_programme_search_items(items, svc)
         set_json(cache_key, items, SEARCH_TTL_SECONDS)
         return ResponseModel(data=_real(items[: min(limit, 80)]))
     except Exception as exc:  # noqa: BLE001
@@ -886,6 +1027,10 @@ async def get_jamb_programme(jamb_programme_id: str):
         if not res.data:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
         out = _jamb_detail_out(res.data[0], full=True)
+        # Keep the exact JAMB name as the student-facing identity while
+        # attaching the reviewed, canonical programme explanations underneath.
+        out["contextItems"] = _programme_context_items_for_student(svc, out.get("programmeId"))
+        out["resources"] = _programme_resources_for_student(svc, out.get("programmeId"))
         # Requirements block: general brochure text + parse status. Programmes whose
         # requirement is institution-variant prose (parse_status = needs_review)
         # surface it as "requirements vary by institution" info, not a gap.
@@ -1022,6 +1167,111 @@ def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
         "institutionType": r.get("institution_type"),
         **_skills_out(r, full=full),
     }
+
+
+def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[dict]:
+    """Read programme-owned explanations for a JAMB identity's canonical row."""
+    if not programme_id:
+        return []
+    try:
+        rows = (
+            svc.table("career_context_items")
+            .select("*")
+            .eq("context_level", "programme")
+            .eq("context_key", str(programme_id))
+            .order("priority")
+            .order("item_type")
+            .order("name")
+            .execute()
+            .data
+            or []
+        )
+        return [
+            {
+                "contextLevel": row.get("context_level"),
+                "contextKey": row.get("context_key"),
+                "domainId": row.get("domain_key"),
+                "itemType": row.get("item_type"),
+                "itemKey": row.get("item_key"),
+                "name": row.get("name"),
+                "plainMeaning": row.get("plain_meaning"),
+                "contextualUse": row.get("contextual_use"),
+                "expectedOutput": row.get("expected_output"),
+                "priority": row.get("priority"),
+                "priorityReason": row.get("priority_reason"),
+                "prerequisites": row.get("prerequisites") or [],
+                "relatedItems": row.get("related_items") or [],
+                "sourceIds": row.get("source_ids") or [],
+                "sourceReferences": row.get("source_references") or [],
+                "sourceLocators": row.get("source_locators") or [],
+                "geographicScope": row.get("geographic_scope"),
+                "evidenceLimitations": row.get("evidence_limitations") or [],
+                "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
+                "sourceConfidence": row.get("source_confidence"),
+                "dataState": row.get("data_state") or "source_backed",
+                "verifiedAt": row.get("verified_at"),
+            }
+            for row in rows
+            if row.get("name")
+        ]
+    except Exception as exc:  # noqa: BLE001
+        log.debug("programme context lookup unavailable for JAMB detail", error=str(exc))
+        return []
+
+
+def _programme_resources_for_student(svc: Any, programme_id: Any) -> list[dict]:
+    """Read only programme-owned, approved links for a JAMB detail page."""
+    if not programme_id:
+        return []
+    try:
+        rows = (
+            svc.table("career_learning_resources")
+            .select("*")
+            .eq("programme_id", str(programme_id))
+            .is_("role_id", "null")
+            .order("resource_type")
+            .order("target_name")
+            .execute()
+            .data
+            or []
+        )
+        safe: list[dict] = []
+        for row in rows:
+            provenance = row.get("source_provenance") or {}
+            scope = row.get("ownership_scope") or provenance.get("ownership")
+            status = row.get("review_status") or provenance.get("review_status")
+            if scope not in {None, "programme"} or status in {"review_only", "unverified"}:
+                continue
+            safe.append({
+                "id": row.get("id"),
+                "programmeId": row.get("programme_id"),
+                "domainId": row.get("domain_id"),
+                "subgroupId": row.get("subgroup_id"),
+                "roleId": row.get("role_id"),
+                "ownershipScope": row.get("ownership_scope"),
+                "reviewStatus": row.get("review_status"),
+                "resourceType": row.get("resource_type"),
+                "targetName": row.get("target_name"),
+                "provider": row.get("provider"),
+                "region": row.get("region"),
+                "accessType": row.get("access_type"),
+                "delivery": row.get("delivery"),
+                "url": row.get("url"),
+                "price": row.get("price"),
+                "currency": row.get("currency"),
+                "pricePeriod": row.get("price_period"),
+                "priceAsOf": row.get("price_as_of"),
+                "priceSource": row.get("price_source"),
+                "sourceUrl": row.get("source_url"),
+                "description": row.get("description"),
+                "sourceConfidence": row.get("source_confidence"),
+                "dataState": row.get("data_state"),
+                "sourceProvenance": provenance,
+            })
+        return safe
+    except Exception as exc:  # noqa: BLE001
+        log.debug("programme resource lookup unavailable for JAMB detail", error=str(exc))
+        return []
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/domains", response_model=ResponseModel)
@@ -1223,7 +1473,7 @@ async def get_school_programmes(
         # small arbitrary cap; the q/faculty filters remain available for large
         # catalogues.
         res = query.order("jamb_name").limit(2000).execute()
-        rows = res.data or []
+        rows = _filter_user_facing_school_rows(res.data or [], svc)
         if not rows:
             return ResponseModel(
                 data=_real([], "No course list recorded for this institution yet.")
@@ -1288,10 +1538,12 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
             svc.table("v_school_jamb_programmes")
             .select("*")
             .eq("jamb_programme_id", jamb_programme_id)
+            .eq("institution_type", "university")
             .order("school_name")
             .limit(2000)
             .execute()
         )
+        offering_rows = _filter_user_facing_school_rows(offerings.data or [], svc)
         offering_items = [
             {
                 "schoolId": r.get("school_id"),
@@ -1306,14 +1558,14 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 # internal mapping substrate and must not replace it.
                 "programmeName": r.get("jamb_name"),
             }
-            for r in (offerings.data or [])
+            for r in offering_rows
         ]
         offering_items.sort(key=lambda item: str(item.get("schoolName") or "").casefold())
         enriched = _attach_school_details(offering_items)
-        return ResponseModel(data=_real(enriched, "Showing recorded university offerings and their requirements." if enriched else "No university offering is recorded for this programme yet."))
+        return ResponseModel(data=_real(enriched, "Showing universities with this programme and their recorded requirements." if enriched else "No university is recorded for this programme yet."))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb university offerings failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("University offerings are temporarily unavailable."))
+        return ResponseModel(data=_coming_soon("The university list for this programme is temporarily unavailable."))
 
 
 def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selected_norm: set[str]) -> dict:
@@ -1400,6 +1652,7 @@ def _attach_school_details(
     note or exception; it does not rewrite the national rule or downstream
     CCMAS/domain/role mapping.
     """
+    items = _filter_user_facing_school_rows(items, _svc())
     school_ids = list(dict.fromkeys(str(i.get("schoolId")) for i in items if i.get("schoolId")))
     if not school_ids:
         return items
@@ -1715,7 +1968,7 @@ async def programmes_by_subjects(
         if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
             return ResponseModel(
                 data=_coming_soon(
-                    "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare university offerings and read each university's requirements; try subject matching again after the subject data is updated."
+                    "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare universities and read each university's requirements; try subject matching again after the subject data is updated."
                 )
             )
         if structured:
@@ -1728,14 +1981,14 @@ async def programmes_by_subjects(
         # where it is labelled as source text and review status.
         notice = (
             "No exact structured subject match was found. Some brochure requirements "
-            "are not structured well enough to produce a match here. You can browse programmes by name or compare university offerings instead."
+            "are not structured well enough to produce a match here. You can browse programmes by name or compare universities instead."
         )
         return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(
             data=_coming_soon(
-                "Subject matching is temporarily unavailable. You can still browse programmes by name, compare university offerings and read university requirements."
+                "Subject matching is temporarily unavailable. You can still browse programmes by name, compare universities and read university requirements."
             )
         )
 
@@ -2185,6 +2438,7 @@ def _attach_school_context(
                 ).data
                 or []
             )
+        rows = _filter_user_facing_school_rows(rows, svc)
         school_detail_rows = _attach_school_details([
             {
                 "schoolId": row.get("school_id"),
