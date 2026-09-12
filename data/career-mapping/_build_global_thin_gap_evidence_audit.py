@@ -10,6 +10,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from _role_tools_loader import load_role_tools
+
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_TAXONOMIES = {"global_esco", "global_onet", "global_isco", "global_wef"}
@@ -48,7 +50,7 @@ def role_names(rows):
 
 def main():
     evidence = load("domain_skill_competency_certification_audit.json")
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     thin = load("thin_domain_role_overlays.json")
     registry = load("domain_role_source_registry.json")
 

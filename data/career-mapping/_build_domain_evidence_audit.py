@@ -6,6 +6,8 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from _role_tools_loader import load_role_tools
+
 
 HERE = Path(__file__).resolve().parent
 
@@ -104,7 +106,7 @@ def main():
     structure = load("domain_structure.json")
     skills = load("domain_skill_provenance.json")
     tools = load("domain_tools.json")
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     registry = load("domain_role_source_registry.json")
     body_audit = load("nigerian_professional_body_audit.json")
     thin = load("thin_domain_role_overlays.json")

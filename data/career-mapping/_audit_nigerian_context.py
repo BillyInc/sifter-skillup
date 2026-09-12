@@ -6,6 +6,8 @@ import os
 import re
 from collections import Counter, defaultdict
 
+from _role_tools_loader import load_role_tools
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 AUDIT = os.path.join(HERE, "_audit")
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
@@ -79,7 +81,7 @@ def summarize_entity(entity, *, entity_id, label=None):
 
 def main():
     provenance = load("domain_skill_provenance.json")
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     meta = load("domain_meta.json")
 
     visible_domains = {domain_id for domain_id in provenance if domain_id not in HIDDEN}

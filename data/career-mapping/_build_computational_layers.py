@@ -12,11 +12,11 @@ import os
 from collections import Counter
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = os.path.join(HERE, "computational_layer_manifest.json")
 ROLES = os.path.join(HERE, "role_library_v3_cleaned.json")
-ROLE_TOOLS = os.path.join(HERE, "role_tools.json")
 LAYERS = os.path.join(HERE, "emerging_group_layers.json")
 LINKS = os.path.join(HERE, "computational_role_subgroup_links.json")
 METHOD_EVIDENCE = os.path.join(HERE, "computational_method_evidence.json")
@@ -103,7 +103,7 @@ def main():
     manifest = load(MANIFEST)
     roles = load(ROLES)
     roles.extend(load_overlay_roles())
-    role_tools = load(ROLE_TOOLS)
+    role_tools = load_role_tools()
     layers = load(LAYERS)
     esco_skill_catalog = load_esco_skill_catalog()
     layers.setdefault("schema_version", 1)

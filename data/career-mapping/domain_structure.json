@@ -698,7 +698,7 @@
   ]
  },
  "D004": {
-  "role_count": 16,
+  "role_count": 17,
   "foundation_skills": [
    {
     "skill": "information security strategy",
@@ -8307,7 +8307,7 @@
   ]
  },
  "D074": {
-  "role_count": 19,
+  "role_count": 20,
   "foundation_skills": [
    {
     "skill": "monitor employee's health",
@@ -9352,7 +9352,7 @@
   "role_hint_certifications": []
  },
  "D156": {
-  "role_count": 9,
+  "role_count": 11,
   "foundation_skills": [
    {
     "skill": "cartography",
@@ -11991,7 +11991,7 @@
   "role_hint_certifications": []
  },
  "D067": {
-  "role_count": 10,
+  "role_count": 12,
   "foundation_skills": [
    {
     "skill": "respond to changing situations in health care",
@@ -12701,7 +12701,7 @@
   "role_hint_certifications": []
  },
  "D165": {
-  "role_count": 14,
+  "role_count": 15,
   "foundation_skills": [
    {
     "skill": "assess physical conditions of clients",
@@ -17468,7 +17468,7 @@
   "certifications": []
  },
  "D163": {
-  "role_count": 7,
+  "role_count": 8,
   "foundation_skills": [
    {
     "skill": "legal terminology",
@@ -19552,7 +19552,7 @@
   "role_hint_certifications": []
  },
  "D065": {
-  "role_count": 11,
+  "role_count": 12,
   "foundation_skills": [
    {
     "skill": "grammar",
@@ -21056,7 +21056,7 @@
   "role_hint_certifications": []
  },
  "D160": {
-  "role_count": 16,
+  "role_count": 17,
   "foundation_skills": [
    {
     "skill": "assess visual impact of displays",
@@ -21959,7 +21959,7 @@
   "role_hint_certifications": []
  },
  "D063": {
-  "role_count": 14,
+  "role_count": 17,
   "foundation_skills": [
    {
     "skill": "economics",
@@ -23771,6 +23771,11 @@
     "n": 2
    },
    {
+    "skill": "forensic intelligence",
+    "prevalence": 0.1,
+    "n": 2
+   },
+   {
     "skill": "forensic psychiatry",
     "prevalence": 0.1,
     "n": 2
@@ -23782,11 +23787,6 @@
    },
    {
     "skill": "hear witness accounts",
-    "prevalence": 0.1,
-    "n": 2
-   },
-   {
-    "skill": "illegal substances",
     "prevalence": 0.1,
     "n": 2
    }
@@ -23878,6 +23878,23 @@
      "evidence_role_count": 2
     },
     "display_order": 3
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ISCO-08 group 25",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Source-backed occupational activities within this domain.",
+    "raw_isco_label": "Source-backed occupational grouping",
+    "source_provenance": {
+     "source": "global_isco",
+     "sources": [
+      "global_isco"
+     ],
+     "ownership": "subgroup",
+     "mapping_method": "canonical_role_library_isco_submajor",
+     "source_url": "https://isco.ilo.org/en/isco-08/"
+    }
    },
    {
     "isco_submajor": "26",
@@ -29474,7 +29491,7 @@
   "role_hint_certifications": []
  },
  "D084": {
-  "role_count": 14,
+  "role_count": 15,
   "foundation_skills": [
    {
     "skill": "perform clerical duties",
@@ -32091,7 +32108,7 @@
   ]
  },
  "D096": {
-  "role_count": 13,
+  "role_count": 15,
   "foundation_skills": [
    {
     "skill": "mechanics",
@@ -32810,7 +32827,7 @@
   "role_hint_certifications": []
  },
  "D099": {
-  "role_count": 17,
+  "role_count": 20,
   "foundation_skills": [
    {
     "skill": "transport construction supplies",
@@ -34263,7 +34280,7 @@
   "certifications": []
  },
  "D105": {
-  "role_count": 14,
+  "role_count": 15,
   "foundation_skills": [
    {
     "skill": "maintain equipment",
@@ -39112,7 +39129,7 @@
   "role_hint_certifications": []
  },
  "D123": {
-  "role_count": 11,
+  "role_count": 13,
   "foundation_skills": [
    {
     "skill": "health care legislation",
@@ -39155,114 +39172,114 @@
     "n": 2
    },
    {
-    "skill": "medical terminology",
-    "prevalence": 0.12,
-    "n": 1
+    "skill": "determine imaging techniques to be performed",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "pharmaceutical products",
-    "prevalence": 0.12,
-    "n": 1
+    "skill": "determine medical images' diagnostic suitability",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "radiation physics in healthcare",
-    "prevalence": 0.12,
-    "n": 1
+    "skill": "determine patient's exposure factors",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "radiobiology",
-    "prevalence": 0.12,
-    "n": 1
+    "skill": "empathise with the healthcare user",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "radiotherapy",
-    "prevalence": 0.12,
-    "n": 1
+    "skill": "ensure compliance with radiation protection regulations",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "adhere to organisational code of ethics",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "ensure safety of healthcare users",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "administer contrast media",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "evidence-based radiography practice",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "administer radiopharmaceuticals",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "first aid",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "analyse x-ray imagery",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "follow clinical guidelines",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "apply context specific clinical competences",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "interact with healthcare users",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "apply organisational techniques",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "listen actively",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "apply radiation protection procedures",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "maintain imaging equipment",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "apply radiological health sciences",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "manage healthcare users' data",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "calculate exposure to radiation",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "manage radiology information system",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "clinical perfusion",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "medical oncology",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "comply with legislation related to health care",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "operate medical imaging equipment",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "comply with quality standards related to healthcare practice",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "paediatrics",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "conduct cancer screening tests",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "post-process medical images",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "conduct routine blood testing",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "prepare patients for imaging procedures",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "conduct video telemetry",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "provide psychological support to patients",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "ct scanning protocols; contrast media administration; radiation protection; image post-processing",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "radiation protection",
+    "prevalence": 0.1538,
+    "n": 2
    },
    {
-    "skill": "deal with emergency care situations",
-    "prevalence": 0.0909,
-    "n": 1
+    "skill": "respond to changing situations in health care",
+    "prevalence": 0.1538,
+    "n": 2
    }
   ],
   "has_subgroups": true,
@@ -39270,7 +39287,7 @@
    {
     "isco_submajor": "22",
     "label": "Health professionals",
-    "role_count": 1,
+    "role_count": 2,
     "cluster_skills": [],
     "description": "Source-backed activities within this domain.",
     "raw_isco_label": "Health professionals",
@@ -41679,7 +41696,7 @@
   "role_hint_certifications": []
  },
  "D166": {
-  "role_count": 10,
+  "role_count": 14,
   "foundation_skills": [
    {
     "skill": "engineering principles",
@@ -41757,6 +41774,56 @@
     "n": 2
    },
    {
+    "skill": "automatic control system",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "develop computer vision system",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "electrical engineering",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "electronics",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "liaise with engineers",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "mechanics",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "mechatronics",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "perform test run",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "robotic components",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
+    "skill": "robotics",
+    "prevalence": 0.1429,
+    "n": 2
+   },
+   {
     "skill": "3d modelling",
     "prevalence": 0.1111,
     "n": 1
@@ -41780,56 +41847,6 @@
     "skill": "building automation",
     "prevalence": 0.1111,
     "n": 1
-   },
-   {
-    "skill": "business requirements techniques",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "cae software",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "computer engineering",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "computer programming",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "computer simulation",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "control engineering",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "create software design",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "data models",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "develop automated migration methods",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "develop documentation in accordance with legal requirements",
-    "prevalence": 0.1111,
-    "n": 1
    }
   ],
   "has_subgroups": true,
@@ -41837,7 +41854,7 @@
    {
     "isco_submajor": "21",
     "label": "Automotive & Powertrain Engineers",
-    "role_count": 7,
+    "role_count": 8,
     "cluster_skills": [
      "systems development life-cycle",
      "ICT network routing",
@@ -41911,6 +41928,23 @@
      }
     },
     "display_order": 2
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science and Engineering Associate Professionals",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Support scientific, technical and engineering work through practical application and measurement.",
+    "raw_isco_label": "Science and Engineering Associate Professionals",
+    "source_provenance": {
+     "source": "global_isco",
+     "sources": [
+      "global_isco"
+     ],
+     "ownership": "subgroup",
+     "mapping_method": "canonical_role_library_isco_submajor",
+     "source_url": "https://isco.ilo.org/en/isco-08/"
+    }
    },
    {
     "isco_submajor": "75",
@@ -42673,7 +42707,7 @@
   "role_hint_certifications": []
  },
  "D137": {
-  "role_count": 8,
+  "role_count": 9,
   "foundation_skills": [
    {
     "skill": "calculate exposure to radiation",
@@ -42801,29 +42835,29 @@
     "n": 2
    },
    {
-    "skill": "adhere to organisational code of ethics",
-    "prevalence": 0.125,
-    "n": 1
+    "skill": "comply with legislation related to health care",
+    "prevalence": 0.2222,
+    "n": 2
    },
    {
-    "skill": "administer contrast media",
-    "prevalence": 0.125,
-    "n": 1
+    "skill": "comply with quality standards related to healthcare practice",
+    "prevalence": 0.2222,
+    "n": 2
    },
    {
-    "skill": "administer radiopharmaceuticals",
-    "prevalence": 0.125,
-    "n": 1
+    "skill": "ensure safety of healthcare users",
+    "prevalence": 0.2222,
+    "n": 2
    },
    {
-    "skill": "advise on pollution prevention",
-    "prevalence": 0.125,
-    "n": 1
+    "skill": "follow clinical guidelines",
+    "prevalence": 0.2222,
+    "n": 2
    },
    {
-    "skill": "analyse x-ray imagery",
-    "prevalence": 0.125,
-    "n": 1
+    "skill": "perform transcranial magnetic stimulation",
+    "prevalence": 0.2222,
+    "n": 2
    }
   ],
   "has_subgroups": true,
@@ -42861,7 +42895,7 @@
    {
     "isco_submajor": "22",
     "label": "Health professionals",
-    "role_count": 2,
+    "role_count": 3,
     "cluster_skills": [
      "evidence-based radiography practice",
      "paediatrics",
@@ -43548,7 +43582,7 @@
   ]
  },
  "D144": {
-  "role_count": 5,
+  "role_count": 14,
   "foundation_skills": [
    {
     "skill": "review meteorological forecast data",
@@ -43706,7 +43740,7 @@
    {
     "isco_submajor": "21",
     "label": "Climate Modelling & Atmospheric Science",
-    "role_count": 4,
+    "role_count": 6,
     "cluster_skills": [
      "conduct research on climate processes",
      "develop models for weather forecast",
@@ -43734,6 +43768,23 @@
       "salary": "excluded"
      }
     }
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science and Engineering Associate Professionals",
+    "role_count": 1,
+    "cluster_skills": [],
+    "description": "Support scientific, technical and engineering work through practical application and measurement.",
+    "raw_isco_label": "Science and Engineering Associate Professionals",
+    "source_provenance": {
+     "source": "global_isco",
+     "sources": [
+      "global_isco"
+     ],
+     "ownership": "subgroup",
+     "mapping_method": "canonical_role_library_isco_submajor",
+     "source_url": "https://isco.ilo.org/en/isco-08/"
+    }
    }
   ],
   "gateway_certifications": [],
@@ -43756,7 +43807,7 @@
   ]
  },
  "D145": {
-  "role_count": 9,
+  "role_count": 12,
   "foundation_skills": [
    {
     "skill": "health care occupation-specific ethics",
@@ -44019,7 +44070,7 @@
   "role_hint_certifications": []
  },
  "D155": {
-  "role_count": 12,
+  "role_count": 16,
   "foundation_skills": [
    {
     "skill": "analytical chemistry",
@@ -44072,6 +44123,76 @@
     "n": 2
    },
    {
+    "skill": "manufacturing processes",
+    "prevalence": 0.1875,
+    "n": 3
+   },
+   {
+    "skill": "perform chemical experiments",
+    "prevalence": 0.1875,
+    "n": 3
+   },
+   {
+    "skill": "work with chemicals",
+    "prevalence": 0.1875,
+    "n": 3
+   },
+   {
+    "skill": "analyse production processes for improvement",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "basic chemicals",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "electronics",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "inspect semiconductor components",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "microassembly",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "microelectronics",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "perform scientific research",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "physics",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "semiconductors",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "test materials",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
+    "skill": "types of plastic",
+    "prevalence": 0.125,
+    "n": 2
+   },
+   {
     "skill": "adjust engineering designs",
     "prevalence": 0.1111,
     "n": 1
@@ -44100,76 +44221,6 @@
     "skill": "create solutions to problems",
     "prevalence": 0.1111,
     "n": 1
-   },
-   {
-    "skill": "develop calibration procedures",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "develop measuring equipment",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "disseminate results to the scientific community",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "engineering principles",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "engineering processes",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "forecast organisational risks",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "inorganic chemistry",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "instrumentation engineering",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "interact professionally in research and professional environments",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "materials characterisation; xrd/sem/tem; materials modelling; research publication",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "materials engineering",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "mathematics",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "metrology",
-    "prevalence": 0.1111,
-    "n": 1
-   },
-   {
-    "skill": "nanomaterial synthesis; characterisation techniques; materials science; safety handling",
-    "prevalence": 0.1111,
-    "n": 1
    }
   ],
   "has_subgroups": true,
@@ -44177,7 +44228,7 @@
    {
     "isco_submajor": "21",
     "label": "Nanoscience & Advanced Materials Research",
-    "role_count": 8,
+    "role_count": 11,
     "cluster_skills": [
      "physics",
      "statistics",

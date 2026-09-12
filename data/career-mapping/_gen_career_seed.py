@@ -11,6 +11,7 @@ import json, re, uuid, os, glob, math
 from collections import Counter, defaultdict
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SEED_OUTPUT_PATH = os.environ.get("CAREER_SEED_OUTPUT_PATH") or os.path.join(HERE, "..", "..", "backend", "seed_career_v2.sql")
@@ -67,7 +68,7 @@ scope_audit = load("domain_skill_competency_certification_audit.json")
 # ownership.
 roles  = load("role_library_v3_cleaned.json")
 roles.extend(load_overlay_roles())
-role_tools = load("role_tools.json") if os.path.exists(os.path.join(HERE, "role_tools.json")) else {}
+role_tools = load_role_tools()
 role_work_profiles = {}
 _work_profile_path = os.path.join(HERE, "role_work_profiles.json")
 if os.path.exists(_work_profile_path):
@@ -386,10 +387,8 @@ for dk, tv in tools.items():
 
 # ── 4b. role-level tools (L3T) from role_tools.json, if built ────
 # Emitted as scope='role' rows (requires migration_role_tools.sql).
-rt_path = os.path.join(HERE, "role_tools.json")
 role_tools_n = 0
-if os.path.exists(rt_path):
-    role_tools = json.load(open(rt_path, encoding="utf-8"))
+if role_tools:
     for rk, ent in role_tools.items():
         if rk == "_meta":
             continue
