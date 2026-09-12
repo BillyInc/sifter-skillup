@@ -6,17 +6,24 @@ import { careerData } from "../../lib/careerData";
 import { provisioningData } from "../../lib/provisioningData";
 import { useAuth } from "@/hooks/useAuth";
 
-type BranchKind = "domains" | "subgroups" | "roles";
-type GuidanceListItem = { id: string };
+type BranchKind = "programmes" | "domains" | "subgroups" | "roles";
+type GuidanceListItem = { id: string; programme?: { id?: string } };
 type GuidancePathRecord = Record<string, GuidanceListItem[] | unknown>;
 
 function guidanceItems(path: GuidancePathRecord, kind: BranchKind): GuidanceListItem[] {
   const value = path[kind];
   return Array.isArray(value)
     ? value.filter((entry): entry is GuidanceListItem => Boolean(
-      entry && typeof entry === "object" && "id" in entry && typeof (entry as { id?: unknown }).id === "string",
+      entry && typeof entry === "object" && (
+        ("id" in entry && typeof (entry as { id?: unknown }).id === "string")
+        || (kind === "programmes" && "programme" in entry && typeof (entry as { programme?: { id?: unknown } }).programme?.id === "string")
+      ),
     ))
     : [];
+}
+
+function selectionId(entry: GuidanceListItem, kind: BranchKind): string {
+  return kind === "programmes" ? String(entry.programme?.id ?? entry.id ?? "") : entry.id;
 }
 
 // The record is deliberately loose: alongside the branch arrays it also
@@ -89,7 +96,7 @@ export function GuidanceReportButton({
     readGuidancePath(targetStudentId, ownerId).then((path) => {
       if (!active) return;
       const list = guidanceItems(path, selection.kind);
-      setSelected(list.some((entry) => entry.id === selection.id));
+      setSelected(list.some((entry) => selectionId(entry, selection.kind) === selection.id));
     });
     return () => {
       active = false;
@@ -106,6 +113,7 @@ export function GuidanceReportButton({
       const item = {
         id: selection.id,
         name: selection.name,
+        ...(selection.kind === "programmes" ? { programme: { id: selection.id, name: selection.name } } : {}),
         ...(selection.domainId ? { domainId: selection.domainId } : {}),
         ...(selection.domainName ? { domainName: selection.domainName } : {}),
         ...(selection.subgroupId ? { subgroupId: selection.subgroupId } : {}),
@@ -113,8 +121,8 @@ export function GuidanceReportButton({
         ...(selection.matchType ? { matchType: selection.matchType } : {}),
       };
       const nextList = selected
-        ? list.filter((entry) => entry.id !== selection.id)
-        : [...list.filter((entry) => entry.id !== selection.id), item];
+        ? list.filter((entry) => selectionId(entry, selection.kind) !== selection.id)
+        : [...list.filter((entry) => selectionId(entry, selection.kind) !== selection.id), item];
       if (targetStudentId) {
         const nextPath = {
           ...path,
@@ -149,7 +157,7 @@ export function GuidanceReportButton({
   return (
     <View style={styles.wrap}>
       <SifterButton
-        label={busy ? "Saving..." : selected ? "Selected" : "Add to guidance"}
+        label={busy ? "Saving..." : selected ? "Selected" : selection.kind === "programmes" ? "Select programme" : "Select"}
         icon={busy ? undefined : selected ? "check" : "bookmark"}
         onPress={add}
         variant="ghost"
