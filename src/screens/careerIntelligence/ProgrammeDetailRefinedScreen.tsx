@@ -103,8 +103,7 @@ function relationshipOrder(matchType: DomainLink["matchType"]): number {
 
 function requirementStatusLabel(status?: string | null): string {
   if (status === "complete") return "Requirements available"
-  if (status === "source_missing") return "No additional requirements recorded"
-  return "Some requirement details are unavailable"
+  return "Requirements listed below"
 }
 
 const DOMAIN_CONNECTIONS: DomainLink["matchType"][] = ["direct", "functional", "adjacent"];
@@ -178,7 +177,10 @@ function appendProgrammeChoice(
   const next = previous.filter((choice) => {
     const savedProgramme = (choice.programme ?? {}) as Record<string, unknown>;
     const savedUniversity = (choice.university ?? {}) as Record<string, unknown>;
-    return String(savedProgramme.id ?? "") !== programmeId || String(savedUniversity.id ?? "") !== universityId;
+    const sameProgramme = String(savedProgramme.id ?? "") === programmeId;
+    const sameUniversity = String(savedUniversity.id ?? "") === universityId;
+    const savedIsPlaceholder = !String(savedUniversity.id ?? "");
+    return !(sameProgramme && (sameUniversity || (savedIsPlaceholder && universityId)));
   });
   return {
     ...path,
@@ -203,6 +205,10 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const activeGuidanceEntry = guidanceEntry || (Array.isArray(routeParams.guidance_entry) ? routeParams.guidance_entry[0] : routeParams.guidance_entry) || undefined;
   const universityOptionsOnly = activeJourneyMode === "universities_only";
   const undergraduateContext = activeUserType === "student" || activeJourneyMode === "undergraduate_career" || activeJourneyMode === "undergraduate_programmes";
+  const guidedAdmissionJourney = Boolean(
+    ["programme_preview", "guided_subject_discovery", "programme_to_role"].includes(activeJourneyMode)
+    && (activeUserType === "ss3_secondary" || activeUserType === "jamb" || guidanceStudentId),
+  );
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
   const [tab, setTab] = useState<ProgrammeTab>("overview");
@@ -213,6 +219,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const [comparisonSchoolIds, setComparisonSchoolIds] = useState<string[]>(initialSchoolId ? [initialSchoolId] : []);
   const [notice, setNotice] = useState<string | null>(null);
   const [savingSchool, setSavingSchool] = useState<string | null>(null);
+  const [universityPickerOpen, setUniversityPickerOpen] = useState(false);
 
   const loadProgramme = useCallback(() => {
     setState(pending("Loading programme details..."));
@@ -347,6 +354,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     // immediately; saving a guidance checkpoint must never hide requirements
     // that the student has already selected to inspect.
     setSelectedSchoolId(school.schoolId);
+    setUniversityPickerOpen(false);
     // SS1/SS2 are comparing admission requirements, not committing to a
     // university-aware programme learning profile. Open requirements first;
     // later-stage users continue to the university-aware overview.
@@ -414,7 +422,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
        tabs={[
          { value: "overview", label: "Overview" },
          ...(selectedSchoolId ? [{ value: "requirements" as ProgrammeTab, label: "Requirements" }] : []),
-         { value: "schools", label: "Universities" },
+         ...(!guidedAdmissionJourney ? [{ value: "schools" as ProgrammeTab, label: "Universities" }] : []),
        ]}
       style={styles.tabs}
     />
@@ -426,7 +434,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     title={programmeName}
       backLabel={focusedGuidance ? "Back to home" : "Back to programme choices"}
       onBack={backToProgrammeChoices}
-       save={focusedGuidance || isViewOnly ? undefined : { entityType: "programme", entityId: activeProgrammeId }}
+      save={focusedGuidance || isViewOnly ? undefined : { entityType: "programme", entityId: activeProgrammeId }}
+      reportSelection={!selectedSchoolId ? { kind: "programmes", id: activeProgrammeId, name: programmeName } : undefined}
       pdf
       pdfPath={guidanceStudentId ? `/api/provisioning/students/${encodeURIComponent(guidanceStudentId)}/report.html` : "/api/student/report.html"}
        state={state}
@@ -468,7 +477,9 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
               focused: focusedGuidance,
             });
           }}
-          onChooseSchool={() => setTab("schools")}
+            guidedAdmissionJourney={guidedAdmissionJourney}
+           universityPickerOpen={universityPickerOpen}
+           onChooseSchool={() => guidedAdmissionJourney ? setUniversityPickerOpen(true) : setTab("schools")}
            guidanceStudentId={guidanceStudentId}
           guidanceContext={guidanceContext}
            router={router}
@@ -508,6 +519,8 @@ function ProgrammeDetailBody({
   focusedGuidance,
   viewOnly,
   showCareerGuidance,
+  guidedAdmissionJourney,
+  universityPickerOpen,
 }: {
   data: Programme;
   tab: ProgrammeTab;
@@ -534,6 +547,8 @@ function ProgrammeDetailBody({
   focusedGuidance: boolean;
   viewOnly: boolean;
   showCareerGuidance: boolean;
+  guidedAdmissionJourney: boolean;
+  universityPickerOpen: boolean;
 }) {
   const exploreNav = useExploreNav();
   const resp = useResponsive();
@@ -602,17 +617,17 @@ function ProgrammeDetailBody({
               />
               {data.resources?.length ? <LearningResourcesBlock resources={data.resources} title="Start learning from the programme" /> : null}
               {earlySecondary && data.skillsCount ? <DataSourceBadge verification="verified" source="CCMAS/JAMB curriculum records" /> : null}
-              <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-                <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
-                <Text style={[styles.body, { color: colors.textRole.secondary }]}>
-                  {earlySecondary
-                    ? "University requirements come next. Open the Universities step when you want to compare where this programme is available."
-                    : "Choose a university to open the full university-aware programme details, address and requirements."}
-                </Text>
-                <TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
-                  <Text style={styles.primaryText}>Choose a university</Text>
-                </TouchableOpacity>
-              </View>
+              {guidedAdmissionJourney ? (
+                <UniversityPicker schools={schools} colors={colors} onSelect={onSelectSchool} />
+              ) : (
+                <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+                  <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
+                  <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose a university to open the full university-aware programme details, address and requirements.</Text>
+                  <TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
+                    <Text style={styles.primaryText}>Choose a university</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </>
           ) : (
             <>
@@ -633,6 +648,7 @@ function ProgrammeDetailBody({
                 {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
                 {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a read-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
                 {showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceContext)} onContinue={onContinueCareer} continueLabel="Continue" /> : <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><SectionLabel>University options review</SectionLabel><Text style={[styles.body, { color: colors.textRole.secondary }]}>You have reviewed this university&apos;s programme details and requirements. Career guidance is not part of this session mode.</Text><TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Change university</Text></TouchableOpacity></View>}
+                {guidedAdmissionJourney && universityPickerOpen ? <UniversityPicker schools={schools} colors={colors} onSelect={onSelectSchool} /> : null}
               </View>
             </>
           )}
@@ -653,9 +669,9 @@ function ProgrammeDetailBody({
             <View style={[styles.block, { marginTop: Spacing.md }]}>
               <SectionLabel>National programme requirements</SectionLabel>
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>These requirements belong to the selected JAMB programme. The university details below are specific to {selectedSchool.schoolName}.</Text>
-              <Text style={[styles.meta, { color: requirements?.requirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>
-                {requirementStatusLabel(requirements?.requirementStatus)}{requirements?.requirementStatus === "review_only" ? " — shown for reference, not used as a confirmed eligibility rule" : ""}
-              </Text>
+               <Text style={[styles.meta, { color: requirements?.requirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>
+                 {requirementStatusLabel(requirements?.requirementStatus)}
+               </Text>
               {requirementCards.map((card) => (
                 <View key={card.field} style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
                   <View style={styles.requirementTitle}>
@@ -670,9 +686,9 @@ function ProgrammeDetailBody({
               <Text style={[styles.body, { color: colors.textRole.secondary }]}>
                 These details belong only to {selectedSchool.schoolName}. They do not replace the national programme requirements above.
               </Text>
-              <Text style={[styles.meta, { color: selectedSchool.universityRequirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>
-                {requirementStatusLabel(selectedSchool.universityRequirementStatus)}{selectedSchool.universityRequirementNotice ? ` — ${selectedSchool.universityRequirementNotice}` : ""}
-              </Text>
+               <Text style={[styles.meta, { color: selectedSchool.universityRequirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>
+                 {requirementStatusLabel(selectedSchool.universityRequirementStatus)}
+               </Text>
               {universityRequirementCards.map((card) => (
                 <View key={card.field} style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
                   <View style={styles.requirementTitle}>
@@ -711,14 +727,14 @@ function ProgrammeDetailBody({
                   <Text style={[styles.body, { color: colors.textRole.secondary }]}>{selectedSchool.address}</Text>
                 </View>
               ) : null}
-              {(requirements?.sourceEvidence?.some((source) => source.layer !== "direct_entry") || selectedSchool.universityRequirementExceptions?.some((row) => row.text && row.parseStatus !== "needs_review")) ? (
+              {(requirements?.sourceEvidence?.some((source) => source.layer !== "direct_entry" && (source as { parseStatus?: string }).parseStatus !== "needs_review") || selectedSchool.universityRequirementExceptions?.some((row) => row.text && row.parseStatus !== "needs_review")) ? (
                 <View style={[styles.requirement, { borderColor: colors.borderRole.subtle }]}>
                   <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: evidenceOpen }} onPress={() => setEvidenceOpen((open) => !open)}>
                     <Text style={[styles.label, { color: colors.accentRole.action }]}>{evidenceOpen ? "Hide source evidence" : "View source evidence"}</Text>
                   </TouchableOpacity>
                   {evidenceOpen ? (
                     <View style={{ gap: Spacing.sm }}>
-                      {(requirements?.sourceEvidence ?? []).filter((source) => source.layer !== "direct_entry").map((source, index) => (
+                      {(requirements?.sourceEvidence ?? []).filter((source) => source.layer !== "direct_entry" && (source as { parseStatus?: string }).parseStatus !== "needs_review").map((source, index) => (
                         <View key={`${source.layer ?? "source"}-${source.page ?? ""}-${index}`}>
                           <Text style={[styles.meta, { color: colors.textRole.muted }]}>
                             {(source.layer ?? "source").toUpperCase()} · {source.sourceFile ?? "Source file not recorded"}{source.page ? ` · page ${source.page}` : ""}
@@ -728,7 +744,7 @@ function ProgrammeDetailBody({
                       ))}
                       {(selectedSchool.universityRequirementExceptions ?? []).filter((row) => row.text && row.parseStatus !== "needs_review").map((row, index) => (
                         <View key={`university-source-${index}`}>
-                          <Text style={[styles.meta, { color: colors.textRole.muted }]}>{(row.examType ?? "university").toUpperCase()} source note{row.parseStatus === "needs_review" ? " · needs confirmation" : ""}</Text>
+                           <Text style={[styles.meta, { color: colors.textRole.muted }]}>{(row.examType ?? "university").toUpperCase()} source note</Text>
                           <Text style={[styles.body, { color: colors.textRole.secondary }]}>{row.text}</Text>
                         </View>
                       ))}
@@ -803,6 +819,32 @@ function ProgrammeDetailBody({
   );
 }
 
+function UniversityPicker({
+  schools,
+  colors,
+  onSelect,
+}: {
+  schools: JambProgrammeSchool[];
+  colors: ColorPalette;
+  onSelect: (school: JambProgrammeSchool) => void;
+}) {
+  return (
+    <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <SectionLabel>Choose a university</SectionLabel>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose where you may want to study this programme. The next view will show that university&apos;s requirements and programme details.</Text>
+      {schools.length ? schools.map((school) => (
+        <TouchableOpacity key={school.schoolId} accessibilityRole="button" onPress={() => onSelect(school)} style={[styles.schoolChoice, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+          <View style={{ flex: 1, gap: Spacing.xs }}>
+            <Text style={[styles.schoolName, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
+            {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
+          </View>
+          <Text style={[styles.link, { color: colors.accentRole.action }]}>Select</Text>
+        </TouchableOpacity>
+      )) : <Text style={[styles.body, { color: colors.textRole.muted }]}>No university offering is available for this programme yet.</Text>}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   tabs: { marginTop: Spacing.md },
   content: { gap: Spacing.lg, paddingBottom: Spacing.xxl },
@@ -838,6 +880,7 @@ const styles = StyleSheet.create({
   school: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.sm, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, flex: 1, minWidth: 260 },
   schoolCopy: { flex: 1, gap: 3 },
   schoolName: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  schoolChoice: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
   meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
   secondaryButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7 },
   compareButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7 },
