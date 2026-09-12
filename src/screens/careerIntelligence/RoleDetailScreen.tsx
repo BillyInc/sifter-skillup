@@ -33,6 +33,7 @@ import {
   type DataState,
   type DomainRoleV2,
   type DomainRoleV2Enriched,
+  type RoleToolV2,
 } from "@/types/career";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ColorPalette } from "@/theme";
@@ -56,11 +57,13 @@ export interface RoleDetailScreenProps {
 
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
 const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
+  const router = useRouter();
   const roleKey = props.roleId ?? String(params.id ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
     : params.guidance_student_id;
   const focusedGuidance = (Array.isArray(params.focus) ? params.focus[0] : params.focus) === "guidance";
+  const exploreNav = useExploreNav();
 const guidanceContext: GuidanceRouteContext = {
     programmeId: Array.isArray(params.programme_id) ? params.programme_id[0] : params.programme_id,
     jambProgrammeId: Array.isArray(params.jamb_programme_id) ? params.jamb_programme_id[0] : params.jamb_programme_id,
@@ -90,11 +93,28 @@ const guidanceContext: GuidanceRouteContext = {
 
   useEffect(() => loadRole(), [loadRole]);
 
+  const onBack = useCallback(() => {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) {
+      router.back();
+      return;
+    }
+    const parentDomain = state.data?.appearsIn?.[0]?.domainId;
+    const parentSubgroup = state.data?.subgroupId;
+    if (parentDomain && parentSubgroup) {
+      router.replace(`${exploreNav.base}/domain/${encodeURIComponent(parentDomain)}/subgroup/${encodeURIComponent(parentSubgroup)}` as never);
+    } else {
+      router.replace(`${exploreNav.base}/domains` as never);
+    }
+  }, [exploreNav.base, router, state.data]);
+
   return (
     <DetailScaffold
       eyebrow="ROLE"
       title={state.data?.name ?? "Role"}
       backLabel={targetStudentId ? "Back to student guidance" : "Back to subgroup"}
+      onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "role", entityId: roleKey }}
       pdf
       pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
@@ -136,10 +156,10 @@ function RoleBody({
   const resp = useResponsive();
 
   const aka = role.alsoKnownAs?.length ? role.alsoKnownAs.join(", ") : null;
-  const essential = role.essentialSkills ?? [];
-  const optional = role.optionalSkills ?? [];
-  const roleTools = role.tools ?? [];
-  const roleCertifications = role.certifications ?? [];
+  const essential = stringList(role.essentialSkills);
+  const optional = stringList(role.optionalSkills);
+  const roleTools = Array.isArray(role.tools) ? role.tools : [];
+  const roleCertifications = Array.isArray(role.certifications) ? role.certifications : [];
   const appearsIn = role.appearsIn ?? [];
   const enriched = role as DomainRoleV2Enriched;
   const currency = enriched.currencyStatus;
@@ -281,11 +301,11 @@ function RoleBody({
             <View style={{ gap: Spacing.xs }}>
               {(roleTools.filter((tool) => tool.group === "common").length) ? <>
                 <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Tools to practise early</Text>
-                <ChipCloud items={visibleCommonTools.map((tool) => tool.name)} colors={colors} prominent />
+                <RoleToolCloud tools={visibleCommonTools} colors={colors} prominent />
               </> : null}
               {(roleTools.filter((tool) => tool.group !== "common").length) ? <>
                 <Text style={[styles.chipLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Role-specific tools</Text>
-                <ChipCloud items={visibleSpecificTools.map((tool) => tool.name)} colors={colors} prominent={false} />
+                <RoleToolCloud tools={visibleSpecificTools} colors={colors} prominent={false} />
               </> : null}
             </View>
           ) : null}
@@ -551,6 +571,34 @@ function ChipCloud({
   );
 }
 
+function RoleToolCloud({ tools, colors, prominent }: { tools: RoleToolV2[]; colors: ColorPalette; prominent: boolean }) {
+  const bg = prominent ? colors.surface.subtle : colors.surface.raised;
+  const textColor = prominent ? colors.textRole.primary : colors.textRole.secondary;
+  return (
+    <View style={styles.chipWrap}>
+      {tools.map((tool, index) => (
+        <TouchableOpacity
+          key={`${tool.name}-${index}`}
+          disabled={!tool.toolUrl}
+          onPress={() => { if (tool.toolUrl) Linking.openURL(tool.toolUrl).catch(() => {}); }}
+          accessibilityRole={tool.toolUrl ? "link" : undefined}
+          style={[styles.chip, { backgroundColor: bg, borderColor: colors.borderRole.subtle }]}
+        >
+          <Text style={[styles.chipText, { color: textColor }, tool.toolUrl ? styles.chipLink : null]} numberOfLines={1}>
+            {tool.name}{tool.toolUrl ? " · open learning link" : ""}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+}
+
+function stringList(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+  if (typeof value === "string") return value.split("|").map((item) => item.trim()).filter(Boolean);
+  return [];
+}
+
 /** Elite unless the status is empty or explicitly deferred. */
 function isElite(status?: string): boolean {
   if (!status) return false;
@@ -711,6 +759,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   chipText: { fontSize: FontSize.sm },
+  chipLink: { textDecorationLine: "underline" },
   moreButton: {
     alignSelf: "flex-start",
     borderWidth: 1,

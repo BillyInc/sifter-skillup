@@ -112,6 +112,16 @@ function RegionChip({
   );
 }
 
+function marketScopeLabel(scope?: CertificationV2Enriched["marketScope"]): string | null {
+  switch (scope) {
+    case "nigeria": return "Nigerian context";
+    case "global": return "Global context";
+    case "nigeria_and_global": return "Nigeria + global evidence";
+    case "not_established": return "Scope not established";
+    default: return null;
+  }
+}
+
 function CertRow({
   cert,
   emphasise,
@@ -171,6 +181,16 @@ function CertRow({
             {cert.body}
           </Text>
           ) : null}
+        {cert.gateReason ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>
+            Why it appears here: {cert.gateReason}
+          </Text>
+        ) : null}
+        {marketScopeLabel(cert.marketScope) ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>
+            {marketScopeLabel(cert.marketScope)}{cert.marketNote ? ` — ${cert.marketNote}` : ""}
+          </Text>
+        ) : null}
         {cert.availabilityStatus && cert.availabilityStatus !== "active" ? (
           <Text
             style={[styles.certBody, { color: colors.textMuted }]}

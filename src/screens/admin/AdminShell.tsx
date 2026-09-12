@@ -201,6 +201,10 @@ export function AdminShell({
       router.replace(guidanceEntry as never);
       return;
     }
+    if (focusedGuidance) {
+      adminNav.home(router as Nav, audience);
+      return;
+    }
     if (router.canGoBack()) {
       router.back();
       return;

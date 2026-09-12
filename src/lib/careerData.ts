@@ -241,6 +241,10 @@ export interface JambProgrammeSuggestion {
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
   skillsCount?: number | null;
+  /** Programme-owned explanations attached through the canonical CCMAS row. */
+  contextItems?: import("@/types/career").CareerContextItem[];
+  /** Programme-owned reviewed reading and learning links. */
+  resources?: import("@/types/career").CareerLearningResource[];
 }
 
 /** General requirements block from programme_subject_requirements (brochure
@@ -498,7 +502,7 @@ export const careerData = {
       () => request<DataState<JambProgrammeSchool[]>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
       ),
-      "University offerings are unavailable.",
+      "The university list for this programme is unavailable.",
       DETAIL_TTL_MS,
     );
   },

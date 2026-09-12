@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Linking, TouchableOpacity, type ViewStyle } from "react-native";
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
-import type { FoundationSkillEnriched } from "../../types/career";
+import type { CareerLearningResource, FoundationSkillEnriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
+  resources?: CareerLearningResource[];
   title?: string;
   style?: ViewStyle;
 }
@@ -14,6 +15,7 @@ export interface FoundationSkillsBlockProps {
 /** Shows source-ranked field skills as a suggested route, never as a raw rank. */
 export function FoundationSkillsBlock({
   skills,
+  resources,
   title = "Common skills in this domain",
   style,
 }: FoundationSkillsBlockProps) {
@@ -22,21 +24,34 @@ export function FoundationSkillsBlock({
   const [notice, setNotice] = useState<string | null>(null);
   if (!skills?.length) return null;
 
-  const rows = [...skills].sort((a, b) => b.prevalence - a.prevalence);
-  const startHere = rows.slice(0, 3);
-  const buildNext = rows.slice(3);
+  const hasStages = skills.some((skill) => Boolean(skill.stage));
+  const rows = [...skills].sort((a, b) => {
+    if (hasStages) {
+      const order = { start_here: 0, build_next: 1, choose_area: 2, prepare_for_role: 3 } as const;
+      return (order[a.stage ?? "build_next"] ?? 1) - (order[b.stage ?? "build_next"] ?? 1);
+    }
+    return (b.prevalence ?? 0) - (a.prevalence ?? 0);
+  });
+  const startHere = hasStages ? rows.filter((item) => item.stage === "start_here") : rows.slice(0, 3);
+  const buildNext = hasStages ? rows.filter((item) => item.stage === "build_next") : rows.slice(3);
+  const chooseArea = hasStages ? rows.filter((item) => item.stage === "choose_area") : [];
 
   const SkillRows = ({ items }: { items: FoundationSkillEnriched[] }) => (
     <View style={styles.rows}>
       {items.map((skill, index) => {
+        const resource = resources?.find((item) =>
+          (item.resourceType === "skill_learning" || item.resourceType === "skill_reference")
+          && item.targetName.trim().toLowerCase() === skill.skill.trim().toLowerCase(),
+        );
+        const url = skill.uri || resource?.url;
         const openUri = async () => {
-          if (!skill.uri) return;
+          if (!url) return;
           setNotice(null);
           if (!(await hasInternetConnection())) {
             setNotice(OFFLINE_LINK_NOTICE);
             return;
           }
-          const opened = await Linking.openURL(skill.uri).then(() => true).catch(() => false);
+          const opened = await Linking.openURL(url).then(() => true).catch(() => false);
           if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
         };
         return (
@@ -47,7 +62,11 @@ export function FoundationSkillsBlock({
             >
               {skill.skill}
             </Text>
-            {skill.uri ? (
+            <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={2}>
+              {resource?.description || skill.priorityReason || (skill.prevalence ? `Appears in ${Math.round(skill.prevalence * 100)}% of the source role profiles in this domain.` : "Source-backed foundation item.")}
+            </Text>
+            {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>{skill.evidenceNote}</Text> : null}
+            {url ? (
               <Text
                 onPress={() => { void openUri(); }}
                 style={[styles.link, { color: colors.accentRole.action }]}
@@ -55,7 +74,7 @@ export function FoundationSkillsBlock({
               >
                 Open
               </Text>
-            ) : null}
+            ) : <Text style={[styles.note, { color: colors.textRole.muted }]}>No verified learning link attached yet.</Text>}
           </View>
         );
       })}
@@ -68,9 +87,10 @@ export function FoundationSkillsBlock({
       <Text style={[styles.caption, { color: colors.textRole.muted }]}>
         Start with the suggested foundation, then add the other capabilities as your direction becomes clearer. This is guidance, not a checklist.
       </Text>
-      {startHere.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Suggested starting point</Text><SkillRows items={startHere} /></View> : null}
-      {expanded && buildNext.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Other domain foundations</Text><SkillRows items={buildNext} /></View> : null}
-      {buildNext.length ? (
+      {startHere.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Start here</Text><SkillRows items={startHere} /></View> : null}
+      {buildNext.length && (expanded || !hasStages) ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Build next</Text><SkillRows items={buildNext} /></View> : null}
+      {chooseArea.length && expanded ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Choose an area</Text><SkillRows items={chooseArea} /></View> : null}
+      {buildNext.length || chooseArea.length ? (
         <TouchableOpacity
           onPress={() => setExpanded((value) => !value)}
           activeOpacity={0.75}
@@ -79,7 +99,7 @@ export function FoundationSkillsBlock({
           style={styles.moreButton}
         >
           <Text style={[styles.moreText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
-            {expanded ? "Show fewer domain skills" : `See all ${rows.length} domain skills`}
+            {expanded ? "Show fewer learning stages" : `See the full learning sequence`}
           </Text>
         </TouchableOpacity>
       ) : null}
@@ -100,15 +120,14 @@ const styles = StyleSheet.create({
   },
   rows: { gap: Spacing.sm, marginTop: Spacing.xs },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "stretch",
     gap: Spacing.sm,
-    minHeight: 32,
+    paddingVertical: Spacing.xs,
   },
   group: { gap: Spacing.xs },
   groupLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.8 },
   skill: {
-    flex: 1,
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.35,
@@ -125,4 +144,5 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   moreText: { fontSize: FontSize.sm },
+  note: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
 });

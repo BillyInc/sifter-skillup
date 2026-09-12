@@ -53,7 +53,7 @@ const JOURNEYS: { value: JourneyMode; title: string; body: string; university?: 
   {
     value: "universities_only",
     title: "University options only",
-    body: "Review offerings, addresses, requirements and notes without entering career guidance.",
+    body: "Review programmes, addresses, requirements and notes without entering career guidance.",
   },
 ];
 

@@ -9,6 +9,8 @@ type ContextItem = {
   priority?: unknown;
   source_ids?: unknown;
   evidence?: unknown;
+  limitation?: unknown;
+  evidence_limitation?: unknown;
 };
 
 type ContextRecord = Record<string, unknown>;
@@ -116,10 +118,20 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
           <Text style={[styles.categoryLabel, { color: colors.textRole.muted }]}>{group.label}</Text>
           {(expanded ? group.items : group.items.slice(0, 6)).map((item, index) => {
             const priority = priorityLabel(item.priority);
+            const evidence = typeof item.evidence === "string" ? item.evidence.trim() : "";
+            const limitation = typeof item.limitation === "string"
+              ? item.limitation.trim()
+              : typeof item.evidence_limitation === "string"
+                ? item.evidence_limitation.trim()
+                : "";
             return (
-              <View key={`${group.key}-${nameOf(item)}-${index}`} style={styles.itemRow}>
-                <Text style={[styles.itemName, { color: colors.textRole.secondary }]}>{nameOf(item)}</Text>
-                {priority ? <Text style={[styles.priority, { color: colors.accentRole.action }]}>{priority}</Text> : null}
+              <View key={`${group.key}-${nameOf(item)}-${index}`} style={styles.itemBlock}>
+                <View style={styles.itemRow}>
+                  <Text style={[styles.itemName, { color: colors.textRole.secondary }]}>{nameOf(item)}</Text>
+                  {priority ? <Text style={[styles.priority, { color: colors.accentRole.action }]}>{priority}</Text> : null}
+                </View>
+                {evidence ? <Text style={[styles.itemExplanation, { color: colors.textRole.muted }]}>Why it appears: {evidence}</Text> : null}
+                {limitation ? <Text style={[styles.itemExplanation, { color: colors.textRole.muted }]}>Evidence limit: {limitation}</Text> : null}
               </View>
             );
           })}
@@ -202,9 +214,11 @@ const styles = StyleSheet.create({
   layerLabel: { fontSize: FontSize.xs, letterSpacing: 0.7, textTransform: "uppercase" },
   category: { gap: 4 },
   categoryLabel: { fontSize: FontSize.xs, fontWeight: "700" },
+  itemBlock: { gap: 2 },
   itemRow: { flexDirection: "row", alignItems: "baseline", gap: Spacing.sm },
   itemName: { flex: 1, fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.35 },
   priority: { fontSize: FontSize.xs, textTransform: "capitalize" },
+  itemExplanation: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
   moreHint: { fontSize: FontSize.xs },
   moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreText: { fontSize: FontSize.sm },

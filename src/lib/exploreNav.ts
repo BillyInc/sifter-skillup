@@ -44,7 +44,12 @@ export function makeExploreNav(base: string) {
     programme(router: Nav, programmeId: string, context?: GuidanceRouteContext) {
       const query = guidanceContextQuery(context);
       logGuidanceRoute(`${base}/programme`, context, "programme_preview");
-      router.push(`${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never);
+      const href = `${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never;
+      // A focused admission picker is a transient decision step. Replacing it
+      // keeps the browser back button aligned with the same exit destination as
+      // the in-app Back to home action; it must not reopen the old picker.
+      if (context?.replaceHistory || context?.focused) router.replace(href);
+      else router.push(href);
     },
     guided(router: Nav, context?: GuidanceRouteContext) {
       if (context?.programmeId || context?.jambProgrammeId) {

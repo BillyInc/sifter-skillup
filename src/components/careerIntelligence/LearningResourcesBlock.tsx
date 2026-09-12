@@ -16,6 +16,7 @@ const GROUPS: {
   types: CareerLearningResource["resourceType"][];
   label: string;
 }[] = [
+  { types: ["programme_reading"], label: "Programme reading" },
   { types: ["domain_overview", "role_reference"], label: "Understand the work" },
   { types: ["skill_learning", "skill_reference"], label: "Build the skills" },
   { types: ["tool_learning"], label: "Learn the tools" },
@@ -40,6 +41,8 @@ function resourceTitle(resource: CareerLearningResource): string {
 
 function openLabel(resource: CareerLearningResource): string {
   switch (resource.resourceType) {
+    case "programme_reading":
+      return "Open reading reference";
     case "skill_reference":
       return "Open skill reference";
     case "skill_learning":

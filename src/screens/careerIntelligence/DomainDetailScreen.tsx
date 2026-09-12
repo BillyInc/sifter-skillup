@@ -64,6 +64,8 @@ export interface DomainDetailScreenProps {
 export function DomainDetailScreen(props: DomainDetailScreenProps) {
   const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[]; match_type?: string | string[] }>();
   const domainKey = props.domainId ?? String(params.id ?? "");
+  const router = useRouter();
+  const exploreNav = useExploreNav();
   const scrollRef = useRef<ScrollView>(null);
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
@@ -99,11 +101,19 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
 
   useEffect(() => loadDomain(), [loadDomain]);
 
+  const onBack = useCallback(() => {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) router.back();
+    else router.replace(`${exploreNav.base}/domains` as never);
+  }, [exploreNav.base, router]);
+
   return (
     <DetailScaffold
       eyebrow="DOMAIN"
       title={state.data?.name ?? "Domain"}
       backLabel={targetStudentId ? "Back to student guidance" : "Back to programme"}
+      onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "domain", entityId: domainKey }}
       pdf
       pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"}
@@ -158,6 +168,7 @@ function DomainBody({
   // ── Section positions for nav scrolling ──────────────────────
   const [activeSection, setActiveSection] = useState("overview");
   const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
+  const [overviewExpanded, setOverviewExpanded] = useState(false);
   const desktopScrollRef = useRef<ScrollView>(null);
   const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
 
@@ -214,6 +225,46 @@ function DomainBody({
         </View>
       ) : null}
 
+      {activeSection === "overview" && domain.studentOrientation ? (
+        <View style={[styles.orientationBlock, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+          <SectionLabel>Understand this field first</SectionLabel>
+          {domain.studentOrientation.whatItStudies ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What it studies</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whatItStudies}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.whatPeopleDo ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>What people do</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whatPeopleDo}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.questions?.length ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Questions this field asks</Text>
+              <View style={styles.orientationList}>
+                {domain.studentOrientation.questions.map((question) => (
+                  <Text key={question} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>• {question}</Text>
+                ))}
+              </View>
+            </View>
+          ) : null}
+          {domain.studentOrientation.whereProgrammeFits ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Where your programme fits</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.whereProgrammeFits}</Text>
+            </View>
+          ) : null}
+          {domain.studentOrientation.relatedProgrammes?.length ? (
+            <View style={styles.orientationPart}>
+              <Text style={[styles.orientationHeading, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Related programmes</Text>
+              <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{domain.studentOrientation.relatedProgrammes.join(" • ")}</Text>
+            </View>
+          ) : null}
+        </View>
+      ) : null}
+
       {/* Wayfinding — this domain's place on the journey */}
       {activeSection === "overview" ? <RouteLine
         variant="spine"
@@ -231,6 +282,15 @@ function DomainBody({
           Start with the domain overview, then choose an area of work. The {subgroups.length || "available"} area{subgroups.length === 1 ? "" : "s"} below divide this broad field into more focused kinds of work, so you can understand an area before choosing a role.
         </Text>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Roles belong inside an area because the same broad domain can lead to very different kinds of work. Open an area when you are ready to compare its capabilities, tools, resources and roles.</Text>
+      </View> : null}
+
+      {activeSection === "overview" ? <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <SectionLabel>How to continue</SectionLabel>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain gives you a shared foundation. Choose an area next when you want to see the extra capabilities, tools and roles attached to that part of the field.</Text>
+        {domain.foundationSkills?.length ? <View style={{ gap: Spacing.xs }}>
+          {(overviewExpanded ? domain.foundationSkills : domain.foundationSkills.slice(0, 3)).map((skill) => <Text key={skill.skill} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>• {skill.skill}</Text>)}
+          {domain.foundationSkills.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: overviewExpanded }} onPress={() => setOverviewExpanded((value) => !value)} style={styles.moreButton}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{overviewExpanded ? "Show less foundation" : `View ${domain.foundationSkills.length - 3} more foundation items`}</Text></TouchableOpacity> : null}
+        </View> : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The source records do not include a foundation list for this domain yet.</Text>}
       </View> : null}
 
       {activeSection === "overview" ? <View style={styles.statsRow}>
@@ -277,11 +337,13 @@ function DomainBody({
       {activeSection === "prepare" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
+          resources={domain.resources}
           title="Start here: foundation skills"
         />
         <ContextualItemList items={domain.contextItems} title="What each skill, tool and certification does in this domain" />
         <ToolGroupsBlock
           tools={domain.tools}
+          resources={domain.resources}
           title="Tools you may use"
           commonLabel="Useful throughout this domain"
           distinctiveLabel="Used in particular areas"
@@ -499,6 +561,15 @@ const styles = StyleSheet.create({
     borderRadius: Radius.lg,
     padding: Spacing.md,
   },
+  orientationBlock: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  orientationPart: { gap: Spacing.xs },
+  orientationHeading: { fontSize: FontSize.sm },
+  orientationList: { gap: Spacing.xs },
   statsRow: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   statCard: { flex: 1, minWidth: 150, gap: 2, borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md },
   statValue: { fontSize: FontSize.xl, fontWeight: "800" },
