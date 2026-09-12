@@ -57,7 +57,7 @@ const guidanceContext: GuidanceRouteContext = {
     {() => subgroup ? <View style={styles.body}>
        <SectionLabel>Area overview</SectionLabel>
        <Text style={[styles.heading, { color: colors.textRole.primary }]}>What people do in this area</Text>
-       <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "A source-backed plain-language description for this area is not available yet. The attached skills, tools, evidence and roles remain available for review."}</Text>
+       <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "A plain-language description for this area is not available yet. Explore the attached capabilities, tools, evidence and roles to understand the area."}</Text>
        <Text style={[styles.copy, { color: colors.textRole.muted }]}>This is one focused area inside the wider domain. Understand the area first, then compare the roles organised here.</Text>
        <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)} style={[styles.more, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show less area context" : "See more area context"}</Text></TouchableOpacity>
       {expanded ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>

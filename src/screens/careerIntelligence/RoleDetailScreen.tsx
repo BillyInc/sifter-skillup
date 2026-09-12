@@ -24,6 +24,7 @@ import {
   LearningResourcesBlock,
   RoleWorkEvidenceBlock,
   ContextualItemList,
+  TextTabs,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -259,7 +260,7 @@ function RoleBody({
       <View onLayout={(e) => onSectionLayout("skills", e.nativeEvent.layout.y)} />
       <View style={styles.roleMeaning}>
         <SectionLabel>What this role means</SectionLabel>
-        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description || "A source-backed occupation explanation is not attached to this role record yet. Review the preparation and evidence below without treating the title alone as a complete job description."}</Text>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description || "A plain-language occupation explanation is not attached to this role record yet. Use the preparation and evidence below without treating the title alone as a complete job description."}</Text>
         {sourceUrl ? <TouchableOpacity accessibilityRole="link" onPress={() => { void openRoleSource(); }}><Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{sourceLabel} for a fuller explanation ↗</Text></TouchableOpacity> : null}
         {sourceNotice ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>{sourceNotice}</Text> : null}
       </View>
@@ -419,6 +420,11 @@ function RoleBody({
   // Mobile / tablet: single column
   return (
     <View style={{ gap: Spacing.lg }}>
+      <TextTabs
+        tabs={SECTIONS.map((section) => ({ value: section.key, label: section.label }))}
+        value={activeSection as typeof SECTIONS[number]["key"]}
+        onChange={(value) => scrollTo(value)}
+      />
       {content}
     </View>
   );
