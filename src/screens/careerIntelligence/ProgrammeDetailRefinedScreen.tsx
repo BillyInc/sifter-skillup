@@ -206,8 +206,11 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const universityOptionsOnly = activeJourneyMode === "universities_only";
   const undergraduateContext = activeUserType === "student" || activeJourneyMode === "undergraduate_career" || activeJourneyMode === "undergraduate_programmes";
   const guidedAdmissionJourney = Boolean(
-    ["programme_preview", "guided_subject_discovery", "programme_to_role"].includes(activeJourneyMode)
-    && (activeUserType === "ss3_secondary" || activeUserType === "jamb" || guidanceStudentId),
+    guidanceStudentId
+    || (
+      ["programme_preview", "guided_subject_discovery", "programme_to_role", "admin_created_student_guidance"].includes(activeJourneyMode)
+      && (activeUserType === "ss3_secondary" || activeUserType === "jamb")
+    ),
   );
   const exploreNav = useExploreNav();
   const { colors } = useTheme();
