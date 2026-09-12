@@ -5,6 +5,7 @@ export type Router = {
   push: (href: Href) => void;
   replace: (href: Href) => void;
   back: () => void;
+  canGoBack: () => boolean;
   dismissTo?: (href: Href) => void;
 };
 
@@ -38,6 +39,7 @@ export function useRouter(): Router {
     push: (href) => announce(browserPath(href)),
     replace: (href) => announce(browserPath(href), true),
     back: () => window.history.back(),
+    canGoBack: () => window.history.length > 1,
     dismissTo: (href) => announce(browserPath(href), true),
   }), []);
 }

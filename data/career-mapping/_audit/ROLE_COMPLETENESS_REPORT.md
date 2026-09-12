@@ -7,10 +7,10 @@ A role is not treated as complete merely because it has a name: source ownership
 
 - Canonical role keys: **5209**
 - Exact ESCO occupation matches: **4746 (91.1%)**
-- Exact detailed O*NET tool matches: **4277 (82.1%)**
-- Exact detailed O*NET competency matches: **4272 (82.0%)**
+- Exact detailed O*NET tool matches: **4232 (81.2%)**
+- Exact detailed O*NET competency matches: **4232 (81.2%)**
 - ESCO skill records: **4746 (91.1%)**
-- Specialist framework signals: **603 (11.6%)**
+- Specialist framework signals: **556 (10.7%)**
 - Any source signal: **5209 (100.0%)**
 - Roles without a source signal: **0**
 
@@ -20,11 +20,11 @@ ESCO and O*NET are kept as separate evidence. O*NET joins use exact detailed SOC
 
 | Domain | Canonical roles | Structure roles | Subgroups | ESCO | O*NET tools | O*NET competencies | Framework | Any signal |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| D139 Game Design | 41 | 41 | 3 | 27 | 23 | 23 | 14 | 41 |
-| D140 Robotics Engineering, Systems Design | 20 | 20 | 4 | 15 | 15 | 15 | 14 | 20 |
+| D139 Game Design | 41 | 41 | 3 | 27 | 23 | 22 | 14 | 41 |
+| D140 Robotics Engineering, Systems Design | 20 | 20 | 4 | 15 | 14 | 15 | 13 | 20 |
 | D141 Quantum Computing, Quantum Information | 19 | 19 | 5 | 0 | 0 | 0 | 19 | 19 |
-| D155 Nanotechnology, Advanced Materials | 16 | 12 | 3 | 8 | 11 | 10 | 12 | 16 |
-| D163 Intellectual Property Law, Patents | 8 | 7 | 5 | 7 | 6 | 6 | 6 | 8 |
+| D155 Nanotechnology, Advanced Materials | 16 | 16 | 3 | 8 | 7 | 7 | 8 | 16 |
+| D163 Intellectual Property Law, Patents | 8 | 8 | 5 | 7 | 5 | 6 | 5 | 8 |
 | D167 XR & Immersive Technology | 13 | 13 | 7 | 7 | 5 | 5 | 13 | 13 |
 | D168 Esports & Creator Economy | 15 | 15 | 6 | 4 | 5 | 5 | 15 | 15 |
 
@@ -40,25 +40,6 @@ The following domains are flagged because they have fewer than five roles, a sou
 
 | Domain | Roles | Structure roles | Subgroups | Any source | Reason |
 |---|---:|---:|---:|---:|---|
-| D163 Intellectual Property Law, Patents | 8 | 7 | 5 | 8 | structure mismatch |
-| D137 Medical Physics, Radiation Therapy | 9 | 8 | 4 | 9 | structure mismatch |
-| D156 Land Surveying, Cadastral Mapping | 11 | 9 | 3 | 11 | structure mismatch |
-| D065 Translation, Interpretation | 12 | 11 | 4 | 12 | structure mismatch |
-| D067 Dentistry | 12 | 10 | 3 | 12 | structure mismatch |
-| D145 Neuroscience, Cognitive Science | 12 | 9 | 3 | 12 | structure mismatch |
-| D123 Radiography, Medical Imaging | 13 | 11 | 2 | 13 | structure mismatch |
-| D144 Climate Science, Meteorology | 14 | 5 | 1 | 14 | structure mismatch |
-| D166 Autonomous Vehicles, Self-Driving Systems | 14 | 10 | 3 | 14 | structure mismatch |
-| D084 Payroll, Bookkeeping | 15 | 14 | 2 | 15 | structure mismatch |
-| D096 Agricultural | 15 | 13 | 3 | 15 | structure mismatch |
-| D105 Handicraft, Basketry, Textile Craft | 15 | 14 | 1 | 15 | structure mismatch |
-| D165 Wellness Coaching, Lifestyle Medicine | 15 | 14 | 3 | 15 | structure mismatch |
-| D155 Nanotechnology, Advanced Materials | 16 | 12 | 3 | 16 | structure mismatch |
-| D004 Cybersecurity | 17 | 16 | 2 | 17 | structure mismatch |
-| D063 Economics | 17 | 14 | 3 | 17 | structure mismatch |
-| D160 Fashion Styling, Image Consulting | 17 | 16 | 6 | 17 | structure mismatch |
-| D074 Occupational Health, Safety | 20 | 19 | 4 | 20 | structure mismatch |
-| D099 Masonry, Bricklaying, Tiling, Plastering | 20 | 17 | 3 | 20 | structure mismatch |
 
 ## Source strategy
 

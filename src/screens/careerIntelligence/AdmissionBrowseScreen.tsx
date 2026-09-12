@@ -700,11 +700,13 @@ export default function AdmissionBrowseScreen() {
         jambProgrammeId: offering.jambProgrammeId,
         schoolId: chosenSchool.id,
         userType: userType || "student",
-        focused: true,
+        focused: isFocusedGuidance,
         guidanceStudentId: guidanceStudentId || undefined,
         guidanceTarget: guidanceTarget || undefined,
         entryPath: guidanceEntry || undefined,
+        replaceHistory: isFocusedGuidance,
         journeyMode: "undergraduate_career",
+        resumeStage: "programme_preview",
       });
     }
   };
@@ -735,6 +737,7 @@ export default function AdmissionBrowseScreen() {
       guidanceStudentId: guidanceStudentId || undefined,
       guidanceTarget: guidanceTarget || undefined,
       entryPath: guidanceEntry || undefined,
+      replaceHistory: isFocusedGuidance,
       focused: isFocusedGuidance,
       journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
       resumeStage: "programme_preview",
@@ -900,6 +903,7 @@ export default function AdmissionBrowseScreen() {
       userType: userType || undefined,
       guidanceTarget: guidanceTarget || undefined,
       entryPath: guidanceEntry || undefined,
+      replaceHistory: isFocusedGuidance,
       focused: isFocusedGuidance,
       viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
       journeyMode: journeyMode || undefined,
@@ -1233,7 +1237,7 @@ export default function AdmissionBrowseScreen() {
         <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}66` }]}>
           <Text style={[styles.section, { color: Brand.primaryDeep, marginTop: 0 }]}>Subject matching is unavailable</Text>
           <Text style={[styles.noticeText, { color: colors.text }]}>We could not turn your subjects into a programme match because the structured requirement data is not complete yet.</Text>
-          <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities that offer it, and open each university's published requirements. Your subject choices remain available when the matcher is ready.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities with it, and open each university&apos;s published requirements. Your subject choices remain available when the matcher is ready.</Text>
         </View>
       ) : null}
 
@@ -1294,14 +1298,16 @@ export default function AdmissionBrowseScreen() {
              {hasSubjectContext ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>{subjectMatchStatus === "loading" ? "Checking your subjects..." : selectedSubjectMatch ? matchSummary(selectedSubjectMatch) : "Subject fit is not confirmed yet."}</Text> : null}
            </View>
            <TouchableOpacity
-             onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
+           onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
                jambProgrammeId: selected.jambProgrammeId || selected.id,
                userType: userType || undefined,
                guidanceTarget: guidanceTarget || undefined,
                entryPath: guidanceEntry || undefined,
+               replaceHistory: isFocusedGuidance,
                focused: isFocusedGuidance,
                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
-               journeyMode: journeyMode || undefined,
+               journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
+               resumeStage: "programme_preview",
              })}
              style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
            >

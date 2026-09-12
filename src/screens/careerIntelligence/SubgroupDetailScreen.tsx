@@ -33,6 +33,13 @@ const guidanceContext: GuidanceRouteContext = {
   const [expanded, setExpanded] = useState(false);
   const [skillsExpanded, setSkillsExpanded] = useState(false);
 
+  const onBack = useCallback(() => {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) router.back();
+    else router.replace(`${exploreNav.base}/domain/${encodeURIComponent(domainId)}` as never);
+  }, [domainId, exploreNav.base, router]);
+
   const loadDomain = useCallback(() => {
     setState(pending("Loading area details..."));
     let active = true;
@@ -46,7 +53,7 @@ const guidanceContext: GuidanceRouteContext = {
   const roles = (state.data?.roles.filter((role) => role.subgroupId === subgroupId) ?? []).sort(compareCareerRoles);
   const inheritedFoundation = (state.data?.foundationSkills ?? []).slice(0, 3);
 
-  return <DetailScaffold eyebrow="AREA" title={subgroup?.name ?? "Area"} backLabel={`Back to ${state.data?.name ?? "domain"}`} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Area", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} state={state} onRetry={loadDomain} requiresAccountForDetails guestDescription={subgroup?.whatPeopleDo || subgroup?.description}>
+  return <DetailScaffold eyebrow="AREA" title={subgroup?.name ?? "Area"} backLabel={`Back to ${state.data?.name ?? "domain"}`} onBack={onBack} save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }} pdf pdfPath={targetStudentId ? `/api/provisioning/students/${encodeURIComponent(targetStudentId)}/report.html` : "/api/student/report.html"} reportSelection={{ kind: "subgroups", id: subgroupId, name: subgroup?.name ?? "Area", domainId, domainName: state.data?.name }} targetStudentId={targetStudentId} state={state} onRetry={loadDomain} requiresAccountForDetails guestDescription={subgroup?.whatPeopleDo || subgroup?.description}>
     {() => subgroup ? <View style={styles.body}>
        <SectionLabel>Area overview</SectionLabel>
        <Text style={[styles.heading, { color: colors.textRole.primary }]}>What people do in this area</Text>
@@ -61,7 +68,7 @@ const guidanceContext: GuidanceRouteContext = {
       {subgroup.workContext?.length ? <View style={styles.detail}><SectionLabel>Typical work context</SectionLabel><Text style={[styles.copy, { color: colors.textRole.muted }]}>These context signals come from the attached occupational evidence. They describe the work setting, not a promise about every employer.</Text>{subgroup.workContext.map((context) => <Text key={`${context.name}-${context.frequency ?? ""}`} style={[styles.copy, { color: colors.textRole.secondary }]}>• {context.name}{context.frequency ? ` — ${context.frequency}` : ""}</Text>)}</View> : null}
        {subgroup.clusterSkills.length ? <View style={styles.detail}><SectionLabel>Capabilities to build in this area</SectionLabel><Text style={[styles.copy, { color: colors.textRole.muted }]}>Start with the capabilities shown first. The remaining ones are available when you want the full picture.</Text><View style={styles.skillList}>{(skillsExpanded ? subgroup.clusterSkills : subgroup.clusterSkills.slice(0, 3)).map((skill) => <Text key={skill} style={[styles.skill, { color: colors.textRole.secondary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>{skill}</Text>)}</View>{subgroup.clusterSkills.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.more, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer capabilities" : `See all ${subgroup.clusterSkills.length} capabilities`}</Text></TouchableOpacity> : null}</View> : null}
       <ContextualItemList items={subgroup.contextItems} title="What each capability and tool does in this area" />
-       <ToolGroupsBlock tools={subgroup.tools} title="Tools used in this area" commonLabel="Useful across this area" distinctiveLabel="More specialised tools in this area" explanation="These tools are attached to this area of work. The roles below show where the tools become useful in practice." />
+       <ToolGroupsBlock tools={subgroup.tools} resources={subgroup.resources} title="Tools used in this area" commonLabel="Useful across this area" distinctiveLabel="More specialised tools in this area" explanation="These tools are attached to this area of work. The roles below show where the tools become useful in practice." />
       <MethodEvidenceBlock methods={subgroup.methodEvidence} title="Methods connected to this area" />
       <GuidanceEvidenceBlock evidence={subgroup.guidanceEvidence} />
       <NigerianContextBlock context={subgroup.nigerianContext} level="subgroup" />
@@ -69,7 +76,7 @@ const guidanceContext: GuidanceRouteContext = {
        <LearningResourcesBlock resources={subgroup.resources} />
        <SectionLabel>Roles in this area</SectionLabel>
        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles are organised under this area. Open one after you understand the area to see what the work involves.</Text>
-      {roles.length ? roles.map((role, index) => <React.Fragment key={role.key}>{(index === 0 || careerRoleTierLabel(role.tier) !== careerRoleTierLabel(roles[index - 1]?.tier)) ? <Text style={[styles.tierLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>{careerRoleTierLabel(role.tier)}</Text> : null}<TouchableOpacity accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, guidanceContext)} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={{ flex: 1, gap: Spacing.xs }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{role.name}</Text><View style={styles.badgeRow}><TierBadgeView tier={role.tier} />{!role.tier ? <Text style={[styles.copy, { color: colors.textRole.muted }]}>Seniority not yet verified</Text> : null}</View><Text style={[styles.copy, { color: colors.textRole.muted }]}>View role details and connected skills.</Text></View><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Open</Text></TouchableOpacity></React.Fragment>) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>Roles for this area are not available yet.</Text>}
+      {roles.length ? roles.map((role, index) => <React.Fragment key={role.key}>{(index === 0 || careerRoleTierLabel(role.tier) !== careerRoleTierLabel(roles[index - 1]?.tier)) ? <Text style={[styles.tierLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>{careerRoleTierLabel(role.tier)}</Text> : null}<TouchableOpacity accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, guidanceContext)} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><View style={{ flex: 1, gap: Spacing.xs }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{role.name}</Text><View style={styles.badgeRow}><TierBadgeView tier={role.tier} /></View><Text style={[styles.copy, { color: colors.textRole.muted }]}>View role details and connected skills.</Text></View><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Open</Text></TouchableOpacity></React.Fragment>) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>Roles for this area are not available yet.</Text>}
     </View> : null}
   </DetailScaffold>;
 }

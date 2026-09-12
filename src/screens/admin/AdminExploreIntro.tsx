@@ -7,7 +7,7 @@ import type { AdminAudience } from "@/lib/adminAudience";
 
 const WORKFLOW_STEPS: readonly string[] = [
   "Start with the student's subjects or programme idea.",
-  "Compare universities that offer the relevant programme.",
+  "Compare universities with the relevant programme.",
   "Explain requirements and connected domains together.",
 ];
 

@@ -301,7 +301,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            We will show universities offering this exact programme identity.
+            We will show universities with this exact programme identity.
             If a different JAMB programme name appears, it will be shown as a
             separate programme with its own universities and requirements.
           </Text>
@@ -312,7 +312,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         <View style={{ gap: Spacing.lg }}>
           <Text style={[styles.caption, { color: colors.textMuted }]}> 
             We will show programmes that accept this combination, explain any
-            missing O-level requirement, and then show the universities offering
+            missing O-level requirement, and then show the universities with
             the programme.
           </Text>
         </View>

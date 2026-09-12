@@ -47,6 +47,7 @@ export function ContextualItemList({
           {isOpen ? <View style={[styles.detail, { borderTopColor: colors.borderRole.subtle }]}>
             {item.expectedOutput ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>What it helps you produce: </Text>{item.expectedOutput}</Text> : null}
             <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Why this position: </Text>{item.priorityReason}</Text>
+            {item.prerequisites.length ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Builds on: </Text>{item.prerequisites.join(", ")}</Text> : null}
             {item.relatedItems.length ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Connects to: </Text>{item.relatedItems.join(", ")}</Text> : null}
             <View style={{ gap: Spacing.xs }}><Text style={[styles.sourceLabel, { color: colors.textRole.muted }]}>Sources</Text>{item.sourceReferences.map((source, index) => <Text key={`${source.url}-${index}`} accessibilityRole="link" onPress={() => void Linking.openURL(source.url)} style={[styles.source, { color: colors.accentRole.action }]}>{source.title ?? source.url}</Text>)}</View>
             {item.evidenceLimitations.map((limitation) => <Text key={limitation} style={[styles.caption, { color: colors.textRole.muted }]}>Limit: {limitation}</Text>)}

@@ -862,6 +862,27 @@
  },
  {
   "domain": "D146",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Zemax",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Aurora HelioScope",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "PVsyst",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D146",
   "isco_submajor": "21",
   "scope": "subgroup",
   "tool": "Zemax",
@@ -3206,6 +3227,13 @@
   "reason": "no_exact_detailed_soc_overlap"
  },
  {
+  "domain": "D058",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "TechSmith Camtasia",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
   "domain": "D097",
   "isco_submajor": "72",
   "scope": "subgroup",
@@ -3669,6 +3697,20 @@
  },
  {
   "domain": "D144",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Autodesk AutoCAD Civil 3D",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "Bentley MicroStation",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D144",
   "isco_submajor": "21",
   "scope": "subgroup",
   "tool": "HEC-HMS",
@@ -3816,6 +3858,13 @@
  },
  {
   "domain": "D070",
+  "isco_submajor": null,
+  "scope": "domain",
+  "tool": "DaVinci Resolve",
+  "reason": "no_exact_detailed_soc_overlap"
+ },
+ {
+  "domain": "D168",
   "isco_submajor": null,
   "scope": "domain",
   "tool": "DaVinci Resolve",

@@ -130,22 +130,22 @@ match the generated seed's post-load counts. Then run
 oracle mismatches. Finally smoke-test the student pipeline and confirm the
 current API payloads contain programme requirements but no Direct Entry fields.
 
-## Current career refresh since the last push (2026-09-01)
+## Current career refresh since the last push (2026-09-12)
 
 The current career seed is transported in compressed, ordered parts:
 
-`backend/seed_career_v2_2026-09-01_parts_gz/`
+`backend/seed_career_v2_2026-09-12_parts_gz/`
 
 The reconstructed local SQL output is
-`backend/seed_career_v2_2026-09-01.sql`; it is ignored by Git because it is
-about 672 MB. The compressed parts exist so the generated artifact can pass
-repository file-size limits. There are 23 `.sql.gz` parts, each below 41 MB
+`backend/seed_career_v2_2026-09-12.sql`; it is ignored by Git because it is
+about 660 MB. The compressed parts exist so the generated artifact can pass
+repository file-size limits. There are 22 `.sql.gz` parts, each below 41 MB
 compressed, and each contains complete SQL statements in order.
 
 This is a generated development/staging seed, not a schema migration. It
 contains the corrected ISCO-backed subgroup hierarchy, current source-backed
 context/provenance payload and reviewed no-direct-local-match rows. It contains
-160 visible domains, 542 subgroups, 5,093 roles, 48,585 tools and 5,090 role
+160 visible domains, 545 subgroups, 5,093 roles, 48,163 tools and 5,090 role
 work-profile rows. Apply it to production only after a production preflight,
 backup and explicit approval of the data refresh.
 
@@ -170,17 +170,20 @@ schema files in this order before the preview seed:
     superseded credentials while exposing their current availability.
 13. `backend/migration_career_resources_v1.sql` when resource data is being
     used
-14. `backend/migration_saved_resource_support.sql` after `saved_items` exists
-15. Decompressed current SQL parts in
-    `backend/seed_career_v2_2026-09-01_parts_gz/`, in numeric order
+14. `backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql`
+    for the reviewed Sociology/D078 guidance slice, after the career resource
+    schema and source-backed career layers exist
+15. `backend/migration_saved_resource_support.sql` after `saved_items` exists
+16. Decompressed current SQL parts in
+    `backend/seed_career_v2_2026-09-12_parts_gz/`, in numeric order
 
 The `.sql.gz` files are not executable by Supabase. Before applying the
 preview, decompress/reassemble them from the repository root:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_2026-09-01_parts_gz/manifest.json `
-  backend/seed_career_v2_2026-09-01.sql
+  backend/seed_career_v2_2026-09-12_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-09-12.sql
 ```
 
 The command verifies every compressed-part checksum before writing the
@@ -190,7 +193,7 @@ reconstructed SQL. Then pass the reconstructed file to `psql` with
 ```powershell
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
   -v ON_ERROR_STOP=1 `
-  -f backend/seed_career_v2_2026-09-01.sql
+  -f backend/seed_career_v2_2026-09-12.sql
 ```
 
 If the SQL Editor must be used, decompress and run the numbered parts
@@ -223,11 +226,11 @@ It must not be run before `migration_role_tools.sql` because role-scoped tool
 rows use `domain_tools.role_id` and the `scope='role'` constraint.
 
 Do not apply the current seed to a populated production database without a
-production preflight, backup and explicit approval. The population gate now
-permits this regenerated seed after the 2026-08-29 structural repair, while
-roles without a supported subgroup taxonomy remain direct domain-to-role rows;
-reviewed no-direct-local-match rows remain explicit. A green population gate is
-not a substitute for production deployment verification.
+production preflight, backup and explicit approval. The current population
+gate passes its structural and source checks. Roles without a supported
+subgroup taxonomy remain direct domain-to-role rows; reviewed
+no-direct-local-match rows remain explicit. A green population gate is not a
+substitute for production deployment verification.
 
 ## Run in THIS order
 
@@ -250,7 +253,11 @@ not a substitute for production deployment verification.
 | 11 | `backend/migration_role_detail_enrichment.sql` | Role-owned certification/detail tables. | #5 and #7 |
 | 11a | `backend/migration_certification_lifecycle.sql` | Retains changing credentials and records credential type, availability, current recommendation, reopening possibility, and status evidence for domain and role-owned credentials. | #9 and #11 |
 | 12 | `backend/migration_career_resources_v1.sql` | Source-backed learning-resource table and indexes. | #5 and #8 |
-| 12a | `backend/migration_contextual_career_items.sql` | Adds the learner-facing contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
+| 12a | `backend/migration_contextual_career_items.sql` | Adds the student-facing programme/domain/subgroup/role contextual evidence table. Each emitted skill, competency, tool and certification row carries its meaning, context-specific use, learning priority, connections, source links, source locator and evidence limitation. | #8, #9, #11a and #12 |
+| 12b | `backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql` | Allows lawful programme-reading references and records whether a credential has Nigerian, global, or both evidence scopes. | #12 |
+| 12c | `backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql` | Explicit programme/domain/subgroup/role ownership, staged D078 foundations, reviewed Sociology learning links, programme reading references and programme context cards. | #8, #12, #12a and #12b |
+| 12d | `backend/migration_guidance_all_programmes_2026-09-12.sql` | Adds programme-owned CCMAS source locators, programme context cards and discipline-specific open foundation references for all 237 parsed programmes. | #12c and the `programmes` seed |
+| 12e | `backend/migration_guidance_global_2026-09-11.sql` | Replaces role-derived domain foundations for the other visible domains with domain-owned orientation/foundation rows and applies ownership filters. | #12d |
 | 13 | `backend/migration_provisioning.sql` | Institution provisioning, school codes, claim codes, student affiliations/consents, merge candidates. | #5 |
 | 14 | `backend/migration_student_pipeline_live.sql` | Student starting points, selected subjects, structured subject options, pathway choices, JAMB/cutoff views. | #4, #6, #13 |
 | 14aa | `backend/migration_school_faculty_filter_2026-09-09.sql` | Appends `jamb_faculty` to the school programme view so the university → faculty → programme picker filters real offerings. | #14 |
@@ -269,13 +276,17 @@ testing login or finishing onboarding with the updated backend.
 
 ### Contextual career item transport
 
-After applying migration **12a**, load the nine ordered gzip parts in
-`backend/seed_contextual_career_items_parts_gz/` in numeric order through the
-repository's normal seed loader. The parts contain 195,248 source-backed
-records. Reassemble or decompress them only in the controlled migration
-environment; do not commit an uncompressed copy. Confirm that the loader
-reports 195,248 rows and that every row has `data_state = 'source_backed'` and
-at least one public source URL before treating the migration as complete.
+After applying migrations **12a–12e** and the base career seed, load the 30
+ordered gzip parts in
+`backend/seed_career_context_items_v1_parts/` in numeric order through the
+repository's normal seed loader. The manifest
+`data/career-mapping/CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json` is authoritative
+for the generated count (currently 126,648 source-backed rows). Reassemble or
+decompress one part only in the controlled migration environment; do not
+commit an uncompressed copy. Confirm that every row has
+`data_state = 'source_backed'`, a non-empty context owner and at least one
+public HTTPS source URL before treating the seed as complete. The row counts
+include role skills/tools but do not promote them into domain foundations.
 
 > **Do NOT run `migration_career_intelligence.sql`.** It is superseded and mixed
 > obsolete taxonomy tables with the base `schools`/`programmes` registry. Use
@@ -294,11 +305,11 @@ The rows above describe the historical production seed path. The new
 preview and follows the dependency-critical order documented at the top of
 this runbook. Do not substitute it for `seed_career_v2.sql` in production.
 
-## 2026-09-01 authoritative correction
+## 2026-09-12 authoritative career seed
 
 The older seed counts above are historical and must not be used for the current
-career refresh. The current source inputs produce 160 visible domains, 542 supported
-subgroups, 5,093 roles, 48,585 tools, 240 certifications, 1,683
+career refresh. The current source inputs produce 160 visible domains, 545 supported
+subgroups, 5,093 roles, 48,163 tools, 240 certifications, 1,683
 programme-domain links, 70,246 programme-role scores, 3,163 JAMB-domain links,
 4,000 domain-overlap rows and 5,050 role work profiles.
 
@@ -310,12 +321,12 @@ python data/career-mapping/_apply_emerging_domain_structure.py
 python data/career-mapping/_build_source_backed_layers.py
 python data/career-mapping/_audit_role_completeness.py
 python data/career-mapping/validate_career_resource_seed_gate.py
-$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-09-01.sql'
+$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-09-12.sql'
 python data/career-mapping/_gen_career_seed.py
 Remove-Item Env:CAREER_SEED_OUTPUT_PATH
 python data/career-mapping/split_large_artifacts.py split-sql `
-  C:\tmp\seed_career_canonical_2026-09-01.sql `
-  backend/seed_career_v2_2026-09-01_parts_gz --max-bytes 40000000 --gzip
+  C:\tmp\seed_career_canonical_2026-09-12.sql `
+  backend/seed_career_v2_2026-09-12_parts_gz --max-bytes 40000000 --gzip
 ```
 
 The structural pass is required because the role library's existing ISCO
@@ -357,16 +368,32 @@ is approved, use this order:
 
 1. Apply the career schema prerequisites through `migration_career_v2.sql`.
 2. Apply the role/tools/source-backed/enrichment/resource schema migrations
-   required by the 2026-09-01 seed.
-3. Apply `seed_career_v2_2026-09-01_parts_gz/part-001.sql.gz` through
-   `part-023.sql.gz`, in numeric order, preserving each transaction.
-4. Apply `migration_student_pipeline_live.sql`.
-5. Apply `migration_school_faculty_filter_2026-09-09.sql`.
-6. If the older 2026-08-31 or historical JAMB transport was used, apply
+required by the 2026-09-12 seed.
+3. Apply `seed_career_v2_2026-09-12_parts_gz/part-001.sql.gz` through
+   `part-022.sql.gz`, in numeric order, preserving each transaction.
+4. Apply `migration_guidance_programme_reading_and_market_scope_2026-09-12.sql`,
+   `migration_guidance_ownership_and_sociology_resources_2026-09-11.sql`, and
+   `migration_guidance_all_programmes_2026-09-12.sql` in that order.
+5. Apply `migration_guidance_global_2026-09-11.sql` after the programme
+   migration so domain-owned foundations remain separate from programme rows.
+6. Apply `seed_career_context_items_v1_parts/part-001.sql.gz` through
+   `part-030.sql.gz`, in numeric order, preserving each transaction.
+7. Apply `migration_student_pipeline_live.sql`.
+8. Apply `migration_school_faculty_filter_2026-09-09.sql`.
+9. If the older 2026-08-31 or historical JAMB transport was used, apply
    `migration_jamb_domain_mapping_corrections_2026-09-08.sql`.
 
+The all-programmes guidance migration is separate from the compressed
+domain/subgroup/role context seed. It adds **1,197 programme-owned context
+rows** and **473 programme reading/source rows** for the 237 parsed CCMAS
+programmes, including the original CCMAS JSON filename and matching PDF
+locator. Sociology-specific books and resources remain owned by the reviewed
+Sociology migration; the all-programmes file does not attach a generic
+Sociology reference to every Social Sciences programme. Apply the all-programmes
+file only after its programme-reading and ownership prerequisites exist.
+
 The correction file is not a replacement for the career seed. The authoritative
-2026-09-01 seed already has the corrected Sociology mapping, including the
+2026-09-12 seed already has the corrected Sociology mapping, including the
 adjacent Criminology, Criminal Justice connection.
 
 After the user applies the files, verify the deployment with read-only queries

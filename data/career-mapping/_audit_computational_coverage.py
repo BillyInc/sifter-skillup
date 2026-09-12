@@ -11,6 +11,8 @@ import json
 import os
 from collections import Counter
 
+from _role_tools_loader import load_role_tools
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 COMPUTATIONAL_DOMAINS = [
@@ -57,7 +59,7 @@ def main():
     layers = load("emerging_group_layers.json")
     roles = load("role_library_v3_cleaned.json")
     overlays = load("emerging_role_overlays.json").get("roles") or []
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     manifest = load("computational_layer_manifest.json")
     links = load("computational_role_subgroup_links.json").get("links") or []
 

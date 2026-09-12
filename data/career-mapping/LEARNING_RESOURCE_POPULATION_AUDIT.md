@@ -26,3 +26,18 @@ SQL regeneration: **SEE CAREER_RESOURCE_SEED_GATE.md** for the source and domain
 ## Validation
 
 URL, price-date, and minimum domain-resource checks passed for this generated population.
+
+## Student-display boundary
+
+The mechanical population is not the student-facing approval list. Its
+`skill_learning` rows include broad provider catalogue destinations, including
+provider homepages, and some are labelled as if they were a learning path for
+an individual skill or role. A provider homepage does not prove that a
+specific course exists for that item.
+
+Those rows remain available for audit and later source reconciliation. The
+student API now requires explicit `ownership_scope` and
+`review_status = approved_guidance_v1`; unclassified, `review_only`,
+`unverified`, `audit_only`, and role-aggregated rows are withheld. The reviewed
+Sociology/domain/subgroup/role links are supplied separately by the approved
+guidance migration and are not promoted by this mechanical population.

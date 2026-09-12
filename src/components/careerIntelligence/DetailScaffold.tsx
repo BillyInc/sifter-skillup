@@ -102,7 +102,9 @@ export function DetailScaffold<T>({
       onBack();
       return;
     }
-    if (router.canGoBack()) {
+    const canGoBack = typeof (router as typeof router & { canGoBack?: () => boolean }).canGoBack === "function"
+      && (router as typeof router & { canGoBack: () => boolean }).canGoBack();
+    if (canGoBack) {
       router.back();
     } else {
       router.replace("/(tabs)/explore" as never);

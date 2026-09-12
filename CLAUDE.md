@@ -81,6 +81,46 @@ rule-record seed. A successful local generation is not proof of a live
 deployment; rerun the post-apply counts and exhaustive matcher audit in
 `backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`.
 
+### Career guidance ownership and reviewed Sociology slice
+
+When applying the source-grounded guidance framework, apply this additive
+migration only after the career resource schema and source-backed career
+layers exist:
+
+```text
+backend/migration_career_v2.sql
+backend/migration_role_tools.sql
+backend/migration_source_backed_career_layers.sql
+backend/migration_career_resources_v1.sql
+backend/migration_contextual_career_items.sql
+backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
+backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_guidance_all_programmes_2026-09-12.sql
+backend/migration_guidance_global_2026-09-11.sql
+backend/seed_career_context_items_v1_parts/part-001.sql.gz ... part-030.sql.gz
+```
+
+Run the files in this exact order. The contextual table must exist before the
+Sociology migration because it now includes programme-level context cards. The
+programme-reading/market-scope patch must precede the Sociology resource
+migration. The all-programmes migration then adds programme-owned CCMAS
+locators, context cards and discipline-specific open foundation references for
+all 237 parsed programmes. It does not label those references as prescribed
+books; the original PDF filename is retained in each source locator. The
+global guidance migration must follow the reviewed Sociology slice so it
+cannot overwrite D078. Finally load the 30 compressed contextual seed parts
+in numeric order. The generated manifest is
+`data/career-mapping/CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json`.
+
+The Sociology migration is the canonical data fix for the reviewed D078 slice:
+it records ownership for programme, domain, subgroup and role resources,
+labels legacy role-aggregated D078 tools as audit evidence, adds the staged
+domain-foundation contract, and seeds the reviewed reading/resource/context
+links. The global migration applies the same ownership rule to the other
+visible domains without using role-frequency aggregates as domain foundations.
+The API ownership filter is a safety net, not a replacement for these
+migrations.
+
 ### MANDATORY APPLY BEHAVIOUR
 
 #### User-requested manual-only mode
@@ -257,16 +297,16 @@ backend/seed_career_resources_v1_parts/part-001.sql ... final part
 backend/patch_subject_catalog_streams.sql
 ```
 
-### Current career seed transport (generated 2026-09-01)
+### Current career seed transport (generated 2026-09-12)
 
 The current worktree contains the regenerated transport directory
-`backend/seed_career_v2_2026-09-01_parts_gz/`. The corresponding reconstructed
+`backend/seed_career_v2_2026-09-12_parts_gz/`. The corresponding reconstructed
 SQL file is intentionally ignored by Git because it is about 672 MB. The
-transport directory contains 23 gzip-compressed parts, each below 41 MB, and
+transport directory contains 22 gzip-compressed parts, each below 41 MB, and
 is the form intended for repository storage. It was generated after the
 source-backed ISCO subgroup repair, source-link rebuild, and current Nigerian
-population-gate reconciliation. It contains 160 visible domains, 542
-subgroups, 5,093 roles, 48,585 tools and 5,090 role work-profile rows.
+population-gate reconciliation. It contains 160 visible domains, 545
+subgroups, 5,093 roles, 48,163 tools and 5,090 role work-profile rows.
 Reviewed bounded/local-only states remain explicit and are not replaced with
 invented Nigerian mappings.
 
@@ -287,7 +327,7 @@ backend/migration_market_intelligence_v1.sql
 backend/migration_role_detail_enrichment.sql    # if role detail/cert data is used
 backend/migration_career_resources_v1.sql       # if resources are used
 backend/migration_saved_resource_support.sql    # after saved_items exists
-backend/seed_career_v2_2026-09-01_parts_gz/part-001.sql.gz ... part-023.sql.gz
+backend/seed_career_v2_2026-09-12_parts_gz/part-001.sql.gz ... part-022.sql.gz
 ```
 
 This is a generated development/staging seed. Do not apply it to a populated
@@ -298,8 +338,8 @@ parts:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_2026-09-01_parts_gz/manifest.json `
-  backend/seed_career_v2_2026-09-01.sql
+  backend/seed_career_v2_2026-09-12_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-09-12.sql
 ```
 
 The reassembler verifies every part checksum before writing the SQL file. Apply
@@ -308,7 +348,7 @@ that reconstructed file through a verified database connection:
 ```powershell
 psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" `
   -v ON_ERROR_STOP=1 `
-  -f backend/seed_career_v2_2026-09-01.sql
+  -f backend/seed_career_v2_2026-09-12.sql
 ```
 
 If the SQL Editor must be used, decompress and execute the numbered parts one
@@ -319,11 +359,11 @@ have been applied because the current seed writes role-owned tool fields and
 source-confidence, data-state, provenance and Nigerian-context columns. Keep
 the current seed transactions intact, record the database and date, and run the
 post-seed count/orphan queries from
-`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The population gate is allowed
-after the 2026-08-29 structural repair; roles without a supported subgroup
-taxonomy remain direct domain-to-role rows. Reviewed no-direct-local-match rows
-must stay explicit until stronger evidence is found. This is not a production
-promotion.
+`backend/COMPLETE_DATA_MIGRATION_2026-08-17.md`. The population gate now passes
+its structural and source checks; roles without a supported subgroup taxonomy
+remain direct domain-to-role rows. Reviewed
+no-direct-local-match rows must stay explicit until stronger evidence is found.
+This is not a production promotion.
 
 Do not claim that this SQL was applied based on a local generator run. SQL is
 only applied through the Supabase SQL Editor or a verified `psql` connection.
@@ -333,7 +373,7 @@ JAMB refresh, apply
 `backend/migration_jamb_domain_mapping_corrections_2026-09-08.sql` after that
 load. It repairs the 147 adjacent links that older transport mislabelled as
 functional and removes one extra Project Management link. The authoritative
-2026-09-01 seed already has the corrected values, and the repair is idempotent.
+2026-09-12 seed already has the corrected values, and the repair is idempotent.
 
 After `backend/migration_student_pipeline_live.sql`, apply
 `backend/migration_school_faculty_filter_2026-09-09.sql`. The undergraduate
@@ -389,12 +429,12 @@ python data/career-mapping/_apply_emerging_domain_structure.py
 python data/career-mapping/_build_source_backed_layers.py
 python data/career-mapping/_audit_role_completeness.py
 python data/career-mapping/validate_career_resource_seed_gate.py
-$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-09-01.sql'
+$env:CAREER_SEED_OUTPUT_PATH='C:\tmp\seed_career_canonical_2026-09-12.sql'
 python data/career-mapping/_gen_career_seed.py
 Remove-Item Env:CAREER_SEED_OUTPUT_PATH
 python data/career-mapping/split_large_artifacts.py split-sql `
-  C:\tmp\seed_career_canonical_2026-09-01.sql `
-  backend/seed_career_v2_2026-09-01_parts_gz --max-bytes 40000000 --gzip
+  C:\tmp\seed_career_canonical_2026-09-12.sql `
+  backend/seed_career_v2_2026-09-12_parts_gz --max-bytes 40000000 --gzip
 ```
 
 The first pass materializes the roles' existing ISCO-backed subgroup ownership
@@ -414,8 +454,8 @@ backend/seed_career_v2_preview_2026-08-25_parts_gz/manifest.json   # historical 
 backend/seed_career_v2_preview_2026-08-25_parts_gz/part-*.sql.gz
 backend/seed_career_v2_preview_2026-08-26_parts_gz/manifest.json   # current transport
 backend/seed_career_v2_preview_2026-08-26_parts_gz/part-*.sql.gz
-  backend/seed_career_v2_2026-09-01_parts_gz/manifest.json            # current transport
-  backend/seed_career_v2_2026-09-01_parts_gz/part-*.sql.gz
+  backend/seed_career_v2_2026-09-12_parts_gz/manifest.json            # current transport
+  backend/seed_career_v2_2026-09-12_parts_gz/part-*.sql.gz
 data/career-mapping/role_tools_parts_gz/manifest.json
 data/career-mapping/role_tools_parts_gz/part-*.json.gz
 data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json
@@ -427,21 +467,19 @@ directly. Before using them, run the reassembler from the repository root:
 
 ```powershell
 python data/career-mapping/split_large_artifacts.py join-json `
-  data/career-mapping/role_tools_parts_gz/manifest.json `
-  data/career-mapping/role_tools.json
-python data/career-mapping/split_large_artifacts.py join-json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
 python data/career-mapping/split_large_artifacts.py join-sql `
-  backend/seed_career_v2_2026-09-01_parts_gz/manifest.json `
-  backend/seed_career_v2_2026-09-01.sql
+  backend/seed_career_v2_2026-09-12_parts_gz/manifest.json `
+  backend/seed_career_v2_2026-09-12.sql
 ```
 
 For Supabase, apply the reconstructed SQL with `psql` as shown above, or apply
 the decompressed SQL parts in numeric order. Never paste or upload the `.gz`
-bytes. Each current SQL part is a complete transaction. Reassemble
-`role_tools.json` before running
-career generators or audits, and reassemble the Nigerian audit JSON before
+bytes. Each current SQL part is a complete transaction. The career generators
+and audits load `role_tools_parts_gz` directly through
+`data/career-mapping/_role_tools_loader.py`; reassembling `role_tools.json` is
+optional. Reassemble the Nigerian audit JSON before
 running its dependent review/gate scripts. The original local generated files
 are not deleted by the transport process.
 
@@ -934,9 +972,12 @@ python data/career-mapping/validate_career_resource_seed_gate.py
 
 The builder recreates the JSON parts and checksum manifest. The SQL generator
 loads those parts and recreates the ordered SQL parts and SQL manifest. The
-gate must pass before applying or committing regenerated resource SQL. Expected
-resource population: 160,914 rows, 160 visible domains, and zero validation
-errors.
+gate must pass before applying or committing regenerated resource SQL. The
+current mechanical build is 160,914 rows across 160 visible domains with zero
+URL/price validation errors, and the source-reconciliation gate passes. Broad
+provider catalogue rows remain audit/reconciliation data; the
+student API must not expose them until they have explicit ownership, scope and
+approved guidance status.
 
 ### Apply to Supabase
 

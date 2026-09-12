@@ -102,7 +102,12 @@ function AdminDomain({ domain }: { domain: DomainV2 }) {
       <Provenance value={domain} />
       <View style={styles.card}>
         <Text style={[styles.cardTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>Domain-level intelligence</Text>
-        <Chips items={domain.foundationSkills.map((item) => `${item.skill} (${Math.round(item.prevalence * 100)}% of roles)`)} label="Foundation skills" />
+        <Chips
+          items={domain.foundationSkills.map((item) => item.prevalence == null
+            ? `${item.skill}${item.stage ? ` (${item.stage.replaceAll("_", " ")})` : ""}`
+            : `${item.skill} (${Math.round(item.prevalence * 100)}% of roles)`)}
+          label="Foundation skills"
+        />
         <ResourceSummary
           tools={[...(domain.tools.distinctive ?? []), ...(domain.tools.common ?? [])].map((item) => item.tool)}
           certifications={[...(domain.gatewayCertifications ?? []), ...(domain.roleHintCertifications ?? [])].map((item) => item.name)}

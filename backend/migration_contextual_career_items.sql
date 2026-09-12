@@ -1,4 +1,5 @@
--- Source-backed learner explanations for skills, tools, competencies and
+-- Source-backed student explanations for programme, domain, subgroup, role
+-- skills, tools, competencies and certifications.
 -- certifications at domain, subgroup and role level.
 -- Run after migration_career_v2.sql, migration_source_backed_career_layers.sql,
 -- migration_role_tools.sql and migration_role_detail_enrichment.sql.
@@ -7,7 +8,7 @@
 
 CREATE TABLE IF NOT EXISTS skillup_dev.career_context_items (
     id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    context_level         TEXT NOT NULL CHECK (context_level IN ('domain', 'subgroup', 'role')),
+    context_level         TEXT NOT NULL CHECK (context_level IN ('programme', 'domain', 'subgroup', 'role')),
     context_key           TEXT NOT NULL,
     domain_key            TEXT NOT NULL,
     item_type             TEXT NOT NULL CHECK (item_type IN ('skill', 'competency', 'tool', 'certification')),
@@ -38,6 +39,14 @@ CREATE INDEX IF NOT EXISTS idx_career_context_items_domain
     ON skillup_dev.career_context_items(domain_key, context_level);
 CREATE INDEX IF NOT EXISTS idx_career_context_items_type
     ON skillup_dev.career_context_items(item_type, item_key);
+
+-- The table was introduced before programme-level context was added. Keep the
+-- migration safe for an already-created table as well as a fresh database.
+ALTER TABLE skillup_dev.career_context_items
+    DROP CONSTRAINT IF EXISTS career_context_items_context_level_check;
+ALTER TABLE skillup_dev.career_context_items
+    ADD CONSTRAINT career_context_items_context_level_check
+    CHECK (context_level IN ('programme', 'domain', 'subgroup', 'role'));
 
 ALTER TABLE skillup_dev.career_context_items ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS career_context_items_public_read ON skillup_dev.career_context_items;

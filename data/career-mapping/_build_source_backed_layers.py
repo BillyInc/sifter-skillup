@@ -16,6 +16,7 @@ from collections import Counter, defaultdict
 
 from _nigerian_context import resolved_nigerian_context
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
@@ -27,7 +28,6 @@ DOMAIN_STRUCTURE = os.path.join(HERE, "domain_structure.json")
 DOMAIN_SOURCE_REGISTRY = os.path.join(HERE, "domain_role_source_registry.json")
 ROLE_LIBRARY = os.path.join(HERE, "role_library_v3_cleaned.json")
 EMERGING_OVERLAY = os.path.join(HERE, "emerging_role_overlays.json")
-ROLE_TOOLS = os.path.join(HERE, "role_tools.json")
 GROUP_LAYERS = os.path.join(HERE, "emerging_group_layers.json")
 REPORT_JSON = os.path.join(HERE, "_audit", "source_backed_layer_report.json")
 REPORT_MD = os.path.join(HERE, "_audit", "source_backed_layer_report.md")
@@ -107,7 +107,7 @@ def main():
     structure = load(DOMAIN_STRUCTURE)
     roles = load(ROLE_LIBRARY)
     roles.extend(load_overlay_roles())
-    role_tools = load(ROLE_TOOLS)
+    role_tools = load_role_tools()
     group_layers = load(GROUP_LAYERS) if os.path.exists(GROUP_LAYERS) else {"domains": {}, "subgroups": []}
     group_layers_by_key = {
         (text(item.get("domain_id")), text(item.get("isco_submajor"))): item

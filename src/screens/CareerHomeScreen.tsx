@@ -147,6 +147,7 @@ function nextStartingPointAction(
   label: string;
   href: string;
 } {
+  const homeEntryPath = "/(tabs)/home";
   const isAdmissionUser = p.userType === "jamb" || p.userType === "ss3_secondary" || p.userType === "senior_secondary";
   const savedProgramme = guidance?.path.programme;
   const savedUniversity = guidance?.path.university;
@@ -169,6 +170,7 @@ function nextStartingPointAction(
       jambProgrammeId,
       schoolId,
       userType: p.userType,
+      entryPath: homeEntryPath,
       journeyMode: "undergraduate_career",
       resumeStage: resumeStage || "university_context",
       focused: true,
@@ -187,6 +189,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "programme_to_role",
       resumeStage: resumeStage || "university_context",
       focused: true,
@@ -204,6 +207,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "programme_preview",
       resumeStage: resumeStage || "programme_preview",
       focused: true,
@@ -224,6 +228,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "guided_subject_discovery",
       resumeStage: resumeStage || "subjects",
       focused: true,
@@ -239,10 +244,12 @@ function nextStartingPointAction(
   const roleId = recordText(savedRole, "key", "id", "roleKey");
   const domainId = recordText(savedDomain, "id", "domainId", "domainKey");
   if (roleId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}?focus=guidance` };
+    const query = guidanceContextQuery({ entryPath: homeEntryPath, focused: true });
+    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}?${query}` };
   }
   if (domainId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}?focus=guidance` };
+    const query = guidanceContextQuery({ entryPath: homeEntryPath, focused: true });
+    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}?${query}` };
   }
 
   return {

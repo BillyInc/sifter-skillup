@@ -207,10 +207,9 @@ export function LiveAdmissionSearchField({
               style={styles.suggestion}
             >
               <Text style={[styles.suggestionText, { color: colors.text }]}>{r.name}</Text>
-              {/* Onboarding search is selecting a programme identity. Keep
-                  university offerings for the programme preview, where the
-                  student can compare them in context; do not turn each
-                  suggestion into "offered by ..." noise or imply a variant. */}
+              {/* Onboarding search selects a programme identity. Keep the
+                  university list for the programme preview, where the student
+                  can compare it in context; do not imply a separate variant. */}
               {kind === "school" ? (
                 <Text style={[styles.suggestionMeta, { color: colors.textMuted }]}>
                   {[r.address, r.city, r.state, r.country].filter(Boolean).join(", ") || "Address not listed"}

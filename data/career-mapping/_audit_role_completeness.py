@@ -6,6 +6,7 @@ import os
 from collections import Counter, defaultdict
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AUDIT = os.path.join(HERE, "_audit")
@@ -67,7 +68,7 @@ def pct(numerator, denominator):
 def main():
     roles = load("role_library_v3_cleaned.json")
     roles.extend(load_overlay_roles())
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     meta = load("domain_meta.json")
     structure = load("domain_structure.json")
 

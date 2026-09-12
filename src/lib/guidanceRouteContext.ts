@@ -34,6 +34,8 @@ export type GuidanceRouteContext = {
   resumeStage?: GuidanceResumeStage | string;
   /** Route to return to when a focused guidance session is exited. */
   entryPath?: string;
+  /** Replace a transient picker route when opening the next focused detail. */
+  replaceHistory?: boolean;
   focused?: boolean;
   viewOnly?: boolean;
 };

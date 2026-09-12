@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "verified_at": "2026-09-12",
+  "source_directory": "C:\\\\Users\\\\USER\\\\Downloads\\\\ccmas original documents",
+  "source_url": "https://www.nuc.edu.ng/ccmas/",
+  "original_pdfs": [
+    "Administration-and-Management.pdf",
+    "Agriculture-2023.pdf",
+    "Allied-Health-Sciences-2023.pdf",
+    "Architecture-CCMAS-2023-FINAL.pdf",
+    "Arts-CCMAS-2023-FINAL.pdf",
+    "Basic-Medical-Sciences-CCMAS-FINAL-December-26-2022.pdf",
+    "Communication-and-Media-Studies-CCMAS-2023-FINAL.pdf",
+    "Computing-CCMAS-2023-FINAL.pdf",
+    "Education-CCMAS-2023-New.pdf",
+    "Engineering-Technology-CCMAS-2023-FINAL.pdf",
+    "Environmental-Sciences-CCMAS-2023-FINAL.pdf",
+    "Law-ALL.pdf",
+    "Medicine-and-Dentistry-CCMAS-2023-FINAL.pdf",
+    "Pharmacy-and-Pharmaceutical-Sciences-CCMAS-2023-FINAL.pdf",
+    "Sciences-CCMAS-2023-FINAL.pdf",
+    "Social-Sciences-CCMAS-FINAL-2023-A.pdf",
+    "Veterinary-Medicine-CCMAS-2023-FINAL.pdf"
+  ],
+  "programmes": 237,
+  "context_rows": 1197,
+  "resource_rows": 473,
+  "context_counts": {
+    "skill": 237,
+    "competency": 711,
+    "tool": 249
+  },
+  "programme_specific_books": [
+    "Sociology"
+  ],
+  "book_policy": "Every programme receives the official CCMAS locator. Optional discipline-level open references are added except Sociology, whose reviewed programme-specific books are supplied by the separate Sociology migration. No book is labelled prescribed without programme-specific evidence.",
+  "sql_file": "migration_guidance_all_programmes_2026-09-12.sql"
+}

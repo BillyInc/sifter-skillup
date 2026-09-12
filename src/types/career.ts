@@ -179,6 +179,10 @@ export interface Programme {
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
   skillsCount?: number | null;
+  /** Reviewed learning/reference links attached to this programme. */
+  resources?: CareerLearningResource[];
+  /** Source-backed explanations of what the programme capabilities mean here. */
+  contextItems?: CareerContextItem[];
   /** Domain links, each with its match type. */
   domains: DomainLink[];
 }
@@ -568,6 +572,9 @@ export interface CertificationV2 {
   name: string;
   body?: string;
   region?: "global" | "nigeria";
+  /** Evidence scope for where the credential is relevant; this is not a demand score. */
+  marketScope?: "nigeria" | "global" | "nigeria_and_global" | "not_established";
+  marketNote?: string;
   level?: "foundation" | "professional" | "advanced";
   /** Why it gates at its placement level (gateway/subgroup/role_hint). */
   gateReason?: string;
@@ -601,6 +608,8 @@ export interface ToolV2 extends SourceBackedFields {
   source?: string; // onet | curated_creative
   elementName?: string | null;
   elementId?: string | null;
+  /** Explicit ownership prevents role-aggregated tools becoming domain advice. */
+  guidanceOwner?: "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | null;
 }
 
 export interface ToolGroups {
@@ -616,7 +625,7 @@ export interface ToolGroups {
 export type ContextItemPriority = "start_here" | "build_next" | "useful_later" | "optional";
 
 export interface CareerContextItem {
-  contextLevel: "domain" | "subgroup" | "role";
+  contextLevel: "programme" | "domain" | "subgroup" | "role";
   contextKey: string;
   domainId: string;
   itemType: "skill" | "competency" | "tool" | "certification";
@@ -723,10 +732,25 @@ export interface RoleWorkProfile {
  *  appears AND is labelled 34%, so common-but-not-universal skills aren't hidden. */
 export interface FoundationSkill {
   skill: string;
-  /** Fraction of the domain's roles whose essential skills include this (0..1). */
-  prevalence: number;
-  /** Absolute role count (numerator behind prevalence). */
-  n: number;
+  /** Fraction of role profiles only when this is explicitly role-derived. */
+  prevalence?: number;
+  /** Absolute role count only when this is explicitly role-derived. */
+  n?: number;
+  /** Student-facing stage for a domain-owned learning sequence. */
+  stage?: "start_here" | "build_next" | "choose_area" | "prepare_for_role";
+  /** Why this item appears at this point in the sequence. */
+  priorityReason?: string;
+  /** Short evidence note shown when the student opens the explanation. */
+  evidenceNote?: string;
+}
+
+/** Student-friendly orientation for deciding whether a domain is worth exploring. */
+export interface DomainStudentOrientation {
+  whatItStudies?: string;
+  questions?: string[];
+  whatPeopleDo?: string;
+  whereProgrammeFits?: string;
+  relatedProgrammes?: string[];
 }
 
 export interface DomainV2 extends SourceBackedFields {
@@ -737,6 +761,7 @@ export interface DomainV2 extends SourceBackedFields {
   cluster?: string;
   clusters: string[];
   description?: string;
+  studentOrientation?: DomainStudentOrientation;
   institutionType: string[];
   eliteDomain: boolean;
   /** L1 common skills, prevalence-ranked (≥30% + adaptive floor). */
@@ -876,6 +901,7 @@ export interface RoleToolV2 extends SourceBackedFields {
   name: string;
   group?: "distinctive" | "common";
   description?: string;
+  toolUrl?: string;
   source?: string;
   elementName?: string | null;
   elementId?: string | null;
@@ -1167,10 +1193,14 @@ export interface ToolGroupsEnriched {
 /** Clickable learning, competency, professional-body, tool and exam resource. */
 export interface CareerLearningResource {
   id: string;
+  programmeId?: string | null;
   domainId?: string | null;
   subgroupId?: string | null;
   roleId?: string | null;
+  ownershipScope?: "programme" | "domain" | "subgroup" | "role" | "audit_only" | null;
+  reviewStatus?: "approved_guidance_v1" | "review_only" | "unverified" | null;
   resourceType:
+    | "programme_reading"
     | "domain_overview"
     | "role_reference"
     | "skill_reference"
