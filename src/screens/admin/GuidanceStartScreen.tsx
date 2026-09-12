@@ -27,7 +27,13 @@ import type { EducatorProfile, RosterStudent } from "@/types/institution";
 import { AdminShell } from "./AdminShell";
 
 type TargetMode = "anonymous" | "student";
-type JourneyMode = "full" | "programme_to_role" | "utme_only" | "olevel_only" | "universities_only";
+type JourneyMode = "full" | "programme_to_role" | "programme_preview" | "guided_subject_discovery" | "utme_only" | "olevel_only" | "universities_only";
+
+const ADMISSION_DOORS: { value: JourneyMode; title: string; body: string }[] = [
+  { value: "programme_to_role", title: "I know the programme and university", body: "Open the programme and university-specific details, then continue into domains, areas and roles." },
+  { value: "programme_preview", title: "I know the programme, but not the university", body: "Open one programme identity first, then choose the university before viewing its requirements." },
+  { value: "guided_subject_discovery", title: "I want help finding a programme", body: "Use the student's O-level and UTME subjects to narrow programme identities, then choose a university." },
+];
 
 const JOURNEYS: { value: JourneyMode; title: string; body: string; university?: boolean }[] = [
   {
@@ -125,12 +131,18 @@ export function GuidanceStartScreen() {
     selectedLearnerType &&
     (!needsStream || selectedStream),
   );
+  const admissionLearner = selectedLearnerType === "ss3" || selectedLearnerType === "jamb";
+
+  useEffect(() => {
+    if (admissionLearner && !ADMISSION_DOORS.some((item) => item.value === journey)) setJourney("guided_subject_discovery");
+    if (!admissionLearner && ADMISSION_DOORS.some((item) => item.value === journey)) setJourney("full");
+  }, [admissionLearner, journey]);
 
   const start = () => {
     if (!profile || !audience || !contextReady) return;
     const learner = selectedLearnerType;
-    const mode = journey === "full" || journey === "utme_only" || journey === "olevel_only" ? "subjects" : "programme";
-    const examType = journey === "utme_only" ? "utme" : journey === "olevel_only" ? "olevel" : journey === "full" ? "combined" : "";
+    const mode = journey === "full" || journey === "utme_only" || journey === "olevel_only" || journey === "guided_subject_discovery" ? "subjects" : "programme";
+    const examType = journey === "utme_only" ? "utme" : journey === "olevel_only" ? "olevel" : journey === "full" || journey === "guided_subject_discovery" ? "combined" : "";
     const guidanceContext = guidanceContextQuery({
       className: learner,
       userType: userTypeForLearner(learner),
@@ -212,8 +224,8 @@ export function GuidanceStartScreen() {
 
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.bodySemibold, { color: colors.text }]}>Journey mode</Text>
-          <Text style={[styles.body, { color: colors.textMuted }]}>Choose the smallest useful check. You can return and run a fuller journey later.</Text>
-          <View style={styles.optionRow}>{JOURNEYS.filter((item) => organizationType === "university" ? item.value === "programme_to_role" || item.value === "universities_only" : true).map((item) => <Choice key={item.value} title={item.title} body={item.body} active={journey === item.value} onPress={() => setJourney(item.value)} colors={colors} />)}</View>
+          <Text style={[styles.body, { color: colors.textMuted }]}>{admissionLearner ? "Use the same three starting questions the student sees. The answer controls whether the flow starts from a known university, a programme preview, or subject discovery." : "Choose the smallest useful check. You can return and run a fuller journey later."}</Text>
+          <View style={styles.optionRow}>{(admissionLearner ? ADMISSION_DOORS : JOURNEYS.filter((item) => organizationType === "university" ? item.value === "programme_to_role" || item.value === "universities_only" : true)).map((item) => <Choice key={item.value} title={item.title} body={item.body} active={journey === item.value} onPress={() => setJourney(item.value)} colors={colors} />)}</View>
         </View>
 
         <SifterButton label={target === "student" ? "Open student guidance" : "Start anonymous guidance"} onPress={start} disabled={!contextReady || (target === "student" && !selectedStudent)} variant="track" color={colors.accentRole.action} size="lg" fullWidth />
