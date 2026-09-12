@@ -59,6 +59,7 @@ export interface RoleDetailScreenProps {
 export function RoleDetailScreen(props: RoleDetailScreenProps) {
 const params = useLocalSearchParams<{ id: string; programme_id?: string | string[]; jamb_programme_id?: string | string[]; school_id?: string | string[]; user_type?: string | string[]; journey_mode?: string | string[]; guidance_student_id?: string | string[]; guidance_target?: string | string[]; guidance_entry?: string | string[]; focus?: string | string[] }>();
   const router = useRouter();
+  const outerScrollRef = useRef<ScrollView>(null);
   const roleKey = props.roleId ?? String(params.id ?? "");
   const targetStudentId = Array.isArray(params.guidance_student_id)
     ? params.guidance_student_id[0]
@@ -130,10 +131,11 @@ const guidanceContext: GuidanceRouteContext = {
       targetStudentId={targetStudentId}
       state={state}
       onRetry={loadRole}
+      scrollRef={outerScrollRef}
       requiresAccountForDetails
       guestDescription={state.data?.description}
     >
-      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} />}
+      {(role) => <RoleBody role={role} roleKey={roleKey} targetStudentId={targetStudentId} focusedGuidance={focusedGuidance} guidanceContext={guidanceContext} outerScrollRef={outerScrollRef} />}
     </DetailScaffold>
   );
 }
@@ -144,12 +146,14 @@ function RoleBody({
   targetStudentId,
   focusedGuidance,
   guidanceContext,
+  outerScrollRef,
 }: {
   role: DomainRoleV2;
   roleKey: string;
   targetStudentId?: string;
   focusedGuidance: boolean;
   guidanceContext: GuidanceRouteContext;
+  outerScrollRef: React.RefObject<ScrollView | null>;
 }) {
   const { colors } = useTheme();
   const router = useRouter();
@@ -176,7 +180,7 @@ function RoleBody({
   const [toolsExpanded, setToolsExpanded] = useState(false);
   const [certificationsExpanded, setCertificationsExpanded] = useState(false);
   const [sourceNotice, setSourceNotice] = useState<string | null>(null);
-  const scrollRef = useRef<ScrollView>(null);
+  const desktopScrollRef = useRef<ScrollView>(null);
 
   const commonRoleTools = roleTools.filter((tool) => tool.group === "common");
   const specificRoleTools = roleTools.filter((tool) => tool.group !== "common");
@@ -208,7 +212,7 @@ function RoleBody({
   const scrollTo = useCallback((key: string) => {
     const y = sectionY.current[key];
     if (y !== undefined) {
-      scrollRef.current?.scrollTo({ y: Math.max(0, y - 20), animated: true });
+       (isDesktop ? desktopScrollRef.current : outerScrollRef.current)?.scrollTo({ y: Math.max(0, y - 20), animated: true });
     }
     setActiveSection(key);
   }, []);
@@ -404,7 +408,7 @@ function RoleBody({
           </View>
         </View>
         <ScrollView
-          ref={scrollRef}
+           ref={desktopScrollRef}
           style={styles.mainScroll}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
