@@ -28,6 +28,7 @@ import argparse
 import json
 import sys
 import time
+import traceback
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -42,8 +43,39 @@ DEV_EDUCATOR_CODE = "LEVELUP-EDU-DEV"
 
 # Computer Science UTME requires exactly Physics, Chemistry and Mathematics.
 # The negative case drops Chemistry, so a correct matcher must not return it.
-UTME_SUBJECTS = ["Physics", "Chemistry", "Mathematics"]
-UTME_SUBJECTS_NEGATIVE = ["Physics", "Mathematics", "Economics"]
+# UTME is exactly four subjects and the matcher rejects any set without Use of
+# English (programmes_by_subjects in student_pipeline_routes.py). Sending three
+# subjects returned an empty list with a notice, which the old assertion could
+# not distinguish from "the matcher is broken".
+UTME_SUBJECTS = ["English Language", "Physics", "Chemistry", "Mathematics"]
+UTME_SUBJECTS_NEGATIVE = ["English Language", "Physics", "Mathematics", "Economics"]
+# Chemistry-gated: present for UTME_SUBJECTS, absent for UTME_SUBJECTS_NEGATIVE.
+# Computer Science was the old probe, but it matches neither set, so the
+# negative assertion passed without testing anything.
+CHEMISTRY_GATED_PROGRAMME = "chemical engineering"
+
+
+def _match_items(payload: Any) -> tuple[list, Optional[str]]:
+    """Unwrap the double envelope the pipeline routes return.
+
+    ResponseModel.data is the _real() envelope {"status", "data", "meta"}, and
+    the item list is the bare list at data.data. Reading only the outer layer
+    yields the envelope dict, whose .get("items") is always None — which
+    silently turned every match into zero matches.
+    """
+    envelope = (payload or {}).get("data") or {}
+    if not isinstance(envelope, dict):
+        return (envelope if isinstance(envelope, list) else []), None
+    inner = envelope.get("data")
+    items = inner if isinstance(inner, list) else []
+    notice = (envelope.get("meta") or {}).get("notice")
+    return items, notice
+
+
+def _programme_name(m: Any) -> str:
+    if not isinstance(m, dict):
+        return ""
+    return m.get("jambName") or m.get("jamb_name") or m.get("name") or ""
 
 
 class Runner:
@@ -52,6 +84,14 @@ class Runner:
         self.timeout = timeout
         self.steps: list[dict[str, Any]] = []
         self.run_id = uuid.uuid4().hex[:8]
+        # Held on the Runner rather than only in main's locals so cleanup can
+        # reach it from any exit path, including the early failure returns and
+        # the crash handler. Deliberately not part of the JSON report.
+        self.owner_token: Optional[str] = None
+        # Real user ids handed back by /api/auth/signup, keyed by the same label
+        # signup() was called with. The roster identifies students by user_id,
+        # not by any name we chose, so this is the only reliable join key.
+        self.user_ids: dict[str, Optional[str]] = {}
 
     # ---------------------------------------------------------------- http
     def call(
@@ -127,6 +167,9 @@ class Runner:
             },
         )
         token = ((payload or {}).get("data") or {}).get("token") if status == 200 else None
+        # /api/auth/signup returns {"token": ..., "user": {...}} single-wrapped
+        # (main.py:629/649/659). The roster keys students by this id.
+        self.user_ids[label] = (((payload or {}).get("data") or {}).get("user") or {}).get("id")
         if not self.record(
             f"{label}: signup",
             bool(token),
@@ -134,6 +177,9 @@ class Runner:
         ):
             return None
         return token
+
+
+_LIVE: dict[str, Any] = {}
 
 
 def main() -> int:
@@ -150,6 +196,10 @@ def main() -> int:
     student_email = f"e2e.student.{tag}@example.invalid"
     password = f"E2e-{tag}-pw"
     created: dict[str, Any] = {}
+    # Published so the crash handler below can still run cleanup: an exception
+    # escaping main() would otherwise skip _finish entirely and leave rows in
+    # the database for the next run to trip over.
+    _LIVE.update(runner=r, args=args, created=created)
 
     print(f"Sifter LevelUp E2E  run={tag}  target={r.base}\n")
 
@@ -163,6 +213,7 @@ def main() -> int:
     owner_token = r.signup("owner", owner_email, password)
     if not owner_token:
         return _finish(r, args, created, 1)
+    r.owner_token = owner_token
 
     status, payload = r.call(
         "POST",
@@ -184,6 +235,10 @@ def main() -> int:
             "organization_name": school_name,
             "role": "Principal",
             "access_code": DEV_EDUCATOR_CODE,
+            # Required: admin access is refused for a claim with no address,
+            # including under the developer access code (institutions_routes
+            # `_find_or_create_school`).
+            "address": "12 Adeola Odeku Street, Victoria Island",
             "city": "Lagos",
             "state": "Lagos",
             "country": "Nigeria",
@@ -234,11 +289,17 @@ def main() -> int:
     status, payload = r.call(
         "POST",
         "/api/provisioning/generate",
-        {"items": [{"draft_id": draft_id, "student_type": "secondary", "stream": "science"}]},
+        # student_type is the Student *stage*, not the school kind: the route
+        # accepts only ss1/ss2/ss3/jamb, and a secondary school may not use
+        # jamb (provisioning_routes `_validate_provisioning_type`). /generate
+        # does not fall back to the draft's student_class, so it must be sent.
+        {"items": [{"draft_id": draft_id, "student_type": "ss1", "stream": "science"}]},
         token=owner_token,
     )
-    gen = ((payload or {}).get("data") or {})
-    generated = gen.get("generated") or gen.get("students") or []
+    # /provisioning/generate returns `data` as a bare list of GeneratedStudent
+    # dicts (snake_case), not an object with a "generated" key.
+    gen = (payload or {}).get("data") or []
+    generated = gen if isinstance(gen, list) else (gen.get("generated") or gen.get("students") or [])
     claim_code = None
     provisioned_id = None
     if generated:
@@ -266,19 +327,49 @@ def main() -> int:
     ok = status == 200 and (payload or {}).get("success") is not False
     if not r.record("student: redeem claim code", ok, payload):
         return _finish(r, args, created, 1)
+    # The claim response carries the authoritative school_id (taken from the
+    # claim_codes row), which is what the consent grant below must reference.
+    claim_school_id = ((payload or {}).get("data") or {}).get("school_id") or school_id
+
+    # 3b. student consents to individual visibility ------------------------
+    # The roster deliberately emits only students who are either
+    # provisioned+unclaimed or hold an active progress/full consent
+    # (provisioning_routes.py:911-922). Claiming flips the student out of the
+    # first category — this account is a self-signed-up student merged onto the
+    # provisioned shell, so it was never in it — which leaves consent as the
+    # only path to individual visibility. A "contact" scope is deliberately not
+    # enough: the roster carries progress fields.
+    status, payload = r.call(
+        "POST",
+        "/api/provisioning/students/consent",
+        {"school_id": claim_school_id, "scope": "progress"},
+        token=student_token,
+    )
+    ok = status == 200 and (payload or {}).get("success") is not False
+    if not r.record("student: grant progress consent", ok, payload):
+        return _finish(r, args, created, 1)
 
     # 4. SS1 guidance -----------------------------------------------------
     status, payload = r.call(
         "POST",
         "/api/student/starting-point",
         {
-            "userType": "ss_secondary",
-            "ssDoor": "ss",
-            "ssClass": "SS1",
+            # user_type is CHECK-constrained to the UserType union in
+            # src/types/onboarding.ts; an SS1 explorer is "senior_secondary".
+            # "ss_secondary" was never a member of either union.
+            "userType": "senior_secondary",
+            # student_starting_points.ss_door is CHECK-constrained to
+            # ('know_where','know_what','unsure') — the same union the app types
+            # in src/types/onboarding.ts. "ss" was never a valid door.
+            "ssDoor": "unsure",
+            # Lowercase: student_starting_points.ss_class carries a CHECK
+            # constraint for ('ss1','ss2','ss3'), and the app types it the same
+            # way (src/types/onboarding.ts). "SS1" is rejected by the database.
+            "ssClass": "ss1",
             "stream": "science",
             "exploreIntent": ["careers"],
             "jambSubjects": UTME_SUBJECTS,
-            "olevelSubjects": UTME_SUBJECTS + ["English Language"],
+            "olevelSubjects": UTME_SUBJECTS,
         },
         token=student_token,
     )
@@ -286,11 +377,21 @@ def main() -> int:
     r.record("student: save SS1 starting point", ok, payload if not ok else {"status": status})
 
     status, payload = r.call("GET", "/api/student/starting-point", token=student_token)
-    persisted = ((payload or {}).get("data") or {})
+    # The route wraps its payload twice: ResponseModel.data is
+    # {"status": "real"|"coming_soon", "data": <profile|None>, ...}. Reading
+    # only the outer layer made this step pass unconditionally, because the
+    # envelope is a non-empty dict even when nothing was saved. Assert on the
+    # echoed value instead.
+    envelope = ((payload or {}).get("data") or {})
+    persisted = envelope.get("data") or {}
     r.record(
         "student: starting point persists",
-        status == 200 and bool(persisted),
-        {"userType": persisted.get("userType"), "ssClass": persisted.get("ssClass")},
+        status == 200 and persisted.get("ssClass") == "ss1",
+        {
+            "envelopeStatus": envelope.get("status"),
+            "userType": persisted.get("userType"),
+            "ssClass": persisted.get("ssClass"),
+        },
     )
 
     # 5. subject matching -------------------------------------------------
@@ -299,14 +400,18 @@ def main() -> int:
         "/api/student/programmes/by-subjects",
         params={"subjects": ",".join(UTME_SUBJECTS), "exam_type": "utme"},
     )
-    matches = ((payload or {}).get("data") or {})
-    items = matches.get("items") if isinstance(matches, dict) else matches
-    items = items or []
-    names = [m.get("jambName") or m.get("jamb_name") or m.get("name") for m in items if isinstance(m, dict)]
+    items, notice = _match_items(payload)
+    names = [_programme_name(m) for m in items]
+    gated_present = any(CHEMISTRY_GATED_PROGRAMME in n.lower() for n in names)
     r.record(
-        "matcher: UTME Physics/Chemistry/Maths returns matches",
-        len(items) > 0,
-        {"count": len(items), "sample": names[:8]},
+        "matcher: UTME with Chemistry returns Chemistry-gated matches",
+        len(items) > 0 and gated_present,
+        {
+            "count": len(items),
+            "sample": names[:8],
+            "gatedProgrammePresent": gated_present,
+            "notice": notice,
+        },
     )
 
     status, payload = r.call(
@@ -314,30 +419,39 @@ def main() -> int:
         "/api/student/programmes/by-subjects",
         params={"subjects": ",".join(UTME_SUBJECTS_NEGATIVE), "exam_type": "utme"},
     )
-    neg = ((payload or {}).get("data") or {})
-    neg_items = neg.get("items") if isinstance(neg, dict) else neg
-    neg_items = neg_items or []
-    neg_names = [
-        (m.get("jambName") or m.get("jamb_name") or m.get("name") or "")
-        for m in neg_items
-        if isinstance(m, dict)
-    ]
-    cs_present = any("computer science" in (n or "").lower() for n in neg_names)
+    neg_items, neg_notice = _match_items(payload)
+    neg_names = [_programme_name(m) for m in neg_items]
+    gated_in_negative = any(CHEMISTRY_GATED_PROGRAMME in n.lower() for n in neg_names)
+    # Both halves matter: the swap must still return programmes (so a blanket
+    # failure cannot pass this step) and must drop the Chemistry-gated one.
     r.record(
-        "matcher: dropping Chemistry excludes Computer Science",
-        not cs_present,
-        {"count": len(neg_items), "computerSciencePresent": cs_present},
+        "matcher: dropping Chemistry excludes Chemistry-gated programmes",
+        len(neg_items) > 0 and not gated_in_negative,
+        {
+            "count": len(neg_items),
+            "gatedProgrammePresent": gated_in_negative,
+            "notice": neg_notice,
+        },
     )
 
     # 6. guidance path + report ------------------------------------------
+    # report.html raises a deliberate 409 unless the resolved path carries both
+    # programme.name and university.name (student_pipeline_routes.py:636), so a
+    # path of academicContext/subjects/resume alone can never render. Reuse a
+    # real programme name from the matcher step above rather than inventing one.
+    chosen = next((m for m in items if isinstance(m, dict)), None)
+    chosen_programme = _programme_name(chosen) or "Chemical Engineering"
+    chosen_programme_id = (chosen or {}).get("id") or (chosen or {}).get("jambId")
     status, payload = r.call(
         "PUT",
         "/api/student/guidance-path",
         {
             "source": "explore",
             "path": {
-                "academicContext": {"ssClass": "SS1", "stream": "science"},
+                "academicContext": {"ssClass": "ss1", "stream": "science"},
                 "subjects": UTME_SUBJECTS,
+                "programme": {"id": chosen_programme_id, "name": chosen_programme},
+                "university": {"name": "University of Lagos"},
                 "resume": {"stage": "subjects", "status": "in_progress", "mode": "guided"},
             },
         },
@@ -347,11 +461,21 @@ def main() -> int:
     r.record("student: save guidance path", ok, payload if not ok else {"status": status})
 
     status, payload = r.call("GET", "/api/student/guidance-path", token=student_token)
-    resumed = ((payload or {}).get("data") or {}).get("path") or {}
+    # Double envelope again: ResponseModel.data is the _real() wrapper and the
+    # saved row sits at data.data. Reading data.path found nothing because the
+    # outer layer only ever carries status/data/meta.
+    envelope = (payload or {}).get("data") or {}
+    saved = envelope.get("data") or {}
+    resumed = (saved.get("path") or {}) if isinstance(saved, dict) else {}
+    resume_state = resumed.get("resume") or {}
     r.record(
         "student: guidance path resumes",
-        status == 200 and bool(resumed),
-        {"resume": resumed.get("resume")},
+        status == 200 and resume_state.get("stage") == "subjects",
+        {
+            "envelopeStatus": envelope.get("status"),
+            "source": saved.get("source") if isinstance(saved, dict) else None,
+            "resume": resume_state,
+        },
     )
 
     status, body = r.call("GET", "/api/student/report.html", token=student_token, raw=True)
@@ -365,12 +489,30 @@ def main() -> int:
     # 7. roster -----------------------------------------------------------
     status, payload = r.call("GET", "/api/provisioning/roster", token=owner_token)
     roster = ((payload or {}).get("data") or {})
+    # The roster is SINGLE-wrapped: ResponseModel(data=RosterResponse(...)).
     roster_items = roster.get("items") or roster.get("students") or []
-    found = any(student_name in json.dumps(i, default=str) for i in roster_items)
+    total_affiliated = roster.get("total_affiliated")
+    # Affiliation and visibility are separate contracts, so assert on both:
+    # total_affiliated proves the link exists, the row proves the consent
+    # actually unlocked it. Checking only one of them hides half the failure.
+    affiliated = isinstance(total_affiliated, int) and total_affiliated >= 1
+    # The roster identifies students by user_id (provisioning_routes.py:923);
+    # full_name is users.username, never the provisioning draft's name, so a
+    # substring match on student_name can never succeed. Guard the id so an
+    # unset capture can't quietly match a row with a null user_id.
+    student_id = r.user_ids.get("student")
+    found = bool(student_id) and any(
+        isinstance(i, dict) and i.get("user_id") == student_id for i in roster_items
+    )
     r.record(
         "owner: student appears on roster",
-        found,
-        {"rosterSize": len(roster_items), "found": found},
+        affiliated and found,
+        {
+            "rosterSize": len(roster_items),
+            "totalAffiliated": total_affiliated,
+            "sharedWithYou": roster.get("shared_with_you"),
+            "found": found,
+        },
     )
 
     failures = [s for s in r.steps if not s["ok"]]
@@ -385,6 +527,10 @@ def _finish(
     owner_token: Optional[str] = None,
     student_token: Optional[str] = None,
 ) -> int:
+    # Fall back to the Runner's copy: a run that fails partway through still
+    # created rows, and leaving them behind poisons the next run (a second
+    # attempt collides with the first one's school/owner/draft).
+    owner_token = owner_token or r.owner_token
     if not args.no_cleanup and owner_token:
         print("\nCleaning up test rows...")
         uid = created.get("provisioned_user_id")
@@ -425,4 +571,12 @@ def _finish(
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception:
+        traceback.print_exc()
+        if _LIVE:
+            sys.exit(_finish(_LIVE["runner"], _LIVE["args"], _LIVE["created"], 1))
+        sys.exit(1)
