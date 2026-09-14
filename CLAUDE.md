@@ -931,6 +931,16 @@ A passing generator run alone is not sufficient. The runtime matcher also
 fails closed when the typed rule layer is absent or stale, so both replacement
 subject seeds must be deployed together.
 
+The runtime matcher is bounded as well as authority-gated. It first uses the
+selected canonical `subject_id` values to find candidate option rows, then
+limits catalogue, candidate, option, typed-rule and item reads. If the
+catalogue identity, candidate set, authority set or item set is unavailable or
+exceeds its safety bound, the endpoint returns no exact subject matches rather
+than loading the full catalogue or guessing. Parser-expanded broad O-level
+groups remain browseable but are review-only unless the source explicitly
+defines the open subject scope. This is an application safety rule and does
+not require a Supabase migration or seed.
+
 Then run `python data/career-mapping/_audit_subject_match_exhaustive.py`.
 This constructs valid selections and negative mutations for every emitted
 UTME/O-level option and compares the runtime matcher with an independent

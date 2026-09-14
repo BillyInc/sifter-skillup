@@ -1140,6 +1140,12 @@ export default function AdmissionBrowseScreen() {
                ? "Search by programme name, open the programme learning profile, and follow its connected domains, subgroups, roles and next skills."
                : "Programme search is based on the programme name. Open a result to understand the programme first, then inspect university-specific requirements. Use Subjects when you want subject-based matching."}
           </Text>
+          <View style={[styles.variantNotice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+            <Text style={[styles.variantNoticeTitle, { color: colors.text }]}>Why you may see more than one result</Text>
+            <Text style={[styles.noticeText, { color: colors.textSoft }]}>
+              Universities do not always use one identical programme name. A search such as “Business” may return separate recorded JAMB programme identities, combined programmes, or university-specific variants. We keep them separate so each result has the right curriculum and university list. Choose the exact programme identity you mean, then review its universities and requirements.
+            </Text>
+          </View>
         </View>
       ) : (
         <View style={styles.panel}>
@@ -1400,6 +1406,8 @@ const styles = StyleSheet.create({
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  variantNotice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md, gap: Spacing.xs },
+  variantNoticeTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
   matchLines: { gap: 3 },
   chosenRow: {
     flexDirection: "row",

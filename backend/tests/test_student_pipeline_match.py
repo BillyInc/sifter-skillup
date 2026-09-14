@@ -56,6 +56,7 @@ class _FakeSvc:
                 catalog = item.get("subject_catalog") or {}
                 if catalog.get("name"):
                     subjects[catalog["name"]] = {
+                        "id": catalog.get("id") or _subject_id(catalog["name"]),
                         "name": catalog["name"],
                         "code": catalog.get("code"),
                     }
@@ -74,7 +75,17 @@ class _FakeSvc:
                 }
                 for option in self._tables.get("programme_subject_options", [])
             ])
-        return _FakeQuery(self._tables.get(name, []))
+        rows = self._tables.get(name, [])
+        if name == "subject_catalog":
+            rows = [
+                {**row, "id": row.get("id") or _subject_id(row.get("name"))}
+                for row in rows
+            ]
+        return _FakeQuery(rows)
+
+
+def _subject_id(name):
+    return f"subject-{str(name or '').strip().lower().replace(' ', '-')}"
 
 
 def _item(option_id, role, name, group_key=None, min_from_group=None, distinct_group_key=None):
@@ -84,8 +95,33 @@ def _item(option_id, role, name, group_key=None, min_from_group=None, distinct_g
         "group_key": group_key,
         "min_from_group": min_from_group,
         "distinct_group_key": distinct_group_key,
-        "subject_catalog": {"name": name, "code": name[:3].upper()},
+        "subject_catalog": {"id": _subject_id(name), "name": name, "code": name[:3].upper()},
     }
+
+
+def test_jamb_detail_uses_registry_when_optional_detail_view_is_empty(monkeypatch):
+    tables = {
+        "v_jamb_programme_details": [],
+        "jamb_programmes": [{
+            "id": "jp1",
+            "jamb_name": "Library Science",
+            "jamb_faculty": "Education",
+            "degree_type": "B.Sc.",
+            "is_blend": False,
+            "skills_technical": ["Research"],
+            "skills_transferable": ["Communication"],
+        }],
+        "programme_subject_requirements": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+    monkeypatch.setattr(spr, "_programme_context_items_for_student", lambda *args: [])
+    monkeypatch.setattr(spr, "_programme_resources_for_student", lambda *args: [])
+
+    response = asyncio.run(spr.get_jamb_programme("jp1"))
+
+    assert response.data["status"] == "real"
+    assert response.data["data"]["jambName"] == "Library Science"
+    assert response.data["data"]["requirements"]["requirementStatus"] == "source_missing"
 
 
 def test_one_of_only_option_counts_group_matches(monkeypatch):
@@ -437,6 +473,37 @@ def test_generic_olevel_scope_cannot_match_catalogue_as_exact_requirement(monkey
             "option_label": "5 credit passes",
             "min_required": 5,
             "source_text": "Five (5) SSC credit passes including English Language, Mathematics and any other relevant subjects.",
+        }],
+        "programme_subject_option_items": [
+            _item("opt1", "required", "English Language"),
+            _item("opt1", "required", "Mathematics"),
+            *[_item("opt1", "one_of", name, group_key="g1", min_from_group=3) for name in names[2:]],
+        ],
+        "subject_catalog": [{"name": name, "code": name[:3].upper()} for name in names],
+        "v_jamb_programme_details": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_structured_subject_options(
+        {"english language", "mathematics", "subject 1", "subject 2", "subject 3"},
+        limit=10,
+        exam_type="olevel",
+    ) == []
+
+
+def test_olevel_english_mathematics_only_scope_cannot_match_catalogue_as_exact_requirement(monkeypatch):
+    # "Including English Language and Mathematics" does not identify the
+    # remaining three credits. A generated whole-catalogue group must not turn
+    # that incomplete evidence into an exact programme match.
+    names = ["English Language", "Mathematics"] + [f"Subject {i}" for i in range(25)]
+    tables = {
+        "programme_subject_options": [{
+            "id": "opt1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "olevel",
+            "option_label": "5 credit passes",
+            "min_required": 5,
+            "source_text": "Five (5) SSC credit passes including English Language and Mathematics.",
         }],
         "programme_subject_option_items": [
             _item("opt1", "required", "English Language"),
