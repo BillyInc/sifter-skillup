@@ -51,6 +51,64 @@ def _selected_items(path: dict, key: str) -> list[dict]:
     return [item for item in value if isinstance(item, dict)] if isinstance(value, list) else []
 
 
+def _domain_foundation_labels(svc: Any, domain_id: Any) -> list[str]:
+    """Read only explicit domain-owned foundations for a printable report.
+
+    ``domains.foundation_skills`` is a legacy role-frequency import. It is
+    useful for audit/admin compatibility, but it is not a student foundation
+    and must not leak into a saved or printed guidance path.
+    """
+    try:
+        rows = (
+            svc.table("career_guidance_foundations")
+            .select("item_name")
+            .eq("domain_id", domain_id)
+            .order("display_order")
+            .execute()
+            .data
+            or []
+        )
+        return [str(row["item_name"]).strip() for row in rows if row.get("item_name")]
+    except Exception:
+        # The additive migration may not yet be present. An empty list is
+        # safer than falling back to role-aggregated foundation data.
+        return []
+
+
+def _owned_rows(rows: list[dict], owner: str) -> list[dict]:
+    """Keep explicitly owned tools out of neighbouring student layers."""
+    return [row for row in rows if row.get("guidance_owner") == owner]
+
+
+def _owned_tools(
+    svc: Any,
+    *,
+    scope: str,
+    owner: str,
+    domain_id: Any = None,
+    subgroup_id: Any = None,
+) -> list[dict]:
+    """Return only explicitly owned tools, or none on an older schema.
+
+    ``guidance_owner`` is an additive migration column. A pre-migration
+    database must not break a report or silently promote unclassified legacy
+    tool rows into a student's guidance.
+    """
+    try:
+        query = svc.table("domain_tools").select(
+            "tool_name, tool_group, source, element_name, element_id, "
+            "source_confidence, data_state, source_provenance, guidance_owner"
+        ).eq("scope", scope)
+        if domain_id is not None:
+            query = query.eq("domain_id", domain_id)
+        if subgroup_id is not None:
+            query = query.eq("subgroup_id", subgroup_id)
+        rows = query.execute().data or []
+        return _owned_rows(rows, owner)
+    except Exception:
+        return []
+
+
 def resolve_guidance_report_context(
     svc: Any,
     user: dict,
@@ -150,9 +208,9 @@ def resolve_guidance_report_context(
             if not domain:
                 continue
             domain_id = domain.get("id")
-            tool_rows = svc.table("domain_tools").select("tool_name, tool_group, source, element_name, element_id, source_confidence, data_state, source_provenance").eq(
-                "domain_id", domain_id
-            ).eq("scope", "domain").execute().data or []
+            tool_rows = _owned_tools(
+                svc, scope="domain", owner="domain", domain_id=domain_id
+            )
             cert_rows = svc.table("domain_certifications").select(
                 "name, body, region, level, gate_reason"
             ).eq("domain_id", domain_id).eq("placement", "gateway").execute().data or []
@@ -176,9 +234,12 @@ def resolve_guidance_report_context(
             for subgroup in sg_rows:
                 if str(subgroup.get("id")) not in selected_sg_ids:
                     continue
-                sg_tools = svc.table("domain_tools").select("tool_name, tool_group, source, element_name, element_id, source_confidence, data_state, source_provenance").eq(
-                    "subgroup_id", subgroup.get("id")
-                ).eq("scope", "subgroup").execute().data or []
+                sg_tools = _owned_tools(
+                    svc,
+                    scope="subgroup",
+                    owner="subgroup",
+                    subgroup_id=subgroup.get("id"),
+                )
                 sg_certs = svc.table("domain_certifications").select(
                     "name, body, region, level, gate_reason"
                 ).eq("subgroup_id", subgroup.get("id")).eq("placement", "subgroup").execute().data or []
@@ -226,7 +287,7 @@ def resolve_guidance_report_context(
                 "intent": choice.get("intent"),
                 "sequence": choice.get("sequence"),
                 "description": domain.get("description"),
-                "skills": _labels(domain.get("foundation_skills")),
+                "skills": _domain_foundation_labels(svc, domain_id),
                 "sourceConfidence": domain.get("source_confidence"),
                 "dataState": domain.get("data_state"),
                 "skillSources": domain.get("foundation_skill_sources") or {},
