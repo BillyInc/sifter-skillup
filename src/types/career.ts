@@ -727,9 +727,9 @@ export interface RoleWorkProfile {
   dataState?: SourceDataState;
 }
 
-/** A domain's common ("foundation") skill, shown with how prevalent it is across the
- *  field's roles. Threshold ≥30% (adaptive floor for diverse domains) — a 34% skill
- *  appears AND is labelled 34%, so common-but-not-universal skills aren't hidden. */
+/** A domain-owned foundation item in the student guidance sequence. Legacy
+ * role-prevalence fields remain typed for audit/admin compatibility but are not
+ * used as student-facing domain recommendations. */
 export interface FoundationSkill {
   skill: string;
   /** Fraction of role profiles only when this is explicitly role-derived. */

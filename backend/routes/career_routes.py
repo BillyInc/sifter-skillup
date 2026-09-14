@@ -1168,7 +1168,12 @@ async def get_domain(domain_id: str):
             resource_rows = _reviewed_guidance_resources(resource_rows)
         resource_rows = _student_guidance_resources(resource_rows)
         curated_domain_foundations = _domain_guidance_foundations(svc, domain_uuid)
-        domain_foundations = curated_domain_foundations if (reviewed_slice or curated_domain_foundations) else _foundation_skills(domain)
+        # Student-facing foundations must come from the explicit, domain-owned
+        # guidance table. The legacy ``domains.foundation_skills`` JSONB is a
+        # role-frequency import retained for audit/admin compatibility; it
+        # must never become a fallback recommendation when the additive
+        # guidance migration is absent or incomplete.
+        domain_foundations = curated_domain_foundations
         tool_resource_urls = _tool_resource_urls(resource_rows)
         domain_context_items = _career_context_items(
             svc, context_level="domain", context_key=domain_id
