@@ -7,10 +7,10 @@ This audit checks CCMAS course outlines and learning outcomes against the curren
 - CCMAS programmes checked: **237**
 - Candidate rows checked: **5275** (scored candidates: **4718**)
 - Active mapping rows checked: **1683**
-- Active links failing the numeric course/outcome gate: **267**
+- Active links failing the numeric course/outcome gate: **269**
 - Active links needing semantic review after the numeric gate: **71**
 - Omitted candidates: **3217**
-- Omitted candidates that pass the numerical gate and need semantic review: **1514**
+- Omitted candidates that pass the numerical gate and need semantic review: **1515**
 - Normalized JAMB identity collisions: **4**
 - Brochure offering rows checked: **439**
 - Repeated normalized offering identities audited: **48**
@@ -112,7 +112,7 @@ These categories are intentionally not hidden behind a generic `ready` label:
 - Source-blank variants: **17**.
 - University-specific exception rows in the generated seed: **3884**; structured subject options: **1998**; exception statuses: `{'not_subject_rule': 1275, 'parsed': 1983, 'needs_review': 626}`.
 - Generated offering seed check: **9130** rows and university UTME/O-level/Direct Entry columns emitted: **True**.
-- Active programme-domain links failing the evidence gate: **267**; active links needing semantic review: **71**.
+- Active programme-domain links failing the evidence gate: **269**; active links needing semantic review: **71**.
 - Unverified programme-domain links retained outside active guidance: **375**.
 
 Requirement review rows and no-source rows remain eligible for manual completion only; they must not be turned into inferred subject rules. Domain-link review is a separate CCMAS curriculum audit and does not mean the JAMB identity itself is broken.

@@ -685,3 +685,195 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
 
     assert len(rows[0]["schoolOfferings"]) == 15
     assert rows[0]["schoolCount"] == 15
+
+
+def test_verified_university_rule_can_add_a_discovery_match(monkeypatch):
+    tables = {
+        "school_programme_requirement_exceptions": [{"id": "ex1", "parse_status": "parsed"}],
+        "school_programme_subject_options": [{
+            "id": "local1",
+            "exception_id": "ex1",
+            "school_id": "s1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "utme",
+            "rule_scope": "full",
+            "min_required": 3,
+            "source_text": "Mathematics, Economics and Government",
+        }],
+        "school_programme_subject_option_items": [
+            {"option_id": "local1", "requirement_role": "required", "subject_catalog": {"name": "Mathematics"}},
+            {"option_id": "local1", "requirement_role": "required", "subject_catalog": {"name": "Economics"}},
+            {"option_id": "local1", "requirement_role": "required", "subject_catalog": {"name": "Government"}},
+        ],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    rows = spr._match_verified_school_subject_options(
+        {"mathematics", "economics", "government", "english language"}, "utme"
+    )
+
+    assert rows[0]["jambProgrammeId"] == "jp1"
+    assert rows[0]["matchBasis"] == "university_specific"
+    assert rows[0]["universityMatchSchoolId"] == "s1"
+
+
+def test_subject_route_surfaces_verified_university_alternative(monkeypatch):
+    monkeypatch.setattr(spr, "_match_structured_subject_options", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        spr,
+        "_match_verified_school_subject_options",
+        lambda selected, exam_type, school_id=None, limit=2000: [{
+            "jambProgrammeId": "jp1",
+            "matchedSubjectCount": 3,
+            "matchedSubjects": ["Mathematics", "Economics", "Government"],
+            "missingSubjects": [],
+            "requirementText": "Mathematics, Economics and Government",
+            "matchBasis": "university_specific",
+            "universityMatchSchoolId": "s1",
+        }] if exam_type == "utme" else [],
+    )
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *_args: items)
+
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Economics, Government",
+            olevel_subjects="",
+            exam_type="utme",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert result.data["data"][0]["matchBasis"] == "university_specific"
+    assert result.data["data"][0]["universitySpecificMatchSchoolIds"] == ["s1"]
+
+
+def test_combined_university_alternatives_must_share_the_same_university(monkeypatch):
+    monkeypatch.setattr(spr, "_match_structured_subject_options", lambda *args, **kwargs: [])
+
+    def local_match(_selected, exam_type, school_id=None, limit=2000):
+        return [{
+            "jambProgrammeId": "jp1",
+            "matchedSubjectCount": 4,
+            "matchedSubjects": ["English Language", "Mathematics", "Physics", "Chemistry"],
+            "missingSubjects": [],
+            "requirementText": "University rule",
+            "matchBasis": "university_specific",
+            "universityMatchSchoolId": "s1" if exam_type == "utme" else "s2",
+        }]
+
+    monkeypatch.setattr(spr, "_match_verified_school_subject_options", local_match)
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *_args: items)
+
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics, Chemistry",
+            olevel_subjects="English Language, Mathematics, Physics, Chemistry, Biology",
+            exam_type="combined",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert result.data["data"] == []
+
+
+def test_university_partial_or_unreviewed_rule_cannot_add_a_match(monkeypatch):
+    tables = {
+        "school_programme_requirement_exceptions": [{"id": "ex1", "parse_status": "needs_review"}],
+        "school_programme_subject_options": [{
+            "id": "local1",
+            "exception_id": "ex1",
+            "school_id": "s1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "utme",
+            "rule_scope": "partial",
+            "min_required": 3,
+            "source_text": "Mathematics, Economics and Government",
+        }],
+        "school_programme_subject_option_items": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+
+    assert spr._match_verified_school_subject_options(
+        {"mathematics", "economics", "government", "english language"}, "utme"
+    ) == []
+
+
+def test_selected_university_full_rule_overrides_national_match(monkeypatch):
+    tables = {
+        "v_school_jamb_programmes": [{
+            "school_id": "s1",
+            "institution_type": "university",
+            "jamb_programme_id": "jp1",
+        }],
+        "school_programme_requirement_exceptions": [{"id": "ex1", "parse_status": "parsed"}],
+        "school_programme_subject_options": [{
+            "id": "local1",
+            "exception_id": "ex1",
+            "school_id": "s1",
+            "jamb_programme_id": "jp1",
+            "exam_type": "utme",
+            "rule_scope": "full",
+            "min_required": 3,
+            "source_text": "Physics, Chemistry and Biology",
+        }],
+        "school_programme_subject_option_items": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+    monkeypatch.setattr(spr, "_match_structured_subject_options", lambda *args, **kwargs: [{
+        "jambProgrammeId": "jp1",
+        "matchedSubjectCount": 4,
+        "matchedSubjects": ["English Language", "Mathematics", "Economics", "Government"],
+        "missingSubjects": [],
+    }])
+    monkeypatch.setattr(spr, "_match_verified_school_subject_options", lambda *args, **kwargs: [])
+    monkeypatch.setattr(spr, "_attach_school_context", lambda items, *args: items)
+
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Economics, Government",
+            olevel_subjects="",
+            exam_type="utme",
+            school_id="s1",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert result.data["data"] == []
+
+
+def test_selected_university_limits_offerings_to_that_university(monkeypatch):
+    tables = {
+        "v_school_jamb_programmes": [
+            {"school_id": "s1", "institution_type": "university", "jamb_programme_id": "jp1"},
+            {"school_id": "s2", "institution_type": "university", "jamb_programme_id": "jp1"},
+        ],
+        "schools": [],
+        "school_programmes": [],
+    }
+    monkeypatch.setattr(spr, "_svc", lambda: _FakeSvc(tables))
+    monkeypatch.setattr(spr, "_match_structured_subject_options", lambda *args, **kwargs: [{
+        "jambProgrammeId": "jp1",
+        "matchedSubjectCount": 4,
+        "matchedSubjects": ["English Language", "Mathematics", "Physics", "Chemistry"],
+        "missingSubjects": [],
+    }])
+    monkeypatch.setattr(spr, "_match_verified_school_subject_options", lambda *args, **kwargs: [])
+
+    captured = {}
+
+    def attach(items, *args):
+        captured["selectedSchoolId"] = args[2]
+        return items
+
+    monkeypatch.setattr(spr, "_attach_school_context", attach)
+    result = asyncio.run(
+        spr.programmes_by_subjects(
+            subjects="English Language, Mathematics, Physics, Chemistry",
+            olevel_subjects="",
+            exam_type="utme",
+            school_id="s1",
+        )
+    )
+
+    assert result.data["status"] == "real"
+    assert captured["selectedSchoolId"] == "s1"

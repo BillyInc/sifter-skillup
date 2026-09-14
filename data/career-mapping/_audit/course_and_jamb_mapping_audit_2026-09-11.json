@@ -13,16 +13,16 @@
     "active_mapping_rows_checked": 1683,
     "unverified_mapping_rows_checked": 375,
     "omitted_candidates": 3217,
-    "omitted_candidates_requiring_review": 1514,
-    "omitted_candidates_not_gate_ready": 1703,
-    "active_links_failing_numeric_gate": 267,
+    "omitted_candidates_requiring_review": 1515,
+    "omitted_candidates_not_gate_ready": 1702,
+    "active_links_failing_numeric_gate": 269,
     "active_links_needing_semantic_review": 71,
     "gate_summary": {
-      "active:passes_course_outcome_gate": 1296,
-      "omitted:fails_course_outcome_gate": 1663,
+      "active:passes_course_outcome_gate": 1294,
+      "omitted:fails_course_outcome_gate": 1662,
       "unverified:fails_course_outcome_gate": 336,
-      "active:fails_course_outcome_gate": 261,
-      "omitted:passes_course_outcome_gate": 1198,
+      "active:fails_course_outcome_gate": 263,
+      "omitted:passes_course_outcome_gate": 1199,
       "active:passes_count_but_needs_semantic_review": 71,
       "omitted:passes_count_but_needs_semantic_review": 294,
       "unverified:passes_count_but_needs_semantic_review": 2,
@@ -15027,10 +15027,10 @@
       "still_needing_manual_source_review": []
     },
     "domain_mapping_review": {
-      "active_links_failing_numeric_gate": 267,
+      "active_links_failing_numeric_gate": 269,
       "active_links_needing_semantic_review": 71,
       "unverified_links": 375,
-      "omitted_candidates_requiring_review": 1514
+      "omitted_candidates_requiring_review": 1515
     },
     "interpretation": {
       "catalogue_state_needs_review": "Requirement text exists but its subject structure still needs source/manual confirmation.",
@@ -135681,11 +135681,23 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 0,
-        "distinct_anchor_count": 0,
-        "domain_specific_anchor_count": 0,
-        "distinct_anchors": [],
-        "matched_courses": [],
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
+        "distinct_anchors": [
+          "first aid"
+        ],
+        "matched_courses": [
+          {
+            "code": "DTH 416",
+            "title": "Medical Emergency and First Aid",
+            "matched_anchors": [
+              "first aid"
+            ],
+            "outcome_count": 5,
+            "has_content_summary": true
+          }
+        ],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 0,
         "transferable_evidence": []
@@ -142655,11 +142667,12 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 5,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
+        "matched_course_count": 6,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemistry"
+          "chemistry",
+          "electronics"
         ],
         "matched_courses": [
           {
@@ -142669,6 +142682,15 @@
               "chemistry"
             ],
             "outcome_count": 10,
+            "has_content_summary": true
+          },
+          {
+            "code": "MLS 310",
+            "title": "Biomedical Engineering",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 2,
             "has_content_summary": true
           },
           {
@@ -144998,17 +145020,27 @@
       "current_mapping": false,
       "unverified_mapping": false,
       "candidate_origin": "scored_candidate",
-      "disposition": "omitted_candidate_not_gate_ready",
-      "gate_status": "fails_course_outcome_gate",
-      "gate_reason": "direct/functional requires at least two course/outcome anchors",
+      "disposition": "omitted_candidate_review",
+      "gate_status": "passes_course_outcome_gate",
+      "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 1,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
+        "matched_course_count": 2,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
+          "first aid",
           "human anatomy"
         ],
         "matched_courses": [
+          {
+            "code": "OPT 418",
+            "title": "Environmental Vision",
+            "matched_anchors": [
+              "first aid"
+            ],
+            "outcome_count": 7,
+            "has_content_summary": true
+          },
           {
             "code": "OPT 609",
             "title": "Neuropathology",
@@ -148638,11 +148670,23 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 0,
-        "distinct_anchor_count": 0,
-        "domain_specific_anchor_count": 0,
-        "distinct_anchors": [],
-        "matched_courses": [],
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
+        "distinct_anchors": [
+          "first aid"
+        ],
+        "matched_courses": [
+          {
+            "code": "POT 202",
+            "title": "First Aid in Prosthetics and Orthotics",
+            "matched_anchors": [
+              "first aid"
+            ],
+            "outcome_count": 4,
+            "has_content_summary": true
+          }
+        ],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 0,
         "transferable_evidence": []
@@ -148796,11 +148840,23 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 0,
-        "distinct_anchor_count": 0,
-        "domain_specific_anchor_count": 0,
-        "distinct_anchors": [],
-        "matched_courses": [],
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
+        "distinct_anchors": [
+          "electronics"
+        ],
+        "matched_courses": [
+          {
+            "code": "POT 415",
+            "title": "Therapeutic Exercises and Assistive Devices",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 6,
+            "has_content_summary": true
+          }
+        ],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 0,
         "transferable_evidence": []
@@ -150388,33 +150444,23 @@
       "unverified_mapping": false,
       "candidate_origin": "scored_candidate",
       "disposition": "active_mapping",
-      "gate_status": "passes_course_outcome_gate",
-      "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
+      "gate_status": "fails_course_outcome_gate",
+      "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 2,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
         "distinct_anchors": [
-          "radiobiology",
-          "radiotherapy"
+          "first aid"
         ],
         "matched_courses": [
           {
-            "code": "RAD 301",
-            "title": "Radiobiology, Radiation Dosimetry and Protection",
+            "code": "RAD 210",
+            "title": "Basic Patient care, Hospital Practice and Professional Ethics",
             "matched_anchors": [
-              "radiobiology"
+              "first aid"
             ],
-            "outcome_count": 4,
-            "has_content_summary": true
-          },
-          {
-            "code": "RAD 561",
-            "title": "Radiotherapy/Oncology I",
-            "matched_anchors": [
-              "radiotherapy"
-            ],
-            "outcome_count": 7,
+            "outcome_count": 8,
             "has_content_summary": true
           }
         ],
@@ -151184,23 +151230,11 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 1,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
-        "distinct_anchors": [
-          "medical terminology"
-        ],
-        "matched_courses": [
-          {
-            "code": "SLT 413",
-            "title": "Medical Speech-Language Pathology",
-            "matched_anchors": [
-              "medical terminology"
-            ],
-            "outcome_count": 4,
-            "has_content_summary": true
-          }
-        ],
+        "matched_course_count": 0,
+        "distinct_anchor_count": 0,
+        "domain_specific_anchor_count": 0,
+        "distinct_anchors": [],
+        "matched_courses": [],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 0,
         "transferable_evidence": []
@@ -215215,10 +215249,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 11,
-        "distinct_anchor_count": 4,
-        "domain_specific_anchor_count": 4,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "laboratory techniques",
           "oxidation"
@@ -215292,7 +215325,6 @@
             "code": "BCH 203",
             "title": "General Biochemistry Practical I",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 0,
@@ -371319,13 +371351,23 @@
       "gate_status": "passes_adjacent_gate",
       "gate_reason": "one course/outcome anchor plus transferable evidence and a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 1,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
+        "matched_course_count": 2,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
+          "electronics",
           "spectroscopy"
         ],
         "matched_courses": [
+          {
+            "code": "PHY 207",
+            "title": "Practical Physics III",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 3,
+            "has_content_summary": true
+          },
           {
             "code": "PHY 304",
             "title": "Electromagnetic Waves and Optics",
@@ -409023,11 +409065,12 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 6,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "matched_course_count": 7,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -409075,6 +409118,15 @@
               "chemistry"
             ],
             "outcome_count": 6,
+            "has_content_summary": true
+          },
+          {
+            "code": "BME 332",
+            "title": "Biomedical Electronics",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 7,
             "has_content_summary": true
           },
           {
@@ -411619,13 +411671,11 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 9,
-        "distinct_anchor_count": 5,
-        "domain_specific_anchor_count": 5,
+        "matched_course_count": 7,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
-          "engineering principles",
           "oxidation",
           "spectroscopy"
         ],
@@ -411686,29 +411736,10 @@
             "has_content_summary": true
           },
           {
-            "code": "TCH 401",
-            "title": "Chemical Product Design",
-            "matched_anchors": [
-              "engineering principles"
-            ],
-            "outcome_count": 7,
-            "has_content_summary": true
-          },
-          {
-            "code": "TCH 405",
-            "title": "Process Control",
-            "matched_anchors": [
-              "chemical processes"
-            ],
-            "outcome_count": 4,
-            "has_content_summary": true
-          },
-          {
             "code": "TCH 555",
             "title": "Chemical Engineering Research Project RECOMMENDATION: TCH 555 – Chemical Engineering Research Project be taken/taught over the two semesters of the final year.",
             "matched_anchors": [
-              "chemistry",
-              "engineering principles"
+              "chemistry"
             ],
             "outcome_count": 70,
             "has_content_summary": true
@@ -416333,10 +416364,11 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 5,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -416381,7 +416413,8 @@
             "code": "CEE 599",
             "title": "Project",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 72,
             "has_content_summary": true
@@ -434598,11 +434631,10 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 6,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
           "chemistry",
-          "engineering principles",
           "oxidation"
         ],
         "matched_courses": [
@@ -434656,8 +434688,7 @@
             "code": "EVE 502",
             "title": "Wastewater Treatment",
             "matched_anchors": [
-              "chemistry",
-              "engineering principles"
+              "chemistry"
             ],
             "outcome_count": 43,
             "has_content_summary": true
@@ -441988,10 +442019,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 10,
-        "distinct_anchor_count": 4,
-        "domain_specific_anchor_count": 4,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation",
           "spectroscopy"
@@ -442038,7 +442068,6 @@
             "code": "HND 212",
             "title": "Human Biochemistry for Nutrition",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 2,
@@ -451532,11 +451561,12 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 6,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 4,
+        "domain_specific_anchor_count": 4,
         "distinct_anchors": [
           "chemistry",
-          "engineering principles",
+          "electronics",
+          "manufacturing processes",
           "oxidation"
         ],
         "matched_courses": [
@@ -451578,19 +451608,20 @@
             "has_content_summary": true
           },
           {
-            "code": "MAR 561",
-            "title": "Basic Drilling Engineering",
+            "code": "MAR 417",
+            "title": "Computer Aided Design (CAD) in 2 E 15 45 Marine Engineering and Naval Architecture",
             "matched_anchors": [
-              "engineering principles"
+              "manufacturing processes"
             ],
-            "outcome_count": 3,
+            "outcome_count": 4,
             "has_content_summary": true
           },
           {
             "code": "MAR 565",
             "title": "Mooring, Risers and Drilling Systems",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 45,
             "has_content_summary": true
@@ -455376,10 +455407,11 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 8,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 4,
+        "domain_specific_anchor_count": 4,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation",
           "spectroscopy"
         ],
@@ -455434,7 +455466,8 @@
             "code": "MME 304",
             "title": "Chemistry of Materials",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 5,
             "has_content_summary": true
@@ -470982,7 +471015,7 @@
         "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
-          "engineering principles",
+          "manufacturing processes",
           "oxidation"
         ],
         "matched_courses": [
@@ -471033,22 +471066,23 @@
             "has_content_summary": true
           },
           {
-            "code": "MTE 411",
-            "title": "Corrosion Engineering",
+            "code": "MTE 407",
+            "title": "Joining and Welding Technology",
             "matched_anchors": [
-              "chemistry"
+              "manufacturing processes"
             ],
             "outcome_count": 4,
             "has_content_summary": true
           },
           {
-            "code": "MTE 415",
-            "title": "Metallurgical Engineering Lab. II GET 499 SIWES III: Students Work 4 C 12 Weeks Experience Scheme",
+            "code": "MTE 411",
+            "title": "Corrosion Engineering",
             "matched_anchors": [
-              "engineering principles"
+              "chemistry",
+              "manufacturing processes"
             ],
-            "outcome_count": 3,
-            "has_content_summary": false
+            "outcome_count": 4,
+            "has_content_summary": true
           }
         ],
         "source_flagged_course_count": 0,
@@ -478300,11 +478334,10 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 7,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "matched_course_count": 6,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation"
         ],
@@ -478344,15 +478377,6 @@
               "chemistry"
             ],
             "outcome_count": 7,
-            "has_content_summary": true
-          },
-          {
-            "code": "MNE 104",
-            "title": "Physical Geology and Earth History",
-            "matched_anchors": [
-              "chemical processes"
-            ],
-            "outcome_count": 6,
             "has_content_summary": true
           },
           {
@@ -486297,11 +486321,12 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 4,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "matched_course_count": 5,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -486338,6 +486363,15 @@
             "title": "General Practical Chemistry II",
             "matched_anchors": [
               "chemistry"
+            ],
+            "outcome_count": 7,
+            "has_content_summary": true
+          },
+          {
+            "code": "NUE 302",
+            "title": "2 C 15 30 Measurement Analysis and Processes in Nuclear",
+            "matched_anchors": [
+              "electronics"
             ],
             "outcome_count": 7,
             "has_content_summary": true
@@ -488548,13 +488582,11 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 9,
-        "distinct_anchor_count": 4,
-        "domain_specific_anchor_count": 4,
+        "matched_course_count": 5,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
-          "engineering principles",
           "oxidation"
         ],
         "matched_courses": [
@@ -488596,47 +488628,10 @@
             "has_content_summary": true
           },
           {
-            "code": "PCE 301",
-            "title": "Chemical Thermodynamics",
-            "matched_anchors": [
-              "chemical processes"
-            ],
-            "outcome_count": 4,
-            "has_content_summary": true
-          },
-          {
-            "code": "PCE 302",
-            "title": "Chemical Reaction Kinetics and catalysis",
-            "matched_anchors": [
-              "chemical processes"
-            ],
-            "outcome_count": 4,
-            "has_content_summary": true
-          },
-          {
-            "code": "PCE 403",
-            "title": "Petrochemical Engineering Process Analysis",
-            "matched_anchors": [
-              "chemical processes"
-            ],
-            "outcome_count": 1,
-            "has_content_summary": true
-          },
-          {
-            "code": "PCE 506",
-            "title": "Final Year Project",
-            "matched_anchors": [
-              "engineering principles"
-            ],
-            "outcome_count": 8,
-            "has_content_summary": true
-          },
-          {
             "code": "PCE 507",
             "title": "Process Dynamics and control in Petrochemical plant Note: It is expected that 2hrs every week should be used by students to learn how to use modelling software such as MATLAB, POLYMATH, CHEMCAD, HYSYS, microsoft excel etc, for simple calculations based on the contents of these courses.",
             "matched_anchors": [
-              "chemistry",
-              "engineering principles"
+              "chemistry"
             ],
             "outcome_count": 45,
             "has_content_summary": true
@@ -504239,10 +504234,11 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 5,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -504287,7 +504283,8 @@
             "code": "STE 501",
             "title": "Steel Structures",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 70,
             "has_content_summary": true
@@ -508049,11 +508046,12 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 5,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "matched_course_count": 8,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -508095,10 +508093,38 @@
             "has_content_summary": true
           },
           {
+            "code": "SSG 203",
+            "title": "Solid Modelling and Design",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 4,
+            "has_content_summary": true
+          },
+          {
+            "code": "SSG 415",
+            "title": "Mechatronics & Robotics",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 3,
+            "has_content_summary": true
+          },
+          {
+            "code": "SSG 433",
+            "title": "Introduction to Micro Electromechanical Systems",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 3,
+            "has_content_summary": true
+          },
+          {
             "code": "SSG 560",
             "title": "Final Year Project II",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 66,
             "has_content_summary": true
@@ -512074,10 +512100,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 5,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation"
         ],
@@ -512123,7 +512148,6 @@
             "code": "TEE 503",
             "title": "Mobile Communication System",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 47,
@@ -516069,10 +516093,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 7,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation"
         ],
@@ -516118,7 +516141,6 @@
             "code": "WRE 503",
             "title": "Design of Treatment Plants",
             "matched_anchors": [
-              "chemical processes",
               "oxidation"
             ],
             "outcome_count": 4,
@@ -553911,11 +553933,23 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 0,
-        "distinct_anchor_count": 0,
-        "domain_specific_anchor_count": 0,
-        "distinct_anchors": [],
-        "matched_courses": [],
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
+        "distinct_anchors": [
+          "first aid"
+        ],
+        "matched_courses": [
+          {
+            "code": "BIO 107",
+            "title": "General Biology Practical I",
+            "matched_anchors": [
+              "first aid"
+            ],
+            "outcome_count": 7,
+            "has_content_summary": true
+          }
+        ],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 36,
         "transferable_evidence": [
@@ -562664,16 +562698,16 @@
         "distinct_anchor_count": 1,
         "domain_specific_anchor_count": 1,
         "distinct_anchors": [
-          "pharmaceutical products"
+          "first aid"
         ],
         "matched_courses": [
           {
-            "code": "SAP 301",
-            "title": "Pharmacoeconomics",
+            "code": "BIO 107",
+            "title": "General Biology Practical I",
             "matched_anchors": [
-              "pharmaceutical products"
+              "first aid"
             ],
-            "outcome_count": 3,
+            "outcome_count": 6,
             "has_content_summary": true
           }
         ],
@@ -573018,10 +573052,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 19,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation"
         ],
@@ -573085,7 +573118,6 @@
             "code": "BCH 203",
             "title": "General Biochemistry Practical",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 7,
@@ -573185,7 +573217,6 @@
             "code": "BCH 405",
             "title": "Plant Biochemistry",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 4,
@@ -573195,7 +573226,6 @@
             "code": "BCH 408",
             "title": "Biochemical Entrepreneurship",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 3,
@@ -590329,8 +590359,8 @@
         "domain_specific_anchor_count": 6,
         "distinct_anchors": [
           "analytical chemistry",
-          "chemical processes",
           "chemistry",
+          "electronics",
           "green chemistry",
           "oxidation",
           "spectroscopy"
@@ -590452,7 +590482,6 @@
             "code": "CHM 302",
             "title": "Inorganic Chemistry II",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 23,
@@ -590492,7 +590521,8 @@
             "code": "CHM 314",
             "title": "Entrepreneurship Skills in Chemistry",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 6,
             "has_content_summary": true
@@ -604255,8 +604285,8 @@
         "domain_specific_anchor_count": 5,
         "distinct_anchors": [
           "analytical chemistry",
-          "chemical processes",
           "chemistry",
+          "electronics",
           "oxidation",
           "spectroscopy"
         ],
@@ -604359,7 +604389,8 @@
             "code": "ICH 314",
             "title": "Entrepreneurship Skills in Industrial Chemistry",
             "matched_anchors": [
-              "chemistry"
+              "chemistry",
+              "electronics"
             ],
             "outcome_count": 6,
             "has_content_summary": true
@@ -604377,7 +604408,6 @@
             "code": "CHM 302",
             "title": "Inorganic Chemistry II",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 23,
@@ -612798,11 +612828,12 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 4,
-        "distinct_anchor_count": 2,
-        "domain_specific_anchor_count": 2,
+        "matched_course_count": 7,
+        "distinct_anchor_count": 3,
+        "domain_specific_anchor_count": 3,
         "distinct_anchors": [
           "chemistry",
+          "electronics",
           "oxidation"
         ],
         "matched_courses": [
@@ -612841,6 +612872,33 @@
               "chemistry"
             ],
             "outcome_count": 23,
+            "has_content_summary": true
+          },
+          {
+            "code": "PHY 202",
+            "title": "Introduction to Electric Circuits and Electronics",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 16,
+            "has_content_summary": true
+          },
+          {
+            "code": "PHY 315",
+            "title": "Electronics",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 3,
+            "has_content_summary": true
+          },
+          {
+            "code": "PHY 423",
+            "title": "Solid State Physics II",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 6,
             "has_content_summary": true
           }
         ],
@@ -614907,10 +614965,9 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 7,
-        "distinct_anchor_count": 3,
-        "domain_specific_anchor_count": 3,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
-          "chemical processes",
           "chemistry",
           "oxidation"
         ],
@@ -614974,7 +615031,6 @@
             "code": "MSE 303",
             "title": "Chemical Oceanography and Laboratory",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 5,
@@ -622779,35 +622835,14 @@
       "unverified_mapping": false,
       "candidate_origin": "scored_candidate",
       "disposition": "active_mapping",
-      "gate_status": "passes_course_outcome_gate",
-      "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
+      "gate_status": "fails_course_outcome_gate",
+      "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 2,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
-        "distinct_anchors": [
-          "radiotherapy"
-        ],
-        "matched_courses": [
-          {
-            "code": "MPH 326",
-            "title": "Medical Imaging",
-            "matched_anchors": [
-              "radiotherapy"
-            ],
-            "outcome_count": 5,
-            "has_content_summary": true
-          },
-          {
-            "code": "MPH 529",
-            "title": "Radiation Biology",
-            "matched_anchors": [
-              "radiotherapy"
-            ],
-            "outcome_count": 5,
-            "has_content_summary": true
-          }
-        ],
+        "matched_course_count": 0,
+        "distinct_anchor_count": 0,
+        "domain_specific_anchor_count": 0,
+        "distinct_anchors": [],
+        "matched_courses": [],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 46,
         "transferable_evidence": [
@@ -625930,13 +625965,11 @@
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
         "matched_course_count": 23,
-        "distinct_anchor_count": 6,
-        "domain_specific_anchor_count": 6,
+        "distinct_anchor_count": 4,
+        "domain_specific_anchor_count": 4,
         "distinct_anchors": [
           "analytical chemistry",
-          "chemical processes",
           "chemistry",
-          "computational chemistry",
           "oxidation",
           "spectroscopy"
         ],
@@ -626066,7 +626099,6 @@
             "code": "BCH 203",
             "title": "General Biochemistry Practical",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 7,
@@ -626104,8 +626136,7 @@
             "code": "MCM 311",
             "title": "The Medicinal Chemistry of Drug Development",
             "matched_anchors": [
-              "chemistry",
-              "computational chemistry"
+              "chemistry"
             ],
             "outcome_count": 3,
             "has_content_summary": true
@@ -644187,13 +644218,23 @@
       "gate_status": "passes_adjacent_gate",
       "gate_reason": "one course/outcome anchor plus transferable evidence and a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 1,
-        "distinct_anchor_count": 1,
-        "domain_specific_anchor_count": 1,
+        "matched_course_count": 2,
+        "distinct_anchor_count": 2,
+        "domain_specific_anchor_count": 2,
         "distinct_anchors": [
+          "electronics",
           "spectroscopy"
         ],
         "matched_courses": [
+          {
+            "code": "PHY 202",
+            "title": "Introduction to Electric Circuits and Electronics",
+            "matched_anchors": [
+              "electronics"
+            ],
+            "outcome_count": 16,
+            "has_content_summary": true
+          },
           {
             "code": "PHY 304",
             "title": "Electromagnetic Waves and Optics",
@@ -649836,13 +649877,13 @@
       "gate_status": "passes_course_outcome_gate",
       "gate_reason": "at least two course/outcome anchors including a domain-specific anchor",
       "course_evidence": {
-        "matched_course_count": 42,
+        "matched_course_count": 43,
         "distinct_anchor_count": 7,
         "domain_specific_anchor_count": 7,
         "distinct_anchors": [
           "analytical chemistry",
-          "chemical processes",
           "chemistry",
+          "electronics",
           "green chemistry",
           "laboratory techniques",
           "oxidation",
@@ -649917,7 +649958,6 @@
             "code": "BCH 203",
             "title": "General Biochemistry Practical",
             "matched_anchors": [
-              "chemical processes",
               "chemistry"
             ],
             "outcome_count": 7,
@@ -705425,11 +705465,23 @@
       "gate_status": "fails_course_outcome_gate",
       "gate_reason": "direct/functional requires at least two course/outcome anchors",
       "course_evidence": {
-        "matched_course_count": 0,
-        "distinct_anchor_count": 0,
-        "domain_specific_anchor_count": 0,
-        "distinct_anchors": [],
-        "matched_courses": [],
+        "matched_course_count": 1,
+        "distinct_anchor_count": 1,
+        "domain_specific_anchor_count": 1,
+        "distinct_anchors": [
+          "first aid"
+        ],
+        "matched_courses": [
+          {
+            "code": "BIO 107",
+            "title": "General Biology Practical I",
+            "matched_anchors": [
+              "first aid"
+            ],
+            "outcome_count": 6,
+            "has_content_summary": true
+          }
+        ],
         "source_flagged_course_count": 0,
         "transferable_evidence_count": 37,
         "transferable_evidence": [

@@ -1640,6 +1640,194 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
     }
 
 
+def _match_verified_school_subject_options(
+    selected_norm: set[str],
+    exam_type: str,
+    school_id: str | None = None,
+    limit: int = 2000,
+) -> list[dict]:
+    """Match only parsed, full university-scoped rules.
+
+    These rules supplement the national JAMB rule for discovery and are used
+    directly when a university is already selected. Partial, conditional, or
+    still-reviewed exception rows never create an eligibility match.
+    """
+    if exam_type not in {"utme", "olevel"}:
+        return []
+    svc = _svc()
+    try:
+        query = (
+            svc.table("school_programme_subject_options")
+            .select(
+                "id, exception_id, school_id, jamb_programme_id, exam_type, rule_scope, "
+                "option_label, min_required, source_text, condition_text"
+            )
+            .eq("exam_type", exam_type)
+            .eq("rule_scope", "full")
+        )
+        if school_id:
+            query = query.eq("school_id", school_id)
+        options = query.limit(5000).execute().data or []
+        # Keep the predicate in Python as well as in the database query. This
+        # protects tests and older adapters whose fluent query mock does not
+        # apply every filter.
+        options = [
+            row for row in options
+            if row.get("exam_type") == exam_type
+            and row.get("rule_scope") == "full"
+            and (not school_id or str(row.get("school_id")) == str(school_id))
+        ]
+        if not options:
+            return []
+
+        exception_ids = [str(row.get("exception_id")) for row in options if row.get("exception_id")]
+        if not exception_ids:
+            return []
+        exceptions = (
+            svc.table("school_programme_requirement_exceptions")
+            .select("id, parse_status")
+            .in_("id", exception_ids)
+            .eq("parse_status", "parsed")
+            .limit(5000)
+            .execute()
+        ).data or []
+        exceptions = [row for row in exceptions if row.get("parse_status") == "parsed"]
+        parsed_exception_ids = {str(row.get("id")) for row in exceptions if row.get("id")}
+        options = [
+            row for row in options
+            if str(row.get("exception_id")) in parsed_exception_ids
+        ]
+        if not options:
+            return []
+
+        option_ids = [row.get("id") for row in options if row.get("id")]
+        item_rows = (
+            svc.table("school_programme_subject_option_items")
+            .select(
+                "option_id, requirement_role, group_key, min_from_group, distinct_group_key, "
+                "subject_catalog(name, code)"
+            )
+            .in_("option_id", option_ids)
+            .limit(20000)
+            .execute()
+        ).data or []
+        items_by_option: dict[str, list[dict]] = {}
+        for row in item_rows:
+            items_by_option.setdefault(str(row.get("option_id")), []).append(row)
+
+        best_by_pair: dict[tuple[str, str], dict] = {}
+        for option in options:
+            result = _evaluate_school_subject_option(
+                option,
+                items_by_option.get(str(option.get("id")), []),
+                selected_norm,
+            )
+            if not result.get("passes"):
+                continue
+            school_key = str(option.get("school_id") or "")
+            programme_key = str(option.get("jamb_programme_id") or "")
+            if not school_key or not programme_key:
+                continue
+            row = {
+                "jambProgrammeId": programme_key,
+                "examType": exam_type,
+                "matchedSubjectCount": len(result.get("matchedSubjects") or []),
+                "matchedSubjects": result.get("matchedSubjects") or [],
+                "missingSubjects": [],
+                "minimumRequired": int(option.get("min_required") or 0),
+                "requirementText": option.get("source_text"),
+                "matchBasis": "university_specific",
+                "universityMatchSchoolId": school_key,
+                "universityRequirementScope": option.get("rule_scope"),
+                "universityRequirementOptionId": option.get("id"),
+            }
+            key = (school_key, programme_key)
+            existing = best_by_pair.get(key)
+            if not existing or row["matchedSubjectCount"] > existing["matchedSubjectCount"]:
+                best_by_pair[key] = row
+        return list(best_by_pair.values())[:limit]
+    except Exception as exc:  # noqa: BLE001
+        # A database without the additive university-rule tables must not turn
+        # the national matcher off. It simply has no university-specific pass.
+        log.debug("verified university subject matching unavailable", error=str(exc))
+        return []
+
+
+def _verified_school_programme_rule_keys(school_id: str | None) -> dict[str, set[str]]:
+    """Return programme IDs whose selected-school rules are fully verified.
+
+    A national match may be used as a discovery fallback, but it must not be
+    presented as eligible for a selected university when that university has a
+    parsed full rule that the selected subjects do not satisfy.
+    """
+    if not school_id:
+        return {}
+    try:
+        options = (
+            _svc()
+            .table("school_programme_subject_options")
+            .select("exception_id, school_id, jamb_programme_id, exam_type, rule_scope")
+            .eq("school_id", school_id)
+            .eq("rule_scope", "full")
+            .limit(5000)
+            .execute()
+        ).data or []
+        options = [
+            row for row in options
+            if str(row.get("school_id")) == str(school_id)
+            and row.get("rule_scope") == "full"
+            and row.get("exam_type") in {"utme", "olevel"}
+            and row.get("jamb_programme_id")
+            and row.get("exception_id")
+        ]
+        if not options:
+            return {}
+        exception_ids = [str(row["exception_id"]) for row in options]
+        parsed = (
+            _svc()
+            .table("school_programme_requirement_exceptions")
+            .select("id, parse_status")
+            .in_("id", exception_ids)
+            .eq("parse_status", "parsed")
+            .limit(5000)
+            .execute()
+        ).data or []
+        parsed_ids = {
+            str(row.get("id"))
+            for row in parsed
+            if row.get("id") and row.get("parse_status") == "parsed"
+        }
+        result: dict[str, set[str]] = {"utme": set(), "olevel": set()}
+        for row in options:
+            if str(row.get("exception_id")) in parsed_ids:
+                result[str(row["exam_type"])].add(str(row["jamb_programme_id"]))
+        return result
+    except Exception as exc:  # noqa: BLE001
+        log.debug("verified selected-university rule coverage unavailable", error=str(exc))
+        return {}
+
+
+def _school_offered_programme_ids(school_id: str | None) -> set[str] | None:
+    if not school_id:
+        return None
+    try:
+        rows = (
+            _svc().table("v_school_jamb_programmes")
+            .select("jamb_programme_id")
+            .eq("school_id", school_id)
+            .eq("institution_type", "university")
+            .limit(5000)
+            .execute()
+        ).data or []
+        return {str(row.get("jamb_programme_id")) for row in rows if row.get("jamb_programme_id")}
+    except Exception as exc:  # noqa: BLE001
+        log.debug("selected university offering filter unavailable", error=str(exc))
+        # A missing/old offering view must not turn every selected-university
+        # request into an empty result. The local-rule pass still protects any
+        # verified exception data that is available.
+        return None
+
+
 def _attach_school_details(
     items: list[dict],
     utme_selected: set[str] | None = None,
@@ -1828,6 +2016,7 @@ async def programmes_by_subjects(
     olevel_subjects: str = Query(""),
     exam_type: str = Query("combined"),
     stream: Optional[str] = Query(None),
+    school_id: Optional[str] = Query(None),
     # The selector must return every matching programme. The UI can paginate or
     # progressively render the result list, but the API must not silently hide
     # valid matches behind the old 40/80-item cap.
@@ -1912,29 +2101,62 @@ async def programmes_by_subjects(
         )
 
     try:
+        selected_school_id = (school_id.strip() if isinstance(school_id, str) else "") or None
+        offered_programme_ids = _school_offered_programme_ids(selected_school_id)
+        verified_school_rules = _verified_school_programme_rule_keys(selected_school_id)
+
+        def restrict_to_selected_school(rows: list[dict]) -> list[dict]:
+            if offered_programme_ids is None:
+                return rows
+            return [
+                row for row in rows
+                if str(row.get("jambProgrammeId") or "") in offered_programme_ids
+            ]
+
+        def restrict_to_verified_school_rules(rows: list[dict], exam_type: str) -> list[dict]:
+            verified_programmes = verified_school_rules.get(exam_type) or set()
+            if not selected_school_id or not verified_programmes:
+                return rows
+            # A parsed full university rule is authoritative for a selected
+            # university. The matching local row is merged below; this removes
+            # only the national row that would bypass that rule.
+            return [
+                row for row in rows
+                if str(row.get("jambProgrammeId") or "") not in verified_programmes
+            ]
+
+        national_utme_matches: list[dict] = []
+        national_olevel_matches: list[dict] = []
         if exam == "olevel":
-            structured = _match_structured_subject_options(
+            national_olevel_matches = _match_structured_subject_options(
                 olevel_norm,
                 limit=min(match_limit, 2000),
                 exam_type="olevel",
                 require_full=True,
             )
+            structured = restrict_to_verified_school_rules(
+                restrict_to_selected_school(national_olevel_matches), "olevel"
+            )
         elif utme_norm and olevel_norm:
-            utme_matches = _match_structured_subject_options(
+            national_utme_matches = _match_structured_subject_options(
                 utme_norm,
                 limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
-            olevel_matches = _match_structured_subject_options(
+            national_olevel_matches = _match_structured_subject_options(
                 olevel_norm,
                 limit=min(match_limit, 400),
                 exam_type="olevel",
                 require_full=False,
             )
-            olevel_by_id = {m.get("jambProgrammeId"): m for m in olevel_matches}
+            national_utme_matches = restrict_to_selected_school(national_utme_matches)
+            national_olevel_matches = restrict_to_selected_school(national_olevel_matches)
+            national_utme_matches = restrict_to_verified_school_rules(national_utme_matches, "utme")
+            national_olevel_matches = restrict_to_verified_school_rules(national_olevel_matches, "olevel")
+            olevel_by_id = {m.get("jambProgrammeId"): m for m in national_olevel_matches}
             structured = []
-            for match in utme_matches:
+            for match in national_utme_matches:
                 jid = match.get("jambProgrammeId")
                 olevel = olevel_by_id.get(jid)
                 if olevel:
@@ -1959,20 +2181,121 @@ async def programmes_by_subjects(
                     })
             structured = structured[: min(match_limit, 2000)]
         else:
-            structured = _match_structured_subject_options(
+            national_utme_matches = _match_structured_subject_options(
                 utme_norm,
                 limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
-        if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
+            structured = restrict_to_verified_school_rules(
+                restrict_to_selected_school(national_utme_matches), "utme"
+            )
+
+        local_utme_matches = (
+            _match_verified_school_subject_options(utme_norm, "utme", selected_school_id, match_limit)
+            if exam in {"utme", "combined"} and utme_norm
+            else []
+        )
+        local_olevel_matches = (
+            _match_verified_school_subject_options(olevel_norm, "olevel", selected_school_id, match_limit)
+            if exam in {"olevel", "combined"} and olevel_norm
+            else []
+        )
+
+        # Merge verified university alternatives without collapsing the
+        # national result. A local rule may supply either layer; for combined
+        # matching, the two layers must still belong to the same university.
+        local_by_programme: dict[str, list[dict]] = {}
+        for row in [*local_utme_matches, *local_olevel_matches]:
+            local_by_programme.setdefault(str(row.get("jambProgrammeId")), []).append(row)
+
+        def decorate(row: dict, local_rows: list[dict]) -> dict:
+            if not local_rows:
+                row.setdefault("matchBasis", "national")
+                return row
+            school_ids = list(dict.fromkeys(
+                str(local.get("universityMatchSchoolId"))
+                for local in local_rows
+                if local.get("universityMatchSchoolId")
+            ))
+            row["matchBasis"] = "national_and_university_specific" if row.get("matchBasis") not in {None, "university_specific"} else "university_specific"
+            row["universitySpecificMatch"] = True
+            row["universitySpecificMatchSchoolIds"] = school_ids
+            row["universitySpecificMatchCount"] = len(school_ids)
+            row["universitySpecificMatches"] = [
+                {
+                    "schoolId": local.get("universityMatchSchoolId"),
+                    "examType": local.get("examType") or (
+                        "utme" if local in local_utme_matches else "olevel"
+                    ),
+                    "matchedSubjects": local.get("matchedSubjects", []),
+                    "requirementText": local.get("requirementText"),
+                }
+                for local in local_rows
+            ]
+            return row
+
+        if exam == "combined":
+            national_utme_by_id = {str(row.get("jambProgrammeId")): row for row in national_utme_matches}
+            national_olevel_by_id = {
+                str(row.get("jambProgrammeId")): row
+                for row in national_olevel_matches
+                if not row.get("missingSubjects")
+            }
+            combined_by_id = {str(row.get("jambProgrammeId")): row for row in structured}
+            local_utme_by_pair = {
+                (str(row.get("universityMatchSchoolId")), str(row.get("jambProgrammeId"))): row
+                for row in local_utme_matches
+            }
+            local_olevel_by_pair = {
+                (str(row.get("universityMatchSchoolId")), str(row.get("jambProgrammeId"))): row
+                for row in local_olevel_matches
+            }
+            local_pairs = set(local_utme_by_pair) | set(local_olevel_by_pair)
+            for school_key, programme_key in local_pairs:
+                local_utme = local_utme_by_pair.get((school_key, programme_key))
+                local_olevel = local_olevel_by_pair.get((school_key, programme_key))
+                utme_ok = programme_key in national_utme_by_id or local_utme is not None
+                olevel_ok = programme_key in national_olevel_by_id or local_olevel is not None
+                if not (utme_ok and olevel_ok):
+                    continue
+                row = combined_by_id.get(programme_key) or national_utme_by_id.get(programme_key) or local_utme or local_olevel
+                if row is None:
+                    continue
+                combined_row = decorate(row, [local for local in (local_utme, local_olevel) if local])
+                olevel_source = local_olevel or national_olevel_by_id.get(programme_key)
+                if olevel_source:
+                    combined_row["olevelMatchedSubjectCount"] = olevel_source.get("matchedSubjectCount", 0)
+                    combined_row["olevelMatchedSubjects"] = olevel_source.get("matchedSubjects", [])
+                    combined_row["olevelRequirementText"] = olevel_source.get("requirementText")
+                combined_row["eligibilityStatus"] = "eligible"
+                combined_row["olevelMissingSubjects"] = []
+                combined_by_id[programme_key] = combined_row
+            structured = list(combined_by_id.values())[: min(match_limit, 2000)]
+        else:
+            by_id = {str(row.get("jambProgrammeId")): row for row in structured}
+            for programme_key, local_rows in local_by_programme.items():
+                row = by_id.get(programme_key)
+                if row is None:
+                    row = dict(local_rows[0])
+                    by_id[programme_key] = row
+                decorate(row, local_rows)
+            structured = list(by_id.values())[: min(match_limit, 2000)]
+        if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable" and not structured:
             return ResponseModel(
                 data=_coming_soon(
                     "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare universities and read each university's requirements; try subject matching again after the subject data is updated."
                 )
             )
         if structured:
-            return ResponseModel(data=_real(_attach_school_context(structured, utme_norm, olevel_norm)))
+            return ResponseModel(
+                data=_real(_attach_school_context(
+                    structured,
+                    utme_norm,
+                    olevel_norm,
+                    selected_school_id,
+                ))
+            )
 
         # A subject-match result is an eligibility-shaped surface.  Do not turn
         # a shared word in an unparsed brochure sentence into a programme match:
@@ -2407,6 +2730,7 @@ def _attach_school_context(
     items: list[dict],
     utme_selected: set[str] | None = None,
     olevel_selected: set[str] | None = None,
+    selected_school_id: str | None = None,
 ) -> list[dict]:
     """Attach every university offering to subject-match rows.
 
@@ -2439,6 +2763,11 @@ def _attach_school_context(
                 or []
             )
         rows = _filter_user_facing_school_rows(rows, svc)
+        if selected_school_id:
+            rows = [
+                row for row in rows
+                if str(row.get("school_id")) == str(selected_school_id)
+            ]
         school_detail_rows = _attach_school_details([
             {
                 "schoolId": row.get("school_id"),
