@@ -455,6 +455,13 @@ is present and has the same programme, requirement, exam layer, and source
 text. Apply `seed_subject_rule_records.sql` before
 `seed_subject_options.sql`.
 
+The application also bounds national matcher reads at runtime. It narrows
+candidate options through the indexed `subject_id` values selected by the
+student and fails closed when the catalogue, authority rows or option items
+are unavailable or exceed the safety bound. This runtime guard is code-only:
+it does not add or change database tables and does not replace the required
+seed/preflight sequence for a live deployment.
+
 ### Exhaustive subject-matcher audit
 
 Run the generated-seed audit from the backend virtual environment after both

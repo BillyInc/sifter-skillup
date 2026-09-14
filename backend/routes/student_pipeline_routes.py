@@ -31,6 +31,13 @@ router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 _SCHEMA = "skillup_dev"
 MAX_EARLY_OLEVEL_SUBJECTS = 6
 MAX_UTME_SUBJECTS = 4
+# Subject matching is an eligibility-shaped endpoint. Keep every remote query
+# bounded and fail closed when the candidate set is incomplete. In particular,
+# never load the whole option/item catalogue for one student's search.
+MAX_SUBJECT_MATCH_CATALOG_ROWS = 300
+MAX_SUBJECT_MATCH_CANDIDATE_ITEMS = 5000
+MAX_SUBJECT_MATCH_OPTIONS = 1200
+MAX_SUBJECT_MATCH_OPTION_ITEMS = 20000
 _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
 CAREER_REPORT_EXPORTS_ENABLED = True
 
@@ -1016,17 +1023,53 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
 async def get_jamb_programme(jamb_programme_id: str):
     try:
         svc = _svc()
-        res = (
-            svc
-            .table("v_jamb_programme_details")
-            .select("*")
-            .eq("jamb_programme_id", jamb_programme_id)
-            .limit(1)
-            .execute()
-        )
-        if not res.data:
+        detail_row: Optional[dict] = None
+        try:
+            res = (
+                svc
+                .table("v_jamb_programme_details")
+                .select("*")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(1)
+                .execute()
+            )
+            detail_row = (res.data or [None])[0]
+        except Exception as exc:  # noqa: BLE001
+            # The detail view is an enrichment layer, not the programme
+            # registry. A missing/stale view must not turn a valid JAMB name
+            # into a locked page; requirements and university offerings can
+            # still be loaded from their own tables below.
+            log.warning("student jamb programme detail view skipped", error=str(exc))
+
+        if not detail_row:
+            try:
+                direct = (
+                    svc
+                    .table("jamb_programmes")
+                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend, skills_technical, skills_transferable")
+                    .eq("id", jamb_programme_id)
+                    .limit(1)
+                    .execute()
+                )
+            except Exception:
+                # Older deployments may have the base registry but not the
+                # optional JAMB skills columns yet. The programme identity is
+                # still enough to render its requirements and offerings.
+                direct = (
+                    svc
+                    .table("jamb_programmes")
+                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend")
+                    .eq("id", jamb_programme_id)
+                    .limit(1)
+                    .execute()
+                )
+            direct_row = (direct.data or [None])[0]
+            if direct_row:
+                detail_row = {**direct_row, "jamb_programme_id": direct_row.get("id")}
+
+        if not detail_row:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
-        out = _jamb_detail_out(res.data[0], full=True)
+        out = _jamb_detail_out(detail_row, full=True)
         # Keep the exact JAMB name as the student-facing identity while
         # attaching the reviewed, canonical programme explanations underneath.
         out["contextItems"] = _programme_context_items_for_student(svc, out.get("programmeId"))
@@ -2324,14 +2367,85 @@ def _match_structured_subject_options(
 ) -> list[dict]:
     global _SUBJECT_MATCH_AUTHORITY_STATE
     svc = _svc()
+
+    # Resolve the selected canonical subjects first. The subject-item table is
+    # indexed by subject_id, so this narrows the remote work to options that
+    # could possibly satisfy at least one selected subject. A missing catalogue
+    # identity is not safe to interpret as a wildcard.
+    try:
+        catalog_rows = (
+            svc.table("subject_catalog")
+            .select("id, name, code")
+            .limit(MAX_SUBJECT_MATCH_CATALOG_ROWS)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("subject catalogue unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if not catalog_rows:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    catalog_subjects = [
+        {
+            "id": row.get("id"),
+            "name": row.get("name") or "",
+            "norm": _normalise_subject(row.get("name") or ""),
+        }
+        for row in catalog_rows
+        if row.get("id") and _normalise_subject(row.get("name") or "")
+    ]
+    selected_catalog_ids = [
+        subject["id"]
+        for subject in catalog_subjects
+        if subject["norm"] in selected_norm
+    ]
+    if not selected_catalog_ids:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
+        return []
+
+    try:
+        candidate_item_rows = (
+            svc.table("programme_subject_option_items")
+            .select("option_id")
+            .in_("subject_id", selected_catalog_ids)
+            .limit(MAX_SUBJECT_MATCH_CANDIDATE_ITEMS + 1)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("subject option candidate query unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if len(candidate_item_rows) > MAX_SUBJECT_MATCH_CANDIDATE_ITEMS:
+        log.warning("subject option candidate set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    candidate_option_ids = list(dict.fromkeys(
+        str(row.get("option_id"))
+        for row in candidate_item_rows
+        if row.get("option_id")
+    ))
+    if not candidate_option_ids:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
+        return []
+    if len(candidate_option_ids) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("subject option candidate options exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+
     options = (
         svc.table("programme_subject_options")
         .select("id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text")
         .eq("exam_type", exam_type)
-        .limit(2000)
+        .in_("id", candidate_option_ids)
+        .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
         .execute()
     )
     option_rows = options.data or []
+    if len(option_rows) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("subject option result set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
     if not option_rows:
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
@@ -2346,11 +2460,15 @@ def _match_structured_subject_options(
             .select("jamb_programme_id, requirement_id, exam_type, rule_status, source_text")
             .in_("jamb_programme_id", list({row.get("jamb_programme_id") for row in option_rows if row.get("jamb_programme_id")}))
             .eq("exam_type", exam_type)
-            .limit(2000)
+            .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
             .execute()
         ).data or []
     except Exception as exc:  # noqa: BLE001
         log.warning("typed subject rule authority unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if len(typed_rule_rows) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("typed subject rule set exceeded safety bound")
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
     typed_by_programme = {
@@ -2382,44 +2500,19 @@ def _match_structured_subject_options(
     if not option_rows:
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
-    # The seed is generated from the brochure parser, but old environments may
-    # still contain an option row whose item list predates a parser correction.
-    # Keep the matcher safe in that state by comparing each option's source text
-    # with the canonical subject catalogue.  An explicitly named subject that
-    # is absent from the option items means the option is incomplete and cannot
-    # be treated as an exact match.
-    try:
-        catalog_rows = (
-            svc.table("subject_catalog")
-            .select("name, code")
-            .limit(300)
-            .execute()
-        ).data or []
-    except Exception as exc:  # noqa: BLE001
-        # An unavailable catalogue must make the option review stricter,
-        # never broader. The generated SQL remains the primary source.
-        log.warning("subject option completeness check unavailable", error=str(exc))
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
-    if not catalog_rows:
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
     _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
-    catalog_subjects = [
-        {
-            "name": row.get("name") or "",
-            "norm": _normalise_subject(row.get("name") or ""),
-        }
-        for row in catalog_rows
-        if _normalise_subject(row.get("name") or "")
-    ]
     option_ids = [r["id"] for r in option_rows]
     item_rows = (
         svc.table("programme_subject_option_items")
         .select("option_id, requirement_role, group_key, min_from_group, distinct_group_key, subject_catalog(name, code)")
-        .in_("option_id", option_ids[:2000])
+        .in_("option_id", option_ids)
+        .limit(MAX_SUBJECT_MATCH_OPTION_ITEMS + 1)
         .execute()
     ).data or []
+    if len(item_rows) > MAX_SUBJECT_MATCH_OPTION_ITEMS:
+        log.warning("subject option item set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
     by_option: dict[str, list[dict]] = {}
     for item in item_rows:
         by_option.setdefault(item["option_id"], []).append(item)
@@ -2512,9 +2605,8 @@ def _match_structured_subject_options(
         broad_group = any(len(names) >= 20 for names in grouped.values())
         source_lower = str(opt.get("source_text") or "").lower()
         # A national rule can be followed by a separate NBC/NTC/TC-II
-        # condition. The condition may use "relevant subjects" even when the
-        # ordinary applicant rule explicitly says "any other subject". Scope
-        # the fail-closed guard to the ordinary rule, matching the parser.
+        # condition. Scope the review check to the ordinary applicant rule,
+        # matching the parser.
         source_scope_text = re.split(
             r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
             r"(?:holders?|candidates?)?\b",
@@ -2522,20 +2614,27 @@ def _match_structured_subject_options(
             maxsplit=1,
             flags=re.I,
         )[0]
-        # A broad catalogue group is safe only when the source explicitly
-        # permits any remaining subject. Words such as “relevant”, “suitable”
-        # or “appropriate” are an unresolved subject scope: the parser cannot
-        # know which subjects are relevant to that programme. Treating the
-        # whole catalogue as executable creates false positives (for example
-        # Arabic + Agriculture + Animal Husbandry appearing to qualify for an
-        # unrelated programme). Keep those rows available to name/university
-        # search and require source review before eligibility matching.
+        # A broad group may be a real explicit "any other subject" rule, but
+        # it may also be a parser-expanded catalogue standing in for an
+        # unresolved phrase such as "relevant subjects". Only the explicit
+        # open-scope wording is executable; everything else stays browseable
+        # but review-only.
         unresolved_scope = re.search(
             r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
             r"\bshares?\s+(?:the\s+)?block\b",
             source_scope_text,
         )
-        generic_olevel_scope = exam_type == "olevel" and broad_group and bool(unresolved_scope)
+        explicit_open_scope = re.search(
+            r"\b(?:any|one|two|three|four|five|six|several)\s+"
+            r"(?:other|remaining|additional)\s+subjects?\b|"
+            r"\bany\s+subject\b",
+            source_scope_text,
+        )
+        generic_olevel_scope = (
+            exam_type == "olevel"
+            and broad_group
+            and (bool(unresolved_scope) or not explicit_open_scope)
+        )
         if generic_olevel_scope:
             continue
         # A stale or hand-edited SQL seed can retain only the named items while

@@ -88,6 +88,38 @@ function currentPath() {
   return `${window.location.pathname}${window.location.search}`;
 }
 
+/**
+ * Expo Router group names are part of native route hrefs but are not web
+ * routes in the Vite shell. Shared resume links can therefore arrive here as
+ * `/(tabs)/home` (or another grouped path). Normalize those compatibility
+ * URLs at the web boundary instead of making every shared navigation helper
+ * platform-aware.
+ */
+function normalizeWebPath(rawPath: string): string {
+  let path = rawPath;
+  try {
+    path = decodeURIComponent(rawPath);
+  } catch {
+    // Keep the original path if a malformed encoded URL reaches the router.
+  }
+
+  const tabsMatch = path.match(/^\/\(tabs\)(\/.*)?$/);
+  if (tabsMatch) return tabsMatch[1] || "/home";
+
+  const adminMatch = path.match(/^\/\(admin\)(\/.*)?$/);
+  if (adminMatch) return `/admin${adminMatch[1] || ""}`;
+
+  const authMatch = path.match(/^\/\(auth\)(\/.*)?$/);
+  if (authMatch) {
+    const authPath = authMatch[1] || "/sign-in";
+    if (authPath === "/sign-in") return "/login";
+    if (authPath === "/create-account" || authPath === "/signup") return "/signup";
+    return authPath;
+  }
+
+  return path;
+}
+
 function go(path: string, replace = false) {
   if (replace) window.history.replaceState({}, "", path);
   else window.history.pushState({}, "", path);
@@ -144,8 +176,17 @@ export function WebApp() {
 function WebRouterApp() {
   const location = useLocation();
   const { user, loading } = useAuth();
-  const path = location.split("?")[0] || "/";
+  const rawPath = location.split("?")[0] || "/";
+  const path = normalizeWebPath(rawPath);
   const isGuest = user?.auth_provider === "guest";
+
+  useEffect(() => {
+    if (rawPath === path) return;
+    const query = window.location.search;
+    const hash = window.location.hash;
+    window.history.replaceState({}, "", `${path}${query}${hash}`);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, [path, rawPath]);
 
   if (loading) return <div className="loading">Loading Sifter LevelUp…</div>;
 
