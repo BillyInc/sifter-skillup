@@ -451,6 +451,7 @@ export default function AdmissionBrowseScreen() {
         {
             examType: subjectExamType,
           olevelSubjects,
+          schoolId: (selectedAdmissionSchool?.schoolId ?? chosenSchool?.id ?? initialSchoolId) || undefined,
         },
       );
       const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];

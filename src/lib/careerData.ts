@@ -454,6 +454,7 @@ export const careerData = {
     options?: {
       examType?: "utme" | "olevel" | "combined";
       olevelSubjects?: string[];
+      schoolId?: string;
     },
   ): Promise<DataState<SubjectProgrammeMatch[]>> {
     const key = [
@@ -462,6 +463,7 @@ export const careerData = {
       stream ?? "",
       options?.examType ?? "",
       [...(options?.olevelSubjects ?? [])].sort().join(",").toLowerCase(),
+      options?.schoolId ?? "",
     ].join(":");
     return readThrough(
       key,
@@ -473,6 +475,7 @@ export const careerData = {
         if (options?.olevelSubjects?.length) {
           qs.set("olevel_subjects", options.olevelSubjects.join(","));
         }
+        if (options?.schoolId) qs.set("school_id", options.schoolId);
         return request<DataState<SubjectProgrammeMatch[]>>(
           `/api/student/programmes/by-subjects?${qs.toString()}`,
         );
