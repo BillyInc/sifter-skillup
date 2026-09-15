@@ -86,7 +86,9 @@ export const ADMIN_DATA_LIVE = {
   programmeDemand: false,
   domainRanking: false,
   intelligenceAlerts: true,
-  skillsGap: false,
+  // This route compares CCMAS with sourced market/practice evidence; it does
+  // not require employment-posting metrics to render.
+  skillsGap: true,
   roleDemand: false,
   peerComparison: true,
   affiliation: true,
@@ -276,11 +278,13 @@ export const adminData = {
     }
   },
 
-  /** Per-programme skills-gap report. */
+  /** Legacy labour-market-posting gap compatibility route. The live
+   * programme-intelligence view uses getProgrammeSkillCoverage(), which
+   * compares CCMAS with sourced domain/subgroup/role practice evidence. */
   async getSkillsGapReport(): Promise<DataState<SkillGapRow[]>> {
     if (!MARKET_DEMAND_AVAILABLE) {
       return comingSoon<SkillGapRow[]>(
-        "Programme skill gaps are unavailable until curriculum and source-backed demand data exist.",
+        "Posting-based skill gaps are unavailable until labour-market demand ingestion is added.",
       );
     }
     try {

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Linking, StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
-import type { CareerContextItem } from "@/types/career";
+import type { CareerContextItem, CareerLearningResource } from "@/types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 
 const PRIORITY_LABEL: Record<CareerContextItem["priority"], string> = {
@@ -14,8 +14,9 @@ const PRIORITY_LABEL: Record<CareerContextItem["priority"], string> = {
 export function ContextualItemList({
   items,
   title = "What these capabilities mean here",
+  resources,
   style,
-}: { items?: CareerContextItem[]; title?: string; style?: ViewStyle }) {
+}: { items?: CareerContextItem[]; title?: string; resources?: CareerLearningResource[]; style?: ViewStyle }) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const [openKey, setOpenKey] = useState<string | null>(null);
@@ -50,6 +51,23 @@ export function ContextualItemList({
             {item.prerequisites.length ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Builds on: </Text>{item.prerequisites.join(", ")}</Text> : null}
             {item.relatedItems.length ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Connects to: </Text>{item.relatedItems.join(", ")}</Text> : null}
             <View style={{ gap: Spacing.xs }}><Text style={[styles.sourceLabel, { color: colors.textRole.muted }]}>Sources</Text>{item.sourceReferences.map((source, index) => <Text key={`${source.url}-${index}`} accessibilityRole="link" onPress={() => void Linking.openURL(source.url)} style={[styles.source, { color: colors.accentRole.action }]}>{source.title ?? source.url}</Text>)}</View>
+            {(() => {
+              const supportedTypes: CareerLearningResource["resourceType"][] = item.itemType === "skill"
+                ? ["skill_learning", "skill_reference"]
+                : item.itemType === "tool"
+                  ? ["tool_learning"]
+                  : item.itemType === "competency"
+                    ? ["competency_reference"]
+                    : ["certification_exam", "professional_body"];
+              const resource = resources?.find((candidate) => candidate.url && supportedTypes.includes(candidate.resourceType) && candidate.targetName.trim().toLowerCase() === item.name.trim().toLowerCase() && candidate.reviewStatus !== "review_only" && candidate.ownershipScope !== "audit_only");
+              return resource ? (
+                <View style={[styles.resourceHint, { borderTopColor: colors.borderRole.subtle }]}>
+                  <Text style={[styles.sourceLabel, { color: colors.textRole.muted }]}>Verified learning link</Text>
+                  <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{resource.description || `${resource.provider} resource for ${item.name}.`}</Text>
+                  <Text accessibilityRole="link" onPress={() => void Linking.openURL(resource.url)} style={[styles.source, { color: colors.accentRole.action }]}>{resource.provider} · Open resource</Text>
+                </View>
+              ) : <Text style={[styles.caption, { color: colors.textRole.muted }]}>No verified learning link is attached to this item yet.</Text>;
+            })()}
             {item.evidenceLimitations.map((limitation) => <Text key={limitation} style={[styles.caption, { color: colors.textRole.muted }]}>Limit: {limitation}</Text>)}
           </View> : null}
         </View>;
@@ -69,6 +87,7 @@ const styles = StyleSheet.create({
   copy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   more: { fontSize: FontSize.sm, fontWeight: "800" },
   detail: { borderTopWidth: 1, paddingTop: Spacing.sm, gap: Spacing.sm },
+  resourceHint: { borderTopWidth: 1, paddingTop: Spacing.sm, gap: Spacing.xs },
   sourceLabel: { fontSize: FontSize.xs, fontWeight: "800", textTransform: "uppercase" },
   source: { fontSize: FontSize.sm, textDecorationLine: "underline" },
 });

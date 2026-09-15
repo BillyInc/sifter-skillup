@@ -14,6 +14,15 @@ import type { EducatorProfile, OrganizationType } from "../types/institution";
  */
 export type AdminAudience = "university" | "school";
 
+/** The three product-facing educator workspaces. Keep this more precise type
+ * for screens whose copy and actions differ between a secondary school and a
+ * tutorial/JAMB provider, while AdminAudience remains for navigation grouping.
+ */
+export type AdminWorkspaceAudience =
+  | "university"
+  | "secondary_school"
+  | "tutorial_centre";
+
 export function adminAudienceForOrg(
   organizationType?: OrganizationType | null,
 ): AdminAudience {
@@ -31,6 +40,21 @@ export function adminAudienceForProfile(
   profile?: EducatorProfile | null,
 ): AdminAudience {
   return adminAudienceForOrg(profile?.organizationType);
+}
+
+export function adminWorkspaceAudienceForProfile(
+  profile?: EducatorProfile | null,
+): AdminWorkspaceAudience {
+  switch (profile?.organizationType) {
+    case "university":
+      return "university";
+    case "tutorial_centre":
+    case "jamb_cafe":
+      return "tutorial_centre";
+    case "secondary_school":
+    default:
+      return "secondary_school";
+  }
 }
 
 /**

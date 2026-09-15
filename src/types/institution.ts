@@ -389,19 +389,32 @@ export interface SkillGapRow {
 
 export type CurriculumCoverageStatus = "complete" | "source_missing" | "review_only";
 
+/** One sourced market/practice item compared with the CCMAS programme record. */
 export interface ProgrammeResourceEvidence {
   name: string;
   kind: "skill" | "tool" | "certification";
   source: "domain" | "subgroup" | "role";
   scopeName?: string;
   roleName?: string;
+  /** Stable comparison identity; aliases are source-provided only. */
+  canonicalKey?: string;
+  aliases?: string[];
+  /** ``bridge`` means present in mapped market/practice evidence but not
+   * evidenced in the programme profile; it is not an accreditation mandate. */
   state: "covered" | "bridge";
+  curriculumState?: "taught" | "partly_evidenced" | "not_evidenced" | "source_review";
+  /** The sourced domain/subgroup/role record is the market/practice layer. */
+  marketState?: "market_practice_evidence" | "insufficient_evidence" | "source_review";
   url?: string;
   provider?: string;
   description?: string;
+  explanation?: string;
   resourceType?: string;
   sourceConfidence?: string;
   dataState?: string;
+  evidenceSource?: string;
+  observedAt?: string;
+  geography?: string;
 }
 
 export interface ProgrammeDomainSkillCoverage {
@@ -414,6 +427,9 @@ export interface ProgrammeDomainSkillCoverage {
   bridgeCount: number;
   coverageStatus: CurriculumCoverageStatus;
   explanation: string;
+  /** Display order: direct first, then functional, then adjacent. */
+  priority?: 1 | 2 | 3;
+  marketState?: "market_practice_evidence" | "insufficient_evidence" | "source_review";
 }
 
 /** Programme-first curriculum bridge: programme → mapped domain → skills. */

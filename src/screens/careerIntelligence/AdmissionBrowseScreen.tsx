@@ -18,6 +18,7 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import { careerData } from "@/lib/careerData";
 import { API } from "@/lib/api";
 import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
@@ -1015,24 +1016,34 @@ export default function AdmissionBrowseScreen() {
           {!chosenSchool && schoolMatches.length ? (
             <View style={styles.results}>
               {schoolMatches.slice(0, 12).map((school) => (
-                <TouchableOpacity
+                <View
                   key={school.id}
-                  activeOpacity={0.82}
-                  onPress={() => chooseSchool(school)}
                   style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
                 >
-                  <Text style={[styles.cardTitle, { color: colors.text }]}>{school.name}</Text>
-                  {school.institutionType ? (
+                  <View style={styles.cardCopy}>
+                    <Text style={[styles.cardTitle, { color: colors.text }]}>{school.name}</Text>
+                    {school.institutionType ? (
+                      <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
+                        {school.institutionType}
+                      </Text>
+                    ) : null}
                     <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                      {school.institutionType}
+                      {[school.address, school.city, school.state, school.country]
+                        .filter(Boolean)
+                        .join(", ") || "Address not listed"}
                     </Text>
-                  ) : null}
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    {[school.address, school.city, school.state, school.country]
-                      .filter(Boolean)
-                      .join(", ") || "Address not listed"}
-                  </Text>
-                </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity
+                    accessibilityRole="radio"
+                    accessibilityState={{ checked: false }}
+                    accessibilityLabel={`Choose ${school.name}`}
+                    onPress={() => chooseSchool(school)}
+                    style={styles.selectionControl}
+                  >
+                    <Feather name="circle" size={22} color={Brand.primary} />
+                    <Text style={[styles.selectionLabel, { color: Brand.primaryDeep }]}>Choose</Text>
+                  </TouchableOpacity>
+                </View>
               ))}
             </View>
           ) : null}
@@ -1076,10 +1087,8 @@ export default function AdmissionBrowseScreen() {
                     .map((o) => {
                       const active = selected?.jambProgrammeId === o.jambProgrammeId;
                       return (
-                        <TouchableOpacity
+                        <View
                           key={o.jambProgrammeId}
-                          activeOpacity={0.82}
-                          onPress={() => chooseOffering(o)}
                           style={[
                             styles.card,
                             {
@@ -1088,17 +1097,29 @@ export default function AdmissionBrowseScreen() {
                             },
                           ]}
                         >
-                          <Text
-                            style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}
-                          >
-                            {o.jambName}
-                          </Text>
-                          {!undergraduateContext && o.hasUniversityException ? (
-                            <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
-                              University-specific admission note available
+                          <View style={styles.cardCopy}>
+                            <Text
+                              style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}
+                            >
+                              {o.jambName}
                             </Text>
-                          ) : null}
-                        </TouchableOpacity>
+                            {!undergraduateContext && o.hasUniversityException ? (
+                              <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
+                                University-specific admission note available
+                              </Text>
+                            ) : null}
+                          </View>
+                          <TouchableOpacity
+                            accessibilityRole="radio"
+                            accessibilityState={{ checked: active }}
+                            accessibilityLabel={`${active ? "Selected" : "Select"} ${o.jambName}`}
+                            onPress={() => chooseOffering(o)}
+                            style={styles.selectionControl}
+                          >
+                            <Feather name={active ? "check-circle" : "circle"} size={22} color={active ? colors.textInverse : Brand.primary} />
+                            <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{active ? "Selected" : "Select"}</Text>
+                          </TouchableOpacity>
+                        </View>
                       );
                     })}
                 </View>
@@ -1258,10 +1279,8 @@ export default function AdmissionBrowseScreen() {
         {candidates.map((item) => {
           const active = (selected?.jambProgrammeId || selected?.id) === (item.jambProgrammeId || item.id);
           return (
-            <TouchableOpacity
+            <View
               key={item.jambProgrammeId || item.id}
-              activeOpacity={0.82}
-              onPress={() => selectCandidate(item)}
               style={[
                 styles.card,
                 {
@@ -1270,6 +1289,7 @@ export default function AdmissionBrowseScreen() {
                 },
               ]}
             >
+              <View style={styles.cardCopy}>
               <Text style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}>
                 {candidateDisplayName(item)}
               </Text>
@@ -1292,7 +1312,18 @@ export default function AdmissionBrowseScreen() {
                   ) : null}
                 </View>
               ) : null}
-            </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                accessibilityRole="radio"
+                accessibilityState={{ checked: active }}
+                accessibilityLabel={`${active ? "Selected" : "Select"} ${candidateDisplayName(item)}`}
+                onPress={() => selectCandidate(item)}
+                style={styles.selectionControl}
+              >
+                <Feather name={active ? "check-circle" : "circle"} size={22} color={active ? colors.textInverse : Brand.primary} />
+                <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{active ? "Selected" : "Select"}</Text>
+              </TouchableOpacity>
+            </View>
           );
         })}
       </View>
@@ -1420,8 +1451,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: Radius.sm,
     padding: Spacing.md,
-    gap: 3,
+    gap: Spacing.md,
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
+  cardCopy: { flex: 1, gap: 3, minWidth: 0 },
+  selectionControl: { alignItems: "center", justifyContent: "center", gap: 2, padding: Spacing.xs, minWidth: 70 },
+  selectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
   cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   cardMeta: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.35 },
   detail: { gap: Spacing.sm },

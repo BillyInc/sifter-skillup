@@ -765,6 +765,16 @@ export const careerData = {
     );
   },
 
+  /** A saved subgroup can be opened without its parent domain in the URL. */
+  async getSubgroupV2(subgroupId: string): Promise<DataState<DomainV2>> {
+    return readThrough(
+      `subgroup_${subgroupId}`,
+      () => request<DataState<DomainV2>>(`/api/career/subgroups/${encodeURIComponent(subgroupId)}`),
+      "See what this area does, the skills it needs, and the roles it can unlock.",
+      DETAIL_TTL_MS,
+    );
+  },
+
   /** A role incl. its role-level bridge skills and coverage. */
   async getRole(_roleId: string): Promise<DataState<Role>> {
     // TODO(career-data): GET /api/career/roles/{id}

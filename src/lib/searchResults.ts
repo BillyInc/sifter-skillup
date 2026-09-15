@@ -245,7 +245,7 @@ export function resolveSearchHref(item: SearchResult): string | null {
     case "domain":
       return `/(tabs)/explore/domain/${id}`;
     case "subgroup":
-      return null;
+      return `/(tabs)/explore/subgroup/${id}`;
     case "role":
       return `/(tabs)/explore/role/${id}`;
     case "programme":

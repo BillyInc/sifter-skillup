@@ -23,7 +23,6 @@ import {
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
-import { useResponsive } from "@/hooks/useResponsive";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -48,13 +47,6 @@ import {
   SectionLabel,
   ContextualItemList,
 } from "@/components/careerIntelligence";
-
-const SECTIONS = [
-  { key: "overview", label: "Overview" },
-  { key: "areas", label: "Areas of work" },
-  { key: "prepare", label: "Learn and prepare" },
-  { key: "build", label: "Build" },
-] as const;
 
 export interface DomainDetailScreenProps {
   /** Stable domain key (e.g. "D001"). */
@@ -150,14 +142,10 @@ function DomainBody({
   const { colors } = useTheme();
   const router = useRouter();
   const exploreNav = useExploreNav();
-  const resp = useResponsive();
-
   const cluster = domain.cluster ?? domain.clusters?.[0];
   const subgroups = domain.subgroups ?? [];
   const roleCount = domain.roleCount ?? domain.roles?.length ?? 0;
   const clusterColor = getClusterColor(cluster ?? "");
-
-  const isDesktop = resp.isDesktop && resp.isWeb;
 
   // No match/coverageRatio passed: the domain endpoint does not return ESCO
   // coverage for these roles. This used to pass `match="match"
@@ -166,17 +154,15 @@ function DomainBody({
   // the same badge. Both props are optional now, and the badge renders nothing
   // when there is nothing to say.
   // ── Section positions for nav scrolling ──────────────────────
-  const [activeSection, setActiveSection] = useState("overview");
   const [subgroupsExpanded, setSubgroupsExpanded] = useState(false);
   const [overviewExpanded, setOverviewExpanded] = useState(false);
-  const desktopScrollRef = useRef<ScrollView>(null);
   const visibleSubgroups = subgroupsExpanded ? subgroups : subgroups.slice(0, 6);
 
   // ── Desktop layout: section nav + content side-by-side ───────
   const content = (
     <>
       {/* Hero section */}
-      {activeSection === "overview" ? <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
+      <View style={[styles.hero, { borderBottomColor: colors.borderRole.subtle }]}>
         <View style={[styles.heroIconWrap, clusterColor ? { backgroundColor: clusterColor + "15" } : undefined]}>
            <DomainIcon cluster={cluster} size={36} />
         </View>
@@ -191,7 +177,7 @@ function DomainBody({
           </Text>
           {domain.description ? (
             <>
-              <Text style={[styles.heroDescLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>What this domain is and what people do</Text>
+              <Text style={[styles.heroDescLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>What this field is about</Text>
               <Text style={[styles.heroDesc, { color: colors.textRole.secondary }]}>
                 {domain.description}
               </Text>
@@ -208,9 +194,9 @@ function DomainBody({
             ) : null}
           </View>
         </View>
-      </View> : null}
+      </View>
 
-      {activeSection === "overview" && matchType ? (
+      {matchType ? (
         <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
           <SectionLabel>Why this domain is in your route</SectionLabel>
           <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
@@ -225,7 +211,7 @@ function DomainBody({
         </View>
       ) : null}
 
-      {activeSection === "overview" && domain.studentOrientation ? (
+      {domain.studentOrientation ? (
         <View style={[styles.orientationBlock, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
           <SectionLabel>Understand this field first</SectionLabel>
           {domain.studentOrientation.whatItStudies ? (
@@ -266,7 +252,7 @@ function DomainBody({
       ) : null}
 
       {/* Wayfinding — this domain's place on the journey */}
-      {activeSection === "overview" ? <RouteLine
+      <RouteLine
         variant="spine"
         stations={[
           { state: "you", label: "Foundations" },
@@ -274,26 +260,26 @@ function DomainBody({
           { state: "target", label: `${roleCount || ""} roles`.trim() },
         ]}
         edges={["solid", "dashed"]}
-      /> : null}
+      />
 
-      {activeSection === "overview" ? <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
         <SectionLabel>How this domain is organised</SectionLabel>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
           Start with the domain overview, then choose an area of work. The {subgroups.length || "available"} area{subgroups.length === 1 ? "" : "s"} below divide this broad field into more focused kinds of work, so you can understand an area before choosing a role.
         </Text>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Roles belong inside an area because the same broad domain can lead to very different kinds of work. Open an area when you are ready to compare its capabilities, tools, resources and roles.</Text>
-      </View> : null}
+      </View>
 
-      {activeSection === "overview" ? <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-        <SectionLabel>How to continue</SectionLabel>
+      <View style={[styles.connectionNote, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <SectionLabel>Your learning path</SectionLabel>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain gives you a shared foundation. Choose an area next when you want to see the extra capabilities, tools and roles attached to that part of the field.</Text>
         {domain.foundationSkills?.length ? <View style={{ gap: Spacing.xs }}>
           {(overviewExpanded ? domain.foundationSkills : domain.foundationSkills.slice(0, 3)).map((skill) => <Text key={skill.skill} style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>• {skill.skill}</Text>)}
           {domain.foundationSkills.length > 3 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: overviewExpanded }} onPress={() => setOverviewExpanded((value) => !value)} style={styles.moreButton}><Text style={[styles.moreButtonText, { color: colors.accentRole.action }]}>{overviewExpanded ? "Show less foundation" : `View ${domain.foundationSkills.length - 3} more foundation items`}</Text></TouchableOpacity> : null}
         </View> : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>The source records do not include a foundation list for this domain yet.</Text>}
-      </View> : null}
+      </View>
 
-      {activeSection === "overview" ? <View style={styles.statsRow}>
+      <View style={styles.statsRow}>
         <View style={[styles.statCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
           <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{subgroups.length}</Text>
           <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>areas of work</Text>
@@ -302,45 +288,24 @@ function DomainBody({
           <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{roleCount}</Text>
           <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>roles organised inside them</Text>
         </View>
-      </View> : null}
+      </View>
 
-      {/* Domain-owned build surface. This is separate from programme skills:
-          it answers what someone can create or develop within this domain. */}
-      {activeSection === "build" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
-        <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>What can you build in this domain?</SectionLabel>
-          <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>
-            Explore source-backed build and entrepreneurship guidance for this domain.
-          </Text>
-          {domain.domainBridgeSkills?.length ? (
-            <View style={styles.bridgeList}>
-              <Text style={[styles.bridgeLabel, { color: colors.textRole.muted }]}>Domain foundations</Text>
-              <View style={styles.bridgeChips}>
-                {domain.domainBridgeSkills.map((item) => (
-                  <View key={item.name} style={[styles.bridgeChip, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
-                    <Text style={[styles.bridgeChipText, { color: colors.textRole.secondary }]}>{item.name}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          ) : null}
-          <TouchableOpacity
-            onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })}
-            style={[styles.buildButton, { borderColor: colors.accentRole.action }]}
-          >
-            <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build / Entrepreneurship</Text>
-          </TouchableOpacity>
-        </View>
-      </View> : null}
+      <View style={[styles.buildEntry, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+        <SectionLabel>Want to build something from this field?</SectionLabel>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Build is a separate product for exploring projects, services and ventures connected to this domain.</Text>
+        <TouchableOpacity onPress={() => exploreNav.entrepreneurship(router, { ...guidanceContext, domainId: domainKey })} style={[styles.buildButton, { borderColor: colors.accentRole.action }]}>
+          <Text style={[styles.buildButtonText, { color: colors.accentRole.action }]}>Open Build in this domain</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Foundation skills */}
-      {activeSection === "prepare" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <FoundationSkillsBlock
           skills={domain.foundationSkills ?? []}
           resources={domain.resources}
           title="Start here: foundation skills"
         />
-        <ContextualItemList items={domain.contextItems} title="What each skill, tool and certification does in this domain" />
+        <ContextualItemList items={domain.contextItems} resources={domain.resources} title="What each skill, tool and certification does in this domain" />
         <ToolGroupsBlock
           tools={domain.tools}
           resources={domain.resources}
@@ -356,7 +321,7 @@ function DomainBody({
         {domain.resources?.length ? <LearningResourcesBlock resources={domain.resources} /> : null}
         <GuidanceEvidenceBlock evidence={domain.guidanceEvidence} />
         <NigerianContextBlock context={domain.nigerianContext} level="domain" />
-      </View> : null}
+      </View>
 
       {/* Per-edge mapping feedback */}
       <MappingFeedbackButton
@@ -370,10 +335,10 @@ function DomainBody({
 
       {/* The domain page stops at subgroups. Roles appear after a subgroup is
           selected in the guided route, rather than beside the domain itself. */}
-      {activeSection === "areas" ? <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
+      <View style={[styles.sectionBlock, { borderTopColor: colors.borderRole.subtle }]}>
         <View style={{ gap: Spacing.sm }}>
           {subgroups.length ? <>
-            <SectionLabel>Areas of work in this domain</SectionLabel>
+            <SectionLabel>Explore areas within this field</SectionLabel>
             <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>Choose an area first. Its page will then show the capabilities, tools and roles that belong to that part of the domain.</Text>
             {visibleSubgroups.map((sg) => (
              <TouchableOpacity
@@ -394,87 +359,18 @@ function DomainBody({
             <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>This domain does not currently have a supported area mapping yet.</Text>
           </View>}
         </View>
-      </View> : null}
+      </View>
 
       {/* Notes stay in Career Intelligence; learning actions belong in My World. */}
-      {activeSection === "overview" ? <NotesWidget entityType="domain" entityId={domainKey} /> : null}
+      <NotesWidget entityType="domain" entityId={domainKey} />
 
     </>
   );
 
-  // Desktop layout: section nav on left, content on right
-  if (isDesktop) {
-    return (
-      <View style={styles.desktopRow}>
-        <View style={styles.navColumn}>
-          <View style={[styles.navSticky, { borderColor: colors.borderRole.subtle, position: "sticky" as any, top: 0 }]}>
-            <Text style={[styles.navTitle, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
-              On this page
-            </Text>
-            {SECTIONS.map((s) => (
-              <TouchableOpacity
-                key={s.key}
-               onPress={() => setActiveSection(s.key)}
-                style={[
-                  styles.navItem,
-                  activeSection === s.key && { backgroundColor: colors.surface.subtle },
-                ]}
-                activeOpacity={0.6}
-              >
-                <View
-                  style={[
-                    styles.navDot,
-                    {
-                      backgroundColor:
-                        activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle,
-                    },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.navLabel,
-                    { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary },
-                    CompassFonts.bodyMedium,
-                  ]}
-                  numberOfLines={1}
-                >
-                  {s.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-        <ScrollView
-           ref={desktopScrollRef}
-          style={styles.mainScroll}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={16}
-        >
-          <View style={{ gap: Spacing.lg }}>
-            {content}
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-
-  // Mobile / tablet: single column
-  return (
-    <View style={{ gap: Spacing.lg }}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.mobileSectionNav}>
-        {SECTIONS.map((s) => (
-          <TouchableOpacity
-            key={s.key}
-            onPress={() => setActiveSection(s.key)}
-            style={[styles.mobileSectionTab, { borderColor: activeSection === s.key ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: activeSection === s.key ? colors.surface.subtle : colors.surface.raised }]}
-          >
-            <Text style={[styles.navLabel, { color: activeSection === s.key ? colors.textRole.primary : colors.textRole.secondary }, CompassFonts.bodyMedium]}>{s.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      {content}
-    </View>
-  );
+  // The guidance page is intentionally one narrative flow. The cards below
+  // are the page's progressive sections; hierarchy is navigated by the cards,
+  // not by switching between disconnected tabs.
+  return <View style={{ gap: Spacing.lg }}>{content}</View>;
 }
 
 export default DomainDetailScreen;
@@ -554,6 +450,12 @@ const styles = StyleSheet.create({
   sectionBlock: {
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: Spacing.lg,
+  },
+  buildEntry: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.sm,
   },
   connectionNote: {
     gap: Spacing.sm,
