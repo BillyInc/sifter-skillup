@@ -7,7 +7,7 @@
  * user-facing concepts here.
  */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter, type Router } from "expo-router";
 import {
@@ -220,6 +220,8 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
   const [requirements, setRequirements] = useState<JambProgrammeRequirements | null>(null);
   const [selectedSchoolId, setSelectedSchoolId] = useState<string | null>(null);
   const [comparisonSchoolIds, setComparisonSchoolIds] = useState<string[]>(initialSchoolId ? [initialSchoolId] : []);
+  const [comparisonOpen, setComparisonOpen] = useState(false);
+  const [previewSchool, setPreviewSchool] = useState<JambProgrammeSchool | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [savingSchool, setSavingSchool] = useState<string | null>(null);
   const [universityPickerOpen, setUniversityPickerOpen] = useState(false);
@@ -358,10 +360,10 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
     // that the student has already selected to inspect.
     setSelectedSchoolId(school.schoolId);
     setUniversityPickerOpen(false);
-    // SS1/SS2 are comparing admission requirements, not committing to a
-    // university-aware programme learning profile. Open requirements first;
-    // later-stage users continue to the university-aware overview.
-    setTab(earlySecondary ? "requirements" : "overview");
+    setPreviewSchool(null);
+    // Inspecting an offering must not switch the student into requirements.
+    // Selecting an offering returns to the programme overview first.
+    setTab("overview");
     if (earlySecondary) {
       setComparisonSchoolIds((current) => current.includes(school.schoolId) ? current : [...current, school.schoolId]);
     }
@@ -458,6 +460,11 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
            comparisonSchools={comparisonSchools}
            comparisonSchoolIds={comparisonSchoolIds}
            onToggleComparison={(schoolId) => setComparisonSchoolIds((current) => current.includes(schoolId) ? current.filter((id) => id !== schoolId) : [...current, schoolId])}
+           comparisonOpen={comparisonOpen}
+           onOpenComparison={() => setComparisonOpen(true)}
+           previewSchool={previewSchool}
+           onPreviewSchool={setPreviewSchool}
+           onClosePreview={() => setPreviewSchool(null)}
            selectedSchoolId={selectedSchoolId}
           onSetTab={setTab}
            earlySecondary={earlySecondary}
@@ -506,6 +513,11 @@ function ProgrammeDetailBody({
   comparisonSchools,
   comparisonSchoolIds,
   onToggleComparison,
+  comparisonOpen,
+  onOpenComparison,
+  previewSchool,
+  onPreviewSchool,
+  onClosePreview,
   selectedSchoolId,
   onSetTab,
   earlySecondary,
@@ -534,6 +546,11 @@ function ProgrammeDetailBody({
   comparisonSchools: JambProgrammeSchool[];
   comparisonSchoolIds: string[];
   onToggleComparison: (schoolId: string) => void;
+  comparisonOpen: boolean;
+  onOpenComparison: () => void;
+  previewSchool: JambProgrammeSchool | null;
+  onPreviewSchool: (school: JambProgrammeSchool) => void;
+  onClosePreview: () => void;
   selectedSchoolId: string | null;
   onSetTab: (tab: ProgrammeTab) => void;
   earlySecondary: boolean;
@@ -616,12 +633,20 @@ function ProgrammeDetailBody({
               />
               <ContextualItemList
                 items={data.contextItems}
+                resources={data.resources}
                 title="What the programme capabilities mean"
               />
               {data.resources?.length ? <LearningResourcesBlock resources={data.resources} title="Start learning from the programme" /> : null}
+              {showCareerGuidance && data.domains?.length ? (
+                <ProgrammeDomainTransition
+                  domains={orderedDomains}
+                  colors={colors}
+                  onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceContext)}
+                />
+              ) : null}
               {earlySecondary && data.skillsCount ? <DataSourceBadge verification="verified" source="CCMAS/JAMB curriculum records" /> : null}
               {guidedAdmissionJourney ? (
-                <UniversityPicker schools={schools} colors={colors} onSelect={onSelectSchool} />
+                <UniversityPicker schools={schools} colors={colors} selectedSchoolId={selectedSchoolId} onSelect={onSelectSchool} />
               ) : (
                 <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
                   <SectionLabel>{earlySecondary ? "Choose a university when you are ready" : "Choose a university to continue"}</SectionLabel>
@@ -643,6 +668,7 @@ function ProgrammeDetailBody({
               <DegreeSkills technical={data.skillsTechnical} transferable={data.skillsTransferable} total={data.skillsCount} />
               <ContextualItemList
                 items={data.contextItems}
+                resources={data.resources}
                 title="What the programme capabilities mean"
               />
               {data.skillsCount ? <DataSourceBadge verification="verified" source="CCMAS/JAMB curriculum records" /> : null}
@@ -651,7 +677,7 @@ function ProgrammeDetailBody({
                 {undergraduateContext ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>This is your current programme. Follow what it teaches into the domains, subgroups, roles, skills, tools, and certifications that can help you plan what to learn next.</Text> : null}
                 {viewOnly ? <Text style={[styles.body, { color: colors.textRole.muted }]}>This is a read-only route because subject fit has not been confirmed. You can inspect the programme and requirements while keeping your current choices unchanged.</Text> : null}
                 {showCareerGuidance ? <ProgrammeDomainTransition domains={orderedDomains} colors={colors} onOpenDomain={(link) => exploreNav.domain(router, link.domainId, guidanceContext)} onContinue={onContinueCareer} continueLabel="Continue" /> : <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}><SectionLabel>University options review</SectionLabel><Text style={[styles.body, { color: colors.textRole.secondary }]}>You have reviewed this university&apos;s programme details and requirements. Career guidance is not part of this session mode.</Text><TouchableOpacity onPress={onChooseSchool} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}><Text style={styles.primaryText}>Change university</Text></TouchableOpacity></View>}
-                {guidedAdmissionJourney && universityPickerOpen ? <UniversityPicker schools={schools} colors={colors} onSelect={onSelectSchool} /> : null}
+                {guidedAdmissionJourney && universityPickerOpen ? <UniversityPicker schools={schools} colors={colors} selectedSchoolId={selectedSchoolId} onSelect={onSelectSchool} /> : null}
               </View>
             </>
           )}
@@ -795,10 +821,24 @@ function ProgrammeDetailBody({
                   {school.studentName || school.jambName ? <Text style={[styles.meta, { color: colors.textRole.secondary }]}>{school.studentName ?? school.jambName}</Text> : null}
                   {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
                 </View>
-                <TouchableOpacity onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
-                  <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Opening..." : selectedSchoolId === school.schoolId ? (earlySecondary ? "Viewing" : "Selected") : (earlySecondary ? "View details" : "Choose")}</Text>
-                </TouchableOpacity>
-                {earlySecondary ? <TouchableOpacity onPress={() => onToggleComparison(school.schoolId)} style={[styles.compareButton, { borderColor: comparisonSchoolIds.includes(school.schoolId) ? colors.accentRole.success : colors.borderRole.subtle }]}>
+                {earlySecondary ? (
+                  <View style={styles.schoolActions}>
+                    <TouchableOpacity onPress={() => onPreviewSchool(school)} style={[styles.secondaryButton, { borderColor: colors.borderRole.subtle }]}>
+                      <Text style={[styles.secondaryText, { color: colors.textRole.primary }]}>View details</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity accessibilityRole="radio" accessibilityState={{ selected: selectedSchoolId === school.schoolId }} onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.accentRole.action }]}>
+                      <Feather name={selectedSchoolId === school.schoolId ? "check-circle" : "circle"} size={15} color={selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.accentRole.action} />
+                      <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.accentRole.action }]}>{savingSchool === school.schoolId ? "Selecting..." : selectedSchoolId === school.schoolId ? "Selected" : "Select"}</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity accessibilityRole="radio" accessibilityState={{ selected: selectedSchoolId === school.schoolId }} onPress={() => onSelectSchool(school)} style={[styles.secondaryButton, { borderColor: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.borderRole.subtle }]}>
+                    <Feather name={selectedSchoolId === school.schoolId ? "check-circle" : "circle"} size={15} color={selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.muted} />
+                    <Text style={[styles.secondaryText, { color: selectedSchoolId === school.schoolId ? colors.accentRole.success : colors.textRole.primary }]}>{savingSchool === school.schoolId ? "Opening..." : selectedSchoolId === school.schoolId ? "Selected" : "Choose"}</Text>
+                  </TouchableOpacity>
+                )}
+                {earlySecondary ? <TouchableOpacity accessibilityRole="checkbox" accessibilityState={{ checked: comparisonSchoolIds.includes(school.schoolId) }} onPress={() => onToggleComparison(school.schoolId)} style={[styles.compareButton, { borderColor: comparisonSchoolIds.includes(school.schoolId) ? colors.accentRole.success : colors.borderRole.subtle }]}>
+                  <Feather name={comparisonSchoolIds.includes(school.schoolId) ? "check-circle" : "circle"} size={15} color={comparisonSchoolIds.includes(school.schoolId) ? colors.accentRole.success : colors.textRole.muted} />
                   <Text style={[styles.secondaryText, { color: comparisonSchoolIds.includes(school.schoolId) ? colors.accentRole.success : colors.textRole.primary }]}>{comparisonSchoolIds.includes(school.schoolId) ? "Added to compare" : "Add to compare"}</Text>
                 </TouchableOpacity> : null}
               </View>
@@ -807,16 +847,35 @@ function ProgrammeDetailBody({
           {earlySecondary && comparisonSchoolIds.length > 1 ? (
             <TouchableOpacity
               accessibilityRole="button"
-              onPress={() => onSetTab("requirements")}
+              onPress={onOpenComparison}
               style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}
             >
               <Text style={styles.primaryText}>Compare selected universities ({comparisonSchoolIds.length})</Text>
             </TouchableOpacity>
           ) : null}
+          {earlySecondary && comparisonOpen && comparisonSchools.length > 1 ? (
+            <UniversityComparisonPanel
+              schools={comparisonSchools}
+              onSelect={onSelectSchool}
+              selectedSchoolId={selectedSchoolId}
+              colors={colors}
+            />
+          ) : null}
           {!schools.length ? <Text style={[styles.body, { color: colors.textRole.muted }]}>No university is recorded for this programme yet.</Text> : null}
           {notice ? <Text style={[styles.notice, { color: colors.textRole.secondary }]}>{notice}</Text> : null}
         </View>
       ) : null}
+
+      <UniversityPreviewModal
+        school={previewSchool}
+        programmeName={programmeName}
+        colors={colors}
+        selectedSchoolId={selectedSchoolId}
+        onClose={onClosePreview}
+        onCompare={(schoolId) => onToggleComparison(schoolId)}
+        isCompared={previewSchool ? comparisonSchoolIds.includes(previewSchool.schoolId) : false}
+        onSelect={onSelectSchool}
+      />
 
     </View>
   );
@@ -825,26 +884,126 @@ function ProgrammeDetailBody({
 function UniversityPicker({
   schools,
   colors,
+  selectedSchoolId,
   onSelect,
 }: {
   schools: JambProgrammeSchool[];
   colors: ColorPalette;
+  selectedSchoolId: string | null;
   onSelect: (school: JambProgrammeSchool) => void;
 }) {
   return (
     <View style={[styles.context, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
       <SectionLabel>Choose a university</SectionLabel>
       <Text style={[styles.body, { color: colors.textRole.secondary }]}>Choose where you may want to study this programme. The next view will show that university&apos;s requirements and programme details.</Text>
-      {schools.length ? schools.map((school) => (
-        <TouchableOpacity key={school.schoolId} accessibilityRole="button" onPress={() => onSelect(school)} style={[styles.schoolChoice, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+      {schools.length ? schools.map((school) => {
+        const selected = selectedSchoolId === school.schoolId;
+        return <TouchableOpacity key={school.schoolId} accessibilityRole="radio" accessibilityState={{ selected }} onPress={() => onSelect(school)} style={[styles.schoolChoice, { borderColor: selected ? colors.accentRole.action : colors.borderRole.subtle, backgroundColor: selected ? colors.surface.subtle : colors.surface.raised }]}>
           <View style={{ flex: 1, gap: Spacing.xs }}>
             <Text style={[styles.schoolName, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
             {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
           </View>
-          <Text style={[styles.link, { color: colors.accentRole.action }]}>Select</Text>
-        </TouchableOpacity>
-      )) : <Text style={[styles.body, { color: colors.textRole.muted }]}>No university offering is available for this programme yet.</Text>}
+          <View style={styles.schoolSelectState}>
+            <Feather name={selected ? "check-circle" : "circle"} size={18} color={selected ? colors.accentRole.action : colors.textRole.muted} />
+            <Text style={[styles.link, { color: selected ? colors.accentRole.action : colors.textRole.secondary }]}>{selected ? "Selected" : "Select"}</Text>
+          </View>
+        </TouchableOpacity>;
+      }) : <Text style={[styles.body, { color: colors.textRole.muted }]}>No university offering is available for this programme yet.</Text>}
     </View>
+  );
+}
+
+function UniversityComparisonPanel({
+  schools,
+  onSelect,
+  selectedSchoolId,
+  colors,
+}: {
+  schools: JambProgrammeSchool[];
+  onSelect: (school: JambProgrammeSchool) => void;
+  selectedSchoolId: string | null;
+  colors: ColorPalette;
+}) {
+  return (
+    <View style={[styles.compareBlock, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <SectionLabel>Compare universities</SectionLabel>
+      <Text style={[styles.body, { color: colors.textRole.secondary }]}>The programme stays the same. Compare addresses, offering details and recorded requirements before selecting one.</Text>
+      <View style={styles.compareGrid}>
+        {schools.map((school) => (
+          <View key={school.schoolId} style={[styles.compareCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+            <Text style={[styles.schoolName, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
+            {school.address ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>{school.address}</Text> : null}
+            <Text style={[styles.meta, { color: school.universityRequirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>{requirementStatusLabel(school.universityRequirementStatus)}</Text>
+            <Text style={[styles.compareLabel, { color: colors.textRole.muted }]}>UTME subjects</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{universityRequirementText(school, "utme_subjects")}</Text>
+            <Text style={[styles.compareLabel, { color: colors.textRole.muted }]}>O-Level requirements</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{universityRequirementText(school, "olevel_requirement")}</Text>
+            {school.universityNote ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Note: {school.universityNote}</Text> : null}
+            <TouchableOpacity accessibilityRole="radio" accessibilityState={{ selected: selectedSchoolId === school.schoolId }} onPress={() => onSelect(school)} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
+              <Feather name={selectedSchoolId === school.schoolId ? "check-circle" : "circle"} size={16} color="#FFFFFF" />
+              <Text style={styles.primaryText}>{selectedSchoolId === school.schoolId ? "Selected" : "Select this university"}</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function UniversityPreviewModal({
+  school,
+  programmeName,
+  colors,
+  selectedSchoolId,
+  onClose,
+  onCompare,
+  isCompared,
+  onSelect,
+}: {
+  school: JambProgrammeSchool | null;
+  programmeName: string;
+  colors: ColorPalette;
+  selectedSchoolId: string | null;
+  onClose: () => void;
+  onCompare: (schoolId: string) => void;
+  isCompared: boolean;
+  onSelect: (school: JambProgrammeSchool) => void;
+}) {
+  if (!school) return null;
+  return (
+    <Modal visible transparent animationType="slide" onRequestClose={onClose}>
+      <View style={styles.modalBackdrop}>
+        <View style={[styles.modalCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <View style={styles.modalHeader}>
+            <View style={{ flex: 1, gap: Spacing.xs }}>
+              <Text style={[styles.modalEyebrow, { color: colors.textRole.muted }]}>UNIVERSITY OFFERING</Text>
+              <Text style={[styles.modalTitle, { color: colors.textRole.primary }]}>{school.schoolName}</Text>
+            </View>
+            <TouchableOpacity accessibilityRole="button" onPress={onClose} style={styles.closeButton}>
+              <Text style={[styles.link, { color: colors.accentRole.action }]}>Close</Text>
+            </TouchableOpacity>
+          </View>
+          {school.address ? <Text style={[styles.body, { color: colors.textRole.secondary }]}>{school.address}</Text> : null}
+          <View style={[styles.previewFacts, { borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.label, { color: colors.textRole.primary }]}>Programme</Text>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{school.studentName ?? school.jambName ?? programmeName}</Text>
+            <Text style={[styles.label, { color: colors.textRole.primary }]}>Requirement status</Text>
+            <Text style={[styles.body, { color: school.universityRequirementStatus === "complete" ? colors.accentRole.success : colors.accentRole.action }]}>{requirementStatusLabel(school.universityRequirementStatus)}</Text>
+          </View>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>This preview helps you compare the offering. The full university requirements appear after you select it.</Text>
+          <View style={styles.modalActions}>
+            <TouchableOpacity onPress={() => onCompare(school.schoolId)} style={[styles.secondaryButton, { borderColor: colors.borderRole.subtle }]}>
+              <Feather name={isCompared ? "check-circle" : "circle"} size={15} color={isCompared ? colors.accentRole.success : colors.textRole.muted} />
+              <Text style={[styles.secondaryText, { color: colors.textRole.primary }]}>{isCompared ? "Added to compare" : "Add to compare"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity accessibilityRole="radio" accessibilityState={{ selected: selectedSchoolId === school.schoolId }} onPress={() => onSelect(school)} style={[styles.primaryButton, { backgroundColor: colors.accentRole.action }]}>
+              <Feather name={selectedSchoolId === school.schoolId ? "check-circle" : "circle"} size={16} color="#FFFFFF" />
+              <Text style={styles.primaryText}>{selectedSchoolId === school.schoolId ? "Selected" : "Select this university"}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -861,6 +1020,7 @@ const styles = StyleSheet.create({
   contextAddress: { fontSize: FontSize.sm },
   inlineAction: { alignSelf: "flex-start", marginTop: Spacing.xs },
   contextActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
+  schoolActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs, alignItems: "center" },
   compareBlock: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.md },
   compareGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   compareCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs, flex: 1, minWidth: 230 },
@@ -873,7 +1033,7 @@ const styles = StyleSheet.create({
   connectionCount: { fontSize: FontSize.sm },
   moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   moreButtonText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
-  primaryButton: { alignSelf: "flex-start", borderRadius: Radius.md, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
+  primaryButton: { alignSelf: "flex-start", borderRadius: Radius.md, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   primaryText: { color: "#fff", fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   requirement: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   requirementTitle: { flexDirection: "row", alignItems: "center", gap: Spacing.xs },
@@ -884,9 +1044,18 @@ const styles = StyleSheet.create({
   schoolCopy: { flex: 1, gap: 3 },
   schoolName: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
   schoolChoice: { flexDirection: "row", alignItems: "center", gap: Spacing.sm, borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md },
+  schoolSelectState: { flexDirection: "row", alignItems: "center", gap: Spacing.xs },
+  modalBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(10, 18, 35, 0.42)", padding: Spacing.md },
+  modalCard: { width: "100%", maxWidth: 680, alignSelf: "center", borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.md },
+  modalHeader: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.md },
+  modalEyebrow: { fontSize: FontSize.xs, letterSpacing: 0.9, fontWeight: "800" },
+  modalTitle: { fontSize: FontSize.xl, ...CompassFonts.displayBold },
+  closeButton: { padding: Spacing.xs },
+  previewFacts: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
+  modalActions: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm, justifyContent: "flex-end" },
   meta: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
-  secondaryButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7 },
-  compareButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7 },
+  secondaryButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
+  compareButton: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 7, flexDirection: "row", alignItems: "center", gap: Spacing.xs },
   secondaryText: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold },
   notice: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
   link: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },

@@ -102,6 +102,10 @@ export function makeExploreNav(base: string) {
       const query = guidanceContextQuery(context, { includeProgrammeId: true });
       router.push(`${base}/domain/${encodeURIComponent(domainId)}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
     },
+    subgroupDirect(router: Nav, subgroupId: string, context?: GuidanceRouteContext) {
+      const query = guidanceContextQuery(context, { includeProgrammeId: true });
+      router.push(`${base}/subgroup/${encodeURIComponent(subgroupId)}${query ? `?${query}` : ""}` as never);
+    },
 
     // ─── Phase 7: elite pathways & special flows ────────────────
     elitePathways(router: Nav) {

@@ -24,7 +24,6 @@ import {
   LearningResourcesBlock,
   RoleWorkEvidenceBlock,
   ContextualItemList,
-  TextTabs,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -43,7 +42,7 @@ import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
 
 const SECTIONS = [
   { key: "overview", label: "Overview" },
-  { key: "skills", label: "Skills" },
+  { key: "skills", label: "Learning path" },
   { key: "routes", label: "Routes" },
   { key: "related", label: "Related" },
 ] as const;
@@ -265,6 +264,7 @@ function RoleBody({
       <View style={styles.roleMeaning}>
         <SectionLabel>What this role means</SectionLabel>
         <Text style={[styles.guidanceNote, { color: colors.textRole.secondary }]}>{role.description || "A plain-language occupation explanation is not attached to this role record yet. Use the preparation and evidence below without treating the title alone as a complete job description."}</Text>
+        <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>This role is organised under the area you opened. The guidance below moves from the work itself to what to build, practise and explore next.</Text>
         {sourceUrl ? <TouchableOpacity accessibilityRole="link" onPress={() => { void openRoleSource(); }}><Text style={[styles.sourceLink, { color: colors.accentRole.action }]}>{sourceLabel} for a fuller explanation ↗</Text></TouchableOpacity> : null}
         {sourceNotice ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>{sourceNotice}</Text> : null}
       </View>
@@ -291,7 +291,7 @@ function RoleBody({
            {(hiddenSkillCount > 0 || skillsExpanded) ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: skillsExpanded }} onPress={() => setSkillsExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{skillsExpanded ? "Show fewer role skills" : `See all ${essential.length + optional.length} role skills`}</Text></TouchableOpacity> : null}
         </View>
       ) : <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>No role skill list is attached to this source record yet. Do not treat the absence as proof that no preparation is needed.</Text>}
-      <ContextualItemList items={role.contextItems} title="What each skill and tool does in this role" />
+      <ContextualItemList items={role.contextItems} resources={role.resources} title="What each skill and tool does in this role" />
 
       <MethodEvidenceBlock methods={role.computationalMethods} title="Methods connected to this role" />
       <GuidanceEvidenceBlock evidence={role.guidanceEvidence} />
@@ -421,14 +421,10 @@ function RoleBody({
     );
   }
 
-  // Mobile / tablet: single column
+  // Mobile / tablet: the role is one continuous narrative; the user scrolls
+  // through the learning path instead of switching between content tabs.
   return (
     <View style={{ gap: Spacing.lg }}>
-      <TextTabs
-        tabs={SECTIONS.map((section) => ({ value: section.key, label: section.label }))}
-        value={activeSection as typeof SECTIONS[number]["key"]}
-        onChange={(value) => scrollTo(value)}
-      />
       {content}
     </View>
   );

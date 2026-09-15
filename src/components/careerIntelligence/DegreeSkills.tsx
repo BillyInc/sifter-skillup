@@ -8,7 +8,7 @@
  * programme claims.
  */
 import React, { useMemo, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, ScrollView, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import {
   useTheme,
   Spacing,
@@ -31,6 +31,8 @@ type ThemeDefinition = {
   key: ThemeKey;
   label: string;
   description: string;
+  examples: string[];
+  why: string;
 };
 
 const THEME_DEFINITIONS: ThemeDefinition[] = [
@@ -38,41 +40,74 @@ const THEME_DEFINITIONS: ThemeDefinition[] = [
     key: "people",
     label: "People and society",
     description: "How people, groups, communities and institutions shape everyday life.",
+    examples: [
+      "Understand how people, groups, families and institutions shape society.",
+      "Explore culture, socialisation, communities and social relationships.",
+    ],
+    why: "This is the main foundation for understanding the people and societies Sociology studies.",
   },
   {
     key: "foundations",
     label: "Ideas and foundations",
     description: "The key ideas, history, concepts and theories behind the programme.",
+    examples: [
+      "Explore the ideas and theories used to explain social life.",
+      "Understand how sociological thinking developed and how theories are compared.",
+    ],
+    why: "These ideas give students language and frameworks for explaining social life.",
   },
   {
     key: "research",
     label: "Research and evidence",
     description: "How to ask questions, gather information and make sense of evidence.",
+    examples: [
+      "Ask questions, choose methods, gather evidence and explain findings.",
+      "Use research design, data collection, ethics and statistics in social investigation.",
+    ],
+    why: "Sociology uses structured investigation to understand social questions, not only opinion or description.",
   },
   {
     key: "technology",
     label: "Technology and information",
     description: "The digital tools and information practices recorded in the curriculum.",
+    examples: [
+      "Use computer applications and online information sources recorded in the programme.",
+      "Find, process and communicate information responsibly.",
+    ],
+    why: "The curriculum records digital information practices that support study and research.",
   },
   {
     key: "enterprise",
     label: "Enterprise and innovation",
     description: "Business, entrepreneurship, innovation and value-creation topics where recorded.",
+    examples: [
+      "Understand opportunity, innovation and enterprise where these topics are recorded.",
+      "Explore how ideas can become practical value or small ventures.",
+    ],
+    why: "This theme appears only where the programme curriculum records enterprise or innovation learning.",
   },
   {
     key: "practice",
     label: "Using what you learn",
     description: "Ways the curriculum asks students to apply, explain, present or create something.",
+    examples: [
+      "Apply sociological ideas through research, reports, presentations and problem-solving.",
+      "Communicate evidence and arguments clearly to different audiences.",
+    ],
+    why: "These outcomes show how the programme expects students to use what they study.",
   },
   {
     key: "other",
     label: "Other programme topics",
     description: "Recorded topics that do not fit neatly into the wider reading themes.",
+    examples: [
+      "Explore additional topics recorded in the programme curriculum.",
+    ],
+    why: "These are genuine curriculum records that do not fit the main student-facing themes.",
   },
 ];
 
 const THEME_LOOKUP = new Map(THEME_DEFINITIONS.map((definition) => [definition.key, definition]));
-const THEME_PREVIEW_COUNT = 2;
 const SUPPORTING_PREVIEW_COUNT = 6;
 
 function normalized(value: string): string {
@@ -98,11 +133,6 @@ function classifyOutcome(value: string): ThemeKey {
   if (/theor|concept|histor|principle|definition|philosoph|classical|foundation|meaning|school of thought/.test(text)) return "foundations";
   if (/apply|analyse|analy[sz]e|design|prepare|present|conduct|write|communicat|demonstrat|create|develop|implement|manage|identify|distinguish|evaluate|assess/.test(text)) return "practice";
   return "other";
-}
-
-function sentenceCase(value: string): string {
-  const text = value.trim();
-  return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 }
 
 function titleish(value: string): string {
@@ -132,8 +162,11 @@ export function DegreeSkills({
   color,
 }: DegreeSkillsProps) {
   const { colors } = useTheme();
-  const [expandedThemes, setExpandedThemes] = useState<Partial<Record<ThemeKey, boolean>>>({});
   const [showAll, setShowAll] = useState(false);
+  const [evidenceThemeKey, setEvidenceThemeKey] = useState<ThemeKey | null>(null);
+  const [showOriginalWording, setShowOriginalWording] = useState(false);
+  const [evidenceSearch, setEvidenceSearch] = useState("");
+  const [originalLimit, setOriginalLimit] = useState(8);
 
   const tech = useMemo(
     () => uniqueItems((technical ?? []).filter((item) => item && item.trim())),
@@ -185,15 +218,21 @@ export function DegreeSkills({
     );
   }
 
-  const expandedCount = themes.reduce(
-    (count, theme) => count + (expandedThemes[theme.key] || showAll ? theme.items.length : Math.min(THEME_PREVIEW_COUNT, theme.items.length)),
-    0,
-  );
-  const hasHiddenThemes = themes.some((theme) => theme.items.length > THEME_PREVIEW_COUNT);
   const hasHiddenSupporting = supporting.length > SUPPORTING_PREVIEW_COUNT;
 
-  const toggleTheme = (key: ThemeKey) => {
-    setExpandedThemes((current) => ({ ...current, [key]: !current[key] }));
+  const evidenceTheme = evidenceThemeKey
+    ? themes.find((theme) => theme.key === evidenceThemeKey) ?? null
+    : null;
+  const filteredOriginalItems = evidenceTheme
+    ? evidenceTheme.items.filter((item) => normalized(item).includes(normalized(evidenceSearch)))
+    : [];
+  const visibleOriginalItems = filteredOriginalItems.slice(0, originalLimit);
+
+  const openEvidence = (key: ThemeKey) => {
+    setEvidenceThemeKey(key);
+    setShowOriginalWording(false);
+    setEvidenceSearch("");
+    setOriginalLimit(8);
   };
 
   return (
@@ -215,8 +254,6 @@ export function DegreeSkills({
       {themes.length ? (
         <View style={styles.themeGrid}>
           {themes.map((theme) => {
-            const isOpen = Boolean(expandedThemes[theme.key] || showAll);
-            const visibleItems = isOpen ? theme.items : theme.items.slice(0, THEME_PREVIEW_COUNT);
             const description = THEME_LOOKUP.get(theme.key)?.description ?? theme.description;
             return (
               <View
@@ -228,33 +265,23 @@ export function DegreeSkills({
                 <Text style={[styles.themeCount, { color: colors.textRole.muted }]}>
                   {theme.items.length} {theme.items.length === 1 ? "curriculum outcome" : "curriculum outcomes"} recorded
                 </Text>
-                <Text style={[styles.exampleLabel, { color: colors.textRole.muted }]}>Examples from this curriculum</Text>
+                <Text style={[styles.exampleLabel, { color: colors.textRole.muted }]}>What this means for you</Text>
                 <View style={styles.list}>
-                  {visibleItems.map((item, index) => (
+                  {theme.examples.map((item, index) => (
                     <View
                       key={`${theme.key}-${normalized(item)}-${index}`}
                       style={[styles.row, { borderTopColor: colors.borderRole.subtle }]}
                     >
                       <Text style={[styles.bullet, { color: colors.accentRole.action }]}>•</Text>
                       <Text style={[styles.rowText, { color: colors.textRole.primary }]}>
-                        {sentenceCase(item)}
+                        {item}
                       </Text>
                     </View>
                   ))}
                 </View>
-                {theme.items.length > THEME_PREVIEW_COUNT ? (
-                  <TouchableOpacity
-                    onPress={() => toggleTheme(theme.key)}
-                    activeOpacity={0.75}
-                    accessibilityRole="button"
-                    accessibilityState={{ expanded: isOpen }}
-                    style={styles.moreBtn}
-                  >
-                    <Text style={[styles.moreText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
-                      {isOpen ? "Show fewer topics" : `See ${theme.items.length - THEME_PREVIEW_COUNT} more topics`}
-                    </Text>
-                  </TouchableOpacity>
-                ) : null}
+                <TouchableOpacity onPress={() => openEvidence(theme.key)} activeOpacity={0.75} accessibilityRole="button" style={styles.moreBtn}>
+                  <Text style={[styles.moreText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>See curriculum evidence</Text>
+                </TouchableOpacity>
               </View>
             );
           })}
@@ -282,15 +309,52 @@ export function DegreeSkills({
         </View>
       ) : null}
 
-      {hasHiddenThemes ? (
-        <TouchableOpacity onPress={() => setShowAll((current) => !current)} activeOpacity={0.75} accessibilityRole="button" accessibilityState={{ expanded: showAll }} style={styles.moreBtn}>
-          <Text style={[styles.moreText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
-            {showAll ? "Show the short learning profile" : "See all curriculum details"}
-          </Text>
-        </TouchableOpacity>
-      ) : null}
-      {!hasHiddenThemes && expandedCount < total ? (
-        <Text style={[styles.note, { color: colors.textRole.muted }]}>Some source records may repeat a theme or be grouped under shared curriculum learning.</Text>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>The cards summarise the curriculum first. Open a theme to inspect representative evidence; original CCMAS wording is available only inside that evidence view.</Text>
+
+      {evidenceTheme ? (
+        <Modal visible transparent animationType="slide" onRequestClose={() => setEvidenceThemeKey(null)}>
+          <View style={styles.modalBackdrop}>
+            <View style={[styles.evidencePanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+              <View style={styles.modalHeader}>
+                <View style={{ flex: 1, gap: Spacing.xs }}>
+                  <Text style={[styles.modalEyebrow, { color: colors.textRole.muted }]}>CURRICULUM EVIDENCE</Text>
+                  <Text style={[styles.modalTitle, { color: colors.textRole.primary }]}>{evidenceTheme.label}</Text>
+                </View>
+                <TouchableOpacity accessibilityRole="button" onPress={() => setEvidenceThemeKey(null)}>
+                  <Text style={[styles.closeText, { color: colors.accentRole.action }]}>Close</Text>
+                </TouchableOpacity>
+              </View>
+              <ScrollView contentContainerStyle={styles.modalContent}>
+                <Text style={[styles.themeDescription, { color: colors.textRole.secondary }]}>{evidenceTheme.description}</Text>
+                <Text style={[styles.evidenceHeading, { color: colors.textRole.primary }]}>What this theme covers</Text>
+                <Text style={[styles.modalCopy, { color: colors.textRole.secondary }]}>{evidenceTheme.why}</Text>
+                <Text style={[styles.evidenceHeading, { color: colors.textRole.primary }]}>Examples from the curriculum</Text>
+                {evidenceTheme.examples.map((item) => <Text key={item} style={[styles.modalBullet, { color: colors.textRole.secondary }]}>• {item}</Text>)}
+                <Text style={[styles.evidenceHeading, { color: colors.textRole.primary }]}>Source record</Text>
+                <Text style={[styles.modalCopy, { color: colors.textRole.muted }]}>{evidenceTheme.items.length} recorded outcome{evidenceTheme.items.length === 1 ? "" : "s"} from the programme curriculum.</Text>
+                <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: showOriginalWording }} onPress={() => setShowOriginalWording((value) => !value)} style={[styles.sourceToggle, { borderColor: colors.borderRole.subtle }]}>
+                  <Text style={[styles.moreText, { color: colors.accentRole.action }]}>{showOriginalWording ? "Hide original source wording" : "View original source wording"}</Text>
+                </TouchableOpacity>
+                {showOriginalWording ? (
+                  <View style={styles.originalSection}>
+                    <Text style={[styles.modalCopy, { color: colors.textRole.muted }]}>These are the source phrases as recorded. They are shown for evidence, not as the main student explanation.</Text>
+                    <TextInput value={evidenceSearch} onChangeText={(value) => { setEvidenceSearch(value); setOriginalLimit(8); }} placeholder="Search this theme" placeholderTextColor={colors.textRole.muted} style={[styles.searchInput, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]} accessibilityLabel="Search original curriculum wording" />
+                    <View style={styles.originalList}>
+                      {visibleOriginalItems.map((item, index) => (
+                        <View key={`${normalized(item)}-${index}`} style={[styles.originalItem, { borderTopColor: colors.borderRole.subtle }]}>
+                          <Text style={[styles.originalIndex, { color: colors.textRole.muted }]}>{index + 1}.</Text>
+                          <Text style={[styles.modalCopy, { color: colors.textRole.secondary, flex: 1 }]}>{item}</Text>
+                        </View>
+                      ))}
+                    </View>
+                    {!visibleOriginalItems.length ? <Text style={[styles.modalCopy, { color: colors.textRole.muted }]}>No matching source wording in this theme.</Text> : null}
+                    {visibleOriginalItems.length < filteredOriginalItems.length ? <TouchableOpacity onPress={() => setOriginalLimit((value) => value + 8)} accessibilityRole="button" style={styles.moreBtn}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Show more source wording</Text></TouchableOpacity> : null}
+                  </View>
+                ) : null}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
       ) : null}
     </View>
   );
@@ -342,6 +406,32 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   moreText: { fontSize: FontSize.sm },
+  modalBackdrop: {
+    backgroundColor: "rgba(15, 23, 42, 0.48)",
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  evidencePanel: {
+    borderTopLeftRadius: Radius.lg,
+    borderTopRightRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    maxHeight: "88%",
+    padding: Spacing.lg,
+  },
+  modalHeader: { alignItems: "flex-start", flexDirection: "row", gap: Spacing.md, paddingBottom: Spacing.md },
+  modalEyebrow: { fontSize: FontSize.xs, ...CompassFonts.bodySemibold, letterSpacing: 0.8 },
+  modalTitle: { fontSize: FontSize.lg, ...CompassFonts.bodySemibold },
+  closeText: { fontSize: FontSize.sm, ...CompassFonts.bodySemibold },
+  modalContent: { gap: Spacing.sm, paddingBottom: Spacing.xl },
+  evidenceHeading: { fontSize: FontSize.md, ...CompassFonts.bodySemibold, marginTop: Spacing.sm },
+  modalCopy: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
+  modalBullet: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5, paddingLeft: Spacing.xs },
+  sourceToggle: { alignSelf: "flex-start", borderRadius: Radius.md, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, marginTop: Spacing.xs },
+  originalSection: { gap: Spacing.sm, marginTop: Spacing.xs },
+  searchInput: { borderRadius: Radius.md, borderWidth: 1, fontSize: FontSize.sm, minHeight: 42, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  originalList: { gap: 0 },
+  originalItem: { flexDirection: "row", gap: Spacing.sm, paddingVertical: Spacing.sm, borderTopWidth: StyleSheet.hairlineWidth },
+  originalIndex: { fontSize: FontSize.xs, minWidth: 24, paddingTop: 2 },
   supportingCard: { borderWidth: StyleSheet.hairlineWidth, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   supportingTitle: { fontSize: FontSize.md, ...CompassFonts.bodySemibold },
   supportingDescription: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },

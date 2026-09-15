@@ -158,7 +158,7 @@ export function GuidanceReportButton({
     <View style={styles.wrap}>
       <SifterButton
         label={busy ? "Saving..." : selected ? "Selected" : selection.kind === "programmes" ? "Select programme" : "Select"}
-        icon={busy ? undefined : selected ? "check" : "bookmark"}
+        icon={busy ? undefined : selected ? "check-circle" : "circle"}
         onPress={add}
         variant="ghost"
         size="sm"
