@@ -41,6 +41,7 @@ import {
   webContainer,
   CompassFonts,
 } from "@/theme";
+import { Feather } from "@expo/vector-icons";
 import { DataStateView, LockedPill } from "@/components/careerIntelligence";
 import { careerData, type GuidanceReportPath } from "@/lib/careerData";
 import { openStudentDocument } from "@/lib/provisioningData";
@@ -766,7 +767,7 @@ function SavedItemRow({
     else if (item.entityType === "school")
       router.push("/(tabs)/explore/admission" as never);
     else if (item.entityType === "subgroup")
-      router.push("/(tabs)/explore/domains" as never);
+      exploreNav.subgroupDirect(router, item.entityId);
     else if (item.entityType === "resource")
       void Linking.openURL(item.entityId).catch(() => {});
     // comparison / opportunity / organisation have no live detail route yet.
@@ -815,6 +816,10 @@ function SavedItemRow({
             <Text style={[styles.typeChipText, { color: colors.textRole.muted }]}>
               {meta.label}
             </Text>
+          </View>
+          <View style={styles.selectedRow}>
+            <Feather name="check-circle" size={13} color={colors.accentRole.action} />
+            <Text style={[styles.selectedText, { color: colors.accentRole.action }]}>Selected in Saved</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -1220,6 +1225,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xs,
     letterSpacing: 0.3,
   },
+  selectedRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 3 },
+  selectedText: { fontSize: FontSize.xs, fontWeight: "700" },
   removeBtn: {
     width: 36,
     height: 36,

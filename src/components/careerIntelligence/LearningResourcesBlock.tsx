@@ -15,13 +15,23 @@ export interface LearningResourcesBlockProps {
 const GROUPS: {
   types: CareerLearningResource["resourceType"][];
   label: string;
+  description: string;
 }[] = [
-  { types: ["programme_reading"], label: "Programme reading" },
-  { types: ["domain_overview", "role_reference"], label: "Understand the work" },
-  { types: ["skill_learning", "skill_reference"], label: "Build the skills" },
-  { types: ["tool_learning"], label: "Learn the tools" },
-  { types: ["competency_reference"], label: "Build the competencies" },
-  { types: ["certification_exam", "professional_body"], label: "Professional exams and bodies" },
+  {
+    types: ["programme_reading", "domain_overview", "role_reference"],
+    label: "Start here",
+    description: "Understand the programme, field or kind of work before choosing what to learn next.",
+  },
+  {
+    types: ["skill_learning", "skill_reference", "competency_reference"],
+    label: "Build next",
+    description: "Strengthen the skills and competencies attached to this route.",
+  },
+  {
+    types: ["tool_learning", "certification_exam", "professional_body"],
+    label: "Explore later",
+    description: "Explore tools, professional references and qualifications as your direction becomes clearer.",
+  },
 ];
 
 function accessLabel(resource: CareerLearningResource): string {
@@ -57,6 +67,21 @@ function openLabel(resource: CareerLearningResource): string {
   }
 }
 
+function resourceKind(resource: CareerLearningResource): string {
+  switch (resource.resourceType) {
+    case "programme_reading": return "Programme reference";
+    case "domain_overview": return "Field reference";
+    case "role_reference": return "Role reference";
+    case "skill_learning": return "Learning resource";
+    case "skill_reference": return "Skill reference";
+    case "tool_learning": return "Tool guide";
+    case "competency_reference": return "Competency reference";
+    case "certification_exam": return "Qualification information";
+    case "professional_body": return "Professional body";
+    default: return "Source-backed resource";
+  }
+}
+
 export function LearningResourcesBlock({
   resources,
   title = "Where to learn and go next",
@@ -66,11 +91,12 @@ export function LearningResourcesBlock({
   const [saved, setSaved] = React.useState<Record<string, boolean>>({});
   const [saving, setSaving] = React.useState<Record<string, boolean>>({});
   const [saveNotice, setSaveNotice] = React.useState<string | null>(null);
-  const [expanded, setExpanded] = React.useState(false);
+  const [expandedStages, setExpandedStages] = React.useState<Record<string, boolean>>({});
   const grouped = useMemo(() => {
     const unique = new Map<string, CareerLearningResource>();
     for (const resource of resources ?? []) {
       if (!resource.url) continue;
+      if (resource.reviewStatus === "review_only" || resource.ownershipScope === "audit_only") continue;
       unique.set(`${resource.resourceType}|${resource.targetName}|${resource.provider}`, resource);
     }
     return GROUPS.map((group) => ({
@@ -119,12 +145,14 @@ export function LearningResourcesBlock({
         Use these links to understand the domain, build the most useful skills, and check professional requirements.
       </Text>
        {grouped.map((group) => {
-         const visibleResources = expanded ? group.resources : group.resources.slice(0, 8);
+         const expanded = Boolean(expandedStages[group.label]);
+         const visibleResources = expanded ? group.resources : group.resources.slice(0, 4);
          return (
          <View key={group.label} style={styles.group}>
           <Text style={[styles.groupLabel, { color: colors.textRole.muted }]}>
             {group.label}
           </Text>
+          <Text style={[styles.groupDescription, { color: colors.textRole.secondary }]}>{group.description}</Text>
            {visibleResources.map((resource) => (
             <Pressable
               key={`${resource.resourceType}|${resource.targetName}|${resource.provider}`}
@@ -143,7 +171,7 @@ export function LearningResourcesBlock({
                   {resourceTitle(resource)}
                 </Text>
                 <Text style={[styles.meta, { color: colors.textRole.muted }]}>
-                  {resource.provider} | {accessLabel(resource)}
+                  {resourceKind(resource)} · {resource.provider} · {accessLabel(resource)}
                 </Text>
                 {resource.description ? (
                   <Text style={[styles.description, { color: colors.textRole.secondary }]} numberOfLines={2}>
@@ -183,7 +211,7 @@ export function LearningResourcesBlock({
               </View>
             </Pressable>
            ))}
-           {group.resources.length > 8 ? <Pressable accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show fewer resources" : `See all ${group.resources.length} resources`}</Text></Pressable> : null}
+           {group.resources.length > 4 ? <Pressable accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpandedStages((current) => ({ ...current, [group.label]: !expanded }))} style={[styles.moreButton, { borderColor: colors.borderRole.subtle }]}><Text style={[styles.moreText, { color: colors.accentRole.action }]}>{expanded ? "Show fewer resources" : `See all ${group.resources.length} resources`}</Text></Pressable> : null}
          </View>
          );
        })}
@@ -208,6 +236,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     textTransform: "uppercase",
   },
+  groupDescription: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4, marginTop: -Spacing.xs },
   resource: {
     alignItems: "center",
     borderRadius: Radius.md,

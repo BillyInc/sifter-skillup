@@ -53,6 +53,23 @@ function ToolChip({ tool, prominent, resource }: { tool: ToolV2Enriched; promine
   );
 }
 
+function isSourceCategory(label: string): boolean {
+  return [
+    "spreadsheet software",
+    "analytical or scientific software",
+    "development environment software",
+    "data base management system software",
+    "data base user interface and query software",
+    "enterprise application integration software",
+    "office suite software",
+    "project management software",
+    "web platform development software",
+    "business intelligence and data analysis software",
+    "object or component oriented development software",
+    "content workflow software",
+  ].includes(label.trim().toLowerCase());
+}
+
 function ToolGroup({
   label,
   tools,
@@ -94,8 +111,10 @@ export function ToolGroupsBlock({
 }: ToolGroupsBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
-  const common = tools?.common ?? [];
-  const distinctive = tools?.distinctive ?? [];
+  // These labels are source taxonomy categories, not named tools a student
+  // can choose to learn. Keep them in audit data but out of guidance.
+  const common = (tools?.common ?? []).filter((tool) => !isSourceCategory(tool.tool));
+  const distinctive = (tools?.distinctive ?? []).filter((tool) => !isSourceCategory(tool.tool));
   if (!distinctive.length && !common.length) return null;
   const total = common.length + distinctive.length;
   const visibleCommon = expanded ? common : common.slice(0, 4);

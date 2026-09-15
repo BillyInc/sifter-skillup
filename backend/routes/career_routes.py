@@ -1367,6 +1367,45 @@ async def get_domain(domain_id: str):
         return ResponseModel(data=_coming_soon("Domain detail is temporarily unavailable."))
 
 
+@router.get("/subgroups/{subgroup_id}", response_model=ResponseModel)
+async def get_subgroup(subgroup_id: str):
+    """Return the parent domain envelope for a saved subgroup.
+
+    Nested subgroup routes already carry the parent domain key. Saved items
+    only store the subgroup identity, so this lookup restores the same
+    source-grounded subgroup detail without sending the user to the generic
+    domain index first.
+    """
+    try:
+        svc = _svc()
+        subgroup = (
+            svc.table("domain_subgroups")
+            .select("domain_id")
+            .eq("id", subgroup_id)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        if not subgroup:
+            return ResponseModel(data=_coming_soon("Area not found."))
+        domain = (
+            svc.table("domains")
+            .select("domain_key")
+            .eq("id", subgroup[0].get("domain_id"))
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        if not domain or not domain[0].get("domain_key"):
+            return ResponseModel(data=_coming_soon("The parent domain is not available."))
+        return await get_domain(str(domain[0]["domain_key"]))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career get_subgroup failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Area detail is temporarily unavailable."))
+
+
 @router.get("/roles/{role_id}", response_model=ResponseModel)
 async def get_role(role_id: str):
     """Role detail (essential/optional skills + ESCO URIs, tier, appearsIn,

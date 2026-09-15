@@ -98,3 +98,6 @@ nul
 # Unrelated local tool checkouts, likewise committed as stray gitlinks.
 /claude-code-proxy/
 /free-claude-code/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat

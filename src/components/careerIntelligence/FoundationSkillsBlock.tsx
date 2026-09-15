@@ -63,7 +63,7 @@ export function FoundationSkillsBlock({
               {skill.skill}
             </Text>
             <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={2}>
-              {resource?.description || skill.priorityReason || (skill.prevalence ? `Appears in ${Math.round(skill.prevalence * 100)}% of the source role profiles in this domain.` : "Source-backed foundation item.")}
+              {resource?.description || skill.priorityReason || "Source-backed foundation item."}
             </Text>
             {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>{skill.evidenceNote}</Text> : null}
             {url ? (
