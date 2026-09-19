@@ -86,7 +86,7 @@ function resourceState(resource: ProgrammeResourceEvidence): { label: string; va
     return { label: "Taught in programme record", variant: "success" };
   }
   if (resource.curriculumState === "partly_evidenced") {
-    return { label: "Partly evidenced in CCMAS", variant: "warning" };
+    return { label: "Partly evidenced in teaching record", variant: "warning" };
   }
   if (resource.curriculumState === "source_review" || resource.marketState === "source_review") {
     return { label: "Source review", variant: "warning" };
@@ -306,7 +306,7 @@ export function SkillsGapScreen() {
             <Text style={[styles.marketNoticeTitle, CompassFonts.bodyBold, { color: colors.text }]}>How to read this view</Text>
             <Text style={[styles.meta, { color: colors.textMuted }]}>The institution's recorded programme teaching is the baseline. Sourced domain, subgroup and role records are the downstream comparison layer. A candidate gap means the downstream layer contains an item that the teaching record does not currently evidence; it is not an accreditation requirement, an employment-demand signal or a recommendation.</Text>
           </View>
-          <ComingSoonPanel state={coverage} empty={(rows) => rows.length === 0} emptyTitle="No programme intelligence yet" emptyBody="Programme intelligence appears when the programme curriculum and mapped market/practice evidence are available.">
+          <ComingSoonPanel state={coverage} empty={(rows) => rows.length === 0} emptyTitle="No programme intelligence yet" emptyBody="Programme intelligence appears when the programme teaching record and sourced downstream evidence are available.">
             {(rows) => <View style={styles.programmeList}>{rows.map((report) => <ProgrammeCoverageCard key={report.programmeId} report={report} />)}</View>}
           </ComingSoonPanel>
         </View>
