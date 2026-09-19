@@ -196,6 +196,7 @@ def add(rows: list[dict], *, level: str, key: str, domain: str, kind: str, name:
         "evidence_type": "source_supported_synthesis",
         "source_confidence": confidence,
         "data_state": "source_backed",
+        "guidance_owner": level,
         "verified_at": VERIFIED_AT,
     })
 
@@ -267,7 +268,6 @@ def build() -> list[dict]:
                 prerequisites=all_foundation[:2], related=[], source_ids=ids, refs=refs,
                 locators=[{"domainId": domain_id, "evidenceKind": "certification", "owner": "domain"}],
                 limitations=["No domain row by itself proves that every Nigerian employer or role requires this credential."])
-
         # Explicit subgroup records, not a re-labelled role-frequency list.
         for subgroup in (structure.get(domain_id) or {}).get("subgroups") or []:
             subgroup_id = clean(subgroup.get("isco_submajor"))
@@ -344,11 +344,201 @@ def row_sql(row: dict) -> str:
     ]) + ")"
 
 
-def render_sql(rows: list[dict], part: int) -> str:
-    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, verified_at)"
+def _unique_json_values(values: list[object]) -> list[object]:
+    """Deduplicate JSON-compatible evidence without changing its order."""
+    out: list[object] = []
+    seen: set[str] = set()
+    for value in values:
+        marker = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        if marker in seen:
+            continue
+        seen.add(marker)
+        out.append(value)
+    return out
+
+
+def _relationship_source_evidence(*rows: dict, extra_limitations: list[str] | None = None) -> dict:
+    """Carry endpoint provenance onto an edge without making a new claim.
+
+    Relationship rows are stored in a table that predates ``source_locators``.
+    Keep the locators in the JSONB source-reference objects as well as on the
+    in-memory edge so the transport does not discard them before the additive
+    schema can be extended.  A locator remains explicitly an endpoint/context
+    locator; it is not presented as independent proof of the relationship.
+    """
+    source_ids: list[str] = []
+    references: list[dict] = []
+    locators: list[object] = []
+    limitations: list[str] = []
+    for row in rows:
+        source_ids.extend(str(value).strip() for value in (row.get("source_ids") or row.get("sourceIds") or []) if str(value).strip())
+        raw_references = row.get("source_references") or row.get("sourceReferences") or []
+        if isinstance(raw_references, list):
+            references.extend(value for value in raw_references if isinstance(value, dict))
+        raw_locators = row.get("source_locators") or row.get("sourceLocators") or []
+        if isinstance(raw_locators, list):
+            locators.extend(raw_locators)
+        if isinstance(raw_references, list):
+            for reference in raw_references:
+                if not isinstance(reference, dict):
+                    continue
+                source_ids.extend(
+                    str(value).strip()
+                    for value in ([reference.get("id")] + (reference.get("sourceIds") or []))
+                    if str(value).strip()
+                )
+                for key in ("locators", "sourceLocators"):
+                    if isinstance(reference.get(key), list):
+                        locators.extend(reference[key])
+                if isinstance(reference.get("evidenceLimitations"), list):
+                    limitations.extend(str(value).strip() for value in reference["evidenceLimitations"] if str(value).strip())
+        raw_limitations = row.get("evidence_limitations") or row.get("evidenceLimitations") or []
+        if isinstance(raw_limitations, list):
+            limitations.extend(str(value).strip() for value in raw_limitations if str(value).strip())
+    limitations.extend(str(value).strip() for value in (extra_limitations or []) if str(value).strip())
+
+    merged: list[dict] = []
+    reference_indexes: dict[tuple[str, str], int] = {}
+    for reference in references:
+        copy = dict(reference)
+        explicit_ids = [str(copy.get("id")).strip()] if str(copy.get("id") or "").strip() else []
+        explicit_ids.extend(str(value).strip() for value in (copy.get("sourceIds") or []) if str(value).strip())
+        if explicit_ids:
+            copy["sourceIds"] = list(dict.fromkeys(explicit_ids))
+        url = clean(copy.get("url"))
+        key = ("url", url) if url else ("", json.dumps(copy, ensure_ascii=False, sort_keys=True))
+        existing_index = reference_indexes.get(key)
+        if existing_index is None:
+            merged.append(copy)
+            reference_indexes[key] = len(merged) - 1
+            continue
+        existing = merged[existing_index]
+        for field in ("sourceIds", "locators", "sourceLocators", "evidenceLimitations"):
+            combined = [*(existing.get(field) or []), *(copy.get(field) or [])]
+            if combined:
+                existing[field] = _unique_json_values(combined)
+    locators = _unique_json_values(locators)
+    if locators:
+        for reference in merged:
+            reference["sourceLocators"] = _unique_json_values([*(reference.get("sourceLocators") or []), *locators])
+    return {
+        "source_ids": list(dict.fromkeys(source_ids)),
+        "source_references": merged,
+        "source_locators": locators,
+        "evidence_limitations": list(dict.fromkeys(limitations)),
+    }
+
+
+def _lower_confidence(*rows: dict) -> str:
+    order = {"low": 0, "medium": 1, "high": 2}
+    values = [str(row.get("source_confidence") or "high") for row in rows]
+    return min(values, key=lambda value: order.get(value, 0))
+
+
+def relationship_rows(rows: list[dict]) -> list[dict]:
+    """Normalize explicit edges and record honest coverage for tools/certs.
+
+    The JSON arrays remain useful for compatibility, but this table gives the
+    API a typed edge between a skill, competency, tool or certification. A
+    missing target is deliberately not turned into a source-backed edge. Each
+    contextual tool and certification still receives one ``not_established``
+    coverage row when no explicit edge exists, so an audit can distinguish
+    "reviewed and no relationship established" from "relationship data was
+    never generated". External source review can later replace that state.
+    """
+    by_context: dict[tuple[str, str, str], dict[str, dict]] = {}
+    for row in rows:
+        by_context.setdefault((row["context_level"], row["context_key"], row["domain_key"]), {})[
+            (row["item_type"], row["item_key"])
+        ] = row
+    edges: list[dict] = []
+    seen: set[tuple] = set()
+    for row in rows:
+        context = (row["context_level"], row["context_key"], row["domain_key"])
+        targets = by_context.get(context, {})
+        for relationship_type, names in (("builds_on", row.get("prerequisites") or []), ("works_with", row.get("related_items") or [])):
+            for name in names:
+                candidate_name = str(name).strip()
+                if not candidate_name:
+                    continue
+                exact = [candidate for candidate in targets.values() if candidate["name"].casefold() == candidate_name.casefold()]
+                target = next((candidate for candidate in exact if candidate["item_key"] != row["item_key"] and candidate["item_type"] == row["item_type"]), None)
+                target = target or next((candidate for candidate in exact if candidate["item_key"] != row["item_key"]), None)
+                if target:
+                    edge_key = (context, row["item_type"], row["item_key"], relationship_type, target["item_type"], target["item_key"])
+                    if edge_key in seen:
+                        continue
+                    seen.add(edge_key)
+                    evidence = _relationship_source_evidence(row, target, extra_limitations=[
+                        "Endpoint evidence is not proof that this relationship is universally required or exclusive."
+                    ])
+                    edges.append({
+                        "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+                        "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+                        "to_item_type": target["item_type"], "to_item_key": target["item_key"], "to_name": target["name"],
+                        "relationship_type": relationship_type, "relationship_status": "source_backed",
+                        **evidence, "source_confidence": _lower_confidence(row, target),
+                        "data_state": "source_backed", "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+                    })
+                    continue
+
+                # Similar-but-not-identical names are deliberately not fuzzy-
+                # matched. Keep the explicit candidate as a non-student-facing
+                # backlog row so later source review can resolve it safely.
+                backlog_key = f"unresolved-{relationship_type}-{slug(candidate_name)}"
+                edge_key = (context, row["item_type"], row["item_key"], "not_established", "", backlog_key)
+                if edge_key in seen:
+                    continue
+                seen.add(edge_key)
+                evidence = _relationship_source_evidence(row, extra_limitations=[
+                    f"Explicit {relationship_type} candidate {candidate_name!r} did not resolve to an exact typed item; review before linking.",
+                    "This backlog row does not assert a relationship or establish a target item.",
+                ])
+                edges.append({
+                    "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+                    "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+                    "to_item_type": None, "to_item_key": backlog_key, "to_name": candidate_name,
+                    "relationship_type": "not_established", "relationship_status": "not_established",
+                    **evidence, "source_confidence": "low", "data_state": "not_established",
+                    "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+                })
+    edge_sources = {(edge["context_level"], edge["context_key"], edge["from_item_type"], edge["from_item_key"]) for edge in edges}
+    for row in rows:
+        if row["item_type"] not in {"tool", "certification"}:
+            continue
+        key = (row["context_level"], row["context_key"], row["item_type"], row["item_key"])
+        if key in edge_sources:
+            continue
+        evidence = _relationship_source_evidence(row, extra_limitations=[
+            "No cross-type relationship is established in the reviewed source records."
+        ])
+        edges.append({
+            "context_level": row["context_level"], "context_key": row["context_key"], "domain_key": row["domain_key"],
+            "from_item_type": row["item_type"], "from_item_key": row["item_key"], "from_name": row["name"],
+            "to_item_type": None, "to_item_key": None, "to_name": None,
+            "relationship_type": "not_established", "relationship_status": "not_established",
+            **evidence, "source_confidence": row["source_confidence"], "data_state": "not_established",
+            "guidance_owner": row["guidance_owner"], "verified_at": row["verified_at"],
+        })
+    return edges
+
+
+def relationship_sql(edge: dict) -> str:
+    return "(" + ", ".join([
+        sql(edge["context_level"]), sql(edge["context_key"]), sql(edge["domain_key"]),
+        sql(edge["from_item_type"]), sql(edge["from_item_key"]), sql(edge["from_name"]),
+        sql(edge["to_item_type"]), sql(edge["to_item_key"]), sql(edge["to_name"]),
+        sql(edge["relationship_type"]), sql(edge["relationship_status"]), sql_text_array(edge["source_ids"]),
+        sql_json(edge["source_references"]), sql_json(edge["evidence_limitations"]), sql(edge["source_confidence"]),
+        sql(edge["data_state"]), sql(edge["guidance_owner"]), sql(edge["verified_at"]),
+    ]) + ")"
+
+
+def render_sql(rows: list[dict], edges: list[dict], part: int) -> str:
+    columns = "(context_level, context_key, domain_key, item_type, item_key, name, plain_meaning, contextual_use, expected_output, priority, priority_reason, prerequisites, related_items, source_ids, source_references, source_locators, geographic_scope, evidence_limitations, evidence_type, source_confidence, data_state, guidance_owner, verified_at)"
     lines = [
         "-- Generated source-backed contextual guidance rows.",
-        f"-- Part {part}; run after backend/migration_contextual_career_items.sql.",
+        f"-- Part {part}; run after backend/migration_contextual_career_items.sql and backend/migration_career_item_relationships_2026-09-17.sql.",
         "BEGIN;",
         "INSERT INTO skillup_dev.career_context_items",
         f"    {columns}",
@@ -364,14 +554,23 @@ def render_sql(rows: list[dict], part: int) -> str:
         "    geographic_scope = EXCLUDED.geographic_scope, evidence_limitations = EXCLUDED.evidence_limitations,",
         "    evidence_type = EXCLUDED.evidence_type, source_confidence = EXCLUDED.source_confidence, data_state = EXCLUDED.data_state,",
         "    verified_at = EXCLUDED.verified_at;",
-        "COMMIT;",
-        "",
     ]
+    if edges:
+        edge_columns = "(context_level, context_key, domain_key, from_item_type, from_item_key, from_name, to_item_type, to_item_key, to_name, relationship_type, relationship_status, source_ids, source_references, evidence_limitations, source_confidence, data_state, guidance_owner, verified_at)"
+        lines += [
+            "INSERT INTO skillup_dev.career_item_relationships",
+            f"    {edge_columns}",
+            "VALUES",
+            ",\n".join(relationship_sql(edge) for edge in edges),
+            "ON CONFLICT DO NOTHING;",
+        ]
+    lines += ["COMMIT;", ""]
     return "\n".join(lines)
 
 
 def main() -> None:
     rows = build()
+    edges = relationship_rows(rows)
     OUT.mkdir(parents=True, exist_ok=True)
     for old in list(OUT.glob("part-*.sql")) + list(OUT.glob("part-*.sql.gz")):
         old.unlink()
@@ -379,11 +578,15 @@ def main() -> None:
     current: list[dict] = []
     current_bytes = 0
     part_number = 1
+    edges_by_context: dict[tuple[str, str], list[dict]] = {}
+    for edge in edges:
+        edges_by_context.setdefault((edge["context_level"], edge["context_key"]), []).append(edge)
     for row in rows:
         candidate = row_sql(row) + ",\n"
         size = len(candidate.encode("utf-8"))
         if current and current_bytes + size > MAX_SQL_BYTES:
-            content = render_sql(current, part_number)
+            current_edges = [edge for row in current for edge in edges_by_context.get((row["context_level"], row["context_key"]), []) if edge["from_item_key"] == row["item_key"] and edge["from_item_type"] == row["item_type"]]
+            content = render_sql(current, current_edges, part_number)
             path = OUT / f"part-{part_number:03d}.sql.gz"
             with gzip.open(path, "wt", encoding="utf-8", compresslevel=9) as handle:
                 handle.write(content)
@@ -394,14 +597,15 @@ def main() -> None:
         current.append(row)
         current_bytes += size
     if current:
-        content = render_sql(current, part_number)
+        current_edges = [edge for row in current for edge in edges_by_context.get((row["context_level"], row["context_key"]), []) if edge["from_item_key"] == row["item_key"] and edge["from_item_type"] == row["item_type"]]
+        content = render_sql(current, current_edges, part_number)
         path = OUT / f"part-{part_number:03d}.sql.gz"
         with gzip.open(path, "wt", encoding="utf-8", compresslevel=9) as handle:
             handle.write(content)
         parts.append({"file": path.relative_to(ROOT).as_posix(), "part": part_number, "row_count": len(current), "bytes": path.stat().st_size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
 
     with gzip.open(HERE / "contextual_guidance_items.json.gz", "wt", encoding="utf-8") as handle:
-        json.dump(rows, handle, ensure_ascii=False, separators=(",", ":"))
+        json.dump({"items": rows, "relationships": edges}, handle, ensure_ascii=False, separators=(",", ":"))
     counts = Counter((row["context_level"], row["item_type"]) for row in rows)
     domains = {row["context_key"] for row in rows if row["context_level"] == "domain"}
     subgroups = {row["context_key"] for row in rows if row["context_level"] == "subgroup"}
@@ -411,6 +615,7 @@ def main() -> None:
         "verified_at": VERIFIED_AT,
         "purpose": "Student-facing explanations whose ownership stays at programme, domain, subgroup or role level.",
         "row_count": len(rows),
+        "relationship_count": len(edges),
         "covered_domains": len(domains),
         "covered_subgroups": len(subgroups),
         "covered_roles": len(roles),
@@ -418,6 +623,7 @@ def main() -> None:
         "generic_tool_names_excluded": sorted(GENERIC_TOOL_NAMES),
         "parts": parts,
         "source_rule": "Domain rows never use role prevalence; role-derived evidence appears only at subgroup/role level.",
+        "relationship_rule": "Only same-context prerequisite and related-item names that resolve to another typed item become source-backed edges; every contextual tool/certification without an established edge receives an explicit not_established coverage row.",
     }
     (HERE / "CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     audit = [
