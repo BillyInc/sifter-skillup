@@ -27541,7 +27541,8 @@
     }
   ],
   "approval_readiness": {
-    "ready_for_scaling": false,
+    "scaling_phase_authorized": true,
+    "ready_for_live_exposure": false,
     "reasons": [
       "Some source-backed student items have no approved item-specific resource match; the UI must retain the honest no-link state.",
       "Live Supabase application and browser verification were not performed."
