@@ -2,7 +2,7 @@
 
 Generated: 2026-09-12
 
-- Rows: **126648**
+- Rows: **126414**
 - Domains with domain-owned rows: **160**
 - Subgroups with explicit subgroup rows: **472**
 - Roles with role-owned rows: **5036**
@@ -18,7 +18,7 @@ Generated: 2026-09-12
 
 ## Coverage counts
 
-- `domain:certification`: 454
+- `domain:certification`: 220
 - `domain:competency`: 480
 - `domain:skill`: 480
 - `role:skill`: 80348

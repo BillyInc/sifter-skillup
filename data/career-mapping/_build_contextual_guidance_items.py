@@ -236,9 +236,15 @@ def build() -> list[dict]:
         web = row.get("nigerian_web_evidence") or {}
         skills = [clean(value) for value in web.get("skills") or [] if clean(value)]
         competencies = [clean(value) for value in web.get("competencies") or [] if clean(value)]
-        certifications = [clean(value) for value in (web.get("certifications") or []) if clean(value)]
-        cert_evidence = row.get("nigerian_certification_evidence") or {}
-        certifications += [clean(value) for value in cert_evidence.get("credential_signals") or [] if clean(value)]
+        # Only explicitly named credentials may become student-facing
+        # certification items.  ``nigerian_web_evidence.certifications`` and
+        # ``credential_signals`` can contain source-audit prose such as
+        # "academic and research qualifications"; those describe a pathway or
+        # sector context, not a credential with a market scope and credential
+        # type.  The reviewed current-domain list is the narrow named-
+        # credential authority.  Keep broader signals in the audit JSON, but
+        # never promote them into the contextual student contract.
+        certifications = [clean(value) for value in (row.get("current_domain_certifications") or []) if clean(value)]
         all_foundation = skills[:3] + competencies[:3]
         for index, name in enumerate(all_foundation):
             kind = "competency" if name in competencies else "skill"
