@@ -208,6 +208,64 @@
         }
       ],
       "limitation": "This evidence supports the candidate and preserves source provenance; active row-level exposure still requires the normal regeneration/audit gate."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Social Sciences::Social Work",
+      "jamb_name": "Social Work",
+      "domain_id": "D046",
+      "domain": "Social Work",
+      "relationship_type": "direct",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/social_sciences.json",
+        "locator": "programme/component for Social Work; direct D046 candidate in programme_domain_final.json",
+        "summary": "The programme identity and domain name are exact; external sources verify that the Nigerian undergraduate curriculum is professional Social Work training rather than a generic social-science fallback."
+      },
+      "sources": [
+        {
+          "title": "University of Ibadan Social Work course structure",
+          "url": "https://educ.ui.edu.ng/courses-7",
+          "locator": "Lines 140-160 identify Social Works and list Introduction to Social Work, Indigenous Social Welfare and Social Work Practice ICT; lines 167-188 list theory, case work, research methods, community development and social policy; lines 193-201 list field practicum and intervention courses.",
+          "evidence": "The official Nigerian curriculum directly names the Social Work programme and its professional practice sequence."
+        },
+        {
+          "title": "University of Nigeria Nsukka Social Work",
+          "url": "https://www.unn.edu.ng/academics/faculties/social-sciences/social-work/",
+          "locator": "Lines 307-349 describe professional Social Work objectives, direct practice, community development and the four-year B.Sc. Social Work and Community Development programme.",
+          "evidence": "Independent official Nigerian university evidence corroborates the direct programme-to-Social-Work relationship."
+        }
+      ],
+      "limitation": "The source resolves the programme/domain identity but does not authorize copying any institution-specific curriculum into the canonical row."
+    },
+    {
+      "issue_class": "full_ccmas_review_required",
+      "programme_ref": "Administration and Management::Business Administration",
+      "jamb_name": "Business Administration",
+      "domain_id": "D028",
+      "domain": "General Management",
+      "relationship_type": "direct",
+      "prior_state": "review_required",
+      "decision": "candidate_corroborated",
+      "promotion": "not_promoted_pending_row_level_regeneration",
+      "confidence": "high",
+      "local_evidence": {
+        "source": "data/career-mapping/ccmas/administration_management.json",
+        "locator": "programme/component for Business Administration; direct D028 candidate in programme_domain_final.json",
+        "summary": "The exact programme name and the local management curriculum align with a General Management domain, while subareas remain separately represented."
+      },
+      "sources": [
+        {
+          "title": "Caleb University B.Sc. Business Administration",
+          "url": "https://calebuniversity.edu.ng/programmes/bsc-business-administration",
+          "locator": "Lines 54-73 identify the accredited B.Sc. Business Administration programme and describe its broad management scope; lines 82-119 list business, management, finance, statistics, analytics and quantitative-management courses; lines 155-182 list strategy, operations and organisational-management outcomes.",
+          "evidence": "The official Nigerian university curriculum directly supports the general management programme relationship without collapsing marketing, HR or finance into the parent domain."
+        }
+      ],
+      "limitation": "The evidence supports the direct parent-domain candidate only; specialist downstream domains retain their own evidence gates."
     }
   ],
   "unresolved_queue_policy": {
