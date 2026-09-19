@@ -226,7 +226,7 @@ function LegacyDomainBody({
                   {anchor.code ? `${anchor.code} · ` : ""}{anchor.title}
                 </Text>
               ))}
-              {programmeConnection.courseAnchors.length > 4 ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>More programme evidence is available in the source record.</Text> : null}
+              {programmeConnection.courseAnchors.length > 4 ? <Text style={[styles.guidanceNote, { color: colors.textRole.muted }]}>More supporting curriculum is recorded for this connection.</Text> : null}
             </View>
           ) : null}
           {programmeConnection?.transferableEvidence?.length ? (
@@ -417,11 +417,11 @@ function DomainBody({
   const relationship = connection?.relationship;
   const orientationResources = (domain.resources ?? []).filter((resource) => resource.resourceType === "domain_overview");
   const relationshipLabel = relationship === "direct"
-    ? "Direct connection"
+    ? "Primary connection"
     : relationship === "functional"
-      ? "Functional connection"
+      ? "Related application"
       : relationship === "adjacent"
-        ? "Adjacent connection"
+        ? "Nearby direction"
         : "Connected field";
 
   if (tab === "build") {
@@ -466,7 +466,7 @@ function DomainBody({
           </View>
           <Text style={[refinedStyles.badge, { color: colors.accentRole.action }]}>{relationshipLabel}</Text>
           <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{connection.explanation}</Text>
-          {connection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection uses course evidence from {connection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
+          {connection.courseAnchors?.length ? <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This connection includes learning from {connection.courseAnchors.slice(0, 3).map((item) => item.title).join(", ")}.</Text> : null}
         </View>
       ) : null}
 
@@ -475,7 +475,7 @@ function DomainBody({
           <Feather name="compass" size={17} color={colors.accentRole.action} />
           <View style={refinedStyles.copyBlock}>
             <Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Understand {domain.name} before choosing an area</Text>
-            <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This explanation is built from the reviewed domain and programme evidence.</Text>
+            <Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>This explanation uses the reviewed programme and field information.</Text>
           </View>
         </View>
         {orientation?.whatItStudies ? <View style={refinedStyles.subsection}><Text style={[refinedStyles.subheading, { color: colors.textRole.primary }]}>What this field studies</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation.whatItStudies}</Text></View> : null}
@@ -513,7 +513,7 @@ function DomainBody({
         <View style={refinedStyles.cardHeading}><Feather name="grid" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Choose a focused area</Text></View>
         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Each area keeps the field foundation and adds a more specific way to study or work. Roles appear inside the area, not on this domain page.</Text>
       </View>
-      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{subgroup.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "A focused area inside this field."}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed focused areas are available yet.</Text>}
+      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{subgroup.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "A focused area inside this field."}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed areas are available yet.</Text>}
     </View>
   );
 }

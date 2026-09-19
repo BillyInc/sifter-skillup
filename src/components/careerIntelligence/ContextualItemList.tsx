@@ -82,8 +82,8 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
     <SectionLabel>{title}</SectionLabel>
     <View style={[styles.emptyCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
       <Feather name="inbox" size={17} color={colors.textRole.muted} />
-      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>No reviewed relationship records are attached to this level yet.</Text>
-      <Text style={[styles.limit, { color: colors.textRole.muted }]}>The page will show each item’s purpose, connections and verified external source when that data is available.</Text>
+      <Text style={[styles.copy, { color: colors.textRole.secondary }]}>No connected learning items are available for this level yet.</Text>
+      <Text style={[styles.limit, { color: colors.textRole.muted }]}>Each item will show what it is for, what it connects to and a verified link when one is available.</Text>
     </View>
   </View>;
   const visible = expanded ? ordered : ordered.slice(0, 5);
@@ -130,8 +130,8 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
               <Text style={[styles.limit, { color: colors.textRole.muted }]}>This is a way of applying the capability, not a separate qualification or proof that you already have it.</Text>
               <ExternalLinkGuard
                 url={methodSourceUrl(method.sourceProvenance)}
-                label={methodSourceUrl(method.sourceProvenance) ? `Open evidence for ${method.name}` : `No verified link for ${method.name}`}
-                description={`This opens the source evidence recorded for the method ${method.name}.`}
+                label={methodSourceUrl(method.sourceProvenance) ? `Open source for ${method.name}` : `No verified source for ${method.name}`}
+                description={`This opens the source used to explain the method ${method.name}.`}
               />
             </View>)}
           </View> : null}

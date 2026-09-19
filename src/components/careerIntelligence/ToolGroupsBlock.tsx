@@ -29,7 +29,7 @@ const TOOL_PURPOSES: Record<ToolPurposeKey, { title: string; explanation: string
   compute: { title: "Compute and automate", explanation: "Use code or repeatable workflows when the work needs calculation, modelling or scale.", order: 4 },
   map: { title: "Study place and space", explanation: "Connect questions to locations, communities and geographic patterns.", order: 5 },
   communicate: { title: "Explain and present findings", explanation: "Turn evidence into documents, charts, presentations or material other people can understand.", order: 6 },
-  other: { title: "Other recorded options", explanation: "These tools are recorded in the source evidence, but their shared purpose is not yet clear enough to place in a focused path.", order: 7 },
+  other: { title: "Other options", explanation: "These tools are listed, but there is not yet enough information to group them by a clear kind of work.", order: 7 },
 };
 
 function purposeIcon(key: ToolPurposeKey): keyof typeof Feather.glyphMap {
@@ -137,7 +137,7 @@ function ToolCard({
         <Feather name={toolIcon(String(tool.tool ?? ""))} size={16} color={colors.accentRole.action} />
         <Text style={[styles.toolName, { color: colors.textRole.primary }]} numberOfLines={2}>{tool.tool}</Text>
       </View>
-      <Text style={[styles.toolPurpose, { color: colors.textRole.muted }]}>{definition.title} · option, not a universal requirement</Text>
+      <Text style={[styles.toolPurpose, { color: colors.textRole.muted }]}>{definition.title} · optional choice, not a requirement</Text>
       {scopeLabel ? <Text style={[styles.toolScope, { color: colors.textRole.muted }]}>{scopeLabel}</Text> : null}
       <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{resource?.description || definition.explanation}</Text>
       <ExternalLinkGuard

@@ -30,7 +30,7 @@ function validReference(reference: SourceReference): boolean {
 export function ContextSourceLinks({
   item,
   resource,
-  title = "Supporting sources",
+  title = "More information",
 }: {
   item?: CareerContextItem;
   resource?: CareerLearningResource;
@@ -62,14 +62,14 @@ export function ContextSourceLinks({
         <Feather name="book-open" size={14} color={colors.textRole.muted} />
         <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{title}</Text>
       </View>
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>These links support the explanation or relationship shown here. They are not automatically learning requirements.</Text>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>These links explain the item or how it connects to this path. They are not automatically learning requirements.</Text>
       <View style={styles.links}>
         {visible.map((source, index) => (
           <ExternalLinkGuard
             key={`${source.url}-${index}`}
             url={source.url}
             label={source.title || "Open supporting source"}
-            description={`This opens the supporting source recorded for this item.`}
+            description={`This opens more information about this item.`}
             textStyle={styles.link}
           />
         ))}

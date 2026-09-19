@@ -58,10 +58,10 @@ export function GuidanceEvidenceBlock({ evidence, style }: GuidanceEvidenceBlock
     <View style={[styles.container, style]}>
       <SectionLabel>How this guidance is supported</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }, CompassFonts.body]}>
-        This guidance starts with the local context attached to this route. It explains why the connection is shown; it is not a promise of demand, employment or a licence.
+        This guidance uses information attached to this route. It explains why the connection is shown; it is not a promise of demand, employment or a licence.
       </Text>
       <View style={styles.rows}>
-        <LensRow label="Local context" lens={evidence.nigeria} />
+        <LensRow label="Nigeria" lens={evidence.nigeria} />
       </View>
       {evidence.limitations?.map((limitation, index) => (
         <Text key={`${limitation}-${index}`} style={[styles.limit, { color: colors.textRole.muted }, CompassFonts.body]}>

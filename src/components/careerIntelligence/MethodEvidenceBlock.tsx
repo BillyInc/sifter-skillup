@@ -11,7 +11,7 @@ export interface MethodEvidenceBlockProps {
 }
 
 /** Shows source-backed methods without implying demonstrated student mastery. */
-export function MethodEvidenceBlock({ methods, title = "Methods that support these skills" }: MethodEvidenceBlockProps) {
+export function MethodEvidenceBlock({ methods, title = "Ways of working that support these skills" }: MethodEvidenceBlockProps) {
   const { colors } = useTheme();
   if (!methods?.length) return null;
 
@@ -42,8 +42,8 @@ export function MethodEvidenceBlock({ methods, title = "Methods that support the
             ) : null}
             <ExternalLinkGuard
               url={method.sourceProvenance && typeof method.sourceProvenance === "object" ? firstSourceUrl(method.sourceProvenance) : undefined}
-              label={firstSourceUrl(method.sourceProvenance ?? {}) ? "Open method evidence" : "No verified link for this method yet"}
-              description={`This opens the source evidence recorded for ${method.name}.`}
+              label={firstSourceUrl(method.sourceProvenance ?? {}) ? "Open source for this method" : "No verified source for this method yet"}
+              description={`This opens the source used to explain ${method.name}.`}
             />
           </View>
         ))}

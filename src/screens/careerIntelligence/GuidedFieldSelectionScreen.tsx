@@ -25,24 +25,24 @@ function domainItem(id: string, name: string, extra: Partial<GuidanceDomainSelec
 }
 
 function relationLabel(matchType?: DomainMatchType): string {
-  if (matchType === "functional") return "Functional connection";
-  if (matchType === "adjacent") return "Possible pivot";
-  if (matchType === "direct") return "Direct connection";
-  return "Domain route";
+  if (matchType === "functional") return "Related application";
+  if (matchType === "adjacent") return "Nearby direction";
+  if (matchType === "direct") return "Primary connection";
+  return "Connected field";
 }
 
 function evidenceLabel(state: GuidanceEvidenceState): string {
-  if (state === "source_backed") return "Source-backed";
+  if (state === "source_backed") return "Based on a named source";
   if (state === "context_only") return "Context available";
-  if (state === "limited") return "Limited";
-  if (state === "pending") return "Pending";
-  return "Not attached";
+  if (state === "limited") return "Limited information";
+  if (state === "pending") return "Being reviewed";
+  return "Not available";
 }
 
 function EvidenceSummary({ colors, evidence }: { colors: ColorPalette; evidence?: GuidanceEvidence }) {
   if (!evidence) return null;
-  return <View accessibilityLabel="Evidence scope" style={styles.evidenceSummary}>
-    <Text style={[styles.evidenceTitle, { color: colors.textRole.muted }]}>Evidence scope</Text>
+  return <View accessibilityLabel="Guidance coverage" style={styles.evidenceSummary}>
+    <Text style={[styles.evidenceTitle, { color: colors.textRole.muted }]}>Where this guidance applies</Text>
     <View style={styles.evidenceItems}>
       {[{ label: "Nigeria", lens: evidence.nigeria }, { label: "Remote", lens: evidence.remote }, { label: "Global", lens: evidence.global }].map(({ label, lens }) => <View key={label} style={[styles.evidenceItem, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
         <Text style={[styles.evidenceLabel, { color: colors.textRole.primary }]}>{label}</Text>
@@ -337,10 +337,10 @@ function DomainStep({ colors, domains, selected, onToggle, onNext }: { colors: C
 */
 function DomainStepRefined({ colors, domains, selected, primaryId, onToggle, onSetPrimary, onView, onNext, onBack, nextLabel }: { colors: ColorPalette; domains: DomainV2[]; selected: Set<string>; primaryId: string; onToggle: (domain: DomainV2) => void; onSetPrimary: (domain: DomainV2) => void; onView: (domain: DomainV2) => void; onNext: () => void; onBack: () => void; nextLabel: string }) {
   const groups: { label: string; items: DomainV2[] }[] = [
-    { label: "Direct connections", items: domains.filter((domain) => domain.programmeMatchType === "direct") },
-    { label: "Functional connections", items: domains.filter((domain) => domain.programmeMatchType === "functional") },
-    { label: "Possible pivots", items: domains.filter((domain) => domain.programmeMatchType === "adjacent") },
-    { label: "Other available domains", items: domains.filter((domain) => !domain.programmeMatchType) },
+    { label: "Closest matches", items: domains.filter((domain) => domain.programmeMatchType === "direct") },
+    { label: "Useful foundations", items: domains.filter((domain) => domain.programmeMatchType === "functional") },
+    { label: "Possible next directions", items: domains.filter((domain) => domain.programmeMatchType === "adjacent") },
+    { label: "Other available fields", items: domains.filter((domain) => !domain.programmeMatchType) },
   ].filter((group) => group.items.length);
   return <View style={styles.section}>
     <Text style={[styles.heading, { color: colors.textRole.primary }]}>First, understand the domains</Text>

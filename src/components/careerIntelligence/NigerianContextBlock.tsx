@@ -162,9 +162,9 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
 
   return (
     <View style={[styles.container, style]}>
-      <SectionLabel>Context that supports this guidance</SectionLabel>
+      <SectionLabel>What supports this guidance</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        These are source-backed context items attached to this {level}. Start with the suggested items, then review the fuller context if you need it. A listed item is not automatically required for every employer or route.
+        These are supporting items for this {level}. Start with the suggestions, then open the fuller details if you need them. A listed item is not automatically required for every employer or route.
       </Text>
       {starterItems.length ? (
         <View style={[styles.startCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
@@ -173,8 +173,8 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
         </View>
       ) : null}
       {expanded ? <>
-        <Layer label="Local evidence" source={actual} expanded />
-        <Layer label="Field context" source={fieldContext} expanded />
+        <Layer label="Local information" source={actual} expanded />
+        <Layer label="Field information" source={fieldContext} expanded />
       </> : null}
       <TouchableOpacity
         accessibilityRole="button"
@@ -187,7 +187,7 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
       {data.evidence_limit ? <Text style={[styles.limit, { color: colors.textRole.muted }]}>{String(data.evidence_limit)}</Text> : null}
       {sources.length ? (
         <View style={styles.sources}>
-          <Text style={[styles.sourceLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Sources checked</Text>
+          <Text style={[styles.sourceLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Learn more</Text>
           {sources.slice(0, expanded ? sources.length : 4).map((source, index) => (
             <View key={`${source.name}-${index}`}>
               <Text style={[styles.source, { color: source.url ? colors.accentRole.action : colors.textRole.secondary }]}>{source.name}{source.url ? " ↗" : ""}</Text>
