@@ -978,7 +978,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 try:
                     preview_location_rows = (
                         svc.table("schools")
-                        .select("id, address, city, state, country")
+                        .select("id, official_name, short_name, address, city, state, country")
                         .in_("id", preview_school_ids)
                         .execute()
                     ).data or []
@@ -998,6 +998,8 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                     location = preview_locations.get(str(source.get("school_id"))) or {}
                     offering.update({
                         "schoolId": source.get("school_id"),
+                        "officialName": location.get("official_name"),
+                        "shortName": location.get("short_name"),
                         "address": location.get("address"),
                         "city": location.get("city"),
                         "state": location.get("state"),
@@ -1892,7 +1894,7 @@ def _attach_school_details(
     try:
         rows = (
             svc.table("schools")
-            .select("id, address, city, state, country")
+            .select("*")
             .in_("id", school_ids)
             .execute()
         ).data or []
@@ -1982,6 +1984,21 @@ def _attach_school_details(
         for key in ("address", "city", "state", "country"):
             if location.get(key) is not None:
                 item[key] = location.get(key)
+        # Newer school registries may carry an official long name and a short
+        # display abbreviation. Keep the older `name` value as the fallback;
+        # never invent a full institution name from an acronym.
+        item["officialName"] = (
+            location.get("official_name")
+            or location.get("full_name")
+            or location.get("officialName")
+            or item.get("officialName")
+        )
+        item["shortName"] = (
+            location.get("short_name")
+            or location.get("abbreviation")
+            or location.get("shortName")
+            or item.get("shortName")
+        )
         jid = str(item.get("jambProgrammeId")) if item.get("jambProgrammeId") else ""
         override = overrides.get((sid, jid)) or {}
         item["universityUtmeSubjects"] = override.get("utme_subjects")
@@ -2887,7 +2904,7 @@ def _attach_school_context(
             try:
                 location_rows = (
                     svc.table("schools")
-                    .select("id, address, city, state, country")
+                    .select("id, official_name, short_name, address, city, state, country")
                     .in_("id", school_ids)
                     .execute()
                 ).data or []
@@ -2904,6 +2921,8 @@ def _attach_school_context(
             offering = {
                 "schoolId": row.get("school_id"),
                 "schoolName": school_name,
+                "officialName": location.get("official_name"),
+                "shortName": location.get("short_name"),
                 "institutionType": row.get("institution_type"),
                 "programmeName": row.get("jamb_name") or "",
                 "studentName": _student_programme_name(row.get("jamb_name")) or row.get("jamb_name"),
@@ -2914,6 +2933,8 @@ def _attach_school_context(
             }
             school_detail = school_details.get((str(row.get("school_id")), str(jid))) or {}
             offering.update({
+                "officialName": school_detail.get("officialName") or offering.get("officialName"),
+                "shortName": school_detail.get("shortName") or offering.get("shortName"),
                 "universityUtmeSubjects": school_detail.get("universityUtmeSubjects"),
                 "universityOlevelRequirement": school_detail.get("universityOlevelRequirement"),
                 "universityNote": school_detail.get("universityNote"),

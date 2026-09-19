@@ -207,6 +207,8 @@ export interface JambProgrammeSuggestion {
   schoolOfferings?: {
     schoolId?: string | null;
     schoolName: string;
+    officialName?: string | null;
+    shortName?: string | null;
     programmeName: string;
     /** Exact JAMB/source name for this offering; never inferred from CCMAS. */
     studentName?: string | null;
@@ -290,6 +292,8 @@ export interface JambProgrammeSchool {
   id?: string | null;
   schoolId: string;
   schoolName: string;
+  officialName?: string | null;
+  shortName?: string | null;
   address?: string | null;
   city?: string | null;
   state?: string | null;

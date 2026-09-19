@@ -87,12 +87,13 @@ export function InstitutionProfileScreen() {
   }, [user?.id]);
 
   const canInvite = team.status === "real" ? Boolean(team.data?.canInvite) : false;
+  const organization = team.status === "real" ? team.data?.organization ?? null : null;
   const orgName =
-    team.status === "real" && team.data?.organization?.name
-      ? team.data.organization.name
+    organization?.officialName || organization?.name
+      ? organization.officialName || organization.name
       : profile?.organizationName || "Organisation profile";
-  const orgType = profile?.organizationType?.replace(/_/g, " ") || "Not set";
-  const verification = profile?.verificationStatus || "unverified";
+  const orgType = (organization?.type || profile?.organizationType)?.replace(/_/g, " ") || "Not set";
+  const verification = organization?.verificationStatus || profile?.verificationStatus || "unverified";
   const memberCount = team.status === "real" ? team.data?.members.length ?? 0 : 0;
   const pendingInviteCount =
     team.status === "real"
@@ -156,6 +157,35 @@ export function InstitutionProfileScreen() {
             <Stat label="Members" value={String(memberCount)} />
             <Stat label="Pending" value={String(pendingInviteCount)} />
           </View>
+        </View>
+
+        <View
+          style={[
+            styles.identityPanel,
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+          ]}
+        >
+          <SectionLabel>Recorded organisation identity</SectionLabel>
+          {organization ? (
+            <View style={styles.identityGrid}>
+              <IdentityField label="Full name" value={organization.officialName || organization.name} />
+              {organization.shortName ? <IdentityField label="Short name" value={organization.shortName} /> : null}
+              {organization.address ? <IdentityField label="Address" value={organization.address} /> : null}
+              {[organization.city, organization.state, organization.country].some(Boolean) ? (
+                <IdentityField
+                  label="Location"
+                  value={[organization.city, organization.state, organization.country].filter(Boolean).join(", ")}
+                />
+              ) : null}
+              {organization.jambCode ? <IdentityField label="JAMB code" value={organization.jambCode} /> : null}
+              {organization.nucCode ? <IdentityField label="NUC code" value={organization.nucCode} /> : null}
+              {organization.moeApprovalNo ? <IdentityField label="MoE approval" value={organization.moeApprovalNo} /> : null}
+              {organization.cacNo ? <IdentityField label="CAC number" value={organization.cacNo} /> : null}
+              {organization.schoolCode ? <IdentityField label="School code" value={organization.schoolCode} /> : null}
+            </View>
+          ) : (
+            <Text style={[styles.body, { color: colors.textRole.muted }]}>Authoritative organisation identity is unavailable until the live organisation record is returned. No address or registry value is inferred here.</Text>
+          )}
         </View>
 
         <View style={styles.section}>
@@ -333,6 +363,17 @@ function TeamRow({ primary, secondary }: { primary: string; secondary: string })
   );
 }
 
+function IdentityField({ label, value }: { label: string; value?: string | null }) {
+  const { colors } = useTheme();
+  if (!value) return null;
+  return (
+    <View style={styles.identityField}>
+      <Text style={[styles.identityLabel, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>{label}</Text>
+      <Text style={[styles.identityValue, { color: colors.textRole.primary }]}>{value}</Text>
+    </View>
+  );
+}
+
 function VerificationBadge({ status }: { status: string }) {
   const { colors } = useTheme();
   const normalized = status.replace(/_/g, " ");
@@ -405,6 +446,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Spacing.sm,
   },
+  identityPanel: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  identityGrid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
+  identityField: { minWidth: 220, flexGrow: 1, gap: 3 },
+  identityLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.5 },
+  identityValue: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
   stat: {
     minWidth: 92,
     borderRadius: Radius.md,
