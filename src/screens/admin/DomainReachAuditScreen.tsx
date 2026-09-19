@@ -197,8 +197,10 @@ export function DomainReachAuditScreen() {
                   <UnreachedCluster key={cluster.cluster} cluster={cluster} />
                 ))}
                 <Text style={[styles.note, { color: colors.textMuted }]}>
-                  ⚠ Some domains require new faculties to unlock. Others can be
-                  reached by adding elective tracks to existing programmes.
+                  This audit identifies domains with no active programme mapping
+                  in the current registry. It does not establish that a new
+                  faculty, elective track or programme change would create a
+                  valid connection.
                 </Text>
               </View>
             )}
