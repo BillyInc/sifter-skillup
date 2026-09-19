@@ -1,0 +1,37 @@
+{
+  "batch_id": "source_enrichment_batch_tiny_2026-09-19",
+  "purpose": "Small web-verified generic-programme learning-resource checkpoint",
+  "access_date": "2026-09-19",
+  "records": [
+    {
+      "programme": "Psychology",
+      "candidate_name": "University of Ibadan Psychology 100-level course resource",
+      "item_type": "programme_learning_resource",
+      "context_level": "programme",
+      "source_authority": "University of Ibadan",
+      "source_title": "Department of Psychology — First and Second Semester 100 Level Undergraduate Courses",
+      "source_url": "https://ui.edu.ng/sites/default/files/Psychology.pdf",
+      "access_date": "2026-09-19",
+      "locator": "Department of Psychology; First and Second Semester 100 Level Undergraduate Courses — 2023/2024 Session; course table rows PSY 101, PSY 102, PSY 103 and PSY 105.",
+      "evidence": "The official University of Ibadan course table names PSY 101 Introduction to Psycho-Biological Basis of Behaviour, PSY 102 Introduction to personality social and life span, PSY 103 Quantitative methods in Psychology and PSY 105 History of Experimental Psychology, with compulsory or required status.",
+      "scope": "A programme-level learning reference for introductory Psychology content and quantitative/research foundations; it does not establish a downstream tool, certification or role relationship.",
+      "decision": "verified_resource",
+      "confidence": "high"
+    },
+    {
+      "programme": "Political Science",
+      "candidate_name": "University of Ibadan Political Science undergraduate course structure",
+      "item_type": "programme_learning_resource",
+      "context_level": "programme",
+      "source_authority": "University of Ibadan, Faculty of the Social Sciences",
+      "source_title": "Courses — Political Science undergraduate course structures and descriptions",
+      "source_url": "https://socsc.ui.edu.ng/courses-0",
+      "access_date": "2026-09-19",
+      "locator": "Courses page; B.Sc. Political Science course structures for 100 and 200 level, plus the course descriptions for POS 111, POS 112 and POS 312.",
+      "evidence": "The official University of Ibadan page lists POS 111 The Study of Politics, POS 112 Nigerian Constitutional Development, POS 113 The Organization of Government and POS 114 The Citizen and the State at 100 level, and identifies POS 312 Logic and Methods of Political Inquiry as a compulsory research-methods course.",
+      "scope": "A programme-level learning reference for political institutions, constitutional development and political inquiry; it does not establish a role-specific relationship or imply that every downstream role requires these courses.",
+      "decision": "verified_resource",
+      "confidence": "high"
+    }
+  ]
+}
