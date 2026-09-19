@@ -114,6 +114,22 @@
   },
   "contextual_seed_transport": {
     "part_count": 30,
+    "manifest_part_count": 30,
+    "integrity_ok": true,
+    "integrity": {
+      "integrity_ok": true,
+      "expected_part_count": 30,
+      "actual_part_count": 30,
+      "manifest_order_valid": true,
+      "actual_numbering_valid": true,
+      "missing_parts": [],
+      "unexpected_parts": [],
+      "duplicate_manifest_names": [],
+      "byte_mismatches": [],
+      "sha256_mismatches": [],
+      "invalid_gzip_parts": [],
+      "transaction_boundary_violations": []
+    },
     "old_d078_generic_certification_signal_hits": 0,
     "relationship_table_mentions": 60,
     "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase."

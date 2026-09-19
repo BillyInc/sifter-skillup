@@ -8,6 +8,7 @@ claims that an external page is live.
 from __future__ import annotations
 
 import gzip
+import hashlib
 import json
 import re
 from collections import Counter
@@ -142,14 +143,93 @@ def broad_d078_resources() -> list[dict]:
     return rows
 
 
+def transport_integrity_report(parts_dir: Path, manifest: dict) -> dict:
+    """Verify compressed SQL parts against the generated checksum manifest."""
+
+    manifest_parts = manifest.get("parts") or []
+    expected_names = [Path(str(entry.get("file") or "")).name for entry in manifest_parts]
+    name_counts = Counter(expected_names)
+    duplicate_manifest_names = sorted(name for name, count in name_counts.items() if count > 1)
+    expected_sequence = list(range(1, len(manifest_parts) + 1))
+    manifest_numbers = [entry.get("part") for entry in manifest_parts]
+    manifest_order_valid = manifest_numbers == expected_sequence and not duplicate_manifest_names
+
+    actual_paths = sorted(parts_dir.glob("part-*.sql.gz"))
+    actual_names = [path.name for path in actual_paths]
+    expected_set = set(expected_names)
+    actual_set = set(actual_names)
+    missing_parts = sorted(expected_set - actual_set)
+    unexpected_parts = sorted(actual_set - expected_set)
+    entries_by_name = {
+        Path(str(entry.get("file") or "")).name: entry for entry in manifest_parts
+    }
+    byte_mismatches: list[dict] = []
+    sha256_mismatches: list[dict] = []
+    invalid_gzip_parts: list[str] = []
+    transaction_boundary_violations: list[dict] = []
+    for path in actual_paths:
+        entry = entries_by_name.get(path.name)
+        if entry is None:
+            continue
+        actual_bytes = path.stat().st_size
+        if entry.get("bytes") != actual_bytes:
+            byte_mismatches.append({"part": path.name, "expected": entry.get("bytes"), "actual": actual_bytes})
+        actual_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+        if entry.get("sha256") != actual_sha256:
+            sha256_mismatches.append({"part": path.name, "expected": entry.get("sha256"), "actual": actual_sha256})
+        try:
+            with gzip.open(path, "rt", encoding="utf-8") as handle:
+                sql_text = handle.read()
+        except (OSError, EOFError, UnicodeError):
+            invalid_gzip_parts.append(path.name)
+            continue
+        begin_count = len(re.findall(r"(?m)^BEGIN;$", sql_text))
+        commit_count = len(re.findall(r"(?m)^COMMIT;$", sql_text))
+        if begin_count != 1 or commit_count != 1:
+            transaction_boundary_violations.append({"part": path.name, "begin_count": begin_count, "commit_count": commit_count})
+    actual_sequence = [
+        int(match.group(1))
+        for name in actual_names
+        if (match := re.fullmatch(r"part-(\d+)\.sql\.gz", name))
+    ]
+    actual_numbering_valid = actual_sequence == expected_sequence
+    integrity_ok = bool(
+        manifest_order_valid
+        and actual_names == expected_names
+        and not missing_parts
+        and not unexpected_parts
+        and actual_numbering_valid
+        and not byte_mismatches
+        and not sha256_mismatches
+        and not invalid_gzip_parts
+        and not transaction_boundary_violations
+    )
+    return {
+        "integrity_ok": integrity_ok,
+        "expected_part_count": len(manifest_parts),
+        "actual_part_count": len(actual_paths),
+        "manifest_order_valid": manifest_order_valid,
+        "actual_numbering_valid": actual_numbering_valid,
+        "missing_parts": missing_parts,
+        "unexpected_parts": unexpected_parts,
+        "duplicate_manifest_names": duplicate_manifest_names,
+        "byte_mismatches": byte_mismatches,
+        "sha256_mismatches": sha256_mismatches,
+        "invalid_gzip_parts": invalid_gzip_parts,
+        "transaction_boundary_violations": transaction_boundary_violations,
+    }
+
+
 def contextual_seed_transport_audit() -> dict:
-    """Check numbered SQL transport without applying it anywhere."""
+    """Check numbered SQL transport and manifest integrity locally."""
 
     signal_names = (
         "academic and research qualifications",
         "institutional research training and professional association membership where applicable",
     )
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     parts = sorted(CONTEXTUAL_SEED_PARTS.glob("part-*.sql.gz"))
+    integrity = transport_integrity_report(CONTEXTUAL_SEED_PARTS, manifest)
     old_signal_hits = 0
     relationship_table_mentions = 0
     for path in parts:
@@ -159,6 +239,9 @@ def contextual_seed_transport_audit() -> dict:
         relationship_table_mentions += text.count("career_item_relationships")
     return {
         "part_count": len(parts),
+        "manifest_part_count": integrity["expected_part_count"],
+        "integrity_ok": integrity["integrity_ok"],
+        "integrity": integrity,
         "old_d078_generic_certification_signal_hits": old_signal_hits,
         "relationship_table_mentions": relationship_table_mentions,
         "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase.",
@@ -310,6 +393,8 @@ def audit() -> dict:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     transport = contextual_seed_transport_audit()
     approval_reasons = []
+    if not transport["integrity_ok"]:
+        approval_reasons.append("The compressed contextual SQL transport does not match its manifest checksums, ordering, or transaction boundaries.")
     if item_scope_type_gaps.get("missing_explicit_market_scope", 0):
         approval_reasons.append("D078 contextual certification items have no explicit market scope or credential type in the API-facing item schema.")
     if item_link_states.get("missing_item_specific_resource", 0):
@@ -435,7 +520,7 @@ def markdown_report(result: dict) -> str:
         f"- Reviewed migration rows: **{reviewed['total']}** by scope `{reviewed['by_scope']}` and type `{reviewed['by_type']}`.",
         f"- HTTPS syntax-valid reviewed URLs: **{reviewed['https_syntax_valid']}**; invalid rows: **{len(reviewed['invalid_url_rows'])}**.",
         f"- Imported broad D078 catalogue rows kept separate from approval: **{broad['total']}** ({broad['by_level']}; states `{broad['by_data_state']}`).",
-        f"- Numbered contextual SQL transport parts checked: **{transport['part_count']}**; old generic D078 certification signal hits: **{transport['old_d078_generic_certification_signal_hits']}**.",
+        f"- Numbered contextual SQL transport parts checked: **{transport['part_count']}**; manifest integrity: **{transport['integrity_ok']}**; old generic D078 certification signal hits: **{transport['old_d078_generic_certification_signal_hits']}**.",
         "- Only the reviewed migration rows count as approved student resources in this audit; broad imported references are not promoted by name overlap.",
         "",
         "## Certification scope",
