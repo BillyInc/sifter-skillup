@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "../../theme";
 import { SectionLabel } from "./RedesignPrimitives";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
 
 type ContextItem = {
   name?: unknown;
@@ -146,7 +146,6 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
 export function NigerianContextBlock({ context, level, style }: NigerianContextBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
   const data = record(context);
   const priority = record(data.priority_metadata);
   const starterKeys = level === "domain"
@@ -190,12 +189,12 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
         <View style={styles.sources}>
           <Text style={[styles.sourceLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Sources checked</Text>
           {sources.slice(0, expanded ? sources.length : 4).map((source, index) => (
-            <TouchableOpacity key={`${source.name}-${index}`} disabled={!source.url} onPress={async () => { if (!source.url) return; if (!(await hasInternetConnection())) { setNotice(OFFLINE_LINK_NOTICE); return; } const opened = await Linking.openURL(source.url).then(() => true).catch(() => false); if (!opened) setNotice("This source could not be opened. Try again when your connection is stable."); }} accessibilityRole={source.url ? "link" : undefined}>
+            <View key={`${source.name}-${index}`}>
               <Text style={[styles.source, { color: source.url ? colors.accentRole.action : colors.textRole.secondary }]}>{source.name}{source.url ? " ↗" : ""}</Text>
-            </TouchableOpacity>
+              <ExternalLinkGuard url={source.url} label={source.name} description={`This opens the source supporting the ${data.domain_name || "field"} context.`} textStyle={{ color: colors.accentRole.action }} />
+            </View>
           ))}
           {!expanded && sources.length > 4 ? <Text style={[styles.moreHint, { color: colors.textRole.muted }]}>+ {sources.length - 4} more source references</Text> : null}
-          {notice ? <Text style={[styles.moreHint, { color: colors.textRole.muted }]}>{notice}</Text> : null}
         </View>
       ) : null}
     </View>

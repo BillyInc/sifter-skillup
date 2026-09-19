@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Linking, Pressable, View, Text, StyleSheet, type ViewStyle } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, type ViewStyle } from "react-native";
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight, Radius } from "../../theme";
 import type { GuidanceEvidence, GuidanceEvidenceLens } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "../../lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
 
 export interface GuidanceEvidenceBlockProps {
   evidence?: GuidanceEvidence;
@@ -12,7 +12,6 @@ export interface GuidanceEvidenceBlockProps {
 
 function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens }) {
   const { colors } = useTheme();
-  const [notice, setNotice] = useState<string | null>(null);
   const stateLabel =
     lens.state === "source_backed"
       ? "Supported by sources"
@@ -37,26 +36,13 @@ function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens })
             Sources for this signal
           </Text>
           {lens.sources.map((source) => (
-            <Pressable
+            <View
               key={`${source.id}|${source.url}`}
-              accessibilityRole="link"
-              accessibilityLabel={`Open source: ${source.label}`}
-              onPress={async () => {
-                if (!(await hasInternetConnection())) {
-                  setNotice(OFFLINE_LINK_NOTICE);
-                  return;
-                }
-                const opened = await Linking.openURL(source.url).then(() => true).catch(() => false);
-                if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
-              }}
               style={styles.sourceLink}
             >
-              <Text style={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
-                {source.label}
-              </Text>
-            </Pressable>
+              <ExternalLinkGuard url={source.url} label={source.label} description={`This opens the source supporting the ${label.toLowerCase()} guidance.`} textStyle={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]} />
+            </View>
           ))}
-          {notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{notice}</Text> : null}
         </View>
       ) : null}
     </View>

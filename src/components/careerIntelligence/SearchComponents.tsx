@@ -227,7 +227,7 @@ function defaultIcon(type: SearchResultType): string {
     case "domain": return "grid";
     case "subgroup": return "layers";
     case "role": return "briefcase";
-    case "skill": return "zap";
+    case "skill": return "check-circle";
     case "tool": return "tool";
     case "certification": return "award";
     case "university": return "building";

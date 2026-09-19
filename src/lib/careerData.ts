@@ -13,6 +13,7 @@
 import {
   type DataState,
   type Programme,
+  type ProgrammeCurriculumContract,
   type Domain,
   type Role,
   type Opportunity,
@@ -189,6 +190,14 @@ export interface UniversityStructuredSubjectRule {
   text?: string | null;
   minimumRequired?: number | null;
   conditionText?: string | null;
+  subjectPool?: string[];
+  subjectItems?: Array<{
+    name: string;
+    code?: string | null;
+    requirementRole?: string | null;
+    groupKey?: string | null;
+    minimumFromGroup?: number | null;
+  }>;
 }
 
 export interface JambProgrammeSuggestion {
@@ -199,9 +208,14 @@ export interface JambProgrammeSuggestion {
   studentName?: string | null;
   jambFaculty?: string | null;
   degreeType?: string | null;
+  /** Canonical programme award fields, when the reviewed programme registry supplies them. */
+  qualification?: string | null;
+  durationYears?: number | null;
   isBlend?: boolean;
   programmeId?: string | null;
   institutionType?: string | null;
+  /** Clean CCMAS course/ability contract; absent until its programme rows are seeded. */
+  curriculumContract?: ProgrammeCurriculumContract;
   schoolNames?: string[];
   schoolCount?: number;
   schoolOfferings?: {
@@ -341,6 +355,8 @@ export interface SchoolFaculty {
 export interface SchoolProgrammeOffering {
   schoolId: string;
   schoolName: string;
+  officialName?: string | null;
+  shortName?: string | null;
   institutionType?: string | null;
   jambProgrammeId: string;
   jambName: string;
@@ -760,20 +776,22 @@ export const careerData = {
   },
 
   /** v2 domain detail: foundation skills, subgroups, tools, certs, demand metrics. */
-  async getDomainV2(domainKey: string): Promise<DataState<DomainV2>> {
+  async getDomainV2(domainKey: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
-      `domain_${domainKey}`,
-      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}`),
+      `domain_${domainKey}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}${query}`),
       "See what this field does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
   },
 
   /** A saved subgroup can be opened without its parent domain in the URL. */
-  async getSubgroupV2(subgroupId: string): Promise<DataState<DomainV2>> {
+  async getSubgroupV2(subgroupId: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
-      `subgroup_${subgroupId}`,
-      () => request<DataState<DomainV2>>(`/api/career/subgroups/${encodeURIComponent(subgroupId)}`),
+      `subgroup_${subgroupId}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainV2>>(`/api/career/subgroups/${encodeURIComponent(subgroupId)}${query}`),
       "See what this area does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
@@ -786,10 +804,11 @@ export const careerData = {
   },
 
   /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
-  async getRoleV2(roleKey: string): Promise<DataState<DomainRoleV2>> {
+  async getRoleV2(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
-      `role_${roleKey}`,
-      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}`),
+      `role_${roleKey}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}${query}`),
       "Understand the role, the bridge skills, and the proof you need to become credible.",
       DETAIL_TTL_MS,
     );
