@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui";
 import {
   canApproveForStudent,
   canExposeToStudents,
+  adminEvidenceQueueState,
   type AdminGuidanceEvidenceRecord,
   type AdminEvidenceState,
 } from "@/screens/admin/adminGuidanceEvidence";
@@ -28,6 +29,18 @@ function stateVariant(state: AdminEvidenceState): "success" | "warning" | "defau
   return state === "approved" ? "success" : state === "verified" ? "default" : "warning";
 }
 
+const queueLabel: Record<ReturnType<typeof adminEvidenceQueueState>, string> = {
+  student_ready: "Student-ready after approval",
+  awaiting_approval: "Awaiting authorised approval",
+  review_required: "Review required",
+  no_link: "No verified link",
+  not_established: "Relationship not established",
+  audit_only: "Audit only",
+  unavailable: "Unavailable",
+  identity_incomplete: "Context/ownership incomplete",
+  provenance_incomplete: "Provenance incomplete",
+};
+
 function SourceField({ label, value }: { label: string; value?: string | null }) {
   const { colors } = useTheme();
   return (
@@ -42,6 +55,7 @@ function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecor
   const { colors } = useTheme();
   const approval = canApproveForStudent(record);
   const exposure = canExposeToStudents(record);
+  const queue = adminEvidenceQueueState(record);
   return (
     <View style={[styles.row, { borderColor: colors.border }]}>
       <View style={styles.headingRow}>
@@ -58,6 +72,7 @@ function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecor
         <SourceField label="Source locator" value={record.sourceLocator} />
         <SourceField label="Access date" value={record.sourceAccessedAt} />
       </View>
+      <Text style={[styles.meta, { color: colors.textMuted }]}>Review queue: {queueLabel[queue]}</Text>
       <View style={[styles.exposure, { backgroundColor: exposure.allowed ? colors.greenSoft : colors.surface.subtle, borderColor: exposure.allowed ? colors.green : colors.border }]}>
         <Text style={[styles.exposureTitle, CompassFonts.bodyBold, { color: exposure.allowed ? colors.green : colors.text }]}>
           Student exposure: {exposure.allowed ? "allowed" : "blocked"}

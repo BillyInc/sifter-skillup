@@ -17,6 +17,11 @@ export type AdminEvidenceState =
   | "unavailable";
 
 export type AdminGuidanceLevel = "programme" | "domain" | "subgroup" | "role";
+export type AdminGuidanceOwner =
+  | AdminGuidanceLevel
+  | "role_aggregated"
+  | "review_only"
+  | "audit_only";
 export type AdminGuidanceItemType =
   | "skill"
   | "tool"
@@ -30,6 +35,11 @@ export interface AdminGuidanceEvidenceRecord {
   name: string;
   level: AdminGuidanceLevel;
   itemType: AdminGuidanceItemType;
+  /** Stable context identity from the API/SQL contract; never infer this from a display name. */
+  contextKey?: string | null;
+  /** Programme identity for downstream admin views and stale-route detection. */
+  programmeKey?: string | null;
+  guidanceOwner?: AdminGuidanceOwner | null;
   programmeName?: string;
   contextName?: string;
   sourceUrl?: string | null;
@@ -44,6 +54,17 @@ export interface AdminEvidenceDecision {
   reason: string;
 }
 
+export type AdminEvidenceQueueState =
+  | "student_ready"
+  | "awaiting_approval"
+  | "review_required"
+  | "no_link"
+  | "not_established"
+  | "audit_only"
+  | "unavailable"
+  | "identity_incomplete"
+  | "provenance_incomplete";
+
 const NEVER_STUDENT_BACKED = new Set<AdminEvidenceState>([
   "review_required",
   "no_link",
@@ -54,6 +75,56 @@ const NEVER_STUDENT_BACKED = new Set<AdminEvidenceState>([
 
 function hasSourceTrace(record: AdminGuidanceEvidenceRecord): boolean {
   return Boolean(record.sourceUrl?.trim() || record.sourceLocator?.trim());
+}
+
+function hasStableContextIdentity(record: AdminGuidanceEvidenceRecord): boolean {
+  return Boolean(record.contextKey?.trim());
+}
+
+function hasMatchingOwner(record: AdminGuidanceEvidenceRecord): boolean {
+  return record.guidanceOwner === record.level;
+}
+
+function identityDecision(record: AdminGuidanceEvidenceRecord): AdminEvidenceDecision {
+  if (!hasStableContextIdentity(record)) {
+    return {
+      allowed: false,
+      reason: "A stable context key is required before evidence can enter student review.",
+    };
+  }
+  if (!record.guidanceOwner) {
+    return {
+      allowed: false,
+      reason: "An explicit guidance owner is required before evidence can enter student review.",
+    };
+  }
+  if (!hasMatchingOwner(record)) {
+    return {
+      allowed: false,
+      reason: `The ${record.guidanceOwner} row cannot be approved for the ${record.level} context.`,
+    };
+  }
+  return { allowed: true, reason: "Stable context identity and matching ownership recorded." };
+}
+
+/**
+ * Returns the durable admin queue state without promoting or hiding a row.
+ * This is intentionally usable by an admin queue and by tests without a
+ * database write. Missing identity/provenance is a visible blocked state.
+ */
+export function adminEvidenceQueueState(
+  record: AdminGuidanceEvidenceRecord,
+): AdminEvidenceQueueState {
+  if (record.evidenceState === "review_required") return "review_required";
+  if (record.evidenceState === "no_link") return "no_link";
+  if (record.evidenceState === "not_established") return "not_established";
+  if (record.evidenceState === "audit_only") return "audit_only";
+  if (record.evidenceState === "unavailable") return "unavailable";
+  if (!identityDecision(record).allowed) return "identity_incomplete";
+  if (!hasSourceTrace(record) || !record.sourceAccessedAt?.trim()) {
+    return "provenance_incomplete";
+  }
+  return record.evidenceState === "approved" ? "student_ready" : "awaiting_approval";
 }
 
 /**
@@ -70,6 +141,8 @@ export function canApproveForStudent(
       reason: `${record.evidenceState} records cannot be approved as student-backed evidence.`,
     };
   }
+  const identity = identityDecision(record);
+  if (!identity.allowed) return identity;
   if (record.evidenceState !== "verified") {
     return {
       allowed: false,
@@ -105,6 +178,8 @@ export function canExposeToStudents(
       reason: `${record.evidenceState} records must remain admin/source-audit only.`,
     };
   }
+  const identity = identityDecision(record);
+  if (!identity.allowed) return identity;
   if (record.evidenceState !== "approved") {
     return {
       allowed: false,
@@ -158,6 +233,9 @@ export function normaliseAdminGuidanceEvidence(
     name: asText(raw.name ?? raw.title ?? raw.label) ?? fallback.name ?? "Unnamed guidance item",
     level: (["programme", "domain", "subgroup", "role"].includes(level) ? level : "domain") as AdminGuidanceLevel,
     itemType: (["skill", "tool", "competency", "certification", "resource", "relationship"].includes(itemType) ? itemType : "resource") as AdminGuidanceItemType,
+    contextKey: asText(raw.contextKey ?? raw.context_key ?? raw.contextId ?? raw.context_id) ?? fallback.contextKey ?? null,
+    programmeKey: asText(raw.programmeKey ?? raw.programme_key ?? raw.programmeId ?? raw.programme_id) ?? fallback.programmeKey ?? null,
+    guidanceOwner: (asText(raw.guidanceOwner ?? raw.guidance_owner ?? raw.owner) ?? fallback.guidanceOwner ?? null) as AdminGuidanceOwner | null,
     programmeName: asText(raw.programmeName ?? raw.programme_name) ?? fallback.programmeName,
     contextName: asText(raw.contextName ?? raw.context_name ?? raw.scopeName ?? raw.scope_name) ?? fallback.contextName,
     sourceUrl: asText(raw.sourceUrl ?? raw.source_url ?? raw.url) ?? fallback.sourceUrl ?? null,
@@ -167,4 +245,3 @@ export function normaliseAdminGuidanceEvidence(
     evidenceNote: asText(raw.evidenceNote ?? raw.evidence_note ?? raw.reason) ?? fallback.evidenceNote ?? null,
   };
 }
-
