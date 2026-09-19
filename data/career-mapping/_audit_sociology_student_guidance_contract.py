@@ -22,6 +22,7 @@ ITEMS_PATH = HERE / "contextual_guidance_items.json.gz"
 DOMAIN_AUDIT_PATH = HERE / "domain_skill_competency_certification_audit.json"
 RESOURCE_MIGRATION = ROOT / "backend" / "migration_guidance_ownership_and_sociology_resources_2026-09-11.sql"
 RESOURCE_PARTS = HERE / "learning_resource_population_parts"
+CONTEXTUAL_SEED_PARTS = ROOT / "backend" / "seed_career_context_items_v1_parts"
 MANIFEST_PATH = HERE / "CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json"
 
 D078 = "D078"
@@ -139,6 +140,29 @@ def broad_d078_resources() -> list[dict]:
             if row.get("domain_id") == D078_UUID:
                 rows.append(row)
     return rows
+
+
+def contextual_seed_transport_audit() -> dict:
+    """Check numbered SQL transport without applying it anywhere."""
+
+    signal_names = (
+        "academic and research qualifications",
+        "institutional research training and professional association membership where applicable",
+    )
+    parts = sorted(CONTEXTUAL_SEED_PARTS.glob("part-*.sql.gz"))
+    old_signal_hits = 0
+    relationship_table_mentions = 0
+    for path in parts:
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            text = handle.read()
+        old_signal_hits += sum(text.count(name) for name in signal_names)
+        relationship_table_mentions += text.count("career_item_relationships")
+    return {
+        "part_count": len(parts),
+        "old_d078_generic_certification_signal_hits": old_signal_hits,
+        "relationship_table_mentions": relationship_table_mentions,
+        "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase.",
+    }
 
 
 def audit() -> dict:
@@ -284,6 +308,7 @@ def audit() -> dict:
     cert_evidence = d078_audit.get("nigerian_certification_evidence") or {}
     programme_context_count = len(re.findall(r"^\s+\('(skill|competency)'", RESOURCE_MIGRATION.read_text(encoding="utf-8"), re.MULTILINE))
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    transport = contextual_seed_transport_audit()
     approval_reasons = []
     if item_scope_type_gaps.get("missing_explicit_market_scope", 0):
         approval_reasons.append("D078 contextual certification items have no explicit market scope or credential type in the API-facing item schema.")
@@ -361,6 +386,7 @@ def audit() -> dict:
             "nigerian_certification_evidence_state": cert_evidence.get("evidence_state"),
             "nigerian_certification_source_count": len(cert_evidence.get("sources") or []),
         },
+        "contextual_seed_transport": transport,
         "item_rows": item_rows,
         "relationship_rows": relationship_rows,
         "approval_readiness": {
@@ -377,6 +403,7 @@ def markdown_report(result: dict) -> str:
     reviewed = result["reviewed_resources_from_migration"]
     broad = result["broad_catalogue_d078_not_approval"]
     programme = result["sociology_programme_contract"]
+    transport = result["contextual_seed_transport"]
     certification_count = items["by_type"].get("certification", 0)
     decision_gap = "certification scope/type metadata, " if certification_count else ""
     certification_note = (
@@ -408,6 +435,7 @@ def markdown_report(result: dict) -> str:
         f"- Reviewed migration rows: **{reviewed['total']}** by scope `{reviewed['by_scope']}` and type `{reviewed['by_type']}`.",
         f"- HTTPS syntax-valid reviewed URLs: **{reviewed['https_syntax_valid']}**; invalid rows: **{len(reviewed['invalid_url_rows'])}**.",
         f"- Imported broad D078 catalogue rows kept separate from approval: **{broad['total']}** ({broad['by_level']}; states `{broad['by_data_state']}`).",
+        f"- Numbered contextual SQL transport parts checked: **{transport['part_count']}**; old generic D078 certification signal hits: **{transport['old_d078_generic_certification_signal_hits']}**.",
         "- Only the reviewed migration rows count as approved student resources in this audit; broad imported references are not promoted by name overlap.",
         "",
         "## Certification scope",

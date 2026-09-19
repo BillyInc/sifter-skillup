@@ -21,6 +21,7 @@ This is a local source-contract audit. HTTPS URL syntax and recorded source fiel
 - Reviewed migration rows: **51** by scope `{'programme': 10, 'domain': 14, 'subgroup': 16, 'role': 11}` and type `{'programme_reading': 3, 'domain_overview': 3, 'skill_learning': 34, 'tool_learning': 10, 'role_reference': 1}`.
 - HTTPS syntax-valid reviewed URLs: **51**; invalid rows: **0**.
 - Imported broad D078 catalogue rows kept separate from approval: **829** ({'domain': 101, 'role': 728}; states `{'source_backed': 827, 'limited': 2}`).
+- Numbered contextual SQL transport parts checked: **30**; old generic D078 certification signal hits: **0**.
 - Only the reviewed migration rows count as approved student resources in this audit; broad imported references are not promoted by name overlap.
 
 ## Certification scope

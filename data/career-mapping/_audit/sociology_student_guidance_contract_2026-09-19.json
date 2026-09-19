@@ -112,6 +112,12 @@
     "nigerian_certification_evidence_state": "sector_context_no_general_individual_licence_found",
     "nigerian_certification_source_count": 3
   },
+  "contextual_seed_transport": {
+    "part_count": 30,
+    "old_d078_generic_certification_signal_hits": 0,
+    "relationship_table_mentions": 60,
+    "note": "Compressed SQL was decompressed for local inspection only; it was not applied to Supabase."
+  },
   "item_rows": [
     {
       "context_level": "domain",
