@@ -1,0 +1,70 @@
+{
+  "schema": "2026-09-19.source-enrichment-batch.v1",
+  "accessed_on": "2026-09-19",
+  "selection_policy": "Exactly three existing unresolved/no-link audit candidates; verified links are item-specific evidence only, and unsupported relationships remain review_required.",
+  "records": [
+    {
+      "candidate": {
+        "kind": "item_resource",
+        "context_level": "domain",
+        "context_key": "D078",
+        "programme": "Sociology",
+        "domain": "Social Sciences::Sociology",
+        "item_type": "competency",
+        "item_name": "formulate research questions",
+        "prior_state": "missing_item_specific_resource",
+        "source_audit": "data/career-mapping/_audit/sociology_student_guidance_contract_2026-09-19.json#item_rows[name=formulate research questions]"
+      },
+      "decision": "verified",
+      "url": "https://owl.purdue.edu/owl/graduate_writing/introduction_to_writing/documents/getting-started-with-grad-writing/articulating-a-research-agenda.pdf",
+      "access_date": "2026-09-19",
+      "source_locator": "Purdue Writing Lab, Articulating a Research Agenda, pages 1-6; especially the research-question and research-agenda learning objectives.",
+      "evidence_summary": "The official Purdue Writing Lab document states that a research agenda starts with articulating a research question, explains how questions guide data and methods, and gives an activity whose objective is to pose a research question. This is specific evidence for the competency's learning link; it does not assert a new programme-domain relationship.",
+      "confidence": "high",
+      "scope": "D078 Sociology domain competency resource",
+      "promotion": "item_resource_candidate_only"
+    },
+    {
+      "candidate": {
+        "kind": "item_resource",
+        "context_level": "domain",
+        "context_key": "D078",
+        "programme": "Sociology",
+        "domain": "Social Sciences::Sociology",
+        "item_type": "competency",
+        "item_name": "evaluate evidence",
+        "prior_state": "missing_item_specific_resource",
+        "source_audit": "data/career-mapping/_audit/sociology_student_guidance_contract_2026-09-19.json#item_rows[name=evaluate evidence]"
+      },
+      "decision": "verified",
+      "url": "https://www.nihlibrary.nih.gov/services/evidence-synthesis/start-here",
+      "access_date": "2026-09-19",
+      "source_locator": "NIH Library, Start Here: Evidence Synthesis; sections Refine the Question and Learn More.",
+      "evidence_summary": "The official NIH Library guidance says the research question determines the evidence-synthesis approach and directs users to refine the question and assess evidence-synthesis methods. This supports an evidence-evaluation learning resource for the Sociology domain competency; it does not create a new relationship edge.",
+      "confidence": "high",
+      "scope": "D078 Sociology domain competency resource",
+      "promotion": "item_resource_candidate_only"
+    },
+    {
+      "candidate": {
+        "kind": "relationship_candidate",
+        "context_level": "role",
+        "context_key": "D001|Blockchain Engineers",
+        "domain_key": "D001",
+        "domain": "Computing/technology domain D001",
+        "item_type": "tool",
+        "item_name": "Docker",
+        "prior_state": "not_established",
+        "source_audit": "data/career-mapping/_audit/relationship_backlog_inventory.json#rows[context_key=D001|Blockchain Engineers,from_name=Docker]"
+      },
+      "decision": "review_required",
+      "url": "https://docs.docker.com/get-started/docker-overview/",
+      "access_date": "2026-09-19",
+      "source_locator": "Docker Docs, What is Docker?, sections The Docker platform and What can I use Docker for?.",
+      "evidence_summary": "The official Docker documentation establishes what Docker does, including packaging and running applications in containers and supporting development, testing and deployment. It does not establish that Docker is required for Blockchain Engineers or identify a specific target item, so the unresolved relationship remains review_required and is not promoted.",
+      "confidence": "medium",
+      "scope": "D001 Blockchain Engineers role tool relationship candidate",
+      "promotion": "not_promoted"
+    }
+  ]
+}
