@@ -31,6 +31,8 @@ import type {
 } from "@/types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { AdminGuidanceEvidencePanel } from "@/components/admin/AdminGuidanceEvidencePanel";
+import { normaliseAdminGuidanceEvidence, type AdminGuidanceEvidenceRecord } from "./adminGuidanceEvidence";
 
 type MatchType = "direct" | "functional" | "adjacent" | string;
 
@@ -83,6 +85,27 @@ function relationshipLabel(matchType: MatchType): string {
 
 function isSourceReview(resource: ProgrammeResourceEvidence): boolean {
   return resource.curriculumState === "source_review" || resource.marketState === "source_review";
+}
+
+function evidenceRecordsForReport(report: ProgrammeSkillCoverage): AdminGuidanceEvidenceRecord[] {
+  const records: AdminGuidanceEvidenceRecord[] = [];
+  for (const domain of report.domains) {
+    for (const [index, resource] of domain.resources.entries()) {
+      const raw = resource as ProgrammeResourceEvidence & Record<string, unknown>;
+      records.push(normaliseAdminGuidanceEvidence(raw, {
+        id: `${report.programmeId}-${domain.domainId}-${resource.source}-${resource.name}-${index}`,
+        name: resource.name,
+        level: resource.source,
+        itemType: resource.kind,
+        programmeName: report.programmeName,
+        contextName: resource.roleName ?? resource.scopeName ?? domain.domainName,
+        sourceUrl: resource.url ?? null,
+        sourceAccessedAt: resource.observedAt ?? null,
+        evidenceNote: isSourceReview(resource) ? "The API marked this row for source review." : "The API has not supplied an explicit approval state.",
+      });
+    }
+  }
+  return records;
 }
 
 function resourceState(resource: ProgrammeResourceEvidence): { label: string; variant: "success" | "warning" } {
@@ -281,6 +304,7 @@ function ProgrammeCoverageCard({ report }: { report: ProgrammeSkillCoverage }) {
         </View>
       </View>
       <CurriculumBaseline report={report} />
+      <AdminGuidanceEvidencePanel records={evidenceRecordsForReport(report)} />
       {PRIORITY.map((group, index) => {
         const domains = orderedDomains.filter((domain) => domain.matchType === group.matchType);
         if (!domains.length) return null;
