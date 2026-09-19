@@ -24,8 +24,8 @@ const stateLabel: Record<AdminEvidenceState, string> = {
   unavailable: "Unavailable",
 };
 
-function stateVariant(state: AdminEvidenceState): "success" | "warning" | "neutral" {
-  return state === "approved" ? "success" : state === "verified" ? "neutral" : "warning";
+function stateVariant(state: AdminEvidenceState): "success" | "warning" | "default" {
+  return state === "approved" ? "success" : state === "verified" ? "default" : "warning";
 }
 
 function SourceField({ label, value }: { label: string; value?: string | null }) {

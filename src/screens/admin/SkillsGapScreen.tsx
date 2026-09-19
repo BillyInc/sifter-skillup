@@ -102,7 +102,7 @@ function evidenceRecordsForReport(report: ProgrammeSkillCoverage): AdminGuidance
         sourceUrl: resource.url ?? null,
         sourceAccessedAt: resource.observedAt ?? null,
         evidenceNote: isSourceReview(resource) ? "The API marked this row for source review." : "The API has not supplied an explicit approval state.",
-      });
+      }));
     }
   }
   return records;
