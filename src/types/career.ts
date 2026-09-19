@@ -155,6 +155,41 @@ export interface School {
   ibassVerified: boolean;
 }
 
+export interface ProgrammeCurriculumOutcome {
+  outcomeId: string;
+  courseCode: string;
+  courseTitle: string;
+  courseLevel?: number | null;
+  /** Source-derived presentation group. It is not a Sociology-only enum. */
+  displayGroup?: "programme_core" | "sociology_programme" | "supporting_social_sciences" | "shared_university" | string;
+  outcomeIndex: number;
+  sourceText: string;
+  studentText: string;
+  /** Source-derived course summary carried in the locator when available. */
+  courseSummary?: string | null;
+  sourceLocator: Record<string, unknown>;
+  dataState: "source_backed" | "review_only" | "excluded" | string;
+}
+
+export interface ProgrammeAbility {
+  abilityId: string;
+  displayTitle?: string;
+  sourceText: string;
+  studentText: string;
+  sourceLocator: Record<string, unknown>;
+  dataState: "source_backed" | "review_only" | "excluded" | string;
+}
+
+export interface ProgrammeCurriculumContract {
+  status: "available" | "not_seeded" | "unavailable" | string;
+  outcomes: ProgrammeCurriculumOutcome[];
+  abilities: ProgrammeAbility[];
+  sourceAuthority?: {
+    parsedSource?: string | null;
+    originalPdf?: string | null;
+  } | null;
+}
+
 export interface Programme {
   id: string;
   /** Standard CCMAS/NCE name. Never shown with the word "CCMAS" in the UI. */
@@ -176,9 +211,12 @@ export interface Programme {
    * several names map to this one programme. Empty means genuinely unmapped —
    * 106 of 239 programmes are.
    */
+  /** Legacy compatibility fields; student screens must use curriculumContract. */
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
   skillsCount?: number | null;
+  /** Clean course-scoped CCMAS contract; legacy skill arrays are not a fallback. */
+  curriculumContract?: ProgrammeCurriculumContract;
   /** Reviewed learning/reference links attached to this programme. */
   resources?: CareerLearningResource[];
   /** Source-backed explanations of what the programme capabilities mean here. */
@@ -192,6 +230,18 @@ export interface DomainLink {
   domainId: string;
   domainName: string;
   matchType: DomainMatchType; // direct | functional | adjacent
+  /** Approved course anchors for this specific programme/domain edge. */
+  courseAnchorQuality?: string | null;
+  courseAnchorCount?: number | null;
+  courseAnchors?: Array<{
+    title: string;
+    code?: string | null;
+    matchedAnchors: string[];
+  }>;
+  transferableEvidence?: string[];
+  /** Edge-specific explanation generated from this programme's approved evidence. */
+  explanation?: string | null;
+  mappingSource?: string | null;
   eliteFlag?: boolean;
 }
 
@@ -568,7 +618,7 @@ export interface Chartership {
 /** Readiness = agent-verified domain match_type × role tier (NOT token coverage). */
 export type Readiness = "ready" | "bridge" | "stretch";
 
-export interface CertificationV2 {
+export interface CertificationV2 extends SourceBackedFields {
   name: string;
   body?: string;
   region?: "global" | "nigeria";
@@ -598,6 +648,9 @@ export interface CertificationV2 {
   statusCheckedAt?: string | null;
   replacementName?: string | null;
   replacementUrl?: string | null;
+  guidanceOwner?: "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | "audit_only" | null;
+  reviewStatus?: "approved_guidance_v1" | "review_only" | "unverified" | "rejected" | null;
+  ownershipScope?: "domain" | "subgroup" | "role" | "audit_only" | null;
 }
 
 export interface ToolV2 extends SourceBackedFields {
@@ -608,8 +661,13 @@ export interface ToolV2 extends SourceBackedFields {
   source?: string; // onet | curated_creative
   elementName?: string | null;
   elementId?: string | null;
+  /** Domain-owned purpose-first route; absent for legacy role/subgroup rows. */
+  purposeKey?: "collect" | "organise" | "analyse" | "compute" | "map" | "communicate" | "other" | null;
+  purposeLabel?: string | null;
+  purposeDescription?: string | null;
+  purposeSource?: Record<string, unknown>;
   /** Explicit ownership prevents role-aggregated tools becoming domain advice. */
-  guidanceOwner?: "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | null;
+  guidanceOwner?: "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | "audit_only" | null;
 }
 
 export interface ToolGroups {
@@ -623,6 +681,19 @@ export interface ToolGroups {
  * a domain, subgroup and role.
  */
 export type ContextItemPriority = "start_here" | "build_next" | "useful_later" | "optional";
+
+export interface CareerContextItemRelationship {
+  relationshipType: "builds_on" | "works_with" | "supports" | "alternative" | "complements" | "qualifies_for";
+  relationshipStatus: "source_backed" | "review_required" | "not_established";
+  fromItemType: CareerContextItem["itemType"];
+  fromItemKey: string;
+  toItemType?: CareerContextItem["itemType"] | null;
+  toItemKey?: string | null;
+  toName?: string | null;
+  sourceIds?: string[];
+  sourceReferences?: Array<{ id?: string; title?: string; url: string; region?: string | null; evidenceType?: string | null }>;
+  evidenceLimitations?: string[];
+}
 
 export interface CareerContextItem {
   contextLevel: "programme" | "domain" | "subgroup" | "role";
@@ -638,6 +709,8 @@ export interface CareerContextItem {
   priorityReason: string;
   prerequisites: string[];
   relatedItems: string[];
+  /** Normalized, source-backed cross-type edges when the additive edge table is present. */
+  relationships?: CareerContextItemRelationship[];
   sourceIds: string[];
   sourceReferences: Array<{
     id?: string;
@@ -652,6 +725,7 @@ export interface CareerContextItem {
   evidenceType: "source_supported_synthesis";
   sourceConfidence: SourceConfidence;
   dataState: "source_backed";
+  guidanceOwner?: "programme" | "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | "audit_only" | null;
   verifiedAt: string;
 }
 
@@ -675,6 +749,8 @@ export interface SubgroupV2 extends SourceBackedFields {
   name: string;
   description?: string;
   whatPeopleDo?: string | null;
+  /** Optional structured orientation owned by this subgroup record. */
+  studentOrientation?: DomainStudentOrientation;
   workContext?: Array<{ name: string; frequency?: string; share?: number }>;
   /** Source-defined subgroup presentation order; lower values appear first. */
   displayOrder?: number | null;
@@ -692,11 +768,19 @@ export interface DomainRoleSummary {
   key: string; // "D011|securities trader"
   name: string;
   description?: string;
+  studentOrientation?: DomainStudentOrientation;
+  /** Small source-backed work preview shown on subgroup/domain role cards. */
+  workProfile?: Pick<RoleWorkProfile, "sourceRecordStatus" | "activities" | "workActivities" | "workContext" | "sourceLinks" | "limitations" | "dataState"> & {
+    activityPreview?: string[];
+    workActivityPreview?: string[];
+  } | null;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
   subgroupId?: string | null;
   eliteStatus?: string;
   resources?: CareerLearningResource[];
+  /** True only when this specific role has reviewed, role-owned student guidance. */
+  guidanceAvailable?: boolean;
 }
 
 /** Source-backed work evidence joined from an occupation profile. */
@@ -746,11 +830,41 @@ export interface FoundationSkill {
 
 /** Student-friendly orientation for deciding whether a domain is worth exploring. */
 export interface DomainStudentOrientation {
+  /** A short student-facing introduction used in the domain hero. */
+  shortIntro?: string;
   whatItStudies?: string;
   questions?: string[];
   whatPeopleDo?: string;
+  /** Concrete kinds of work or outputs a student can expect to encounter. */
+  outputs?: string[];
+  /** The evidence-to-explanation sequence used in the field. */
+  howWorkHappens?: string[];
   whereProgrammeFits?: string;
+  /** Helps a student decide whether to explore this field further. */
+  decisionGuide?: string;
   relatedProgrammes?: string[];
+  /** Short provenance note for student-readable attribution. */
+  sourceNote?: string;
+}
+
+/** Evidence-backed explanation for one programme-to-domain relationship. */
+export interface ProgrammeDomainConnection {
+  programmeId: string;
+  programmeName: string;
+  relationship: DomainMatchType;
+  explanation: string;
+  curriculumAvailable: boolean;
+  curriculumCourseCount?: number;
+  courseAnchorQuality?: string | null;
+  courseAnchors?: Array<{
+    title: string;
+    code?: string | null;
+    matchedAnchors: string[];
+  }>;
+  transferableEvidence?: string[];
+  mappingSource?: string | null;
+  sourceReviewRequired?: boolean;
+  reviewRequired?: boolean;
 }
 
 export interface DomainV2 extends SourceBackedFields {
@@ -758,6 +872,8 @@ export interface DomainV2 extends SourceBackedFields {
   name: string;
   /** Programme context added by the guided selector; absent in context-free exploration. */
   programmeMatchType?: DomainMatchType;
+  /** The specific programme-to-domain explanation when opened from guidance. */
+  programmeConnection?: ProgrammeDomainConnection | null;
   cluster?: string;
   clusters: string[];
   description?: string;
@@ -786,6 +902,7 @@ export interface DomainRoleV2 extends SourceBackedFields {
   name: string;
   /** Source-backed occupation explanation, when the role source provides one. */
   description?: string;
+  studentOrientation?: DomainStudentOrientation;
   subgroupId?: string | null;
   tier?: "entry" | "mid" | "senior";
   alsoKnownAs?: string[];
@@ -794,6 +911,10 @@ export interface DomainRoleV2 extends SourceBackedFields {
   eliteStatus?: string;
   essentialSkills: string[];
   optionalSkills: string[];
+  /** The selected programme-to-domain explanation when opened in guidance. */
+  programmeConnection?: ProgrammeDomainConnection | null;
+  essentialSkillUris?: string[];
+  optionalSkillUris?: string[];
   /** O*NET task, activity and preparation evidence, when a code is mapped. */
   workProfile?: RoleWorkProfile | null;
   computationalMethods?: (ComputationalMethodEvidence & { subgroupId?: string | null })[];
@@ -813,6 +934,16 @@ export interface DomainRoleV2 extends SourceBackedFields {
   certifications?: CertificationV2[];
   /** Every domain this role is reachable from (multi-domain by design). */
   appearsIn: { domainId: string; domainName: string; roleKey: string }[];
+  /** Explicit parent context used to render the programme-to-role continuation. */
+  parentContext?: {
+    domainId?: string | null;
+    domainName?: string | null;
+    subgroupId?: string | null;
+    subgroupName?: string | null;
+    domainFoundation?: FoundationSkill[];
+    domainItems?: CareerContextItem[];
+    subgroupItems?: CareerContextItem[];
+  };
   /** Role-level bridge skills (covered/missing split). */
   coveredSkills?: string[];
   roleBridgeSkills?: { name: string; covered?: boolean }[];
@@ -901,6 +1032,8 @@ export interface RoleToolV2 extends SourceBackedFields {
   name: string;
   group?: "distinctive" | "common";
   description?: string;
+  /** Optional structured orientation owned by this role record. */
+  studentOrientation?: DomainStudentOrientation;
   toolUrl?: string;
   source?: string;
   elementName?: string | null;
