@@ -26,6 +26,7 @@ export type AdminGuidanceItemType =
   | "skill"
   | "tool"
   | "competency"
+  | "ability"
   | "certification"
   | "resource"
   | "relationship";
@@ -43,8 +44,20 @@ export interface AdminGuidanceEvidenceRecord {
   programmeName?: string;
   contextName?: string;
   sourceUrl?: string | null;
-  sourceLocator?: string | null;
+  sourceLocator?: unknown;
   sourceAccessedAt?: string | null;
+  sourceReferences?: unknown[];
+  sourceLocators?: unknown[];
+  linkState?: string | null;
+  linkUrl?: string | null;
+  noLinkReason?: string | null;
+  sourceIds?: string[];
+  relationshipType?: string | null;
+  relationshipStatus?: string | null;
+  fromItemType?: string | null;
+  toItemType?: string | null;
+  toItemKey?: string | null;
+  toName?: string | null;
   evidenceState: AdminEvidenceState;
   evidenceNote?: string | null;
 }
@@ -74,7 +87,7 @@ const NEVER_STUDENT_BACKED = new Set<AdminEvidenceState>([
 ]);
 
 function hasSourceTrace(record: AdminGuidanceEvidenceRecord): boolean {
-  return Boolean(record.sourceUrl?.trim() || record.sourceLocator?.trim());
+  return Boolean(record.sourceUrl?.trim() || asText(record.sourceLocator));
 }
 
 function hasStableContextIdentity(record: AdminGuidanceEvidenceRecord): boolean {
@@ -232,15 +245,27 @@ export function normaliseAdminGuidanceEvidence(
     id: asText(raw.id ?? raw.itemId ?? raw.item_id) ?? fallback.id ?? "unidentified-guidance-item",
     name: asText(raw.name ?? raw.title ?? raw.label) ?? fallback.name ?? "Unnamed guidance item",
     level: (["programme", "domain", "subgroup", "role"].includes(level) ? level : "domain") as AdminGuidanceLevel,
-    itemType: (["skill", "tool", "competency", "certification", "resource", "relationship"].includes(itemType) ? itemType : "resource") as AdminGuidanceItemType,
+    itemType: (["skill", "tool", "competency", "ability", "certification", "resource", "relationship"].includes(itemType) ? itemType : "resource") as AdminGuidanceItemType,
     contextKey: asText(raw.contextKey ?? raw.context_key ?? raw.contextId ?? raw.context_id) ?? fallback.contextKey ?? null,
     programmeKey: asText(raw.programmeKey ?? raw.programme_key ?? raw.programmeId ?? raw.programme_id) ?? fallback.programmeKey ?? null,
     guidanceOwner: (asText(raw.guidanceOwner ?? raw.guidance_owner ?? raw.owner) ?? fallback.guidanceOwner ?? null) as AdminGuidanceOwner | null,
     programmeName: asText(raw.programmeName ?? raw.programme_name) ?? fallback.programmeName,
     contextName: asText(raw.contextName ?? raw.context_name ?? raw.scopeName ?? raw.scope_name) ?? fallback.contextName,
     sourceUrl: asText(raw.sourceUrl ?? raw.source_url ?? raw.url) ?? fallback.sourceUrl ?? null,
-    sourceLocator: asText(raw.sourceLocator ?? raw.source_locator ?? raw.locator) ?? fallback.sourceLocator ?? null,
+    sourceLocator: raw.sourceLocator ?? raw.source_locator ?? raw.locator ?? fallback.sourceLocator ?? null,
     sourceAccessedAt: asText(raw.sourceAccessedAt ?? raw.source_accessed_at ?? raw.accessedAt ?? raw.accessed_at ?? raw.observedAt ?? raw.observed_at) ?? fallback.sourceAccessedAt ?? null,
+    sourceReferences: Array.isArray(raw.sourceReferences ?? raw.source_references) ? (raw.sourceReferences ?? raw.source_references) as unknown[] : fallback.sourceReferences,
+    sourceLocators: Array.isArray(raw.sourceLocators ?? raw.source_locators) ? (raw.sourceLocators ?? raw.source_locators) as unknown[] : fallback.sourceLocators,
+    linkState: asText(raw.linkState ?? raw.link_state) ?? fallback.linkState ?? null,
+    linkUrl: asText(raw.linkUrl ?? raw.link_url) ?? fallback.linkUrl ?? null,
+    noLinkReason: asText(raw.noLinkReason ?? raw.no_link_reason) ?? fallback.noLinkReason ?? null,
+    sourceIds: Array.isArray(raw.sourceIds ?? raw.source_ids) ? ((raw.sourceIds ?? raw.source_ids) as unknown[]).map(String) : fallback.sourceIds,
+    relationshipType: asText(raw.relationshipType ?? raw.relationship_type) ?? fallback.relationshipType ?? null,
+    relationshipStatus: asText(raw.relationshipStatus ?? raw.relationship_status) ?? fallback.relationshipStatus ?? null,
+    fromItemType: asText(raw.fromItemType ?? raw.from_item_type) ?? fallback.fromItemType ?? null,
+    toItemType: asText(raw.toItemType ?? raw.to_item_type) ?? fallback.toItemType ?? null,
+    toItemKey: asText(raw.toItemKey ?? raw.to_item_key) ?? fallback.toItemKey ?? null,
+    toName: asText(raw.toName ?? raw.to_name) ?? fallback.toName ?? null,
     evidenceState,
     evidenceNote: asText(raw.evidenceNote ?? raw.evidence_note ?? raw.reason) ?? fallback.evidenceNote ?? null,
   };

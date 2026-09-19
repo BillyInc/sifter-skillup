@@ -5,8 +5,8 @@ Read-only local checkpoint for the admin/institution boundary across the full pa
 ## Population boundary
 
 - Programmes: **237** (236 generic + 1 Sociology).
-- JAMB identities: **420**; active programme-domain links: **1343**.
-- Explicitly unmapped programme: **Sciences::Mathematics**.
+- JAMB identities: **420**; active programme-domain links: **1344**.
+- Explicitly unmapped programme: **none**.
 - The admin contract is evaluated against the full population; Sociology/Nursing/Accounting route smokes remain fixtures, not full render proof.
 
 ## JAMB curriculum review queues
@@ -27,7 +27,7 @@ Read-only local checkpoint for the admin/institution boundary across the full pa
 
 - Contextual catalogue rows: **126414**; unresolved/not-established relationship rows: **2305** / **2305**.
 - Contextual link-state gaps in the current scaling contract: **0**.
-- The one unmapped programme must be resolved before downstream route acceptance; it is recorded explicitly rather than assigned a guessed domain.
+- All parsed programmes currently have an active domain mapping; any future mapping change must retain the same source/evidence gate.
 - Full 237-programme admin rendering, live institution payloads, browser proof and SQL remain deferred.
 
 ## Decision

@@ -89,6 +89,21 @@ function isSourceReview(resource: ProgrammeResourceEvidence): boolean {
 
 function evidenceRecordsForReport(report: ProgrammeSkillCoverage): AdminGuidanceEvidenceRecord[] {
   const records: AdminGuidanceEvidenceRecord[] = [];
+  const programmeRows = [...(report.programmeEvidence ?? []), ...(report.programmeAbilities ?? [])];
+  for (const [index, resource] of programmeRows.entries()) {
+    const raw = resource as ProgrammeResourceEvidence & Record<string, unknown>;
+    records.push(normaliseAdminGuidanceEvidence(raw, {
+      id: `${report.programmeId}-programme-${resource.kind}-${resource.name}-${index}`,
+      name: resource.name,
+      level: "programme",
+      itemType: resource.kind,
+      programmeName: report.programmeName,
+      contextName: report.programmeName,
+      sourceUrl: resource.url ?? null,
+      sourceAccessedAt: resource.sourceAccessedAt ?? resource.observedAt ?? null,
+      evidenceNote: "Programme-owned evidence is visible to administrators for traceability and review.",
+    }));
+  }
   for (const domain of report.domains) {
     for (const [index, resource] of domain.resources.entries()) {
       const raw = resource as ProgrammeResourceEvidence & Record<string, unknown>;
@@ -100,7 +115,7 @@ function evidenceRecordsForReport(report: ProgrammeSkillCoverage): AdminGuidance
         programmeName: report.programmeName,
         contextName: resource.roleName ?? resource.scopeName ?? domain.domainName,
         sourceUrl: resource.url ?? null,
-        sourceAccessedAt: resource.observedAt ?? null,
+        sourceAccessedAt: resource.sourceAccessedAt ?? resource.observedAt ?? null,
         evidenceNote: isSourceReview(resource) ? "The API marked this row for source review." : "The API has not supplied an explicit approval state.",
       }));
     }
@@ -259,21 +274,29 @@ function CurriculumBaseline({ report }: { report: ProgrammeSkillCoverage }) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
   const items = report.curriculumSkills;
+  const curriculumEvidence = report.curriculumEvidence ?? [];
+  const studentRows = curriculumEvidence.filter((row) => row.studentDisplay && row.dataState === "source_backed");
+  const reviewRows = curriculumEvidence.length - studentRows.length;
   const visible = open ? items : items.slice(0, 8);
   return (
     <View style={[styles.baseline, { backgroundColor: colors.surface.raised, borderColor: colors.border }]}>
       <View style={styles.baselineHeader}>
         <View style={styles.baselineCopy}>
           <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>What this programme teaches</Text>
-          <Text style={[styles.meta, { color: colors.textMuted }]}>Institution teaching record · {items.length} CCMAS learning items</Text>
+          <Text style={[styles.meta, { color: colors.textMuted }]}>Institution teaching record · {curriculumEvidence.length || items.length} curriculum row(s) · {studentRows.length} student-displayable · {reviewRows} held for review</Text>
         </View>
-        <Badge label={report.curriculumStatus === "complete" ? "Teaching record complete" : "Teaching record incomplete"} variant={report.curriculumStatus === "complete" ? "success" : "warning"} size="sm" />
+        <Badge label={report.curriculumContractState === "available" ? "Curriculum contract available" : "Curriculum unavailable"} variant={report.curriculumContractState === "available" ? "success" : "warning"} size="sm" />
       </View>
       <View style={styles.curriculumColumns}>
         <CurriculumColumn title="Technical / subject capabilities" items={report.curriculumTechnical} />
         <CurriculumColumn title="Transferable capabilities" items={report.curriculumTransferable} />
       </View>
       {visible.length ? <View style={styles.curriculumList}>{visible.map((item, index) => <Text key={`${item}-${index}`} style={[styles.curriculumItem, { color: colors.text }]}>{item}</Text>)}</View> : <Text style={[styles.meta, { color: colors.textMuted }]}>No curriculum outcomes are available for this programme yet.</Text>}
+      {open && curriculumEvidence.length ? <View style={styles.curriculumEvidenceList}>
+        <Text style={[styles.groupLabel, CompassFonts.bodySemibold, { color: colors.textMuted }]}>Admin source traceability</Text>
+        {curriculumEvidence.slice(0, 80).map((row, index) => <Text key={`${row.outcomeId ?? row.courseCode ?? "row"}-${index}`} style={[styles.meta, { color: colors.textSoft }]}>{[row.courseCode, row.courseTitle, row.studentDisplay ? "student-displayable" : "review-only", row.dataState].filter(Boolean).join(" · ")}{row.sourceLocator ? ` · locator: ${typeof row.sourceLocator === "string" ? row.sourceLocator : JSON.stringify(row.sourceLocator)}` : ""}</Text>)}
+        {curriculumEvidence.length > 80 ? <Text style={[styles.meta, { color: colors.textMuted }]}>Showing the first 80 curriculum rows; the API retains the full admin evidence set.</Text> : null}
+      </View> : null}
       {items.length > 8 ? <TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpen((value) => !value)}><Text style={[styles.openLink, { color: colors.accent }]}>{open ? "Show fewer curriculum items" : `See all ${items.length} curriculum items`}</Text></TouchableOpacity> : null}
     </View>
   );
@@ -375,6 +398,7 @@ const styles = StyleSheet.create({
   curriculumColumns: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.lg },
   curriculumColumn: { minWidth: 190, flex: 1, gap: 3 },
   curriculumList: { gap: Spacing.xs },
+  curriculumEvidenceList: { gap: Spacing.xs },
   curriculumItem: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.4 },
   priorityGroup: { gap: Spacing.sm },
   priorityTitle: { fontSize: FontSize.md },

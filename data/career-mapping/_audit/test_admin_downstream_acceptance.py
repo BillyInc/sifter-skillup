@@ -40,7 +40,7 @@ class AdminDownstreamAcceptanceTest(unittest.TestCase):
         self.assertTrue(self.report["populationIdentity"]["allProgrammeKeysPresent"])
         self.assertTrue(self.report["populationIdentity"]["programmeKeysAreUnique"])
         self.assertEqual(self.report["populationIdentity"]["uniqueProgrammeKeys"], 237)
-        self.assertEqual(self.report["unmappedProgrammes"], ["Sciences::Mathematics"])
+        self.assertEqual(self.report["unmappedProgrammes"], [])
         self.assertEqual(self.report["jambCoverage"]["partialCurriculumScope"], 273)
         self.assertEqual(self.report["jambCoverage"]["combinedCcmasCurriculum"], 28)
         self.assertEqual(self.report["jambCoverage"]["externalSourcesRequired"], 6)

@@ -28,6 +28,8 @@ ADMIN_EVIDENCE = ROOT / "src" / "screens" / "admin" / "adminGuidanceEvidence.ts"
 ADMIN_PANEL = ROOT / "src" / "components" / "admin" / "AdminGuidanceEvidencePanel.tsx"
 ADMIN_DATA = ROOT / "src" / "lib" / "adminData.ts"
 INSTITUTION_TYPES = ROOT / "src" / "types" / "institution.ts"
+INSTITUTION_ROUTE = ROOT / "backend" / "routes" / "institutions_routes.py"
+ADMIN_COVERAGE_SCREEN = ROOT / "src" / "screens" / "admin" / "SkillsGapScreen.tsx"
 PROVISIONING = ROOT / "src" / "screens" / "admin" / "StudentProvisioningScreen.tsx"
 REPORT_SMOKE = ROOT / "scripts" / "sociologyReportSmoke.cjs"
 
@@ -54,6 +56,10 @@ def build_report() -> dict[str, Any]:
     categories = {
         row["category"]: row["rows"] for row in jamb["categories"]
     }
+    relationship_queue_count = relationships.get(
+        "total_unresolved",
+        scaling["relationshipAudit"]["notEstablishedRows"],
+    )
 
     admin_contract = {
         "provenance_gate": all(
@@ -91,6 +97,25 @@ def build_report() -> dict[str, Any]:
             )
         ),
         "panel_exposes_queue_state": contains(ADMIN_PANEL, r"Review queue:"),
+        "panel_exposes_link_and_relationship_state": all(
+            contains(ADMIN_PANEL, pattern)
+            for pattern in (r"Link state:", r"Relationship:", r"Technical provenance:")
+        ),
+        "route_preserves_curriculum_and_downstream_traceability": all(
+            contains(INSTITUTION_ROUTE, pattern)
+            for pattern in (
+                r"_optional_rows",
+                r"ProgrammeCurriculumEvidence",
+                r"programme_curriculum_outcomes",
+                r"career_item_relationships",
+                r"programme_evidence=deduped_programme_evidence",
+                r"source_locator: Any",
+            )
+        ),
+        "admin_screen_renders_programme_and_curriculum_evidence": all(
+            contains(ADMIN_COVERAGE_SCREEN, pattern)
+            for pattern in (r"programmeEvidence", r"curriculumEvidence", r"Admin source traceability")
+        ),
     }
     institution_contract = {
         "authoritative_identity_fields": all(
@@ -141,7 +166,7 @@ def build_report() -> dict[str, Any]:
             "reviewRequired": jamb["totals"]["review_required"],
         },
         "reviewQueue": {
-            "unresolvedRelationshipRows": relationships["total_unresolved"],
+                "unresolvedRelationshipRows": relationship_queue_count,
             "notEstablishedRelationshipRows": scaling["relationshipAudit"]["notEstablishedRows"],
             "contextualItems": scaling["contextualAudit"]["itemRows"],
             "contextualItemLinkStateGaps": scaling["contextualAudit"]["issues"].get(
@@ -203,7 +228,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- Contextual catalogue rows: **{queue['contextualItems']}**; unresolved/not-established relationship rows: **{queue['unresolvedRelationshipRows']}** / **{queue['notEstablishedRelationshipRows']}**.",
         f"- Contextual link-state gaps in the current scaling contract: **{queue['contextualItemLinkStateGaps']}**.",
-        "- The one unmapped programme must be resolved before downstream route acceptance; it is recorded explicitly rather than assigned a guessed domain.",
+        "- All parsed programmes currently have an active domain mapping; any future mapping change must retain the same source/evidence gate.",
         "- Full 237-programme admin rendering, live institution payloads, browser proof and SQL remain deferred.",
         "",
         "## Decision",

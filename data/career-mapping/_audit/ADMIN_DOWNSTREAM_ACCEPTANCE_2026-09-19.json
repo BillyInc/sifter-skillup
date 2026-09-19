@@ -1,9 +1,12 @@
 {
   "adminContract": {
+    "admin_screen_renders_programme_and_curriculum_evidence": true,
     "ownership_and_context_gate": true,
+    "panel_exposes_link_and_relationship_state": true,
     "panel_exposes_queue_state": true,
     "provenance_gate": true,
     "review_queue_states": true,
+    "route_preserves_curriculum_and_downstream_traceability": true,
     "student_exposure_gate": true
   },
   "auditDate": "2026-09-19",
@@ -47,13 +50,11 @@
   },
   "schemaVersion": 1,
   "scope": {
-    "activeProgrammeDomainLinks": 1343,
+    "activeProgrammeDomainLinks": 1344,
     "genericProgrammeCount": 236,
     "jambIdentityCount": 420,
     "programmeCount": 237,
     "sociologyProgrammeCount": 1
   },
-  "unmappedProgrammes": [
-    "Sciences::Mathematics"
-  ]
+  "unmappedProgrammes": []
 }

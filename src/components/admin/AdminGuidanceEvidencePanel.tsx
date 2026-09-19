@@ -41,12 +41,24 @@ const queueLabel: Record<ReturnType<typeof adminEvidenceQueueState>, string> = {
   provenance_incomplete: "Provenance incomplete",
 };
 
-function SourceField({ label, value }: { label: string; value?: string | null }) {
+function displayValue(value: unknown): string {
+  if (typeof value === "string" && value.trim()) return value.trim();
+  if (value && typeof value === "object") {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return "Recorded";
+    }
+  }
+  return "Not recorded";
+}
+
+function SourceField({ label, value }: { label: string; value?: unknown }) {
   const { colors } = useTheme();
   return (
     <View style={styles.sourceField}>
       <Text style={[styles.sourceLabel, { color: colors.textSoft }]}>{label}</Text>
-      <Text style={[styles.sourceValue, { color: colors.text }]}>{value?.trim() || "Not recorded"}</Text>
+      <Text style={[styles.sourceValue, { color: colors.text }]}>{displayValue(value)}</Text>
     </View>
   );
 }
@@ -71,7 +83,15 @@ function EvidenceRow({ record, onApprove }: { record: AdminGuidanceEvidenceRecor
         <SourceField label="Source URL" value={record.sourceUrl} />
         <SourceField label="Source locator" value={record.sourceLocator} />
         <SourceField label="Access date" value={record.sourceAccessedAt} />
+        <SourceField label="Context / owner" value={[record.contextKey, record.guidanceOwner].filter(Boolean).join(" · ")} />
       </View>
+      <Text style={[styles.meta, { color: colors.textMuted }]}>Link state: {record.linkState || "not recorded"}{record.noLinkReason ? ` · ${record.noLinkReason}` : ""}</Text>
+      {record.relationshipType || record.toName ? (
+        <Text style={[styles.meta, { color: colors.textMuted }]}>Relationship: {[record.relationshipType, record.name, record.toName || "target not established"].filter(Boolean).join(" → ")}{record.relationshipStatus ? ` · ${record.relationshipStatus}` : ""}</Text>
+      ) : null}
+      {(record.sourceReferences?.length || record.sourceLocators?.length || record.sourceIds?.length) ? (
+        <Text style={[styles.meta, { color: colors.textSoft }]}>Technical provenance: {record.sourceReferences?.length ?? 0} reference(s) · {record.sourceLocators?.length ?? 0} locator(s) · {record.sourceIds?.length ?? 0} source ID(s)</Text>
+      ) : null}
       <Text style={[styles.meta, { color: colors.textMuted }]}>Review queue: {queueLabel[queue]}</Text>
       <View style={[styles.exposure, { backgroundColor: exposure.allowed ? colors.greenSoft : colors.surface.subtle, borderColor: exposure.allowed ? colors.green : colors.border }]}>
         <Text style={[styles.exposureTitle, CompassFonts.bodyBold, { color: exposure.allowed ? colors.green : colors.text }]}>

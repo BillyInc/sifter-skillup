@@ -403,8 +403,8 @@ export type CurriculumCoverageStatus = "complete" | "source_missing" | "review_o
 /** One sourced market/practice item compared with the CCMAS programme record. */
 export interface ProgrammeResourceEvidence {
   name: string;
-  kind: "skill" | "tool" | "certification";
-  source: "domain" | "subgroup" | "role";
+  kind: "skill" | "tool" | "competency" | "ability" | "certification" | "resource" | "relationship";
+  source: "programme" | "domain" | "subgroup" | "role";
   scopeName?: string;
   roleName?: string;
   /** Stable comparison identity; aliases are source-provided only. */
@@ -426,6 +426,38 @@ export interface ProgrammeResourceEvidence {
   evidenceSource?: string;
   observedAt?: string;
   geography?: string;
+  contextKey?: string;
+  programmeKey?: string;
+  guidanceOwner?: string;
+  evidenceState?: "verified" | "approved" | "review_required" | "no_link" | "not_established" | "audit_only" | "unavailable";
+  sourceLocator?: unknown;
+  sourceAccessedAt?: string;
+  sourceReferences?: unknown[];
+  sourceLocators?: unknown[];
+  linkState?: "linked" | "no_link" | "review_required" | string;
+  linkUrl?: string;
+  noLinkReason?: string;
+  sourceIds?: string[];
+  relationshipType?: string;
+  relationshipStatus?: string;
+  fromItemType?: string;
+  toItemType?: string;
+  toItemKey?: string;
+  toName?: string;
+}
+
+export interface ProgrammeCurriculumEvidence {
+  outcomeId?: string;
+  courseCode?: string;
+  courseTitle?: string;
+  courseLevel?: number;
+  displayGroup?: string;
+  outcomeIndex?: number;
+  sourceText?: string;
+  studentText?: string;
+  sourceLocator?: unknown;
+  studentDisplay: boolean;
+  dataState: string;
 }
 
 export interface ProgrammeDomainSkillCoverage {
@@ -451,6 +483,10 @@ export interface ProgrammeSkillCoverage {
   curriculumTechnical: string[];
   curriculumTransferable: string[];
   curriculumStatus: "complete" | "source_missing";
+  curriculumContractState?: "available" | "unavailable";
+  curriculumEvidence?: ProgrammeCurriculumEvidence[];
+  programmeAbilities?: ProgrammeResourceEvidence[];
+  programmeEvidence?: ProgrammeResourceEvidence[];
   domains: ProgrammeDomainSkillCoverage[];
 }
 
