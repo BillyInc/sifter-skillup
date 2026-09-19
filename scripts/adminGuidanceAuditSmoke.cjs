@@ -35,7 +35,7 @@ assert.equal(canExposeToStudents(verified).allowed, false, "verified data bypass
 
 const approved = normaliseAdminGuidanceEvidence({ ...base, evidence_state: "approved" });
 assert.equal(canExposeToStudents(approved).allowed, true);
-assert.equal(canExposeToStudents({ ...approved, source_locator: null, source_url: null }).allowed, false);
-assert.equal(canExposeToStudents({ ...approved, source_accessed_at: null }).allowed, false);
+assert.equal(canExposeToStudents({ ...approved, sourceLocator: null, sourceUrl: null }).allowed, false);
+assert.equal(canExposeToStudents({ ...approved, sourceAccessedAt: null }).allowed, false);
 
 console.log("Admin guidance audit smoke passed (source trace, access date, approval, and student-exposure gates).");
