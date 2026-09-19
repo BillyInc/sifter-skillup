@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "rea
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { DetailScaffold, RouteLine } from "@/components/careerIntelligence";
-import { hasGuidanceReportContext, isGuidanceReportReady } from "@/components/careerIntelligence/GuidanceReportButton";
+import { hasGuidanceReportContextForRoute, isGuidanceReportReadyForRoute } from "@/components/careerIntelligence/GuidanceReportButton";
 import { careerData, type GuidanceDomainSelection, type GuidanceReportPath } from "@/lib/careerData";
 import { provisioningData } from "@/lib/provisioningData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -171,8 +171,14 @@ export default function GuidedFieldSelectionScreen() {
   const directRoleDomains = selectedDomains.filter((domain) => domain.roles.some((role) => role.guidanceAvailable !== false && !role.subgroupId));
   const showSubgroupStep = selectedDomains.length === 0 || selectedDomains.some((domain) => domain.subgroups.length > 0);
   const displayedStep: Step = !showSubgroupStep && step === "subgroups" ? "roles" : step;
-  const reportContextReady = hasGuidanceReportContext(path as Record<string, unknown>);
-  const reviewComplete = isGuidanceReportReady(path as Record<string, unknown>);
+  const reportContextReady = hasGuidanceReportContextForRoute(path as Record<string, unknown>, {
+    programmeId: guidanceContext.programmeId,
+    schoolId: guidanceContext.schoolId,
+  });
+  const reviewComplete = isGuidanceReportReadyForRoute(path as Record<string, unknown>, {
+    programmeId: guidanceContext.programmeId,
+    schoolId: guidanceContext.schoolId,
+  });
   const roleEntries: RoleEntry[] = [
     ...selectedSubgroups,
     ...directRoleDomains.map((domain) => ({ domain, directOnly: domain.subgroups.length > 0 })),

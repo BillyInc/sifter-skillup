@@ -88,6 +88,38 @@ const completedPath = {
   resume: { stage: "review", status: "complete" },
 };
 
+assert.equal(
+  gate.hasGuidanceReportContextForRoute(completedPath, {
+    programmeId: "jamb-sociology",
+    schoolId: "university-ibadan",
+  }),
+  true,
+);
+assert.equal(
+  gate.hasGuidanceReportContextForRoute(completedPath, {
+    programmeId: "jamb-other-programme",
+    schoolId: "university-ibadan",
+  }),
+  false,
+  "a completed path for another programme must not unlock this route",
+);
+assert.equal(
+  gate.hasGuidanceReportContextForRoute(completedPath, {
+    programmeId: "jamb-sociology",
+    schoolId: "university-other",
+  }),
+  false,
+  "a completed path for another university must not unlock this route",
+);
+assert.equal(
+  gate.isGuidanceReportReadyForRoute(completedPath, {
+    programmeId: "jamb-other-programme",
+    schoolId: "university-ibadan",
+  }),
+  false,
+  "report actions must stay locked when the restored path is for another route",
+);
+
 function actionsFor(path) {
   const enabled = gate.isGuidanceReportReady(path);
   const tree = DetailScaffold({
