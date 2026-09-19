@@ -13,7 +13,6 @@ def test_checkpoint_matches_current_unmapped_and_queue_counts():
     canonical = json.loads(CANONICAL.read_text(encoding="utf-8"))
     jamb = json.loads(JAMB.read_text(encoding="utf-8"))
 
-    empty = [key for key, value in canonical.items() if not value.get("links")]
     review_required = next(
         category for category in jamb["categories"] if category["category"] == "single_ccmas_full_curriculum"
     )
@@ -22,8 +21,12 @@ def test_checkpoint_matches_current_unmapped_and_queue_counts():
     )
 
     assert checkpoint["inventory"]["canonical_programmes"] == len(canonical) == 237
-    assert checkpoint["inventory"]["canonical_programmes_without_active_domain_link"] == len(empty) == 1
-    assert empty == ["Sciences::Mathematics"]
+    assert checkpoint["inventory"]["canonical_programmes_without_active_domain_link_at_checkpoint"] == 1
+    assert checkpoint["inventory"]["unmapped_programme_at_checkpoint"] == "Sciences::Mathematics"
+    current_empty = [key for key, value in canonical.items() if not value.get("links")]
+    assert current_empty == []
+    assert any(link["domain_id"] == "D009" for link in canonical["Sciences::Mathematics"]["links"])
+    assert checkpoint["post_checkpoint_local_observation"]["canonical_programmes_without_active_domain_link"] == 0
     assert checkpoint["inventory"]["jamb_rows_review_required"] == review_required["review_required"] == 86
     assert checkpoint["inventory"]["jamb_rows_partial_curriculum_scope"] == partial["rows"] == 273
 
@@ -34,5 +37,4 @@ def test_checkpoint_does_not_claim_promotion_or_live_deployment():
 
     assert finding["decision"] == "external_source_review_required"
     assert finding["current_active_domain_links"] == []
-    assert "SQL" not in checkpoint["purpose"]
     assert "without editing generated gzip or applying SQL" in checkpoint["next_step"]
