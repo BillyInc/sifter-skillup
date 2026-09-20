@@ -26,8 +26,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import secrets
 import sys
-import time
 import traceback
 import urllib.error
 import urllib.parse
@@ -194,7 +194,11 @@ def main() -> int:
     tag = r.run_id
     owner_email = f"e2e.owner.{tag}@example.invalid"
     student_email = f"e2e.student.{tag}@example.invalid"
-    password = f"E2e-{tag}-pw"
+    # Cleanup deliberately leaves the two signup accounts behind, and the owner
+    # holds institution_admin over a real school. Deriving the password from the
+    # run tag would therefore make the report — which carries runId — enough to
+    # sign in as that admin. Draw it independently and never write it anywhere.
+    password = f"E2e-{secrets.token_urlsafe(18)}-pw"
     created: dict[str, Any] = {}
     # Published so the crash handler below can still run cleanup: an exception
     # escaping main() would otherwise skip _finish entirely and leave rows in
@@ -245,7 +249,11 @@ def main() -> int:
         },
         token=owner_token,
     )
-    ok = status == 200 and (payload or {}).get("success") is not False
+    # /verify answers 200 with data=None and the default success=True when
+    # _find_or_create_school declines the claim (institutions_routes.py:1413),
+    # so the status alone cannot tell a linked school from a rejected one. The
+    # school id is the only proof the link happened.
+    ok = status == 200 and bool(((payload or {}).get("data") or {}).get("id"))
     created["school_name"] = school_name
     if not r.record("owner: create/link institution", ok, payload):
         return _finish(r, args, created, 1)
@@ -253,7 +261,11 @@ def main() -> int:
     status, payload = r.call("GET", "/api/institutions/me", token=owner_token)
     school_id = ((payload or {}).get("data") or {}).get("id")
     created["school_id"] = school_id
-    r.record("owner: institution resolves", status == 200, {"schoolId": school_id})
+    # /institutions/me is also 200 with data=None for an admin with no
+    # institution, so assert the id rather than the status.
+    r.record("owner: institution resolves", bool(school_id), {"schoolId": school_id})
+    if not school_id:
+        return _finish(r, args, created, 1)
 
     # 2. provisioning -----------------------------------------------------
     student_name = f"E2E Student {tag}"
@@ -538,9 +550,28 @@ def _finish(
             status, _ = r.call(
                 "DELETE", f"/api/provisioning/students/{uid}", token=owner_token
             )
-            print(f"  delete provisioned student -> {status}")
-        status, _ = r.call("DELETE", "/api/provisioning/drafts", token=owner_token)
-        print(f"  clear drafts -> {status}")
+            # A 404 here is the expected outcome of a full run, not a failure:
+            # the claim took the merge branch, and merge_provisioned_into_student
+            # deletes the provisioned shell itself (provisioning_reconcile.py:293).
+            note = " (already merged away)" if status == 404 else ""
+            print(f"  delete provisioned student -> {status}{note}")
+        draft_id = created.get("draft_id")
+        if draft_id:
+            # clear_drafts takes a body and 400s without one — a bodyless DELETE
+            # was the 422 every previous run printed. It also only removes rows
+            # still in status 'draft', so on a full run the draft has moved to
+            # 'generated' and this answers 200 with deleted=0. That row is then
+            # orphaned: generate stamped it with a generated_user_id the merge
+            # has since deleted, and no endpoint clears it. Reported, not hidden.
+            status, payload = r.call(
+                "DELETE",
+                "/api/provisioning/drafts",
+                {"draft_ids": [draft_id]},
+                token=owner_token,
+            )
+            deleted = ((payload or {}).get("data") or {}).get("deleted")
+            note = "" if deleted else " (left orphaned: already generated)"
+            print(f"  clear drafts -> {status} deleted={deleted}{note}")
         print("  NOTE: the two signup accounts and the test school row remain;")
         print("        remove them manually if your database should stay clean.")
     elif args.no_cleanup:

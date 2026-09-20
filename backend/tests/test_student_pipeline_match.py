@@ -7,6 +7,12 @@ and being mis-ranked.
 """
 
 import asyncio
+import re
+import typing
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
 
 from routes import student_pipeline_routes as spr
 
@@ -685,3 +691,84 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
 
     assert len(rows[0]["schoolOfferings"]) == 15
     assert rows[0]["schoolCount"] == 15
+
+
+# ─────────────────────────────────────────────────────────────
+# StartingPointIn enum validation (mirrors the CHECK constraints)
+# ─────────────────────────────────────────────────────────────
+#
+# _clean_text only strips whitespace, so before these annotations a bad value
+# travelled all the way to Postgres and came back as one CHECK violation at a
+# time behind a generic 500 envelope. The contract now lives at the request
+# boundary, which means it can drift from the database — hence the second test
+# below, which reads the constraint sets straight out of the migration.
+
+_MIGRATION = Path(__file__).parents[1] / "migration_student_pipeline_live.sql"
+
+
+def _valid_starting_point(**overrides):
+    payload = {"userType": "senior_secondary"}
+    payload.update(overrides)
+    return payload
+
+
+def test_valid_starting_point_is_accepted():
+    """Guards the negative cases below from passing for the wrong reason."""
+    model = spr.StartingPointIn(**_valid_starting_point(
+        ssDoor="know_what", ssClass="ss2", stream="science",
+    ))
+    assert model.userType == "senior_secondary"
+    assert (model.ssDoor, model.ssClass, model.stream) == ("know_what", "ss2", "science")
+
+
+@pytest.mark.parametrize(
+    "field, bad_value",
+    [
+        ("userType", "hacker"),
+        ("ssDoor", "maybe"),
+        ("ssClass", "ss9"),
+        ("stream", "engineering"),
+    ],
+)
+def test_starting_point_rejects_values_outside_the_check_constraint(field, bad_value):
+    with pytest.raises(ValidationError) as caught:
+        spr.StartingPointIn(**_valid_starting_point(**{field: bad_value}))
+
+    assert field in str(caught.value)
+
+
+def _sql_in_values(column: str) -> set[str]:
+    """Pull the `column IN ('a', 'b', …)` set out of the live migration."""
+    sql = _MIGRATION.read_text(encoding="utf-8")
+    match = re.search(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE)
+    assert match, f"no `{column} IN (...)` CHECK found in {_MIGRATION.name}"
+    values = set(re.findall(r"'([^']+)'", match.group(1)))
+    assert values, f"`{column} IN (...)` parsed as empty — the regex has rotted"
+    return values
+
+
+@pytest.mark.parametrize(
+    "field, column",
+    [
+        ("userType", "user_type"),
+        ("ssDoor", "ss_door"),
+        ("ssClass", "ss_class"),
+        ("stream", "stream"),
+    ],
+)
+def test_starting_point_literals_match_the_migration_check_constraints(field, column):
+    """Drift guard: the Pydantic Literal and the DB CHECK are one contract.
+
+    typing.get_args on an Optional[Literal[...]] yields (Literal[...], NoneType),
+    so the Literal's own args are collected from whichever arg has them.
+    """
+    annotation = spr.StartingPointIn.model_fields[field].annotation
+    args = typing.get_args(annotation)
+    literal_values = {a for a in args if isinstance(a, str)}
+    for arg in args:
+        literal_values.update(a for a in typing.get_args(arg) if isinstance(a, str))
+
+    assert literal_values == _sql_in_values(column), (
+        f"StartingPointIn.{field} has drifted from the "
+        f"{column} CHECK constraint in {_MIGRATION.name}"
+    )
