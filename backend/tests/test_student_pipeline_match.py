@@ -703,14 +703,23 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
 # boundary, which means it can drift from the database — hence the second test
 # below, which reads the constraint sets straight out of the migration.
 
-# Every migration that constrains student_starting_points, in apply order.
+# The migrations that constrain student_starting_points, in APPLY order.
+#
 # The base migration is not the authority on its own: the ss3 patch DROPs and
 # re-ADDs student_starting_points_user_type_check, so the deployed constraint
-# is whichever file touched the column last. Reading only the base would let a
-# widening applied as a patch fail this guard spuriously, and a widening of the
-# base alone pass it while the live DB still rejects the value.
+# is whichever file touched the column last.
+#
+# This list is declared rather than globbed because filename order is not apply
+# order — "migration_ss3_..." sorts BEFORE "migration_student_pipeline_live..."
+# ('s' < 't'), so a sorted glob hands back the base as the last match, which is
+# exactly the file that must not win. These filenames carry no numeric or date
+# prefix, so apply order cannot be recovered from them. Add new patches here,
+# at the end, when they touch this table.
 _MIGRATION_DIR = Path(__file__).parents[1]
-_MIGRATIONS = sorted(_MIGRATION_DIR.glob("migration_*.sql"))
+_MIGRATIONS = [
+    _MIGRATION_DIR / "migration_student_pipeline_live.sql",
+    _MIGRATION_DIR / "migration_ss3_secondary_starting_point_patch.sql",
+]
 
 
 def _valid_starting_point(**overrides):
@@ -748,6 +757,7 @@ def _sql_in_values(column: str) -> set[str]:
     """The `column IN ('a', …)` set as the last migration to touch it leaves it."""
     found: list[tuple[str, set[str]]] = []
     for path in _MIGRATIONS:
+        assert path.exists(), f"{path.name} is listed in _MIGRATIONS but missing"
         sql = path.read_text(encoding="utf-8")
         for match in re.finditer(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE):
             values = set(re.findall(r"'([^']+)'", match.group(1)))

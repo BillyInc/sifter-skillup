@@ -820,12 +820,21 @@ async def revoke_consent(
     """Revoke individual visibility — the student collapses back to aggregate-only."""
     try:
         # Only validate a scope the caller actually named; omitting it is the
-        # ordinary "turn sharing off" case and means every scope.
-        scope = _validate_consent_scope(payload.scope) if payload.scope else None
+        # ordinary "turn sharing off" case and means every scope. A blank or
+        # whitespace-only value counts as not naming one, so that "" and "   "
+        # mean the same thing rather than one revoking everything and the other
+        # stripping to empty and 400ing.
+        named_scope = (payload.scope or "").strip()
+        scope = _validate_consent_scope(named_scope) if named_scope else None
         _require_student_affiliation(current_user["id"], payload.school_id)
+        # granted_at IS NULL mirrors what every reader of this table requires
+        # (get_roster and the guidance visibility check), so a row that was
+        # never actually granted cannot be counted as something we revoked.
         query = _svc().table("student_consents").update({"revoked_at": _now()}).eq(
             "student_id", current_user["id"]
-        ).eq("school_id", payload.school_id).is_("revoked_at", "null")
+        ).eq("school_id", payload.school_id).is_(
+            "revoked_at", "null"
+        ).not_.is_("granted_at", "null")
         if scope:
             query = query.eq("scope", scope)
         updated = query.execute().data or []

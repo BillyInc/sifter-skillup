@@ -352,8 +352,14 @@ class _FilteringQuery:
 
     def __init__(self, rows):
         self._rows = rows
-        self._filters: list[tuple[str, object]] = []
+        # (column, value, negated)
+        self._filters: list[tuple[str, object, bool]] = []
         self._patch: dict = {}
+        self._negate_next = False
+
+    def _take_negation(self) -> bool:
+        negated, self._negate_next = self._negate_next, False
+        return negated
 
     def update(self, patch):
         self._patch = patch
@@ -363,26 +369,36 @@ class _FilteringQuery:
         return self
 
     def eq(self, col, val):
-        self._filters.append((col, val))
+        self._filters.append((col, val, self._take_negation()))
         return self
 
     def is_(self, col, val):
         # PostgREST spells SQL NULL as the literal string "null".
-        self._filters.append((col, None if val == "null" else val))
+        self._filters.append((col, None if val == "null" else val, self._take_negation()))
         return self
 
     @property
     def not_(self):
+        """Negate the NEXT filter, as PostgREST's `.not_.is_(...)` does.
+
+        Returning self unchanged would make `.not_.is_("granted_at","null")`
+        mean the opposite of what the route asks for, and the tests below would
+        then agree with a stub rather than with the database.
+        """
+        self._negate_next = True
         return self
 
     def limit(self, *_a, **_k):
         return self
 
     def execute(self):
-        matched = [
-            r for r in self._rows
-            if all(r.get(col) == val for col, val in self._filters)
-        ]
+        def _ok(row):
+            for col, val, negated in self._filters:
+                if (row.get(col) == val) is negated:
+                    return False
+            return True
+
+        matched = [r for r in self._rows if _ok(r)]
         for row in matched:
             row.update(self._patch)
         return MagicMock(data=matched)
@@ -419,9 +435,9 @@ class TestRevokeReportsWhatItActuallyDid:
         _login_as(prov_db, _user_row())
         rows = [
             {"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "full",
-             "revoked_at": None},
+             "granted_at": "2026-01-01T00:00:00Z", "revoked_at": None},
             {"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "contact",
-             "revoked_at": None},
+             "granted_at": "2026-01-01T00:00:00Z", "revoked_at": None},
         ]
         self._wire(prov_db, rows)
 
@@ -443,7 +459,7 @@ class TestRevokeReportsWhatItActuallyDid:
         """The exact pre-fix scenario: stored grant is 'full', caller says 'progress'."""
         _login_as(prov_db, _user_row())
         rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "full",
-                 "revoked_at": None}]
+                 "granted_at": "2026-01-01T00:00:00Z", "revoked_at": None}]
         self._wire(prov_db, rows)
 
         res = client.request(
@@ -463,6 +479,7 @@ class TestRevokeReportsWhatItActuallyDid:
     ):
         _login_as(prov_db, _user_row())
         rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "progress",
+                 "granted_at": "2026-01-01T00:00:00Z",
                  "revoked_at": "2026-01-01T00:00:00Z"}]
         self._wire(prov_db, rows)
 
@@ -474,3 +491,45 @@ class TestRevokeReportsWhatItActuallyDid:
         assert res.status_code == 200, res.text
         assert res.json()["data"]["revoked"] is False
         assert rows[0]["revoked_at"] == "2026-01-01T00:00:00Z"
+
+    def test_a_never_granted_row_is_not_counted_as_revoked(
+        self, client, auth_header, prov_db
+    ):
+        """granted_at IS NULL means the grant was never active.
+
+        Every reader of student_consents requires granted_at IS NOT NULL
+        (get_roster, and the guidance visibility check), so counting such a row
+        as revoked would report turning off sharing that was never on.
+        """
+        _login_as(prov_db, _user_row())
+        rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "progress",
+                 "granted_at": None, "revoked_at": None}]
+        self._wire(prov_db, rows)
+
+        res = client.request(
+            "DELETE", CONSENT_URL, headers=auth_header,
+            json={"school_id": SCHOOL_ID},
+        )
+
+        assert res.status_code == 200, res.text
+        assert res.json()["data"]["revoked"] is False
+        assert rows[0]["revoked_at"] is None
+
+    def test_a_blank_scope_means_every_scope_not_a_400(
+        self, client, auth_header, prov_db
+    ):
+        """"" and "   " must agree: both mean "no scope named"."""
+        _login_as(prov_db, _user_row())
+        for blank in ("", "   "):
+            rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "full",
+                     "granted_at": "2026-01-01T00:00:00Z", "revoked_at": None}]
+            self._wire(prov_db, rows)
+
+            res = client.request(
+                "DELETE", CONSENT_URL, headers=auth_header,
+                json={"school_id": SCHOOL_ID, "scope": blank},
+            )
+
+            assert res.status_code == 200, f"{blank!r}: {res.text}"
+            assert res.json()["data"]["revoked"] is True, repr(blank)
+            assert rows[0]["revoked_at"] is not None, repr(blank)
