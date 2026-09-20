@@ -939,11 +939,13 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
             aggregate_only=total_affiliated - shared,
             shared_with_you=shared,
         ).model_dump())
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: roster failed", error=str(exc))
-        return ResponseModel(data=RosterResponse(
-            students=[], total_affiliated=0, aggregate_only=0, shared_with_you=0,
-        ).model_dump())
+        # An all-zero 200 is indistinguishable from a school with no students,
+        # so a backend failure has to surface as a failure.
+        raise HTTPException(status_code=500, detail="Could not load the roster.")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1240,6 +1242,10 @@ async def grant_consent(
             "revoked_at": None,
         }, on_conflict="student_id,school_id,scope").execute()
         return ResponseModel(data={"granted": True}, message="Sharing enabled. You can revoke this anytime.")
+    except HTTPException:
+        # _validate_consent_scope raises 400 and _require_student_affiliation
+        # raises 403 from inside this try; both must reach the client intact.
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: consent grant failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not record consent.")
@@ -1258,6 +1264,9 @@ async def revoke_consent(
             "student_id", current_user["id"]
         ).eq("school_id", payload.school_id).eq("scope", scope).execute()
         return ResponseModel(data={"revoked": True}, message="Sharing turned off.")
+    except HTTPException:
+        # Same as grant_consent: the deliberate 400/403 must not become a 500.
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: consent revoke failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not revoke consent.")

@@ -12,7 +12,7 @@ from __future__ import annotations
 import re
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
 from pydantic import BaseModel, Field
@@ -284,7 +284,19 @@ def _profile_out(row: dict, subject_rows: Optional[list[dict]] = None) -> dict:
 
 
 class StartingPointIn(BaseModel):
-    userType: str
+    # These four mirror the CHECK constraints on
+    # skillup_dev.student_starting_points (migration_student_pipeline_live.sql).
+    # Validating here turns a bad value into a 422 at the request boundary
+    # instead of a Postgres constraint violation behind a generic 500.
+    userType: Literal[
+        "senior_secondary",
+        "ss3_secondary",
+        "jamb",
+        "student",
+        "skilled_worker",
+        "professional",
+        "graduate",
+    ]
     institutionType: Optional[str] = None
     schoolName: Optional[str] = None
     programmeName: Optional[str] = None
@@ -295,9 +307,9 @@ class StartingPointIn(BaseModel):
     jambPrepMode: Optional[str] = None
     tutorialCentreId: Optional[str] = None
     tutorialCentreName: Optional[str] = None
-    ssDoor: Optional[str] = None
-    ssClass: Optional[str] = None
-    stream: Optional[str] = None
+    ssDoor: Optional[Literal["know_where", "know_what", "unsure"]] = None
+    ssClass: Optional[Literal["ss1", "ss2", "ss3"]] = None
+    stream: Optional[Literal["science", "art", "commercial"]] = None
     exploreIntent: list[str] = Field(default_factory=list)
     jambSubjects: list[str] = Field(default_factory=list)
     olevelSubjects: list[str] = Field(default_factory=list)
