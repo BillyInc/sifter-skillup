@@ -703,7 +703,14 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
 # boundary, which means it can drift from the database — hence the second test
 # below, which reads the constraint sets straight out of the migration.
 
-_MIGRATION = Path(__file__).parents[1] / "migration_student_pipeline_live.sql"
+# Every migration that constrains student_starting_points, in apply order.
+# The base migration is not the authority on its own: the ss3 patch DROPs and
+# re-ADDs student_starting_points_user_type_check, so the deployed constraint
+# is whichever file touched the column last. Reading only the base would let a
+# widening applied as a patch fail this guard spuriously, and a widening of the
+# base alone pass it while the live DB still rejects the value.
+_MIGRATION_DIR = Path(__file__).parents[1]
+_MIGRATIONS = sorted(_MIGRATION_DIR.glob("migration_*.sql"))
 
 
 def _valid_starting_point(**overrides):
@@ -738,13 +745,16 @@ def test_starting_point_rejects_values_outside_the_check_constraint(field, bad_v
 
 
 def _sql_in_values(column: str) -> set[str]:
-    """Pull the `column IN ('a', 'b', …)` set out of the live migration."""
-    sql = _MIGRATION.read_text(encoding="utf-8")
-    match = re.search(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE)
-    assert match, f"no `{column} IN (...)` CHECK found in {_MIGRATION.name}"
-    values = set(re.findall(r"'([^']+)'", match.group(1)))
-    assert values, f"`{column} IN (...)` parsed as empty — the regex has rotted"
-    return values
+    """The `column IN ('a', …)` set as the last migration to touch it leaves it."""
+    found: list[tuple[str, set[str]]] = []
+    for path in _MIGRATIONS:
+        sql = path.read_text(encoding="utf-8")
+        for match in re.finditer(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE):
+            values = set(re.findall(r"'([^']+)'", match.group(1)))
+            assert values, f"`{column} IN (...)` in {path.name} parsed as empty"
+            found.append((path.name, values))
+    assert found, f"no `{column} IN (...)` CHECK found in any migration_*.sql"
+    return found[-1][1]
 
 
 @pytest.mark.parametrize(
@@ -770,5 +780,5 @@ def test_starting_point_literals_match_the_migration_check_constraints(field, co
 
     assert literal_values == _sql_in_values(column), (
         f"StartingPointIn.{field} has drifted from the "
-        f"{column} CHECK constraint in {_MIGRATION.name}"
+        f"{column} CHECK constraint in the migration_*.sql set"
     )

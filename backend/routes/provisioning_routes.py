@@ -780,6 +780,20 @@ class ConsentRequest(BaseModel):
     scope: str = "progress"  # progress | contact | full
 
 
+class ConsentRevokeRequest(BaseModel):
+    """Revoking is scope-optional on purpose.
+
+    A student turning sharing off means all of it. Defaulting this to
+    "progress" — as the grant model does — silently left a 'full' or
+    'contact' grant in place while still answering "Sharing turned off",
+    and get_roster counts 'full' as individual visibility, so the student
+    stayed on the roster after being told they were not.
+    """
+
+    school_id: str
+    scope: Optional[str] = None  # None = every scope for this school
+
+
 def _validate_consent_scope(scope: Optional[str]) -> str:
     value = (scope or "progress").strip().lower()
     if value not in _CONSENT_SCOPES:
@@ -800,17 +814,33 @@ def _require_student_affiliation(student_id: str, school_id: str) -> None:
 
 @router.delete("/students/consent", response_model=ResponseModel)
 async def revoke_consent(
-    payload: ConsentRequest = Body(...),
+    payload: ConsentRevokeRequest = Body(...),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Revoke individual visibility — the student collapses back to aggregate-only."""
     try:
-        scope = _validate_consent_scope(payload.scope)
+        # Only validate a scope the caller actually named; omitting it is the
+        # ordinary "turn sharing off" case and means every scope.
+        scope = _validate_consent_scope(payload.scope) if payload.scope else None
         _require_student_affiliation(current_user["id"], payload.school_id)
-        _svc().table("student_consents").update({"revoked_at": _now()}).eq(
+        query = _svc().table("student_consents").update({"revoked_at": _now()}).eq(
             "student_id", current_user["id"]
-        ).eq("school_id", payload.school_id).eq("scope", scope).execute()
-        return ResponseModel(data={"revoked": True}, message="Sharing turned off.")
+        ).eq("school_id", payload.school_id).is_("revoked_at", "null")
+        if scope:
+            query = query.eq("scope", scope)
+        updated = query.execute().data or []
+        # Report what actually happened. Claiming revoked=True on a zero-row
+        # update is the same lie this branch exists to remove: the client
+        # renders "Sharing is off" while the roster still shows the student.
+        return ResponseModel(
+            data={
+                "revoked": bool(updated),
+                "scopes": sorted(
+                    {r.get("scope") for r in updated if isinstance(r, dict) and r.get("scope")}
+                ),
+            },
+            message="Sharing turned off." if updated else "Sharing was already off.",
+        )
     except HTTPException:
         # Same as grant_consent: the deliberate 400/403 must not become a 500.
         raise

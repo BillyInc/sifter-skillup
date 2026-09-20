@@ -585,11 +585,19 @@ export const studentAccountApi = {
     });
   },
 
-  /** Revoke individual visibility (collapse back to aggregate-only). */
-  async revokeConsent(schoolId: string, scope: "progress" | "contact" | "full" = "progress"): Promise<void> {
+  /**
+   * Revoke individual visibility (collapse back to aggregate-only).
+   *
+   * Scope is deliberately omitted by default: the server then revokes every
+   * scope for the school, which is what "turn sharing off" means to a student.
+   * Sending "progress" unconditionally — as this used to — left a "full" grant
+   * standing, and the roster counts "full" as individual visibility, so the
+   * student stayed listed after the app told them sharing was off.
+   */
+  async revokeConsent(schoolId: string, scope?: "progress" | "contact" | "full"): Promise<void> {
     await request(`/api/provisioning/students/consent`, {
       method: "DELETE",
-      body: JSON.stringify({ school_id: schoolId, scope }),
+      body: JSON.stringify(scope ? { school_id: schoolId, scope } : { school_id: schoolId }),
     });
   },
 

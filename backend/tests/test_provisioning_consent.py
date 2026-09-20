@@ -223,12 +223,15 @@ class TestRevokeConsentErrorCodes:
 
     def test_valid_revoke_still_succeeds(self, client, auth_header, prov_db):
         _login_as(prov_db, _user_row())
-        prov_db.set_tables(student_affiliations=[{"id": "aff-1"}])
+        prov_db.set_tables(
+            student_affiliations=[{"id": "aff-1"}],
+            student_consents=[{"scope": "progress"}],
+        )
 
         res = self._revoke(client, auth_header)
 
         assert res.status_code == 200, res.text
-        assert res.json()["data"] == {"revoked": True}
+        assert res.json()["data"]["revoked"] is True
 
     def test_revoke_route_is_not_shadowed_by_the_parameterised_delete(self):
         """Regression guard for the ordering itself.
@@ -332,3 +335,142 @@ class TestRosterFailureIsDistinguishableFromEmpty:
         assert data["total_affiliated"] == 0
         assert data["aggregate_only"] == 0
         assert data["shared_with_you"] == 0
+
+
+# ─────────────────────────────────────────────────────────────
+# 3. Revoking must not report success it did not achieve
+# ─────────────────────────────────────────────────────────────
+
+class _FilteringQuery:
+    """A stub that actually applies .eq() filters, unlike _Query above.
+
+    The scope bug below is invisible to a stub that ignores filters: the whole
+    point is that `.eq("scope", "progress")` matches nothing when the stored
+    grant is "full". So this one honours eq/is_ and returns only the rows an
+    update would really have touched.
+    """
+
+    def __init__(self, rows):
+        self._rows = rows
+        self._filters: list[tuple[str, object]] = []
+        self._patch: dict = {}
+
+    def update(self, patch):
+        self._patch = patch
+        return self
+
+    def select(self, *_a, **_k):
+        return self
+
+    def eq(self, col, val):
+        self._filters.append((col, val))
+        return self
+
+    def is_(self, col, val):
+        # PostgREST spells SQL NULL as the literal string "null".
+        self._filters.append((col, None if val == "null" else val))
+        return self
+
+    @property
+    def not_(self):
+        return self
+
+    def limit(self, *_a, **_k):
+        return self
+
+    def execute(self):
+        matched = [
+            r for r in self._rows
+            if all(r.get(col) == val for col, val in self._filters)
+        ]
+        for row in matched:
+            row.update(self._patch)
+        return MagicMock(data=matched)
+
+
+class TestRevokeReportsWhatItActuallyDid:
+    """A zero-row revoke must not answer `revoked: true`.
+
+    get_roster grants individual visibility for scope in {"progress", "full"},
+    so a revoke that misses a "full" row leaves the student on the roster while
+    the app renders "Sharing is off" — a success response that is a lie, which
+    is the whole defect class this branch removes.
+    """
+
+    @staticmethod
+    def _wire(prov_db, consent_rows):
+        import routes.provisioning_routes as pr
+
+        consents = _FilteringQuery(consent_rows)
+
+        def _table(name):
+            if name == "student_consents":
+                return consents
+            return _Query(prov_db.tables.get(name, []))
+
+        prov_db.sc.schema.return_value.table.side_effect = _table
+        prov_db.set_tables(student_affiliations=[{"id": "aff-1"}])
+        assert pr.revoke_consent  # the handler under test really exists
+        return consents
+
+    def test_omitting_scope_revokes_every_scope_for_the_school(
+        self, client, auth_header, prov_db
+    ):
+        _login_as(prov_db, _user_row())
+        rows = [
+            {"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "full",
+             "revoked_at": None},
+            {"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "contact",
+             "revoked_at": None},
+        ]
+        self._wire(prov_db, rows)
+
+        res = client.request(
+            "DELETE", CONSENT_URL, headers=auth_header,
+            json={"school_id": SCHOOL_ID},
+        )
+
+        assert res.status_code == 200, res.text
+        body = res.json()["data"]
+        assert body["revoked"] is True
+        assert body["scopes"] == ["contact", "full"]
+        # Both rows actually stamped — this is what keeps the student off the roster.
+        assert all(r["revoked_at"] is not None for r in rows)
+
+    def test_a_scope_that_matches_nothing_is_reported_as_not_revoked(
+        self, client, auth_header, prov_db
+    ):
+        """The exact pre-fix scenario: stored grant is 'full', caller says 'progress'."""
+        _login_as(prov_db, _user_row())
+        rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "full",
+                 "revoked_at": None}]
+        self._wire(prov_db, rows)
+
+        res = client.request(
+            "DELETE", CONSENT_URL, headers=auth_header,
+            json={"school_id": SCHOOL_ID, "scope": "progress"},
+        )
+
+        assert res.status_code == 200, res.text
+        assert res.json()["data"]["revoked"] is False
+        assert "already off" in res.json()["message"].lower()
+        # The load-bearing assertion: the 'full' grant is untouched, so the
+        # client must not have been told sharing was turned off.
+        assert rows[0]["revoked_at"] is None
+
+    def test_an_already_revoked_grant_is_not_restamped(
+        self, client, auth_header, prov_db
+    ):
+        _login_as(prov_db, _user_row())
+        rows = [{"student_id": USER_ID, "school_id": SCHOOL_ID, "scope": "progress",
+                 "revoked_at": "2026-01-01T00:00:00Z"}]
+        self._wire(prov_db, rows)
+
+        res = client.request(
+            "DELETE", CONSENT_URL, headers=auth_header,
+            json={"school_id": SCHOOL_ID},
+        )
+
+        assert res.status_code == 200, res.text
+        assert res.json()["data"]["revoked"] is False
+        assert rows[0]["revoked_at"] == "2026-01-01T00:00:00Z"
