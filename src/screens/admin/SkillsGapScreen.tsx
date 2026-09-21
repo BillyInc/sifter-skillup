@@ -81,15 +81,19 @@ function relationshipLabel(matchType: MatchType): string {
   return "Mapped connection";
 }
 
+function isSourceReview(resource: ProgrammeResourceEvidence): boolean {
+  return resource.curriculumState === "source_review" || resource.marketState === "source_review";
+}
+
 function resourceState(resource: ProgrammeResourceEvidence): { label: string; variant: "success" | "warning" } {
+  if (isSourceReview(resource)) {
+    return { label: "Source review", variant: "warning" };
+  }
   if (resource.curriculumState === "taught" || resource.state === "covered") {
     return { label: "Taught in programme record", variant: "success" };
   }
   if (resource.curriculumState === "partly_evidenced") {
     return { label: "Partly evidenced in teaching record", variant: "warning" };
-  }
-  if (resource.curriculumState === "source_review" || resource.marketState === "source_review") {
-    return { label: "Source review", variant: "warning" };
   }
   return { label: "Not evidenced in teaching record", variant: "warning" };
 }
@@ -145,13 +149,21 @@ function ResourceGroupsByScope({
   title,
   resources,
   includeRole,
+  stateFilter,
 }: {
   title: string;
   resources: ProgrammeResourceEvidence[];
   includeRole?: boolean;
+  stateFilter?: "covered" | "bridge" | "source_review";
 }) {
   const groups = new Map<string, ProgrammeResourceEvidence[]>();
-  for (const resource of resources) {
+  const filtered = resources.filter((resource) => {
+    if (!stateFilter) return true;
+    if (stateFilter === "source_review") return isSourceReview(resource);
+    if (isSourceReview(resource)) return false;
+    return resource.state === stateFilter;
+  });
+  for (const resource of filtered) {
     const scope = [resource.scopeName, includeRole ? resource.roleName : null]
       .filter(Boolean)
       .join(" · ") || "Unspecified scope";
@@ -169,8 +181,9 @@ function ResourceGroupsByScope({
 function DomainCoverageCard({ domain, priority }: { domain: ProgrammeDomainSkillCoverage; priority: number }) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
-  const covered = domain.resources.filter((resource) => resource.state === "covered");
-  const gapCandidates = domain.resources.filter((resource) => resource.state === "bridge");
+  const covered = domain.resources.filter((resource) => !isSourceReview(resource) && resource.state === "covered");
+  const gapCandidates = domain.resources.filter((resource) => !isSourceReview(resource) && resource.state === "bridge");
+  const sourceReview = domain.resources.filter(isSourceReview);
   const domainResources = domain.resources.filter((resource) => resource.source === "domain");
   const subgroupResources = domain.resources.filter((resource) => resource.source === "subgroup");
   const roleResources = domain.resources.filter((resource) => resource.source === "role");
@@ -197,15 +210,21 @@ function DomainCoverageCard({ domain, priority }: { domain: ProgrammeDomainSkill
       <View style={styles.countRow}>
         <Text style={[styles.meta, { color: colors.textSoft }]}>Institution-taught records: {covered.length}</Text>
         <Text style={[styles.meta, { color: colors.textSoft }]}>Downstream items not in teaching record: {gapCandidates.length}</Text>
-        <Text style={[styles.meta, { color: colors.textSoft }]}>Skills {domain.resources.filter((r) => r.kind === "skill").length} · Tools {domain.resources.filter((r) => r.kind === "tool").length} · Certifications {domain.resources.filter((r) => r.kind === "certification").length}</Text>
+        <Text style={[styles.meta, { color: colors.textSoft }]}>Skills {domain.resources.filter((r) => r.kind === "skill").length} · Tools {domain.resources.filter((r) => r.kind === "tool").length} · Certifications {domain.resources.filter((r) => r.kind === "certification").length} · Source review {sourceReview.length}</Text>
       </View>
 
       {open ? (
         <View style={styles.resourceList}>
-          <Text style={[styles.explanation, { color: colors.textMuted }]}>A candidate is shown because a sourced downstream domain, subgroup or role record contains it and the institution's programme teaching record does not currently evidence it by name. Review the source and curriculum context before changing teaching plans; this is not an accreditation or employment-demand finding.</Text>
-          <ResourceGroup title="Domain-owned downstream records" resources={domainResources} />
-          <ResourceGroupsByScope title="Subgroup-owned downstream records" resources={subgroupResources} />
-          <ResourceGroupsByScope title="Role-owned downstream records" resources={roleResources} includeRole />
+          <Text style={[styles.explanation, { color: colors.textMuted }]}>A gap candidate is a sourced downstream record absent from the teaching baseline. Source-review records are withheld from both the taught and gap counts until ownership or provenance is resolved; this is not an accreditation or employment-demand finding.</Text>
+          <ResourceGroupsByScope title="Taught downstream records" resources={domainResources} stateFilter="covered" />
+          <ResourceGroupsByScope title="Gap candidates for curriculum review" resources={domainResources} stateFilter="bridge" />
+          <ResourceGroupsByScope title="Source-review records (not counted as gaps)" resources={domainResources} stateFilter="source_review" />
+          <ResourceGroupsByScope title="Taught subgroup records" resources={subgroupResources} stateFilter="covered" />
+          <ResourceGroupsByScope title="Subgroup gap candidates for curriculum review" resources={subgroupResources} stateFilter="bridge" />
+          <ResourceGroupsByScope title="Subgroup source-review records" resources={subgroupResources} stateFilter="source_review" />
+          <ResourceGroupsByScope title="Taught role records" resources={roleResources} includeRole stateFilter="covered" />
+          <ResourceGroupsByScope title="Role gap candidates for curriculum review" resources={roleResources} includeRole stateFilter="bridge" />
+          <ResourceGroupsByScope title="Role source-review records" resources={roleResources} includeRole stateFilter="source_review" />
           {!domain.resources.length ? <Text style={[styles.meta, { color: colors.textMuted }]}>No sourced downstream skills, tools or certifications are recorded for this connection.</Text> : null}
         </View>
       ) : null}

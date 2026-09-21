@@ -754,6 +754,39 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
     assert rows[0]["schoolCount"] == 15
 
 
+def test_subject_match_preserves_authoritative_school_identity(monkeypatch):
+    monkeypatch.setattr(
+        spr,
+        "_svc",
+        lambda: _FakeSvc(
+            {
+                "v_school_jamb_programmes": [{
+                    "school_id": "school-1",
+                    "school_name": "UOE",
+                    "institution_type": "university",
+                    "jamb_programme_id": "jp1",
+                    "jamb_name": "Sociology",
+                }],
+                "schools": [{
+                    "id": "school-1",
+                    "name": "UOE",
+                    "official_name": "University of Example",
+                    "short_name": "UOE",
+                    "address": "1 Main Road",
+                }],
+                "school_programmes": [],
+            }
+        ),
+    )
+
+    rows = spr._attach_school_context([{"jambProgrammeId": "jp1"}])
+    offering = rows[0]["schoolOfferings"][0]
+
+    assert offering["officialName"] == "University of Example"
+    assert offering["shortName"] == "UOE"
+    assert offering["address"] == "1 Main Road"
+
+
 def test_verified_university_rule_can_add_a_discovery_match(monkeypatch):
     tables = {
         "school_programme_requirement_exceptions": [{"id": "ex1", "parse_status": "parsed"}],

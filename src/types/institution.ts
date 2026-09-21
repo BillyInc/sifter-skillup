@@ -61,6 +61,9 @@ export interface Organization {
   id: string;
   type: OrganizationType;
   name: string;
+  /** Authoritative registry display fields; never inferred from an acronym. */
+  officialName?: string;
+  shortName?: string;
   /** Registry anchors (which apply depends on type). */
   jambCode?: string; // JAMB/CAPS institution code (universities)
   nucCode?: string; // NUC accreditation (universities)
@@ -260,6 +263,14 @@ export interface ProvisioningMergeCandidate {
 //  Aggregate dashboard (the 5 stat cards) 
 export interface InstitutionSummary {
   institutionName: string;
+  institutionOfficialName?: string | null;
+  institutionShortName?: string | null;
+  institutionAddress?: string | null;
+  institutionCity?: string | null;
+  institutionState?: string | null;
+  institutionCountry?: string | null;
+  institutionType?: OrganizationType | null;
+  verificationStatus?: VerificationStatus | null;
   institutionCode: string;
   activeProgrammes: number;
   facultyCount?: number;

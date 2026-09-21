@@ -146,7 +146,10 @@ def _org_from_school(school_id: str) -> Optional["Organization"]:
             id=row.get("id") or school_id,
             type=org_type,
             name=row.get("name") or "",
+            official_name=row.get("official_name") or row.get("full_name"),
+            short_name=row.get("short_name") or row.get("abbreviation"),
             jamb_code=row.get("jamb_code"),
+            nuc_code=row.get("nuc_code"),
             state=row.get("state"),
             address=row.get("address"),
             city=row.get("city"),
@@ -812,6 +815,8 @@ class Organization(_InstitutionBase):
     id: str
     type: str  # secondary_school | university | tutorial_centre | jamb_cafe
     name: str
+    official_name: Optional[str] = None
+    short_name: Optional[str] = None
     jamb_code: Optional[str] = None
     nuc_code: Optional[str] = None
     moe_approval_no: Optional[str] = None
@@ -898,6 +903,14 @@ class AdminAccessCodeRequest(_InstitutionBase):
 
 class InstitutionSummary(_InstitutionBase):
     institution_name: str
+    institution_official_name: Optional[str] = None
+    institution_short_name: Optional[str] = None
+    institution_address: Optional[str] = None
+    institution_city: Optional[str] = None
+    institution_state: Optional[str] = None
+    institution_country: Optional[str] = None
+    institution_type: Optional[str] = None
+    verification_status: Optional[str] = None
     institution_code: str
     active_programmes: int = 0
     faculty_count: Optional[int] = None
@@ -1661,21 +1674,43 @@ async def get_institution_summary(
     # The RESOLVED org, never the raw path value. Echoing the URL back is how
     # `institution_code: "me"` used to reach the client as if it were real.
     org_id = _assert_own_institution(institution_id, current_user)
+    org = _org_from_school(org_id) if org_id else None
+    institution_name = (org.official_name or org.name) if org else ""
+    institution_code = (org.school_code or org_id or "") if org else (org_id or "")
     try:
         programmes = _school_programmes(current_user, cap=1000)
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
         domains_accessible = len({r["domain_id"] for r in pd_rows})
         summary = InstitutionSummary(
-            institution_name="",
-            institution_code=org_id or "",
+            institution_name=institution_name,
+            institution_official_name=org.official_name if org else None,
+            institution_short_name=org.short_name if org else None,
+            institution_address=org.address if org else None,
+            institution_city=org.city if org else None,
+            institution_state=org.state if org else None,
+            institution_country=org.country if org else None,
+            institution_type=org.type if org else None,
+            verification_status=org.verification_status if org else None,
+            institution_code=institution_code,
             active_programmes=len(programmes),
             domains_accessible=domains_accessible,
         )
         return ResponseModel(data=summary.model_dump(by_alias=True))
     except Exception as exc:  # noqa: BLE001
         log.error("institutions summary failed", error=str(exc))
-        summary = InstitutionSummary(institution_name="", institution_code=org_id or "")
+        summary = InstitutionSummary(
+            institution_name=institution_name,
+            institution_official_name=org.official_name if org else None,
+            institution_short_name=org.short_name if org else None,
+            institution_address=org.address if org else None,
+            institution_city=org.city if org else None,
+            institution_state=org.state if org else None,
+            institution_country=org.country if org else None,
+            institution_type=org.type if org else None,
+            verification_status=org.verification_status if org else None,
+            institution_code=institution_code,
+        )
         return ResponseModel(data=summary.model_dump(by_alias=True))
 
 

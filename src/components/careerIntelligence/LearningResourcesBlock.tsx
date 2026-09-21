@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import { Linking, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
+import { Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from "../../theme";
 import type { CareerLearningResource } from "../../types/career";
 import { careerData } from "../../lib/careerData";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "../../lib/networkState";
 import { SectionLabel } from "./RedesignPrimitives";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { isStudentResource } from "./resourceLinks";
 
 export interface LearningResourcesBlockProps {
   resources?: CareerLearningResource[];
@@ -96,7 +97,7 @@ export function LearningResourcesBlock({
     const unique = new Map<string, CareerLearningResource>();
     for (const resource of resources ?? []) {
       if (!resource.url) continue;
-      if (resource.reviewStatus === "review_only" || resource.ownershipScope === "audit_only") continue;
+      if (!isStudentResource(resource)) continue;
       unique.set(`${resource.resourceType}|${resource.targetName}|${resource.provider}`, resource);
     }
     return GROUPS.map((group) => ({
@@ -129,15 +130,6 @@ export function LearningResourcesBlock({
 
   if (!grouped.length) return null;
 
-  const openResource = async (url: string) => {
-    if (!(await hasInternetConnection())) {
-      setSaveNotice(OFFLINE_LINK_NOTICE);
-      return;
-    }
-    const opened = await Linking.openURL(url).then(() => true).catch(() => false);
-    if (!opened) setSaveNotice("This link could not be opened. Try again when your connection is stable.");
-  };
-
   return (
     <View style={[styles.container, style]}>
       <SectionLabel>{title}</SectionLabel>
@@ -157,7 +149,7 @@ export function LearningResourcesBlock({
             <Pressable
               key={`${resource.resourceType}|${resource.targetName}|${resource.provider}`}
               accessibilityRole="link"
-               onPress={() => { void openResource(resource.url); }}
+               onPress={undefined}
               style={({ pressed }) => [
                 styles.resource,
                 {
@@ -180,7 +172,7 @@ export function LearningResourcesBlock({
                 ) : null}
               </View>
               <View style={styles.actions}>
-                <Text style={[styles.open, { color: colors.accentRole.action }]}>{openLabel(resource)}</Text>
+                <ExternalLinkGuard url={resource.url} label={openLabel(resource)} description={resource.description || `This opens the resource recorded for ${resourceTitle(resource)}.`} textStyle={[styles.open, { color: colors.accentRole.action }]} />
                 <Pressable
                   accessibilityRole="button"
                   onPress={async (event) => {
