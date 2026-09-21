@@ -27,6 +27,24 @@ export function hasGuidanceReportContext(path: Record<string, unknown> | null | 
   return hasStableIdentity(path?.programme) && hasStableIdentity(path?.university);
 }
 
+/**
+ * A restored report path must belong to the route that is currently being
+ * reviewed. Empty route values mean that the caller has no constraint (for
+ * example, a context-free resume link), but a supplied programme or university
+ * identity must match exactly. This prevents a completed path for another
+ * offering from unlocking the current route's report actions.
+ */
+export function hasGuidanceReportContextForRoute(
+  path: Record<string, unknown> | null | undefined,
+  expected: { programmeId?: string; schoolId?: string },
+): boolean {
+  if (!hasGuidanceReportContext(path)) return false;
+  const programmeId = String(asRecord(path?.programme)?.id ?? "");
+  const schoolId = String(asRecord(path?.university)?.id ?? "");
+  return (!expected.programmeId || programmeId === expected.programmeId)
+    && (!expected.schoolId || schoolId === expected.schoolId);
+}
+
 /** Review completion is a deliberate checkpoint, not merely reaching the tab. */
 export function isGuidanceReviewComplete(path: Record<string, unknown> | null | undefined): boolean {
   const resume = asRecord(path?.resume);
@@ -35,6 +53,15 @@ export function isGuidanceReviewComplete(path: Record<string, unknown> | null | 
 
 export function isGuidanceReportReady(path: Record<string, unknown> | null | undefined): boolean {
   return hasGuidanceReportContext(path) && isGuidanceReviewComplete(path);
+}
+
+/** Complete Review is usable only when its academic context matches the
+ * programme/university route that is currently open. */
+export function isGuidanceReportReadyForRoute(
+  path: Record<string, unknown> | null | undefined,
+  expected: { programmeId?: string; schoolId?: string },
+): boolean {
+  return hasGuidanceReportContextForRoute(path, expected) && isGuidanceReviewComplete(path);
 }
 
 function guidanceItems(path: GuidancePathRecord, kind: BranchKind): GuidanceListItem[] {

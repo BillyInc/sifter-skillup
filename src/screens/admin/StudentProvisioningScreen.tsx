@@ -85,6 +85,36 @@ function streamLabel(stream?: ProvisioningStream | null) {
   return STREAMS.find((s) => s.value === stream)?.label ?? "";
 }
 
+function savedPathRecordName(value: unknown, keys: string[]) {
+  if (!value || typeof value !== "object") return null;
+  const record = value as Record<string, unknown>;
+  for (const key of keys) {
+    if (typeof record[key] === "string" && record[key]) return record[key] as string;
+  }
+  return null;
+}
+
+function savedGuidancePathLabel(path: Record<string, any>) {
+  const programme = savedPathRecordName(path.programme, ["name", "programmeName", "jambName"]);
+  const university = savedPathRecordName(path.university, ["name", "universityName", "schoolName"]);
+  const domains = (Array.isArray(path.domains) ? path.domains : [])
+    .map((item: unknown) => savedPathRecordName(item, ["name", "domainName", "label"]))
+    .filter(Boolean);
+  const subgroups = (Array.isArray(path.subgroups) ? path.subgroups : [])
+    .map((item: unknown) => savedPathRecordName(item, ["name", "subgroupName", "label"]))
+    .filter(Boolean);
+  const roles = (Array.isArray(path.roles) ? path.roles : [])
+    .map((item: unknown) => savedPathRecordName(item, ["name", "roleName", "label"]))
+    .filter(Boolean);
+  return [
+    programme ? `Programme: ${programme}` : null,
+    university ? `University: ${university}` : null,
+    domains.length ? `Domains: ${domains.join(", ")}` : null,
+    subgroups.length ? `Subgroups: ${subgroups.join(", ")}` : null,
+    roles.length ? `Roles: ${roles.join(", ")}` : null,
+  ].filter(Boolean).join(" → ");
+}
+
 function isLocalDraftId(id: string) {
   return id.startsWith("local-draft-");
 }
@@ -1145,6 +1175,27 @@ function GeneratedCards({
   const { colors } = useTheme();
   const router = useRouter();
   const [copied, setCopied] = useState<string | null>(null);
+  const [savedPathLabels, setSavedPathLabels] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let active = true;
+    const complete = generated.filter((student) => student.guidanceComplete);
+    if (!complete.length) {
+      setSavedPathLabels({});
+      return () => { active = false; };
+    }
+    void Promise.all(complete.map(async (student) => {
+      try {
+        const saved = await provisioningData.getGuidancePath(student.userId);
+        return [student.userId, savedGuidancePathLabel(saved?.path ?? {})] as const;
+      } catch {
+        return [student.userId, ""] as const;
+      }
+    })).then((entries) => {
+      if (active) setSavedPathLabels(Object.fromEntries(entries));
+    });
+    return () => { active = false; };
+  }, [generated]);
 
   const copyAll = useCallback(async () => {
     const text = generated
@@ -1200,9 +1251,12 @@ function GeneratedCards({
           <Text style={[styles.cardHint, { color: colors.textMuted }]}>
             {copied === g.userId ? "Copied!" : "Tap the code to copy"}
           </Text>
-           {!g.guidanceComplete ? (
-              <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this student before printing a report.</Text>
-            ) : null}
+          {!g.guidanceComplete ? (
+            <Text style={[styles.guidancePending, { color: colors.warning ?? colors.textMuted }]}>Guide this student before printing a report.</Text>
+          ) : null}
+          {g.guidanceComplete ? (
+            <Text style={[styles.guidancePath, { color: colors.textMuted }]}>Report context: {savedPathLabels[g.userId] || "Saved guidance path details are loading."}</Text>
+          ) : null}
           <View style={styles.cardActions}>
             <TouchableOpacity
               onPress={() => provisioningData.openLoginCard(g.userId)}
@@ -1599,6 +1653,7 @@ const styles = StyleSheet.create({
   cardCode: { fontSize: FontSize.hero, letterSpacing: 4 },
   cardHint: { fontSize: FontSize.xs },
   guidancePending: { fontSize: FontSize.xs, textAlign: "center" },
+  guidancePath: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45, textAlign: "center" },
   streamPicker: { gap: Spacing.xs },
   streamPickerCompact: { flex: 1, minWidth: 180 },
   streamPickerLabel: {

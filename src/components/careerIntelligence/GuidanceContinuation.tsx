@@ -47,10 +47,10 @@ export function GuidanceContinuation({ programmeName, connection, domainName, su
   return (
     <View style={styles.container}>
       <SectionLabel>How this path builds</SectionLabel>
-      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each step keeps what came before and adds a more focused way to use it. The names below come from the reviewed curriculum and guidance records.</Text>
+      <Text style={[styles.intro, { color: colors.textRole.secondary }]}>Each step keeps what came before and adds a more focused way to use it. The names below come from the programme and field information.</Text>
       <View style={styles.grid}>
         {programmeName ? <Stage title={`From ${programmeName}`} text={connection?.explanation || "The programme is the starting point for this route."} items={programmeEvidence} /> : null}
-        <Stage title={`Shared in ${domainName}`} text="Start with the field foundation. These items are owned by the domain; they are not a role-frequency checklist." items={foundationNames.length ? foundationNames : domainNames} />
+        <Stage title={`Shared foundation in ${domainName}`} text="Start with the foundation shared across this field." items={foundationNames.length ? foundationNames : domainNames} />
         {subgroupName ? <Stage title={`${subgroupName} adds`} text="This focused area adds methods and capabilities for a narrower kind of work." items={subgroupNames} /> : null}
         {roleName ? <Stage title={`${roleName} focuses`} text="This role applies the path to a particular kind of work and output." items={roleNames} /> : null}
       </View>

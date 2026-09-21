@@ -7,7 +7,7 @@ import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
-import { isStudentResource } from "./resourceLinks";
+import { isStudentResource, studentItemLinkUrl } from "./resourceLinks";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
@@ -46,7 +46,7 @@ export function FoundationSkillsBlock({
   if (!reviewedSkills.length) return <View style={[styles.container, style]}>
     <SectionLabel>{title === "Common skills in this domain" ? "What to build first" : title}</SectionLabel>
     <View style={styles.emptyCard}>
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>No reviewed foundation sequence is attached to this level yet. The page will not infer a learning priority from unrelated role records.</Text>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>A learning sequence is not available for this level yet. The page will not guess a priority from unrelated role information.</Text>
     </View>
   </View>;
 
@@ -66,8 +66,8 @@ export function FoundationSkillsBlock({
           && isStudentResource(item)
           && item.targetName.trim().toLowerCase() === skill.skill.trim().toLowerCase(),
         );
-        const url = skill.uri || resource?.url;
         const contextItem = contextItemFor(contextItems, "skill", skill.skill);
+        const url = studentItemLinkUrl(contextItem, resource, skill.uri);
         const buildOn = studentRelationshipTargets(contextItem, "builds_on", contextItems);
         const worksWith = studentRelationshipTargets(contextItem, "works_with", contextItems);
         return (
@@ -82,7 +82,7 @@ export function FoundationSkillsBlock({
               </Text>
             </View>
             <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>
-              {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is a source-backed foundation item for the field."}
+              {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is one of the foundations for the field."}
             </Text>
             {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>{contextItem.contextualUse}</Text> : null}
             {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>Helps you: {contextItem.expectedOutput}</Text> : null}

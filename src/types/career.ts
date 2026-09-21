@@ -725,6 +725,19 @@ export interface CareerContextItem {
   evidenceType: "source_supported_synthesis";
   sourceConfidence: SourceConfidence;
   dataState: "source_backed";
+  /**
+   * Explicit student-facing link boundary.  A reviewed record may be shown
+   * without a link, but an unresolved/review-required link must stay out of
+   * the student route and remain available to admin/audit views only.
+   */
+  linkState?: "linked" | "no_link" | "review_required";
+  linkUrl?: string | null;
+  linkTitle?: string | null;
+  linkSourceReference?: Record<string, unknown>;
+  linkAccessedAt?: string | null;
+  linkConfidence?: SourceConfidence;
+  linkEvidence?: Record<string, unknown>;
+  noLinkReason?: string | null;
   guidanceOwner?: "programme" | "domain" | "subgroup" | "role" | "role_aggregated" | "review_only" | "audit_only" | null;
   verifiedAt: string;
 }

@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "rea
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { DetailScaffold, RouteLine } from "@/components/careerIntelligence";
-import { hasGuidanceReportContext, isGuidanceReportReady } from "@/components/careerIntelligence/GuidanceReportButton";
+import { hasGuidanceReportContextForRoute, isGuidanceReportReadyForRoute } from "@/components/careerIntelligence/GuidanceReportButton";
 import { careerData, type GuidanceDomainSelection, type GuidanceReportPath } from "@/lib/careerData";
 import { provisioningData } from "@/lib/provisioningData";
 import { useExploreNav } from "@/lib/exploreNav";
@@ -25,24 +25,24 @@ function domainItem(id: string, name: string, extra: Partial<GuidanceDomainSelec
 }
 
 function relationLabel(matchType?: DomainMatchType): string {
-  if (matchType === "functional") return "Functional connection";
-  if (matchType === "adjacent") return "Possible pivot";
-  if (matchType === "direct") return "Direct connection";
-  return "Domain route";
+  if (matchType === "functional") return "Related application";
+  if (matchType === "adjacent") return "Nearby direction";
+  if (matchType === "direct") return "Primary connection";
+  return "Connected field";
 }
 
 function evidenceLabel(state: GuidanceEvidenceState): string {
-  if (state === "source_backed") return "Source-backed";
+  if (state === "source_backed") return "Based on a named source";
   if (state === "context_only") return "Context available";
-  if (state === "limited") return "Limited";
-  if (state === "pending") return "Pending";
-  return "Not attached";
+  if (state === "limited") return "Limited information";
+  if (state === "pending") return "Being reviewed";
+  return "Not available";
 }
 
 function EvidenceSummary({ colors, evidence }: { colors: ColorPalette; evidence?: GuidanceEvidence }) {
   if (!evidence) return null;
-  return <View accessibilityLabel="Evidence scope" style={styles.evidenceSummary}>
-    <Text style={[styles.evidenceTitle, { color: colors.textRole.muted }]}>Evidence scope</Text>
+  return <View accessibilityLabel="Guidance coverage" style={styles.evidenceSummary}>
+    <Text style={[styles.evidenceTitle, { color: colors.textRole.muted }]}>Where this guidance applies</Text>
     <View style={styles.evidenceItems}>
       {[{ label: "Nigeria", lens: evidence.nigeria }, { label: "Remote", lens: evidence.remote }, { label: "Global", lens: evidence.global }].map(({ label, lens }) => <View key={label} style={[styles.evidenceItem, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
         <Text style={[styles.evidenceLabel, { color: colors.textRole.primary }]}>{label}</Text>
@@ -113,7 +113,7 @@ export default function GuidedFieldSelectionScreen() {
       let domains: DomainV2[] = [];
       const loadLinkedDomains = async (links: { domainId: string; matchType?: DomainMatchType }[]) => {
         const matchById = new Map(links.map((link) => [link.domainId, link.matchType]));
-        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2(link.domainId)));
+        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2ForStudent(link.domainId)));
         return loaded
           .filter((entry): entry is DataState<DomainV2> & { data: DomainV2 } => Boolean(entry.data))
           .map((entry) => ({ ...entry.data, programmeMatchType: matchById.get(entry.data.id) }));
@@ -128,7 +128,7 @@ export default function GuidedFieldSelectionScreen() {
           const links = linked.status === "real" && linked.data ? linked.data.domains : [];
           domains = await loadLinkedDomains(links);
         } else {
-          const programme = await careerData.getProgramme(programmeId);
+          const programme = await careerData.getProgrammeForStudent(programmeId);
           if (programme.status !== "real") {
             if (active) setState({ status: programme.status, data: null, meta: programme.meta });
             return;
@@ -151,7 +151,7 @@ export default function GuidedFieldSelectionScreen() {
           return;
         }
         const links = clusters.status === "real" && clusters.data ? clusters.data.flatMap((group) => group.domains) : [];
-        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2(link.id)));
+        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2ForStudent(link.id)));
         domains = loaded.filter((entry): entry is DataState<DomainV2> & { data: DomainV2 } => Boolean(entry.data)).map((entry) => entry.data);
       }
       if (active) {
@@ -171,8 +171,14 @@ export default function GuidedFieldSelectionScreen() {
   const directRoleDomains = selectedDomains.filter((domain) => domain.roles.some((role) => role.guidanceAvailable !== false && !role.subgroupId));
   const showSubgroupStep = selectedDomains.length === 0 || selectedDomains.some((domain) => domain.subgroups.length > 0);
   const displayedStep: Step = !showSubgroupStep && step === "subgroups" ? "roles" : step;
-  const reportContextReady = hasGuidanceReportContext(path as Record<string, unknown>);
-  const reviewComplete = isGuidanceReportReady(path as Record<string, unknown>);
+  const reportContextReady = hasGuidanceReportContextForRoute(path as Record<string, unknown>, {
+    programmeId: guidanceContext.programmeId,
+    schoolId: guidanceContext.schoolId,
+  });
+  const reviewComplete = isGuidanceReportReadyForRoute(path as Record<string, unknown>, {
+    programmeId: guidanceContext.programmeId,
+    schoolId: guidanceContext.schoolId,
+  });
   const roleEntries: RoleEntry[] = [
     ...selectedSubgroups,
     ...directRoleDomains.map((domain) => ({ domain, directOnly: domain.subgroups.length > 0 })),
@@ -331,10 +337,10 @@ function DomainStep({ colors, domains, selected, onToggle, onNext }: { colors: C
 */
 function DomainStepRefined({ colors, domains, selected, primaryId, onToggle, onSetPrimary, onView, onNext, onBack, nextLabel }: { colors: ColorPalette; domains: DomainV2[]; selected: Set<string>; primaryId: string; onToggle: (domain: DomainV2) => void; onSetPrimary: (domain: DomainV2) => void; onView: (domain: DomainV2) => void; onNext: () => void; onBack: () => void; nextLabel: string }) {
   const groups: { label: string; items: DomainV2[] }[] = [
-    { label: "Direct connections", items: domains.filter((domain) => domain.programmeMatchType === "direct") },
-    { label: "Functional connections", items: domains.filter((domain) => domain.programmeMatchType === "functional") },
-    { label: "Possible pivots", items: domains.filter((domain) => domain.programmeMatchType === "adjacent") },
-    { label: "Other available domains", items: domains.filter((domain) => !domain.programmeMatchType) },
+    { label: "Closest matches", items: domains.filter((domain) => domain.programmeMatchType === "direct") },
+    { label: "Useful foundations", items: domains.filter((domain) => domain.programmeMatchType === "functional") },
+    { label: "Possible next directions", items: domains.filter((domain) => domain.programmeMatchType === "adjacent") },
+    { label: "Other available fields", items: domains.filter((domain) => !domain.programmeMatchType) },
   ].filter((group) => group.items.length);
   return <View style={styles.section}>
     <Text style={[styles.heading, { color: colors.textRole.primary }]}>First, understand the domains</Text>

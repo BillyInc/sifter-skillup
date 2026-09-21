@@ -1254,10 +1254,18 @@ def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[di
                 "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
                 "sourceConfidence": row.get("source_confidence"),
                 "dataState": row.get("data_state") or "source_backed",
+                "guidanceOwner": row.get("guidance_owner"),
                 "verifiedAt": row.get("verified_at"),
             }
             for row in rows
+            # Context ownership and explicit source state are both required
+            # for the student JAMB route.  In particular, do not treat a
+            # missing data_state as source-backed: older role-aggregated and
+            # review-only rows remain audit data until they are classified and
+            # approved for the programme layer.
             if row.get("name")
+            and row.get("guidance_owner") == "programme"
+            and row.get("data_state") == "source_backed"
         ]
     except Exception as exc:  # noqa: BLE001
         log.debug("programme context lookup unavailable for JAMB detail", error=str(exc))

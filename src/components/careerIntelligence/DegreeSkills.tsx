@@ -13,6 +13,7 @@ import type { ProgrammeCurriculumContract, ProgrammeCurriculumOutcome, CareerLea
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { isStudentResource } from "./resourceLinks";
+import { programmeThemeForCourse, type ProgrammeThemeKey } from "./programmeCurriculumThemes";
 
 const INITIAL_THEMES = 5;
 const INITIAL_ABILITIES = 4;
@@ -69,7 +70,7 @@ function groupCourses(contract: ProgrammeCurriculumContract): CourseGroup[] {
   }));
 }
 
-type ThemeKey = "core" | "shared" | "people" | "ideas" | "research" | "technology" | "application";
+type ThemeKey = ProgrammeThemeKey;
 type Theme = {
   key: ThemeKey;
   title: string;
@@ -87,19 +88,6 @@ const THEME_META: Record<ThemeKey, Omit<Theme, "courses">> = {
   technology: { key: "technology", title: "Technology and information", icon: "monitor", description: "Courses in this part cover the digital applications and information practices recorded for the programme." },
   application: { key: "application", title: "Using what you learn", icon: "edit-3", description: "Courses in this part show how the programme expects you to apply, explain, present or create something." },
 };
-
-function themeForCourse(course: CourseGroup, sociology: boolean): ThemeKey {
-  if (!sociology) return course.displayGroup === "shared_university" ? "shared" : "core";
-  if (course.displayGroup === "shared_university") return "shared";
-  const titleText = (course.title + " " + (course.courseSummary ?? "")).toLowerCase();
-  const outcomeText = course.outcomes.slice(0, 3).map((item) => item.studentText).join(" ").toLowerCase();
-  const text = titleText + " " + outcomeText;
-  if (/(research|method|survey|statistics|data|project|proposal|fieldwork|investigat|evidence|analysis)/.test(text)) return "research";
-  if (/(computer|computing|digital|information|internet|application|software|technology)/.test(text)) return "technology";
-  if (/(communication|presentation|report|essay|entrepreneur|peace|conflict|practice|apply|solution|development)/.test(text)) return "application";
-  if (/(theor|philosoph|history|concept|thought|foundation|principle)/.test(text)) return "ideas";
-  return "people";
-}
 
 function outcomeAction(text: string): string {
   const cleaned = cleanText(text).replace(/[.;]+$/, "");
@@ -170,10 +158,9 @@ function resourcesForTheme(resources: CareerLearningResource[] | undefined, them
 }
 
 function buildThemes(courses: CourseGroup[]): Theme[] {
-  const sociology = courses.some((course) => ["sociology_programme", "supporting_social_sciences"].includes(course.displayGroup ?? ""));
   const byKey = new Map<ThemeKey, CourseGroup[]>();
   for (const course of courses) {
-    const key = themeForCourse(course, sociology);
+    const key = programmeThemeForCourse(course);
     byKey.set(key, (byKey.get(key) ?? []).concat(course));
   }
   return (Object.keys(THEME_META) as ThemeKey[]).map((key) => ({ ...THEME_META[key], courses: byKey.get(key) ?? [] })).filter((theme) => theme.courses.length);

@@ -25,7 +25,7 @@ import { Badge } from "../ui";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
-import { resourceForItem } from "./resourceLinks";
+import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 
 export interface CertPlacementListProps {
   gateway?: CertificationV2Enriched[];
@@ -165,9 +165,9 @@ function CertRow({
   const { colors } = useTheme();
   const price = formatPrice(cert.price, cert.currency);
   const resource = resourceForItem(resources, "certification", cert.name);
-  const url = cert.officialUrl || resource?.url;
-  const hasUrl = !!url;
   const relation = contextItemFor(contextItems, "certification", cert.name);
+  const url = studentItemLinkUrl(relation, resource, cert.officialUrl);
+  const hasUrl = !!url;
 
   return (
     <View
@@ -234,7 +234,7 @@ function CertRow({
             </Text>
           </View>
         ) : null}
-        {cert.replacementName && cert.replacementUrl ? <ExternalLinkGuard url={cert.replacementUrl} label={`Current route: ${cert.replacementName}`} description={`This opens the current route recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} /> : null}
+        {cert.replacementName && cert.replacementUrl ? <ExternalLinkGuard url={studentItemLinkUrl(undefined, undefined, cert.replacementUrl)} label={`Current route: ${cert.replacementName}`} description={`This opens the current route recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} /> : null}
         {price || cert.tierType || cert.credentialType ? (
           <View style={styles.certFacts}>
             {price ? (
