@@ -1,4 +1,5 @@
 import type { CareerContextItem, CareerLearningResource } from "@/types/career";
+import { isLegacyOnetUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 const RESOURCE_TYPES: Record<CareerContextItem["itemType"], CareerLearningResource["resourceType"][]> = {
   skill: ["skill_learning", "skill_reference"],
@@ -9,12 +10,16 @@ const RESOURCE_TYPES: Record<CareerContextItem["itemType"], CareerLearningResour
 
 /** Student resources must be approved, source-backed and owned by a visible context. */
 export function isStudentResource(resource: CareerLearningResource): boolean {
-  return resource.reviewStatus !== "review_only"
+  return Boolean(studentSafeUrl(resource.url))
+    && !isLegacyOnetUrl(resource.sourceUrl)
+    && resource.reviewStatus !== "review_only"
     && resource.reviewStatus !== "unverified"
     && resource.ownershipScope !== "audit_only"
     && resource.dataState !== "unsourced"
     && resource.sourceConfidence !== "unsourced";
 }
+
+export { studentItemLinkUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 /** Resolve only an explicitly attached item resource. Descriptive resource
  * names may begin with the canonical item name; arbitrary word overlap is

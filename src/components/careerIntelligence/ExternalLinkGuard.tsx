@@ -1,17 +1,21 @@
 import React, { useMemo, useState } from "react";
 import { Linking, Modal, StyleSheet, Text, TouchableOpacity, View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type ExternalLinkGuardProps = {
   url?: string | null;
   label: string;
   description?: string | null;
+  /** Admin/audit may open retained source URLs; student guidance may not. */
+  audience?: "student" | "admin";
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 };
 
-function safeExternalUrl(value?: string | null): string | null {
+function safeExternalUrl(value?: string | null, audience: "student" | "admin" = "student"): string | null {
+  if (audience === "student") return studentSafeUrl(value) ?? null;
   if (!value) return null;
   try {
     const parsed = new URL(value);
@@ -22,11 +26,11 @@ function safeExternalUrl(value?: string | null): string | null {
 }
 
 /** A deliberate hand-off before a student leaves Sifter for a third-party source. */
-export function ExternalLinkGuard({ url, label, description, disabled, style, textStyle }: ExternalLinkGuardProps) {
+export function ExternalLinkGuard({ url, label, description, audience = "student", disabled, style, textStyle }: ExternalLinkGuardProps) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const destination = useMemo(() => safeExternalUrl(url), [url]);
+  const destination = useMemo(() => safeExternalUrl(url, audience), [audience, url]);
   const hostname = useMemo(() => {
     if (!destination) return null;
     try { return new URL(destination).hostname.replace(/^www\./, ""); } catch { return null; }

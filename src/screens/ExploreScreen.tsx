@@ -47,6 +47,7 @@ import { SkillDiscoveryPanel } from "@/components/careerIntelligence/SkillDiscov
 import { CareerDisclaimer } from "@/components/careerIntelligence/CareerDisclaimer";
 import { getStartingPoint } from "@/lib/startingPoint";
 import { useSearchLauncher } from "@/components/shell/searchLauncher";
+import type { StartingPointProfile } from "@/types/onboarding";
 
 // ─── Cluster hero data ───────────────────────────────────────────
 // The 8 signature clusters from BUILD_PLAN.md with their defined
@@ -129,6 +130,8 @@ export default function ExploreScreen({
   const hasSession = Boolean(user);
   const [searchUserType, setSearchUserType] = useState<string | null>(null);
   const [searchSchoolId, setSearchSchoolId] = useState<string | null>(null);
+  const [startingPoint, setStartingPoint] = useState<StartingPointProfile | null>(null);
+  const [startingPointResolved, setStartingPointResolved] = useState(false);
 
   const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState<ResultFilter>("all");
@@ -148,12 +151,17 @@ export default function ExploreScreen({
     if (!user?.id || isGuest) {
       setSearchUserType(null);
       setSearchSchoolId(null);
+      setStartingPoint(null);
+      setStartingPointResolved(true);
       return () => { active = false; };
     }
+    setStartingPointResolved(false);
     void getStartingPoint(user.id).then((profile) => {
       if (!active) return;
+      setStartingPoint(profile);
       setSearchUserType(profile?.userType ?? null);
       setSearchSchoolId(profile?.preferredSchoolId ?? null);
+      setStartingPointResolved(true);
     });
     return () => { active = false; };
   }, [isGuest, user?.id]);
@@ -277,7 +285,19 @@ export default function ExploreScreen({
       {!adminAudience ? (
         <AdmissionEntryCard
           isGuest={isGuest}
-          onPress={() => isGuest ? router.push("/(auth)/signup" as never) : exploreNav.admissionHub(router, "programme")}
+          undergraduate={startingPoint?.userType === "student"}
+          onPress={() => {
+            if (isGuest) {
+              router.push("/(auth)/signup" as never);
+            } else if (startingPoint?.userType === "student") {
+              exploreNav.admissionHub(router, "school", null, {
+                userType: "student",
+                journey: "undergraduate_programmes",
+              });
+            } else {
+              exploreNav.admissionHub(router, "programme");
+            }
+          }}
         />
       ) : null}
 
@@ -298,6 +318,8 @@ export default function ExploreScreen({
           isGuest={isGuest}
           router={router}
           nav={exploreNav}
+          startingPoint={startingPoint}
+          startingPointResolved={startingPointResolved}
           onPick={(term) => {
             setQuery(term);
             launchSearch(term);
@@ -491,6 +513,8 @@ function ExploreIdle({
   nav,
   onPick,
   onFocusSearch,
+  startingPoint,
+  startingPointResolved,
   adminAudience,
   adminType,
 }: {
@@ -501,6 +525,8 @@ function ExploreIdle({
   nav: ExploreNav;
   onPick: (term: string) => void;
   onFocusSearch: () => void;
+  startingPoint: StartingPointProfile | null;
+  startingPointResolved: boolean;
   adminAudience?: "school" | "university";
   adminType?: string | null;
 }) {
@@ -630,7 +656,8 @@ function ExploreIdle({
           partially initialised guidance route. */}
       {!adminAudience && isGuest ? (
         <GuestExploreActions onCreateAccount={() => router.push("/(auth)/signup" as never)} />
-      ) : !adminAudience ? (
+      ) : !adminAudience && startingPointResolved && startingPoint?.userType === "student" ? null
+      : !adminAudience && startingPointResolved ? (
         <View style={styles.section}>
           <SectionLabel>Starting points</SectionLabel>
           {DOORS.map((d, i) => (
@@ -639,10 +666,26 @@ function ExploreIdle({
                 activeOpacity={0.85}
                 onPress={
                   d.key === "know"
-                    ? onFocusSearch
+                    ? () => nav.admissionHub(router, "programme", null, {
+                        entry: "programme_and_university",
+                        userType: startingPoint?.userType,
+                        className: startingPoint?.ssClass,
+                        stream: startingPoint?.stream,
+                      })
                     : d.key === "what"
-                      ? () => nav.admissionHub(router, "programme")
-                      : () => nav.admissionHub(router, "subjects")
+                      ? () => nav.admissionHub(router, "programme", null, {
+                          entry: "programme_search",
+                          userType: startingPoint?.userType,
+                          className: startingPoint?.ssClass,
+                          stream: startingPoint?.stream,
+                        })
+                      : () => nav.admissionHub(router, "subjects", null, {
+                          entry: "subject_match",
+                          userType: startingPoint?.userType,
+                          className: startingPoint?.ssClass,
+                          stream: startingPoint?.stream,
+                          examType: startingPoint?.userType === "senior_secondary" ? "olevel" : "combined",
+                        })
                 }
                 style={[
                   styles.card,
@@ -676,7 +719,7 @@ function ExploreIdle({
   );
 }
 
-function AdmissionEntryCard({ isGuest, onPress }: { isGuest: boolean; onPress: () => void }) {
+function AdmissionEntryCard({ isGuest, undergraduate, onPress }: { isGuest: boolean; undergraduate: boolean; onPress: () => void }) {
   const { colors } = useTheme();
   return (
     <TouchableOpacity
@@ -688,10 +731,10 @@ function AdmissionEntryCard({ isGuest, onPress }: { isGuest: boolean; onPress: (
         <Feather name="book-open" size={22} color={colors.accentRole.action} />
       </View>
       <View style={styles.admissionLeft}>
-        <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>PROGRAMME + UNIVERSITY</Text>
-        <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>Find a programme and university</Text>
+        <Text style={[styles.admissionEyebrow, { color: colors.accentRole.action }]}>{undergraduate ? "MY UNIVERSITY" : "PROGRAMME + UNIVERSITY"}</Text>
+        <Text style={[styles.admissionTitle, { color: colors.textRole.primary }]}>{undergraduate ? "I’m studying this programme" : "Find a programme and university"}</Text>
         <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>
-          {isGuest ? "Create an account to start a connected programme and university search." : "Start with what you know, your subjects, or a university and compare the right options."}
+          {isGuest ? "Create an account to start connected guidance." : undergraduate ? "Choose your university and programme, then follow what you are learning into domains, subgroups, roles and next skills." : "Start with what you know, your subjects, or a university and compare the right options."}
         </Text>
         <Text style={[styles.admissionAction, { color: colors.accentRole.action }]}>
           {isGuest ? "Create account to start" : "Start matching"} <Text style={{ fontSize: 16 }}>→</Text>
@@ -921,7 +964,7 @@ function buildExtendedSearchGroups(
         subtitle: item.domainName ? `Used in ${item.domainName}` : "Career skill",
         meta: item.context,
         href: item.domainId ? `${basePath}/domain/${encodeURIComponent(item.domainId)}` : undefined,
-        icon: "zap",
+        icon: "check-circle",
       })),
     },
     {

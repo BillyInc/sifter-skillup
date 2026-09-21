@@ -113,7 +113,7 @@ export default function GuidedFieldSelectionScreen() {
       let domains: DomainV2[] = [];
       const loadLinkedDomains = async (links: { domainId: string; matchType?: DomainMatchType }[]) => {
         const matchById = new Map(links.map((link) => [link.domainId, link.matchType]));
-        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2(link.domainId)));
+        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2ForStudent(link.domainId)));
         return loaded
           .filter((entry): entry is DataState<DomainV2> & { data: DomainV2 } => Boolean(entry.data))
           .map((entry) => ({ ...entry.data, programmeMatchType: matchById.get(entry.data.id) }));
@@ -128,7 +128,7 @@ export default function GuidedFieldSelectionScreen() {
           const links = linked.status === "real" && linked.data ? linked.data.domains : [];
           domains = await loadLinkedDomains(links);
         } else {
-          const programme = await careerData.getProgramme(programmeId);
+          const programme = await careerData.getProgrammeForStudent(programmeId);
           if (programme.status !== "real") {
             if (active) setState({ status: programme.status, data: null, meta: programme.meta });
             return;
@@ -151,7 +151,7 @@ export default function GuidedFieldSelectionScreen() {
           return;
         }
         const links = clusters.status === "real" && clusters.data ? clusters.data.flatMap((group) => group.domains) : [];
-        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2(link.id)));
+        const loaded = await Promise.all(links.map((link) => careerData.getDomainV2ForStudent(link.id)));
         domains = loaded.filter((entry): entry is DataState<DomainV2> & { data: DomainV2 } => Boolean(entry.data)).map((entry) => entry.data);
       }
       if (active) {

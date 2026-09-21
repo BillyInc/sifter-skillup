@@ -4,6 +4,7 @@ import { CompassFonts, useTheme, Spacing, FontSize, FontWeight, Radius } from ".
 import type { GuidanceEvidence, GuidanceEvidenceLens } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 export interface GuidanceEvidenceBlockProps {
   evidence?: GuidanceEvidence;
@@ -35,14 +36,18 @@ function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens })
           <Text style={[styles.sourcesLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
             Sources for this signal
           </Text>
-          {lens.sources.map((source) => (
+          {lens.sources.map((source) => {
+            const url = studentSafeUrl(source.url);
+            if (!url) return null;
+            return (
             <View
               key={`${source.id}|${source.url}`}
               style={styles.sourceLink}
             >
-              <ExternalLinkGuard url={source.url} label={source.label} description={`This opens the source supporting the ${label.toLowerCase()} guidance.`} textStyle={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]} />
+              <ExternalLinkGuard url={url} label={source.label} description={`This opens the source supporting the ${label.toLowerCase()} guidance.`} textStyle={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]} />
             </View>
-          ))}
+            );
+          })}
         </View>
       ) : null}
     </View>

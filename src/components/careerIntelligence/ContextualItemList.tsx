@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import type { CareerContextItem, CareerLearningResource, ComputationalMethodEvidence } from "@/types/career";
 import { SectionLabel } from "./RedesignPrimitives";
-import { resourceForItem } from "./resourceLinks";
+import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
@@ -37,10 +37,13 @@ function relationshipTargets(
   return resolveRelationshipTargets(item, relationshipType, items);
 }
 
-function isStudentItem(item: CareerContextItem): boolean {
+function isStudentItem(item: CareerContextItem, resources?: CareerLearningResource[]): boolean {
+  const resource = resourceForItem(resources, item.itemType, item.name);
   return item.dataState === "source_backed"
     && item.sourceConfidence !== "unsourced"
-    && item.guidanceOwner === item.contextLevel;
+    && item.guidanceOwner === item.contextLevel
+    && item.linkState !== "review_required"
+    && (item.linkState !== "linked" || Boolean(studentItemLinkUrl(item, resource)));
 }
 
 /**
@@ -66,7 +69,7 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
   const ordered = useMemo(() => {
     const seen = new Set<string>();
     return [...(items ?? [])]
-      .filter((item) => isStudentItem(item) && (!itemTypes?.length || itemTypes.includes(item.itemType)) && !excluded.has(item.name.trim().toLowerCase()))
+      .filter((item) => isStudentItem(item, resources) && (!itemTypes?.length || itemTypes.includes(item.itemType)) && !excluded.has(item.name.trim().toLowerCase()))
       .filter((item) => {
         const key = `${item.itemType}:${item.itemKey.trim().toLowerCase() || item.name.trim().toLowerCase()}`;
         if (seen.has(key)) return false;
@@ -98,8 +101,8 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
       // not automatically item-specific learning links. Only an explicitly
       // attached resource may become a student link; otherwise the card must
       // show the honest no-link state.
-      const url = resource?.url;
-      const label = resource ? `Open ${resource.provider}` : "";
+      const url = studentItemLinkUrl(item, resource);
+       const label = resource ? `Open ${resource.provider}` : `Open verified information for ${item.name}`;
       return <View key={key} style={[styles.card, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <View style={styles.header}>
           <View style={{ flex: 1, gap: Spacing.xs }}>
@@ -137,7 +140,7 @@ export function ContextualItemList({ items, itemTypes, title = "Your preparation
           </View> : null}
           <View style={[styles.resource, { borderTopColor: colors.borderRole.subtle }]}>
             {resource?.description ? <Text style={[styles.caption, { color: colors.textRole.secondary }]}>{resource.description}</Text> : null}
-            {url ? <ExternalLinkGuard url={url} label={label} description={resource?.description || `This opens the verified learning or reference page for ${item.name}.`} /> : <Text style={[styles.caption, { color: colors.textRole.muted }]}>No verified item-specific learning link is available yet.</Text>}
+             {url ? <ExternalLinkGuard url={url} label={label} description={resource?.description || `This opens the verified learning or reference page for ${item.name}.`} /> : <Text style={[styles.caption, { color: colors.textRole.muted }]}>No verified link is available yet.</Text>}
           </View>
           <ContextSourceLinks item={item} resource={resource} />
           {item.evidenceLimitations.map((limitation) => <Text key={limitation} style={[styles.limit, { color: colors.textRole.muted }]}>{limitation}</Text>)}

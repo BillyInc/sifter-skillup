@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, type ViewStyle } from "react-
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "../../theme";
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { isLegacyOnetUrl, studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type ContextItem = {
   name?: unknown;
@@ -87,7 +88,9 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
     const source = record(value);
     const name = typeof source.name === "string" ? source.name : typeof source.id === "string" ? source.id : "";
     const urls = Array.isArray(source.urls) ? source.urls.filter((url): url is string => typeof url === "string") : [];
-    return name ? [{ name, url: urls[0] }] : [];
+    const url = studentSafeUrl(urls[0]);
+    if (!name || /o\*?net/i.test(name) || isLegacyOnetUrl(urls[0])) return [];
+    return [{ name, url }];
   });
   const seen = new Set(rows.map((row) => row.name.toLowerCase()));
   const ids = [
@@ -96,8 +99,8 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
   for (const value of ids) {
     if (typeof value !== "string") continue;
     const fallback = SOURCE_LINKS[value];
-    if (!fallback || seen.has(fallback.name.toLowerCase())) continue;
-    rows.push(fallback);
+    if (!fallback || /o\*?net/i.test(fallback.name) || isLegacyOnetUrl(fallback.url) || seen.has(fallback.name.toLowerCase())) continue;
+    rows.push({ name: fallback.name, url: studentSafeUrl(fallback.url) });
     seen.add(fallback.name.toLowerCase());
   }
   return rows;

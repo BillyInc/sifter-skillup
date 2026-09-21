@@ -4,6 +4,7 @@ import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import type { ComputationalMethodEvidence } from "@/types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 export interface MethodEvidenceBlockProps {
   methods?: Array<ComputationalMethodEvidence & { subgroupId?: string | null }>;
@@ -55,7 +56,8 @@ export function MethodEvidenceBlock({ methods, title = "Ways of working that sup
 function firstSourceUrl(provenance: Record<string, unknown>): string | undefined {
   for (const key of ["sourceUrl", "source_url", "url"]) {
     const value = provenance[key];
-    if (typeof value === "string" && /^https?:\/\//i.test(value)) return value;
+    const safe = studentSafeUrl(typeof value === "string" ? value : undefined);
+    if (safe) return safe;
   }
   return undefined;
 }

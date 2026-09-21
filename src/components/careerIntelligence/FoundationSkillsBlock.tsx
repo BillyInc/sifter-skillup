@@ -7,7 +7,7 @@ import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
-import { isStudentResource } from "./resourceLinks";
+import { isStudentResource, studentItemLinkUrl } from "./resourceLinks";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
@@ -66,8 +66,8 @@ export function FoundationSkillsBlock({
           && isStudentResource(item)
           && item.targetName.trim().toLowerCase() === skill.skill.trim().toLowerCase(),
         );
-        const url = skill.uri || resource?.url;
         const contextItem = contextItemFor(contextItems, "skill", skill.skill);
+        const url = studentItemLinkUrl(contextItem, resource, skill.uri);
         const buildOn = studentRelationshipTargets(contextItem, "builds_on", contextItems);
         const worksWith = studentRelationshipTargets(contextItem, "works_with", contextItems);
         return (

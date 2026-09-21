@@ -20,6 +20,7 @@ import { useResponsive } from "@/hooks/useResponsive";
 import type { DataState, SkillDiscoveryResult } from "@/types/career";
 import { SectionLabel } from "./index";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type Intent = "learned" | "intended";
 type SkillPath = SkillDiscoveryResult["paths"][number];
@@ -296,7 +297,7 @@ export function SkillDiscoveryPanel({ adminType }: SkillDiscoveryPanelProps) {
           ) : null}
 
           {state?.status === "pending" ? <View style={styles.loading}><ActivityIndicator color={colors.accentRole.action} /><Text style={[styles.help, { color: colors.textRole.muted }]}>Following your skills through the career map…</Text></View> : null}
-          {data ? <SkillResults data={data} colors={colors} intent={intent} onAdd={addSkillValue} onOpenDomain={openDomain} onOpenSubgroup={openSubgroup} onOpenRole={openRole} onOpenPath={openPath} /> : null}
+          {data ? <SkillResults data={data} colors={colors} intent={intent} adminMode={isAdmin} onAdd={addSkillValue} onOpenDomain={openDomain} onOpenSubgroup={openSubgroup} onOpenRole={openRole} onOpenPath={openPath} /> : null}
           {state && state.status !== "real" && state.meta?.notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{state.meta.notice}</Text> : null}
       </View>
     </View>
@@ -307,6 +308,7 @@ function SkillResults({
   data,
   colors,
   intent,
+  adminMode,
   onAdd,
   onOpenDomain,
   onOpenSubgroup,
@@ -316,6 +318,7 @@ function SkillResults({
   data: SkillDiscoveryResult;
   colors: ThemeColors;
   intent: Intent;
+  adminMode: boolean;
   onAdd: (value: string) => void;
   onOpenDomain: (id: string) => void;
   onOpenSubgroup: (domainId: string, subgroupId: string) => void;
@@ -384,7 +387,13 @@ function SkillResults({
                     {item.plainMeaning ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>What it means: </Text>{item.plainMeaning}</Text> : null}
                     {item.contextualUse ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>Why it matters here: </Text>{item.contextualUse}</Text> : null}
                     {item.expectedOutput ? <Text style={[styles.help, { color: colors.textRole.secondary }]}><Text style={{ fontWeight: "800" }}>What it helps you produce: </Text>{item.expectedOutput}</Text> : null}
-                    {item.sourceReferences?.length ? <View style={{ gap: 3 }}><Text style={[styles.help, { color: colors.textRole.muted, fontWeight: "800" }]}>Evidence</Text>{item.sourceReferences.slice(0, 3).map((source) => <ExternalLinkGuard key={source.url} url={source.url} label={source.title ?? "Open evidence source"} description={`This opens the evidence source recorded for ${item.name}.`} textStyle={[styles.help, { color: colors.accentRole.action }]} />)}</View> : null}
+                    {(() => {
+                      const sources = (item.sourceReferences ?? [])
+                        .map((source) => ({ ...source, studentUrl: studentSafeUrl(source.url) }))
+                        .filter((source) => adminMode ? Boolean(source.url) : Boolean(source.studentUrl))
+                        .slice(0, 3);
+                      return sources.length ? <View style={{ gap: 3 }}><Text style={[styles.help, { color: colors.textRole.muted, fontWeight: "800" }]}>Evidence</Text>{sources.map((source) => <ExternalLinkGuard key={source.url} audience={adminMode ? "admin" : "student"} url={adminMode ? source.url : source.studentUrl} label={source.title ?? "Open evidence source"} description={`This opens the evidence source recorded for ${item.name}.`} textStyle={[styles.help, { color: colors.accentRole.action }]} />)}</View> : <Text style={[styles.help, { color: colors.textRole.muted }]}>No verified evidence link is available for this match yet.</Text>;
+                    })()}
                   </View> : null}
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onAdd(item.name)} accessibilityRole="button" accessibilityLabel={`Add ${item.name} to the skill map`} style={styles.addSuggestion}><Feather name="plus-circle" size={19} color={colors.accentRole.action} /><Text style={{ color: colors.accentRole.action, fontSize: FontSize.xs, fontWeight: "800" }}>Add</Text></TouchableOpacity>

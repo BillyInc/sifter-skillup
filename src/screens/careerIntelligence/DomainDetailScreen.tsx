@@ -26,6 +26,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme, Spacing, Radius, FontSize, CompassFonts } from "@/theme";
 import { getClusterColor } from "@/data/clusterMaps";
 import { careerData } from "@/lib/careerData";
+import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
 import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import {
@@ -82,7 +83,7 @@ export function DomainDetailScreen(props: DomainDetailScreenProps) {
   const loadDomain = useCallback(() => {
     setState(pending<DomainV2>("Loading domain details..."));
     let alive = true;
-    void careerData.getDomainV2(domainKey, guidanceContext.programmeId).then((res) => {
+    void careerData.getDomainV2ForStudent(domainKey, guidanceContext.programmeId).then((res) => {
       if (alive) setState(res);
     });
     return () => {
@@ -451,8 +452,8 @@ function DomainBody({
         </View>
         <View style={refinedStyles.copyBlock}>
           {domain.cluster ? <Text style={[refinedStyles.eyebrow, { color: colors.textRole.muted }]}>{domain.cluster}</Text> : null}
-          <Text style={[refinedStyles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{domain.name}</Text>
-          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{orientation?.shortIntro || orientation?.whatItStudies || `A reviewed explanation of what ${domain.name} studies is not available yet.`}</Text>
+          <Text style={[refinedStyles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{formatCareerLabel(domain.name)}</Text>
+          <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: orientation?.shortIntro, whatPeopleDo: orientation?.whatPeopleDo, whatItStudies: orientation?.whatItStudies, description: domain.description, fallback: "A reviewed plain-language explanation of this field is not available yet." })}</Text>
         </View>
       </View>
 
@@ -513,7 +514,7 @@ function DomainBody({
         <View style={refinedStyles.cardHeading}><Feather name="grid" size={17} color={colors.accentRole.action} /><Text style={[refinedStyles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>Choose a focused area</Text></View>
         <Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>Each area keeps the field foundation and adds a more specific way to study or work. Roles appear inside the area, not on this domain page.</Text>
       </View>
-      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{subgroup.name}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "A focused area inside this field."}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed areas are available yet.</Text>}
+      {subgroups.length ? <View style={refinedStyles.grid}>{subgroups.map((subgroup) => <TouchableOpacity key={subgroup.id} accessibilityRole="button" onPress={() => exploreNav.subgroup(router, domainKey, subgroup.id, guidanceContext)} style={[refinedStyles.tile, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="grid" size={20} color={colors.accentRole.action} /><Text style={[refinedStyles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(subgroup.name)}</Text><Text style={[refinedStyles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text><Text style={[refinedStyles.meta, { color: colors.textRole.muted }]}>{subgroup.roleCount ?? 0} {(subgroup.roleCount ?? 0) === 1 ? "role" : "roles"} in this area</Text><Text style={[refinedStyles.actionText, { color: colors.accentRole.action }]}>Explore area →</Text></TouchableOpacity>)}</View> : <Text style={[refinedStyles.copy, { color: colors.textRole.muted }]}>No reviewed areas are available yet.</Text>}
     </View>
   );
 }

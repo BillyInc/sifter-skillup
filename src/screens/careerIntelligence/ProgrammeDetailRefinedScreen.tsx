@@ -7,7 +7,7 @@
  * user-facing concepts here.
  */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter, type Router } from "expo-router";
 import {
@@ -15,7 +15,6 @@ import {
   ContextualItemList,
   DegreeSkills,
   DetailScaffold,
-  LearningResourcesBlock,
   SectionLabel,
   TextTabs,
   invalidateGuidancePathCache,
@@ -25,6 +24,7 @@ import { ADMIN_EXPLORE_BASE, useExploreNav } from "@/lib/exploreNav";
 import { type GuidanceRouteContext } from "@/lib/guidanceRouteContext";
 import { provisioningData } from "@/lib/provisioningData";
 import { awardLine } from "@/lib/programmeAward";
+import { studentSummary } from "@/lib/careerLabels";
 import { requirementFallbackText, sanitizeRequirementText, type RequirementField } from "@/lib/sanitizeRequirementText";
 import { comingSoon, pending, real, type DataState, type DomainLink, type Programme } from "@/types/career";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme, type ColorPalette } from "@/theme";
@@ -173,10 +173,8 @@ function ProgrammeDomainTransition({
           {visible.map((link) => <TouchableOpacity accessibilityRole="button" key={link.domainId} onPress={() => onOpenDomain(link)} style={[styles.preview, { borderColor: colors.borderRole.subtle }]}>
             <Text style={[styles.previewName, { color: colors.textRole.primary }]}>{link.domainName}</Text>
             <Text style={[styles.previewType, { color: colors.accentRole.action }]}>{relationshipLabel(link.matchType)}</Text>
-            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{relationshipCopy(link)}</Text>
-            {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>
-              Connected through {link.courseAnchors.slice(0, 2).map((anchor) => anchor.code ? `${anchor.code} · ${anchor.title}` : anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and other recorded courses" : ""}.
-            </Text> : null}
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: link.explanation, fallback: relationshipCopy(link) })}</Text>
+            {link.courseAnchors?.length ? <Text style={[styles.meta, { color: colors.textRole.muted }]}>Recorded through {link.courseAnchors.slice(0, 2).map((anchor) => anchor.title).join(" and ")}{link.courseAnchors.length > 2 ? " and other course evidence" : ""}.</Text> : null}
             <Text style={[styles.link, { color: colors.accentRole.action }]}>Open domain</Text>
           </TouchableOpacity>)}
         </View>
@@ -313,7 +311,7 @@ export default function ProgrammeDetailRefinedScreen({ programmeId, jambProgramm
         return;
       }
 
-      const result = await careerData.getProgramme(programmeId);
+      const result = await careerData.getProgrammeForStudent(programmeId);
       if (!active) return;
       setState(result);
       if (result.status !== "real" || !result.data) return;

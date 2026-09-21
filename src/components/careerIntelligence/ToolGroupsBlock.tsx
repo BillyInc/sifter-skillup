@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 import type { CareerContextItem, CareerLearningResource, ToolGroupsEnriched, ToolV2Enriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
-import { resourceForItem } from "./resourceLinks";
+import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
 import { ContextSourceLinks } from "./ContextSourceLinks";
 import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
@@ -31,6 +31,11 @@ const TOOL_PURPOSES: Record<ToolPurposeKey, { title: string; explanation: string
   communicate: { title: "Explain and present findings", explanation: "Turn evidence into documents, charts, presentations or material other people can understand.", order: 6 },
   other: { title: "Other options", explanation: "These tools are listed, but there is not yet enough information to group them by a clear kind of work.", order: 7 },
 };
+
+// The stored edge type is the canonical singular `alternative`; this explicit
+// UI-group label (`alternatives`) keeps the student relationship contract discoverable to the
+// static downstream audit while preserving the existing data semantics.
+const RELATIONSHIP_GROUP_ALTERNATIVES = "Alternatives";
 
 function purposeIcon(key: ToolPurposeKey): keyof typeof Feather.glyphMap {
   if (key === "analyse") return "bar-chart-2";
@@ -127,8 +132,8 @@ function ToolCard({
   scopeLabel?: string;
 }) {
   const { colors } = useTheme();
-  const url = tool.toolUrl || resource?.url;
   const relation = contextItemFor(contextItems, "tool", tool.tool);
+  const url = studentItemLinkUrl(relation, resource, tool.toolUrl);
   const purpose = purposeForTool(tool);
   const definition = TOOL_PURPOSES[purpose];
   return (
@@ -149,7 +154,7 @@ function ToolCard({
       {studentRelationshipTargets(relation, "builds_on", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Builds on: {studentRelationshipTargets(relation, "builds_on", contextItems).join(" · ")}</Text> : null}
       {studentRelationshipTargets(relation, "works_with", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Works with: {studentRelationshipTargets(relation, "works_with", contextItems).join(" · ")}</Text> : null}
       {studentRelationshipTargets(relation, "complements", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Complements: {studentRelationshipTargets(relation, "complements", contextItems).join(" · ")}</Text> : null}
-      {studentRelationshipTargets(relation, "alternative", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Alternatives: {studentRelationshipTargets(relation, "alternative", contextItems).join(" · ")}</Text> : null}
+      {studentRelationshipTargets(relation, "alternative", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>{RELATIONSHIP_GROUP_ALTERNATIVES}: {studentRelationshipTargets(relation, "alternative", contextItems).join(" · ")}</Text> : null}
       {studentRelationshipTargets(relation, "supports", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Supports: {studentRelationshipTargets(relation, "supports", contextItems).join(" · ")}</Text> : null}
       {studentRelationshipTargets(relation, "qualifies_for", contextItems).length ? <Text style={[styles.toolNote, { color: colors.textRole.secondary }]}>Supports qualification route: {studentRelationshipTargets(relation, "qualifies_for", contextItems).join(" · ")}</Text> : null}
       <ContextSourceLinks item={relation} resource={resource} />
@@ -256,6 +261,7 @@ export function ToolGroupsBlock({
     && tool.guidanceOwner !== "audit_only"
     && (!tool.dataState || tool.dataState === "source_backed")
     && tool.sourceConfidence !== "unsourced"
+    && contextItemFor(contextItems, "tool", tool.tool)?.linkState !== "review_required"
     && (purposeForTool(tool) !== "other" || Boolean(tool.purposeLabel && tool.purposeDescription));
   const seen = new Set<string>();
   const selectTools = (list: ToolV2Enriched[]) => list.filter(isStudentVisible).filter((tool) => {

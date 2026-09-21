@@ -60,6 +60,12 @@ import {
 import { request } from "./api";
 import { getCached, getCachedStale, setCached, queueWrite, cancelQueuedSave, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
+import {
+  sanitizeStudentDataState,
+  sanitizeStudentDomain,
+  sanitizeStudentProgramme,
+  sanitizeStudentRole,
+} from "./studentCareerBoundary";
 
 /** Reference data is refreshed daily; writes and account data never use this cache. */
 const REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
@@ -652,6 +658,11 @@ export const careerData = {
     );
   },
 
+  /** Student boundary: preserve the raw method above for admin/audit views. */
+  async getProgrammeForStudent(programmeId: string): Promise<DataState<Programme>> {
+    return sanitizeStudentDataState(await careerData.getProgramme(programmeId), sanitizeStudentProgramme);
+  },
+
   /** All domains grouped by cluster, for the context-free Domain Explorer. */
   async getDomainClusters(): Promise<DataState<DomainClusterGroup[]>> {
     return readThrough(
@@ -786,6 +797,11 @@ export const careerData = {
     );
   },
 
+  /** Student boundary: remove staff-only source URLs and review-required items. */
+  async getDomainV2ForStudent(domainKey: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    return sanitizeStudentDataState(await careerData.getDomainV2(domainKey, programmeId), sanitizeStudentDomain);
+  },
+
   /** A saved subgroup can be opened without its parent domain in the URL. */
   async getSubgroupV2(subgroupId: string, programmeId?: string): Promise<DataState<DomainV2>> {
     const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
@@ -795,6 +811,11 @@ export const careerData = {
       "See what this area does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
+  },
+
+  /** Student boundary for the saved/nested subgroup route. */
+  async getSubgroupV2ForStudent(subgroupId: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    return sanitizeStudentDataState(await careerData.getSubgroupV2(subgroupId, programmeId), sanitizeStudentDomain);
   },
 
   /** A role incl. its role-level bridge skills and coverage. */
@@ -812,6 +833,11 @@ export const careerData = {
       "Understand the role, the bridge skills, and the proof you need to become credible.",
       DETAIL_TTL_MS,
     );
+  },
+
+  /** Student boundary: admin retains the raw occupation evidence method. */
+  async getRoleV2ForStudent(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
+    return sanitizeStudentDataState(await careerData.getRoleV2(roleKey, programmeId), sanitizeStudentRole);
   },
 
   /** Opportunities matched to a programme/domain, eligibility-filtered.

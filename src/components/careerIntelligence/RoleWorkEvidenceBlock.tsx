@@ -4,6 +4,7 @@ import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import type { RoleWorkProfile } from "@/types/career";
 import { SectionLabel } from "./RedesignPrimitives";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type Props = { profile?: RoleWorkProfile | null };
 
@@ -18,7 +19,7 @@ const WEF_CATEGORY_LABELS: Record<string, string> = {
 function FutureOfWorkSignals({ profile, labelColor, copyColor }: { profile: RoleWorkProfile; labelColor: string; copyColor: string }) {
   if (!profile.wefSignals.length) return null;
   const explanations = Array.from(new Set(profile.wefSignals.flatMap((signal) => signal.categories.map((category) => WEF_CATEGORY_LABELS[category] || category))));
-  const sourceUrl = profile.wefSignals.find((signal) => signal.sourceUrl)?.sourceUrl;
+  const sourceUrl = profile.wefSignals.map((signal) => studentSafeUrl(signal.sourceUrl)).find((url): url is string => Boolean(url));
   return (
     <View style={{ gap: Spacing.xs }}>
       <Text style={[styles.label, { color: labelColor }, CompassFonts.bodySemibold]}>Future-of-work signal</Text>
@@ -42,6 +43,9 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
   const hiddenCount = Math.max(0, profile.activities.length - activities.length);
   const firstZone = profile.jobZones[0];
   const firstEducation = profile.educationSignals[0]?.label;
+  const studentSourceLinks = profile.sourceLinks
+    .map((source) => ({ ...source, url: studentSafeUrl(source.url) }))
+    .filter((source): source is typeof source & { url: string } => Boolean(source.url));
   return (
     <View style={{ gap: Spacing.md }}>
       <View style={{ gap: Spacing.sm }}>
@@ -52,7 +56,7 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
       </View>
       {(firstZone?.name || firstEducation) ? <View style={{ gap: Spacing.xs }}><Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Preparation signals</Text>{firstZone?.name ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Preparation signal: </Text>{firstZone.name.replace(/^Job Zone [^:]+:\s*/i, "")}</Text> : null}{firstEducation ? <Text style={[styles.copy, { color: colors.textRole.secondary }]}><Text style={CompassFonts.bodySemibold}>Education signal: </Text>{firstEducation}</Text> : null}</View> : null}
       {profile.relatedOccupations.length ? <View style={{ gap: Spacing.xs }}><Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Related occupation examples</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{profile.relatedOccupations.join(" · ")}</Text></View> : null}
-      <View style={{ gap: Spacing.xs }}><Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Evidence limits and further reading</Text>{profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}{profile.sourceLinks.map((source, index) => <ExternalLinkGuard key={`${source.url}-${index}`} url={source.url} label={source.label ? `Open ${source.label}` : "Open occupation source"} description="This opens the source used to explain the role activities." />)}</View>
+      <View style={{ gap: Spacing.xs }}><Text style={[styles.label, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Evidence limits and further reading</Text>{profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}{studentSourceLinks.length ? studentSourceLinks.map((source, index) => <ExternalLinkGuard key={`${source.url}-${index}`} url={source.url} label={source.label ? `Open ${source.label}` : "Open occupation source"} description="This opens the source used to explain the role activities." />) : <Text style={[styles.copy, { color: colors.textRole.muted }]}>No verified student link is attached to this work evidence yet.</Text>}</View>
       <FutureOfWorkSignals profile={profile} labelColor={colors.textRole.primary} copyColor={colors.textRole.secondary} />
     </View>
   );

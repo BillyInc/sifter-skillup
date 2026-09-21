@@ -13,6 +13,7 @@ import {
   HierarchyOrientationCard,
 } from "@/components/careerIntelligence";
 import { careerData } from "@/lib/careerData";
+import { formatCareerLabel, studentSummary } from "@/lib/careerLabels";
 import { compareCareerRoles } from "@/lib/careerRoleOrdering";
 import { useExploreNav } from "@/lib/exploreNav";
 import type { GuidanceRouteContext } from "@/lib/guidanceRouteContext";
@@ -53,8 +54,8 @@ export default function SubgroupDetailScreen() {
     setState(pending("Loading area details..."));
     let active = true;
     const request = nestedRoute
-      ? careerData.getDomainV2(domainId, guidanceContext.programmeId)
-      : careerData.getSubgroupV2(subgroupId, guidanceContext.programmeId);
+      ? careerData.getDomainV2ForStudent(domainId, guidanceContext.programmeId)
+      : careerData.getSubgroupV2ForStudent(subgroupId, guidanceContext.programmeId);
     void request.then((value) => { if (active) setState(value); });
     return () => { active = false; };
   }, [domainId, guidanceContext.programmeId, nestedRoute, subgroupId]);
@@ -69,7 +70,7 @@ export default function SubgroupDetailScreen() {
   return (
     <DetailScaffold
       eyebrow="AREA"
-      title={subgroup?.name ?? "Area"}
+      title={formatCareerLabel(subgroup?.name ?? "Area")}
       backLabel={`Back to ${state.data?.name ?? "domain"}`}
       onBack={onBack}
       save={focusedGuidance ? undefined : { entityType: "subgroup", entityId: subgroupId }}
@@ -160,8 +161,8 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
     <View style={styles.body}>
       <View style={[styles.detail, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
         <View style={styles.badgeRow}><Feather name="grid" size={18} color={colors.accentRole.action} /><Text style={[styles.pathText, { color: colors.textRole.muted }]}>{domain?.name ?? "Domain"} / {subgroup.name}</Text></View>
-        <Text style={[styles.heading, { color: colors.textRole.primary }]}>{subgroup.name}</Text>
-        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{subgroup.whatPeopleDo || subgroup.description || "This is a focused area inside the wider domain."}</Text>
+        <Text style={[styles.heading, { color: colors.textRole.primary }]}>{formatCareerLabel(subgroup.name)}</Text>
+        <Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: subgroup.studentOrientation?.shortIntro, whatPeopleDo: subgroup.studentOrientation?.whatPeopleDo || subgroup.whatPeopleDo, whatItStudies: subgroup.studentOrientation?.whatItStudies, description: subgroup.description, fallback: "A plain-language explanation of this focused area is not available yet." })}</Text>
       </View>
       {programmeConnection ? <View style={[styles.detail, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><SectionLabel>Why this area is in your path</SectionLabel><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{programmeConnection.explanation}</Text></View> : null}
       <GuidanceContinuation programmeName={programmeConnection?.programmeName} connection={programmeConnection} domainName={domain?.name ?? "Domain"} subgroupName={subgroup.name} domainFoundation={domain?.foundationSkills} domainItems={domain?.contextItems} subgroupItems={subgroup.contextItems} />
@@ -185,7 +186,7 @@ function SubgroupBody({ subgroup, domain, roles, programmeConnection, guidanceCo
       <View style={styles.section}>
         <View style={styles.badgeRow}><Feather name="users" size={18} color={colors.accentRole.action} /><SectionLabel>Roles inside this area</SectionLabel></View>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>Roles belong inside an area because they use the area’s foundation in different ways. Open a role after you understand this area.</Text>
-        {roles.length ? <View style={styles.roleGrid}>{roles.map((role) => <TouchableOpacity key={role.key} accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, guidanceContext)} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="user" size={20} color={colors.accentRole.action} /><View style={{ flex: 1, gap: Spacing.xs }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{role.name}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{role.studentOrientation?.whatPeopleDo || role.description || "Open this role to see its recorded work and preparation."}</Text><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Explore role →</Text></View></TouchableOpacity>)}</View> : <Text style={[styles.copy, { color: colors.textRole.muted }]}>No roles are available for this area yet.</Text>}
+        {roles.length ? <View style={styles.roleGrid}>{roles.map((role) => <TouchableOpacity key={role.key} accessibilityRole="button" onPress={() => exploreNav.role(router, role.key, guidanceContext)} style={[styles.role, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}><Feather name="user" size={20} color={colors.accentRole.action} /><View style={{ flex: 1, gap: Spacing.xs }}><Text style={[styles.roleTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{formatCareerLabel(role.name)}</Text><Text style={[styles.copy, { color: colors.textRole.secondary }]}>{studentSummary({ shortIntro: role.studentOrientation?.shortIntro, whatPeopleDo: role.studentOrientation?.whatPeopleDo, whatItStudies: role.studentOrientation?.whatItStudies, description: role.description, fallback: "A plain-language explanation of this role is not available yet." })}</Text><Text style={[styles.moreText, { color: colors.accentRole.action }]}>Explore role →</Text></View></TouchableOpacity>)}</View> : <Text style={[styles.copy, { color: colors.textRole.muted }]}>No roles are available for this area yet.</Text>}
       </View>
     </View>
   );
