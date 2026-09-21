@@ -4,6 +4,8 @@ import { Feather } from "@expo/vector-icons";
 import { CompassFonts, FontSize, Radius, Spacing, useTheme } from "@/theme";
 import type { CareerContextItem, CareerLearningResource } from "@/types/career";
 import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { isLegacyOnetUrl } from "@/lib/studentCareerBoundary";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 type SourceReference = {
   id?: string;
@@ -14,12 +16,8 @@ type SourceReference = {
 };
 
 function validReference(reference: SourceReference): boolean {
-  try {
-    const url = new URL(reference.url);
-    return (url.protocol === "https:" || url.protocol === "http:") && reference.url.trim().length > 0;
-  } catch {
-    return false;
-  }
+  if (isLegacyOnetUrl(reference.url)) return false;
+  return Boolean(studentSafeUrl(reference.url));
 }
 
 /**
@@ -30,7 +28,7 @@ function validReference(reference: SourceReference): boolean {
 export function ContextSourceLinks({
   item,
   resource,
-  title = "Supporting sources",
+  title = "More information",
 }: {
   item?: CareerContextItem;
   resource?: CareerLearningResource;
@@ -45,12 +43,14 @@ export function ContextSourceLinks({
         .filter((edge) => edge.relationshipStatus === "source_backed")
         .flatMap((edge) => edge.sourceReferences ?? []),
     ];
-    if (resource?.sourceUrl) all.push({ title: `${resource.provider} source`, url: resource.sourceUrl });
+    const sourceUrl = studentSafeUrl(resource?.sourceUrl);
+    if (sourceUrl) all.push({ title: `${resource?.provider ?? "Recorded"} source`, url: sourceUrl });
     const seen = new Set<string>();
     return all.filter((reference) => {
-      if (!validReference(reference) || seen.has(reference.url)) return false;
-      seen.add(reference.url);
-      return reference.url !== resource?.url;
+      const safeUrl = studentSafeUrl(reference.url);
+      if (!validReference(reference) || !safeUrl || seen.has(safeUrl)) return false;
+      seen.add(safeUrl);
+      return safeUrl !== studentSafeUrl(resource?.url);
     });
   }, [item, resource]);
 
@@ -62,14 +62,14 @@ export function ContextSourceLinks({
         <Feather name="book-open" size={14} color={colors.textRole.muted} />
         <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{title}</Text>
       </View>
-      <Text style={[styles.note, { color: colors.textRole.muted }]}>These links support the explanation or relationship shown here. They are not automatically learning requirements.</Text>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>These links explain the item or how it connects to this path. They are not automatically learning requirements.</Text>
       <View style={styles.links}>
         {visible.map((source, index) => (
           <ExternalLinkGuard
             key={`${source.url}-${index}`}
             url={source.url}
             label={source.title || "Open supporting source"}
-            description={`This opens the supporting source recorded for this item.`}
+            description={`This opens more information about this item.`}
             textStyle={styles.link}
           />
         ))}

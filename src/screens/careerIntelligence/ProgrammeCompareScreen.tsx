@@ -115,7 +115,7 @@ export default function ProgrammeCompareScreen() {
       const rows = await Promise.all(
         selectedIds.map(async (id) => ({
           id,
-          programme: await careerData.getProgramme(id),
+          programme: await careerData.getProgrammeForStudent(id),
         })),
       );
       if (active) setItems(rows);

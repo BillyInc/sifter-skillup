@@ -45,10 +45,11 @@ export function makeExploreNav(base: string) {
       const query = guidanceContextQuery(context);
       logGuidanceRoute(`${base}/programme`, context, "programme_preview");
       const href = `${base}/programme/${encodeURIComponent(programmeId)}${query ? `?${query}` : ""}` as never;
-      // A focused admission picker is a transient decision step. Replacing it
-      // keeps the browser back button aligned with the same exit destination as
-      // the in-app Back to home action; it must not reopen the old picker.
-      if (context?.replaceHistory || context?.focused) router.replace(href);
+      // Most focused transitions replace the originating search surface. An
+      // intentional multi-step guidance route may opt into browser history so
+      // Preview -> University selection -> University overview remains a
+      // reversible sequence.
+      if (context?.replaceHistory || (context?.focused && !context?.preserveHistory)) router.replace(href);
       else router.push(href);
     },
     guided(router: Nav, context?: GuidanceRouteContext) {
@@ -140,10 +141,32 @@ export function makeExploreNav(base: string) {
     },
 
     // ─── Phase 8: admission intelligence ─────────────────────────
-    /** The admission hub, optionally in a given picker mode. */
-    admissionHub(router: Nav, mode?: "programme" | "subjects", adminType?: string | null) {
+    /**
+     * Admission entry points are deliberately typed.  A programme-name door
+     * must not reopen the mixed programme/university/subjects hub, and a
+     * subject door must carry the learner context that owns its subject rules.
+     */
+    admissionHub(
+      router: Nav,
+      mode?: "programme" | "subjects" | "school",
+      adminType?: string | null,
+      options?: {
+        entry?: "programme_and_university" | "programme_search" | "subject_match";
+        userType?: string | null;
+        className?: string | null;
+        stream?: string | null;
+        examType?: "utme" | "olevel" | "combined";
+        journey?: string | null;
+      },
+    ) {
       const query = [
           mode ? `mode=${mode}` : "",
+          options?.entry ? `entry=${options.entry}` : "",
+          options?.userType ? `user_type=${encodeURIComponent(options.userType)}` : "",
+          options?.className ? `class_name=${encodeURIComponent(options.className)}` : "",
+          options?.stream ? `stream=${encodeURIComponent(options.stream)}` : "",
+          options?.examType ? `exam_type=${options.examType}` : "",
+          options?.journey ? `journey=${encodeURIComponent(options.journey)}` : "",
           base === ADMIN_EXPLORE_BASE ? "admin=1" : "",
           base === ADMIN_EXPLORE_BASE && adminType ? `admin_type=${encodeURIComponent(adminType)}` : "",
         ].filter(Boolean).join("&");

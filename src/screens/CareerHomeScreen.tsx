@@ -311,32 +311,44 @@ export default function CareerHomeScreen() {
         active = false;
       };
     }
-    void (async () => {
-      try {
-        const [sp, items, draft] = await Promise.all([
-          getStartingPoint(user?.id),
-          careerData.getSavedItems(),
-          getOnboardingDraft(user?.id),
-        ]);
-        const path = await careerData.getGuidancePath();
-        if (!active) return;
-        const draftProfile = draft?.studentProfile && draft.choice !== "educator"
-          ? {
-              ...(draft.studentProfile as StartingPointProfile),
-              userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
-            }
-          : null;
-        setStarting(sp ?? draftProfile);
-        setStartingLoaded(true);
-        setSaved(items);
-        setGuidance(path);
-      } catch {
-        if (!active) return;
-        setStartingLoaded(true);
-        setSaved(error<SavedItem[]>("Saved paths could not be loaded. Try again."));
-        setGuidance(error<GuidanceReportPath | null>("Saved guidance could not be loaded. Try again."));
-      }
-    })();
+    // Start every Home request together, but reveal the starting point as soon
+    // as its own endpoint responds. A slow onboarding-draft or saved-guidance
+    // request must not hold the first orientation card hostage.
+    const startingPromise = getStartingPoint(user?.id);
+    const draftPromise = getOnboardingDraft(user?.id);
+    let startingResolved = false;
+    void startingPromise.then((sp) => {
+      startingResolved = true;
+      if (!active) return;
+      setStarting(sp ?? null);
+      setStartingLoaded(true);
+    }).catch(() => {
+      startingResolved = true;
+      if (!active) return;
+      setStartingLoaded(true);
+    });
+    void draftPromise.then((draft) => {
+      if (!active || startingResolved) return;
+      const draftProfile = draft?.studentProfile && draft.choice !== "educator"
+        ? {
+            ...(draft.studentProfile as StartingPointProfile),
+            userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
+          }
+        : null;
+      if (draftProfile) setStarting(draftProfile);
+    }).catch(() => undefined);
+    void Promise.all([
+      careerData.getSavedItems(),
+      careerData.getGuidancePath(),
+    ]).then(([items, path]) => {
+      if (!active) return;
+      setSaved(items);
+      setGuidance(path);
+    }).catch(() => {
+      if (!active) return;
+      setSaved(error<SavedItem[]>("Saved paths could not be loaded. Try again."));
+      setGuidance(error<GuidanceReportPath | null>("Saved guidance could not be loaded. Try again."));
+    });
     return () => {
       active = false;
     };

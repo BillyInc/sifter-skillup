@@ -79,7 +79,7 @@ function resourceKind(resource: CareerLearningResource): string {
     case "competency_reference": return "Competency reference";
     case "certification_exam": return "Qualification information";
     case "professional_body": return "Professional body";
-    default: return "Source-backed resource";
+    default: return "Reference";
   }
 }
 
