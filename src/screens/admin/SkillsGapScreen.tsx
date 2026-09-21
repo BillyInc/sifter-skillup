@@ -1,12 +1,12 @@
 /**
- * Programme intelligence — CCMAS teaching versus sourced market/practice
- * capability evidence.
+ * Programme intelligence — the institution's recorded programme teaching
+ * versus sourced downstream domain/subgroup/role capability evidence.
  *
  * The API currently supplies curriculum evidence and domain/subgroup/role
- * evidence. The latter is the market/practice layer for this view: an item is
- * a gap candidate when it is present in that layer but is not evidenced in the
- * programme curriculum. Employment-posting metrics are a separate signal and
- * are not required for this comparison.
+ * evidence. The latter is the downstream comparison layer for this view: an
+ * item is a gap candidate when it is present in that layer but is not evidenced
+ * in the institution's programme teaching record. Employment-posting metrics
+ * are a separate signal and are not required for this comparison.
  */
 import React, { useEffect, useMemo, useState } from "react";
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -57,7 +57,7 @@ function audienceCopy(audience: AdminWorkspaceAudience): { eyebrow: string; titl
     return {
       eyebrow: "Curriculum intelligence",
       title: "Programme intelligence",
-      body: "Compare what the programme curriculum records with the sourced skills, tools, competencies and certifications used across its direct, functional and adjacent career connections. Direct connections come first for curriculum review.",
+      body: "Compare the institution's recorded programme teaching with sourced skills, tools, competencies and certifications in its direct, functional and adjacent domain connections. Direct connections come first for curriculum review.",
     };
   }
   if (audience === "tutorial_centre") {
@@ -83,15 +83,15 @@ function relationshipLabel(matchType: MatchType): string {
 
 function resourceState(resource: ProgrammeResourceEvidence): { label: string; variant: "success" | "warning" } {
   if (resource.curriculumState === "taught" || resource.state === "covered") {
-    return { label: "Taught in CCMAS", variant: "success" };
+    return { label: "Taught in programme record", variant: "success" };
   }
   if (resource.curriculumState === "partly_evidenced") {
-    return { label: "Partly evidenced in CCMAS", variant: "warning" };
+    return { label: "Partly evidenced in teaching record", variant: "warning" };
   }
   if (resource.curriculumState === "source_review" || resource.marketState === "source_review") {
     return { label: "Source review", variant: "warning" };
   }
-  return { label: "Not evidenced in CCMAS", variant: "warning" };
+  return { label: "Not evidenced in teaching record", variant: "warning" };
 }
 
 function ResourceRow({ resource }: { resource: ProgrammeResourceEvidence }) {
@@ -113,7 +113,7 @@ function ResourceRow({ resource }: { resource: ProgrammeResourceEvidence }) {
         {resource.description ? <Text style={[styles.meta, { color: colors.textMuted }]}>{resource.description}</Text> : null}
         <Text style={[styles.meta, { color: colors.textSoft }]}>{resource.kind} · {scope}</Text>
         {resource.explanation ? <Text style={[styles.meta, { color: colors.textMuted }]}>{resource.explanation}</Text> : null}
-        {resource.marketState === "market_practice_evidence" ? <Text style={[styles.meta, { color: colors.textMuted }]}>Sourced market/practice evidence · not an employment-demand metric</Text> : null}
+        {resource.marketState === "market_practice_evidence" ? <Text style={[styles.meta, { color: colors.textMuted }]}>Sourced downstream practice evidence · not employment demand</Text> : null}
         {resource.sourceConfidence || resource.dataState ? (
           <Text style={[styles.meta, { color: colors.textMuted }]}>Evidence: {[resource.sourceConfidence, resource.dataState].filter(Boolean).join(" · ")}</Text>
         ) : null}
@@ -195,18 +195,18 @@ function DomainCoverageCard({ domain, priority }: { domain: ProgrammeDomainSkill
       </TouchableOpacity>
 
       <View style={styles.countRow}>
-        <Text style={[styles.meta, { color: colors.textSoft }]}>CCMAS evidenced: {covered.length}</Text>
-        <Text style={[styles.meta, { color: colors.textSoft }]}>Market/practice candidates: {gapCandidates.length}</Text>
+        <Text style={[styles.meta, { color: colors.textSoft }]}>Institution-taught records: {covered.length}</Text>
+        <Text style={[styles.meta, { color: colors.textSoft }]}>Downstream items not in teaching record: {gapCandidates.length}</Text>
         <Text style={[styles.meta, { color: colors.textSoft }]}>Skills {domain.resources.filter((r) => r.kind === "skill").length} · Tools {domain.resources.filter((r) => r.kind === "tool").length} · Certifications {domain.resources.filter((r) => r.kind === "certification").length}</Text>
       </View>
 
       {open ? (
         <View style={styles.resourceList}>
-          <Text style={[styles.explanation, { color: colors.textMuted }]}>A candidate is shown because the mapped market/practice evidence contains it and the current CCMAS outcome profile does not evidence it by name. Review the source and curriculum context before changing teaching plans.</Text>
-          <ResourceGroup title="Direct-domain foundation" resources={domainResources} />
-          <ResourceGroupsByScope title="Direct subgroup capabilities" resources={subgroupResources} />
-          <ResourceGroupsByScope title="Role preparation options" resources={roleResources} includeRole />
-          {!domain.resources.length ? <Text style={[styles.meta, { color: colors.textMuted }]}>No sourced skills, tools or certifications are recorded for this connection.</Text> : null}
+          <Text style={[styles.explanation, { color: colors.textMuted }]}>A candidate is shown because a sourced downstream domain, subgroup or role record contains it and the institution's programme teaching record does not currently evidence it by name. Review the source and curriculum context before changing teaching plans; this is not an accreditation or employment-demand finding.</Text>
+          <ResourceGroup title="Domain-owned downstream records" resources={domainResources} />
+          <ResourceGroupsByScope title="Subgroup-owned downstream records" resources={subgroupResources} />
+          <ResourceGroupsByScope title="Role-owned downstream records" resources={roleResources} includeRole />
+          {!domain.resources.length ? <Text style={[styles.meta, { color: colors.textMuted }]}>No sourced downstream skills, tools or certifications are recorded for this connection.</Text> : null}
         </View>
       ) : null}
     </View>
@@ -223,9 +223,9 @@ function CurriculumBaseline({ report }: { report: ProgrammeSkillCoverage }) {
       <View style={styles.baselineHeader}>
         <View style={styles.baselineCopy}>
           <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>What this programme teaches</Text>
-          <Text style={[styles.meta, { color: colors.textMuted }]}>CCMAS curriculum baseline · {items.length} recorded learning items</Text>
+          <Text style={[styles.meta, { color: colors.textMuted }]}>Institution teaching record · {items.length} CCMAS learning items</Text>
         </View>
-        <Badge label={report.curriculumStatus === "complete" ? "CCMAS recorded" : "CCMAS incomplete"} variant={report.curriculumStatus === "complete" ? "success" : "warning"} size="sm" />
+        <Badge label={report.curriculumStatus === "complete" ? "Teaching record complete" : "Teaching record incomplete"} variant={report.curriculumStatus === "complete" ? "success" : "warning"} size="sm" />
       </View>
       <View style={styles.curriculumColumns}>
         <CurriculumColumn title="Technical / subject capabilities" items={report.curriculumTechnical} />
@@ -258,7 +258,7 @@ function ProgrammeCoverageCard({ report }: { report: ProgrammeSkillCoverage }) {
       <View style={styles.programmeHeader}>
         <View style={styles.baselineCopy}>
           <Text style={[styles.programmeTitle, CompassFonts.bodyBold, { color: colors.text }]}>{report.programmeName}</Text>
-          <Text style={[styles.meta, { color: colors.textMuted }]}>Programme curriculum versus sourced market/practice evidence</Text>
+          <Text style={[styles.meta, { color: colors.textMuted }]}>Institution teaching record versus sourced downstream evidence</Text>
         </View>
       </View>
       <CurriculumBaseline report={report} />
@@ -304,9 +304,9 @@ export function SkillsGapScreen() {
           <Text style={[styles.lede, { color: colors.textMuted }]}>{copy.body}</Text>
           <View style={[styles.marketNotice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
             <Text style={[styles.marketNoticeTitle, CompassFonts.bodyBold, { color: colors.text }]}>How to read this view</Text>
-            <Text style={[styles.meta, { color: colors.textMuted }]}>The CCMAS record is the teaching baseline. Sourced domain, subgroup and role records are the market/practice comparison layer. A candidate gap means the comparison layer contains an item that the CCMAS record does not currently evidence; it is not automatically an accreditation requirement.</Text>
+            <Text style={[styles.meta, { color: colors.textMuted }]}>The institution's recorded programme teaching is the baseline. Sourced domain, subgroup and role records are the downstream comparison layer. A candidate gap means the downstream layer contains an item that the teaching record does not currently evidence; it is not an accreditation requirement, an employment-demand signal or a recommendation.</Text>
           </View>
-          <ComingSoonPanel state={coverage} empty={(rows) => rows.length === 0} emptyTitle="No programme intelligence yet" emptyBody="Programme intelligence appears when the programme curriculum and mapped market/practice evidence are available.">
+          <ComingSoonPanel state={coverage} empty={(rows) => rows.length === 0} emptyTitle="No programme intelligence yet" emptyBody="Programme intelligence appears when the programme teaching record and sourced downstream evidence are available.">
             {(rows) => <View style={styles.programmeList}>{rows.map((report) => <ProgrammeCoverageCard key={report.programmeId} report={report} />)}</View>}
           </ComingSoonPanel>
         </View>
