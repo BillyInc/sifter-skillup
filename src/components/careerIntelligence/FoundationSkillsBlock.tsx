@@ -1,61 +1,96 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Linking, TouchableOpacity, type ViewStyle } from "react-native";
-import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
-import type { FoundationSkillEnriched } from "../../types/career";
+import { View, Text, StyleSheet, TouchableOpacity, type ViewStyle } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { CompassFonts, useTheme, Spacing, FontSize, FontWeight, Radius } from "../../theme";
+import type { CareerContextItem, CareerLearningResource, FoundationSkillEnriched } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { ContextSourceLinks } from "./ContextSourceLinks";
+import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { isStudentResource, studentItemLinkUrl } from "./resourceLinks";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
+  resources?: CareerLearningResource[];
+  contextItems?: CareerContextItem[];
   title?: string;
   style?: ViewStyle;
 }
 
-/** Shows source-ranked field skills as a suggested route, never as a raw rank. */
+function studentRelationshipTargets(item: CareerContextItem | undefined, type: "builds_on" | "works_with", contextItems?: CareerContextItem[]) {
+  if (!item) return [];
+  if (item.relationships !== undefined) {
+    return item.relationships
+      .filter((edge) => edge.relationshipStatus === "source_backed" && edge.relationshipType === type)
+      .map((edge) => edge.toName || edge.toItemKey)
+      .filter((name): name is string => Boolean(name));
+  }
+  return resolveRelationshipTargets(item, type, contextItems);
+}
+
+/** Shows only the explicit domain-owned learning sequence. Legacy prevalence
+ * fields are audit data and must never become student foundation guidance. */
 export function FoundationSkillsBlock({
   skills,
+  resources,
+  contextItems,
   title = "Common skills in this domain",
   style,
 }: FoundationSkillsBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
-  if (!skills?.length) return null;
+  const reviewedSkills = [...(skills ?? [])]
+    .filter((skill) => skill.stage && skill.stage !== "prepare_for_role")
+    .filter((skill, index, values) => values.findIndex((candidate) => candidate.skill.trim().toLowerCase() === skill.skill.trim().toLowerCase()) === index);
 
-  const rows = [...skills].sort((a, b) => b.prevalence - a.prevalence);
-  const startHere = rows.slice(0, 3);
-  const buildNext = rows.slice(3);
+  if (!reviewedSkills.length) return <View style={[styles.container, style]}>
+    <SectionLabel>{title === "Common skills in this domain" ? "What to build first" : title}</SectionLabel>
+    <View style={styles.emptyCard}>
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>A learning sequence is not available for this level yet. The page will not guess a priority from unrelated role information.</Text>
+    </View>
+  </View>;
+
+  const order = { start_here: 0, build_next: 1, choose_area: 2, prepare_for_role: 3 } as const;
+  const rows = reviewedSkills.sort((a, b) => {
+    return order[a.stage!] - order[b.stage!] || a.skill.localeCompare(b.skill);
+  });
+  const startHere = rows.filter((item) => item.stage === "start_here");
+  const buildNext = rows.filter((item) => item.stage === "build_next");
+  const chooseArea = rows.filter((item) => item.stage === "choose_area");
 
   const SkillRows = ({ items }: { items: FoundationSkillEnriched[] }) => (
     <View style={styles.rows}>
       {items.map((skill, index) => {
-        const openUri = async () => {
-          if (!skill.uri) return;
-          setNotice(null);
-          if (!(await hasInternetConnection())) {
-            setNotice(OFFLINE_LINK_NOTICE);
-            return;
-          }
-          const opened = await Linking.openURL(skill.uri).then(() => true).catch(() => false);
-          if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
-        };
+        const resource = resources?.find((item) =>
+          (item.resourceType === "skill_learning" || item.resourceType === "skill_reference")
+          && isStudentResource(item)
+          && item.targetName.trim().toLowerCase() === skill.skill.trim().toLowerCase(),
+        );
+        const contextItem = contextItemFor(contextItems, "skill", skill.skill);
+        const url = studentItemLinkUrl(contextItem, resource, skill.uri);
+        const buildOn = studentRelationshipTargets(contextItem, "builds_on", contextItems);
+        const worksWith = studentRelationshipTargets(contextItem, "works_with", contextItems);
         return (
-          <View key={`${skill.skill}-${index}`} style={styles.row}>
-            <Text
-              style={[styles.skill, { color: colors.textRole.secondary }]}
-              numberOfLines={2}
-            >
-              {skill.skill}
-            </Text>
-            {skill.uri ? (
+          <View key={`${skill.skill}-${index}`} style={[styles.row, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
+            <View style={styles.skillHeading}>
+              <Feather name="check-circle" size={16} color={colors.accentRole.action} />
               <Text
-                onPress={() => { void openUri(); }}
-                style={[styles.link, { color: colors.accentRole.action }]}
-                accessibilityRole="link"
+                style={[styles.skill, { color: colors.textRole.secondary }]}
+                numberOfLines={2}
               >
-                Open
+                {skill.skill}
               </Text>
-            ) : null}
+            </View>
+            <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>
+              {contextItem?.plainMeaning || resource?.description || skill.priorityReason || "This is one of the foundations for the field."}
+            </Text>
+            {contextItem?.contextualUse ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>{contextItem.contextualUse}</Text> : null}
+            {contextItem?.expectedOutput ? <Text style={[styles.note, { color: colors.textRole.secondary }]} numberOfLines={3}>Helps you: {contextItem.expectedOutput}</Text> : null}
+            {buildOn.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Builds on: {buildOn.join(" · ")}</Text> : null}
+            {worksWith.length ? <Text style={[styles.note, { color: colors.textRole.muted }]}>Works with: {worksWith.join(" · ")}</Text> : null}
+            {skill.evidenceNote ? <Text style={[styles.note, { color: colors.textRole.muted }]} numberOfLines={3}>{skill.evidenceNote}</Text> : null}
+            <ExternalLinkGuard url={url} label={`Learn about ${skill.skill}`} description={resource?.description || `This opens a verified learning or reference page for ${skill.skill}.`} textStyle={[styles.link, { color: colors.accentRole.action }]} />
+            <ContextSourceLinks item={contextItem} resource={resource} />
           </View>
         );
       })}
@@ -68,9 +103,10 @@ export function FoundationSkillsBlock({
       <Text style={[styles.caption, { color: colors.textRole.muted }]}>
         Start with the suggested foundation, then add the other capabilities as your direction becomes clearer. This is guidance, not a checklist.
       </Text>
-      {startHere.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Suggested starting point</Text><SkillRows items={startHere} /></View> : null}
-      {expanded && buildNext.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Other domain foundations</Text><SkillRows items={buildNext} /></View> : null}
-      {buildNext.length ? (
+      {startHere.length ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Start here</Text><SkillRows items={startHere} /></View> : null}
+      {buildNext.length && expanded ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Build next</Text><SkillRows items={buildNext} /></View> : null}
+      {chooseArea.length && expanded ? <View style={styles.group}><Text style={[styles.groupLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Choose an area</Text><SkillRows items={chooseArea} /></View> : null}
+      {buildNext.length || chooseArea.length ? (
         <TouchableOpacity
           onPress={() => setExpanded((value) => !value)}
           activeOpacity={0.75}
@@ -79,11 +115,10 @@ export function FoundationSkillsBlock({
           style={styles.moreButton}
         >
           <Text style={[styles.moreText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
-            {expanded ? "Show fewer domain skills" : `See all ${rows.length} domain skills`}
+            {expanded ? "Show fewer learning stages" : `See the full learning sequence`}
           </Text>
         </TouchableOpacity>
       ) : null}
-      {notice ? <Text style={[styles.caption, { color: colors.textRole.muted }]}>{notice}</Text> : null}
     </View>
   );
 }
@@ -92,6 +127,7 @@ export default FoundationSkillsBlock;
 
 const styles = StyleSheet.create({
   container: { gap: Spacing.sm },
+  skillHeading: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.xs },
   caption: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
@@ -100,15 +136,16 @@ const styles = StyleSheet.create({
   },
   rows: { gap: Spacing.sm, marginTop: Spacing.xs },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "stretch",
     gap: Spacing.sm,
-    minHeight: 32,
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
   },
   group: { gap: Spacing.xs },
   groupLabel: { fontSize: FontSize.xs, textTransform: "uppercase", letterSpacing: 0.8 },
   skill: {
-    flex: 1,
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.35,
@@ -125,4 +162,6 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   moreText: { fontSize: FontSize.sm },
+  note: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.35 },
+  emptyCard: { borderWidth: StyleSheet.hairlineWidth, borderColor: "#E5E7EB", borderRadius: Radius.md, padding: Spacing.md },
 });

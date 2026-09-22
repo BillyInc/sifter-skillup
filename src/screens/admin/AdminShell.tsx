@@ -144,6 +144,16 @@ export function AdminShell({
     || readParam(searchParams?.focus) === "guidance"
     || readParam(searchParams?.journey) === "guided_subject_discovery"
     || readParam(searchParams?.journey_mode) === "guided_subject_discovery";
+  const guidancePathLabel = [
+    readParam(searchParams?.programme_id) ? `Programme ID: ${readParam(searchParams?.programme_id)}` : null,
+    readParam(searchParams?.jamb_programme_id) ? `JAMB programme ID: ${readParam(searchParams?.jamb_programme_id)}` : null,
+    readParam(searchParams?.school_id) ? `University context ID: ${readParam(searchParams?.school_id)}` : null,
+    readParam(searchParams?.domain_id) ? `Domain ID: ${readParam(searchParams?.domain_id)}` : null,
+    readParam(searchParams?.subgroup_id) ? `Subgroup ID: ${readParam(searchParams?.subgroup_id)}` : null,
+    (readParam(searchParams?.role_id) || readParam(searchParams?.role_key))
+      ? `Role ID: ${readParam(searchParams?.role_id) || readParam(searchParams?.role_key)}`
+      : null,
+  ].filter(Boolean).join(" → ");
   const guidanceEntry = readParam(searchParams?.guidance_entry);
   const resumeQuery = useMemo(
     () => Object.entries(searchParams ?? {})
@@ -199,6 +209,10 @@ export function AdminShell({
   const goBack = () => {
     if (focusedGuidance && guidanceEntry?.startsWith("/")) {
       router.replace(guidanceEntry as never);
+      return;
+    }
+    if (focusedGuidance) {
+      adminNav.home(router as Nav, audience);
       return;
     }
     if (router.canGoBack()) {
@@ -271,6 +285,7 @@ export function AdminShell({
         groups={navGroups}
         activeKey={activeKey}
         focusedGuidance={focusedGuidance}
+        guidancePathLabel={guidancePathLabel}
         isHome={isHome}
         drawerOpen={drawerOpen}
         onDrawerOpen={() => setDrawerOpen(true)}
@@ -359,6 +374,7 @@ export function AdminShell({
             studentClass={readParam(searchParams?.student_class) || readParam(searchParams?.class_name) || readParam(searchParams?.student_type)}
             stream={readParam(searchParams?.stream)}
             journey={readParam(searchParams?.journey_mode) || readParam(searchParams?.journey)}
+            pathLabel={guidancePathLabel}
             studentTarget={readParam(searchParams?.guidance_student_id) ? "student" : "anonymous"}
           />
         ) : null}
@@ -405,6 +421,7 @@ function WebAdminShell({
   groups,
   activeKey,
   focusedGuidance,
+  guidancePathLabel,
   isHome,
   drawerOpen,
   onDrawerOpen,
@@ -427,6 +444,7 @@ function WebAdminShell({
   groups: { title: string; items: AdminNavItem[] }[];
   activeKey: string;
   focusedGuidance: boolean;
+  guidancePathLabel: string;
   isHome: boolean;
   drawerOpen: boolean;
   onDrawerOpen: () => void;
@@ -482,7 +500,7 @@ function WebAdminShell({
           </div>
           {actions ? <div className="web-admin-actions">{actions}</div> : null}
         </header>
-        {focusedGuidance ? <div className="web-admin-context" role="status"><strong>Focused guidance workspace</strong><span>Navigation is collapsed while you work. Your target and resume context remain attached to this route.</span></div> : null}
+        {focusedGuidance ? <div className="web-admin-context" role="status"><strong>Focused guidance workspace</strong><span>{guidancePathLabel ? `Route context: ${guidancePathLabel}. ` : ""}Navigation is collapsed while you work. Your target and resume context remain attached to this route.</span></div> : null}
         <main className="web-admin-content">{children}</main>
       </section>
       {accountAction ? <div className="web-admin-modal-backdrop" role="presentation"><section className="web-admin-modal" role="dialog" aria-modal="true" aria-labelledby="web-admin-action-title"><h2 id="web-admin-action-title">{accountAction === "delete" ? "Delete this account?" : "Sign out?"}</h2><p>{accountAction === "delete" ? "Your account will be marked for deletion. A 24-hour recovery cooldown starts immediately." : "You will need to sign in again to continue."}</p><div><button className="secondary" onClick={onCancelAction} disabled={actionBusy}>Cancel</button><button className="danger-button" onClick={onRunAction} disabled={actionBusy}>{accountAction === "delete" ? "Delete account" : "Sign out"}</button></div></section></div> : null}
@@ -490,7 +508,7 @@ function WebAdminShell({
   );
 }
 
-function GuidanceContextBanner({ studentClass, stream, journey, studentTarget }: { studentClass?: string; stream?: string; journey?: string; studentTarget: "student" | "anonymous" }) {
+function GuidanceContextBanner({ studentClass, stream, journey, pathLabel, studentTarget }: { studentClass?: string; stream?: string; journey?: string; pathLabel?: string; studentTarget: "student" | "anonymous" }) {
   const { colors } = useTheme();
   const journeyLabel = journey ? journey.replace(/_/g, " ") : "";
   const context = [studentClass, stream].filter(Boolean).join(" · ");
@@ -504,6 +522,7 @@ function GuidanceContextBanner({ studentClass, stream, journey, studentTarget }:
         <Text style={[styles.guidanceContextTitle, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{studentTarget === "student" ? "This workspace is scoped to the selected student" : "This workspace is not attached to a student record"}</Text>
         <Text style={[styles.guidanceContextBody, CompassFonts.body, { color: colors.textRole.secondary }]}>{studentTarget === "student" ? "Selections use this student&apos;s authorised guidance path. Access and consent checks remain enforced." : "Use this for your own or a walk-in-style exploration without identifying or inspecting a student."}</Text>
       </View>
+      {pathLabel ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>Route context (record IDs): {pathLabel}</Text> : null}
       {context || journeyLabel ? <Text style={[styles.guidanceContextMeta, CompassFonts.data, { color: colors.textRole.muted }]}>{[context, journeyLabel].filter(Boolean).join(" · ")}</Text> : null}
     </View>
   );

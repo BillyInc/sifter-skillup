@@ -138,7 +138,7 @@ export function SeniorSecondaryExploreSetupForm({
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-             Search by the name you know. We will show the universities that offer
+             Search by the name you know. We will show the universities with
              it and let you choose one before showing its full requirements.
           </Text>
         </View>

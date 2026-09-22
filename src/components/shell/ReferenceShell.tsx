@@ -382,7 +382,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 activeOpacity={0.85}
                 onPress={() => {
                   if (guidanceEntry?.startsWith('/')) router.replace(guidanceEntry as any);
-                  else if (router.canGoBack()) router.back();
                   else router.replace('/(tabs)/home' as any);
                 }}
                 style={[styles.focusExitButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}

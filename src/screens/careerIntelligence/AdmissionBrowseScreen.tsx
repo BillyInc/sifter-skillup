@@ -18,6 +18,7 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import { careerData } from "@/lib/careerData";
 import { API } from "@/lib/api";
 import { getStartingPoint, saveStartingPoint } from "@/lib/startingPoint";
@@ -176,6 +177,7 @@ export default function AdmissionBrowseScreen() {
     journey_mode?: string | string[];
     focus?: string | string[];
     resume?: string | string[];
+    entry?: string | string[];
   }>();
   const router = useRouter();
   const exploreNav = useExploreNav();
@@ -183,8 +185,11 @@ export default function AdmissionBrowseScreen() {
   const { colors } = useTheme();
   const rawMode = readParam(params.mode);
   const userType = readParam(params.user_type);
-  const earlySecondary = userType === "senior_secondary";
-  const showSchoolMode = !userType || userType === "student";
+  const discoveryEntry = readParam(params.entry);
+  const [studentContextType, setStudentContextType] = useState(userType);
+  const effectiveUserType = studentContextType || userType;
+  const earlySecondary = effectiveUserType === "senior_secondary";
+  const showSchoolMode = !effectiveUserType || effectiveUserType === "student";
   const initialMode: Mode =
     rawMode === "subjects" ? "subjects" : rawMode === "school" && showSchoolMode ? "school" : "programme";
   const [mode, setMode] = useState<Mode>(initialMode);
@@ -217,7 +222,7 @@ export default function AdmissionBrowseScreen() {
   );
   const journeyMode = readParam(params.journey_mode) || readParam(params.journey);
   const isFocusedGuidance = readParam(params.focus) === "guidance" || journeyMode === "guided_subject_discovery";
-  const undergraduateContext = userType === "student" || journeyMode === "undergraduate_programmes";
+  const undergraduateContext = effectiveUserType === "student" || journeyMode === "undergraduate_programmes";
   const learnerAudience: AdminLearnerAudience | null = adminLearnerAudienceForOrg(adminType);
   const [contextClass, setContextClass] = useState(readParam(params.class_name));
   const [stream, setStream] = useState(readParam(params.stream));
@@ -236,6 +241,7 @@ export default function AdmissionBrowseScreen() {
 
   // School-first (enrolled) state.
   const [schoolQuery, setSchoolQuery] = useState("");
+  const [universityQuery, setUniversityQuery] = useState("");
   const [schoolMatches, setSchoolMatches] = useState<AdmissionSchool[]>([]);
   const [chosenSchool, setChosenSchool] = useState<AdmissionSchool | null>(null);
   const initialSchoolId = readParam(params.school_id);
@@ -247,9 +253,50 @@ export default function AdmissionBrowseScreen() {
   const guidanceCompleteRef = useRef(false);
   const finalizingGuidanceRef = useRef(false);
 
+  const dedicatedProgrammeSearch = !isAdminExplore && (
+    discoveryEntry === "programme_search" || journeyMode === "programme_preview"
+  );
+  const dedicatedProgrammeAndUniversity = !isAdminExplore && discoveryEntry === "programme_and_university";
+  const dedicatedSubjectMatch = !isAdminExplore && (
+    discoveryEntry === "subject_match" || journeyMode === "guided_subject_discovery"
+  );
+  const validStudentSubjectType = ["senior_secondary", "ss3_secondary", "jamb"].includes(effectiveUserType);
+  const studentSubjectContextReady = !dedicatedSubjectMatch
+    ? true
+    : validStudentSubjectType && (
+        effectiveUserType !== "senior_secondary"
+          ? true
+          : ["ss1", "ss2"].includes(contextClass.trim().toLowerCase()) && Boolean(stream)
+      );
+  // Undergraduates enter through their current university/programme context;
+  // keep this workspace university-first and do not expose the secondary/JAMB
+  // discovery doors or a generic national programme search alongside it.
+  const showModeSwitcher = isAdminExplore || (
+    !undergraduateContext &&
+    !dedicatedProgrammeSearch &&
+    !dedicatedProgrammeAndUniversity &&
+    !dedicatedSubjectMatch
+  );
+
   useEffect(() => {
     if (earlySecondary && subjectExamType !== "olevel") setSubjectExamType("olevel");
   }, [earlySecondary, subjectExamType]);
+
+  const chooseStudentSubjectContext = (nextType: "senior_secondary" | "ss3_secondary" | "jamb") => {
+    setStudentContextType(nextType);
+    if (nextType === "senior_secondary") {
+      setSubjectExamType("olevel");
+      if (!["ss1", "ss2"].includes(contextClass.trim().toLowerCase())) setContextClass("");
+    } else {
+      setSubjectExamType("combined");
+      setContextClass(nextType === "jamb" ? "jamb" : "ss3");
+      setStream("");
+    }
+    setCandidates([]);
+    setSelected(null);
+    setSubjectMatchAttempted(false);
+    setNotice(null);
+  };
 
   const subjects = useMemo(
     () => subjectText.split(",").map((s) => s.trim()).filter(Boolean),
@@ -451,6 +498,7 @@ export default function AdmissionBrowseScreen() {
         {
             examType: subjectExamType,
           olevelSubjects,
+          schoolId: (selectedAdmissionSchool?.schoolId ?? chosenSchool?.id ?? initialSchoolId) || undefined,
         },
       );
       const nextCandidates = (state.status === "real" || state.status === "fallback") && state.data ? state.data : [];
@@ -699,12 +747,14 @@ export default function AdmissionBrowseScreen() {
       exploreNav.programme(router, offering.jambProgrammeId, {
         jambProgrammeId: offering.jambProgrammeId,
         schoolId: chosenSchool.id,
-        userType: userType || "student",
-        focused: true,
+        userType: effectiveUserType || "student",
+        focused: isFocusedGuidance,
         guidanceStudentId: guidanceStudentId || undefined,
         guidanceTarget: guidanceTarget || undefined,
         entryPath: guidanceEntry || undefined,
+        replaceHistory: isFocusedGuidance,
         journeyMode: "undergraduate_career",
+        resumeStage: "programme_preview",
       });
     }
   };
@@ -718,8 +768,29 @@ export default function AdmissionBrowseScreen() {
     setProgrammeDetail(null);
     setSelectedSubjectMatch(null);
     setSubjectMatchStatus(hasSubjectContext ? "loading" : "idle");
+    setUniversityQuery("");
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
+    if (dedicatedProgrammeAndUniversity) {
+      // A programme result establishes the national programme identity. It
+      // must not expand university offerings inside this search surface. The
+      // programme preview owns the next explanation and its dedicated
+      // university grid owns selection/comparison.
+      exploreNav.programme(router, id, {
+        jambProgrammeId: id,
+        userType: effectiveUserType || undefined,
+        className: contextClass || readParam(params.class_name) || undefined,
+        stream: stream || undefined,
+        guidanceStudentId: guidanceStudentId || undefined,
+        guidanceTarget: guidanceTarget || undefined,
+        entryPath: guidanceEntry || undefined,
+        replaceHistory: isFocusedGuidance,
+        focused: isFocusedGuidance,
+        journeyMode: journeyMode || "programme_preview",
+        resumeStage: "programme_preview",
+      });
+      return;
+    }
     // A programme result is the user's selection. Open its single programme
     // preview immediately; that screen owns the next decision (which
     // university offers it). Keeping the university list out of this result
@@ -729,12 +800,13 @@ export default function AdmissionBrowseScreen() {
     exploreNav.programme(router, id, {
       jambProgrammeId: id,
       schoolId: undergraduateContext ? chosenSchool?.id : undefined,
-      userType: userType || undefined,
+      userType: effectiveUserType || undefined,
       className: contextClass || readParam(params.class_name) || undefined,
       stream: stream || undefined,
       guidanceStudentId: guidanceStudentId || undefined,
       guidanceTarget: guidanceTarget || undefined,
       entryPath: guidanceEntry || undefined,
+      replaceHistory: isFocusedGuidance,
       focused: isFocusedGuidance,
       journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
       resumeStage: "programme_preview",
@@ -786,7 +858,7 @@ export default function AdmissionBrowseScreen() {
       setDomains(domainState.status === "real" && domainState.data ? domainState.data : null);
       const selectedPath = {
         academicContext: {
-          userType: userType || (isAdminExplore
+          userType: effectiveUserType || (isAdminExplore
             ? contextClass === "undergraduate"
               ? "student"
               : contextClass === "jamb"
@@ -897,12 +969,14 @@ export default function AdmissionBrowseScreen() {
     exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
       jambProgrammeId: selected.jambProgrammeId || selected.id,
       schoolId: school.schoolId,
-      userType: userType || undefined,
+      userType: effectiveUserType || undefined,
       guidanceTarget: guidanceTarget || undefined,
       entryPath: guidanceEntry || undefined,
+      replaceHistory: isFocusedGuidance,
       focused: isFocusedGuidance,
       viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
-      journeyMode: journeyMode || undefined,
+      journeyMode: journeyMode || "programme_to_role",
+      resumeStage: "university_context",
     });
   };
 
@@ -915,6 +989,56 @@ export default function AdmissionBrowseScreen() {
     );
   }
 
+  // A direct "I don't know yet" entry must establish the learner context
+  // before the subject picker is rendered. Otherwise the generic hub silently
+  // mixes SS1/SS2 O-level guidance with SS3/JAMB combined guidance.
+  if (dedicatedSubjectMatch && !studentSubjectContextReady) {
+    return (
+      <ScrollView
+        style={{ flex: 1, backgroundColor: colors.bg }}
+        contentContainerStyle={[styles.scroll, webContainer as object]}
+      >
+        <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>SUBJECT MATCHING</Text>
+        <Text style={[styles.title, { color: colors.text }]}>First, tell us where you are</Text>
+        <Text style={[styles.hint, { color: colors.textMuted }]}>The subjects we use depend on your stage. SS1 and SS2 use O-level subjects for early programme guidance; SS3 and JAMB candidates use O-level and UTME subjects together.</Text>
+        <View style={styles.contextChoiceGrid}>
+          {([
+            ["senior_secondary", "SS1 or SS2", "Choose your class and school stream. We will use O-level subjects."],
+            ["ss3_secondary", "SS3", "Use your O-level subjects together with your UTME combination."],
+            ["jamb", "JAMB candidate", "Use your O-level subjects together with your UTME combination."],
+          ] as const).map(([value, label, description]) => (
+            <TouchableOpacity
+              key={value}
+              onPress={() => chooseStudentSubjectContext(value)}
+              style={[styles.contextChoice, { backgroundColor: colors.card, borderColor: effectiveUserType === value ? Brand.primary : colors.border }]}
+              accessibilityRole="button"
+            >
+              <Text style={[styles.cardTitle, { color: colors.text }]}>{label}</Text>
+              <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{description}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        {effectiveUserType === "senior_secondary" ? (
+          <>
+            <Text style={[styles.label, { color: colors.textSoft }]}>Class</Text>
+            <View style={styles.modeRow}>
+              {["ss1", "ss2"].map((value) => (
+                <ModeButton key={value} label={value.toUpperCase()} active={contextClass === value} onPress={() => setContextClass(value)} />
+              ))}
+            </View>
+            <Text style={[styles.label, { color: colors.textSoft }]}>School stream</Text>
+            <View style={styles.modeRow}>
+              {["science", "commercial", "art"].map((value) => (
+                <ModeButton key={value} label={value[0].toUpperCase() + value.slice(1)} active={stream === value} onPress={() => setStream(value)} />
+              ))}
+            </View>
+            <Text style={[styles.hint, { color: colors.textMuted }]}>Your stream helps sort the starting suggestions. The subject rules decide which programmes can be matched.</Text>
+          </>
+        ) : null}
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.bg }}
@@ -923,7 +1047,17 @@ export default function AdmissionBrowseScreen() {
       showsVerticalScrollIndicator={false}
     >
       <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
-        {guidedSubjectDiscovery ? "GUIDED DISCOVERY" : undergraduateContext ? "MY UNIVERSITY" : "PROGRAMME DISCOVERY"}
+        {guidedSubjectDiscovery
+          ? "GUIDED DISCOVERY"
+          : dedicatedSubjectMatch
+            ? "SUBJECT MATCHING"
+            : dedicatedProgrammeAndUniversity
+              ? "PROGRAMME + UNIVERSITY"
+            : dedicatedProgrammeSearch
+              ? "PROGRAMME SEARCH"
+              : undergraduateContext
+                ? "MY UNIVERSITY"
+                : "PROGRAMME DISCOVERY"}
       </Text>
       <Text style={[styles.title, { color: colors.text }]}>
         {guidedSubjectDiscovery
@@ -934,7 +1068,13 @@ export default function AdmissionBrowseScreen() {
             ? "Plan subjects and programmes"
             : undergraduateContext
               ? "Explore your university programmes"
-            : "Find a programme, university or subject plan"}
+              : dedicatedProgrammeAndUniversity
+                ? "Find the programme and university"
+                : dedicatedProgrammeSearch
+                ? "Find your programme"
+                : dedicatedSubjectMatch
+                  ? "Find programme options from your subjects"
+                  : "Find a programme, university or subject plan"}
       </Text>
 
       {guidedSubjectDiscovery ? (
@@ -965,7 +1105,7 @@ export default function AdmissionBrowseScreen() {
         </View>
       ) : null}
 
-       {showAdmissionEditor ? <View style={styles.modeRow}>
+       {showAdmissionEditor && showModeSwitcher ? <View style={styles.modeRow}>
          {showSchoolMode ? <ModeButton label={undergraduateContext ? "My university programmes" : "My university"} active={mode === "school"} onPress={() => { markAdminGuidanceInProgress(); setMode("school"); }} /> : null}
         <ModeButton label={undergraduateContext ? "Find a programme" : "Programme"} active={mode === "programme"} onPress={() => { markAdminGuidanceInProgress(); setMode("programme"); }} />
         {!undergraduateContext ? <ModeButton label="Subjects" active={mode === "subjects"} onPress={() => { markAdminGuidanceInProgress(); setMode("subjects"); }} /> : null}
@@ -1010,24 +1150,32 @@ export default function AdmissionBrowseScreen() {
           {!chosenSchool && schoolMatches.length ? (
             <View style={styles.results}>
               {schoolMatches.slice(0, 12).map((school) => (
-                <TouchableOpacity
+                <View
                   key={school.id}
-                  activeOpacity={0.82}
-                  onPress={() => chooseSchool(school)}
                   style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
                 >
-                  <Text style={[styles.cardTitle, { color: colors.text }]}>{school.name}</Text>
-                  {school.institutionType ? (
-                    <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                      {school.institutionType}
-                    </Text>
-                  ) : null}
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    {[school.address, school.city, school.state, school.country]
-                      .filter(Boolean)
-                      .join(", ") || "Address not listed"}
-                  </Text>
-                </TouchableOpacity>
+                  <View style={styles.cardCopy}>
+                    <Text style={[styles.cardTitle, { color: colors.text }]}>{school.name}</Text>
+                    {school.institutionType ? (
+                      <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
+                        {school.institutionType}
+                      </Text>
+                    ) : null}
+                    {[school.address, school.city, school.state, school.country].filter(Boolean).length ? (
+                      <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{[school.address, school.city, school.state, school.country].filter(Boolean).join(", ")}</Text>
+                    ) : null}
+                  </View>
+                  <TouchableOpacity
+                    accessibilityRole="radio"
+                    accessibilityState={{ checked: false }}
+                    accessibilityLabel={`Choose ${school.name}`}
+                    onPress={() => chooseSchool(school)}
+                    style={styles.selectionControl}
+                  >
+                    <Feather name="circle" size={22} color={Brand.primary} />
+                    <Text style={[styles.selectionLabel, { color: Brand.primaryDeep }]}>Choose</Text>
+                  </TouchableOpacity>
+                </View>
               ))}
             </View>
           ) : null}
@@ -1071,10 +1219,8 @@ export default function AdmissionBrowseScreen() {
                     .map((o) => {
                       const active = selected?.jambProgrammeId === o.jambProgrammeId;
                       return (
-                        <TouchableOpacity
+                        <View
                           key={o.jambProgrammeId}
-                          activeOpacity={0.82}
-                          onPress={() => chooseOffering(o)}
                           style={[
                             styles.card,
                             {
@@ -1083,17 +1229,29 @@ export default function AdmissionBrowseScreen() {
                             },
                           ]}
                         >
-                          <Text
-                            style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}
-                          >
-                            {o.jambName}
-                          </Text>
-                          {!undergraduateContext && o.hasUniversityException ? (
-                            <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
-                              University-specific admission note available
+                          <View style={styles.cardCopy}>
+                            <Text
+                              style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}
+                            >
+                              {o.jambName}
                             </Text>
-                          ) : null}
-                        </TouchableOpacity>
+                            {!undergraduateContext && o.hasUniversityException ? (
+                              <Text style={[styles.cardMeta, { color: active ? colors.textInverse : Brand.primaryDeep }]}>
+                                University-specific admission note available
+                              </Text>
+                            ) : null}
+                          </View>
+                          <TouchableOpacity
+                            accessibilityRole="radio"
+                            accessibilityState={{ checked: active }}
+                            accessibilityLabel={`${active ? "Selected" : "Select"} ${o.jambName}`}
+                            onPress={() => chooseOffering(o)}
+                            style={styles.selectionControl}
+                          >
+                            <Feather name={active ? "check-circle" : "circle"} size={22} color={active ? colors.textInverse : Brand.primary} />
+                            <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{active ? "Selected" : "Select"}</Text>
+                          </TouchableOpacity>
+                        </View>
                       );
                     })}
                 </View>
@@ -1135,10 +1293,19 @@ export default function AdmissionBrowseScreen() {
                ? "Search by programme name, open the programme learning profile, and follow its connected domains, subgroups, roles and next skills."
                : "Programme search is based on the programme name. Open a result to understand the programme first, then inspect university-specific requirements. Use Subjects when you want subject-based matching."}
           </Text>
+          <View style={[styles.variantNotice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+            <Text style={[styles.variantNoticeTitle, { color: colors.text }]}>Why you may see more than one result</Text>
+            <Text style={[styles.noticeText, { color: colors.textSoft }]}>
+              Universities do not always use one identical programme name. A search such as “Business” may return separate recorded JAMB programme identities, combined programmes, or university-specific variants. We keep them separate so each result has the right curriculum and university list. Choose the exact programme identity you mean, then review its universities and requirements.
+            </Text>
+          </View>
         </View>
       ) : (
         <View style={styles.panel}>
-          <Text style={[styles.label, { color: colors.textSoft }]}>What do you want to check?</Text>
+          <Text style={[styles.label, { color: colors.textSoft }]}>Choose the subjects you want to use</Text>
+          {dedicatedSubjectMatch ? (
+            <Text style={[styles.hint, { color: colors.textMuted }]}>We will use this stage-appropriate subject set to find programme possibilities. Universities and their specific requirements come after you open a matched programme.</Text>
+          ) : null}
           {!earlySecondary ? <View style={styles.modeRow}>
             <ModeButton label="UTME subjects" active={subjectExamType === "utme"} onPress={() => {
               markAdminGuidanceInProgress();
@@ -1233,7 +1400,7 @@ export default function AdmissionBrowseScreen() {
         <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}66` }]}>
           <Text style={[styles.section, { color: Brand.primaryDeep, marginTop: 0 }]}>Subject matching is unavailable</Text>
           <Text style={[styles.noticeText, { color: colors.text }]}>We could not turn your subjects into a programme match because the structured requirement data is not complete yet.</Text>
-          <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities that offer it, and open each university's published requirements. Your subject choices remain available when the matcher is ready.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities with it, and open each university&apos;s published requirements. Your subject choices remain available when the matcher is ready.</Text>
         </View>
       ) : null}
 
@@ -1247,10 +1414,8 @@ export default function AdmissionBrowseScreen() {
         {candidates.map((item) => {
           const active = (selected?.jambProgrammeId || selected?.id) === (item.jambProgrammeId || item.id);
           return (
-            <TouchableOpacity
+            <View
               key={item.jambProgrammeId || item.id}
-              activeOpacity={0.82}
-              onPress={() => selectCandidate(item)}
               style={[
                 styles.card,
                 {
@@ -1259,11 +1424,15 @@ export default function AdmissionBrowseScreen() {
                 },
               ]}
             >
+              <View style={styles.cardCopy}>
               <Text style={[styles.cardTitle, { color: active ? colors.textInverse : colors.text }]}>
                 {candidateDisplayName(item)}
               </Text>
-              {/* University options intentionally appear only after the user
-                  opens the programme preview below. */}
+              {/* In the programme-search door, university options belong to
+                  the next programme-preview step. In the known-programme+
+                  known-university door, they are intentionally rendered in
+                  the same focused workspace after the exact identity is
+                  selected. */}
               {/* Was the CCMAS canonical name. A student searching "Computer
                   Engineering" does not need to be told the CCMAS programme is
                   "Computer Engineering" — CCMAS is the mapping substrate, not
@@ -1281,7 +1450,18 @@ export default function AdmissionBrowseScreen() {
                   ) : null}
                 </View>
               ) : null}
-            </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                accessibilityRole="radio"
+                accessibilityState={{ checked: active }}
+                accessibilityLabel={`${active ? "Selected" : "Select"} ${candidateDisplayName(item)}`}
+                onPress={() => selectCandidate(item)}
+                style={styles.selectionControl}
+              >
+                <Feather name={active ? "check-circle" : "circle"} size={22} color={active ? colors.textInverse : Brand.primary} />
+                <Text style={[styles.selectionLabel, { color: active ? colors.textInverse : Brand.primaryDeep }]}>{active ? "Selected" : "Select"}</Text>
+              </TouchableOpacity>
+            </View>
           );
         })}
       </View>
@@ -1290,23 +1470,25 @@ export default function AdmissionBrowseScreen() {
          <View style={styles.detail}>
            <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
              <Text style={[styles.section, { color: colors.text }]}>Programme selected</Text>
-             <Text style={[styles.requirementText, { color: colors.textSoft }]}>Open the programme preview to choose a university. University names, addresses, requirements and the full learning profile belong to the next screen, not this search list.</Text>
+             <Text style={[styles.requirementText, { color: colors.textSoft }]}>{dedicatedProgrammeAndUniversity ? "Now choose a university above. The next screen will show this university's actual programme details and requirements." : "Open the programme preview to choose a university. University names, addresses, requirements and the full learning profile belong to the next screen, not this search list."}</Text>
              {hasSubjectContext ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>{subjectMatchStatus === "loading" ? "Checking your subjects..." : selectedSubjectMatch ? matchSummary(selectedSubjectMatch) : "Subject fit is not confirmed yet."}</Text> : null}
            </View>
-           <TouchableOpacity
-             onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
+           {!dedicatedProgrammeAndUniversity ? <TouchableOpacity
+           onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
                jambProgrammeId: selected.jambProgrammeId || selected.id,
-               userType: userType || undefined,
+               userType: effectiveUserType || undefined,
                guidanceTarget: guidanceTarget || undefined,
                entryPath: guidanceEntry || undefined,
+               replaceHistory: isFocusedGuidance,
                focused: isFocusedGuidance,
                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
-               journeyMode: journeyMode || undefined,
+               journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
+               resumeStage: "programme_preview",
              })}
              style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
            >
              <Text style={styles.actionText}>Open programme preview</Text>
-           </TouchableOpacity>
+           </TouchableOpacity> : null}
          </View>
        ) : null}
        <CareerDisclaimer variant="footer" />
@@ -1362,6 +1544,8 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xxxl * 1.18,
   },
   modeRow: { flexDirection: "row", gap: Spacing.sm },
+  contextChoiceGrid: { gap: Spacing.sm },
+  contextChoice: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.xs },
   modeBtn: {
     borderWidth: 1,
     borderRadius: Radius.sm,
@@ -1369,6 +1553,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
   },
   subjectPlanCard: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  universityChooser: { borderWidth: 1, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
   subjectPlanHeader: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.md },
   changeSubjectsButton: { paddingVertical: Spacing.xs, paddingHorizontal: Spacing.sm },
   subjectPlanText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
@@ -1393,6 +1578,8 @@ const styles = StyleSheet.create({
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
+  variantNotice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md, gap: Spacing.xs },
+  variantNoticeTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
   matchLines: { gap: 3 },
   chosenRow: {
     flexDirection: "row",
@@ -1405,8 +1592,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: Radius.sm,
     padding: Spacing.md,
-    gap: 3,
+    gap: Spacing.md,
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
+  cardCopy: { flex: 1, gap: 3, minWidth: 0 },
+  selectionControl: { alignItems: "center", justifyContent: "center", gap: 2, padding: Spacing.xs, minWidth: 70 },
+  selectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
   cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   cardMeta: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.35 },
   detail: { gap: Spacing.sm },

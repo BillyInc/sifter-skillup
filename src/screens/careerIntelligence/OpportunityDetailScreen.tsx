@@ -10,7 +10,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Linking,
 } from "react-native";
 import { useRouter, type Router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
@@ -25,6 +24,7 @@ import {
 import { careerData } from "@/lib/careerData";
 import { opportunitiesNav } from "@/lib/opportunitiesNav";
 import { useResponsive } from "@/hooks/useResponsive";
+import { ExternalLinkGuard } from "@/components/careerIntelligence";
 import {
   comingSoon,
   type DataState,
@@ -212,14 +212,10 @@ function OpportunityBody({
     <View style={styles.actions}>
       <SubscribeButton target="opportunity" targetId={opportunityId} />
       {data.careersUrl ? (
-        <TouchableOpacity
-          activeOpacity={0.85}
-          onPress={() => { const url = data.careersUrl; if (url) Linking.openURL(url).catch(() => {}); }}
-          style={[styles.applyBtn, { backgroundColor: colors.accentRole.action }]}
-        >
+        <View style={[styles.applyBtn, { backgroundColor: colors.accentRole.action }]}>
           <Feather name="external-link" size={14} color="#fff" style={{ marginRight: Spacing.xs }} />
-          <Text style={styles.applyBtnText}>Apply</Text>
-        </TouchableOpacity>
+          <ExternalLinkGuard url={data.careersUrl} label="Apply" description="This opens the opportunity page recorded for this listing." textStyle={styles.applyBtnText} />
+        </View>
       ) : null}
     </View>
   );

@@ -13,6 +13,8 @@ import os
 import re
 from collections import defaultdict
 
+from _role_tools_loader import load_role_tools
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
 MEDICAL_TOOLS = {"epic systems", "meditech software"}
@@ -46,7 +48,7 @@ def health_adjacent(meta):
 
 
 def main():
-    role_tools = json.load(open(os.path.join(HERE, "role_tools.json"), encoding="utf-8"))
+    role_tools = load_role_tools()
     domain_tools = json.load(open(os.path.join(HERE, "domain_tools.json"), encoding="utf-8"))
     roles = json.load(open(os.path.join(HERE, "role_library_v3_cleaned.json"), encoding="utf-8"))
     meta = json.load(open(os.path.join(HERE, "domain_meta.json"), encoding="utf-8"))

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme, FontSize } from "../../theme";
-import { SifterButton } from "../ui";
 import { shareStudentDocument } from "../../lib/provisioningData";
 import { hasInternetConnection } from "../../lib/networkState";
 
@@ -36,14 +36,15 @@ export function ShareExportButton({
 
   return (
     <View style={styles.wrap}>
-      <SifterButton
-        label={title}
-        icon="share-2"
-         onPress={() => { void onPress(); }}
-        variant="ghost"
-        size="sm"
-        fullWidth={false}
-      />
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel={title}
+        accessibilityHint="Share this report"
+        onPress={() => { void onPress(); }}
+        style={[styles.iconButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+      >
+        <Feather name="share-2" size={18} color={colors.textRole.primary} />
+      </TouchableOpacity>
       {hint ? <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text> : null}
     </View>
   );
@@ -51,6 +52,7 @@ export function ShareExportButton({
 
 const styles = StyleSheet.create({
   wrap: { gap: 4, alignItems: "flex-start" },
+  iconButton: { width: 38, height: 38, borderWidth: 1, borderRadius: 10, alignItems: "center", justifyContent: "center" },
   hint: { fontSize: FontSize.xs, fontWeight: "600", maxWidth: 240 },
 });
 

@@ -200,13 +200,19 @@ def _published_elite_entity_ids(entity_level: str) -> set[str]:
     try:
         rows = (
             _svc().table("elite_evidence_reviews")
-            .select("entity_id, domain_id")
+            .select("entity_id, domain_id, entity_level")
             .eq("entity_level", entity_level)
             .eq("decision", "published")
             .execute().data or []
         )
         ids: set[str] = set()
         for row in rows:
+            # Keep the boundary explicit for older mocked/legacy clients that
+            # may ignore the PostgREST filters above.
+            if row.get("entity_level") and row.get("entity_level") != entity_level:
+                continue
+            if "entity_level" not in row:
+                continue
             for key in ("entity_id", "domain_id"):
                 if row.get(key):
                     ids.add(str(row[key]))
@@ -286,7 +292,10 @@ def _date_str(v: Any) -> Optional[str]:
 def _skill_text(value: Any) -> list[str]:
     """Flatten the JSON/text shapes used by imported skills data."""
     if isinstance(value, str):
-        return [value.strip()] if value.strip() else []
+        # Older imports stored arrays as pipe-delimited text. Keep commas
+        # inside a skill name intact; the pipe is the canonical legacy
+        # separator used by the career tables.
+        return [part.strip() for part in re.split(r"\s*\|\s*", value) if part.strip()]
     if isinstance(value, list):
         out: list[str] = []
         for item in value:
@@ -401,12 +410,28 @@ def _cert(row: dict) -> dict:
     """Map a domain_certifications row → CertificationV2Enriched (camelCase)."""
     key = re.sub(r"[^a-z0-9]+", " ", str(row.get("name") or "").lower()).strip()
     override = _CERT_LIFECYCLE_OVERRIDES.get(key) or {}
+    market_scope = row.get("market_scope")
+    if not market_scope:
+        market_scope = "nigeria" if row.get("region") == "nigeria" else "global" if row.get("region") == "global" else "not_established"
+    market_note = {
+        "nigeria": "Nigerian pathway or professional context is recorded. Check the specific role and current issuer requirements.",
+        "global": "Global pathway is recorded. Nigerian usefulness is not automatically established by this row; check local role or regulator context.",
+        "nigeria_and_global": "Both Nigerian and global evidence are recorded. If you plan to work locally, check the Nigerian pathway first.",
+        "not_established": "The current evidence does not establish a specific Nigerian or global market scope.",
+    }.get(market_scope)
     return {
         "name": row.get("name"),
         "body": row.get("body"),
         "region": row.get("region"),
+        "marketScope": market_scope,
+        "marketNote": market_note,
         "level": row.get("level"),
         "gateReason": row.get("gate_reason"),
+        "sourceConfidence": row.get("source_confidence"),
+        "dataState": row.get("data_state") or "source_backed",
+        "guidanceOwner": row.get("guidance_owner"),
+        "reviewStatus": row.get("review_status"),
+        "ownershipScope": row.get("ownership_scope"),
         # Phase 9 enrichment
         "officialUrl": override.get("official_url") or row.get("official_url"),
         "seniorityTier": row.get("seniority_tier"),
@@ -444,19 +469,28 @@ def _tool(row: dict) -> dict:
         "source": row.get("source"),
         "elementName": row.get("element_name"),
         "elementId": row.get("element_id"),
+        "purposeKey": row.get("purpose_key"),
+        "purposeLabel": row.get("purpose_label"),
+        "purposeDescription": row.get("purpose_description"),
+        "purposeSource": row.get("purpose_source") or {},
         "sourceConfidence": row.get("source_confidence"),
         "dataState": row.get("data_state"),
         "sourceProvenance": row.get("source_provenance") or {},
+        "guidanceOwner": row.get("guidance_owner"),
         "toolUrl": row.get("tool_url"),
     }
 
 
-def _tool_groups(rows: list[dict]) -> dict:
+def _tool_groups(rows: list[dict], resource_urls: Optional[dict[str, str]] = None) -> dict:
     """Split tool rows into distinctive/common ToolGroups(Enriched)."""
     distinctive: list[dict] = []
     common: list[dict] = []
     for r in rows or []:
-        mapped = _tool(r)
+        tool_name = str(r.get("tool_name") or "").strip().casefold()
+        mapped = _tool({
+            **r,
+            "tool_url": r.get("tool_url") or (resource_urls or {}).get(tool_name),
+        })
         if r.get("tool_group") == "distinctive":
             distinctive.append(mapped)
         else:
@@ -464,13 +498,166 @@ def _tool_groups(rows: list[dict]) -> dict:
     return {"distinctive": distinctive, "common": common}
 
 
+_NON_ACTIONABLE_TOOL_NAMES = {
+    "facebook",
+    "instagram",
+    "whatsapp",
+    "mozilla firefox",
+    "google chrome",
+    "safari",
+    # Source taxonomy/category labels are useful for audit, but they are not
+    # named tools a student can choose to learn.
+    "microsoft office software",
+    "office suite software",
+    "spreadsheet software",
+    "analytical or scientific software",
+    "development environment software",
+    "data base management system software",
+    "data base user interface and query software",
+    "enterprise application integration software",
+    "project management software",
+    "web platform development software",
+    "business intelligence and data analysis software",
+    "object or component oriented development software",
+    "content workflow software",
+}
+
+
+def _student_visible_tool_row(
+    row: dict,
+    *,
+    domain_key: Optional[str] = None,
+    scope: Optional[str] = None,
+) -> bool:
+    """Keep student tool payloads owned, named, and useful.
+
+    Source-backed occupational software categories are retained for staff audit,
+    but a browser or social network is not automatically a domain tool merely
+    because O*NET recorded it beside a role. D078 is stricter: only rows from
+    its reviewed, purpose-first domain overlay are student-visible.
+    """
+    name = str(row.get("tool_name") or "").strip().casefold()
+    category = str(row.get("element_name") or "").strip().casefold()
+    if not name or name in _NON_ACTIONABLE_TOOL_NAMES or category in _NON_ACTIONABLE_TOOL_NAMES:
+        return False
+    if row.get("guidance_owner") in {"role_aggregated", "review_only", "audit_only"}:
+        return False
+    if str(row.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
+        return False
+    if domain_key == "D078":
+        provenance = row.get("source_provenance") or {}
+        if scope == "domain":
+            return (
+                row.get("guidance_owner") == "domain"
+                and provenance.get("guidance_layer") == "social_sciences_domain_tool_path_v1"
+            )
+        if scope == "subgroup":
+            return row.get("guidance_owner") == "subgroup"
+    return True
+
+
+def _student_visible_cert_row(row: dict) -> bool:
+    """Keep certification rows source-backed and actionable for students."""
+    if not str(row.get("name") or "").strip():
+        return False
+    if row.get("guidance_owner") in {"role_aggregated", "review_only", "audit_only"}:
+        return False
+    if str(row.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
+        return False
+    if str(row.get("review_status") or "").strip().lower() in {"review_only", "unverified", "rejected"}:
+        return False
+    if row.get("retain_in_catalogue") is False or row.get("current_recommendation") is False:
+        return False
+    return True
+
+
+def _student_visible_method_row(row: dict) -> bool:
+    """Methods are student guidance only when their evidence is source-backed."""
+    if not str(row.get("method_name") or "").strip():
+        return False
+    return str(row.get("data_state") or "source_backed").strip().lower() not in {
+        "review_only", "excluded", "audit_only"
+    }
+
+
+def _role_work_profile_summary(row: Optional[dict]) -> Optional[dict]:
+    """Map the source-backed work profile used by role cards.
+
+    Domain responses use this smaller summary so a student can understand what
+    a role produces before opening the full role page. It deliberately keeps
+    source-backed activities only; it does not turn preparation or education
+    signals into requirements or rename activity classifications as invented
+    role outputs.
+    """
+    if not row:
+        return None
+    work_activities = row.get("work_activities") or []
+    activities = row.get("activities") or []
+    work_activity_names = [
+        item.get("name")
+        for item in work_activities
+        if isinstance(item, dict) and item.get("name")
+    ]
+    activity_preview = [item for item in activities if isinstance(item, str) and item]
+    return {
+        "sourceRecordStatus": row.get("source_record_status"),
+        "activities": activities,
+        "workActivities": work_activities,
+        "activityPreview": activity_preview[:4],
+        "workActivityPreview": work_activity_names[:4],
+        "workContext": row.get("work_context") or [],
+        "sourceLinks": row.get("source_links") or [],
+        "limitations": row.get("limitations") or [],
+        "dataState": row.get("data_state"),
+    }
+
+
+def _programme_domain_explanation(
+    programme_name: str,
+    domain_name: str,
+    relationship: str,
+    course_anchors: list[dict] | None = None,
+    transferable_evidence: list[str] | None = None,
+) -> str:
+    """Explain one programme-to-domain edge in the programme's context.
+
+    The relationship label belongs to the edge, not to the domain. The copy
+    therefore always names the programme and uses only approved evidence
+    returned for that edge; it never falls back to role aggregates.
+    """
+    anchors = [
+        str(item.get("title") or "").strip()
+        for item in (course_anchors or [])
+        if item.get("title")
+    ]
+    evidence = [str(item).strip() for item in (transferable_evidence or []) if str(item).strip()]
+    if relationship == "direct":
+        opening = f"{programme_name} connects directly to {domain_name} because its recorded curriculum develops knowledge and ways of working used in this field."
+    elif relationship == "functional":
+        opening = f"{programme_name} connects functionally to {domain_name} because some of its learning can be used in this field, while the field adds its own foundation."
+    else:
+        opening = f"{programme_name} connects adjacently to {domain_name} because it shares a nearby way of working, but a larger bridge may be needed before specialising."
+    details: list[str] = []
+    if anchors:
+        details.append(
+            f"The connection is supported by {', '.join(anchors[:3])}"
+            f"{' and other recorded courses' if len(anchors) > 3 else ''}."
+        )
+    elif evidence:
+        details.append(f"The connection is also supported by {', '.join(evidence[:2])}.")
+    return " ".join([opening, *details])
+
+
 def _career_resource(row: dict) -> dict:
     """Map a normalized learning/professional resource to the API contract."""
     return {
         "id": row.get("id"),
+        "programmeId": row.get("programme_id"),
         "domainId": row.get("domain_id"),
         "subgroupId": row.get("subgroup_id"),
         "roleId": row.get("role_id"),
+        "ownershipScope": row.get("ownership_scope"),
+        "reviewStatus": row.get("review_status"),
         "resourceType": row.get("resource_type"),
         "targetName": row.get("target_name"),
         "provider": row.get("provider"),
@@ -495,6 +682,7 @@ def _career_resources(
     svc: Any,
     *,
     domain_id: Optional[str] = None,
+    programme_id: Optional[str] = None,
     role_id: Optional[str] = None,
     include_role: bool = True,
 ) -> list[dict]:
@@ -503,6 +691,8 @@ def _career_resources(
         query = svc.table("career_learning_resources").select("*")
         if domain_id:
             query = query.eq("domain_id", domain_id)
+        if programme_id:
+            query = query.eq("programme_id", programme_id)
         if role_id:
             query = query.eq("role_id", role_id)
         elif not include_role:
@@ -514,7 +704,112 @@ def _career_resources(
         return []
 
 
-def _context_item(row: dict) -> dict:
+def _reviewed_guidance_resources(resources: list[dict]) -> list[dict]:
+    """Keep only resources explicitly approved for the reviewed guidance UI.
+
+    The career-resource table also contains broad imported references and
+    role-aggregated tool links. They remain available for audit/admin use, but
+    must not silently become student-facing recommendations on the Sociology
+    review slice.
+    """
+    return [
+        resource
+        for resource in resources
+        if resource.get("reviewStatus") == "approved_guidance_v1"
+        or (resource.get("sourceProvenance") or {}).get("review_status")
+        == "approved_guidance_v1"
+    ]
+
+
+def _student_guidance_resources(
+    resources: list[dict],
+    *,
+    expected_scope: Optional[str] = None,
+) -> list[dict]:
+    """Keep explicitly safe rows in any student-facing career layer.
+
+    Ownership and review status are the source of truth. Explicit audit-only,
+    review-only and role-aggregated rows are never promoted to a student
+    layer. Legacy rows with no ownership metadata are also withheld: a generic
+    provider homepage must not appear as a specific course, learning path or
+    recommendation simply because the old row has a valid URL. The row can be
+    made visible later by classifying it and approving its scope.
+    """
+    safe: list[dict] = []
+    for resource in resources or []:
+        provenance = resource.get("sourceProvenance") or {}
+        scope = resource.get("ownershipScope") or provenance.get("ownership_scope")
+        status = resource.get("reviewStatus") or provenance.get("review_status")
+        if scope not in {"programme", "domain", "subgroup", "role"}:
+            continue
+        if status != "approved_guidance_v1":
+            continue
+        if provenance.get("ownership") in {"role_aggregated", "audit_only"}:
+            continue
+        if expected_scope and scope and scope != expected_scope:
+            continue
+        safe.append(resource)
+    return safe
+
+
+def _domain_guidance_foundations(svc: Any, domain_id: str) -> list[dict]:
+    """Read domain-owned staged foundations when the additive table exists."""
+    try:
+        rows = (
+            svc.table("career_guidance_foundations")
+            .select("*")
+            .eq("domain_id", domain_id)
+            .order("display_order")
+            .execute()
+            .data
+            or []
+        )
+        return [
+            {
+                "skill": row.get("item_name"),
+                "prevalence": None,
+                "n": None,
+                "stage": row.get("stage"),
+                "priorityReason": row.get("priority_reason"),
+                "evidenceNote": row.get("evidence_note"),
+                "uri": row.get("resource_url"),
+            }
+            for row in rows
+            if row.get("item_name")
+        ]
+    except Exception as exc:  # noqa: BLE001
+        log.debug("career guidance foundation layer unavailable", error=str(exc))
+        return []
+
+
+def _tool_resource_urls(resources: list[dict]) -> dict[str, str]:
+    """Resolve tool-learning links onto the tool chips that reference them.
+
+    Older ``domain_tools`` rows often have no URL of their own, while the
+    additive learning-resource layer does. Keeping the fallback here lets
+    existing taxonomy rows become clickable without inventing a link.
+    """
+    urls: dict[str, str] = {}
+    for resource in resources or []:
+        if resource.get("resourceType") != "tool_learning":
+            continue
+        name = str(resource.get("targetName") or "").strip().casefold()
+        url = resource.get("url")
+        if not name or not isinstance(url, str) or not url.strip():
+            continue
+        urls.setdefault(name, url.strip())
+    # Resource target names are deliberately descriptive (for example,
+    # ``Python documentation and tutorial``) while taxonomy rows use the
+    # named tool (``Python``).  Resolve only a leading-name relationship;
+    # never match arbitrary words in a description to a tool.
+    for target, url in list(urls.items()):
+        words = target.split()
+        for size in range(1, min(3, len(words)) + 1):
+            urls.setdefault(" ".join(words[:size]), url)
+    return urls
+
+
+def _context_item(row: dict, relationships: list[dict] | None = None) -> dict:
     """Map a source-backed contextual item row to the frontend contract."""
     return {
         "contextLevel": row.get("context_level"),
@@ -530,6 +825,7 @@ def _context_item(row: dict) -> dict:
         "priorityReason": row.get("priority_reason"),
         "prerequisites": row.get("prerequisites") or [],
         "relatedItems": row.get("related_items") or [],
+        "relationships": relationships or [],
         "sourceIds": row.get("source_ids") or [],
         "sourceReferences": row.get("source_references") or [],
         "sourceLocators": row.get("source_locators") or [],
@@ -538,6 +834,7 @@ def _context_item(row: dict) -> dict:
         "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
         "sourceConfidence": row.get("source_confidence"),
         "dataState": row.get("data_state") or "source_backed",
+        "guidanceOwner": row.get("guidance_owner"),
         "verifiedAt": _date_str(row.get("verified_at")),
     }
 
@@ -562,7 +859,55 @@ def _career_context_items(
             .data
             or []
         )
-        return [_context_item(row) for row in rows]
+        relationships_by_item: dict[tuple[str, str], list[dict]] = {}
+        try:
+            edge_rows = (
+                svc.table("career_item_relationships")
+                .select("*")
+                .eq("context_level", context_level)
+                .eq("context_key", context_key)
+                .eq("relationship_status", "source_backed")
+                .eq("data_state", "source_backed")
+                .execute()
+                .data
+                or []
+            )
+            for edge in edge_rows:
+                relationships_by_item.setdefault(
+                    (str(edge.get("from_item_type") or ""), str(edge.get("from_item_key") or "")),
+                    [],
+                ).append({
+                    "relationshipType": edge.get("relationship_type"),
+                    "relationshipStatus": edge.get("relationship_status"),
+                    "fromItemType": edge.get("from_item_type"),
+                    "fromItemKey": edge.get("from_item_key"),
+                    "toItemType": edge.get("to_item_type"),
+                    "toItemKey": edge.get("to_item_key"),
+                    "toName": edge.get("to_name"),
+                    "sourceIds": edge.get("source_ids") or [],
+                    "sourceReferences": edge.get("source_references") or [],
+                    "evidenceLimitations": edge.get("evidence_limitations") or [],
+                })
+        except Exception as edge_exc:  # noqa: BLE001
+            # The relationship migration is additive. Existing installations
+            # still use the explicit JSON arrays on each contextual item until
+            # the normalized edge table is applied.
+            log.debug("career contextual relationship layer unavailable", error=str(edge_exc))
+
+        # Context level and ownership must agree. A role aggregate, an
+        # unclassified legacy row, or a row owned by a different layer is
+        # retained in the database for audit but is never student-facing.
+        visible = []
+        for row in rows:
+            owner = row.get("guidance_owner")
+            if owner != context_level:
+                continue
+            if owner in {"role_aggregated", "review_only", "audit_only"}:
+                continue
+            if row.get("data_state") != "source_backed":
+                continue
+            visible.append(_context_item(row, relationships_by_item.get((str(row.get("item_type") or ""), str(row.get("item_key") or "")))))
+        return visible
     except Exception as exc:  # noqa: BLE001
         # The migration is additive. A pre-migration installation keeps the
         # existing domain/role view rather than failing the whole endpoint.
@@ -718,6 +1063,99 @@ def _programme_skills(svc: Any, programme_id: str) -> dict:
         return {"skillsTechnical": [], "skillsTransferable": [], "skillsCount": 0}
 
 
+def _programme_curriculum_contract(svc: Any, programme_id: str) -> dict:
+    """Read the clean programme-owned curriculum contract.
+
+    The legacy skills JSONB fields are intentionally not used as a fallback:
+    they flatten course outcomes, programme abilities and shared records and
+    may contain appended source annotations.  Until the additive contract
+    migration and seed exist, the endpoint returns an honest unavailable state
+    instead of sending that data to the student UI.
+    """
+    result = {
+        "status": "unavailable",
+        "outcomes": [],
+        "abilities": [],
+        "sourceAuthority": None,
+    }
+    try:
+        outcome_rows = (
+            svc.table("programme_curriculum_outcomes")
+            .select(
+                "outcome_id, course_code, course_title, course_level, outcome_index, "
+                "display_group, "
+                "source_text, student_text, source_locator, student_display, data_state"
+            )
+            .eq("programme_id", programme_id)
+            .eq("student_display", True)
+            .eq("data_state", "source_backed")
+            .order("course_level")
+            .order("course_code")
+            .order("outcome_index")
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.debug("clean programme curriculum contract unavailable", error=str(exc))
+        return result
+
+    try:
+        ability_rows = (
+            svc.table("programme_abilities")
+            .select(
+                "ability_id, display_title, source_text, student_text, source_locator, "
+                "student_display, data_state"
+            )
+            .eq("programme_id", programme_id)
+            .eq("student_display", True)
+            .eq("data_state", "source_backed")
+            .order("ability_id")
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.debug("clean programme abilities contract unavailable", error=str(exc))
+        ability_rows = []
+
+    result["outcomes"] = [
+        {
+            "outcomeId": row.get("outcome_id"),
+            "courseCode": row.get("course_code"),
+            "courseTitle": row.get("course_title"),
+            "courseLevel": row.get("course_level"),
+            # Do not leak the reviewed Sociology label into programmes whose
+            # contract has not supplied a presentation group.  The API keeps
+            # the row honest; the client renders the generic programme layer
+            # until a source-backed group is available.
+            "displayGroup": row.get("display_group") or "programme_core",
+            "outcomeIndex": row.get("outcome_index"),
+            "sourceText": row.get("source_text"),
+            "studentText": row.get("student_text"),
+            "courseSummary": (row.get("source_locator") or {}).get("courseSummary"),
+            "sourceLocator": row.get("source_locator") or {},
+            "dataState": row.get("data_state"),
+        }
+        for row in outcome_rows
+    ]
+    result["abilities"] = [
+        {
+            "abilityId": row.get("ability_id"),
+            "displayTitle": row.get("display_title") or "Use what you learn",
+            "sourceText": row.get("source_text"),
+            "studentText": row.get("student_text"),
+            "sourceLocator": row.get("source_locator") or {},
+            "dataState": row.get("data_state"),
+        }
+        for row in ability_rows
+    ]
+    result["status"] = "available" if result["outcomes"] or result["abilities"] else "not_seeded"
+    if result["outcomes"]:
+        first_locator = result["outcomes"][0].get("sourceLocator") or {}
+        result["sourceAuthority"] = {
+            "parsedSource": first_locator.get("parsedSource"),
+            "originalPdf": first_locator.get("originalPdf"),
+        }
+    return result
+
+
 @router.get("/programmes/{programme_id}", response_model=ResponseModel)
 async def get_programme(programme_id: str):
     """Programme detail incl. its domain links (grouped/sorted client-side).
@@ -742,7 +1180,13 @@ async def get_programme(programme_id: str):
         duration = r.get("duration_years")
         published_domain_ids = _published_elite_entity_ids("domain")
 
-        # Domain links for this programme (Phase 2 mapping).
+        clean_curriculum = _programme_curriculum_contract(svc, programme_id)
+
+        # Domain links for this programme (Phase 2 mapping).  A clean
+        # programme contract is only allowed to expose domain links that also
+        # have an explicit programme-domain evidence row.  This prevents an
+        # older/stale programme_domain row (including a review-only or
+        # unverified edge) from appearing in student guidance.
         pd_res = (
             svc.table("programme_domain")
             .select("domain_id, match_type, elite_flag")
@@ -750,6 +1194,39 @@ async def get_programme(programme_id: str):
             .execute()
         )
         links = pd_res.data or []
+        evidence_by_domain: dict[str, dict] = {}
+        if clean_curriculum.get("status") == "available":
+            try:
+                evidence_rows = (
+                    svc.table("programme_domain_evidence")
+                    .select(
+                        "domain_id, course_anchor_quality, course_anchor_count, course_anchors, "
+                        "transferable_evidence, mapping_source, source_review_required, review_required"
+                    )
+                    .eq("programme_id", programme_id)
+                    .execute()
+                ).data or []
+                approved_domain_ids = {
+                    str(row.get("domain_id"))
+                    for row in evidence_rows
+                    if row.get("domain_id")
+                    and not bool(row.get("source_review_required"))
+                    and not bool(row.get("review_required"))
+                }
+                evidence_by_domain = {
+                    str(row.get("domain_id")): row
+                    for row in evidence_rows
+                    if row.get("domain_id") in approved_domain_ids
+                }
+                links = [
+                    link for link in links
+                    if str(link.get("domain_id")) in approved_domain_ids
+                ]
+            except Exception as evidence_exc:  # noqa: BLE001
+                # The clean contract must not fall back to unreviewed legacy
+                # mappings when its evidence table is not deployed yet.
+                log.debug("programme-domain evidence gate unavailable", error=str(evidence_exc))
+                links = []
         domains: list = []
         if links:
             domain_ids = [link["domain_id"] for link in links]
@@ -764,12 +1241,54 @@ async def get_programme(programme_id: str):
                 d = by_id.get(link["domain_id"])
                 if not d:
                     continue
+                evidence = evidence_by_domain.get(str(link.get("domain_id"))) or {}
+                course_anchors = [
+                    {
+                        "title": anchor.get("title"),
+                        "code": anchor.get("code"),
+                        "matchedAnchors": anchor.get("matched_anchors") or [],
+                    }
+                    for anchor in (evidence.get("course_anchors") or [])
+                    if isinstance(anchor, dict) and anchor.get("title")
+                ]
+                relationship = str(link.get("match_type") or "").strip().lower()
+                # A missing/unknown relationship is incomplete mapping data,
+                # not an adjacent connection. Keep the programme response
+                # fail-closed rather than inventing a weaker tier.
+                if relationship not in {"direct", "functional", "adjacent"}:
+                    log.debug(
+                        "programme-domain link withheld: invalid match type",
+                        programme_id=programme_id,
+                        domain_id=link.get("domain_id"),
+                        match_type=link.get("match_type"),
+                    )
+                    continue
                 domains.append(
                     {
                         # domainId is the stable domain_key the domain route expects.
                         "domainId": d.get("domain_key") or d["id"],
                         "domainName": d.get("name"),
-                        "matchType": link.get("match_type") or "adjacent",
+                        "matchType": relationship,
+                        "courseAnchorQuality": evidence.get("course_anchor_quality"),
+                        "courseAnchorCount": evidence.get("course_anchor_count"),
+                        "courseAnchors": course_anchors,
+                        "transferableEvidence": [
+                            item.get("evidence")
+                            for item in (evidence.get("transferable_evidence") or [])
+                            if isinstance(item, dict) and item.get("evidence")
+                        ],
+                        "explanation": _programme_domain_explanation(
+                            str(r.get("name") or "the selected programme"),
+                            str(d.get("name") or "this field"),
+                            relationship,
+                            course_anchors,
+                            [
+                                item.get("evidence")
+                                for item in (evidence.get("transferable_evidence") or [])
+                                if isinstance(item, dict) and item.get("evidence")
+                            ],
+                        ),
+                        "mappingSource": evidence.get("mapping_source"),
                         "eliteFlag": bool(link.get("elite_flag")) and (
                             str(link.get("domain_id")) in published_domain_ids
                             or str(d.get("domain_key")) in published_domain_ids
@@ -788,8 +1307,34 @@ async def get_programme(programme_id: str):
             "durationYears": float(duration) if duration is not None else None,
             "overview": r.get("description"),
             "domains": domains,
-            **_programme_skills(svc, programme_id),
+            "resources": [],
+            # Keep the old keys for response compatibility, but never fill
+            # them from the polluted legacy arrays. Student curriculum comes
+            # from the explicit contract below.
+            "skillsTechnical": [],
+            "skillsTransferable": [],
+            "skillsCount": 0,
+            "curriculumContract": clean_curriculum,
         }
+        # Programme resources are additive and optional so older databases
+        # continue to serve the curriculum and domain mapping normally.
+        programme_resources = _career_resources(
+            svc,
+            programme_id=programme_id,
+            include_role=False,
+        )
+        programme["resources"] = _student_guidance_resources(
+            programme_resources,
+            expected_scope="programme",
+        )
+        # Programme-level context is additive. It explains what the recorded
+        # curriculum capabilities mean before the student follows a mapped
+        # domain, subgroup or role. Older databases simply return no rows.
+        programme["contextItems"] = _career_context_items(
+            svc,
+            context_level="programme",
+            context_key=str(programme_id),
+        )
         # The canonical programme row is mapping infrastructure. Resolve a
         # student-facing JAMB name separately so the UI never uses the CCMAS
         # name as a course heading when a source-backed JAMB name exists.
@@ -843,6 +1388,7 @@ async def list_domain_clusters():
     """
     try:
         svc = _svc()
+        published_domain_ids = _published_elite_entity_ids("domain")
         res = (
             svc.table("domains")
             .select("id, domain_key, name, cluster, elite_domain, excluded")
@@ -875,9 +1421,15 @@ async def list_domain_clusters():
                 # The domain route keys on domain_key, not the uuid.
                 "id": r.get("domain_key") or r["id"],
                 "name": r.get("name"),
-                "eliteFlag": bool(r.get("elite_domain"))
-                and str(r.get("id")) in published_domain_ids
-                or (bool(r.get("elite_domain")) and str(r.get("domain_key")) in published_domain_ids),
+                # Keep the legacy taxonomy flag during the rolling migration
+                # when no publication evidence has been seeded; once the
+                # evidence gate contains IDs, only explicitly published rows
+                # remain eligible.
+                "eliteFlag": bool(r.get("elite_domain")) and (
+                    not published_domain_ids
+                    or str(r.get("id")) in published_domain_ids
+                    or str(r.get("domain_key")) in published_domain_ids
+                ),
             }
             grouped.setdefault(r.get("cluster") or "Other", []).append(entry)
 
@@ -892,7 +1444,7 @@ async def list_domain_clusters():
 
 
 @router.get("/domains/{domain_id}", response_model=ResponseModel)
-async def get_domain(domain_id: str):
+async def get_domain(domain_id: str, programme_id: Optional[str] = Query(None)):
     """Domain detail (foundation skills, subgroups, tools, certs) with Phase 9
     enrichment. `{domain_id}` is the stable domain_key (e.g. "D001"). Returns a
     `real` DomainV2Enriched envelope, degrading to `coming_soon` on miss/error."""
@@ -908,6 +1460,146 @@ async def get_domain(domain_id: str):
         if not dres.data:
             return ResponseModel(data=_coming_soon("Domain not found."))
         domain = dres.data[0]
+
+        # A domain is stable, but the reason it appears in a student's route
+        # belongs to the specific programme-to-domain edge. Resolve both a
+        # canonical programme id and a JAMB identity so the same domain can
+        # explain its relationship correctly in either entry path.
+        programme_connection = None
+        if programme_id:
+            canonical_id = str(programme_id)
+            programme_row = (
+                svc.table("programmes")
+                .select("id, name")
+                .eq("id", canonical_id)
+                .limit(1)
+                .execute()
+                .data
+                or []
+            )
+            if not programme_row:
+                jamb_row = (
+                    svc.table("jamb_programmes")
+                    .select("programme_id")
+                    .eq("id", canonical_id)
+                    .limit(1)
+                    .execute()
+                    .data
+                    or []
+                )
+                canonical_id = str((jamb_row[0] or {}).get("programme_id") or canonical_id)
+                programme_row = (
+                    svc.table("programmes")
+                    .select("id, name")
+                    .eq("id", canonical_id)
+                    .limit(1)
+                    .execute()
+                    .data
+                    or []
+                )
+            edge_rows = (
+                svc.table("programme_domain")
+                .select("match_type")
+                .eq("programme_id", canonical_id)
+                .eq("domain_id", domain.get("id"))
+                .execute()
+                .data
+                or []
+            )
+            valid_relationships = {"direct", "functional", "adjacent"}
+            relationship_priority = {"direct": 0, "functional": 1, "adjacent": 2}
+            valid_edges = [
+                str(edge.get("match_type") or "").strip().lower()
+                for edge in edge_rows
+                if str(edge.get("match_type") or "").strip().lower() in valid_relationships
+            ]
+            if programme_row and valid_edges:
+                # A duplicate edge must not make the result depend on database
+                # row order. Invalid values are ignored, and a valid edge is
+                # selected deterministically by the strongest relationship.
+                relationship = min(valid_edges, key=lambda value: relationship_priority[value])
+                if relationship in {"direct", "functional", "adjacent"}:
+                    programme_name = str(programme_row[0].get("name") or "the selected programme")
+                    curriculum = _programme_curriculum_contract(svc, canonical_id)
+                    evidence: dict = {}
+                    evidence_rows: list[dict] = []
+                    try:
+                        evidence_rows = (
+                            svc.table("programme_domain_evidence")
+                            .select(
+                                "course_anchor_quality, course_anchor_count, course_anchors, "
+                                "transferable_evidence_count, transferable_evidence, "
+                                "mapping_source, source_review_required, review_required"
+                            )
+                            .eq("programme_id", canonical_id)
+                            .eq("domain_id", domain.get("id"))
+                            .limit(1)
+                            .execute()
+                            .data
+                            or []
+                        )
+                        evidence = evidence_rows[0] if evidence_rows else {}
+                    except Exception as evidence_exc:  # noqa: BLE001
+                        # The evidence table is additive. Older databases may
+                        # still expose the relationship label without anchors;
+                        # never invent anchors as a fallback.
+                        log.debug("programme-domain evidence unavailable", error=str(evidence_exc))
+                    evidence_is_approved = bool(evidence_rows) and not any(
+                        bool(evidence.get(flag))
+                        for flag in ("source_review_required", "review_required")
+                    )
+                    if curriculum.get("status") != "available" or not evidence_is_approved:
+                        # A stored relationship label is not enough to explain
+                        # a student-facing programme connection. Wait for the
+                        # clean curriculum and explicit evidence row instead
+                        # of falling back to stale mapping or role data.
+                        log.debug(
+                            "programme-domain connection withheld",
+                            programme_id=canonical_id,
+                            domain_id=domain.get("id"),
+                            curriculum_status=curriculum.get("status"),
+                            evidence_present=bool(evidence_rows),
+                        )
+                    else:
+                        course_anchors = [
+                            {
+                                "title": anchor.get("title"),
+                                "code": anchor.get("code"),
+                                "matchedAnchors": anchor.get("matched_anchors") or [],
+                            }
+                            for anchor in (evidence.get("course_anchors") or [])
+                            if isinstance(anchor, dict) and anchor.get("title")
+                        ]
+                        transferable_evidence = [
+                            item.get("evidence")
+                            for item in (evidence.get("transferable_evidence") or [])
+                            if isinstance(item, dict) and item.get("evidence")
+                        ]
+                        relation_copy = _programme_domain_explanation(
+                            programme_name,
+                            str(domain.get("name") or "this field"),
+                            relationship,
+                            course_anchors,
+                            transferable_evidence,
+                        )
+                        programme_connection = {
+                            "programmeId": canonical_id,
+                            "programmeName": programme_name,
+                            "relationship": relationship,
+                            "explanation": relation_copy,
+                            "curriculumAvailable": True,
+                            "curriculumCourseCount": len({
+                                str(row.get("courseCode"))
+                                for row in curriculum.get("outcomes") or []
+                                if row.get("courseCode")
+                            }) or None,
+                            "courseAnchorQuality": evidence.get("course_anchor_quality"),
+                            "courseAnchors": course_anchors,
+                            "transferableEvidence": transferable_evidence,
+                            "mappingSource": evidence.get("mapping_source"),
+                            "sourceReviewRequired": False,
+                            "reviewRequired": False,
+                        }
         domain_uuid = domain["id"]
         published_domain_ids = _published_elite_entity_ids("domain")
         published_role_ids = _published_elite_entity_ids("role")
@@ -921,12 +1613,82 @@ async def get_domain(domain_id: str):
         )
         role_res = (
             svc.table("domain_roles")
-            .select(
-                "id, role_key, role_name, description, also_known_as, tier, subgroup_id, elite_status, elite_flag"
-            )
+            # Keep the provenance/state fields here. They are required to
+            # decide whether a role card is student-visible; selecting only
+            # the display columns silently turned every role orientation into
+            # an empty payload.
+            .select("*")
             .eq("domain_id", domain_uuid)
             .execute()
         )
+        reviewed_role_guidance_keys: set[str] = set()
+        if domain_id == "D078":
+            # The reviewed Sociology slice must not promote a taxonomy role
+            # into a student card merely because it has a legacy description or
+            # flattened skill array. Require an exact role-owned context record
+            # (or an explicitly reviewed student orientation on that role).
+            try:
+                # Read the reviewed D078 role keys once and compare case-
+                # insensitively. Exact ownership is the gate; descriptions,
+                # flattened skills and legacy source rows are not fallbacks.
+                reviewed_role_guidance_keys = {
+                    str(row.get("context_key") or "").strip().split("|", 1)[-1].casefold()
+                    for row in (
+                        svc.table("career_context_items")
+                        .select("context_key")
+                        .eq("context_level", "role")
+                        .like("context_key", "D078|%")
+                        .execute()
+                        .data
+                        or []
+                    )
+                    if str(row.get("context_key") or "").strip()
+                }
+            except Exception as role_guidance_exc:  # noqa: BLE001
+                log.debug("reviewed role guidance layer unavailable", error=str(role_guidance_exc))
+        visible_role_rows = [
+            row for row in (role_res.data or [])
+            if str(row.get("data_state") or "").strip().lower()
+            not in {"review_only", "excluded", "audit_only"}
+            and (
+                domain_id != "D078"
+                or str(row.get("role_key") or "").strip().casefold() in reviewed_role_guidance_keys
+                or bool((row.get("source_provenance") or {}).get("student_orientation"))
+            )
+        ]
+        visible_role_count_by_subgroup: dict[str, int] = {}
+        for row in visible_role_rows:
+            subgroup_id = row.get("subgroup_id")
+            if subgroup_id:
+                visible_role_count_by_subgroup[str(subgroup_id)] = (
+                    visible_role_count_by_subgroup.get(str(subgroup_id), 0) + 1
+                )
+
+        # Role cards need a small, source-backed work preview. Keep this
+        # additive and optional so older databases still render the taxonomy,
+        # while avoiding a per-role query on the domain endpoint.
+        role_work_profiles: dict[str, dict] = {}
+        try:
+            role_ids = [row.get("id") for row in visible_role_rows if row.get("id")]
+            if role_ids:
+                work_profile_rows = (
+                    svc.table("domain_role_work_profiles")
+                    .select(
+                        "role_id, source_record_status, activities, work_activities, "
+                        "work_context, source_links, limitations, data_state"
+                    )
+                    .in_("role_id", role_ids)
+                    .execute()
+                    .data
+                    or []
+                )
+                role_work_profiles = {
+                    str(row.get("role_id")): row
+                    for row in work_profile_rows
+                    if row.get("role_id")
+                }
+        except Exception as work_profile_exc:  # noqa: BLE001
+            log.debug("career domain role work previews unavailable", error=str(work_profile_exc))
 
         role_context_by_key: dict[str, dict] = {}
         try:
@@ -972,6 +1734,8 @@ async def get_domain(domain_id: str):
 
         methods_by_subgroup: dict[str, list[dict]] = {}
         for method in method_rows:
+            if not _student_visible_method_row(method):
+                continue
             methods_by_subgroup.setdefault(method.get("subgroup_id"), []).append({
                 "name": method.get("method_name"),
                 "classification": method.get("classification") or "unknown",
@@ -1009,6 +1773,18 @@ async def get_domain(domain_id: str):
         tool_rows = tool_res.data or []
         cert_rows = cert_res.data or []
         resource_rows = _career_resources(svc, domain_id=domain_uuid, include_role=False)
+        reviewed_slice = domain_id == "D078"
+        if reviewed_slice:
+            resource_rows = _reviewed_guidance_resources(resource_rows)
+        resource_rows = _student_guidance_resources(resource_rows)
+        curated_domain_foundations = _domain_guidance_foundations(svc, domain_uuid)
+        # Student-facing foundations must come from the explicit, domain-owned
+        # guidance table. The legacy ``domains.foundation_skills`` JSONB is a
+        # role-frequency import retained for audit/admin compatibility; it
+        # must never become a fallback recommendation when the additive
+        # guidance migration is absent or incomplete.
+        domain_foundations = curated_domain_foundations
+        tool_resource_urls = _tool_resource_urls(resource_rows)
         domain_context_items = _career_context_items(
             svc, context_level="domain", context_key=domain_id
         )
@@ -1048,10 +1824,22 @@ async def get_domain(domain_id: str):
 
         # Domain-scoped tools (subgroup tools attach to their subgroup below).
         domain_tools = [t for t in tool_rows if t.get("scope") == "domain"]
+        # D078's existing domain tool rows are O*NET categories aggregated
+        # from roles. They are useful audit evidence, not domain-owned student
+        # recommendations. The reviewed slice therefore keeps tools at the
+        # subgroup/role level until explicit domain ownership is recorded.
+        domain_tools = [
+            tool for tool in domain_tools
+            if _student_visible_tool_row(tool, domain_key=domain_id, scope="domain")
+        ]
+        domain_tool_names = {
+            str(tool.get("tool_name") or "").strip().casefold()
+            for tool in domain_tools
+        }
 
         # Certs split by placement; subgroup certs attach to their subgroup.
-        gateway = [_cert(c) for c in cert_rows if c.get("placement") == "gateway"]
-        role_hint = [_cert(c) for c in cert_rows if c.get("placement") == "role_hint"]
+        gateway = [_cert(c) for c in cert_rows if c.get("placement") == "gateway" and _student_visible_cert_row(c)]
+        role_hint = [_cert(c) for c in cert_rows if c.get("placement") == "role_hint" and _student_visible_cert_row(c)]
 
         # Subgroups — each carries its cluster skills, tools and specialisation certs.
         subgroups = []
@@ -1064,14 +1852,21 @@ async def get_domain(domain_id: str):
             ),
         ):
             sg_id = sg["id"]
+            if str(sg.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
+                continue
             sg_tools = [
                 t for t in tool_rows
                 if t.get("subgroup_id") == sg_id and t.get("scope") == "subgroup"
             ]
+            sg_tools = [
+                tool for tool in sg_tools
+                if _student_visible_tool_row(tool, domain_key=domain_id, scope="subgroup")
+                and str(tool.get("tool_name") or "").strip().casefold() not in domain_tool_names
+            ]
             sg_certs = [
                 _cert(c)
                 for c in cert_rows
-                if c.get("subgroup_id") == sg_id and c.get("placement") == "subgroup"
+                if c.get("subgroup_id") == sg_id and c.get("placement") == "subgroup" and _student_visible_cert_row(c)
             ]
             subgroups.append(
                 {
@@ -1080,9 +1875,10 @@ async def get_domain(domain_id: str):
                      "name": sg.get("label"),
                      "description": sg.get("description"),
                      "whatPeopleDo": sg.get("what_people_do"),
+                     "studentOrientation": (sg.get("source_provenance") or {}).get("student_orientation") or {},
                      "workContext": sg.get("work_context") or [],
-                     "roleCount": sg.get("role_count"),
-                     "clusterSkills": sg.get("cluster_skills") or [],
+                     "roleCount": visible_role_count_by_subgroup.get(str(sg_id), 0),
+                     "clusterSkills": _skill_text(sg.get("cluster_skills")),
                      "clusterSkillUris": sg.get("cluster_skill_uris") or {},
                      "sourceConfidence": sg.get("source_confidence"),
                      "dataState": sg.get("data_state"),
@@ -1091,9 +1887,14 @@ async def get_domain(domain_id: str):
                      "guidanceEvidence": _guidance_evidence(sg.get("nigerian_context") or {}),
                      "skillSources": sg.get("skill_sources") or {},
                      "methodEvidence": methods_by_subgroup.get(sg_id, []),
-                      "tools": _tool_groups(sg_tools),
+                      "tools": _tool_groups(sg_tools, tool_resource_urls),
                      "certifications": sg_certs,
-                      "resources": resources_by_subgroup.get(sg_id, []),
+                     "resources": _student_guidance_resources(
+                          _reviewed_guidance_resources(resources_by_subgroup.get(sg_id, []))
+                          if reviewed_slice
+                          else resources_by_subgroup.get(sg_id, []),
+                          expected_scope="subgroup",
+                      ),
                       "contextItems": _career_context_items(
                           svc, context_level="subgroup", context_key=f"{domain_id}|sg:{sg.get('isco_submajor')}"
                       ),
@@ -1105,7 +1906,9 @@ async def get_domain(domain_id: str):
                 "key": r.get("role_key"),
                 "name": r.get("role_name"),
                 "description": r.get("description"),
-                "tier": r.get("tier"),
+                 "studentOrientation": (r.get("source_provenance") or {}).get("student_orientation") or {},
+                 "workProfile": _role_work_profile_summary(role_work_profiles.get(str(r.get("id")))),
+                 "tier": r.get("tier"),
                 "alsoKnownAs": r.get("also_known_as") or [],
                 "subgroupId": r.get("subgroup_id"),
                 "nigerianContext": role_context_by_key.get(r.get("role_key"), {}),
@@ -1127,9 +1930,28 @@ async def get_domain(domain_id: str):
                     }
                      if r.get("role_key") in family_by_role else None
                  ),
-                 "resources": resources_by_role.get(r.get("id"), []),
+                "resources": _student_guidance_resources(
+                     _reviewed_guidance_resources(resources_by_role.get(r.get("id"), []))
+                     if reviewed_slice
+                     else resources_by_role.get(r.get("id"), []),
+                     expected_scope="role",
+                 ),
+                 # A role may be retained in the taxonomy/audit record before
+                 # its own preparation contract has been reviewed.  Do not let
+                 # the student UI promote that raw role row into guidance.
+                 "guidanceAvailable": (
+                     str(r.get("role_key") or "").strip().casefold() in reviewed_role_guidance_keys
+                     or bool((r.get("source_provenance") or {}).get("student_orientation"))
+                     if domain_id == "D078"
+                     else bool(
+                         _career_context_items(svc, context_level="role", context_key=str(r.get("role_key") or ""))
+                         or r.get("description")
+                         or _skill_text(r.get("essential_skills"))
+                         or _skill_text(r.get("optional_skills"))
+                     )
+                 ),
              }
-            for r in (role_res.data or [])
+            for r in visible_role_rows
         ]
 
         data = {
@@ -1138,12 +1960,17 @@ async def get_domain(domain_id: str):
             "cluster": domain.get("cluster"),
             "clusters": domain.get("clusters") or [],
             "description": domain.get("description"),
+            "programmeConnection": programme_connection,
+            "studentOrientation": (
+                (domain.get("source_provenance") or {}).get("student_orientation")
+                or {}
+            ),
             "institutionType": domain.get("institution_type") or [],
             "eliteDomain": bool(domain.get("elite_domain")) and (
                 str(domain.get("id")) in published_domain_ids
                 or str(domain.get("domain_key")) in published_domain_ids
             ),
-            "foundationSkills": _foundation_skills(domain),
+            "foundationSkills": domain_foundations,
             "foundationSkillUris": domain.get("foundation_skill_uris") or {},
              "sourceConfidence": domain.get("source_confidence"),
              "dataState": domain.get("data_state"),
@@ -1152,22 +1979,64 @@ async def get_domain(domain_id: str):
             "guidanceEvidence": _guidance_evidence(domain.get("nigerian_context") or {}),
             "foundationSkillSources": domain.get("foundation_skill_sources") or {},
             "roleCount": domain.get("role_count"),
-            "tools": _tool_groups(domain_tools),
+            "tools": _tool_groups(domain_tools, tool_resource_urls),
             "gatewayCertifications": gateway,
             "roleHintCertifications": role_hint,
             "subgroups": subgroups,
              "roles": roles,
-             "resources": domain_resources,
+             "resources": _student_guidance_resources(
+                 domain_resources,
+                 expected_scope="domain",
+             ),
              "contextItems": domain_context_items,
           }
         return ResponseModel(data=_real(data))
     except Exception as exc:  # noqa: BLE001 — degrade gracefully to the UI's pending state
         log.error("career get_domain failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("Domain detail is temporarily unavailable."))
+        return ResponseModel(data=_coming_soon("We couldn't load this domain right now. Try again."))
+
+
+@router.get("/subgroups/{subgroup_id}", response_model=ResponseModel)
+async def get_subgroup(subgroup_id: str, programme_id: Optional[str] = Query(None)):
+    """Return the parent domain envelope for a saved subgroup.
+
+    Nested subgroup routes already carry the parent domain key. Saved items
+    only store the subgroup identity, so this lookup restores the same
+    source-grounded subgroup detail without sending the user to the generic
+    domain index first.
+    """
+    try:
+        svc = _svc()
+        subgroup = (
+            svc.table("domain_subgroups")
+            .select("domain_id")
+            .eq("id", subgroup_id)
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        if not subgroup:
+            return ResponseModel(data=_coming_soon("Area not found."))
+        domain = (
+            svc.table("domains")
+            .select("domain_key")
+            .eq("id", subgroup[0].get("domain_id"))
+            .limit(1)
+            .execute()
+            .data
+            or []
+        )
+        if not domain or not domain[0].get("domain_key"):
+            return ResponseModel(data=_coming_soon("The parent domain is not available."))
+        return await get_domain(str(domain[0]["domain_key"]), programme_id=programme_id)
+    except Exception as exc:  # noqa: BLE001
+        log.error("career get_subgroup failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Area detail is temporarily unavailable."))
 
 
 @router.get("/roles/{role_id}", response_model=ResponseModel)
-async def get_role(role_id: str):
+async def get_role(role_id: str, programme_id: Optional[str] = Query(None)):
     """Role detail (essential/optional skills + ESCO URIs, tier, appearsIn,
     currency status) with Phase 9 enrichment. `{role_id}` is the stable role_key
     (e.g. "D001|securities trader"). Returns a `real` DomainRoleV2Enriched
@@ -1185,7 +2054,14 @@ async def get_role(role_id: str):
         if not rres.data:
             return ResponseModel(data=_coming_soon("Role not found."))
         role = rres.data[0]
+        if str(role.get("data_state") or "").strip().lower() in {"review_only", "excluded", "audit_only"}:
+            # Taxonomy/audit rows are not student guidance. Do not expose a
+            # role merely because someone guessed its URL.
+            return ResponseModel(data=_coming_soon("This role is not available in student guidance yet."))
         resource_rows = _career_resources(svc, role_id=role.get("id"))
+        if str(role.get("role_key") or "").startswith("D078|"):
+            resource_rows = _reviewed_guidance_resources(resource_rows)
+        resource_rows = _student_guidance_resources(resource_rows, expected_scope="role")
         role_context_items = _career_context_items(
             svc, context_level="role", context_key=role_id
         )
@@ -1195,21 +2071,31 @@ async def get_role(role_id: str):
         try:
             role_tools = (
                 svc.table("domain_tools")
-                .select("tool_name, tool_group, role_freq, score, source, element_name, element_id, source_confidence, data_state, source_provenance")
+                .select("*")
                 .eq("role_id", role.get("id"))
                 .eq("scope", "role")
                 .order("tool_group")
                 .order("tool_name")
                 .execute().data or []
             )
+            role_tools = [
+                tool for tool in role_tools
+                if _student_visible_tool_row(
+                    tool,
+                    domain_key="D078" if str(role.get("role_key") or "").startswith("D078|") else None,
+                    scope="role",
+                )
+            ]
             role_certs = (
                 svc.table("role_certifications").select("*")
                 .eq("role_key", role_id).order("name").execute().data or []
             )
+            role_certs = [cert for cert in role_certs if _student_visible_cert_row(cert)]
         except Exception as enrichment_exc:  # noqa: BLE001
             # The role enrichment migration is additive. Existing installations
             # can still render role skills while the patch is being applied.
             log.warning("career role enrichment unavailable", error=str(enrichment_exc))
+        role_tool_resource_urls = _tool_resource_urls(resource_rows)
 
         try:
             work_profile_rows = (
@@ -1232,8 +2118,11 @@ async def get_role(role_id: str):
             # usable while an older installation is being migrated.
             log.debug("career role work profile unavailable", error=str(work_profile_exc))
 
-        essential = role.get("essential_skills") or []
-        optional = role.get("optional_skills") or []
+        # Imported Supabase rows can be JSON arrays or legacy pipe-delimited
+        # text. Normalize once at the API boundary so every client receives the
+        # contract promised by DomainRoleV2 and never crashes on `.map()`.
+        essential = _skill_text(role.get("essential_skills"))
+        optional = _skill_text(role.get("optional_skills"))
         essential_uris = role.get("essential_skill_uris") or []
         optional_uris = role.get("optional_skill_uris") or []
 
@@ -1272,6 +2161,96 @@ async def get_role(role_id: str):
                             "roleKey": r.get("role_key"),
                         }
                     )
+
+        # Preserve the programme-specific relationship on the role response.
+        # A role can be reachable from several domains, so use the first
+        # recorded parent for the route context rather than inventing a role-
+        # wide mapping explanation. The domain endpoint remains the authority
+        # for the evidence and applies the same curriculum/evidence gate.
+        programme_connection = None
+        if programme_id and appears_in:
+            try:
+                # Prefer the role's actual parent domain. A role name may be
+                # reused across domains, so the first appearance is not a
+                # safe source for a programme-specific connection.
+                role_domain_key = next(
+                    (
+                        item.get("domainId")
+                        for item in appears_in
+                        if item.get("domainId")
+                        and any(
+                            row.get("role_key") == role_id
+                            and row.get("domain_id") == role.get("domain_id")
+                            for row in rows
+                        )
+                    ),
+                    appears_in[0].get("domainId"),
+                )
+                domain_response = await get_domain(
+                    str(role_domain_key or ""),
+                    programme_id=programme_id,
+                )
+                domain_data = getattr(domain_response, "data", None)
+                if isinstance(domain_data, dict):
+                    programme_connection = domain_data.get("programmeConnection")
+            except Exception as connection_exc:  # noqa: BLE001
+                log.debug("career role programme connection unavailable", error=str(connection_exc))
+
+        # The role page is downstream of a domain and (when reviewed) a
+        # subgroup. Return the parent context explicitly so the client can
+        # render the inheritance chain instead of guessing it from a role
+        # name or from the first domain in appears_in.
+        parent_context: dict = {}
+        try:
+            domain_parent = None
+            if role.get("domain_id"):
+                domain_parent_rows = (
+                    svc.table("domains")
+                    .select("id, domain_key, name")
+                    .eq("id", role.get("domain_id"))
+                    .limit(1)
+                    .execute()
+                    .data
+                    or []
+                )
+                domain_parent = domain_parent_rows[0] if domain_parent_rows else None
+            subgroup_parent = None
+            if role.get("subgroup_id"):
+                subgroup_parent_rows = (
+                    svc.table("domain_subgroups")
+                    .select("id, label, domain_id, isco_submajor")
+                    .eq("id", role.get("subgroup_id"))
+                    .limit(1)
+                    .execute()
+                    .data
+                    or []
+                )
+                subgroup_parent = subgroup_parent_rows[0] if subgroup_parent_rows else None
+
+            domain_key = (domain_parent or {}).get("domain_key")
+            subgroup_key = (subgroup_parent or {}).get("id")
+            subgroup_context_key = (
+                f"{domain_key}|sg:{subgroup_parent.get('isco_submajor')}"
+                if domain_key and subgroup_parent and subgroup_parent.get("isco_submajor")
+                else None
+            )
+            parent_context = {
+                "domainId": domain_key,
+                "domainName": (domain_parent or {}).get("name"),
+                "subgroupId": subgroup_key,
+                "subgroupName": (subgroup_parent or {}).get("label"),
+                "domainFoundation": _domain_guidance_foundations(
+                    svc, str(domain_parent.get("id"))
+                ) if domain_parent else [],
+                "domainItems": _career_context_items(
+                    svc, context_level="domain", context_key=str(domain_key)
+                ) if domain_key else [],
+                "subgroupItems": _career_context_items(
+                    svc, context_level="subgroup", context_key=str(subgroup_context_key)
+                ) if subgroup_context_key else [],
+            }
+        except Exception as parent_exc:  # noqa: BLE001
+            log.debug("career role parent context unavailable", error=str(parent_exc))
 
         role_families: list[dict] = []
         try:
@@ -1342,6 +2321,15 @@ async def get_role(role_id: str):
                 method_rows = svc.table("computational_method_evidence").select(
                     "subgroup_id, method_name, classification, competence_status, esco_id, description, evidence_roles, source_provenance, data_state"
                 ).eq("domain_id", role.get("domain_id")).in_("subgroup_id", list(method_subgroup_ids)).order("method_name").execute().data or []
+                # A subgroup-level method is not automatically a method for
+                # every role placed under that subgroup.  Show it only where
+                # the method evidence names this exact role/key; otherwise it
+                # stays available for data audit but is withheld from students.
+                role_method_keys = {
+                    str(role_id).strip().casefold(),
+                    str(role.get("role_key") or "").strip().casefold(),
+                    str(role.get("role_name") or "").strip().casefold(),
+                }
                 computational_methods = [
                     {
                         "subgroupId": row.get("subgroup_id"),
@@ -1355,6 +2343,12 @@ async def get_role(role_id: str):
                         "dataState": row.get("data_state"),
                     }
                     for row in method_rows
+                    if _student_visible_method_row(row)
+                    if role_method_keys.intersection({
+                        str(value).strip().casefold()
+                        for value in (row.get("evidence_roles") or [])
+                        if value
+                    })
                 ]
         except Exception as method_exc:  # noqa: BLE001
             log.debug("career role computational method evidence unavailable", error=str(method_exc))
@@ -1363,7 +2357,10 @@ async def get_role(role_id: str):
             "key": role.get("role_key"),
             "name": role.get("role_name"),
             "description": role.get("description"),
+            "studentOrientation": (role.get("source_provenance") or {}).get("student_orientation") or {},
+            "programmeConnection": programme_connection,
             "subgroupId": role.get("subgroup_id"),
+            "parentContext": parent_context,
             "computationalSubgroups": computational_subgroups,
             "computationalMethods": computational_methods,
             "tier": role.get("tier"),
@@ -1424,6 +2421,7 @@ async def get_role(role_id: str):
                     "sourceConfidence": t.get("source_confidence"),
                     "dataState": t.get("data_state"),
                     "sourceProvenance": t.get("source_provenance") or {},
+                    "toolUrl": t.get("tool_url") or role_tool_resource_urls.get(str(t.get("tool_name") or "").strip().casefold()),
                 }
                 for t in role_tools if t.get("tool_name")
             ],

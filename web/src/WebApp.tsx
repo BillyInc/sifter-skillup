@@ -88,6 +88,38 @@ function currentPath() {
   return `${window.location.pathname}${window.location.search}`;
 }
 
+/**
+ * Expo Router group names are part of native route hrefs but are not web
+ * routes in the Vite shell. Shared resume links can therefore arrive here as
+ * `/(tabs)/home` (or another grouped path). Normalize those compatibility
+ * URLs at the web boundary instead of making every shared navigation helper
+ * platform-aware.
+ */
+function normalizeWebPath(rawPath: string): string {
+  let path = rawPath;
+  try {
+    path = decodeURIComponent(rawPath);
+  } catch {
+    // Keep the original path if a malformed encoded URL reaches the router.
+  }
+
+  const tabsMatch = path.match(/^\/\(tabs\)(\/.*)?$/);
+  if (tabsMatch) return tabsMatch[1] || "/home";
+
+  const adminMatch = path.match(/^\/\(admin\)(\/.*)?$/);
+  if (adminMatch) return `/admin${adminMatch[1] || ""}`;
+
+  const authMatch = path.match(/^\/\(auth\)(\/.*)?$/);
+  if (authMatch) {
+    const authPath = authMatch[1] || "/sign-in";
+    if (authPath === "/sign-in") return "/login";
+    if (authPath === "/create-account" || authPath === "/signup") return "/signup";
+    return authPath;
+  }
+
+  return path;
+}
+
 function go(path: string, replace = false) {
   if (replace) window.history.replaceState({}, "", path);
   else window.history.pushState({}, "", path);
@@ -144,8 +176,17 @@ export function WebApp() {
 function WebRouterApp() {
   const location = useLocation();
   const { user, loading } = useAuth();
-  const path = location.split("?")[0] || "/";
+  const rawPath = location.split("?")[0] || "/";
+  const path = normalizeWebPath(rawPath);
   const isGuest = user?.auth_provider === "guest";
+
+  useEffect(() => {
+    if (rawPath === path) return;
+    const query = window.location.search;
+    const hash = window.location.hash;
+    window.history.replaceState({}, "", `${path}${query}${hash}`);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, [path, rawPath]);
 
   if (loading) return <div className="loading">Loading Sifter LevelUp…</div>;
 
@@ -367,8 +408,8 @@ type GlobalSearchRow = { id: string; title: string; subtitle?: string; kind: Glo
 type GlobalSearchGroup = { label: string; rows: GlobalSearchRow[] };
 
 const GLOBAL_SEARCH_INTENTS: Array<{ value: SearchIntent; label: string; description: string }> = [
-  { value: "programme_guidance", label: "Find a programme", description: "Programme names open Admission Intelligence, where you can compare university offerings." },
-  { value: "university_requirements", label: "Check a university", description: "University results open its programme offerings and any available requirements." },
+  { value: "programme_guidance", label: "Find a programme", description: "Programme names open Admission Intelligence, where you can compare universities with that programme." },
+  { value: "university_requirements", label: "Check a university", description: "University results open its programme list and any available requirements." },
   { value: "career_exploration", label: "Explore career paths", description: "Career results show the domain, subgroup and role routes connected to your search." },
   { value: "skills_and_tools", label: "Find skills and tools", description: "See catalogue skills, tools and credentials, then open their connected domain." },
   { value: "opportunities", label: "Find opportunities", description: "Search the opportunities catalogue; availability depends on published source data." },
@@ -420,7 +461,7 @@ function GlobalSearchDropdown({
     {intent ? <p className="global-search-guidance">{GLOBAL_SEARCH_INTENTS.find((option) => option.value === intent)?.description}</p> : result?.searchContext?.guidance ? <p className="global-search-guidance">{result.searchContext.guidance}</p> : null}
     {!hasQuery ? <p className="global-search-hint">Type at least two characters. Results are grouped so “nursing” can be distinguished as a programme, university, domain, role or skill.</p> : null}
     {loading ? <p className="global-search-hint">Searching the current catalogue…</p> : null}
-    {!loading && hasQuery && !groups.length ? <p className="global-search-hint">No matching catalogue items yet. For UTME/O-level matching and university offerings, open Admission Intelligence in Explore.</p> : null}
+    {!loading && hasQuery && !groups.length ? <p className="global-search-hint">No matching catalogue items yet. For UTME/O-level matching and university programme details, open Admission Intelligence in Explore.</p> : null}
     {!loading && groups.map((group) => <section key={group.label} className="global-search-group"><h3>{group.label}</h3>{group.rows.map((row) => <button key={`${row.kind}-${row.id}`} className="global-search-result" onClick={() => onSelect(row)}><span><strong>{row.title}</strong><small>{row.subtitle}</small></span><em>{row.kind === "programme" ? "Open admission flow" : row.kind === "university" ? "View programmes" : "Open guidance"}</em></button>)}</section>)}
     <button className="global-search-close" onClick={onClose}>Close search</button>
   </div>;
@@ -650,7 +691,13 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     </aside> : null}
     <section className="platform-main">
       <header className="platform-toolbar">
-        {showPlatformBack ? <button className="platform-back" onClick={() => { if (focusedGuidance && guidanceEntry?.startsWith("/")) go(guidanceEntry, true); else platformBack(path); }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
+        {showPlatformBack ? <button className="platform-back" onClick={() => {
+          // Focused guidance is a task workspace entered from Home. If an
+          // older saved link has no explicit entry path, its safe destination
+          // is still Home—not the transient admission picker or Explore hub.
+          if (focusedGuidance) go(guidanceEntry?.startsWith("/") ? guidanceEntry : "/home", true);
+          else platformBack(path);
+        }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
         {focusedGuidance ? <div className="platform-guidance-title"><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
           <span aria-hidden="true">⌕</span>

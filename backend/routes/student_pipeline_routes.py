@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 import uuid
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 from typing import Any, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query, Response
@@ -30,6 +31,13 @@ router = APIRouter(prefix="/api/student", tags=["student-pipeline"])
 _SCHEMA = "skillup_dev"
 MAX_EARLY_OLEVEL_SUBJECTS = 6
 MAX_UTME_SUBJECTS = 4
+# Subject matching is an eligibility-shaped endpoint. Keep every remote query
+# bounded and fail closed when the candidate set is incomplete. In particular,
+# never load the whole option/item catalogue for one student's search.
+MAX_SUBJECT_MATCH_CATALOG_ROWS = 300
+MAX_SUBJECT_MATCH_CANDIDATE_ITEMS = 5000
+MAX_SUBJECT_MATCH_OPTIONS = 1200
+MAX_SUBJECT_MATCH_OPTION_ITEMS = 20000
 _SUBJECT_MATCH_AUTHORITY_STATE = "unknown"
 CAREER_REPORT_EXPORTS_ENABLED = True
 
@@ -94,6 +102,138 @@ def _student_programme_name(value: Any) -> Optional[str]:
     if not raw:
         return None
     return raw
+
+
+_JAMB_LABEL_CACHE_KEY = "student:known-jamb-programme-labels:v1"
+
+
+def _normalise_registry_label(value: Any) -> str:
+    text = _clean_text(value) or ""
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", text.lower())).strip()
+
+
+def _known_jamb_programme_labels(svc) -> list[str]:
+    """Load official programme labels used to reject malformed school names.
+
+    Some legacy offering/view rows contain a programme fragment in
+    ``school_name``. That is data quality debt, but it must not become a
+    student-facing university until the source row is corrected.
+    """
+    cached = get_json(_JAMB_LABEL_CACHE_KEY)
+    if isinstance(cached, list):
+        return [label for label in cached if isinstance(label, str) and label]
+    try:
+        rows = (
+            svc.table("jamb_programmes")
+            .select("jamb_name")
+            .limit(2000)
+            .execute()
+        ).data or []
+        labels = sorted({
+            normalised
+            for row in rows
+            if (normalised := _normalise_registry_label(row.get("jamb_name")))
+        })
+        set_json(_JAMB_LABEL_CACHE_KEY, labels, REFERENCE_TTL_SECONDS)
+        return labels
+    except Exception as exc:  # noqa: BLE001
+        log.warning("student programme label lookup failed", error=str(exc))
+        return []
+
+
+def _looks_like_programme_label(school_name: Any, programme_name: Any, labels: list[str]) -> bool:
+    school = _normalise_registry_label(school_name)
+    if not school or len(school) < 4:
+        return False
+    candidates = list(labels)
+    programme = _normalise_registry_label(programme_name)
+    if programme:
+        candidates.append(programme)
+    school_tokens = school.split()
+    for label in candidates:
+        if school == label:
+            return True
+        # Rows such as "SOCIOLOGY AND" are truncated programme labels.
+        if label.startswith(f"{school} ") and len(school_tokens) >= 2:
+            return True
+        # Some legacy rows contain a complete programme fragment rather than
+        # the beginning of it (for example "Security Studies" inside
+        # "Criminology and Security Studies", or "Arts" inside "Creative
+        # Arts"). Treat a full token sequence inside an official programme
+        # label as source evidence that this is not an institution name.
+        if f" {school} " in f" {label} ":
+            return True
+        # Catch one-character OCR/transcription errors such as ANTHROPOLGY.
+        if len(school) >= 8 and SequenceMatcher(None, school, label).ratio() >= 0.94:
+            return True
+    return False
+
+
+def _filter_user_facing_school_rows(rows: list[dict], svc) -> list[dict]:
+    """Fail closed when an offering row is not actually a university.
+
+    ``institution_type`` is necessary but not sufficient because malformed
+    legacy rows can still be typed as ``university``. Keep this filter at the
+    response boundary so search, programme details, and subject-match previews
+    agree while the underlying source data remains available for audit.
+    """
+    labels = _known_jamb_programme_labels(svc)
+    filtered: list[dict] = []
+    for row in rows:
+        institution_type = str(
+            row.get("institution_type") or row.get("institutionType") or ""
+        ).strip().lower()
+        if institution_type and institution_type != "university":
+            continue
+        school_name = row.get("school_name") or row.get("schoolName")
+        programme_name = (
+            row.get("jamb_name")
+            or row.get("jambName")
+            or row.get("programmeName")
+        )
+        if _looks_like_programme_label(school_name, programme_name, labels):
+            log.warning(
+                "suppressing malformed institution label from student response",
+                school_name=school_name,
+                programme_name=programme_name,
+            )
+            continue
+        filtered.append(row)
+    return filtered
+
+
+def _filter_user_facing_programme_search_items(items: list[dict], svc) -> list[dict]:
+    """Sanitise nested university previews in cached programme-search items."""
+    labels = _known_jamb_programme_labels(svc)
+    out: list[dict] = []
+    for item in items:
+        programme_name = item.get("jambName") or item.get("studentName")
+        offerings = item.get("schoolOfferings")
+        if isinstance(offerings, list):
+            valid_offerings = _filter_user_facing_school_rows(offerings, svc)
+            item = dict(item)
+            item["schoolOfferings"] = valid_offerings
+            names = list(dict.fromkeys(
+                str(offering.get("schoolName")).strip()
+                for offering in valid_offerings
+                if offering.get("schoolName")
+            ))
+            item["schoolNames"] = names[:3]
+            item["schoolCount"] = len(names)
+        elif isinstance(item.get("schoolNames"), list):
+            item = dict(item)
+            original_names = list(item["schoolNames"])
+            names = [
+                str(name).strip()
+                for name in original_names
+                if name and not _looks_like_programme_label(name, programme_name, labels)
+            ]
+            item["schoolNames"] = names[:3]
+            item["schoolCount"] = max(0, int(item.get("schoolCount") or 0) - (
+                len(original_names) - len(names)
+            ))
+        out.append(item)
+    return out
 
 
 def _requirement_status(parse_status: Any, *texts: Any) -> str:
@@ -763,10 +903,16 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
     try:
         svc = _svc()
         cache_key = (q or "").strip().lower()
-        cache_key = f"student:jamb-programmes:{cache_key}:{min(limit, 80)}"
+        cache_key = f"student:jamb-programmes:v2:{cache_key}:{min(limit, 80)}"
         cached = get_json(cache_key)
         if isinstance(cached, list):
-            return ResponseModel(data=_real(cached[: min(limit, 80)]))
+            # Cached rows are already frontend-shaped, so apply the same
+            # response-boundary protection before returning them.
+            return ResponseModel(
+                data=_real(
+                    _filter_user_facing_programme_search_items(cached, _svc())[: min(limit, 80)]
+                )
+            )
         try:
             if q and q.strip():
                 like = f"%{q.strip()}%"
@@ -820,6 +966,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                     ).data
                     or []
                 )
+            offering_rows = _filter_user_facing_school_rows(offering_rows, svc)
             schools_by_jamb: dict[str, list[str]] = {}
             offerings_by_jamb: dict[str, list[dict[str, str]]] = {}
             for row in offering_rows:
@@ -843,7 +990,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 try:
                     preview_location_rows = (
                         svc.table("schools")
-                        .select("id, address, city, state, country")
+                        .select("id, official_name, short_name, address, city, state, country")
                         .in_("id", preview_school_ids)
                         .execute()
                     ).data or []
@@ -863,6 +1010,8 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                     location = preview_locations.get(str(source.get("school_id"))) or {}
                     offering.update({
                         "schoolId": source.get("school_id"),
+                        "officialName": location.get("official_name"),
+                        "shortName": location.get("short_name"),
                         "address": location.get("address"),
                         "city": location.get("city"),
                         "state": location.get("state"),
@@ -876,6 +1025,7 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
                 item["schoolOfferings"] = offerings_by_jamb.get(jid, [])
         except Exception as exc:  # noqa: BLE001
             log.warning("student programme school context skipped", error=str(exc))
+        items = _filter_user_facing_programme_search_items(items, svc)
         set_json(cache_key, items, SEARCH_TTL_SECONDS)
         return ResponseModel(data=_real(items[: min(limit, 80)]))
     except Exception as exc:  # noqa: BLE001
@@ -887,17 +1037,57 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
 async def get_jamb_programme(jamb_programme_id: str):
     try:
         svc = _svc()
-        res = (
-            svc
-            .table("v_jamb_programme_details")
-            .select("*")
-            .eq("jamb_programme_id", jamb_programme_id)
-            .limit(1)
-            .execute()
-        )
-        if not res.data:
+        detail_row: Optional[dict] = None
+        try:
+            res = (
+                svc
+                .table("v_jamb_programme_details")
+                .select("*")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(1)
+                .execute()
+            )
+            detail_row = (res.data or [None])[0]
+        except Exception as exc:  # noqa: BLE001
+            # The detail view is an enrichment layer, not the programme
+            # registry. A missing/stale view must not turn a valid JAMB name
+            # into a locked page; requirements and university offerings can
+            # still be loaded from their own tables below.
+            log.warning("student jamb programme detail view skipped", error=str(exc))
+
+        if not detail_row:
+            try:
+                direct = (
+                    svc
+                    .table("jamb_programmes")
+                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend, skills_technical, skills_transferable")
+                    .eq("id", jamb_programme_id)
+                    .limit(1)
+                    .execute()
+                )
+            except Exception:
+                # Older deployments may have the base registry but not the
+                # optional JAMB skills columns yet. The programme identity is
+                # still enough to render its requirements and offerings.
+                direct = (
+                    svc
+                    .table("jamb_programmes")
+                    .select("id, jamb_name, jamb_faculty, degree_type, is_blend")
+                    .eq("id", jamb_programme_id)
+                    .limit(1)
+                    .execute()
+                )
+            direct_row = (direct.data or [None])[0]
+            if direct_row:
+                detail_row = {**direct_row, "jamb_programme_id": direct_row.get("id")}
+
+        if not detail_row:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
-        out = _jamb_detail_out(res.data[0], full=True)
+        out = _jamb_detail_out(detail_row, full=True)
+        # Keep the exact JAMB name as the student-facing identity while
+        # attaching the reviewed, canonical programme explanations underneath.
+        out["contextItems"] = _programme_context_items_for_student(svc, out.get("programmeId"))
+        out["resources"] = _programme_resources_for_student(svc, out.get("programmeId"))
         # Requirements block: general brochure text + parse status. Programmes whose
         # requirement is institution-variant prose (parse_status = needs_review)
         # surface it as "requirements vary by institution" info, not a gap.
@@ -1034,6 +1224,119 @@ def _jamb_detail_out(r: dict, *, full: bool = False) -> dict:
         "institutionType": r.get("institution_type"),
         **_skills_out(r, full=full),
     }
+
+
+def _programme_context_items_for_student(svc: Any, programme_id: Any) -> list[dict]:
+    """Read programme-owned explanations for a JAMB identity's canonical row."""
+    if not programme_id:
+        return []
+    try:
+        rows = (
+            svc.table("career_context_items")
+            .select("*")
+            .eq("context_level", "programme")
+            .eq("context_key", str(programme_id))
+            .order("priority")
+            .order("item_type")
+            .order("name")
+            .execute()
+            .data
+            or []
+        )
+        return [
+            {
+                "contextLevel": row.get("context_level"),
+                "contextKey": row.get("context_key"),
+                "domainId": row.get("domain_key"),
+                "itemType": row.get("item_type"),
+                "itemKey": row.get("item_key"),
+                "name": row.get("name"),
+                "plainMeaning": row.get("plain_meaning"),
+                "contextualUse": row.get("contextual_use"),
+                "expectedOutput": row.get("expected_output"),
+                "priority": row.get("priority"),
+                "priorityReason": row.get("priority_reason"),
+                "prerequisites": row.get("prerequisites") or [],
+                "relatedItems": row.get("related_items") or [],
+                "sourceIds": row.get("source_ids") or [],
+                "sourceReferences": row.get("source_references") or [],
+                "sourceLocators": row.get("source_locators") or [],
+                "geographicScope": row.get("geographic_scope"),
+                "evidenceLimitations": row.get("evidence_limitations") or [],
+                "evidenceType": row.get("evidence_type") or "source_supported_synthesis",
+                "sourceConfidence": row.get("source_confidence"),
+                "dataState": row.get("data_state") or "source_backed",
+                "guidanceOwner": row.get("guidance_owner"),
+                "verifiedAt": row.get("verified_at"),
+            }
+            for row in rows
+            # Context ownership and explicit source state are both required
+            # for the student JAMB route.  In particular, do not treat a
+            # missing data_state as source-backed: older role-aggregated and
+            # review-only rows remain audit data until they are classified and
+            # approved for the programme layer.
+            if row.get("name")
+            and row.get("guidance_owner") == "programme"
+            and row.get("data_state") == "source_backed"
+        ]
+    except Exception as exc:  # noqa: BLE001
+        log.debug("programme context lookup unavailable for JAMB detail", error=str(exc))
+        return []
+
+
+def _programme_resources_for_student(svc: Any, programme_id: Any) -> list[dict]:
+    """Read only programme-owned, approved links for a JAMB detail page."""
+    if not programme_id:
+        return []
+    try:
+        rows = (
+            svc.table("career_learning_resources")
+            .select("*")
+            .eq("programme_id", str(programme_id))
+            .is_("role_id", "null")
+            .order("resource_type")
+            .order("target_name")
+            .execute()
+            .data
+            or []
+        )
+        safe: list[dict] = []
+        for row in rows:
+            provenance = row.get("source_provenance") or {}
+            scope = row.get("ownership_scope") or provenance.get("ownership")
+            status = row.get("review_status") or provenance.get("review_status")
+            if scope not in {None, "programme"} or status in {"review_only", "unverified"}:
+                continue
+            safe.append({
+                "id": row.get("id"),
+                "programmeId": row.get("programme_id"),
+                "domainId": row.get("domain_id"),
+                "subgroupId": row.get("subgroup_id"),
+                "roleId": row.get("role_id"),
+                "ownershipScope": row.get("ownership_scope"),
+                "reviewStatus": row.get("review_status"),
+                "resourceType": row.get("resource_type"),
+                "targetName": row.get("target_name"),
+                "provider": row.get("provider"),
+                "region": row.get("region"),
+                "accessType": row.get("access_type"),
+                "delivery": row.get("delivery"),
+                "url": row.get("url"),
+                "price": row.get("price"),
+                "currency": row.get("currency"),
+                "pricePeriod": row.get("price_period"),
+                "priceAsOf": row.get("price_as_of"),
+                "priceSource": row.get("price_source"),
+                "sourceUrl": row.get("source_url"),
+                "description": row.get("description"),
+                "sourceConfidence": row.get("source_confidence"),
+                "dataState": row.get("data_state"),
+                "sourceProvenance": provenance,
+            })
+        return safe
+    except Exception as exc:  # noqa: BLE001
+        log.debug("programme resource lookup unavailable for JAMB detail", error=str(exc))
+        return []
 
 
 @router.get("/jamb-programmes/{jamb_programme_id}/domains", response_model=ResponseModel)
@@ -1235,7 +1538,7 @@ async def get_school_programmes(
         # small arbitrary cap; the q/faculty filters remain available for large
         # catalogues.
         res = query.order("jamb_name").limit(2000).execute()
-        rows = res.data or []
+        rows = _filter_user_facing_school_rows(res.data or [], svc)
         if not rows:
             return ResponseModel(
                 data=_real([], "No course list recorded for this institution yet.")
@@ -1300,10 +1603,12 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
             svc.table("v_school_jamb_programmes")
             .select("*")
             .eq("jamb_programme_id", jamb_programme_id)
+            .eq("institution_type", "university")
             .order("school_name")
             .limit(2000)
             .execute()
         )
+        offering_rows = _filter_user_facing_school_rows(offerings.data or [], svc)
         offering_items = [
             {
                 "schoolId": r.get("school_id"),
@@ -1318,14 +1623,14 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 # internal mapping substrate and must not replace it.
                 "programmeName": r.get("jamb_name"),
             }
-            for r in (offerings.data or [])
+            for r in offering_rows
         ]
         offering_items.sort(key=lambda item: str(item.get("schoolName") or "").casefold())
         enriched = _attach_school_details(offering_items)
-        return ResponseModel(data=_real(enriched, "Showing recorded university offerings and their requirements." if enriched else "No university offering is recorded for this programme yet."))
+        return ResponseModel(data=_real(enriched, "Showing universities with this programme and their recorded requirements." if enriched else "No university is recorded for this programme yet."))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb university offerings failed", error=str(exc))
-        return ResponseModel(data=_coming_soon("University offerings are temporarily unavailable."))
+        return ResponseModel(data=_coming_soon("The university list for this programme is temporarily unavailable."))
 
 
 def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selected_norm: set[str]) -> dict:
@@ -1400,6 +1705,194 @@ def _evaluate_school_subject_option(option: dict, item_rows: list[dict], selecte
     }
 
 
+def _match_verified_school_subject_options(
+    selected_norm: set[str],
+    exam_type: str,
+    school_id: str | None = None,
+    limit: int = 2000,
+) -> list[dict]:
+    """Match only parsed, full university-scoped rules.
+
+    These rules supplement the national JAMB rule for discovery and are used
+    directly when a university is already selected. Partial, conditional, or
+    still-reviewed exception rows never create an eligibility match.
+    """
+    if exam_type not in {"utme", "olevel"}:
+        return []
+    svc = _svc()
+    try:
+        query = (
+            svc.table("school_programme_subject_options")
+            .select(
+                "id, exception_id, school_id, jamb_programme_id, exam_type, rule_scope, "
+                "option_label, min_required, source_text, condition_text"
+            )
+            .eq("exam_type", exam_type)
+            .eq("rule_scope", "full")
+        )
+        if school_id:
+            query = query.eq("school_id", school_id)
+        options = query.limit(5000).execute().data or []
+        # Keep the predicate in Python as well as in the database query. This
+        # protects tests and older adapters whose fluent query mock does not
+        # apply every filter.
+        options = [
+            row for row in options
+            if row.get("exam_type") == exam_type
+            and row.get("rule_scope") == "full"
+            and (not school_id or str(row.get("school_id")) == str(school_id))
+        ]
+        if not options:
+            return []
+
+        exception_ids = [str(row.get("exception_id")) for row in options if row.get("exception_id")]
+        if not exception_ids:
+            return []
+        exceptions = (
+            svc.table("school_programme_requirement_exceptions")
+            .select("id, parse_status")
+            .in_("id", exception_ids)
+            .eq("parse_status", "parsed")
+            .limit(5000)
+            .execute()
+        ).data or []
+        exceptions = [row for row in exceptions if row.get("parse_status") == "parsed"]
+        parsed_exception_ids = {str(row.get("id")) for row in exceptions if row.get("id")}
+        options = [
+            row for row in options
+            if str(row.get("exception_id")) in parsed_exception_ids
+        ]
+        if not options:
+            return []
+
+        option_ids = [row.get("id") for row in options if row.get("id")]
+        item_rows = (
+            svc.table("school_programme_subject_option_items")
+            .select(
+                "option_id, requirement_role, group_key, min_from_group, distinct_group_key, "
+                "subject_catalog(name, code)"
+            )
+            .in_("option_id", option_ids)
+            .limit(20000)
+            .execute()
+        ).data or []
+        items_by_option: dict[str, list[dict]] = {}
+        for row in item_rows:
+            items_by_option.setdefault(str(row.get("option_id")), []).append(row)
+
+        best_by_pair: dict[tuple[str, str], dict] = {}
+        for option in options:
+            result = _evaluate_school_subject_option(
+                option,
+                items_by_option.get(str(option.get("id")), []),
+                selected_norm,
+            )
+            if not result.get("passes"):
+                continue
+            school_key = str(option.get("school_id") or "")
+            programme_key = str(option.get("jamb_programme_id") or "")
+            if not school_key or not programme_key:
+                continue
+            row = {
+                "jambProgrammeId": programme_key,
+                "examType": exam_type,
+                "matchedSubjectCount": len(result.get("matchedSubjects") or []),
+                "matchedSubjects": result.get("matchedSubjects") or [],
+                "missingSubjects": [],
+                "minimumRequired": int(option.get("min_required") or 0),
+                "requirementText": option.get("source_text"),
+                "matchBasis": "university_specific",
+                "universityMatchSchoolId": school_key,
+                "universityRequirementScope": option.get("rule_scope"),
+                "universityRequirementOptionId": option.get("id"),
+            }
+            key = (school_key, programme_key)
+            existing = best_by_pair.get(key)
+            if not existing or row["matchedSubjectCount"] > existing["matchedSubjectCount"]:
+                best_by_pair[key] = row
+        return list(best_by_pair.values())[:limit]
+    except Exception as exc:  # noqa: BLE001
+        # A database without the additive university-rule tables must not turn
+        # the national matcher off. It simply has no university-specific pass.
+        log.debug("verified university subject matching unavailable", error=str(exc))
+        return []
+
+
+def _verified_school_programme_rule_keys(school_id: str | None) -> dict[str, set[str]]:
+    """Return programme IDs whose selected-school rules are fully verified.
+
+    A national match may be used as a discovery fallback, but it must not be
+    presented as eligible for a selected university when that university has a
+    parsed full rule that the selected subjects do not satisfy.
+    """
+    if not school_id:
+        return {}
+    try:
+        options = (
+            _svc()
+            .table("school_programme_subject_options")
+            .select("exception_id, school_id, jamb_programme_id, exam_type, rule_scope")
+            .eq("school_id", school_id)
+            .eq("rule_scope", "full")
+            .limit(5000)
+            .execute()
+        ).data or []
+        options = [
+            row for row in options
+            if str(row.get("school_id")) == str(school_id)
+            and row.get("rule_scope") == "full"
+            and row.get("exam_type") in {"utme", "olevel"}
+            and row.get("jamb_programme_id")
+            and row.get("exception_id")
+        ]
+        if not options:
+            return {}
+        exception_ids = [str(row["exception_id"]) for row in options]
+        parsed = (
+            _svc()
+            .table("school_programme_requirement_exceptions")
+            .select("id, parse_status")
+            .in_("id", exception_ids)
+            .eq("parse_status", "parsed")
+            .limit(5000)
+            .execute()
+        ).data or []
+        parsed_ids = {
+            str(row.get("id"))
+            for row in parsed
+            if row.get("id") and row.get("parse_status") == "parsed"
+        }
+        result: dict[str, set[str]] = {"utme": set(), "olevel": set()}
+        for row in options:
+            if str(row.get("exception_id")) in parsed_ids:
+                result[str(row["exam_type"])].add(str(row["jamb_programme_id"]))
+        return result
+    except Exception as exc:  # noqa: BLE001
+        log.debug("verified selected-university rule coverage unavailable", error=str(exc))
+        return {}
+
+
+def _school_offered_programme_ids(school_id: str | None) -> set[str] | None:
+    if not school_id:
+        return None
+    try:
+        rows = (
+            _svc().table("v_school_jamb_programmes")
+            .select("jamb_programme_id")
+            .eq("school_id", school_id)
+            .eq("institution_type", "university")
+            .limit(5000)
+            .execute()
+        ).data or []
+        return {str(row.get("jamb_programme_id")) for row in rows if row.get("jamb_programme_id")}
+    except Exception as exc:  # noqa: BLE001
+        log.debug("selected university offering filter unavailable", error=str(exc))
+        # A missing/old offering view must not turn every selected-university
+        # request into an empty result. The local-rule pass still protects any
+        # verified exception data that is available.
+        return None
+
+
 def _attach_school_details(
     items: list[dict],
     utme_selected: set[str] | None = None,
@@ -1412,6 +1905,7 @@ def _attach_school_details(
     note or exception; it does not rewrite the national rule or downstream
     CCMAS/domain/role mapping.
     """
+    items = _filter_user_facing_school_rows(items, _svc())
     school_ids = list(dict.fromkeys(str(i.get("schoolId")) for i in items if i.get("schoolId")))
     if not school_ids:
         return items
@@ -1420,7 +1914,7 @@ def _attach_school_details(
     try:
         rows = (
             svc.table("schools")
-            .select("id, address, city, state, country")
+            .select("*")
             .in_("id", school_ids)
             .execute()
         ).data or []
@@ -1510,6 +2004,21 @@ def _attach_school_details(
         for key in ("address", "city", "state", "country"):
             if location.get(key) is not None:
                 item[key] = location.get(key)
+        # Newer school registries may carry an official long name and a short
+        # display abbreviation. Keep the older `name` value as the fallback;
+        # never invent a full institution name from an acronym.
+        item["officialName"] = (
+            location.get("official_name")
+            or location.get("full_name")
+            or location.get("officialName")
+            or item.get("officialName")
+        )
+        item["shortName"] = (
+            location.get("short_name")
+            or location.get("abbreviation")
+            or location.get("shortName")
+            or item.get("shortName")
+        )
         jid = str(item.get("jambProgrammeId")) if item.get("jambProgrammeId") else ""
         override = overrides.get((sid, jid)) or {}
         item["universityUtmeSubjects"] = override.get("utme_subjects")
@@ -1587,6 +2096,7 @@ async def programmes_by_subjects(
     olevel_subjects: str = Query(""),
     exam_type: str = Query("combined"),
     stream: Optional[str] = Query(None),
+    school_id: Optional[str] = Query(None),
     # The selector must return every matching programme. The UI can paginate or
     # progressively render the result list, but the API must not silently hide
     # valid matches behind the old 40/80-item cap.
@@ -1671,29 +2181,62 @@ async def programmes_by_subjects(
         )
 
     try:
+        selected_school_id = (school_id.strip() if isinstance(school_id, str) else "") or None
+        offered_programme_ids = _school_offered_programme_ids(selected_school_id)
+        verified_school_rules = _verified_school_programme_rule_keys(selected_school_id)
+
+        def restrict_to_selected_school(rows: list[dict]) -> list[dict]:
+            if offered_programme_ids is None:
+                return rows
+            return [
+                row for row in rows
+                if str(row.get("jambProgrammeId") or "") in offered_programme_ids
+            ]
+
+        def restrict_to_verified_school_rules(rows: list[dict], exam_type: str) -> list[dict]:
+            verified_programmes = verified_school_rules.get(exam_type) or set()
+            if not selected_school_id or not verified_programmes:
+                return rows
+            # A parsed full university rule is authoritative for a selected
+            # university. The matching local row is merged below; this removes
+            # only the national row that would bypass that rule.
+            return [
+                row for row in rows
+                if str(row.get("jambProgrammeId") or "") not in verified_programmes
+            ]
+
+        national_utme_matches: list[dict] = []
+        national_olevel_matches: list[dict] = []
         if exam == "olevel":
-            structured = _match_structured_subject_options(
+            national_olevel_matches = _match_structured_subject_options(
                 olevel_norm,
                 limit=min(match_limit, 2000),
                 exam_type="olevel",
                 require_full=True,
             )
+            structured = restrict_to_verified_school_rules(
+                restrict_to_selected_school(national_olevel_matches), "olevel"
+            )
         elif utme_norm and olevel_norm:
-            utme_matches = _match_structured_subject_options(
+            national_utme_matches = _match_structured_subject_options(
                 utme_norm,
                 limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
-            olevel_matches = _match_structured_subject_options(
+            national_olevel_matches = _match_structured_subject_options(
                 olevel_norm,
                 limit=min(match_limit, 400),
                 exam_type="olevel",
                 require_full=False,
             )
-            olevel_by_id = {m.get("jambProgrammeId"): m for m in olevel_matches}
+            national_utme_matches = restrict_to_selected_school(national_utme_matches)
+            national_olevel_matches = restrict_to_selected_school(national_olevel_matches)
+            national_utme_matches = restrict_to_verified_school_rules(national_utme_matches, "utme")
+            national_olevel_matches = restrict_to_verified_school_rules(national_olevel_matches, "olevel")
+            olevel_by_id = {m.get("jambProgrammeId"): m for m in national_olevel_matches}
             structured = []
-            for match in utme_matches:
+            for match in national_utme_matches:
                 jid = match.get("jambProgrammeId")
                 olevel = olevel_by_id.get(jid)
                 if olevel:
@@ -1718,20 +2261,121 @@ async def programmes_by_subjects(
                     })
             structured = structured[: min(match_limit, 2000)]
         else:
-            structured = _match_structured_subject_options(
+            national_utme_matches = _match_structured_subject_options(
                 utme_norm,
                 limit=min(match_limit, 2000),
                 exam_type="utme",
                 require_full=True,
             )
-        if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable":
+            structured = restrict_to_verified_school_rules(
+                restrict_to_selected_school(national_utme_matches), "utme"
+            )
+
+        local_utme_matches = (
+            _match_verified_school_subject_options(utme_norm, "utme", selected_school_id, match_limit)
+            if exam in {"utme", "combined"} and utme_norm
+            else []
+        )
+        local_olevel_matches = (
+            _match_verified_school_subject_options(olevel_norm, "olevel", selected_school_id, match_limit)
+            if exam in {"olevel", "combined"} and olevel_norm
+            else []
+        )
+
+        # Merge verified university alternatives without collapsing the
+        # national result. A local rule may supply either layer; for combined
+        # matching, the two layers must still belong to the same university.
+        local_by_programme: dict[str, list[dict]] = {}
+        for row in [*local_utme_matches, *local_olevel_matches]:
+            local_by_programme.setdefault(str(row.get("jambProgrammeId")), []).append(row)
+
+        def decorate(row: dict, local_rows: list[dict]) -> dict:
+            if not local_rows:
+                row.setdefault("matchBasis", "national")
+                return row
+            school_ids = list(dict.fromkeys(
+                str(local.get("universityMatchSchoolId"))
+                for local in local_rows
+                if local.get("universityMatchSchoolId")
+            ))
+            row["matchBasis"] = "national_and_university_specific" if row.get("matchBasis") not in {None, "university_specific"} else "university_specific"
+            row["universitySpecificMatch"] = True
+            row["universitySpecificMatchSchoolIds"] = school_ids
+            row["universitySpecificMatchCount"] = len(school_ids)
+            row["universitySpecificMatches"] = [
+                {
+                    "schoolId": local.get("universityMatchSchoolId"),
+                    "examType": local.get("examType") or (
+                        "utme" if local in local_utme_matches else "olevel"
+                    ),
+                    "matchedSubjects": local.get("matchedSubjects", []),
+                    "requirementText": local.get("requirementText"),
+                }
+                for local in local_rows
+            ]
+            return row
+
+        if exam == "combined":
+            national_utme_by_id = {str(row.get("jambProgrammeId")): row for row in national_utme_matches}
+            national_olevel_by_id = {
+                str(row.get("jambProgrammeId")): row
+                for row in national_olevel_matches
+                if not row.get("missingSubjects")
+            }
+            combined_by_id = {str(row.get("jambProgrammeId")): row for row in structured}
+            local_utme_by_pair = {
+                (str(row.get("universityMatchSchoolId")), str(row.get("jambProgrammeId"))): row
+                for row in local_utme_matches
+            }
+            local_olevel_by_pair = {
+                (str(row.get("universityMatchSchoolId")), str(row.get("jambProgrammeId"))): row
+                for row in local_olevel_matches
+            }
+            local_pairs = set(local_utme_by_pair) | set(local_olevel_by_pair)
+            for school_key, programme_key in local_pairs:
+                local_utme = local_utme_by_pair.get((school_key, programme_key))
+                local_olevel = local_olevel_by_pair.get((school_key, programme_key))
+                utme_ok = programme_key in national_utme_by_id or local_utme is not None
+                olevel_ok = programme_key in national_olevel_by_id or local_olevel is not None
+                if not (utme_ok and olevel_ok):
+                    continue
+                row = combined_by_id.get(programme_key) or national_utme_by_id.get(programme_key) or local_utme or local_olevel
+                if row is None:
+                    continue
+                combined_row = decorate(row, [local for local in (local_utme, local_olevel) if local])
+                olevel_source = local_olevel or national_olevel_by_id.get(programme_key)
+                if olevel_source:
+                    combined_row["olevelMatchedSubjectCount"] = olevel_source.get("matchedSubjectCount", 0)
+                    combined_row["olevelMatchedSubjects"] = olevel_source.get("matchedSubjects", [])
+                    combined_row["olevelRequirementText"] = olevel_source.get("requirementText")
+                combined_row["eligibilityStatus"] = "eligible"
+                combined_row["olevelMissingSubjects"] = []
+                combined_by_id[programme_key] = combined_row
+            structured = list(combined_by_id.values())[: min(match_limit, 2000)]
+        else:
+            by_id = {str(row.get("jambProgrammeId")): row for row in structured}
+            for programme_key, local_rows in local_by_programme.items():
+                row = by_id.get(programme_key)
+                if row is None:
+                    row = dict(local_rows[0])
+                    by_id[programme_key] = row
+                decorate(row, local_rows)
+            structured = list(by_id.values())[: min(match_limit, 2000)]
+        if _SUBJECT_MATCH_AUTHORITY_STATE == "unavailable" and not structured:
             return ResponseModel(
                 data=_coming_soon(
-                    "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare university offerings and read each university's requirements; try subject matching again after the subject data is updated."
+                    "Subject matching is not available for this path yet because the structured subject rules are incomplete. You can still browse programmes by name, compare universities and read each university's requirements; try subject matching again after the subject data is updated."
                 )
             )
         if structured:
-            return ResponseModel(data=_real(_attach_school_context(structured, utme_norm, olevel_norm)))
+            return ResponseModel(
+                data=_real(_attach_school_context(
+                    structured,
+                    utme_norm,
+                    olevel_norm,
+                    selected_school_id,
+                ))
+            )
 
         # A subject-match result is an eligibility-shaped surface.  Do not turn
         # a shared word in an unparsed brochure sentence into a programme match:
@@ -1740,14 +2384,14 @@ async def programmes_by_subjects(
         # where it is labelled as source text and review status.
         notice = (
             "No exact structured subject match was found. Some brochure requirements "
-            "are not structured well enough to produce a match here. You can browse programmes by name or compare university offerings instead."
+            "are not structured well enough to produce a match here. You can browse programmes by name or compare universities instead."
         )
         return ResponseModel(data=_real([], notice))
     except Exception as exc:  # noqa: BLE001
         log.error("student subject programme match failed", error=str(exc))
         return ResponseModel(
             data=_coming_soon(
-                "Subject matching is temporarily unavailable. You can still browse programmes by name, compare university offerings and read university requirements."
+                "Subject matching is temporarily unavailable. You can still browse programmes by name, compare universities and read university requirements."
             )
         )
 
@@ -1760,14 +2404,85 @@ def _match_structured_subject_options(
 ) -> list[dict]:
     global _SUBJECT_MATCH_AUTHORITY_STATE
     svc = _svc()
+
+    # Resolve the selected canonical subjects first. The subject-item table is
+    # indexed by subject_id, so this narrows the remote work to options that
+    # could possibly satisfy at least one selected subject. A missing catalogue
+    # identity is not safe to interpret as a wildcard.
+    try:
+        catalog_rows = (
+            svc.table("subject_catalog")
+            .select("id, name, code")
+            .limit(MAX_SUBJECT_MATCH_CATALOG_ROWS)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("subject catalogue unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if not catalog_rows:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    catalog_subjects = [
+        {
+            "id": row.get("id"),
+            "name": row.get("name") or "",
+            "norm": _normalise_subject(row.get("name") or ""),
+        }
+        for row in catalog_rows
+        if row.get("id") and _normalise_subject(row.get("name") or "")
+    ]
+    selected_catalog_ids = [
+        subject["id"]
+        for subject in catalog_subjects
+        if subject["norm"] in selected_norm
+    ]
+    if not selected_catalog_ids:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
+        return []
+
+    try:
+        candidate_item_rows = (
+            svc.table("programme_subject_option_items")
+            .select("option_id")
+            .in_("subject_id", selected_catalog_ids)
+            .limit(MAX_SUBJECT_MATCH_CANDIDATE_ITEMS + 1)
+            .execute()
+        ).data or []
+    except Exception as exc:  # noqa: BLE001
+        log.warning("subject option candidate query unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if len(candidate_item_rows) > MAX_SUBJECT_MATCH_CANDIDATE_ITEMS:
+        log.warning("subject option candidate set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    candidate_option_ids = list(dict.fromkeys(
+        str(row.get("option_id"))
+        for row in candidate_item_rows
+        if row.get("option_id")
+    ))
+    if not candidate_option_ids:
+        _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
+        return []
+    if len(candidate_option_ids) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("subject option candidate options exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+
     options = (
         svc.table("programme_subject_options")
         .select("id, jamb_programme_id, requirement_id, exam_type, option_label, min_required, source_text")
         .eq("exam_type", exam_type)
-        .limit(2000)
+        .in_("id", candidate_option_ids)
+        .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
         .execute()
     )
     option_rows = options.data or []
+    if len(option_rows) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("subject option result set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
     if not option_rows:
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
@@ -1782,11 +2497,15 @@ def _match_structured_subject_options(
             .select("jamb_programme_id, requirement_id, exam_type, rule_status, source_text")
             .in_("jamb_programme_id", list({row.get("jamb_programme_id") for row in option_rows if row.get("jamb_programme_id")}))
             .eq("exam_type", exam_type)
-            .limit(2000)
+            .limit(MAX_SUBJECT_MATCH_OPTIONS + 1)
             .execute()
         ).data or []
     except Exception as exc:  # noqa: BLE001
         log.warning("typed subject rule authority unavailable; refusing national matches", error=str(exc))
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
+    if len(typed_rule_rows) > MAX_SUBJECT_MATCH_OPTIONS:
+        log.warning("typed subject rule set exceeded safety bound")
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
     typed_by_programme = {
@@ -1818,44 +2537,19 @@ def _match_structured_subject_options(
     if not option_rows:
         _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
         return []
-    # The seed is generated from the brochure parser, but old environments may
-    # still contain an option row whose item list predates a parser correction.
-    # Keep the matcher safe in that state by comparing each option's source text
-    # with the canonical subject catalogue.  An explicitly named subject that
-    # is absent from the option items means the option is incomplete and cannot
-    # be treated as an exact match.
-    try:
-        catalog_rows = (
-            svc.table("subject_catalog")
-            .select("name, code")
-            .limit(300)
-            .execute()
-        ).data or []
-    except Exception as exc:  # noqa: BLE001
-        # An unavailable catalogue must make the option review stricter,
-        # never broader. The generated SQL remains the primary source.
-        log.warning("subject option completeness check unavailable", error=str(exc))
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
-    if not catalog_rows:
-        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
-        return []
     _SUBJECT_MATCH_AUTHORITY_STATE = "ready"
-    catalog_subjects = [
-        {
-            "name": row.get("name") or "",
-            "norm": _normalise_subject(row.get("name") or ""),
-        }
-        for row in catalog_rows
-        if _normalise_subject(row.get("name") or "")
-    ]
     option_ids = [r["id"] for r in option_rows]
     item_rows = (
         svc.table("programme_subject_option_items")
         .select("option_id, requirement_role, group_key, min_from_group, distinct_group_key, subject_catalog(name, code)")
-        .in_("option_id", option_ids[:2000])
+        .in_("option_id", option_ids)
+        .limit(MAX_SUBJECT_MATCH_OPTION_ITEMS + 1)
         .execute()
     ).data or []
+    if len(item_rows) > MAX_SUBJECT_MATCH_OPTION_ITEMS:
+        log.warning("subject option item set exceeded safety bound")
+        _SUBJECT_MATCH_AUTHORITY_STATE = "unavailable"
+        return []
     by_option: dict[str, list[dict]] = {}
     for item in item_rows:
         by_option.setdefault(item["option_id"], []).append(item)
@@ -1948,9 +2642,8 @@ def _match_structured_subject_options(
         broad_group = any(len(names) >= 20 for names in grouped.values())
         source_lower = str(opt.get("source_text") or "").lower()
         # A national rule can be followed by a separate NBC/NTC/TC-II
-        # condition. The condition may use "relevant subjects" even when the
-        # ordinary applicant rule explicitly says "any other subject". Scope
-        # the fail-closed guard to the ordinary rule, matching the parser.
+        # condition. Scope the review check to the ordinary applicant rule,
+        # matching the parser.
         source_scope_text = re.split(
             r"\s+(?:for|in)\s+(?:nbc|ntc|nabteb|tc\s*ii|technic(?:al)?\s+certificate)\s+"
             r"(?:holders?|candidates?)?\b",
@@ -1958,20 +2651,27 @@ def _match_structured_subject_options(
             maxsplit=1,
             flags=re.I,
         )[0]
-        # A broad catalogue group is safe only when the source explicitly
-        # permits any remaining subject. Words such as “relevant”, “suitable”
-        # or “appropriate” are an unresolved subject scope: the parser cannot
-        # know which subjects are relevant to that programme. Treating the
-        # whole catalogue as executable creates false positives (for example
-        # Arabic + Agriculture + Animal Husbandry appearing to qualify for an
-        # unrelated programme). Keep those rows available to name/university
-        # search and require source review before eligibility matching.
+        # A broad group may be a real explicit "any other subject" rule, but
+        # it may also be a parser-expanded catalogue standing in for an
+        # unresolved phrase such as "relevant subjects". Only the explicit
+        # open-scope wording is executable; everything else stays browseable
+        # but review-only.
         unresolved_scope = re.search(
             r"\b(?:relevant|suitable|appropriate|related|cognate|pertinent)\b|"
             r"\bshares?\s+(?:the\s+)?block\b",
             source_scope_text,
         )
-        generic_olevel_scope = exam_type == "olevel" and broad_group and bool(unresolved_scope)
+        explicit_open_scope = re.search(
+            r"\b(?:any|one|two|three|four|five|six|several)\s+"
+            r"(?:other|remaining|additional)\s+subjects?\b|"
+            r"\bany\s+subject\b",
+            source_scope_text,
+        )
+        generic_olevel_scope = (
+            exam_type == "olevel"
+            and broad_group
+            and (bool(unresolved_scope) or not explicit_open_scope)
+        )
         if generic_olevel_scope:
             continue
         # A stale or hand-edited SQL seed can retain only the named items while
@@ -2166,6 +2866,7 @@ def _attach_school_context(
     items: list[dict],
     utme_selected: set[str] | None = None,
     olevel_selected: set[str] | None = None,
+    selected_school_id: str | None = None,
 ) -> list[dict]:
     """Attach every university offering to subject-match rows.
 
@@ -2197,6 +2898,12 @@ def _attach_school_context(
                 ).data
                 or []
             )
+        rows = _filter_user_facing_school_rows(rows, svc)
+        if selected_school_id:
+            rows = [
+                row for row in rows
+                if str(row.get("school_id")) == str(selected_school_id)
+            ]
         school_detail_rows = _attach_school_details([
             {
                 "schoolId": row.get("school_id"),
@@ -2217,7 +2924,7 @@ def _attach_school_context(
             try:
                 location_rows = (
                     svc.table("schools")
-                    .select("id, address, city, state, country")
+                    .select("id, official_name, short_name, address, city, state, country")
                     .in_("id", school_ids)
                     .execute()
                 ).data or []
@@ -2234,6 +2941,8 @@ def _attach_school_context(
             offering = {
                 "schoolId": row.get("school_id"),
                 "schoolName": school_name,
+                "officialName": location.get("official_name"),
+                "shortName": location.get("short_name"),
                 "institutionType": row.get("institution_type"),
                 "programmeName": row.get("jamb_name") or "",
                 "studentName": _student_programme_name(row.get("jamb_name")) or row.get("jamb_name"),
@@ -2244,6 +2953,8 @@ def _attach_school_context(
             }
             school_detail = school_details.get((str(row.get("school_id")), str(jid))) or {}
             offering.update({
+                "officialName": school_detail.get("officialName") or offering.get("officialName"),
+                "shortName": school_detail.get("shortName") or offering.get("shortName"),
                 "universityUtmeSubjects": school_detail.get("universityUtmeSubjects"),
                 "universityOlevelRequirement": school_detail.get("universityOlevelRequirement"),
                 "universityNote": school_detail.get("universityNote"),

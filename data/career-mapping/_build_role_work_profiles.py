@@ -22,6 +22,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 
 HERE = Path(__file__).resolve().parent
@@ -32,7 +33,6 @@ ARCHIVE_SHA256 = "6883548adf5fde64cf6f801b35d15519c9225f2732c3cab0e281c652d16b23
 ARCHIVE_URL = "https://www.onetcenter.org/dl_files/database/db_31_0_text.zip"
 OUTPUT = HERE / "role_work_profiles.json"
 ROLE_LIBRARY = HERE / "role_library_v3_cleaned.json"
-ROLE_TOOLS = HERE / "role_tools.json"
 SCOPE_AUDIT = HERE / "domain_skill_competency_certification_audit.json"
 SOURCE_REGISTRY = HERE / "domain_role_source_registry.json"
 EMERGING_OVERLAYS = HERE / "emerging_role_overlays.json"
@@ -228,7 +228,7 @@ def main() -> None:
     for role in roles:
         roles_by_key[f"{role.get('domain_id')}|{role.get('role_name')}"] = role
 
-    role_tools = json.loads(ROLE_TOOLS.read_text(encoding="utf-8"))
+    role_tools = load_role_tools()
     audit = json.loads(SCOPE_AUDIT.read_text(encoding="utf-8"))
     registry = json.loads(SOURCE_REGISTRY.read_text(encoding="utf-8")).get("source_catalog", {})
     overlay_sources = json.loads(EMERGING_OVERLAYS.read_text(encoding="utf-8")).get("sources", {})

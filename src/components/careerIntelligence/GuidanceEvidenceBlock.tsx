@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Linking, Pressable, View, Text, StyleSheet, type ViewStyle } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, type ViewStyle } from "react-native";
 import { CompassFonts, useTheme, Spacing, FontSize, FontWeight, Radius } from "../../theme";
 import type { GuidanceEvidence, GuidanceEvidenceLens } from "../../types/career";
 import { SectionLabel } from "./RedesignPrimitives";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "../../lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { studentSafeUrl } from "@/lib/studentCareerBoundary";
 
 export interface GuidanceEvidenceBlockProps {
   evidence?: GuidanceEvidence;
@@ -12,7 +13,6 @@ export interface GuidanceEvidenceBlockProps {
 
 function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens }) {
   const { colors } = useTheme();
-  const [notice, setNotice] = useState<string | null>(null);
   const stateLabel =
     lens.state === "source_backed"
       ? "Supported by sources"
@@ -36,27 +36,18 @@ function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens })
           <Text style={[styles.sourcesLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
             Sources for this signal
           </Text>
-          {lens.sources.map((source) => (
-            <Pressable
+          {lens.sources.map((source) => {
+            const url = studentSafeUrl(source.url);
+            if (!url) return null;
+            return (
+            <View
               key={`${source.id}|${source.url}`}
-              accessibilityRole="link"
-              accessibilityLabel={`Open source: ${source.label}`}
-              onPress={async () => {
-                if (!(await hasInternetConnection())) {
-                  setNotice(OFFLINE_LINK_NOTICE);
-                  return;
-                }
-                const opened = await Linking.openURL(source.url).then(() => true).catch(() => false);
-                if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
-              }}
               style={styles.sourceLink}
             >
-              <Text style={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
-                {source.label}
-              </Text>
-            </Pressable>
-          ))}
-          {notice ? <Text style={[styles.notice, { color: colors.textRole.muted }]}>{notice}</Text> : null}
+              <ExternalLinkGuard url={url} label={source.label} description={`This opens the source supporting the ${label.toLowerCase()} guidance.`} textStyle={[styles.sourceText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]} />
+            </View>
+            );
+          })}
         </View>
       ) : null}
     </View>
@@ -72,10 +63,10 @@ export function GuidanceEvidenceBlock({ evidence, style }: GuidanceEvidenceBlock
     <View style={[styles.container, style]}>
       <SectionLabel>How this guidance is supported</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }, CompassFonts.body]}>
-        This guidance starts with the local context attached to this route. It explains why the connection is shown; it is not a promise of demand, employment or a licence.
+        This guidance uses information attached to this route. It explains why the connection is shown; it is not a promise of demand, employment or a licence.
       </Text>
       <View style={styles.rows}>
-        <LensRow label="Local context" lens={evidence.nigeria} />
+        <LensRow label="Nigeria" lens={evidence.nigeria} />
       </View>
       {evidence.limitations?.map((limitation, index) => (
         <Text key={`${limitation}-${index}`} style={[styles.limit, { color: colors.textRole.muted }, CompassFonts.body]}>

@@ -15,6 +15,7 @@ import re
 from collections import Counter, defaultdict
 
 from _role_overlay_loader import load_overlay_roles
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HIDDEN = {"D086", "D087", "D088", "D089", "D100", "D101", "D108", "D113"}
@@ -117,7 +118,7 @@ def main():
         role_name = text(role.get("role_name"))
         if domain_id and role_name and domain_id not in HIDDEN:
             role_by_key[f"{domain_id}|{role_name}"] = role
-    role_tools = load("role_tools.json")
+    role_tools = load_role_tools()
     meta = load("domain_meta.json")
     registry = load("domain_role_source_registry.json")
 

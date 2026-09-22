@@ -12,14 +12,15 @@
  */
 import React, { useRef, useState } from "react";
 import {
+  TouchableOpacity,
   View,
   Text,
   StyleSheet,
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme, FontSize } from "../../theme";
-import { SifterButton } from "../ui";
 import { openStudentDocument } from "../../lib/provisioningData";
 import { hasInternetConnection } from "../../lib/networkState";
 
@@ -70,14 +71,15 @@ export function PdfExportButton({
 
   return (
     <View style={[styles.wrap, style]}>
-      <SifterButton
-        label={title}
-        icon="⤓"
-      onPress={() => { void onPress(); }}
-        variant="ghost"
-        size="sm"
-        fullWidth={false}
-      />
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel={title}
+        accessibilityHint="Print or save this report"
+        onPress={() => { void onPress(); }}
+        style={[styles.iconButton, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}
+      >
+        <Feather name="printer" size={18} color={colors.textRole.primary} />
+      </TouchableOpacity>
       {hint ? (
         <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
       ) : null}
@@ -87,6 +89,7 @@ export function PdfExportButton({
 
 const styles = StyleSheet.create({
   wrap: { gap: 4, alignItems: "flex-start" },
+  iconButton: { width: 38, height: 38, borderWidth: 1, borderRadius: 10, alignItems: "center", justifyContent: "center" },
   hint: { fontSize: FontSize.xs, fontWeight: "600", maxWidth: 240 },
 });
 

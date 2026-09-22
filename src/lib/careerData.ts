@@ -13,6 +13,7 @@
 import {
   type DataState,
   type Programme,
+  type ProgrammeCurriculumContract,
   type Domain,
   type Role,
   type Opportunity,
@@ -59,6 +60,12 @@ import {
 import { request } from "./api";
 import { getCached, getCachedStale, setCached, queueWrite, cancelQueuedSave, flushQueue } from "./careerCache";
 import type { StartingPointProfile } from "../types/onboarding";
+import {
+  sanitizeStudentDataState,
+  sanitizeStudentDomain,
+  sanitizeStudentProgramme,
+  sanitizeStudentRole,
+} from "./studentCareerBoundary";
 
 /** Reference data is refreshed daily; writes and account data never use this cache. */
 const REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
@@ -189,6 +196,14 @@ export interface UniversityStructuredSubjectRule {
   text?: string | null;
   minimumRequired?: number | null;
   conditionText?: string | null;
+  subjectPool?: string[];
+  subjectItems?: Array<{
+    name: string;
+    code?: string | null;
+    requirementRole?: string | null;
+    groupKey?: string | null;
+    minimumFromGroup?: number | null;
+  }>;
 }
 
 export interface JambProgrammeSuggestion {
@@ -199,14 +214,21 @@ export interface JambProgrammeSuggestion {
   studentName?: string | null;
   jambFaculty?: string | null;
   degreeType?: string | null;
+  /** Canonical programme award fields, when the reviewed programme registry supplies them. */
+  qualification?: string | null;
+  durationYears?: number | null;
   isBlend?: boolean;
   programmeId?: string | null;
   institutionType?: string | null;
+  /** Clean CCMAS course/ability contract; absent until its programme rows are seeded. */
+  curriculumContract?: ProgrammeCurriculumContract;
   schoolNames?: string[];
   schoolCount?: number;
   schoolOfferings?: {
     schoolId?: string | null;
     schoolName: string;
+    officialName?: string | null;
+    shortName?: string | null;
     programmeName: string;
     /** Exact JAMB/source name for this offering; never inferred from CCMAS. */
     studentName?: string | null;
@@ -241,6 +263,10 @@ export interface JambProgrammeSuggestion {
   skillsTechnical?: string[] | null;
   skillsTransferable?: string[] | null;
   skillsCount?: number | null;
+  /** Programme-owned explanations attached through the canonical CCMAS row. */
+  contextItems?: import("@/types/career").CareerContextItem[];
+  /** Programme-owned reviewed reading and learning links. */
+  resources?: import("@/types/career").CareerLearningResource[];
 }
 
 /** General requirements block from programme_subject_requirements (brochure
@@ -286,6 +312,8 @@ export interface JambProgrammeSchool {
   id?: string | null;
   schoolId: string;
   schoolName: string;
+  officialName?: string | null;
+  shortName?: string | null;
   address?: string | null;
   city?: string | null;
   state?: string | null;
@@ -333,6 +361,8 @@ export interface SchoolFaculty {
 export interface SchoolProgrammeOffering {
   schoolId: string;
   schoolName: string;
+  officialName?: string | null;
+  shortName?: string | null;
   institutionType?: string | null;
   jambProgrammeId: string;
   jambName: string;
@@ -450,6 +480,7 @@ export const careerData = {
     options?: {
       examType?: "utme" | "olevel" | "combined";
       olevelSubjects?: string[];
+      schoolId?: string;
     },
   ): Promise<DataState<SubjectProgrammeMatch[]>> {
     const key = [
@@ -458,6 +489,7 @@ export const careerData = {
       stream ?? "",
       options?.examType ?? "",
       [...(options?.olevelSubjects ?? [])].sort().join(",").toLowerCase(),
+      options?.schoolId ?? "",
     ].join(":");
     return readThrough(
       key,
@@ -469,6 +501,7 @@ export const careerData = {
         if (options?.olevelSubjects?.length) {
           qs.set("olevel_subjects", options.olevelSubjects.join(","));
         }
+        if (options?.schoolId) qs.set("school_id", options.schoolId);
         return request<DataState<SubjectProgrammeMatch[]>>(
           `/api/student/programmes/by-subjects?${qs.toString()}`,
         );
@@ -498,7 +531,7 @@ export const careerData = {
       () => request<DataState<JambProgrammeSchool[]>>(
         `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
       ),
-      "University offerings are unavailable.",
+      "The university list for this programme is unavailable.",
       DETAIL_TTL_MS,
     );
   },
@@ -625,6 +658,11 @@ export const careerData = {
     );
   },
 
+  /** Student boundary: preserve the raw method above for admin/audit views. */
+  async getProgrammeForStudent(programmeId: string): Promise<DataState<Programme>> {
+    return sanitizeStudentDataState(await careerData.getProgramme(programmeId), sanitizeStudentProgramme);
+  },
+
   /** All domains grouped by cluster, for the context-free Domain Explorer. */
   async getDomainClusters(): Promise<DataState<DomainClusterGroup[]>> {
     return readThrough(
@@ -749,13 +787,35 @@ export const careerData = {
   },
 
   /** v2 domain detail: foundation skills, subgroups, tools, certs, demand metrics. */
-  async getDomainV2(domainKey: string): Promise<DataState<DomainV2>> {
+  async getDomainV2(domainKey: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
-      `domain_${domainKey}`,
-      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}`),
+      `domain_${domainKey}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainV2>>(`/api/career/domains/${encodeURIComponent(domainKey)}${query}`),
       "See what this field does, the skills it needs, and the roles it can unlock.",
       DETAIL_TTL_MS,
     );
+  },
+
+  /** Student boundary: remove staff-only source URLs and review-required items. */
+  async getDomainV2ForStudent(domainKey: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    return sanitizeStudentDataState(await careerData.getDomainV2(domainKey, programmeId), sanitizeStudentDomain);
+  },
+
+  /** A saved subgroup can be opened without its parent domain in the URL. */
+  async getSubgroupV2(subgroupId: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
+    return readThrough(
+      `subgroup_${subgroupId}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainV2>>(`/api/career/subgroups/${encodeURIComponent(subgroupId)}${query}`),
+      "See what this area does, the skills it needs, and the roles it can unlock.",
+      DETAIL_TTL_MS,
+    );
+  },
+
+  /** Student boundary for the saved/nested subgroup route. */
+  async getSubgroupV2ForStudent(subgroupId: string, programmeId?: string): Promise<DataState<DomainV2>> {
+    return sanitizeStudentDataState(await careerData.getSubgroupV2(subgroupId, programmeId), sanitizeStudentDomain);
   },
 
   /** A role incl. its role-level bridge skills and coverage. */
@@ -765,13 +825,19 @@ export const careerData = {
   },
 
   /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
-  async getRoleV2(roleKey: string): Promise<DataState<DomainRoleV2>> {
+  async getRoleV2(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
+    const query = programmeId ? `?programme_id=${encodeURIComponent(programmeId)}` : "";
     return readThrough(
-      `role_${roleKey}`,
-      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}`),
+      `role_${roleKey}_${programmeId ?? "none"}`,
+      () => request<DataState<DomainRoleV2>>(`/api/career/roles/${encodeURIComponent(roleKey)}${query}`),
       "Understand the role, the bridge skills, and the proof you need to become credible.",
       DETAIL_TTL_MS,
     );
+  },
+
+  /** Student boundary: admin retains the raw occupation evidence method. */
+  async getRoleV2ForStudent(roleKey: string, programmeId?: string): Promise<DataState<DomainRoleV2>> {
+    return sanitizeStudentDataState(await careerData.getRoleV2(roleKey, programmeId), sanitizeStudentRole);
   },
 
   /** Opportunities matched to a programme/domain, eligibility-filtered.

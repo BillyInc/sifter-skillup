@@ -19,6 +19,7 @@ from collections import Counter, defaultdict
 from urllib.parse import quote_plus
 
 from _learning_resource_population_io import write_population
+from _role_tools_loader import load_role_tools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NS = uuid.UUID("5c1f7e00-0000-4000-8000-0000ca4ee401")
@@ -62,7 +63,7 @@ try:
 except ImportError:
     pass
 domain_tools = load("domain_tools.json")
-role_tools = load("role_tools.json")
+role_tools = load_role_tools()
 body_audit = load("nigerian_professional_body_audit.json")
 remaining_body_evidence = load("nigerian_remaining_body_web_evidence.json")
 cert_enrichment = list(csv.DictReader(open(os.path.join(HERE, "_enrichment", "certs_enrichment.csv"), encoding="utf-8")))

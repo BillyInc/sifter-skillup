@@ -15,20 +15,27 @@ import {
   View,
   Text,
   StyleSheet,
-  Linking,
   TouchableOpacity,
   type ViewStyle,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
-import type { CertificationV2Enriched } from "../../types/career";
+import type { CareerContextItem, CareerLearningResource, CertificationV2Enriched } from "../../types/career";
 import { Badge } from "../ui";
-import { hasInternetConnection, OFFLINE_LINK_NOTICE } from "@/lib/networkState";
+import { ExternalLinkGuard } from "./ExternalLinkGuard";
+import { ContextSourceLinks } from "./ContextSourceLinks";
+import { contextItemFor, relationshipTargets as resolveRelationshipTargets } from "./contextRelations";
+import { resourceForItem, studentItemLinkUrl } from "./resourceLinks";
 
 export interface CertPlacementListProps {
   gateway?: CertificationV2Enriched[];
   subgroup?: CertificationV2Enriched[];
   roleHint?: CertificationV2Enriched[];
   style?: ViewStyle;
+  emptyMessage?: string;
+  /** Explicit cross-item edges for this same context, when the API supplies them. */
+  contextItems?: CareerContextItem[];
+  resources?: CareerLearningResource[];
 }
 
 const LEVEL_VARIANT: Record<
@@ -112,30 +119,55 @@ function RegionChip({
   );
 }
 
+function marketScopeLabel(scope?: CertificationV2Enriched["marketScope"]): string | null {
+  switch (scope) {
+    case "nigeria": return "Nigerian context";
+    case "global": return "Global context";
+    case "nigeria_and_global": return "Nigeria + global evidence";
+    default: return null;
+  }
+}
+
+function isStudentCertification(cert: CertificationV2Enriched): boolean {
+  return cert.marketScope !== "not_established"
+    && (!cert.dataState || cert.dataState === "source_backed")
+    && cert.sourceConfidence !== "unsourced"
+    && cert.guidanceOwner !== "role_aggregated"
+    && cert.guidanceOwner !== "review_only"
+    && cert.guidanceOwner !== "audit_only"
+    && cert.reviewStatus !== "review_only"
+    && cert.reviewStatus !== "unverified"
+    && cert.ownershipScope !== "audit_only";
+}
+
+function studentRelationshipTargets(item: CareerContextItem | undefined, type: "builds_on" | "works_with", contextItems?: CareerContextItem[]) {
+  if (!item) return [];
+  if (item.relationships !== undefined) {
+    return item.relationships
+      .filter((edge) => edge.relationshipStatus === "source_backed" && edge.relationshipType === type)
+      .map((edge) => edge.toName || edge.toItemKey)
+      .filter((name): name is string => Boolean(name));
+  }
+  return resolveRelationshipTargets(item, type, contextItems);
+}
+
 function CertRow({
   cert,
   emphasise,
+  contextItems,
+  resources,
 }: {
   cert: CertificationV2Enriched;
   emphasise: boolean;
+  contextItems?: CareerContextItem[];
+  resources?: CareerLearningResource[];
 }) {
   const { colors } = useTheme();
   const price = formatPrice(cert.price, cert.currency);
-  const hasUrl = !!cert.officialUrl;
-  const [notice, setNotice] = useState<string | null>(null);
-
-  const openLink = async (url?: string | null) => {
-    if (!url) return;
-    setNotice(null);
-    if (!(await hasInternetConnection())) {
-      setNotice(OFFLINE_LINK_NOTICE);
-      return;
-    }
-    const opened = await Linking.openURL(url).then(() => true).catch(() => false);
-    if (!opened) setNotice("This source could not be opened. Try again when your connection is stable.");
-  };
-
-  const openUrl = () => openLink(cert.officialUrl);
+  const resource = resourceForItem(resources, "certification", cert.name);
+  const relation = contextItemFor(contextItems, "certification", cert.name);
+  const url = studentItemLinkUrl(relation, resource, cert.officialUrl);
+  const hasUrl = !!url;
 
   return (
     <View
@@ -149,20 +181,15 @@ function CertRow({
       ]}
     >
       <View style={styles.certMain}>
-        <Text
-          onPress={hasUrl ? openUrl : undefined}
-          style={[
-            styles.certName,
-            { color: hasUrl ? colors.accent : colors.text },
-            hasUrl ? styles.certNameLink : null,
-          ]}
-          accessibilityRole={hasUrl ? "link" : undefined}
-          accessibilityLabel={hasUrl ? `Open certification source for ${cert.name}` : undefined}
-          numberOfLines={2}
-        >
+        <View style={styles.certTitleRow}>
+        <Feather name="award" size={16} color={colors.text} />
+        <Text style={[styles.certName, { color: colors.text }]} numberOfLines={2}>
           {cert.name}
-          {hasUrl ? " ↗" : ""}
         </Text>
+        </View>
+        {relation?.plainMeaning ? <Text style={[styles.certBody, { color: colors.textMuted }]}>{relation.plainMeaning}</Text> : null}
+        {relation?.contextualUse ? <Text style={[styles.certBody, { color: colors.textMuted }]}>{relation.contextualUse}</Text> : null}
+        <ExternalLinkGuard url={url} label={hasUrl ? `Open information for ${cert.name}` : `No verified link for ${cert.name}`} description={resource?.description || `This opens the official information or reference page recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} />
         {cert.body ? (
           <Text
             style={[styles.certBody, { color: colors.textMuted }]}
@@ -171,6 +198,23 @@ function CertRow({
             {cert.body}
           </Text>
           ) : null}
+        {cert.gateReason ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>
+            Why it appears here: {cert.gateReason}
+          </Text>
+        ) : null}
+        {studentRelationshipTargets(relation, "builds_on", contextItems).length ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>Builds on: {studentRelationshipTargets(relation, "builds_on", contextItems).join(" · ")}</Text>
+        ) : null}
+        {studentRelationshipTargets(relation, "works_with", contextItems).length ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>Works with: {studentRelationshipTargets(relation, "works_with", contextItems).join(" · ")}</Text>
+        ) : null}
+        <ContextSourceLinks item={relation} resource={resource} />
+        {marketScopeLabel(cert.marketScope) ? (
+          <Text style={[styles.certBody, { color: colors.textMuted }]}>
+            {marketScopeLabel(cert.marketScope)}{cert.marketNote ? ` — ${cert.marketNote}` : ""}
+          </Text>
+        ) : null}
         {cert.availabilityStatus && cert.availabilityStatus !== "active" ? (
           <Text
             style={[styles.certBody, { color: colors.textMuted }]}
@@ -183,20 +227,14 @@ function CertRow({
                 : "Retired by the issuer.")}
           </Text>
         ) : null}
-        {cert.replacementName ? (
-          <TouchableOpacity
-            accessibilityRole="link"
-            accessibilityLabel={`Open current route: ${cert.replacementName}`}
-            onPress={() => openLink(cert.replacementUrl || cert.officialUrl)}
-          >
+        {cert.replacementName && !cert.replacementUrl ? (
+          <View>
             <Text style={[styles.certBody, styles.certNameLink, { color: colors.accent }]}>
               Current route: {cert.replacementName} â†—
             </Text>
-          </TouchableOpacity>
+          </View>
         ) : null}
-        {notice ? (
-          <Text style={[styles.certBody, { color: colors.textMuted }]}>{notice}</Text>
-        ) : null}
+        {cert.replacementName && cert.replacementUrl ? <ExternalLinkGuard url={studentItemLinkUrl(undefined, undefined, cert.replacementUrl)} label={`Current route: ${cert.replacementName}`} description={`This opens the current route recorded for ${cert.name}.`} textStyle={[styles.certBody, { color: colors.accent }]} /> : null}
         {price || cert.tierType || cert.credentialType ? (
           <View style={styles.certFacts}>
             {price ? (
@@ -237,11 +275,15 @@ function CertGroup({
   certs,
   emphasise,
   expanded,
+  contextItems,
+  resources,
 }: {
   label: string;
   certs: CertificationV2Enriched[];
   emphasise?: boolean;
   expanded: boolean;
+  contextItems?: CareerContextItem[];
+  resources?: CareerLearningResource[];
 }) {
   const { colors } = useTheme();
   if (!certs.length) return null;
@@ -253,7 +295,7 @@ function CertGroup({
       </Text>
       <View style={styles.groupRows}>
         {visible.map((c, i) => (
-          <CertRow key={`${c.name}-${i}`} cert={c} emphasise={!!emphasise} />
+          <CertRow key={`${c.name}-${i}`} cert={c} emphasise={!!emphasise} contextItems={contextItems} resources={resources} />
         ))}
       </View>
     </View>
@@ -265,11 +307,21 @@ export function CertPlacementList({
   subgroup,
   roleHint,
   style,
+  contextItems,
+  resources,
+  emptyMessage,
 }: CertPlacementListProps) {
   const { colors } = useTheme();
-  const g = gateway ?? [];
-  const s = subgroup ?? [];
-  const r = roleHint ?? [];
+  const seen = new Set<string>();
+  const selectStudentCerts = (certs?: CertificationV2Enriched[]) => (certs ?? []).filter(isStudentCertification).filter((cert) => {
+    const key = cert.name.trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  const g = selectStudentCerts(gateway);
+  const s = selectStudentCerts(subgroup);
+  const r = selectStudentCerts(roleHint);
   const [expanded, setExpanded] = useState(false);
   const total = g.length + s.length + r.length;
   const visibleCount = Math.min(g.length, 4) + Math.min(s.length, 4) + Math.min(r.length, 4);
@@ -278,7 +330,7 @@ export function CertPlacementList({
     return (
       <View style={style}>
         <Text style={[styles.none, { color: colors.textMuted }]}>
-          No formal certification requirement is recorded for this domain.
+          {emptyMessage || "No formal certification requirement is recorded for this level."}
         </Text>
       </View>
     );
@@ -286,9 +338,9 @@ export function CertPlacementList({
 
   return (
     <View style={[styles.container, style]}>
-      <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} />
-      <CertGroup label="Credentials for specific areas" certs={s} expanded={expanded} />
-      <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} />
+      <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} contextItems={contextItems} resources={resources} />
+      <CertGroup label="Credentials for specific areas" certs={s} expanded={expanded} contextItems={contextItems} resources={resources} />
+      <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} contextItems={contextItems} resources={resources} />
       {total > visibleCount ? <View style={styles.moreWrap}><Text style={[styles.moreHint, { color: colors.textMuted }]}>The first credentials are shown by placement level. The rest remain available when you want the full list.</Text><TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)}><Badge label={expanded ? "Show fewer credentials" : `See all ${total} credentials`} variant="info" size="sm" /></TouchableOpacity></View> : null}
     </View>
   );
@@ -317,6 +369,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
   },
   certMain: { flex: 1, gap: 2 },
+  certTitleRow: { flexDirection: "row", alignItems: "flex-start", gap: Spacing.xs },
   certName: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   certNameLink: { textDecorationLine: "underline" },
   certBody: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },

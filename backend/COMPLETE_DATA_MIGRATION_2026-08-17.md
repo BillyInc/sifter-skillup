@@ -73,12 +73,41 @@ The generated SQL has been locally regenerated and audited. It has not been
 executed against Supabase by this audit; the post-seed queries below are the
 required proof of a successful Supabase run.
 
+### D. Apply source-grounded guidance after the career tables and seed exist
+
+Apply these additive files in this order:
+
+```text
+backend/migration_contextual_career_items.sql
+backend/migration_guidance_programme_reading_and_market_scope_2026-09-12.sql
+backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql
+backend/migration_guidance_all_programmes_2026-09-12.sql
+backend/migration_guidance_global_2026-09-11.sql
+```
+
+Then load `backend/seed_career_context_items_v1_parts/part-001.sql.gz` through
+`part-030.sql.gz` in numeric order. The generated manifest is
+`data/career-mapping/CONTEXTUAL_GUIDANCE_ITEMS_MANIFEST.json`. It currently
+contains 126,648 source-backed rows across 160 domains, 472 explicit
+subgroups and 5,036 roles. Decompress one part only when executing it; do not
+create or apply a monolithic uncompressed copy.
+
+The domain rows in that seed are built from domain-owned evidence. Role skills
+and tools remain role-level context rows and are never used as the domain
+foundation. The all-programmes migration adds programme-owned context and
+resources for all 237 parsed CCMAS programmes. Each row records the original
+CCMAS JSON filename and is anchored to the official NUC CCMAS page. Open
+references are optional foundation aids, not claims that a Nigerian university
+prescribes them. Sociology remains the only programme with specifically
+reviewed Haralambos/Holborn and Giddens publisher/library references, with
+OpenStax as the free open-text alternative.
+
 The current worktree also contains the development preview of the corrected
 career taxonomy/context payload. Its repository transport form is the ordered,
 gzip-compressed directory
-`backend/seed_career_v2_2026-09-01_parts_gz/`; the local reconstructed form is
-`backend/seed_career_v2_2026-09-01.sql`. The local monolithic file is ignored
-by Git because it is about 672 MB. It is a development/staging output and must
+`backend/seed_career_v2_2026-09-12_parts_gz/`; the local reconstructed form is
+`backend/seed_career_v2_2026-09-12.sql`. The local monolithic file is ignored
+by Git because it is about 660 MB. It is a development/staging output and must
 not be applied to a populated production database without preflight, backup,
 approval and post-seed verification.
 
@@ -103,15 +132,15 @@ variants.
 | `seed_subject_rule_records.sql` | 1,260 typed UTME/O-level/direct-entry rule records: 678 matchable, 135 structured source rules, 2 cross-references, 420 direct-entry records, 25 explicit source-missing records |
 | `seed_career_v2.sql` | 160 domains, 460 subgroups, 5,038 roles, 47,111 tools, 240 certifications, 2,058 programme-domain links, 70,246 programme-role scores, 709 JAMB-domain links, 4,000 overlaps |
 | `seed_career_v2_preview_2026-08-26_parts_gz/` | Development preview transport: 20 ordered gzip parts for 160 domains, 486 subgroups, 5,050 roles, 47,471 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,164 JAMB-domain links, and 4,000 overlaps; 11 reviewed no-direct-local-match rows remain explicit |
-| `seed_career_v2_2026-09-01_parts_gz/` | Current development/staging transport: 23 ordered gzip parts for 160 visible domains, 542 supported subgroups, 5,093 roles, 48,585 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,163 JAMB-domain links, 4,000 overlaps, and 5,090 role work profiles |
+| `seed_career_v2_2026-09-12_parts_gz/` | Current development/staging transport: 22 ordered gzip parts for 160 visible domains, 545 supported subgroups, 5,093 roles, 48,163 tools, 240 certifications, 1,683 programme-domain links, 70,246 programme-role scores, 3,163 JAMB-domain links, 4,000 overlaps, and 5,090 role work profiles |
 | `seed_career_resources_v1_parts/` | 160,914 source-backed resource rows in 322 batches, split into pushable SQL transactions |
 | `refresh_jamb_programme_domain_2026-08-17.sql` | 709 JAMB-domain links; standalone replacement only |
 
-## 2026-09-01 authoritative career-seed correction
+## 2026-09-12 authoritative career-seed refresh
 
 The older `seed_career_v2.sql` and 2026-08-26 preview counts in historical
 notes are superseded for this refresh. The repaired generator now emits 160
-visible domains, 542 supported ISCO subgroups, 5,093 roles, 48,585 tools,
+visible domains, 545 supported ISCO subgroups, 5,093 roles, 48,163 tools,
 240 certifications and 5,090 role work profiles. The 35 former structural
 review cases are resolved by materializing the roles' existing ISCO sub-major
 ownership and reconciling counts after canonical role deduplication. Roles
@@ -119,7 +148,7 @@ without a supported subgroup taxonomy retain a direct domain-to-role path with
 a null subgroup reference; no subgroup mapping is invented.
 
 The current transport is
-`backend/seed_career_v2_2026-09-01_parts_gz/` with 23 ordered gzip parts. The
+`backend/seed_career_v2_2026-09-12_parts_gz/` with 22 ordered gzip parts. The
 resource gate and role-completeness audit pass after this repair. Reviewed
 no-direct-local-match rows remain explicit; they are not converted into
 invented Nigerian counterparts.
@@ -141,9 +170,6 @@ Each compressed part is below 41 MB. Reassemble them from the repository root
 before use:
 
 ```powershell
-python data/career-mapping/split_large_artifacts.py join-json `
-  data/career-mapping/role_tools_parts_gz/manifest.json `
-  data/career-mapping/role_tools.json
 python data/career-mapping/split_large_artifacts.py join-json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25_parts_gz/manifest.json `
   data/career-mapping/nigerian_entity_extraction_audit_2026-08-25.json
@@ -260,6 +286,7 @@ Run each file in the order below. Keep each SQL file's transaction intact.
 11. `backend/migration_role_detail_enrichment.sql`
 12. `backend/migration_certification_lifecycle.sql`
 13. `backend/migration_career_resources_v1.sql`
+14. `backend/migration_guidance_ownership_and_sociology_resources_2026-09-11.sql`
 
 For the current career preview, the dependency-critical subset is:
 
@@ -273,6 +300,7 @@ migration_career_v2.sql
   -> migration_role_detail_enrichment.sql (when role detail data is used)
   -> migration_certification_lifecycle.sql
   -> migration_career_resources_v1.sql (when resource data is used)
+  -> migration_guidance_ownership_and_sociology_resources_2026-09-11.sql (when the reviewed Sociology/D078 guidance slice is used)
   -> migration_saved_resource_support.sql (after saved_items exists)
   -> seed_career_v2_preview_2026-08-26_parts_gz/ (reconstruct locally; development only)
   -> seed_certification_lifecycle.sql (apply provider lifecycle statuses and replacements after credential rows load; name matching is punctuation-normalized)
@@ -283,6 +311,17 @@ migration_career_v2.sql
 preview seed. The preview inserts the source-backed columns and role-scoped
 tool ownership that those migrations create. This order is specific to the
 current preview and does not authorize a production deployment.
+
+`migration_guidance_ownership_and_sociology_resources_2026-09-11.sql` is an
+additive reviewed-slice migration. Run it only after
+`migration_career_resources_v1.sql` and the source-backed career layers. It
+adds explicit programme/domain/subgroup/role resource ownership, labels old
+D078 role-aggregated tool rows for audit rather than student guidance, adds
+the staged domain-foundation table, and seeds the reviewed Sociology → Social
+Sciences → Computational Social Science → Statistician links. It is
+idempotent for its reviewed rows and must not be replaced by a broad resource
+import. The API keeps its ownership checks as a fail-safe, but the migration
+is the canonical data fix.
 
 `migration_subject_catalog.sql` is required before
 `migration_career_pilot.sql` on a fresh database because the latter creates

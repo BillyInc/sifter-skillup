@@ -1506,8 +1506,9 @@ async def respond_to_student_consent_request(
 def _resolve_report_context(user: dict, school_name: Optional[str], generated_on: str) -> ReportContext:
     """Build a ReportContext from the student's chosen_direction + taxonomy.
 
-    Reads domain (foundation_skills, description), its roles, and the chosen
-    programme. Every field degrades gracefully to None/empty — never invents.
+    Reads the explicit domain-owned foundation table, domain description, its
+    roles, and the chosen programme. Every field degrades gracefully to
+    None/empty — never invents or falls back to role-frequency foundations.
     """
     # New guidance-path records preserve the complete selected branches. Keep
     # the legacy direction resolver below as a compatibility fallback for
@@ -1544,16 +1545,20 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
     try:
         if domain_key:
             dres = _svc().table("domains").select(
-                "id, domain_key, name, description, foundation_skills"
+                "id, domain_key, name, description"
             ).eq("domain_key", domain_key).limit(1).execute()
             dom = (dres.data or [None])[0]
             if dom:
                 domain_name = dom.get("name")
                 domain_description = dom.get("description")
-                for s in (dom.get("foundation_skills") or [])[:12]:
-                    label = s.get("skill") if isinstance(s, dict) else str(s)
-                    if label:
-                        foundation_skills.append(label)
+                foundation_rows = _svc().table("career_guidance_foundations").select(
+                    "item_name"
+                ).eq("domain_id", dom["id"]).order("display_order").execute().data or []
+                foundation_skills = [
+                    str(row["item_name"]).strip()
+                    for row in foundation_rows[:12]
+                    if row.get("item_name")
+                ]
                 # Roles reachable from this domain.
                 rres = _svc().table("domain_roles").select("role_name").eq(
                     "domain_id", dom["id"]
@@ -1582,13 +1587,16 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
                 domain_ids = [row.get("domain_id") for row in pd_rows if row.get("domain_id")]
                 if domain_ids:
                     drows = _svc().table("domains").select(
-                        "id, name, description, foundation_skills"
+                        "id, name, description"
                     ).in_("id", domain_ids).execute().data or []
                     for drow in drows:
                         domain_name = domain_name or drow.get("name")
                         domain_description = domain_description or drow.get("description")
-                        for skill in (drow.get("foundation_skills") or [])[:12]:
-                            label = skill.get("skill") if isinstance(skill, dict) else str(skill)
+                        foundation_rows = _svc().table("career_guidance_foundations").select(
+                            "item_name"
+                        ).eq("domain_id", drow["id"]).order("display_order").execute().data or []
+                        for row in foundation_rows[:12]:
+                            label = str(row.get("item_name") or "").strip()
                             if label and label not in foundation_skills:
                                 foundation_skills.append(label)
                     rrows = _svc().table("domain_roles").select(

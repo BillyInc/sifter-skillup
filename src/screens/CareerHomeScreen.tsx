@@ -147,6 +147,7 @@ function nextStartingPointAction(
   label: string;
   href: string;
 } {
+  const homeEntryPath = "/(tabs)/home";
   const isAdmissionUser = p.userType === "jamb" || p.userType === "ss3_secondary" || p.userType === "senior_secondary";
   const savedProgramme = guidance?.path.programme;
   const savedUniversity = guidance?.path.university;
@@ -169,6 +170,7 @@ function nextStartingPointAction(
       jambProgrammeId,
       schoolId,
       userType: p.userType,
+      entryPath: homeEntryPath,
       journeyMode: "undergraduate_career",
       resumeStage: resumeStage || "university_context",
       focused: true,
@@ -187,6 +189,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "programme_to_role",
       resumeStage: resumeStage || "university_context",
       focused: true,
@@ -204,6 +207,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "programme_preview",
       resumeStage: resumeStage || "programme_preview",
       focused: true,
@@ -224,6 +228,7 @@ function nextStartingPointAction(
       userType: p.userType,
       className: p.ssClass,
       stream: p.stream,
+      entryPath: homeEntryPath,
       journeyMode: "guided_subject_discovery",
       resumeStage: resumeStage || "subjects",
       focused: true,
@@ -239,10 +244,12 @@ function nextStartingPointAction(
   const roleId = recordText(savedRole, "key", "id", "roleKey");
   const domainId = recordText(savedDomain, "id", "domainId", "domainKey");
   if (roleId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}?focus=guidance` };
+    const query = guidanceContextQuery({ entryPath: homeEntryPath, focused: true });
+    return { label: "Open saved guidance", href: `/(tabs)/explore/role/${encodeURIComponent(roleId)}?${query}` };
   }
   if (domainId) {
-    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}?focus=guidance` };
+    const query = guidanceContextQuery({ entryPath: homeEntryPath, focused: true });
+    return { label: "Open saved guidance", href: `/(tabs)/explore/domain/${encodeURIComponent(domainId)}?${query}` };
   }
 
   return {
@@ -304,32 +311,44 @@ export default function CareerHomeScreen() {
         active = false;
       };
     }
-    void (async () => {
-      try {
-        const [sp, items, draft] = await Promise.all([
-          getStartingPoint(user?.id),
-          careerData.getSavedItems(),
-          getOnboardingDraft(user?.id),
-        ]);
-        const path = await careerData.getGuidancePath();
-        if (!active) return;
-        const draftProfile = draft?.studentProfile && draft.choice !== "educator"
-          ? {
-              ...(draft.studentProfile as StartingPointProfile),
-              userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
-            }
-          : null;
-        setStarting(sp ?? draftProfile);
-        setStartingLoaded(true);
-        setSaved(items);
-        setGuidance(path);
-      } catch {
-        if (!active) return;
-        setStartingLoaded(true);
-        setSaved(error<SavedItem[]>("Saved paths could not be loaded. Try again."));
-        setGuidance(error<GuidanceReportPath | null>("Saved guidance could not be loaded. Try again."));
-      }
-    })();
+    // Start every Home request together, but reveal the starting point as soon
+    // as its own endpoint responds. A slow onboarding-draft or saved-guidance
+    // request must not hold the first orientation card hostage.
+    const startingPromise = getStartingPoint(user?.id);
+    const draftPromise = getOnboardingDraft(user?.id);
+    let startingResolved = false;
+    void startingPromise.then((sp) => {
+      startingResolved = true;
+      if (!active) return;
+      setStarting(sp ?? null);
+      setStartingLoaded(true);
+    }).catch(() => {
+      startingResolved = true;
+      if (!active) return;
+      setStartingLoaded(true);
+    });
+    void draftPromise.then((draft) => {
+      if (!active || startingResolved) return;
+      const draftProfile = draft?.studentProfile && draft.choice !== "educator"
+        ? {
+            ...(draft.studentProfile as StartingPointProfile),
+            userType: (draft.studentProfile.userType ?? draft.choice ?? "student") as UserType,
+          }
+        : null;
+      if (draftProfile) setStarting(draftProfile);
+    }).catch(() => undefined);
+    void Promise.all([
+      careerData.getSavedItems(),
+      careerData.getGuidancePath(),
+    ]).then(([items, path]) => {
+      if (!active) return;
+      setSaved(items);
+      setGuidance(path);
+    }).catch(() => {
+      if (!active) return;
+      setSaved(error<SavedItem[]>("Saved paths could not be loaded. Try again."));
+      setGuidance(error<GuidanceReportPath | null>("Saved guidance could not be loaded. Try again."));
+    });
     return () => {
       active = false;
     };

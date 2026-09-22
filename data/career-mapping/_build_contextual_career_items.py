@@ -27,6 +27,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+from _role_tools_loader import load_role_tools
+
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -36,7 +38,6 @@ AUDIT_MD = HERE / "_audit" / "CONTEXTUAL_CAREER_ITEMS_2026-09-04.md"
 
 SKILLS = HERE / "domain_skill_provenance.json"
 TOOLS = HERE / "domain_tools.json"
-ROLE_TOOLS = HERE / "role_tools.json"
 ROLES = HERE / "role_library_v3_cleaned.json"
 DOMAINS = HERE / "domain_structure.json"
 REGISTRY = HERE / "domain_role_source_registry.json"
@@ -165,7 +166,7 @@ def add_record(records: list[dict], seen: set[tuple[str, str, str]], *, level: s
 def main() -> None:
     skills_by_domain = json.loads(SKILLS.read_text(encoding="utf-8"))
     tools_by_domain = json.loads(TOOLS.read_text(encoding="utf-8"))
-    role_tools = json.loads(ROLE_TOOLS.read_text(encoding="utf-8"))
+    role_tools = load_role_tools()
     role_rows = json.loads(ROLES.read_text(encoding="utf-8"))
     domain_rows = json.loads(DOMAINS.read_text(encoding="utf-8"))
     registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
