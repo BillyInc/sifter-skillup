@@ -287,7 +287,7 @@ export function CertPlacementList({
   return (
     <View style={[styles.container, style]}>
       <CertGroup label="Required in some regulated paths" certs={g} emphasise expanded={expanded} />
-      <CertGroup label="Credentials for specialisations" certs={s} expanded={expanded} />
+      <CertGroup label="Credentials for specific areas" certs={s} expanded={expanded} />
       <CertGroup label="Credentials that may strengthen this route" certs={r} expanded={expanded} />
       {total > visibleCount ? <View style={styles.moreWrap}><Text style={[styles.moreHint, { color: colors.textMuted }]}>The first credentials are shown by placement level. The rest remain available when you want the full list.</Text><TouchableOpacity accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded((value) => !value)}><Badge label={expanded ? "Show fewer credentials" : `See all ${total} credentials`} variant="info" size="sm" /></TouchableOpacity></View> : null}
     </View>

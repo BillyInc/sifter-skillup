@@ -482,7 +482,6 @@ export default function HomeScreen() {
                   <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }, CompassFonts.data]}>NEXT GUIDANCE STEP</Text>
                   <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }, CompassFonts.body]}>Compare programmes, universities, and admission requirements in Explore.</Text>
                 </View>
-                <WebListRow icon="MAP" title="Explore" sub="Continue your programme and career guidance" onPress={() => go('/(tabs)/explore')} />
               </WebCard>
             </WebCol>
 
@@ -528,23 +527,6 @@ export default function HomeScreen() {
               </WebCard>
             </WebCol>
 
-            <WebCol weight={1}>
-              <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
-                {[
-                  { emoji: 'MAP', label: 'Explore Pathways', sub: 'Browse programmes, roles, and pathways', route: '/(tabs)/explore' },
-                  { emoji: 'WORLD', label: WORLD_NAV.label, sub: 'Your saved items, notes, and Feed', route: '/(tabs)/myworld' },
-                ].filter((item) => !isGuest || item.emoji !== 'WORLD').map((item) => (
-                  <WebListRow
-                    key={item.label}
-                    icon={item.emoji}
-                    title={item.label}
-                    sub={item.sub}
-                    onPress={() => go(item.route)}
-                    right={<Text style={{ color: colors.textRole.muted, fontSize: 16 }}>{'>'}</Text>}
-                  />
-                ))}
-              </WebCard>
-            </WebCol>
           </WebRow>
         </WebShell>
       </SafeAreaView>
@@ -685,12 +667,6 @@ export default function HomeScreen() {
         </Animated.View>
 
         {/* ── Quick actions ── */}
-        <Animated.View style={[styles.actionsSection, contentAnimatedStyle]}>
-          <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
-          <QuickAction iconLabel="MAP" label="Explore guidance" sub="Browse programmes, universities, domains, and roles" color={accentColor} onPress={() => go(continueHref)} />
-          <QuickAction iconLabel="MAP" label="Explore Pathways" sub="Browse programmes, roles, and pathways" color={colors.accentRole.success} onPress={() => go('/(tabs)/explore')} />
-          {!isGuest ? <QuickAction iconLabel="WORLD" label={WORLD_NAV.label} sub="Saved items, notes, and Feed" color={colors.accentRole.status} onPress={() => go('/(tabs)/myworld')} /> : null}
-        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );

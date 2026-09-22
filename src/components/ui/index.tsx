@@ -200,7 +200,7 @@ export function SifterButton({
   const txtColor    = variant === 'ghost' ? colors.text
     : variant === 'secondary' ? colors.text
     : variant === 'primary'   ? colors.accentRole.onFill
-    : '#fff';
+    : colors.accentRole.onFill;
 
   const fontSize = size === 'sm' ? FontSize.sm : size === 'lg' ? FontSize.lg : FontSize.md;
 

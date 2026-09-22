@@ -111,7 +111,7 @@ function matchSummary(item: SubjectProgrammeMatch): string {
     if (item.eligibilityStatus === "utme_match_olevel_gap") {
       return "UTME gate matches, but the O-level requirement still has gaps.";
     }
-    return "UTME gate matches. O-level requirement needs review before this is treated as eligible.";
+    return "UTME gate matches, but the O-level details are incomplete, so eligibility cannot be confirmed yet.";
   }
   if (item.matchBasis === "olevel") {
     return "O-level requirement matches your selected subjects. Check the UTME subjects before applying.";
@@ -169,6 +169,7 @@ export default function AdmissionBrowseScreen() {
     admin_type?: string | string[];
     guidance_student_id?: string | string[];
     guidance_target?: string | string[];
+    guidance_entry?: string | string[];
     user_type?: string | string[];
     programme?: string | string[];
     journey?: string | string[];
@@ -206,6 +207,7 @@ export default function AdmissionBrowseScreen() {
   // presence of a student ID; an explicit contradictory marker is stale and
   // must not hydrate another account's checkpoint.
   const guidanceTarget = requestedGuidanceTarget || (guidanceStudentId ? "authorised_student" : "");
+  const guidanceEntry = readParam(params.guidance_entry);
   const sessionOnlyGuidance = isAdminExplore && !guidanceStudentId;
   const guidanceContextShape = { guidanceTarget, guidanceStudentId };
   const staleGuidanceRoute = isAdminExplore && (
@@ -701,6 +703,7 @@ export default function AdmissionBrowseScreen() {
         focused: true,
         guidanceStudentId: guidanceStudentId || undefined,
         guidanceTarget: guidanceTarget || undefined,
+        entryPath: guidanceEntry || undefined,
         journeyMode: "undergraduate_career",
       });
     }
@@ -717,60 +720,26 @@ export default function AdmissionBrowseScreen() {
     setSubjectMatchStatus(hasSubjectContext ? "loading" : "idle");
     const id = candidate.jambProgrammeId || candidate.id;
     if (!id) return;
-    const [schoolState, detailState, subjectState] = await Promise.all([
-      careerData.getJambProgrammeSchools(id),
-      careerData.getJambProgramme(id),
-      hasSubjectContext
-          ? careerData.getProgrammesBySubjects(
-            subjectExamType === "olevel" ? olevelSubjects : subjects,
-            stream || undefined,
-            {
-            examType: subjectExamType,
-            olevelSubjects,
-            },
-          )
-        : Promise.resolve(null),
-    ]);
-    setProgrammeDetail(
-      detailState.status === "real" && detailState.data ? detailState.data : null,
-    );
-    let nextSubjectMatch: SubjectProgrammeMatch | null = null;
-    let nextSubjectMatchStatus: SubjectMatchStatus = hasSubjectContext ? "unavailable" : "idle";
-    if (hasSubjectContext) {
-      if (subjectState?.status === "real" || subjectState?.status === "fallback") {
-        nextSubjectMatch = (subjectState.data ?? []).find(
-          (item) => (item.jambProgrammeId || item.id) === id,
-        ) ?? null;
-        nextSubjectMatchStatus = "real";
-      } else {
-        nextSubjectMatchStatus = "unavailable";
-      }
-    }
-    setSelectedSubjectMatch(nextSubjectMatch);
-    setSubjectMatchStatus(nextSubjectMatchStatus);
-    const availableSchools =
-      (schoolState.status === "real" || schoolState.status === "fallback") && schoolState.data
-        ? schoolState.data
-        : [];
-    // The supported student flows are ordinary university/UTME guidance. A
-    // Direct Entry row belongs to a future explicit polytechnic/DE route and
-    // must not silently appear beside the ordinary university choices.
-    setSchools(availableSchools);
-    const onboardingSchool = initialSchoolId
-      ? availableSchools.find((school) => school.schoolId === initialSchoolId)
-      : null;
-    if (chosenSchool || onboardingSchool) {
-      await finalizeAdmissionChoice(candidate, {
-        schoolId: chosenSchool?.id ?? onboardingSchool?.schoolId ?? "",
-        schoolName: chosenSchool?.name ?? onboardingSchool?.schoolName ?? initialSchoolName,
-        institutionType: chosenSchool?.institutionType ?? onboardingSchool?.institutionType,
-        jambProgrammeId: id,
-        jambName: candidate.jambName,
-        studentName: candidateDisplayName(candidate),
-        programmeId: null,
-        programmeName: candidateDisplayName(candidate),
-      }, { status: nextSubjectMatchStatus, match: nextSubjectMatch });
-    }
+    // A programme result is the user's selection. Open its single programme
+    // preview immediately; that screen owns the next decision (which
+    // university offers it). Keeping the university list out of this result
+    // panel prevents programme identity, university offering, and requirements
+    // from competing on one screen. A preselected undergraduate school is
+    // carried into the preview as the only exception.
+    exploreNav.programme(router, id, {
+      jambProgrammeId: id,
+      schoolId: undergraduateContext ? chosenSchool?.id : undefined,
+      userType: userType || undefined,
+      className: contextClass || readParam(params.class_name) || undefined,
+      stream: stream || undefined,
+      guidanceStudentId: guidanceStudentId || undefined,
+      guidanceTarget: guidanceTarget || undefined,
+      entryPath: guidanceEntry || undefined,
+      focused: isFocusedGuidance,
+      journeyMode: journeyMode || (isFocusedGuidance ? "programme_preview" : undefined),
+      resumeStage: "programme_preview",
+    });
+    return;
   };
 
   const finalizeAdmissionChoice = async (
@@ -845,7 +814,7 @@ export default function AdmissionBrowseScreen() {
                 : "partial",
           examType: subjectExamType,
           notice: subjectMatchStatus === "unavailable"
-            ? "The structured subject requirement check was unavailable or under review when this path was selected."
+            ? "The structured subject requirement check is not available for this path yet."
             : undefined,
         },
         programme: {
@@ -930,6 +899,7 @@ export default function AdmissionBrowseScreen() {
       schoolId: school.schoolId,
       userType: userType || undefined,
       guidanceTarget: guidanceTarget || undefined,
+      entryPath: guidanceEntry || undefined,
       focused: isFocusedGuidance,
       viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
       journeyMode: journeyMode || undefined,
@@ -1262,7 +1232,7 @@ export default function AdmissionBrowseScreen() {
       {mode === "subjects" && !loading && subjectMatchAttempted && subjectMatchStatus === "unavailable" ? (
         <View style={[styles.notice, { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}66` }]}>
           <Text style={[styles.section, { color: Brand.primaryDeep, marginTop: 0 }]}>Subject matching is unavailable</Text>
-          <Text style={[styles.noticeText, { color: colors.text }]}>We did not turn your subjects into a programme match because the structured requirement data is missing or still under review.</Text>
+          <Text style={[styles.noticeText, { color: colors.text }]}>We could not turn your subjects into a programme match because the structured requirement data is not complete yet.</Text>
           <Text style={[styles.noticeText, { color: colors.text }]}>You can still search for a programme by name, compare the universities that offer it, and open each university's published requirements. Your subject choices remain available when the matcher is ready.</Text>
         </View>
       ) : null}
@@ -1317,97 +1287,27 @@ export default function AdmissionBrowseScreen() {
       </View>
 
        {selected ? (
-        <View style={styles.detail}>
-          <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-            <Text style={[styles.section, { color: colors.text }]}>What this programme is about</Text>
-            <Text style={[styles.requirementText, { color: colors.textSoft }]}>
-              {`${candidateDisplayName(selected)} is a programme option from your selected subjects. Open the programme overview to see what the programme teaches.`}
-            </Text>
-          </View>
-          {/* The learning profile belongs to the university-aware programme
-              detail. Showing raw curriculum outcomes before a university is
-              chosen made the result look like a final programme explanation
-              and hid the actual next decision: which university offers it. */}
-          <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-            <Text style={[styles.section, { color: colors.text }]}>Why this programme appeared</Text>
-            <Text style={[styles.requirementText, { color: colors.textSoft }]}>Matched subjects: {selectedSubjectDetails?.matchedSubjects?.length ? selectedSubjectDetails.matchedSubjects.join(", ") : "The available programme rule matched this selection."}</Text>
-            {selectedSubjectDetails?.olevelMatchedSubjects?.length ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>O-level subjects checked: {selectedSubjectDetails.olevelMatchedSubjects.join(", ")}</Text> : null}
-          </View>
-          {!selectedAdmissionSchool ? (
-            <Text style={[styles.hint, { color: colors.textMuted }]}>{undergraduateContext ? "Choose your university to open the programme learning profile and continue into career guidance." : "Choose a university to open the university-aware programme overview. National and university-specific requirements will appear there, not before the university is selected."}</Text>
-          ) : null}
-            <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-              <Text style={[styles.section, { color: colors.textSoft }]}>Universities offering this programme{schools.length ? ` (${schools.length})` : ""}</Text>
-              <Text style={[styles.hint, { color: colors.textMuted }]}>
-                {undergraduateContext
-                  ? "Choose a university to open its programme learning profile and career guidance."
-                  : earlySecondary
-                    ? "Choose a university to explore its requirements. This does not commit you to a school."
-                    : "Choose a university to open its programme overview and requirements."}
-              </Text>
-            </View>
-            <>
-          {hasSubjectContext ? (
-            <View style={[styles.notice, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
-              <Text style={[styles.noticeText, { color: colors.text }]}>
-                {subjectMatchStatus === "loading"
-                  ? "Checking this programme against your UTME and O-level subjects..."
-                  : subjectMatchStatus === "unavailable"
-                     ? "We could not verify the subject requirements right now. University details remain view-only until the check succeeds."
-                    : selectedSubjectMatch
-                      ? matchSummary(selectedSubjectMatch)
-                      : "This programme does not match the selected UTME subjects."}
-              </Text>
-            </View>
-          ) : null}
-          {schools.length ? (
-            schools.map((school) => (
-              <TouchableOpacity
-                key={school.schoolId}
-                activeOpacity={0.8}
-                onPress={() => { void openUniversityDetails(school); }}
-                style={[styles.infoRow, { backgroundColor: colors.card, borderColor: colors.border }]}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.infoTitle, { color: colors.text }]}>{school.schoolName}</Text>
-                  {school.address ? (
-                    <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{school.address}</Text>
-                  ) : null}
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
-                    Offering recorded
-                  </Text>
-                  {school.universityNote ? (
-                    <Text style={[styles.cardMeta, { color: Brand.primaryDeep }]} numberOfLines={2}>{school.universityNote}</Text>
-                  ) : null}
-                </View>
-                <Text style={[styles.score, { color: colors.text }]}>
-                    {selectedAdmissionSchool?.schoolId === school.schoolId ? (earlySecondary ? "Viewing" : undergraduateContext ? "Selected" : "Selected") : (earlySecondary ? "View details" : undergraduateContext ? "Open guidance" : "Choose")}
-                </Text>
-              </TouchableOpacity>
-            ))
-           ) : (
-             <Text style={[styles.hint, { color: colors.textMuted }]}>No university offerings are recorded for this programme yet.</Text>
-          )}
-
-           {selectedAdmissionSchool ? (
-            <TouchableOpacity
-              onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
-                jambProgrammeId: selected.jambProgrammeId || selected.id,
-                schoolId: selectedAdmissionSchool.schoolId,
-                userType: userType || undefined,
-                guidanceTarget: guidanceTarget || undefined,
-                focused: isFocusedGuidance,
-                viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
-                journeyMode: journeyMode || undefined,
-              })}
-              style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
-            >
-                <Text style={styles.actionText}>{earlySecondary ? "Explore programme details" : undergraduateContext ? "Open career guidance" : "View programme details"}</Text>
-            </TouchableOpacity>
-           ) : null}
-            </>
-
-        </View>
+         <View style={styles.detail}>
+           <View style={[styles.requirements, { backgroundColor: colors.surface.subtle, borderColor: colors.border }]}>
+             <Text style={[styles.section, { color: colors.text }]}>Programme selected</Text>
+             <Text style={[styles.requirementText, { color: colors.textSoft }]}>Open the programme preview to choose a university. University names, addresses, requirements and the full learning profile belong to the next screen, not this search list.</Text>
+             {hasSubjectContext ? <Text style={[styles.requirementText, { color: colors.textSoft }]}>{subjectMatchStatus === "loading" ? "Checking your subjects..." : selectedSubjectMatch ? matchSummary(selectedSubjectMatch) : "Subject fit is not confirmed yet."}</Text> : null}
+           </View>
+           <TouchableOpacity
+             onPress={() => exploreNav.programme(router, selected.jambProgrammeId || selected.id, {
+               jambProgrammeId: selected.jambProgrammeId || selected.id,
+               userType: userType || undefined,
+               guidanceTarget: guidanceTarget || undefined,
+               entryPath: guidanceEntry || undefined,
+               focused: isFocusedGuidance,
+               viewOnly: Boolean(hasSubjectContext && (subjectMatchStatus !== "real" || !selectedSubjectMatch || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_gap" || selectedSubjectMatch.eligibilityStatus === "utme_match_olevel_unparsed")),
+               journeyMode: journeyMode || undefined,
+             })}
+             style={[styles.actionBtn, { backgroundColor: Brand.primary, alignSelf: "flex-start" }]}
+           >
+             <Text style={styles.actionText}>Open programme preview</Text>
+           </TouchableOpacity>
+         </View>
        ) : null}
        <CareerDisclaimer variant="footer" />
      </ScrollView>
@@ -1489,7 +1389,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
-  actionText: { color: "#fff", fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  actionText: { color: "#FFFFFF", fontSize: FontSize.sm, fontWeight: FontWeight.black },
   hint: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   notice: { borderWidth: 1, borderRadius: Radius.sm, padding: Spacing.md },
   noticeText: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },

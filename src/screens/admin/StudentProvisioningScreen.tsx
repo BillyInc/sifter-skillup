@@ -1078,7 +1078,7 @@ function AddStudentsTab({ initialMode = "school" }: { initialMode?: "school" | "
                   </View>
                 ) : null}
               </View>
-              {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Needs review</Text> : null}
+              {d.needsReview ? <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>Details need confirmation</Text> : null}
             </View>
           ))}
 

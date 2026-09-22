@@ -290,9 +290,9 @@ export function AdmissionInsightScreen({
               ? "Programme admission rows"
               : "Admission rows by programme and school"}
           </SectionLabel>
-          {cutoffsState.status === "real" && cutoffsState.data?.length ? (
+          {cutoffsState.status === "real" && cutoffsState.data?.some((cutoff) => cutoff.form === "UTME") ? (
             <View style={resp.isDesktop ? styles.cutoffGrid : { gap: Spacing.sm }}>
-              {cutoffsState.data.map((c) => (
+              {cutoffsState.data.filter((cutoff) => cutoff.form === "UTME").map((c) => (
                 <CutoffCard key={c.id} cutoff={c} colors={colors} />
               ))}
             </View>

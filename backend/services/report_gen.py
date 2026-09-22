@@ -178,7 +178,7 @@ def _subject_match_status(path: dict) -> tuple[str, str]:
     if status == "partial":
         return "Partial check", "The subject check was partial. Review the requirement gaps before treating this as a possible fit."
     if status == "unavailable":
-        return "Unavailable", "Structured subject matching was unavailable or under review. This report is not eligibility confirmation."
+        return "Unavailable", "Structured subject matching was not available for this path. This report is not eligibility confirmation."
     return "Not checked", "Subject matching was not used for this programme search."
 
 

@@ -156,7 +156,13 @@ export function RoleClusterSection({
           ) : null}
 
           <MethodEvidenceBlock methods={subgroup.methodEvidence} />
-          <ToolGroupsBlock tools={subgroup.tools} />
+          <ToolGroupsBlock
+            tools={subgroup.tools}
+            title="Tools used in this area"
+            commonLabel="Useful across this area"
+            distinctiveLabel="More specialised tools in this area"
+            explanation="These tools are attached to the area of work. Open a role below to see where they become useful in practice."
+          />
           <CertPlacementList subgroup={subgroup.certifications} />
 
           {children}

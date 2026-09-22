@@ -387,7 +387,7 @@ function SectionHeading({ colors, title, body }: { colors: ColorPalette; title: 
 }
 
 function StateNote<T>({ colors, state }: { colors: ColorPalette; state: DataState<T> }) {
-  const title = state.status === "real" ? "No verified rows yet" : state.status === "pending" ? "Data pending" : state.status === "fallback" ? "Standard data" : "Evidence-gated detail";
+  const title = state.status === "real" ? "No verified rows yet" : state.status === "pending" ? "Loading your saved items" : state.status === "fallback" ? "Standard data" : "Evidence-gated detail";
   return <View style={[styles.stateNote, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}><Feather name={state.status === "error" ? "alert-triangle" : "lock"} size={17} color={colors.textRole.muted} /><View style={styles.cardText}><Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>{title}</Text><Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{state.meta?.notice ?? "This route will open when its source, cycle, and evidence checks are complete."}</Text></View></View>;
 }
 

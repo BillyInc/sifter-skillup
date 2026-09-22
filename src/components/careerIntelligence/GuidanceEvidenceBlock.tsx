@@ -10,25 +10,19 @@ export interface GuidanceEvidenceBlockProps {
   style?: ViewStyle;
 }
 
-const LENSES: Array<{ key: "nigeria" | "remote" | "global"; label: string }> = [
-  { key: "nigeria", label: "Nigeria" },
-  { key: "remote", label: "Remote" },
-  { key: "global", label: "Global" },
-];
-
 function LensRow({ label, lens }: { label: string; lens: GuidanceEvidenceLens }) {
   const { colors } = useTheme();
   const [notice, setNotice] = useState<string | null>(null);
   const stateLabel =
     lens.state === "source_backed"
-      ? "Source-backed"
+      ? "Supported by sources"
       : lens.state === "context_only"
-        ? "Context available"
+        ? "Context only"
         : lens.state === "limited"
-          ? "Limited evidence"
+          ? "Limited source coverage"
           : lens.state === "pending"
-            ? "Pending"
-            : "Not attached";
+            ? "Being checked"
+            : "Not available";
 
   return (
     <View style={[styles.row, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
@@ -78,10 +72,10 @@ export function GuidanceEvidenceBlock({ evidence, style }: GuidanceEvidenceBlock
     <View style={[styles.container, style]}>
       <SectionLabel>How this guidance is supported</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.muted }, CompassFonts.body]}>
-        Nigerian, remote and global signals are kept separate. A missing local signal does not make a portable skill less useful, and global evidence does not establish a Nigerian licence.
+        This guidance starts with the local context attached to this route. It explains why the connection is shown; it is not a promise of demand, employment or a licence.
       </Text>
       <View style={styles.rows}>
-        {LENSES.map(({ key, label }) => <LensRow key={key} label={label} lens={evidence[key]} />)}
+        <LensRow label="Local context" lens={evidence.nigeria} />
       </View>
       {evidence.limitations?.map((limitation, index) => (
         <Text key={`${limitation}-${index}`} style={[styles.limit, { color: colors.textRole.muted }, CompassFonts.body]}>
@@ -107,6 +101,8 @@ const styles = StyleSheet.create({
   sourcesLabel: { fontSize: FontSize.xs },
   sourceLink: { alignSelf: "flex-start", paddingVertical: 2 },
   sourceText: { fontSize: FontSize.xs, textDecorationLine: "underline" },
+  moreButton: { alignSelf: "flex-start", borderWidth: 1, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  moreText: { fontSize: FontSize.sm },
   limit: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
   notice: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.4 },
 });

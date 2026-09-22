@@ -640,16 +640,6 @@ export default function CareerHomeScreen() {
           </View>
         )}
       </DataStateView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={styles.linkRow}
-        onPress={() => router.push("/(tabs)/explore")}
-      >
-        <Text style={[styles.linkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
-          Explore and save domains
-        </Text>
-      </TouchableOpacity>
-
     </ScrollView>
   );
 }

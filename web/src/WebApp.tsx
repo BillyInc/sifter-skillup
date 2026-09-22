@@ -94,6 +94,24 @@ function go(path: string, replace = false) {
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
+function platformBackFallback(path: string): string {
+  if (path === "/onboarding") return "/home";
+  if (path.startsWith("/explore/")) return "/explore";
+  if (path.startsWith("/opportunities/")) return "/opportunities";
+  if (path.startsWith("/profile/")) return "/profile";
+  if (path.startsWith("/myworld/") || path.startsWith("/portfolio")) return "/myworld";
+  if (path.startsWith("/skills") || path === "/streaks" || path === "/world" || path === "/map" || path.startsWith("/map/")) return "/home";
+  return "/home";
+}
+
+function platformBack(path: string) {
+  if (window.history.length > 1 && document.referrer.startsWith(window.location.origin)) {
+    window.history.back();
+    return;
+  }
+  go(platformBackFallback(path));
+}
+
 function useLocation() {
   const [location, setLocation] = useState(currentPath);
   useEffect(() => {
@@ -215,10 +233,45 @@ function Login({ onBack, onSignup, onForgot }: { onBack: () => void; onSignup: (
   return <>
     <button className="back" onClick={onBack}>← Back</button>
     <div className="auth-header"><h2>Log in</h2><p className="muted">Use the email and password for your Sifter account.</p></div>
-    <form onSubmit={submit} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label><label>Password<input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label><button type="button" className="text-button forgot-link" onClick={onForgot}>Forgot password?</button><button className="primary" disabled={busy}>{busy ? "Logging in…" : "Log in"}</button></form>
+    <form onSubmit={submit} className="form">
+      <label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
+      <PasswordField label="Password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button type="button" className="text-button forgot-link" onClick={onForgot}>Forgot password?</button>
+      <button className="primary" disabled={busy}>{busy ? "Logging in…" : "Log in"}</button>
+    </form>
     {error && <p className="error" role="alert">{error}</p>}
     <p className="switch">Need an account? <button className="inline-button" onClick={onSignup}>Create one</button></p>
   </>;
+}
+
+function PasswordField({
+  label,
+  value,
+  onChange,
+  autoComplete,
+  minLength,
+  hint,
+}: {
+  label: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete: string;
+  minLength?: number;
+  hint?: string;
+}) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <label>
+      {label}
+      <span className="password-field">
+        <input type={visible ? "text" : "password"} autoComplete={autoComplete} minLength={minLength} value={value} onChange={onChange} required />
+        <button type="button" className="password-toggle" onMouseDown={(event) => event.preventDefault()} onClick={() => setVisible((current) => !current)} aria-pressed={visible} aria-label={`${visible ? "Hide" : "Show"} ${label.toLowerCase()}`}>
+          {visible ? "Hide" : "Show"}
+        </button>
+      </span>
+      {hint ? <small className="field-hint">{hint}</small> : null}
+    </label>
+  );
 }
 
 function Signup({ onBack, onLogin }: { onBack: () => void; onLogin: () => void }) {
@@ -234,7 +287,31 @@ function Signup({ onBack, onLogin }: { onBack: () => void; onLogin: () => void }
   return <>
     <button className="back" onClick={onBack}>← Back</button>
     <div className="auth-header"><h2>Create your account</h2><p className="muted">Use one account to keep your guidance, saved choices and reports together.</p></div>
-    <form onSubmit={submit} className="form"><div className="two-col"><label>First name<input autoComplete="given-name" value={form.firstName} onChange={update("firstName")} required /></label><label>Last name<input autoComplete="family-name" value={form.lastName} onChange={update("lastName")} required /></label></div><label>Middle name <span className="field-optional">Optional</span><input autoComplete="additional-name" value={form.middleName} onChange={update("middleName")} /></label><label>Date of birth<input type="date" autoComplete="bday" min="1900-01-01" max={new Date().toISOString().slice(0, 10)} value={form.dateOfBirth} onChange={update("dateOfBirth")} required /><small className="field-hint">Used for account safety and age-appropriate guidance.</small></label><label>Email<input type="email" autoComplete="email" value={form.email} onChange={update("email")} required /></label><label>Password<input type="password" autoComplete="new-password" minLength={8} value={form.password} onChange={update("password")} required /><small className="field-hint">At least 8 characters.</small></label><label>Confirm password<input type="password" autoComplete="new-password" minLength={8} value={form.confirmPassword} onChange={update("confirmPassword")} required /></label><label>School code <span className="field-optional">Optional</span><input autoComplete="off" value={form.schoolCode} onChange={update("schoolCode")} placeholder="SCHOOL-XXXXXXXX" /><small className="field-hint">Use a code shared by your school to link your account.</small></label><label>Student claim code <span className="field-optional">Optional</span><input autoComplete="off" value={form.claimCode} onChange={update("claimCode")} placeholder="SCHOOL-SS1-XXXXXXXX" /><small className="field-hint">Use this if your school created an account for you.</small></label>{sent && <label>Email verification code<input inputMode="numeric" autoComplete="one-time-code" value={form.code} onChange={update("code")} required /><small className="field-hint">Enter the code sent to your email.</small></label>}<div className="legal-box"><p className="legal-heading">Review before creating your account</p><div className="consent-status" aria-live="polite"><span className={`consent-check ${requiredAccepted ? "is-accepted" : ""}`} aria-hidden="true">{requiredAccepted ? "✓" : ""}</span><span>{requiredAccepted ? "Terms & Conditions and Privacy Policy accepted" : "Both documents must be read and explicitly accepted"}</span></div><div className="legal-actions"><button type="button" className="secondary" onClick={() => setDocument("terms")}>{termsAccepted ? "Terms accepted" : "Read and accept Terms"}</button><button type="button" className="secondary" onClick={() => setDocument("privacy")}>{privacyAccepted ? "Privacy accepted" : "Read and accept Privacy"}</button></div>{requiredAccepted && <><p className="analytics-explanation">Optional analytics helps us see which screens are useful and where people get stuck. It records anonymous product-usage events, not your password, email content, private report content, or school records. You can leave it off and change this choice later in Settings.</p><label className="check-row"><input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} /> Share anonymous usage analytics (optional)</label></>}</div><div className="action-row"><button type="button" className="secondary" onClick={sendCode} disabled={busy}>{sent ? "Send again" : "Send email code"}</button>{sent && <button className="primary" disabled={busy || !requiredAccepted}>{busy ? "Creating…" : "Create account"}</button>}</div></form>{error && <p className="error" role="alert">{error}</p>}<p className="switch">Already have an account? <button className="inline-button" onClick={onLogin}>Log in</button></p>{document && <LegalDialog kind={document} onClose={() => setDocument(null)} onAccept={() => { if (document === "terms") { setTermsAccepted(true); setDocument("privacy"); } else { setPrivacyAccepted(true); setDocument(null); } }} />}</>;
+    <form onSubmit={submit} className="form">
+      <div className="two-col">
+        <label>First name<input autoComplete="given-name" value={form.firstName} onChange={update("firstName")} required /></label>
+        <label>Last name<input autoComplete="family-name" value={form.lastName} onChange={update("lastName")} required /></label>
+      </div>
+      <label>Middle name <span className="field-optional">Optional</span><input autoComplete="additional-name" value={form.middleName} onChange={update("middleName")} /></label>
+      <label>Date of birth<input type="date" autoComplete="bday" min="1900-01-01" max={new Date().toISOString().slice(0, 10)} value={form.dateOfBirth} onChange={update("dateOfBirth")} required /><small className="field-hint">Used for account safety and age-appropriate guidance.</small></label>
+      <PasswordField label="Password" autoComplete="new-password" minLength={8} value={form.password} onChange={update("password")} hint="At least 8 characters." />
+      <PasswordField label="Confirm password" autoComplete="new-password" minLength={8} value={form.confirmPassword} onChange={update("confirmPassword")} />
+      <label>School code <span className="field-optional">Optional</span><input autoComplete="off" value={form.schoolCode} onChange={update("schoolCode")} placeholder="SCHOOL-XXXXXXXX" /><small className="field-hint">Use a code shared by your school to link your account.</small></label>
+      <label>Student claim code <span className="field-optional">Optional</span><input autoComplete="off" value={form.claimCode} onChange={update("claimCode")} placeholder="SCHOOL-SS1-XXXXXXXX" /><small className="field-hint">Use this if your school created an account for you.</small></label>
+      <div className={`legal-box${requiredAccepted ? " is-accepted" : ""}`}>
+        <p className="legal-heading">Review before creating your account</p>
+        <div className="consent-status" aria-live="polite"><span className={`consent-check ${requiredAccepted ? "is-accepted" : ""}`} aria-hidden="true">{requiredAccepted ? "✓" : ""}</span><span>{requiredAccepted ? "Terms & Conditions and Privacy Policy accepted" : "Both documents must be read and explicitly accepted"}</span></div>
+        <div className="legal-actions"><button type="button" className="secondary" onClick={() => setDocument("terms")}>{termsAccepted ? "Terms accepted" : "Read and accept Terms"}</button><button type="button" className="secondary" onClick={() => setDocument("privacy")}>{privacyAccepted ? "Privacy accepted" : "Read and accept Privacy"}</button></div>
+        {requiredAccepted && <><p className="analytics-explanation">Optional analytics helps us see which screens are useful and where people get stuck. It records anonymous product-usage events, not your password, email content, private report content, or school records. You can leave it off and change this choice later in Settings.</p><label className="check-row"><input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} /> Share anonymous usage analytics (optional)</label></>}
+      </div>
+      <label>Email<input type="email" autoComplete="email" value={form.email} onChange={update("email")} required /></label>
+      {sent && <label>Email verification code<input inputMode="numeric" autoComplete="one-time-code" value={form.code} onChange={update("code")} required /><small className="field-hint">Enter the code sent to your email.</small></label>}
+      <div className="action-row"><button type="button" className="secondary" onClick={sendCode} disabled={busy}>{sent ? "Send again" : "Send email code"}</button>{sent && <button className="primary" disabled={busy || !requiredAccepted}>{busy ? "Creating…" : "Create account"}</button>}</div>
+    </form>
+    {error && <p className="error" role="alert">{error}</p>}
+    <p className="switch">Already have an account? <button className="inline-button" onClick={onLogin}>Log in</button></p>
+    {document && <LegalDialog kind={document} onClose={() => setDocument(null)} onAccept={() => { if (document === "terms") { setTermsAccepted(true); setDocument("privacy"); } else { setPrivacyAccepted(true); setDocument(null); } }} />}
+  </>;
 }
 
 function LegalDialog({ kind, onClose, onAccept }: { kind: "terms" | "privacy"; onClose: () => void; onAccept: () => void }) {
@@ -243,7 +320,10 @@ function LegalDialog({ kind, onClose, onAccept }: { kind: "terms" | "privacy"; o
   const sections = kind === "terms" ? TERMS_SECTIONS : privacySections("Sifter LevelUp", "");
   useEffect(() => {
     const element = scrollRef.current;
-    if (element) setAtEnd(element.scrollHeight <= element.clientHeight + 8);
+    if (element) {
+      element.scrollTop = 0;
+      setAtEnd(element.scrollHeight <= element.clientHeight + 8);
+    }
   }, [kind, sections.length]);
   return <div className="modal-backdrop" role="presentation"><section className="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title"><div className="modal-head"><h3 id="legal-title">{kind === "terms" ? "Terms & Conditions" : "Privacy Policy"}</h3><button className="text-button" onClick={onClose}>Close</button></div><div ref={scrollRef} className="legal-scroll" onScroll={(event) => { const element = event.currentTarget; setAtEnd(element.scrollTop + element.clientHeight >= element.scrollHeight - 8); }}>{sections.map(([title, body]) => <section key={title}><h4>{title}</h4><p>{body}</p></section>)}<p>Document version: {kind === "terms" ? TERMS_VERSION : PRIVACY_VERSION}</p><p>Reaching the end only enables the acceptance button; it does not accept the document for you.</p></div><button className="primary" disabled={!atEnd} onClick={onAccept}>{atEnd ? `I have read and accept the ${kind === "terms" ? "Terms & Conditions" : "Privacy Policy"}` : "Scroll to read the document"}</button></section></div>;
 }
@@ -279,7 +359,7 @@ function ForgotPassword({ onBack }: { onBack: () => void }) {
     finally { setBusy(false); }
   }
 
-  return <><button className="back" onClick={onBack}>← Back to log in</button><div className="auth-header"><h2>Reset your password</h2><p className="muted">Request a reset code, then choose a new password. We will not reveal whether an email is registered.</p></div>{message && <p className="success" role="status">{message}</p>}{error && <p className="error" role="alert">{error}</p>}<form onSubmit={sent ? reset : sendCode} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>{sent && <><label>Reset code<input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required /></label><label>New password<input type="password" autoComplete="new-password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required /></label><label>Confirm new password<input type="password" autoComplete="new-password" minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></label></>}<button className="primary" disabled={busy}>{busy ? (sent ? "Saving…" : "Sending…") : sent ? "Set new password" : "Send reset code"}</button></form>{sent && <button className="link-button recovery-resend" onClick={() => void sendCode()} disabled={busy}>Send another code</button>}<p className="switch">Remembered it? <button className="inline-button" onClick={onBack}>Log in</button></p></>;
+  return <><button className="back" onClick={onBack}>← Back to log in</button><div className="auth-header"><h2>Reset your password</h2><p className="muted">Request a reset code, then choose a new password. We will not reveal whether an email is registered.</p></div>{message && <p className="success" role="status">{message}</p>}{error && <p className="error" role="alert">{error}</p>}<form onSubmit={sent ? reset : sendCode} className="form"><label>Email<input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>{sent && <><label>Reset code<input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required /></label><PasswordField label="New password" autoComplete="new-password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} hint="At least 6 characters." /><PasswordField label="Confirm new password" autoComplete="new-password" minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} /></>}<button className="primary" disabled={busy}>{busy ? (sent ? "Saving…" : "Sending…") : sent ? "Set new password" : "Send reset code"}</button></form>{sent && <button className="link-button recovery-resend" onClick={() => void sendCode()} disabled={busy}>Send another code</button>}<p className="switch">Remembered it? <button className="inline-button" onClick={onBack}>Log in</button></p></>;
 }
 
 type GlobalSearchKind = "programme" | "university" | "domain" | "subgroup" | "role" | "skill" | "tool" | "certification" | "opportunity";
@@ -349,7 +429,11 @@ function GlobalSearchDropdown({
 function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
   const { signOut } = useAuth();
   const query = new URLSearchParams(window.location.search);
-  const back = () => go("/home");
+  const focusedGuidance = query.get("focus") === "guidance"
+    || query.get("guided") === "1"
+    || query.get("journey") === "guided_subject_discovery"
+    || query.get("journey_mode") === "guided_subject_discovery";
+  const guidanceEntry = query.get("guidance_entry");
   const [adminProfile, setAdminProfile] = useState<EducatorProfile | null>(null);
   useEffect(() => {
     if (!path.startsWith("/admin")) return;
@@ -368,6 +452,8 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
       : path;
   const isAdminExplore = path.startsWith("/admin/explore") || path.startsWith("/admin/workspace-explore");
   const isAdminRoute = path.startsWith("/admin");
+  const isRootPlatformRoute = path === "/" || path === "/home" || path === "/explore" || path === "/opportunities" || path === "/myworld" || path === "/profile";
+  const showPlatformBack = !isAdminRoute && (focusedGuidance || !isRootPlatformRoute);
 
   function content() {
     if (route === "/" || route === "/home") return <CareerHomeScreen />;
@@ -387,7 +473,7 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     if (route === "/explore/elite") return <ElitePathwaysHubScreen />;
     if (route.startsWith("/explore/elite/")) return <ElitePathwayDetailScreen />;
     const programme = route.match(/^\/explore\/programme\/([^/]+)/)?.[1];
-    if (programme) return <ProgrammeDetailRefinedScreen programmeId={decodeURIComponent(programme)} jambProgrammeId={query.get("jamb_programme_id") ?? undefined} initialSchoolId={query.get("school_id") ?? undefined} userType={query.get("user_type") ?? undefined} guidanceStudentId={query.get("guidance_student_id") ?? undefined} guidanceTarget={query.get("guidance_target") ?? undefined} viewOnly={query.get("view_only") === "1"} journeyMode={query.get("journey_mode") ?? undefined} />;
+    if (programme) return <ProgrammeDetailRefinedScreen programmeId={decodeURIComponent(programme)} jambProgrammeId={query.get("jamb_programme_id") ?? undefined} initialSchoolId={query.get("school_id") ?? undefined} userType={query.get("user_type") ?? undefined} guidanceStudentId={query.get("guidance_student_id") ?? undefined} guidanceTarget={query.get("guidance_target") ?? undefined} guidanceEntry={guidanceEntry ?? undefined} viewOnly={query.get("view_only") === "1"} journeyMode={query.get("journey_mode") ?? undefined} />;
     const domain = route.match(/^\/explore\/domain\/([^/]+)$/)?.[1];
     if (domain) return <DomainDetailScreen domainId={decodeURIComponent(domain)} />;
     const subgroup = route.match(/^\/explore\/domain\/([^/]+)\/subgroup\/([^/]+)$/);
@@ -547,9 +633,12 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
     return <Suspense fallback={<RouteLoading />}>{content()}</Suspense>;
   }
 
-  return <main className="platform-shell">
-    <aside className="platform-sidebar">
-      <Brand />
+  return <main className={`platform-shell${focusedGuidance ? " is-guidance-workspace" : ""}`}>
+    {!focusedGuidance ? <aside className="platform-sidebar">
+      <a className="brand" href="/home" onClick={(event) => { event.preventDefault(); go("/home"); }} aria-label="Sifter LevelUp home">
+        <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>
+        <span>Sifter <b>LevelUp</b></span>
+      </a>
       <nav className="platform-nav" aria-label="Main navigation">
         <a href="/home" onClick={(e) => { e.preventDefault(); go("/home"); }}>Home</a>
         <a href="/explore" onClick={(e) => { e.preventDefault(); go("/explore"); }}>Explore</a>
@@ -558,17 +647,18 @@ function AuthenticatedWebApp({ user, path }: { user: WebUser; path: string }) {
         <a href="/profile" onClick={(e) => { e.preventDefault(); go("/profile"); }}>Profile</a>
       </nav>
       <div className="platform-sidebar-account"><span>{user.username || user.email || "Account"}</span><button className="text-button" onClick={() => { void signOut().then(() => go("/", true)); }}>Sign out</button></div>
-    </aside>
+    </aside> : null}
     <section className="platform-main">
       <header className="platform-toolbar">
-        <div className="global-search-shell" ref={searchShellRef}>
+        {showPlatformBack ? <button className="platform-back" onClick={() => { if (focusedGuidance && guidanceEntry?.startsWith("/")) go(guidanceEntry, true); else platformBack(path); }} aria-label="Go back">← {focusedGuidance ? "Exit guidance" : "Back"}</button> : null}
+        {focusedGuidance ? <div className="platform-guidance-title"><span>Focused guidance workspace</span><strong>Follow your selected path</strong></div> : <div className="global-search-shell" ref={searchShellRef}>
         <form className="global-search" onSubmit={submitGlobalSearch} role="search">
           <span aria-hidden="true">⌕</span>
           <input value={globalQuery} onFocus={() => setSearchOpen(true)} onChange={(event) => { setGlobalQuery(event.target.value); setSearchOpen(true); }} placeholder="Search programmes, universities, domains, roles or skills" aria-label="Search Sifter" />
           <button type="submit">Search</button>
         </form>
         {searchOpen ? <GlobalSearchDropdown query={globalQuery} intent={searchIntent} onIntentChange={setSearchIntent} loading={searchLoading} result={searchPayload} onSelect={openSearchResult} onClose={() => setSearchOpen(false)} /> : null}
-        </div>
+        </div>}
       </header>
       <div className="platform-content"><Suspense fallback={<RouteLoading />}>{content()}</Suspense></div>
     </section>

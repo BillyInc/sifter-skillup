@@ -242,7 +242,7 @@ function ResultsPanel({
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={rp.header}>
         <Text style={[rp.badge, { color: passed ? '#22c55e' : '#ef4444' }]}>
-          {passed ? '✓ PASSED' : '✗ NEEDS REVIEW'}
+          {passed ? '✓ PASSED' : '✗ CHECK AGAIN'}
         </Text>
         <Text style={rp.threshold}>
           Required: {Math.round(passThreshold * 100)}% ({Math.ceil(result.total * passThreshold)}/{result.total} criteria)

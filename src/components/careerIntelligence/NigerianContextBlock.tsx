@@ -90,7 +90,6 @@ function sourceRows(context: ContextRecord): { name: string; url?: string }[] {
   const seen = new Set(rows.map((row) => row.name.toLowerCase()));
   const ids = [
     ...(Array.isArray(context.source_ids) ? context.source_ids : []),
-    ...((record(context.global_enrichment).source_ids as unknown[]) ?? []),
   ];
   for (const value of ids) {
     if (typeof value !== "string") continue;
@@ -131,7 +130,7 @@ function Layer({ label, source, expanded }: { label: string; source: unknown; ex
   );
 }
 
-/** Shows the source-backed Nigerian/global context attached to an entity. */
+/** Shows the source-backed context attached to an entity. */
 export function NigerianContextBlock({ context, level, style }: NigerianContextBlockProps) {
   const { colors } = useTheme();
   const [expanded, setExpanded] = useState(false);
@@ -144,19 +143,17 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
   const starterItems = uniqueItems(starterKeys.flatMap((key) => items(priority[key]))).slice(0, 5);
   const actual = record(data.actual_enrichment);
   const fieldContext = record(data.domain_context_enrichment);
-  const global = record(data.global_enrichment);
   const hasLayers = CATEGORIES.some((category) => items(actual[category.key]).length)
-    || CATEGORIES.some((category) => items(fieldContext[category.key]).length)
-    || CATEGORIES.some((category) => items(global[category.key]).length);
+    || CATEGORIES.some((category) => items(fieldContext[category.key]).length);
   const sources = sourceRows(data);
 
   if (!starterItems.length && !hasLayers && !sources.length) return null;
 
   return (
     <View style={[styles.container, style]}>
-      <SectionLabel>Nigerian and global context</SectionLabel>
+      <SectionLabel>Context that supports this guidance</SectionLabel>
       <Text style={[styles.intro, { color: colors.textRole.secondary }]}>
-        These are source-backed context items attached to this {level}. Start with the suggested items, then review everything available. A listed item is not automatically required for every employer or route.
+        These are source-backed context items attached to this {level}. Start with the suggested items, then review the fuller context if you need it. A listed item is not automatically required for every employer or route.
       </Text>
       {starterItems.length ? (
         <View style={[styles.startCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
@@ -165,9 +162,8 @@ export function NigerianContextBlock({ context, level, style }: NigerianContextB
         </View>
       ) : null}
       {expanded ? <>
-        <Layer label="Nigerian item evidence" source={actual} expanded />
-        <Layer label="Nigerian field context" source={fieldContext} expanded />
-        <Layer label="Global or shared evidence" source={global} expanded />
+        <Layer label="Local evidence" source={actual} expanded />
+        <Layer label="Field context" source={fieldContext} expanded />
       </> : null}
       <TouchableOpacity
         accessibilityRole="button"

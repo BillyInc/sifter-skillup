@@ -37,7 +37,7 @@ import type {
 export type DataStatus =
   | "real" // IBASS/CCMAS/NCE-sourced, fully populated
   | "fallback" // standard/national data shown while real data is pending
-  | "pending" // being populated; show a "data pending" state
+  | "pending" // request is in flight; show a loading state
   | "coming_soon" // feature designed but not yet populated at all
   | "locked" // gated (e.g. requires an account / not yet released)
   | "error";

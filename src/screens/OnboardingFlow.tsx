@@ -46,11 +46,23 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
     userType: profile.userType,
     className: profile.ssClass,
     stream: profile.stream,
+    entryPath: "/onboarding",
     focused: true,
   };
 
   if (profile.userType === "senior_secondary") {
     if (profile.exploreIntent?.includes("have_programme") && programme) {
+      // The onboarding search already resolved the national JAMB identity.
+      // Reopening the generic admission picker here caused the student to see
+      // every variant and the programme/subject switch again. Go straight to
+      // that identity's preview; its university list is the next decision.
+      if (programmeId) {
+        return guidanceHref(`/(tabs)/explore/programme/${encodeURIComponent(programmeId)}`, [], {
+          ...baseContext,
+          journeyMode: "programme_preview",
+          resumeStage: "programme_preview",
+        });
+      }
       return guidanceHref("/(tabs)/explore/admission", [
         "mode=programme",
         `q=${encodeURIComponent(programme)}`,
@@ -99,6 +111,20 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
             ...baseContext,
             journeyMode: "programme_to_role",
             resumeStage: "university_context",
+          },
+        );
+      }
+      if (profile.intendedJambProgrammeId) {
+        // "I know the programme" has already selected the exact JAMB
+        // identity. Let the preview show its university offerings without
+        // sending the candidate back through the generic search surface.
+        return guidanceHref(
+          `/(tabs)/explore/programme/${encodeURIComponent(profile.intendedJambProgrammeId)}`,
+          [],
+          {
+            ...baseContext,
+            journeyMode: "programme_preview",
+            resumeStage: "programme_preview",
           },
         );
       }
@@ -287,27 +313,29 @@ export default function OnboardingFlow({
   };
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.surface.base }}
-      contentContainerStyle={[
-        styles.scroll,
-        { paddingHorizontal: resp.isDesktop ? Spacing.xxl : Spacing.md },
-        resp.isDesktop && { maxWidth: 720, alignSelf: "center" },
-      ]}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
-      <OnboardingBackGuard />
-      {onBackToChoices ? (
-        <TouchableOpacity
-          activeOpacity={0.78}
-          onPress={onBackToChoices}
-          style={styles.choiceBack}
-        >
-          <Text style={styles.choiceBackText}>Back to user selection</Text>
-        </TouchableOpacity>
-      ) : null}
-      <Stepper step={step} total={1} />
+    <View style={{ flex: 1, backgroundColor: colors.surface.base }}>
+      <ScrollView
+        pointerEvents={finishing ? "none" : "auto"}
+        style={{ flex: 1, backgroundColor: colors.surface.base }}
+        contentContainerStyle={[
+          styles.scroll,
+          { paddingHorizontal: resp.isDesktop ? Spacing.xxl : Spacing.md },
+          resp.isDesktop && { maxWidth: 720, alignSelf: "center" },
+        ]}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <OnboardingBackGuard />
+        {onBackToChoices ? (
+          <TouchableOpacity
+            activeOpacity={0.78}
+            onPress={onBackToChoices}
+            style={styles.choiceBack}
+          >
+            <Text style={styles.choiceBackText}>Back to user selection</Text>
+          </TouchableOpacity>
+        ) : null}
+        <Stepper step={step} total={1} />
 
       {schoolCodeOpen ? (
         <View style={[styles.schoolCodeCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
@@ -351,18 +379,26 @@ export default function OnboardingFlow({
         </TouchableOpacity>
       )}
 
-      <View>
-        {profile.userType === "senior_secondary" ? (
-          <SeniorSecondaryExploreSetupForm {...setupProps} />
-        ) : null}
-        {profile.userType === "jamb" || profile.userType === "ss3_secondary" ? (
-          <JambSetupForm {...setupProps} />
-        ) : null}
-        {profile.userType === "student" ? (
-          <CurrentStudentSetupForm {...setupProps} />
-        ) : null}
-      </View>
-    </ScrollView>
+        <View>
+          {profile.userType === "senior_secondary" ? (
+            <SeniorSecondaryExploreSetupForm {...setupProps} />
+          ) : null}
+          {profile.userType === "jamb" || profile.userType === "ss3_secondary" ? (
+            <JambSetupForm {...setupProps} />
+          ) : null}
+          {profile.userType === "student" ? (
+            <CurrentStudentSetupForm {...setupProps} />
+          ) : null}
+        </View>
+      </ScrollView>
+      {finishing ? (
+        <View style={styles.finishingOverlay} accessibilityRole="progressbar">
+          <ActivityIndicator size="large" color={Brand.primaryDeep} />
+          <Text style={[styles.finishingTitle, { color: colors.textRole.primary }]}>Opening your guidance</Text>
+          <Text style={[styles.finishingHint, { color: colors.textRole.secondary }]}>Your choices are being saved. This screen is locked for a moment.</Text>
+        </View>
+      ) : null}
+    </View>
   );
 }
 
@@ -394,4 +430,14 @@ const styles = StyleSheet.create({
   schoolCodeRow: { flexDirection: "row", gap: Spacing.sm, alignItems: "center" },
   schoolCodeInput: { flex: 1, minHeight: 46, borderWidth: 1, borderRadius: Radius.sm, paddingHorizontal: Spacing.md },
   schoolCodeButton: { minHeight: 46, minWidth: 72, borderRadius: Radius.sm, alignItems: "center", justifyContent: "center" },
+  finishingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: Spacing.xl,
+    gap: Spacing.sm,
+    backgroundColor: "rgba(255,255,255,0.86)",
+  },
+  finishingTitle: { fontSize: FontSize.lg, fontWeight: "900", textAlign: "center" },
+  finishingHint: { maxWidth: 320, fontSize: FontSize.sm, lineHeight: 20, textAlign: "center" },
 });

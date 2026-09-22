@@ -32,6 +32,8 @@ export type GuidanceRouteContext = {
   guidanceTarget?: GuidanceTarget | string;
   guidanceStudentId?: string;
   resumeStage?: GuidanceResumeStage | string;
+  /** Route to return to when a focused guidance session is exited. */
+  entryPath?: string;
   focused?: boolean;
   viewOnly?: boolean;
 };
@@ -131,6 +133,7 @@ export function guidanceContextQuery(
   add("guidance_target", context.guidanceTarget);
   add("guidance_student_id", context.guidanceStudentId);
   add("resume", context.resumeStage);
+  add("guidance_entry", context.entryPath);
   if (context.focused) pairs.push("focus=guidance");
   if (context.viewOnly) pairs.push("view_only=1");
   return pairs.join("&");

@@ -64,7 +64,7 @@ const REQUIREMENT_FALLBACK_TEXT: Record<RequirementField, string> = {
   olevel_requirement:
     "Check JAMB IBASS brochure for O'Level credit requirements for this programme.",
   direct_entry:
-    "Check individual university for Direct Entry requirements for this programme.",
+    "Check the university's current admission notice for any additional requirements.",
 };
 
 export function sanitizeRequirementText(

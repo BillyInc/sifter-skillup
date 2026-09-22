@@ -59,7 +59,7 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
     return (
       <View style={{ gap: Spacing.sm }}>
         <SectionLabel>Work evidence</SectionLabel>
-        <Text style={[styles.copy, { color: colors.textRole.muted }]}>A detailed global occupation activity profile is not attached to this role yet. The role description, skills, local context, and registered source links remain available; no duties or Nigerian demand have been inferred from the title.</Text>
+        <Text style={[styles.copy, { color: colors.textRole.muted }]}>A detailed occupation activity profile is not attached to this role yet. The role description, skills, local context, and registered source links remain available; no duties or Nigerian demand have been inferred from the title.</Text>
       </View>
     );
   }
@@ -69,7 +69,6 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
       <View style={{ gap: Spacing.sm }}>
         <SectionLabel>Work evidence</SectionLabel>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>This role has a source-backed occupation or specialist-framework explanation, but the source does not provide the same task-level profile as O*NET. Read the role meaning and preparation above, then use the linked source for its fuller explanation.</Text>
-        <FutureOfWorkSignals profile={profile} openSource={(url) => { void openSource(url); }} labelColor={colors.textRole.muted} copyColor={colors.textRole.secondary} actionColor={colors.accentRole.action} />
         <View style={{ gap: Spacing.xs }}>
           {profile.limitations.map((limitation, index) => <Text key={`${limitation}-${index}`} style={[styles.copy, { color: colors.textRole.muted }]}>• {limitation}</Text>)}
           {profile.sourceLinks.map((source, index) => (
@@ -90,7 +89,6 @@ export function RoleWorkEvidenceBlock({ profile }: Props) {
 
   return (
     <View style={{ gap: Spacing.md }}>
-      <FutureOfWorkSignals profile={profile} openSource={(url) => { void openSource(url); }} labelColor={colors.textRole.muted} copyColor={colors.textRole.secondary} actionColor={colors.accentRole.action} />
       <View style={{ gap: Spacing.sm }}>
         <SectionLabel>What this work involves</SectionLabel>
         <Text style={[styles.copy, { color: colors.textRole.secondary }]}>These are source-reported activities for the mapped occupation. They help you picture the work before deciding what to learn.</Text>
