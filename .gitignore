@@ -98,3 +98,8 @@ nul
 # Unrelated local tool checkouts, likewise committed as stray gitlinks.
 /claude-code-proxy/
 /free-claude-code/
+
+# Live E2E run reports. They carry the test account emails and up to 800
+# characters of raw backend error bodies, and land in whatever directory the
+# script was run from.
+e2e*.json

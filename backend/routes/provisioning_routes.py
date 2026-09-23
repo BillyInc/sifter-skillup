@@ -770,6 +770,95 @@ def _delete_unclaimed_student(svc, user_id: str) -> None:
     _users().delete().eq("id", user_id).execute()
 
 
+# NOTE: these and revoke_consent below sit above the parameterised
+# DELETE /students/{user_id} deliberately. Starlette matches in
+# registration order, so a /students/consent DELETE registered after it
+# is swallowed by the {user_id} route and answered 403 by its admin gate,
+# leaving the revoke endpoint unreachable for the students who own it.
+class ConsentRequest(BaseModel):
+    school_id: str
+    scope: str = "progress"  # progress | contact | full
+
+
+class ConsentRevokeRequest(BaseModel):
+    """Revoking is scope-optional on purpose.
+
+    A student turning sharing off means all of it. Defaulting this to
+    "progress" — as the grant model does — silently left a 'full' or
+    'contact' grant in place while still answering "Sharing turned off",
+    and get_roster counts 'full' as individual visibility, so the student
+    stayed on the roster after being told they were not.
+    """
+
+    school_id: str
+    scope: Optional[str] = None  # None = every scope for this school
+
+
+def _validate_consent_scope(scope: Optional[str]) -> str:
+    value = (scope or "progress").strip().lower()
+    if value not in _CONSENT_SCOPES:
+        raise HTTPException(status_code=400, detail="Choose a valid consent scope.")
+    return value
+
+
+def _require_student_affiliation(student_id: str, school_id: str) -> None:
+    """Consent is only meaningful for an existing student-school link."""
+    row = _svc().table("student_affiliations").select("id").eq(
+        "student_id", student_id
+    ).eq("school_id", school_id).limit(1).execute().data or []
+    if not row:
+        raise HTTPException(
+            status_code=403,
+            detail="Link this school to your account before changing sharing.",
+        )
+
+@router.delete("/students/consent", response_model=ResponseModel)
+async def revoke_consent(
+    payload: ConsentRevokeRequest = Body(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Revoke individual visibility — the student collapses back to aggregate-only."""
+    try:
+        # Only validate a scope the caller actually named; omitting it is the
+        # ordinary "turn sharing off" case and means every scope. A blank or
+        # whitespace-only value counts as not naming one, so that "" and "   "
+        # mean the same thing rather than one revoking everything and the other
+        # stripping to empty and 400ing.
+        named_scope = (payload.scope or "").strip()
+        scope = _validate_consent_scope(named_scope) if named_scope else None
+        _require_student_affiliation(current_user["id"], payload.school_id)
+        # granted_at IS NULL mirrors what every reader of this table requires
+        # (get_roster and the guidance visibility check), so a row that was
+        # never actually granted cannot be counted as something we revoked.
+        query = _svc().table("student_consents").update({"revoked_at": _now()}).eq(
+            "student_id", current_user["id"]
+        ).eq("school_id", payload.school_id).is_(
+            "revoked_at", "null"
+        ).not_.is_("granted_at", "null")
+        if scope:
+            query = query.eq("scope", scope)
+        updated = query.execute().data or []
+        # Report what actually happened. Claiming revoked=True on a zero-row
+        # update is the same lie this branch exists to remove: the client
+        # renders "Sharing is off" while the roster still shows the student.
+        return ResponseModel(
+            data={
+                "revoked": bool(updated),
+                "scopes": sorted(
+                    {r.get("scope") for r in updated if isinstance(r, dict) and r.get("scope")}
+                ),
+            },
+            message="Sharing turned off." if updated else "Sharing was already off.",
+        )
+    except HTTPException:
+        # Same as grant_consent: the deliberate 400/403 must not become a 500.
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: consent revoke failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not revoke consent.")
+
+
+
 @router.delete("/students/{user_id}", response_model=ResponseModel)
 async def delete_student_account(
     user_id: str,
@@ -939,11 +1028,13 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
             aggregate_only=total_affiliated - shared,
             shared_with_you=shared,
         ).model_dump())
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: roster failed", error=str(exc))
-        return ResponseModel(data=RosterResponse(
-            students=[], total_affiliated=0, aggregate_only=0, shared_with_you=0,
-        ).model_dump())
+        # An all-zero 200 is indistinguishable from a school with no students,
+        # so a backend failure has to surface as a failure.
+        raise HTTPException(status_code=500, detail="Could not load the roster.")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1197,28 +1288,6 @@ async def affiliate(
         raise HTTPException(status_code=500, detail="Could not affiliate.")
 
 
-class ConsentRequest(BaseModel):
-    school_id: str
-    scope: str = "progress"  # progress | contact | full
-
-
-def _validate_consent_scope(scope: Optional[str]) -> str:
-    value = (scope or "progress").strip().lower()
-    if value not in _CONSENT_SCOPES:
-        raise HTTPException(status_code=400, detail="Choose a valid consent scope.")
-    return value
-
-
-def _require_student_affiliation(student_id: str, school_id: str) -> None:
-    """Consent is only meaningful for an existing student-school link."""
-    row = _svc().table("student_affiliations").select("id").eq(
-        "student_id", student_id
-    ).eq("school_id", school_id).limit(1).execute().data or []
-    if not row:
-        raise HTTPException(
-            status_code=403,
-            detail="Link this school to your account before changing sharing.",
-        )
 
 
 @router.post("/students/consent", response_model=ResponseModel)
@@ -1240,27 +1309,14 @@ async def grant_consent(
             "revoked_at": None,
         }, on_conflict="student_id,school_id,scope").execute()
         return ResponseModel(data={"granted": True}, message="Sharing enabled. You can revoke this anytime.")
+    except HTTPException:
+        # _validate_consent_scope raises 400 and _require_student_affiliation
+        # raises 403 from inside this try; both must reach the client intact.
+        raise
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: consent grant failed", error=str(exc))
         raise HTTPException(status_code=500, detail="Could not record consent.")
 
-
-@router.delete("/students/consent", response_model=ResponseModel)
-async def revoke_consent(
-    payload: ConsentRequest = Body(...),
-    current_user: dict = Depends(Auth.get_current_user),
-):
-    """Revoke individual visibility — the student collapses back to aggregate-only."""
-    try:
-        scope = _validate_consent_scope(payload.scope)
-        _require_student_affiliation(current_user["id"], payload.school_id)
-        _svc().table("student_consents").update({"revoked_at": _now()}).eq(
-            "student_id", current_user["id"]
-        ).eq("school_id", payload.school_id).eq("scope", scope).execute()
-        return ResponseModel(data={"revoked": True}, message="Sharing turned off.")
-    except Exception as exc:  # noqa: BLE001
-        log.error("provisioning: consent revoke failed", error=str(exc))
-        raise HTTPException(status_code=500, detail="Could not revoke consent.")
 
 
 class ConsentRequestCreate(BaseModel):

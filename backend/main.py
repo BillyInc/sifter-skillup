@@ -669,13 +669,11 @@ async def auth_signup(body: dict, request: Request):
             has_last_name=bool(last_name),
             has_date_of_birth=bool(date_of_birth),
         )
+        # The exception text stays in the server log above; echoing it back to
+        # the client leaks internals whenever DEBUG is left on.
         raise HTTPException(
             status_code=500,
-            detail=(
-                f"We could not create your account right now. Please try again. ({exc})"
-                if settings.DEBUG
-                else "We could not create your account right now. Please try again."
-            ),
+            detail="We could not create your account right now. Please try again.",
         )
 
 
@@ -940,13 +938,12 @@ async def delete_me(
     try:
         _soft_delete_user_compat(service, current_user["id"], deletion_updates)
     except Exception as exc:
-        detail = (
-            f"Account deletion could not update the account: {exc}"
-            if settings.DEBUG
-            else "Account deletion is temporarily unavailable."
-        )
+        # The exception text stays in the log; echoing it back to the client
+        # leaks internals whenever DEBUG is left on.
         log.error("Account deletion update failed", error=str(exc))
-        raise HTTPException(status_code=500, detail=detail) from exc
+        raise HTTPException(
+            status_code=500, detail="Account deletion is temporarily unavailable."
+        ) from exc
     try:
         service.table("active_sessions").update({
             "is_active": False,

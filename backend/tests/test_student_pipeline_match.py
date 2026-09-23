@@ -7,6 +7,12 @@ and being mis-ranked.
 """
 
 import asyncio
+import re
+import typing
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
 
 from routes import student_pipeline_routes as spr
 
@@ -753,6 +759,106 @@ def test_subject_match_keeps_all_university_offerings(monkeypatch):
     assert len(rows[0]["schoolOfferings"]) == 15
     assert rows[0]["schoolCount"] == 15
 
+
+# ─────────────────────────────────────────────────────────────
+# StartingPointIn enum validation (mirrors the CHECK constraints)
+# ─────────────────────────────────────────────────────────────
+#
+# _clean_text only strips whitespace, so before these annotations a bad value
+# travelled all the way to Postgres and came back as one CHECK violation at a
+# time behind a generic 500 envelope. The contract now lives at the request
+# boundary, which means it can drift from the database — hence the second test
+# below, which reads the constraint sets straight out of the migration.
+
+# The migrations that constrain student_starting_points, in APPLY order.
+#
+# The base migration is not the authority on its own: the ss3 patch DROPs and
+# re-ADDs student_starting_points_user_type_check, so the deployed constraint
+# is whichever file touched the column last.
+#
+# This list is declared rather than globbed because filename order is not apply
+# order — "migration_ss3_..." sorts BEFORE "migration_student_pipeline_live..."
+# ('s' < 't'), so a sorted glob hands back the base as the last match, which is
+# exactly the file that must not win. These filenames carry no numeric or date
+# prefix, so apply order cannot be recovered from them. Add new patches here,
+# at the end, when they touch this table.
+_MIGRATION_DIR = Path(__file__).parents[1]
+_MIGRATIONS = [
+    _MIGRATION_DIR / "migration_student_pipeline_live.sql",
+    _MIGRATION_DIR / "migration_ss3_secondary_starting_point_patch.sql",
+]
+
+
+def _valid_starting_point(**overrides):
+    payload = {"userType": "senior_secondary"}
+    payload.update(overrides)
+    return payload
+
+
+def test_valid_starting_point_is_accepted():
+    """Guards the negative cases below from passing for the wrong reason."""
+    model = spr.StartingPointIn(**_valid_starting_point(
+        ssDoor="know_what", ssClass="ss2", stream="science",
+    ))
+    assert model.userType == "senior_secondary"
+    assert (model.ssDoor, model.ssClass, model.stream) == ("know_what", "ss2", "science")
+
+
+@pytest.mark.parametrize(
+    "field, bad_value",
+    [
+        ("userType", "hacker"),
+        ("ssDoor", "maybe"),
+        ("ssClass", "ss9"),
+        ("stream", "engineering"),
+    ],
+)
+def test_starting_point_rejects_values_outside_the_check_constraint(field, bad_value):
+    with pytest.raises(ValidationError) as caught:
+        spr.StartingPointIn(**_valid_starting_point(**{field: bad_value}))
+
+    assert field in str(caught.value)
+
+
+def _sql_in_values(column: str) -> set[str]:
+    """The `column IN ('a', …)` set as the last migration to touch it leaves it."""
+    found: list[tuple[str, set[str]]] = []
+    for path in _MIGRATIONS:
+        assert path.exists(), f"{path.name} is listed in _MIGRATIONS but missing"
+        sql = path.read_text(encoding="utf-8")
+        for match in re.finditer(rf"\b{column}\s+IN\s*\(([^)]*)\)", sql, re.IGNORECASE):
+            values = set(re.findall(r"'([^']+)'", match.group(1)))
+            assert values, f"`{column} IN (...)` in {path.name} parsed as empty"
+            found.append((path.name, values))
+    assert found, f"no `{column} IN (...)` CHECK found in any migration_*.sql"
+    return found[-1][1]
+
+
+@pytest.mark.parametrize(
+    "field, column",
+    [
+        ("userType", "user_type"),
+        ("ssDoor", "ss_door"),
+        ("ssClass", "ss_class"),
+        ("stream", "stream"),
+    ],
+)
+def test_starting_point_literals_match_the_migration_check_constraints(field, column):
+    """Drift guard: the Pydantic Literal and the DB CHECK are one contract.
+
+    typing.get_args on an Optional[Literal[...]] yields (Literal[...], NoneType),
+    so the Literal's own args are collected from whichever arg has them.
+    """
+    annotation = spr.StartingPointIn.model_fields[field].annotation
+    args = typing.get_args(annotation)
+    literal_values = {a for a in args if isinstance(a, str)}
+    for arg in args:
+        literal_values.update(a for a in typing.get_args(arg) if isinstance(a, str))
+
+    assert literal_values == _sql_in_values(column), (
+        f"StartingPointIn.{field} has drifted from the "
+        f"{column} CHECK constraint in the migration_*.sql set"
+    )
 
 def test_subject_match_preserves_authoritative_school_identity(monkeypatch):
     monkeypatch.setattr(
